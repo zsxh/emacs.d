@@ -1,4 +1,4 @@
-;; init-git.el --- Version Control Configuations	-*- lexical-binding: t -*-
+;; init-exec-path.el --- exec-path configurations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,14 +25,17 @@
 
 ;;; Commentary:
 ;;
-;;  Version Control Configuations
+;;  exec-path configurations
 ;;
 
 ;;; Code:
 
-(use-package evil-magit
-  :ensure t)
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
-(provide 'init-git)
+(provide 'init-exec-path)
 
-;;; init-git.el ends here
+;;; init-exec-path.el ends here

@@ -1,4 +1,4 @@
-;; init-git.el --- Version Control Configuations	-*- lexical-binding: t -*-
+;; init-projectile.el --- projectile configurations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,14 +25,16 @@
 
 ;;; Commentary:
 ;;
-;;  Version Control Configuations
+;;  projectile configurations
 ;;
 
 ;;; Code:
 
-(use-package evil-magit
-  :ensure t)
+(use-package counsel-projectile
+  :ensure t
+  :hook (after-init . counsel-projectile-mode))
 
-(provide 'init-git)
 
-;;; init-git.el ends here
+(provide 'init-projectile)
+
+;;; init-projectile.el ends here

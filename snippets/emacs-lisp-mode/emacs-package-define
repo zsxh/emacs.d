@@ -2,7 +2,7 @@
 # name: emacs-package-define
 # key: epd
 # --
-;; `(buffer-name)` --- ${1:Summary}	-*- lexical-binding: t -*-
+;; ${1:`(buffer-name)`} --- ${2:Summary}	-*- lexical-binding: t -*-
 
 ;; Copyright (C) `(format-time-string "%Y")` Zsxh Chen
 
@@ -29,7 +29,7 @@
 
 ;;; Commentary:
 ;;
-;;  ${2:Commentary}
+;;  ${3:Commentary}
 ;;
 
 ;;; Code:
@@ -38,3 +38,4 @@ $0
 
 (provide '`(file-name-sans-extension (buffer-name))`)
 
+;;; $1 ends here

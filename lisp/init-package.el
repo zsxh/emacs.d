@@ -1,10 +1,41 @@
-;; -*- lexical-binding: t -*-
+;; init-package.el --- Emacs Package Managerment	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2018 Zsxh Chen
+
+;; Author: Zsxh Chen <bnbvbchen@gmail.com>
+;; URL: https://github.com/zsxh/.emacs.d
+
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 2, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+
+;;; Commentary:
+;;
+;;  Emacs Package Managerment
+;;
+
+;;; Code:
 
 (require 'package)
 
 ;; FIXME: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (with-eval-after-load 'package
+  ;; Dont set custom package-user-dir, doesn't work well with (setq flycheck-emacs-lisp-load-path 'inherit)
   ;; ;; Install into seperate package dirs for each Emacs version, to prevent bytecode incompatibility
   ;; (setq package-user-dir (expand-file-name emacs-version package-user-dir))
   (defun package--save-selected-packages (&optional value)
@@ -41,3 +72,5 @@
   (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart))
 
 (provide 'init-package)
+
+;;; init-package.el ends here

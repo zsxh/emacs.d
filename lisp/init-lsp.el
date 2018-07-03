@@ -1,4 +1,4 @@
-;; init-git.el --- Version Control Configuations	-*- lexical-binding: t -*-
+;; init-lsp.el --- lsp-mode Configurations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,14 +25,31 @@
 
 ;;; Commentary:
 ;;
-;;  Version Control Configuations
+;;  lsp-mode Configurations
 ;;
 
 ;;; Code:
 
-(use-package evil-magit
-  :ensure t)
+(use-package lsp-mode
+  :ensure t
+  :config
+  ;; (use-package lsp-imenu
+  ;;   :ensure t
+  ;;   :hook (lsp-after-open . lsp-enbale-imenu))
 
-(provide 'init-git)
+  (use-package company-lsp
+    :after init-comany
+    :ensure t
+    :config
+    (push 'company-lsp company-backends))
+  
+  (use-package lsp-ui
+    :ensure t
+    :hook (lsp-mode . lsp-ui-mode)
+    :config
+    (setq lsp-ui-sideline-ignore-duplicate t)))
 
-;;; init-git.el ends here
+
+(provide 'init-lsp)
+
+;;; init-lsp.el ends here
