@@ -51,6 +51,7 @@
       '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
         ("org-cn"   . "http://elpa.emacs-china.org/org/")
         ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
+
 ;; Initialize packages
 (setq package-enable-at-startup nil)
 (when (version< emacs-version "27.0")

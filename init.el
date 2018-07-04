@@ -63,6 +63,7 @@
 (require 'init-keybinding)
 
 ;; Feature
+(require 'init-dired)
 (require 'init-ibuffer)
 (require 'init-neotree)
 (require 'init-org)

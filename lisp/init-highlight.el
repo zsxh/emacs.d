@@ -38,6 +38,12 @@
   (setq show-paren-when-point-inside-paren t) ;; Dont know why this doesn't work
   (setq show-paren-when-point-in-periphery t))
 
+;; Color String
+(use-package rainbow-mode
+  :ensure t
+  :diminish rainbow-mode
+  :hook ((emacs-lisp-mode web-mode css-mode) . rainbow-mode))
+
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
 (use-package rainbow-delimiters
   :ensure t
