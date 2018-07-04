@@ -3,7 +3,7 @@
 ;; Copyright (C) 2018 Zsxh Chen
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
-;; URL: https://github.com/zsxh/.emacs.d
+;; URL: https://github.com/zsxh/emacs.d
 
 ;; This file is not part of GNU Emacs.
 ;;
@@ -41,15 +41,11 @@
   :after evil
   :ensure t
   :config
-  (with-eval-after-load 'dired
-    (evil-collection-init 'dired))
-  (with-eval-after-load 'ibuffer
-    (evil-collection-init 'ibuffer))
-  (with-eval-after-load 'ediff
-    (evil-collection-init 'ediff))
-  (with-eval-after-load 'flycheck
-    (evil-collection-init 'flycheck))
-  )
+  (with-eval-after-load 'dired (evil-collection-init 'dired))
+  (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
+  (with-eval-after-load 'ediff (evil-collection-init 'ediff))
+  (with-eval-after-load 'flycheck (evil-collection-init 'flycheck))
+  (with-eval-after-load 'neotree (evil-collection-init 'neotree)))
 
 (provide 'init-evil)
 

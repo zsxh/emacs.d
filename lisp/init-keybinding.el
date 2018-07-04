@@ -3,7 +3,7 @@
 ;; Copyright (C) 2018 Zsxh Chen
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
-;; URL: https://github.com/zsxh/.emacs.d
+;; URL: https://github.com/zsxh/emacs.d
 
 ;; This file is not part of GNU Emacs.
 ;;
@@ -50,10 +50,11 @@
            "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
            "SPC" '(counsel-M-x :which-key "M-x")
            "'"   '(ansi-term :which-key "open terminal")
-           "1"   '(select-window-1 :which-key "select-window-1")
-           "2"   '(select-window-2 :which-key "select-window-2")
-           "3"   '(select-window-3 :which-key "select-window-3")
-           "4"   '(select-window-4 :which-key "select-window-4")
+           "0"   '(neotree-show :which-key "neotree")
+           "1"   '(winum-select-window-1 :which-key "select-window-1")
+           "2"   '(winum-select-window-2 :which-key "select-window-2")
+           "3"   '(winum-select-window-3 :which-key "select-window-3")
+           "4"   '(winum-select-window-4 :which-key "select-window-4")
            ;; Buffers
            "b"   '(nil :which-key "buffer")
            "bb"  '(ibuffer :which-key "buffers list")

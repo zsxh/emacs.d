@@ -3,7 +3,7 @@
 ;; Copyright (C) 2018 Zsxh Chen
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
-;; URL: https://github.com/zsxh/.emacs.d
+;; URL: https://github.com/zsxh/emacs.d
 
 ;; This file is not part of GNU Emacs.
 ;;

@@ -3,7 +3,7 @@
 ;; Copyright (C) 2018 Zsxh Chen
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
-;; URL: https://github.com/zsxh/.emacs.d
+;; URL: https://github.com/zsxh/emacs.d
 
 ;; This file is not part of GNU Emacs.
 ;;
@@ -44,6 +44,13 @@
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  ;; (doom-themes-visual-bell-config)
+
+  ;; Enable custom neotree theme
+  (doom-themes-neotree-config)  ; all-the-icons fonts must be installed!
+  
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config)
   )
@@ -65,9 +72,9 @@
 (setq initial-buffer-choice t)
 
 ;; Numbered window shortcuts
-(use-package window-numbering
+(use-package winum
   :ensure t
-  :hook (after-init . window-numbering-mode))
+  :hook (after-init . winum-mode))
 
 
 (provide 'init-ui)
