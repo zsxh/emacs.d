@@ -38,10 +38,12 @@
   ;;   :hook (lsp-after-open . lsp-enbale-imenu))
 
   (use-package company-lsp
-    :after init-comany
+    :after init-company
     :ensure t
     :config
-    (push 'company-lsp company-backends))
+    (push 'company-lsp company-backends)
+    (setq company-lsp-enable-snippet t
+          company-lsp-cache-candidates t))
   
   (use-package lsp-ui
     :ensure t

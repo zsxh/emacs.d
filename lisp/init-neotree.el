@@ -68,9 +68,7 @@
         (if arg
             (neotree-enter arg)
           (let ((mru-winum (winum-get-number (get-mru-window))))
-            (apply 'neotree-enter (list mru-winum))))
-        )))
-  )
+            (apply 'neotree-enter (list mru-winum))))))))
 
 (defun zsxh/neotree-collapse ()
   "Collapse a neotree node."
