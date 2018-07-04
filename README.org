@@ -1,0 +1,3 @@
+* TODO List
+  - [ ] Local Flycheck, Company modes for each prog-major-mode
+  - [ ] Support more langs
