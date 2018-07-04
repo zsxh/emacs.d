@@ -35,8 +35,13 @@
   :ensure nil
   :hook (after-init . show-paren-mode)
   :config
-  (setq show-paren-when-point-inside-paren t)
+  (setq show-paren-when-point-inside-paren t) ;; Dont know why this doesn't work
   (setq show-paren-when-point-in-periphery t))
+
+;; Highlights delimiters such as parentheses, brackets or braces according to their depth
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Poor Performance
 ;; Highlight uncommitted changes
