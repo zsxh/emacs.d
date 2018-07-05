@@ -39,7 +39,7 @@
     :ensure t))
 
 (with-eval-after-load 'yasnippet
-  (require 'init-keybinding)
+  (require 'general)
   (general-define-key
    :states '(normal visual emacs)
    :keymaps 'snippet-mode-map

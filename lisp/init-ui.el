@@ -36,6 +36,9 @@
 (tooltip-mode    -1)
 (menu-bar-mode   -1)
 
+;; Startup windows size
+(toggle-frame-maximized)
+
 ;; Theme
 (use-package doom-themes
   :ensure t

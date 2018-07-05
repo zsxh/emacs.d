@@ -39,8 +39,8 @@
   (setq org-default-notes-file (concat org-directory "/gtd/caputure.org")))
 
 (use-package evil-org
-  :ensure t
   :after (org evil)
+  :ensure t
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook
@@ -51,7 +51,7 @@
 
 ;; Mode Keybindings
 (with-eval-after-load 'evil-org
-  (require 'init-keybinding)
+  (require 'general)
   (general-define-key
    :states '(normal visual emacs)
    :keymaps 'org-mode-map

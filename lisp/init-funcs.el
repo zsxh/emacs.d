@@ -30,7 +30,7 @@
 
 ;;; Code:
 
-(defun new-empty-buffer ()
+(defun zsxh/new-empty-buffer ()
   "Create a new empty buffer.
 New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
 
@@ -43,11 +43,10 @@ It returns the buffer (for elisp programing)."
     $buf
     ))
 
-(defun switch-buffer-scratch ()
-  "Switch to the scratch buffer. If the buffer doesn't exist,
-create it and write the initial message into it."
-  (interactive)
-  (let* ((scratch-buffer-name "*scratch*")
+(defun switch-buffer-or-create (name)
+  "Switch to the NAME buffer.
+If the buffer doesn't exist, create it and write the initial message into it."
+  (let* ((scratch-buffer-name name)
          (scratch-buffer (get-buffer scratch-buffer-name)))
     (unless scratch-buffer
       (setq scratch-buffer (get-buffer-create scratch-buffer-name))
@@ -55,6 +54,15 @@ create it and write the initial message into it."
         (lisp-interaction-mode)
         (insert initial-scratch-message)))
     (switch-to-buffer scratch-buffer)))
+
+(defmacro zsxh/switch-to-buffer-or-create (name)
+  "Switch to the NAME buffer.
+If the buffer doesn't exist, create it and write the initial message into it.
+
+It returns a lambda function to switch to target buffer."
+  (interactive)
+  `(lambda () (interactive) (switch-buffer-or-create ,name)))
+
 
 (provide 'init-funcs)
 

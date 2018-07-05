@@ -42,23 +42,32 @@
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended)
   :config
-  ;; active env first
-  (pipenv-activate)
-  ;; startup lsp-python
-  (with-eval-after-load 'init-lsp
+  (use-package lsp-python
+    :requires lsp-mode
+    :ensure t
+    :config
+    (lsp-python-enable)))
 
-    (lsp-define-stdio-client lsp-python "python"
-                            #'projectile-project-root
-                            '("pyls"))
-    (defun lsp-set-cfg ()
-        (let ((lsp-cfg `(:pyls (:configurationSources ("flake8")))))
-        ;; TODO: check lsp--cur-workspace here to decide per server / project
-        (lsp--set-configuration lsp-cfg)))
-    (add-hook 'lsp-after-initialize-hook 'lsp-set-cfg)
-
-    ;; (add-hook 'python-mode-hook 'lsp-python-enable)
-    (lsp-python-enable))
-  )
+;; Extra Keybindings
+(with-eval-after-load 'lsp-python
+  (require 'general)
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'python-mode-map
+   :major-modes t
+   :prefix "SPC"
+   "m"   '(nil :which-key "major")
+   "mg"  '(nil :which-key "go")
+   "mgg" '(xref-find-definitions :which-key "goto-definition"))
+   "mgr" '(xref-find-references :which-key "find-references")
+  (general-define-key
+   :states '(normal visual emacs)
+   :keymaps 'python-mode-map
+   :major-modes t
+   :prefix ","
+   "g"  '(nil :which-key "go")
+   "gg" '(xref-find-definitions :which-key "goto-definition"))
+   "gr" '(xref-find-references :which-key "find-references"))
 
 (provide 'init-python)
 

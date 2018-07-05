@@ -42,7 +42,7 @@
 (use-package rainbow-mode
   :ensure t
   :diminish rainbow-mode
-  :hook ((emacs-lisp-mode web-mode css-mode) . rainbow-mode))
+  :hook (prog-mode . rainbow-mode))
 
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
 (use-package rainbow-delimiters

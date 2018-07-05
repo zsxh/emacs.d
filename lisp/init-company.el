@@ -60,7 +60,6 @@
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
-        ;; company-auto-complete t             ; enable auto complete
         company-idle-delay .2               ; decrease delay before autocompletion popup shows
         company-echo-delay 0                ; remove annoying blinking
         company-minimum-prefix-length 2
@@ -75,11 +74,12 @@
       :bind (:map company-active-map
                   ("M-h" . company-quickhelp-manual-begin))
       :hook (global-company-mode . company-quickhelp-mode)
-      :config (setq company-quickhelp-delay 0.8)))
+      :config (setq company-quickhelp-delay 0.4)))
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
   (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
+
 
 (provide 'init-company)
 

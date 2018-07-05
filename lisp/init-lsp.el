@@ -31,26 +31,25 @@
 ;;; Code:
 
 (use-package lsp-mode
+  :ensure t)
+
+(use-package company-lsp
+  :after (company lsp-mode)
   :ensure t
   :config
-  ;; (use-package lsp-imenu
-  ;;   :ensure t
-  ;;   :hook (lsp-after-open . lsp-enbale-imenu))
+  (push 'company-lsp company-backends)
+  (setq company-lsp-enable-snippet t
+        company-lsp-cache-candidates t))
 
-  (use-package company-lsp
-    :after init-company
-    :ensure t
-    :config
-    (push 'company-lsp company-backends)
-    (setq company-lsp-enable-snippet t
-          company-lsp-cache-candidates t))
-  
-  (use-package lsp-ui
-    :ensure t
-    :hook (lsp-mode . lsp-ui-mode)
-    :config
-    (setq lsp-ui-sideline-ignore-duplicate t)))
-
+(use-package lsp-ui
+  :after lsp-mode
+  :ensure t
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-sideline-ignore-duplicate t)
+  (require 'lsp-ui-imenu)
+  (lsp-ui-imenu-enable t)
+  )
 
 (provide 'init-lsp)
 

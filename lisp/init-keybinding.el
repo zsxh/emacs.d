@@ -59,8 +59,9 @@
            "b"   '(nil :which-key "buffer")
            "bb"  '(ibuffer :which-key "buffers list")
            "bd"  '(kill-current-buffer :which-key "kill-current-buffer")
-           "bs"  '(switch-buffer-scratch :which-key "switch to *scratch*")
-           "bn"  '(new-empty-buffer :which-key "empty-buffer")
+           "bs"  `(,(zsxh/switch-to-buffer-or-create "*scratch*") :which-key "*scratch*")
+           "bm"  `(,(zsxh/switch-to-buffer-or-create "*Messages*") :which-key "*Messages*")
+           "bn"  '(zsxh/new-empty-buffer :which-key "empty-buffer")
            ;; Error Flycheck
            "e"   '(nil :which-key "error")
            "el"  '(flycheck-list-errors :which-key "flycheck-list-errors")

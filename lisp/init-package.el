@@ -65,6 +65,13 @@
 (eval-when-compile
   (require 'use-package))
 
+;; Initialization benchmark
+(use-package benchmark-init
+  :ensure t
+  :commands (benchmark-init/activate)
+  :hook (after-init . benchmark-init/deactivate)
+  :init (benchmark-init/activate))
+
 ;; Extensions
 (use-package package-utils
   :ensure t
