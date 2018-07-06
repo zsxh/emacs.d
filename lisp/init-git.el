@@ -31,6 +31,7 @@
 ;;; Code:
 
 (use-package evil-magit
+  :defer 1
   :ensure t)
 
 (provide 'init-git)

@@ -31,6 +31,7 @@
 ;;; Code:
 
 (use-package exec-path-from-shell
+  :defer 1
   :ensure t
   :config
   (when (memq window-system '(mac ns x))
