@@ -37,7 +37,7 @@
 (menu-bar-mode   -1)
 
 ;; Startup windows size
-(toggle-frame-maximized)
+(toggle-frame-fullscreen)
 
 ;; Theme
 (use-package doom-themes

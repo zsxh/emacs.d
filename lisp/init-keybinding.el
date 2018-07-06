@@ -69,6 +69,9 @@
            ;; Files
            "f"   '(nil :which-key "file")
            "ff"  '(counsel-find-file :which-key "find files")
+           ;; Help
+           "h"   '(nil :which-key "help")
+           "hp"  '(helpful-at-point :which-key "helpful-at-point")
            ;; Jump
            "j"   '(nil :which-key "jump")
            "jd"  '(dired-jump :which-key "dired-jump")

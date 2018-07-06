@@ -51,23 +51,13 @@
 ;; Extra Keybindings
 (with-eval-after-load 'lsp-python
   (require 'general)
-  (general-define-key
-   :states '(normal visual emacs)
-   :keymaps 'python-mode-map
-   :major-modes t
-   :prefix "SPC"
-   "m"   '(nil :which-key "major")
-   "mg"  '(nil :which-key "go")
-   "mgg" '(xref-find-definitions :which-key "goto-definition"))
-   "mgr" '(xref-find-references :which-key "find-references")
-  (general-define-key
-   :states '(normal visual emacs)
-   :keymaps 'python-mode-map
-   :major-modes t
-   :prefix ","
-   "g"  '(nil :which-key "go")
-   "gg" '(xref-find-definitions :which-key "goto-definition"))
-   "gr" '(xref-find-references :which-key "find-references"))
+  (zsxh/define-major-key python-mode-map
+                         "g"  '(nil :which-key "go")
+                         "gg" '(xref-find-definitions :which-key "goto-definition")
+                         "gr" '(xref-find-references :which-key "find-references")
+                         "r"  '(nil :which-key "refactor")
+                         "rr" '(lsp-rename :which-key "rename")))
+                         
 
 (provide 'init-python)
 

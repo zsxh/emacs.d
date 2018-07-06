@@ -63,6 +63,32 @@ It returns a lambda function to switch to target buffer."
   (interactive)
   `(lambda () (interactive) (switch-buffer-or-create ,name)))
 
+(defmacro zsxh/define-major-key (mode-map &rest rest)
+  "Define local leader keys with both \"SPC m\" and \",\" once.
+Need major-mode-map MODE-MAP and keybidngs map REST.
+
+It returns a function to define local leader keys."
+  (interactive)
+  (defun prefix-m (element)
+    (if (stringp element) (format "m%s" element) element))
+  (let ((mode-map mode-map)
+        (rest rest)
+        (m-rest (mapcar #'prefix-m rest)))
+    `(progn
+       (general-define-key
+        :states '(normal visual emacs)
+        :keymaps ',mode-map
+        :major-modes t
+        :prefix "SPC"
+        "m"   '(nil :which-key "major")
+        ,@m-rest)
+       (general-define-key
+        :states '(normal visual emacs)
+        :keymaps ',mode-map
+        :major-modes t
+        :prefix ","
+        ,@rest))))
+
 
 (provide 'init-funcs)
 

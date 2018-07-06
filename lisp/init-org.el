@@ -52,21 +52,10 @@
 ;; Mode Keybindings
 (with-eval-after-load 'evil-org
   (require 'general)
-  (general-define-key
-   :states '(normal visual emacs)
-   :keymaps 'org-mode-map
-   :major-modes t
-   :prefix "SPC"
-   "m"   '(nil :which-key "major")
-   "ma"  '(org-agenda :which-key "org-agenda")
-   "mc"  '(org-capture :which-key "org-capture"))
-  (general-define-key
-   :states '(normal visual emacs)
-   :keymaps 'org-mode-map
-   :major-modes t
-   :prefix ","
-   "a"  '(org-agenda :which-key "org-agenda")
-   "c"  '(org-capture :which-key "org-capture")))
+  (zsxh/define-major-key org-mode-map
+                         "a"  '(org-agenda :which-key "org-agenda")
+                         "c"  '(org-capture :which-key "org-capture")))
+  
 
 (provide 'init-org)
 

@@ -40,20 +40,8 @@
 
 (with-eval-after-load 'yasnippet
   (require 'general)
-  (general-define-key
-   :states '(normal visual emacs)
-   :keymaps 'snippet-mode-map
-   :major-modes t
-   :prefix "SPC"
-   "m"   '(nil :which-key "major")
-   "mt"   '(yas-tryout-snippet :which-key "yas-tryout-snippet"))
-  (general-define-key
-   :states '(normal visual emacs)
-   :keymaps 'snippet-mode-map
-   :major-modes t
-   :prefix ","
-   "t"   '(yas-tryout-snippet :which-key "yas-tryout-snippet"))
-  )
+  (zsxh/define-major-key snippet-mode-map
+                         "t"   '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
 
 
 (provide 'init-yasnippet)

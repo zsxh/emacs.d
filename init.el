@@ -58,6 +58,9 @@
 ;; Emacs environment
 (require 'init-exec-path)
 
+;; Load custom functions
+(require 'init-funcs)
+
 ;; KeyBinding
 (require 'init-evil)
 (require 'init-keybinding)
@@ -83,9 +86,7 @@
 
 ;; Language
 (require 'init-python)
-
-;; Load custom functions
-(require 'init-funcs)
+(require 'init-emacs-lisp)
 
 
 (provide 'init)
