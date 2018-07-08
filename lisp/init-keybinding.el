@@ -91,6 +91,7 @@
            "wm"  '(delete-other-windows :which-key "max")
            ;; Toggle
            "t"   '(nil :which-key "toggle")
+           "tl"  '(toggle-truncate-lines :which-key "truncate-lines")
            ;; Others
            "a"   '(nil :which-key "application")
            "c"   '(nil :which-key "comment")

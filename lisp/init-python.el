@@ -57,7 +57,7 @@
                          "gr" '(xref-find-references :which-key "find-references")
                          "r"  '(nil :which-key "refactor")
                          "rr" '(lsp-rename :which-key "rename")))
-                         
+
 
 (provide 'init-python)
 

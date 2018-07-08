@@ -42,7 +42,7 @@
 (setq adaptive-fill-first-line-regexp "^* *$")
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
 (setq make-backup-files nil)               ; Forbide to make backup files
-(setq auto-save-default nil)               ; Disable auto save
+(setq auto-save-default nil)               ; Disable default auto save
 (setq set-mark-command-repeat-pop t)       ; Repeating C-SPC after popping mark pops it again
 (setq-default kill-whole-line t)           ; Kill line including '\n'
 
@@ -115,6 +115,13 @@
 
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; Use package auto-save instead of default auto save
+(require 'auto-save)
+(auto-save-enable)
+(setq auto-save-slient t)
+(setq auto-save-delete-trailing-whitespace t)
+
 
 (provide 'init-edit)
 
