@@ -31,9 +31,11 @@
 ;;; Code:
 
 (use-package lsp-intellij
-  :after (lsp-mode company-lsp)
+  :commands lsp-intellij-enable
   :ensure t
-  :hook (java-mode . lsp-intellij-enable)
+  :hook (java-mode . (lambda ()
+                       (require 'init-lsp)
+                       (lsp-intellij-enable)))
   :config (push 'java-mode company-global-modes))
 
 (provide 'init-java)

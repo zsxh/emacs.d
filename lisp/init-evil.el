@@ -35,7 +35,7 @@
   :init
   (setq evil-want-integration nil)
   :config
-  (evil-mode 1))
+  (evil-mode))
 
 (use-package evil-collection
   :after evil

@@ -32,22 +32,22 @@
 
 (use-package pyenv-mode
   :ensure t
+  :commands pyenv-mode
   :hook (python-mode . pyenv-mode)
   )
 
 (use-package pipenv
   :ensure t
-  :hook (python-mode . pipenv-mode)
+  :commands pipenv-mode
+  :hook (python-mode . (lambda ()
+                         (pipenv-mode)
+                         (require 'init-lsp)
+                         (use-package lsp-python
+                           :ensure t
+                           :config (lsp-python-enable))))
   :init
   (setq pipenv-projectile-after-switch-function
-        #'pipenv-projectile-after-switch-extended)
-  :config
-  (require 'init-lsp)
-  (use-package lsp-python
-    ;; :requires init-lsp
-    :ensure t
-    :config
-    (lsp-python-enable)))
+        #'pipenv-projectile-after-switch-extended))
 
 ;; Extra Keybindings
 (with-eval-after-load 'lsp-python

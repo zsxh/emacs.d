@@ -88,6 +88,7 @@
 ;; Language
 (require 'init-python)
 (require 'init-emacs-lisp)
+(require 'init-java)
 
 ;; Experimental
 ;; (require 'eaf)
