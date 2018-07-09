@@ -42,8 +42,9 @@
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended)
   :config
+  (require 'init-lsp)
   (use-package lsp-python
-    :requires lsp-mode
+    ;; :requires init-lsp
     :ensure t
     :config
     (lsp-python-enable)))

@@ -31,6 +31,7 @@
 ;;; Code:
 
 (use-package org
+  :defer 1
   :ensure org-plus-contrib
   :config
   ;; org agenda
@@ -55,7 +56,7 @@
   (zsxh/define-major-key org-mode-map
                          "a"  '(org-agenda :which-key "org-agenda")
                          "c"  '(org-capture :which-key "org-capture")))
-  
+
 
 (provide 'init-org)
 
