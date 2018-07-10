@@ -38,13 +38,13 @@
 (use-package pipenv
   :ensure t
   :commands pipenv-mode
-  :hook ((python-mode . (lambda ()
+  :hook (python-mode . (lambda ()
                          (pipenv-mode)
-                         (+python/python-setup-shell)
                          (require 'init-lsp)
                          (use-package lsp-python
                            :ensure t
-                           :config (lsp-python-enable)))))
+                           :config (lsp-python-enable))
+                         (+python/python-setup-shell)))
   :init
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended))
@@ -135,7 +135,7 @@ This works around https://github.com/pyenv/pyenv-which-ext"
 
 (defun +python/python-execute-file-focus (arg)
   "Execute a python script in a shell and switch to the shell buffer in
- `insert state'."
+ 'normal state'."
   (interactive "P")
   (+python/python-execute-file arg)
   (switch-to-buffer-other-window "*compilation*")
