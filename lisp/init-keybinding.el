@@ -71,6 +71,9 @@
            "ff"  '(counsel-find-file :which-key "find files")
            ;; Help
            "h"   '(nil :which-key "help")
+           "hd"  '(nil :which-key "details")
+           "hdm" '((lambda () (interactive) (describe-variable 'major-mode)) :which-key "major-mode")
+           "hdn" '((lambda () (interactive) (describe-variable 'minor-mode-list)) :which-key "minor-mode-list")
            "hp"  '(helpful-at-point :which-key "helpful-at-point")
            ;; Jump
            "j"   '(nil :which-key "jump")

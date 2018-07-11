@@ -54,7 +54,7 @@
   (require 'general)
   (zsxh/define-major-key python-mode-map
                          "'"  '(+python/repl :which-key "repl")
-                         "c"  '(nil :which-key "execute")
+                         "c"  '(nil :which-key "compile-exec")
                          "cc" '(+python/python-execute-file :which-key "execute-file")
                          "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")
                          "g"  '(nil :which-key "go")
