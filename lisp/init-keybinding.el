@@ -90,6 +90,9 @@
    ;; Jump
    "j"   '(nil :which-key "jump")
    "jd"  '(dired-jump :which-key "dired-jump")
+   "jc"  '(avy-goto-char :which-key "avy-goto-char")
+   "jw"  '(avy-goto-word-1 :which-key "avy-goto-word-1")
+   "je"  '(avy-goto-word-0 :which-key "avy-goto-word-0")
    ;; Org
    "o"   '(nil :which-key "org")
    "oa"  '(org-agenda :which-key "org-agenda")
@@ -97,7 +100,6 @@
    ;; Text
    "t"   '(nil :which-key "text")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
-   "tj"  '(avy-goto-char :which-key "avy-goto-char")
    ;; Window
    "w"   '(nil :which-key "window")
    "wl"  '(windmove-right :which-key "move right")

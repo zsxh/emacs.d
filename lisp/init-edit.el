@@ -121,7 +121,9 @@
 ;; jumping to visible text using a char-based decision tree
 (use-package avy
   :ensure t
-  :bind ("C-:" . 'avy-goto-char))
+  :bind (("C-:" . 'avy-goto-char)
+         ("M-g w" . 'avy-goto-word-1)
+         ("M-g e" . 'avy-goto-word-0)))
 
 
 (provide 'init-edit)
