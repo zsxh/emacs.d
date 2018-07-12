@@ -60,7 +60,7 @@
    "/"   '(counsel-rg :which-key "ripgrep")
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "last buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
-   "'"   '(ansi-term :which-key "open terminal")
+   "'"   '(shell-pop :which-key "shell-pop")
    "0"   '(neotree-show :which-key "neotree")
    "1"   '(winum-select-window-1 :which-key "select-window-1")
    "2"   '(winum-select-window-2 :which-key "select-window-2")

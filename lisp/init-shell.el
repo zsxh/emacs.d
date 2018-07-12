@@ -1,4 +1,4 @@
-;; init-dired.el --- Dired	-*- lexical-binding: t -*-
+;; init-shell.el --- Shell Configurations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,18 +25,20 @@
 
 ;;; Commentary:
 ;;
-;;  Dired
+;;  Shell Configurations
 ;;
 
 ;;; Code:
 
-;; (use-package diredfl
-;;   :after dired
-;;   :ensure t
-;;   :config (diredfl-global-mode))
+(use-package shell-pop
+  :ensure t
+  :config
+  (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell))))
+  (setq shell-pop-term-shell "/usr/bin/zsh")
+  (setq shell-pop-window-position "bottom")
+  ;; The last line is needed or no picked up by 'shell-pop'
+  (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
-(setq dired-listing-switches "-alh")
+(provide 'init-shell)
 
-(provide 'init-dired)
-
-;;; init-dired.el ends here
+;;; init-shell.el ends here

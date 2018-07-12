@@ -71,6 +71,7 @@
 (require 'init-ibuffer)
 (require 'init-neotree)
 (require 'init-org)
+(require 'init-shell)
 
 ;; Completion in Emacs
 (require 'init-ivy)

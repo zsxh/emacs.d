@@ -112,6 +112,11 @@
 (setq auto-save-slient t)
 (setq auto-save-delete-trailing-whitespace t)
 
+;; (use-package smartparens
+;;   :ensure t
+;;   :commands smartparens-mode
+;;   :hook (prog-mode . smartparens-mode)
+;;   :config (require 'smartparens-config))
 
 (provide 'init-edit)
 
