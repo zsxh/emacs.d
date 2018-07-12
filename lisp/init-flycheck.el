@@ -40,8 +40,7 @@
   (setq flycheck-emacs-lisp-load-path 'inherit)
 
   ;; Only check while saving and opening files
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  )
+  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
 
 ;; Display Flycheck errors in GUI tooltips
 (if (display-graphic-p)

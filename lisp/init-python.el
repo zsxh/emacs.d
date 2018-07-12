@@ -32,8 +32,7 @@
 (use-package pyenv-mode
   :ensure t
   :commands pyenv-mode
-  :hook (python-mode . pyenv-mode)
-  )
+  :hook (python-mode . pyenv-mode))
 
 (use-package pipenv
   :ensure t

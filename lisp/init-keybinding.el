@@ -38,7 +38,7 @@
   (which-key-mode)
   (which-key-setup-side-window-bottom))
 
-;; Main keybinding
+;; Global keybinding
 (use-package general
   :after evil-collection
   :ensure t
@@ -53,8 +53,7 @@
                                   replace))
   (general-override-mode)
   (general-define-key
-   ;; :states '(normal visual insert motion emacs)
-   :states '(normal visual motion)
+   :states '(normal visual motion emacs)
    :keymaps 'override
    :prefix "SPC"
    :non-normal-prefix "M-SPC"

@@ -43,8 +43,7 @@
     (when value
       (setq package-selected-packages value))
     (unless after-init-time
-      (add-hook 'after-init-hook #'package--save-selected-packages)))
- )
+      (add-hook 'after-init-hook #'package--save-selected-packages))))
 
 ;; Set EPLA
 (setq package-archives

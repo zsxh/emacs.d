@@ -47,6 +47,22 @@
   (with-eval-after-load 'flycheck (evil-collection-init 'flycheck))
   (with-eval-after-load 'neotree (evil-collection-init 'neotree)))
 
+;; lispy with evil
+(use-package lispyville
+  :after evil
+  :ensure t
+  :hook ((emacs-lisp-mode . lispyville-mode)
+         (lisp-mode . lispyville-mode))
+  :config
+  (lispyville-set-key-theme
+   '(operators
+     c-w
+     prettify
+     (escape insert)
+     (additional-movement normal visual motion))))
+
+
+
 (provide 'init-evil)
 
 ;;; init-evil.el ends here

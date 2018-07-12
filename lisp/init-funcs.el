@@ -40,8 +40,7 @@ It returns the buffer (for elisp programing)."
     (switch-to-buffer $buf)
     (funcall 'text-mode)
     (setq buffer-offer-save t)
-    $buf
-    ))
+    $buf))
 
 (defun switch-buffer-or-create (name)
   "Switch to the NAME buffer.
@@ -76,14 +75,14 @@ It returns a function to define local leader keys."
         (m-rest (mapcar #'prefix-m rest)))
     `(progn
        (general-define-key
-        :states '(normal visual emacs)
+        :states '(normal visual motion emacs)
         :keymaps ',mode-map
         :major-modes t
         :prefix "SPC"
-        "m"   '(nil :which-key "major")
+        "m" '(nil :which-key "major")
         ,@m-rest)
        (general-define-key
-        :states '(normal visual emacs)
+        :states '(normal visual motion emacs)
         :keymaps ',mode-map
         :major-modes t
         :prefix ","

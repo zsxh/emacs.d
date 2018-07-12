@@ -48,8 +48,7 @@
   :config
   (setq lsp-ui-sideline-ignore-duplicate t)
   (require 'lsp-ui-imenu)
-  (lsp-ui-imenu-enable t)
-  )
+  (lsp-ui-imenu-enable t))
 
 (provide 'init-lsp)
 
