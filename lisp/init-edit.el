@@ -76,6 +76,7 @@
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
+  :defer 1
   :ensure t
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -95,6 +96,7 @@
 
 ;; Framework for mode-specific buffer indexes
 (use-package imenu
+  :defer 1
   :ensure t)
 
 ;; Treat undo history as a tree
@@ -115,6 +117,12 @@
 ;; It allows you to select and edit matches interactively
 (use-package evil-multiedit
   :ensure t)
+
+;; jumping to visible text using a char-based decision tree
+(use-package avy
+  :ensure t
+  :bind ("C-:" . 'avy-goto-char))
+
 
 (provide 'init-edit)
 

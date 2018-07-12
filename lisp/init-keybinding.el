@@ -61,6 +61,7 @@
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "last buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
    "'"   '(shell-pop :which-key "shell-pop")
+   ";"   '(comment-dwim-2 :which-key "comment-line")
    "0"   '(neotree-show :which-key "neotree")
    "1"   '(winum-select-window-1 :which-key "select-window-1")
    "2"   '(winum-select-window-2 :which-key "select-window-2")
@@ -73,10 +74,6 @@
    "bs"  `(,(zsxh/switch-to-buffer-or-create "*scratch*") :which-key "*scratch*")
    "bm"  `(,(zsxh/switch-to-buffer-or-create "*Messages*") :which-key "*Messages*")
    "bn"  '(zsxh/new-empty-buffer :which-key "empty-buffer")
-   ;; Edit
-   "c"   '(nil :which-key "edit")
-   "cl"  '(comment-dwim-2 :which-key "comment-line")
-   "cm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
    ;; Error Flycheck
    "e"   '(nil :which-key "error")
    "el"  '(flycheck-list-errors :which-key "flycheck-list-errors")
@@ -97,6 +94,10 @@
    "o"   '(nil :which-key "org")
    "oa"  '(org-agenda :which-key "org-agenda")
    "oc"  '(org-capture :which-key "org-capture")
+   ;; Text
+   "t"   '(nil :which-key "text")
+   "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
+   "tj"  '(avy-goto-char :which-key "avy-goto-char")
    ;; Window
    "w"   '(nil :which-key "window")
    "wl"  '(windmove-right :which-key "move right")
@@ -108,8 +109,8 @@
    "wd"  '(delete-window :which-key "delete window")
    "wm"  '(delete-other-windows :which-key "max")
    ;; Toggle
-   "t"   '(nil :which-key "toggle")
-   "tl"  '(toggle-truncate-lines :which-key "truncate-lines")
+   "T"   '(nil :which-key "toggle")
+   "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
    ;; Others
    "a"   '(nil :which-key "application")
    "g"   '(nil :which-key "git")

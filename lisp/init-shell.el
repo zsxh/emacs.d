@@ -32,6 +32,7 @@
 
 (use-package shell-pop
   :ensure t
+  :commands shell-pop
   :config
   (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell))))
   (setq shell-pop-term-shell "/usr/bin/zsh")

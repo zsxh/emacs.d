@@ -39,7 +39,7 @@
     ;; Evil-Keybindings
     (with-eval-after-load 'neotree (evil-collection-init 'neotree))
     ;; Custom Keybindings
-    (require 'init-keybinding)
+    (require 'general)
     (general-define-key
      :states '(normal visual insert neotree-mode)
      :keymaps 'neotree-mode-map
