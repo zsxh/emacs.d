@@ -66,6 +66,12 @@
 ;;     (diff-hl-margin-mode))
 ;;   )
 
+(use-package smartparens
+  :ensure t
+  :commands smartparens-mode
+  :hook (prog-mode . smartparens-mode)
+  :config (require 'smartparens-config))
+
 (provide 'init-highlight)
 
 ;;; init-highlight.el ends here

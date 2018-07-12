@@ -53,18 +53,22 @@
 
   ;; Enable custom neotree theme
   (doom-themes-neotree-config)  ; all-the-icons fonts must be installed!
-  
+
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config)
   )
+
+(use-package doom-modeline
+  :ensure t
+  :defer t
+  :hook (after-init . doom-modeline-init))
 
 ;; Font
 (set-frame-font "SF Mono 13" nil t)
 
 ;; org table font
 (custom-set-faces
- '(org-table ((t (:family "Ubuntu Mono derivative Powerline"))))
- )
+ '(org-table ((t (:family "Ubuntu Mono derivative Powerline")))))
 
 ;; Line Number
 (use-package display-line-numbers

@@ -74,7 +74,7 @@
       :bind (:map company-active-map
                   ("M-h" . company-quickhelp-manual-begin))
       :hook (global-company-mode . company-quickhelp-mode)
-      :config (setq company-quickhelp-delay 0.4)))
+      :config (setq company-quickhelp-delay 0.3)))
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
