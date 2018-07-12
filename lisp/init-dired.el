@@ -30,12 +30,16 @@
 
 ;;; Code:
 
-;; (use-package diredfl
-;;   :after dired
-;;   :ensure t
-;;   :config (diredfl-global-mode))
+;;narrow dired to match filter
+(use-package dired-narrow
+  :ensure t)
 
-(setq dired-listing-switches "-alh")
+;; dired local keybindings
+(with-eval-after-load 'evil-collection
+  (require 'general)
+  (zsxh/define-major-key dired-mode-map
+                         "/" '(dired-narrow :which-key "dired-narrow")
+                         "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
 
 (provide 'init-dired)
 

@@ -12,8 +12,7 @@
 ;; published by the Free Software Foundation; either version 2, or
 ;; (at your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; This program is distributed in the hope that it will be useful,;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ;; General Public License for more details.
 ;;
@@ -41,7 +40,11 @@
   :after evil
   :ensure t
   :config
-  (with-eval-after-load 'dired (evil-collection-init 'dired))
+  (with-eval-after-load 'dired
+    (evil-collection-init 'dired)
+    (evil-collection-define-key 'normal 'dired-mode-map
+      (kbd "SPC") nil
+      "," nil))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'flycheck (evil-collection-init 'flycheck))

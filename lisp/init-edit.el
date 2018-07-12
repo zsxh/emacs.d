@@ -112,11 +112,9 @@
 (setq auto-save-slient t)
 (setq auto-save-delete-trailing-whitespace t)
 
-;; (use-package smartparens
-;;   :ensure t
-;;   :commands smartparens-mode
-;;   :hook (prog-mode . smartparens-mode)
-;;   :config (require 'smartparens-config))
+;; It allows you to select and edit matches interactively
+(use-package evil-multiedit
+  :ensure t)
 
 (provide 'init-edit)
 

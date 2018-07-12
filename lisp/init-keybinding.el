@@ -73,6 +73,10 @@
    "bs"  `(,(zsxh/switch-to-buffer-or-create "*scratch*") :which-key "*scratch*")
    "bm"  `(,(zsxh/switch-to-buffer-or-create "*Messages*") :which-key "*Messages*")
    "bn"  '(zsxh/new-empty-buffer :which-key "empty-buffer")
+   ;; Edit
+   "c"   '(nil :which-key "edit")
+   "cl"  '(comment-dwim-2 :which-key "comment-line")
+   "cm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
    ;; Error Flycheck
    "e"   '(nil :which-key "error")
    "el"  '(flycheck-list-errors :which-key "flycheck-list-errors")
@@ -108,8 +112,6 @@
    "tl"  '(toggle-truncate-lines :which-key "truncate-lines")
    ;; Others
    "a"   '(nil :which-key "application")
-   "c"   '(nil :which-key "comment")
-   "cl"  '(comment-dwim-2 :which-key "comment line")
    "g"   '(nil :which-key "git")
    "gs"  '(magit :which-key "magit")))
 
