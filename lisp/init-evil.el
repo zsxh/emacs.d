@@ -34,7 +34,14 @@
   :init
   (setq evil-want-integration nil)
   :config
-  (evil-mode))
+  (evil-mode)
+  ;; remove all keybindings from insert-state keymap,it is VERY VERY important
+  (setcdr evil-insert-state-map nil)
+  ;; 把emacs模式下的按键绑定到Insert模式下
+  (define-key evil-insert-state-map
+    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+  ;; but [escape] should switch back to normal state
+  (define-key evil-insert-state-map [escape] 'evil-normal-state))
 
 (use-package evil-collection
   :after evil
@@ -45,25 +52,11 @@
     (evil-collection-define-key 'normal 'dired-mode-map
       (kbd "SPC") nil
       "," nil))
+  (with-eval-after-load 'debug (evil-collection-init 'debug))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'flycheck (evil-collection-init 'flycheck))
   (with-eval-after-load 'neotree (evil-collection-init 'neotree)))
-
-;; lispy with evil
-(use-package lispyville
-  :after evil
-  :ensure t
-  :hook ((emacs-lisp-mode . lispyville-mode)
-         (lisp-mode . lispyville-mode))
-  :config
-  (lispyville-set-key-theme
-   '(operators
-     c-w
-     prettify
-     (escape insert)
-     (additional-movement normal visual motion))))
-
 
 
 (provide 'init-evil)

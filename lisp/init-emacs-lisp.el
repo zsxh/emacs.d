@@ -56,19 +56,12 @@
 (use-package elisp-refs
   :ensure t)
 
-;; A better *Help* buffer
-(use-package helpful
+;; Short and sweet LISP editing
+(use-package lispy
   :ensure t
-  :defines ivy-initial-inputs-alist
-  :bind (("C-c C-d" . helpful-at-point))
-  :config
-  (with-eval-after-load 'ivy
-    (dolist (cmd '(helpful-callable
-                   helpful-variable
-                   helpful-function
-                   helpful-macro
-                   helpful-command))
-      (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist))))
+  :commands lispy-mode
+  :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
+         (lisp-interaction-mode . (lambda () (lispy-mode 1)))))
 
 ;; KeyBindings
 (with-eval-after-load 'elisp-mode

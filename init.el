@@ -72,6 +72,7 @@
 (require 'init-neotree)
 (require 'init-org)
 (require 'init-shell)
+(require 'init-helpful)
 
 ;; Completion in Emacs
 (require 'init-ivy)

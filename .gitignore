@@ -62,3 +62,4 @@ network-security.data
 .last-package-update-day
 bookmarks
 experimental/*
+ignoreit.el

@@ -112,7 +112,7 @@
 (require 'auto-save)
 (auto-save-enable)
 (setq auto-save-slient t)
-(setq auto-save-delete-trailing-whitespace t)
+;; (setq auto-save-delete-trailing-whitespace t)
 
 ;; It allows you to select and edit matches interactively
 (use-package evil-multiedit

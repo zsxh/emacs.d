@@ -48,7 +48,10 @@
             (lambda ()
               (evil-org-set-key-theme)))
   (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+  (evil-org-agenda-set-keys)
+  ;; custom keybindings
+  (evil-define-key 'motion org-agenda-mode-map
+    "?" 'org-agenda-view-mode-dispatch))
 
 ;; Mode Keybindings
 (with-eval-after-load 'evil-org
