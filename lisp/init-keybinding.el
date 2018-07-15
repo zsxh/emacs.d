@@ -86,6 +86,9 @@
    "hd"  '(nil :which-key "details")
    "hdm" '((lambda () (interactive) (describe-variable 'major-mode)) :which-key "major-mode")
    "hdn" '((lambda () (interactive) (describe-variable 'minor-mode-list)) :which-key "minor-mode-list")
+   "hf"  '(helpful-callable :which-key "helpful-callable")
+   "hk"  '(helpful-key :which-key "helpful-key")
+   "hv"  '(helpful-variable :which-key "helpful-variable")
    "hp"  '(helpful-at-point :which-key "helpful-at-point")
    ;; Jump
    "j"   '(nil :which-key "jump")
