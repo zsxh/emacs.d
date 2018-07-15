@@ -63,3 +63,4 @@ network-security.data
 bookmarks
 experimental/*
 ignoreit.el
+.cache/*

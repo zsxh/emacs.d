@@ -73,19 +73,19 @@
 (require 'init-org)
 (require 'init-shell)
 (require 'init-helpful)
+(require 'init-edit)
 
 ;; Completion in Emacs
 (require 'init-ivy)
 
 ;; Programing
-(require 'init-edit)
 (require 'init-company)
 (require 'init-yasnippet)
 (require 'init-flycheck)
 (require 'init-git)
 (require 'init-highlight)
 (require 'init-projectile)
-;; (require 'init-lsp)
+(require 'init-prog)
 
 ;; Language
 (require 'init-python)

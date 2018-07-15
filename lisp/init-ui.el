@@ -49,7 +49,7 @@
   (load-theme 'doom-vibrant t)
 
   ;; Enable flashing mode-line on errors
-  ;; (doom-themes-visual-bell-config)
+  (doom-themes-visual-bell-config)
 
   ;; Enable custom neotree theme
   (doom-themes-neotree-config)  ; all-the-icons fonts must be installed!
@@ -63,7 +63,8 @@
   :hook (after-init . doom-modeline-init))
 
 ;; Font
-(set-frame-font "SF Mono 13" nil t)
+;; (set-frame-font "SF Mono 13" nil t)
+(set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)
 
 ;; org table font
 (custom-set-faces

@@ -1,4 +1,4 @@
-;; init-c.el --- C/C++ Comfigurations	-*- lexical-binding: t -*-
+;; init-prog.el --- Common Programing Settings	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,39 +25,21 @@
 
 ;;; Commentary:
 ;;
-;;  C/C++ Configurations
+;;  Common Programing Settings
 ;;
 
 ;;; Code:
 
-(use-package cquery
+(use-package autodisass-java-bytecode
   :ensure t
-  :commands lsp-cquery-enable
-  :init
-  (defun cquery//enable ()
-    (condition-case nil
-        (lsp-cquery-enable)
-      (user-error nil)))
-  :hook ((c-mode . (lambda ()
-                     (require 'init-lsp)
-                     (cquery//enable)))
-         (c++-mode . (lambda ()
-                       (require 'init-lsp)
-                       (cquery//enable))))
-  :config
-  (setq cquery-executable "/usr/bin/cquery")
+  :defer t)
 
-  ;; Log file
-  ;; (setq cquery-extra-args '("--log-file=/tmp/cq.log"))
+(use-package google-c-style
+  :defer t
+  :ensure t
+  :commands
+  (google-set-c-style))
 
-  ;; Cache directory, both relative and absolute paths are supported
-  ;; (setq cquery-cache-dir ".cquery_cached_index")
+(provide 'init-prog)
 
-  ;; Initialization options
-  (setq cquery-extra-init-params
-        '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
-
-
-(provide 'init-c)
-
-;;; init-c.el ends here
+;;; init-prog.el ends here
