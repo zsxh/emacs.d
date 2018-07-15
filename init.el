@@ -74,6 +74,7 @@
 (require 'init-shell)
 (require 'init-helpful)
 (require 'init-edit)
+(require 'init-pdf)
 
 ;; Completion in Emacs
 (require 'init-ivy)
