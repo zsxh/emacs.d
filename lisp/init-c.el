@@ -30,31 +30,31 @@
 
 ;;; Code:
 
-(use-package cquery
+(use-package ccls
   :ensure t
-  :commands lsp-cquery-enable
+  :commands lsp-ccls-enable
   :init
-  (defun cquery//enable ()
+  (defun ccls//enable ()
     (condition-case nil
-        (lsp-cquery-enable)
+        (lsp-ccls-enable)
       (user-error nil)))
   :hook ((c-mode . (lambda ()
                      (require 'init-lsp)
-                     (cquery//enable)))
+                     (ccls//enable)))
          (c++-mode . (lambda ()
                        (require 'init-lsp)
-                       (cquery//enable))))
+                       (ccls//enable))))
   :config
-  (setq cquery-executable "/usr/bin/cquery")
+  (setq cquery-executable "~/Code/ccls/release/ccls")
 
   ;; Log file
-  ;; (setq cquery-extra-args '("--log-file=/tmp/cq.log"))
+  ;; (setq ccls-extra-args '("--log-file=/tmp/cq.log"))
 
   ;; Cache directory, both relative and absolute paths are supported
-  ;; (setq cquery-cache-dir ".cquery_cached_index")
+  ;; (setq ccls-cache-dir ".cquery_cached_index")
 
   ;; Initialization options
-  (setq cquery-extra-init-params
+  (setq ccls-extra-init-params
         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
 
 
