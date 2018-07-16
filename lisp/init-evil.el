@@ -56,6 +56,7 @@
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'flycheck (evil-collection-init 'flycheck))
+  (with-eval-after-load 'pdf-tools (require 'evil-collection-pdf) (evil-collection-pdf-setup))
   (with-eval-after-load 'neotree (evil-collection-init 'neotree)))
 
 

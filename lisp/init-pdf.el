@@ -32,7 +32,6 @@
 
 (use-package pdf-tools
   :ensure t
-  :defer t
   :mode (("\\.pdf\\'" . pdf-view-mode))
   :config (pdf-tools-install))
 

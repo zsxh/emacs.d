@@ -37,9 +37,12 @@
   :after (company lsp-mode)
   :ensure t
   :config
-  (push 'company-lsp company-backends)
   (setq company-lsp-enable-snippet t
-        company-lsp-cache-candidates t))
+        company-lsp-cache-candidates nil
+        company-transformers nil
+        company-lsp-async t)
+  ;; (push 'company-lsp company-backends)
+  (push '(company-lsp :with company-yasnippet) company-backends))
 
 (use-package lsp-ui
   :after lsp-mode
