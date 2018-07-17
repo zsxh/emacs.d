@@ -49,7 +49,7 @@
   (load-theme 'doom-vibrant t)
 
   ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
+  ;; (doom-themes-visual-bell-config)
 
   ;; Enable custom neotree theme
   (doom-themes-neotree-config)  ; all-the-icons fonts must be installed!

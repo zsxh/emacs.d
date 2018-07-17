@@ -44,7 +44,7 @@
         backend
       (append (if (consp backend) backend (list backend))
               '(:with company-yasnippet))))
-  :bind (("M-/" . company-complete)
+  :bind (("M-/" . yas-expand)
          ("C-c C-y" . company-yasnippet)
          :map company-active-map
          ("C-p" . company-select-previous)

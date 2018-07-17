@@ -48,7 +48,7 @@
 ;; Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
-;; (add-to-list 'load-path (expand-file-name "experimental/emacs-application-framework" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "experimental/emacs-application-framework" user-emacs-directory))
 
 ;; Package Configuations
 (require 'init-package)
@@ -95,7 +95,8 @@
 (require 'init-c)
 
 ;; Experimental
-;; (require 'eaf)
+;; Enable pyenv-mode first and set it to system
+(require 'eaf)
 
 
 (provide 'init)

@@ -67,10 +67,12 @@
     )
   :hook ((c-mode . (lambda ()
                      (require 'init-lsp)
-                     (cquery//enable)))
+                     (cquery//enable)
+                     (setq evil-shift-width c-basic-offset)))
          (c++-mode . (lambda ()
                        (require 'init-lsp)
-                       (cquery//enable))))
+                       (cquery//enable)
+                       (setq evil-shift-width c-basic-offset))))
   :config
   (setq ccls-executable "/usr/bin/cquery")
   (setq cquery-extra-init-params
