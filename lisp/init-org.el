@@ -60,6 +60,26 @@
                          "a"  '(org-agenda :which-key "org-agenda")
                          "c"  '(org-capture :which-key "org-capture")))
 
+;; Org for blog
+(use-package org-page
+  :defer t
+  :ensure t
+  :config
+  (setq op/repository-directory "~/org/zsxh.github.io")
+  (setq op/site-domain "https://zsxh.github.io/")
+  (setq op/personal-disqus-shortname "zsxhspace")
+  (setq op/site-main-title "Hello World的一千种写法")
+
+  (setq op/repository-org-branch "source")  ;; default is "source"
+  (setq op/repository-html-branch "master") ;; default is "master"
+
+  (setq op/personal-github-link "https://github.com/zsxh")
+
+  (setq op/personal-google-analytics-id "UA-119871562-1")
+
+  ;; (setq op/highlight-render 'htmlize)
+  (setq op/theme 'mdo))
+
 
 (provide 'init-org)
 

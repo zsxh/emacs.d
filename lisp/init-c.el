@@ -63,16 +63,14 @@
   (defun cquery//enable ()
     (condition-case nil
         (lsp-cquery-enable)
-      (user-error nil))
-    )
+      (user-error nil)))
+  
   :hook ((c-mode . (lambda ()
                      (require 'init-lsp)
-                     (cquery//enable)
-                     (setq evil-shift-width c-basic-offset)))
+                     (cquery//enable)))
          (c++-mode . (lambda ()
                        (require 'init-lsp)
-                       (cquery//enable)
-                       (setq evil-shift-width c-basic-offset))))
+                       (cquery//enable))))
   :config
   (setq ccls-executable "/usr/bin/cquery")
   (setq cquery-extra-init-params
