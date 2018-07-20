@@ -89,13 +89,12 @@
 (require 'init-prog)
 
 ;; Language
-(require 'init-python)
 (require 'init-emacs-lisp)
-(require 'init-java)
 (require 'init-c)
+(require 'init-python)
+(require 'init-java)
 
 ;; Experimental
-;; Enable pyenv-mode first and set it to system
 (require 'eaf)
 
 

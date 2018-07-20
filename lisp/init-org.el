@@ -62,7 +62,7 @@
 
 ;; Org for blog
 (use-package org-page
-  :defer t
+  :defer 1
   :ensure t
   :config
   (setq op/repository-directory "~/org/zsxh.github.io")
