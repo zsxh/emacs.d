@@ -30,11 +30,12 @@
 
 ;;; Code:
 
-;; Minimal UI
-(scroll-bar-mode -1)
-(tool-bar-mode   -1)
-(tooltip-mode    -1)
-(menu-bar-mode   -1)
+;; Minimal UI in init.el when emacs-version < 27
+(unless (version< emacs-version "27")
+  (scroll-bar-mode -1)
+  (tool-bar-mode   -1)
+  (tooltip-mode    -1)
+  (menu-bar-mode   -1))
 
 ;; Startup windows size
 (toggle-frame-fullscreen)
