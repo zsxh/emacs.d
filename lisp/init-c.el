@@ -64,7 +64,8 @@
     (condition-case nil
         (lsp-cquery-enable)
       (user-error nil)))
-  
+  ;; By default files ending in .h are treated as c files rather than c++ files.
+  (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   :hook ((c-mode . (lambda ()
                      (require 'init-lsp)
                      (cquery//enable)))

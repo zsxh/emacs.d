@@ -29,6 +29,9 @@
 ;;
 
 ;;; Code:
+ 
+;; dired "human-readable" format
+(setq dired-listing-switches "-alh")
 
 ;;narrow dired to match filter
 (use-package dired-narrow
