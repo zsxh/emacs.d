@@ -29,6 +29,12 @@
 ;;
 
 ;;; Code:
+
+;; Somehow pipenv cant really active virtulenv, but i found pyvenv do a good job for this
+(use-package pyvenv
+  :ensure t
+  :commands pyvenv-activate)
+
 (use-package pyenv-mode
   :ensure t
   :commands pyenv-mode
@@ -38,6 +44,7 @@
   :ensure t
   :commands pipenv-mode
   :hook (python-mode . (lambda ()
+                         (setq-local python-indent-offset 2)
                          (pipenv-mode)
                          (require 'init-lsp)
                          (use-package lsp-python
