@@ -104,6 +104,7 @@
    ;; Text
    "t"   '(nil :which-key "text")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
+   "ts"  '(hydra-zoom/body :which-key "scale")
    ;; Window
    "w"   '(nil :which-key "window")
    "wl"  '(windmove-right :which-key "move right")
@@ -114,6 +115,7 @@
    "w-"  '(split-window-below :which-key "split bottom")
    "wd"  '(delete-window :which-key "delete window")
    "wm"  '(delete-other-windows :which-key "max")
+   "ws"  '(hydra-window-scale/body :which-key "scale")
    ;; Toggle
    "T"   '(nil :which-key "toggle")
    "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
@@ -122,6 +124,20 @@
    "g"   '(nil :which-key "git")
    "gs"  '(magit :which-key "magit")))
 
+(use-package hydra
+  :ensure t
+  :config
+  (defhydra hydra-zoom (:hint nil)
+    "zoom"
+    ("k" text-scale-increase "zoom-in" :color pink)
+    ("j" text-scale-decrease "zoom-out" :color pink))
+  (defhydra hydra-window-scale (:hint nil)
+    "scale window"
+    ("h" shrink-window-horizontally "shrink-window-horizontally" :color pink)
+    ("l" enlarge-window-horizontally "enlarger-window-horizontally" :color pink)
+    ("j" shrink-window "shrink-window" :color pink)
+    ("k" enlarge-window "enlarge-window" :color pink)
+    ("f" balance-windows "balance" :color pink)))
 
 (provide 'init-keybinding)
 
