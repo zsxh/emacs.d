@@ -36,7 +36,11 @@
   :ensure t
   :config
   (which-key-mode)
-  (which-key-setup-side-window-bottom))
+  (which-key-setup-side-window-bottom)
+  ;; Rename the entry, for 1 to 1..9
+  (push '(("\\(.*\\)1" . "winum-select-window-1") . ("\\11..9" . "window 1..9")) which-key-replacement-alist)
+  ;; Hide other entries [2-9]
+  (push '((nil . "select-window-[2-9]") . t) which-key-replacement-alist))
 
 ;; Global keybinding
 (use-package general
@@ -63,10 +67,15 @@
    "'"   '(shell-pop :which-key "shell-pop")
    ";"   '(comment-dwim-2 :which-key "comment-line")
    "0"   '(neotree-show :which-key "neotree")
-   "1"   '(winum-select-window-1 :which-key "select-window-1")
-   "2"   '(winum-select-window-2 :which-key "select-window-2")
-   "3"   '(winum-select-window-3 :which-key "select-window-3")
-   "4"   '(winum-select-window-4 :which-key "select-window-4")
+   "1"   'winum-select-window-1
+   "2"   'winum-select-window-2
+   "3"   'winum-select-window-3
+   "4"   'winum-select-window-4
+   "5"   'winum-select-window-5
+   "6"   'winum-select-window-6
+   "7"   'winum-select-window-7
+   "8"   'winum-select-window-8
+   "9"   'winum-select-window-9
    ;; Buffers
    "b"   '(nil :which-key "buffer")
    "bb"  '(ibuffer :which-key "buffers list")
