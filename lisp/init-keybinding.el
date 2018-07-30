@@ -104,7 +104,7 @@
    ;; Text
    "t"   '(nil :which-key "text")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
-   "ts"  '(hydra-zoom/body :which-key "scale")
+   "ts"  '(hydra-text-scale/body :which-key "scale")
    ;; Window
    "w"   '(nil :which-key "window")
    "wl"  '(windmove-right :which-key "move right")
@@ -127,10 +127,10 @@
 (use-package hydra
   :ensure t
   :config
-  (defhydra hydra-zoom (:hint nil)
+  (defhydra hydra-text-scale (:hint nil)
     "zoom"
-    ("k" text-scale-increase "zoom-in" :color pink)
-    ("j" text-scale-decrease "zoom-out" :color pink))
+    ("k" text-scale-increase "text-scale-increase" :color pink)
+    ("j" text-scale-decrease "text-scale-decrease" :color pink))
   (defhydra hydra-window-scale (:hint nil)
     "scale window"
     ("h" shrink-window-horizontally "shrink-window-horizontally" :color pink)
