@@ -43,17 +43,19 @@
 (use-package pipenv
   :ensure t
   :commands pipenv-mode
-  :hook (python-mode . (lambda ()
-                         (setq-local python-indent-offset 2)
-                         (pipenv-mode)
-                         (require 'init-lsp)
-                         (use-package lsp-python
-                           :ensure t
-                           :config (lsp-python-enable))
-                         (+python/python-setup-shell)))
+  :hook (python-mode . pipenv-mode)
   :init
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended))
+
+(use-package lsp-python
+  :ensure t
+  :commands lsp-python-enable
+  :hook (python-mode . (lambda ()
+                         (require 'init-lsp)
+                         (setq-local python-indent-offset 2)
+                         (lsp-python-enable)
+                         (+python/python-setup-shell))))
 
 ;; Extra Keybindings
 (with-eval-after-load 'lsp-python
@@ -69,20 +71,8 @@
                          "r"  '(nil :which-key "refactor")
                          "rr" '(lsp-rename :which-key "rename")))
 
-;; Code from spacemacs and doom-emacs
 (defun +python/pyenv-executable-find (command)
-  "Find executable taking pyenv shims into account.
-If the executable is a system executable and not in the same path
-as the pyenv version then also return nil.
-This works around https://github.com/pyenv/pyenv-which-ext"
-  (if (executable-find "pyenv")
-      (progn
-        (let ((pyenv-string (shell-command-to-string (concat "pyenv which " command)))
-              (pyenv-version-name (string-trim (shell-command-to-string "pyenv version-name"))))
-          (and (not (string-match "not found" pyenv-string))
-               (string-match pyenv-version-name (string-trim pyenv-string))
-                 (string-trim pyenv-string))))
-    (executable-find command)))
+  (executable-find command))
 
 (defun +python/python-setup-shell (&rest args)
   (if (+python/pyenv-executable-find "ipython")

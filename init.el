@@ -93,6 +93,7 @@
 (require 'init-c)
 (require 'init-python)
 (require 'init-java)
+(require 'init-web)
 
 ;; Experimental
 (require 'eaf)
