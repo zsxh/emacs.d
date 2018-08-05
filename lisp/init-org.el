@@ -50,8 +50,9 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys)
   ;; custom keybindings
-  (evil-define-key 'motion org-agenda-mode-map
-    "?" 'org-agenda-view-mode-dispatch))
+  (evil-define-key 'motion org-agenda-mode-map "?" 'org-agenda-view-mode-dispatch)
+  ;; Open links and files with RET in normal state
+  (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point))
 
 ;; Mode Keybindings
 (with-eval-after-load 'evil-org
