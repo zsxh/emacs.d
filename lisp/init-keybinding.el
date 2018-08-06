@@ -139,14 +139,16 @@
   (defhydra hydra-text-scale (:hint nil)
     "zoom"
     ("k" text-scale-increase "text-scale-increase" :color pink)
-    ("j" text-scale-decrease "text-scale-decrease" :color pink))
+    ("j" text-scale-decrease "text-scale-decrease" :color pink)
+    ("q" nil "cancel" :color blue))
   (defhydra hydra-window-scale (:hint nil)
     "scale window"
     ("h" shrink-window-horizontally "shrink-window-horizontally" :color pink)
     ("l" enlarge-window-horizontally "enlarger-window-horizontally" :color pink)
     ("j" shrink-window "shrink-window" :color pink)
     ("k" enlarge-window "enlarge-window" :color pink)
-    ("f" balance-windows "balance" :color pink)))
+    ("f" balance-windows "balance" :color pink)
+    ("q" nil "cancel" :color blue)))
 
 (provide 'init-keybinding)
 
