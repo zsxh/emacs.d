@@ -84,6 +84,13 @@
   :ensure t
   :hook (after-init . winum-mode))
 
+(use-package imenu-list
+  :defer t
+  :ensure t
+  :init
+  (progn
+    (setq imenu-list-focus-after-activation t
+          imenu-list-auto-resize t)))
 
 (provide 'init-ui)
 

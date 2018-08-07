@@ -57,7 +57,8 @@
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'flycheck (evil-collection-init 'flycheck))
   (with-eval-after-load 'pdf-tools (require 'evil-collection-pdf) (evil-collection-pdf-setup))
-  (with-eval-after-load 'neotree (evil-collection-init 'neotree)))
+  (with-eval-after-load 'neotree (evil-collection-init 'neotree))
+  (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list)))
 
 
 (provide 'init-evil)

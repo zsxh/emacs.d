@@ -80,9 +80,10 @@
    "b"   '(nil :which-key "buffer")
    "bb"  '(ibuffer :which-key "buffers list")
    "bd"  '(kill-current-buffer :which-key "kill-current-buffer")
-   "bs"  `(,(zsxh/switch-to-buffer-or-create "*scratch*") :which-key "*scratch*")
+   "bi"  '(imenu-list-smart-toggle :which-key "imenu")
    "bm"  `(,(zsxh/switch-to-buffer-or-create "*Messages*") :which-key "*Messages*")
    "bn"  '(zsxh/new-empty-buffer :which-key "empty-buffer")
+   "bs"  `(,(zsxh/switch-to-buffer-or-create "*scratch*") :which-key "*scratch*")
    ;; Error Flycheck
    "e"   '(nil :which-key "error")
    "el"  '(flycheck-list-errors :which-key "flycheck-list-errors")
