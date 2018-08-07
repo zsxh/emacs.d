@@ -53,6 +53,7 @@
       (kbd "SPC") nil
       "," nil))
   (with-eval-after-load 'debug (evil-collection-init 'debug))
+  (with-eval-after-load 'edebug (evil-collection-init 'edebug))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'flycheck (evil-collection-init 'flycheck))

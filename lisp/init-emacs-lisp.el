@@ -63,6 +63,9 @@
   :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
          (lisp-interaction-mode . (lambda () (lispy-mode 1)))))
 
+(use-package edebug-x
+  :ensure t)
+
 ;; KeyBindings
 (with-eval-after-load 'elisp-mode
   (require 'general)
