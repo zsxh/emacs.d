@@ -34,6 +34,12 @@
   :defer 3
   :ensure t)
 
+(with-eval-after-load 'evil-magit
+  (require 'general)
+  (zsxh/define-major-key with-editor-mode-map
+                         "c" '(with-editor-finish :which-key "with-editor-finish")
+                         "k" '(with-editor-cancel :which-key "with-editor-cancel")))
+
 (provide 'init-git)
 
 ;;; init-git.el ends here
