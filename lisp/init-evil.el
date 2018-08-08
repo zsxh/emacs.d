@@ -38,8 +38,7 @@
   ;; remove all keybindings from insert-state keymap,it is VERY VERY important
   (setcdr evil-insert-state-map nil)
   ;; 把emacs模式下的按键绑定到Insert模式下
-  (define-key evil-insert-state-map
-    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+  (define-key evil-insert-state-map (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
   ;; but [escape] should switch back to normal state
   (define-key evil-insert-state-map [escape] 'evil-normal-state))
 
@@ -47,13 +46,9 @@
   :after evil
   :ensure t
   :config
-  (with-eval-after-load 'dired
-    (evil-collection-init 'dired)
-    (evil-collection-define-key 'normal 'dired-mode-map
-      (kbd "SPC") nil
-      "," nil))
+  (with-eval-after-load 'package (evil-collection-init 'package-menu))
   (with-eval-after-load 'debug (evil-collection-init 'debug))
-  (with-eval-after-load 'edebug (evil-collection-init 'edebug))
+  ;; (with-eval-after-load 'edebug (evil-collection-init 'edebug))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'flycheck (evil-collection-init 'flycheck))

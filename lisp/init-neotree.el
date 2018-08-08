@@ -37,7 +37,7 @@
   :config
   (with-eval-after-load 'evil-collection
     ;; Evil-Keybindings
-    (with-eval-after-load 'neotree (evil-collection-init 'neotree))
+    (evil-collection-init 'neotree)
     ;; Custom Keybindings
     (require 'general)
     (general-define-key

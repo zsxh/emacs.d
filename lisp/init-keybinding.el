@@ -61,12 +61,15 @@
    :keymaps 'override
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
+   ;; misc
    "/"   '(counsel-rg :which-key "ripgrep")
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "last buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
    "'"   '(shell-pop :which-key "shell-pop")
+   ":"   '((lambda () (interactive) (call-interactively 'eval-expression)) :which-key "M-:")
    ";"   '(comment-dwim-2 :which-key "comment-line")
    "0"   '(neotree-show :which-key "neotree")
+   ;; winum-select-window
    "1"   'winum-select-window-1
    "2"   'winum-select-window-2
    "3"   'winum-select-window-3
@@ -129,8 +132,7 @@
    ;; Toggle
    "T"   '(nil :which-key "toggle")
    "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
-   ;; Others
-   "a"   '(nil :which-key "application")
+   ;; git
    "g"   '(nil :which-key "git")
    "gs"  '(magit :which-key "magit")))
 

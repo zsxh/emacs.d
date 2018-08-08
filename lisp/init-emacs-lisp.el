@@ -63,8 +63,6 @@
   :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
          (lisp-interaction-mode . (lambda () (lispy-mode 1)))))
 
-(use-package edebug-x
-  :ensure t)
 
 ;; KeyBindings
 (with-eval-after-load 'elisp-mode
@@ -76,9 +74,12 @@
                          "ep" '(pp-eval-expression :which-key "eval-expression")
                          "ee" '(pp-eval-last-sexp :which-key "eval-last-sexp")
                          "ej" '(eval-print-last-sexp :which-key "eval-print-last-sexp")
+                         "d"  '(nil :which-key "debug")
+                         "df" '(edebug-defun :which-key "edebug-defun")
                          "m"  '(nil :which-key "macro")
-                         "me" '(pp-macroexpand-expression :which-key "macroexpand-expression")
                          "mc" '(pp-macroexpand-last-sexp :which-key "macroexpand-last-sexp")
+                         "me" '(pp-macroexpand-expression :which-key "macroexpand-expression")
+                         "ms" '(macrostep-expand :which-key "macrostep-expand")
                          "g"  '(nil :which-key "goto")
                          "gd" '(evil-goto-definition :which-key "goto-definition"))
   (zsxh/define-major-key 'lisp-interaction-mode-map
@@ -87,9 +88,12 @@
                          "ep" '(eval-expression :which-key "eval-expression")
                          "ee" '(eval-last-sexp :which-key "eval-last-sexp")
                          "ej" '(eval-print-last-sexp :which-key "eval-print-last-sexp")
+                         "d"  '(nil :which-key "debug")
+                         "df" '(edebug-defun :which-key "edebug-defun")
                          "m"  '(nil :which-key "macro")
-                         "me" '(pp-macroexpand-expression :which-key "macroexpand-expression")
                          "mc" '(pp-macroexpand-last-sexp :which-key "macroexpand-last-sexp")
+                         "me" '(pp-macroexpand-expression :which-key "macroexpand-expression")
+                         "ms" '(macrostep-expand :which-key "macrostep-expand")
                          "g"  '(nil :which-key "goto")
                          "gd" '(evil-goto-definition :which-key "goto-definition")))
 

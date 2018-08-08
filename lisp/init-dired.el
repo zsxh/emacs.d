@@ -39,6 +39,10 @@
 
 ;; dired local keybindings
 (with-eval-after-load 'evil-collection
+  (evil-collection-init 'dired)
+  (evil-collection-define-key 'normal 'dired-mode-map
+    (kbd "SPC") nil
+    "," nil)
   (require 'general)
   (zsxh/define-major-key dired-mode-map
                          "/" '(dired-narrow :which-key "dired-narrow")
