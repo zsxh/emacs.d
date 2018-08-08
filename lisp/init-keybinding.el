@@ -132,6 +132,7 @@
    ;; Toggle
    "T"   '(nil :which-key "toggle")
    "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
+   "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
    ;; git
    "g"   '(nil :which-key "git")
    "gs"  '(magit :which-key "magit")))
