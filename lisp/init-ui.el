@@ -72,9 +72,9 @@
  '(org-table ((t (:family "Ubuntu Mono derivative Powerline")))))
 
 ;; Line Number
-(use-package display-line-numbers
-  :ensure nil
-  :hook (prog-mode . display-line-numbers-mode))
+;; (use-package display-line-numbers
+;;   :ensure nil
+;;   :hook (prog-mode . display-line-numbers-mode))
 
 ;; Emacs startup *scratch* buffer
 (setq initial-buffer-choice t)

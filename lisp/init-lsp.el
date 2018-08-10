@@ -31,7 +31,10 @@
 ;;; Code:
 
 (use-package lsp-mode
-  :ensure t)
+  :ensure t
+  :config
+  (require 'lsp-imenu)
+  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
 
 (use-package company-lsp
   :after (company lsp-mode)

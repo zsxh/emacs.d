@@ -30,9 +30,13 @@
 
 ;;; Code:
 
-(use-package counsel-projectile
+;; (use-package counsel-projectile
+;;   :ensure t
+;;   :hook (after-init . counsel-projectile-mode))
+
+(use-package projectile
   :ensure t
-  :hook (after-init . counsel-projectile-mode))
+  :hook (after-init . projectile-mode))
 
 
 (provide 'init-projectile)

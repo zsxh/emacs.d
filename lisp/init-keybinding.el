@@ -132,6 +132,7 @@
    ;; Toggle
    "T"   '(nil :which-key "toggle")
    "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
+   "Tn"  '(display-line-numbers-mode :which-key "display-line-numbers")
    "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
    ;; git
    "g"   '(nil :which-key "git")

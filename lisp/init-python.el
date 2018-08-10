@@ -107,7 +107,8 @@
 (defun +python/repl ()
   "Open the Python REPL."
   (interactive)
-  (process-buffer (run-python nil t t))
+  ;; (process-buffer (run-python nil t t))
+  (pop-to-buffer (process-buffer (python-shell-get-or-create-process)))
   (evil-insert-state))
 
 (defun +python/python-execute-file (arg)
