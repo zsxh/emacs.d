@@ -46,13 +46,14 @@
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook
             (lambda ()
-              (evil-org-set-key-theme)))
+              (evil-org-set-key-theme)
+              ;; Open links and files with RET in normal state
+              (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)))
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys)
-  ;; custom keybindings
-  (evil-define-key 'motion org-agenda-mode-map "?" 'org-agenda-view-mode-dispatch)
-  ;; Open links and files with RET in normal state
-  (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point))
+  (evil-define-key 'motion org-agenda-mode-map
+    "?" 'org-agenda-view-mode-dispatch
+    "0" 'digit-argument))
 
 ;; Mode Keybindings
 (with-eval-after-load 'evil-org
