@@ -82,9 +82,10 @@
    "9"   'winum-select-window-9
    ;; Buffers
    "b"   '(nil :which-key "buffer")
-   "bb"  '(ibuffer :which-key "buffers list")
+   "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
    "bd"  '(kill-current-buffer :which-key "kill-current-buffer")
    "bi"  '(imenu-list-smart-toggle :which-key "imenu")
+   "bl"  '(ibuffer :which-key "buffers list")
    "bm"  `(,(zsxh/switch-to-buffer-or-create "*Messages*") :which-key "*Messages*")
    "bn"  '(zsxh/new-empty-buffer :which-key "empty-buffer")
    "bs"  `(,(zsxh/switch-to-buffer-or-create "*scratch*") :which-key "*scratch*")

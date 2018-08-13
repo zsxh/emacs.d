@@ -48,7 +48,6 @@
 ;; Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "experimental/emacs-application-framework" user-emacs-directory))
 
 ;; Package Configuations
 (require 'init-package)
@@ -95,7 +94,7 @@
 (require 'init-web)
 
 ;; Experimental
-(require 'eaf)
+(require 'init-eaf)
 
 
 (provide 'init)
