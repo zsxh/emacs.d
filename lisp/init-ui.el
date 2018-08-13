@@ -38,7 +38,8 @@
   (menu-bar-mode   -1))
 
 ;; Startup windows size
-(toggle-frame-maximized)
+;; (toggle-frame-maximized)
+(toggle-frame-fullscreen)
 
 ;; Theme
 (use-package doom-themes
@@ -62,6 +63,11 @@
   :ensure t
   :defer t
   :hook (after-init . doom-modeline-init))
+
+;; Display time on modeline
+(setq display-time-format "%Y/%m/%d 周%a %H:%M")
+(setq display-time-default-load-average nil) ; don't show load avera
+(display-time-mode)
 
 ;; Font
 ;; (set-frame-font "SF Mono 13" nil t)
