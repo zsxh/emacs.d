@@ -61,6 +61,7 @@
 
 (use-package ivy-xref
   :ensure t
+  :commands ivy-xref-show-xrefs
   :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
 (provide 'init-ivy)

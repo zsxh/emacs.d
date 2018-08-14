@@ -35,7 +35,8 @@
 
 ;;narrow dired to match filter
 (use-package dired-narrow
-  :ensure t)
+  :ensure t
+  :commands dired-narrow)
 
 ;; dired local keybindings
 (with-eval-after-load 'evil-collection

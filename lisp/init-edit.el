@@ -116,7 +116,8 @@
 
 ;; It allows you to select and edit matches interactively
 (use-package evil-multiedit
-  :ensure t)
+  :ensure t
+  :commands evil-multiedit-toggle-marker-here)
 
 ;; jumping to visible text using a char-based decision tree
 (use-package avy

@@ -1,3 +1,4 @@
 * TODOs
+  - [ ] Spacemacs like local major-mode keybindings
   - [ ] Support more langs
-  - [ ] Lazy Load
+  - [X] Lazy Load

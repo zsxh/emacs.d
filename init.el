@@ -94,7 +94,7 @@
 (require 'init-web)
 
 ;; Experimental
-(require 'init-eaf)
+(require 'init-experimental)
 
 
 (provide 'init)

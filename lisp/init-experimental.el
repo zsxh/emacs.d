@@ -1,4 +1,4 @@
-;; init-eaf.el --- Emacs application framework	-*- lexical-binding: t -*-
+;; init-experimental.el --- Experimental Feature	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,15 +25,18 @@
 
 ;;; Commentary:
 ;;
-;;  Emacs application framework Settings
+;;  Experimental Feature
 ;;
 
 ;;; Code:
 
-(add-to-list 'load-path (expand-file-name "experimental/eaf" user-emacs-directory))
+(let ((default-directory (expand-file-name "experimental" user-emacs-directory)))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;; https://github.com/manateelazycat/emacs-application-framework
-(require 'eaf)
+(use-package eaf
+  :commands eaf-open)
+
 
 ;; pdf viewer
 (add-to-list 'auto-mode-alist
@@ -42,7 +45,11 @@
                                  (eaf-open filename)
                                  (kill-buffer (file-name-nondirectory filename))))))
 
+;; https://github.com/manateelazycat/aweshell
+(use-package aweshell
+  :commands aweshell-new)
 
-(provide 'init-eaf)
 
-;;; init-eaf.el ends here
+(provide 'init-experimental)
+
+;;; init-experimental.el ends here
