@@ -58,7 +58,8 @@
 
 (use-package cquery
   :ensure t
-  :commands lsp-cquery-enable
+  :requires (init-lsp)
+  :commands (lsp-cquery-enable)
   :init
   (defun cquery//enable ()
     (condition-case nil
@@ -66,12 +67,8 @@
       (user-error nil)))
   ;; By default files ending in .h are treated as c files rather than c++ files.
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-  :hook ((c-mode . (lambda ()
-                     (require 'init-lsp)
-                     (cquery//enable)))
-         (c++-mode . (lambda ()
-                       (require 'init-lsp)
-                       (cquery//enable))))
+  :hook ((c-mode . cquery//enable)
+         (c++-mode . cquery//enable))
   :config
   (setq ccls-executable "/usr/bin/cquery")
   (setq cquery-extra-init-params

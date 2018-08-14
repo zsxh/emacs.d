@@ -50,9 +50,9 @@
 
 (use-package lsp-python
   :ensure t
+  :requires (init-lsp)
   :commands lsp-python-enable
   :hook (python-mode . (lambda ()
-                         (require 'init-lsp)
                          (setq-local python-indent-offset 2)
                          (lsp-python-enable)
                          (+python/python-setup-shell))))

@@ -87,6 +87,7 @@
 (require 'init-prog)
 
 ;; Language
+(require 'init-lsp)
 (require 'init-emacs-lisp)
 (require 'init-c)
 (require 'init-python)

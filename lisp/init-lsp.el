@@ -32,6 +32,7 @@
 
 (use-package lsp-mode
   :ensure t
+  :commands (lsp-mode)
   :config
   (require 'lsp-imenu)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))

@@ -40,20 +40,24 @@
 
 (use-package meghanada
   :ensure t
-  :defer t
-  :init
-  (add-hook 'java-mode-hook
-            (lambda ()
-              (google-set-c-style)
-              (google-make-newline-indent)
-              (meghanada-mode t)
-              ;; (smartparens-mode t)
-              (rainbow-delimiters-mode t)
-              ;; (highlight-symbol-mode t)
-              ;; use code format
-              ;; (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
-              ))
-
+  :commands (meghanada-mode)
+  :hook (java-mode-hook . (lambda ()
+                            (google-set-c-style)
+                            (google-make-newline-indent)
+                            (meghanada-mode t)
+                            ;; (smartparens-mode t)
+                            (rainbow-delimiters-mode t)
+                            ;; (highlight-symbol-mode t)
+                            ;; use code format
+                            ;; (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
+                            ))
+  :bind (:map meghanada-mode-map
+              ("C-S-t" . meghanada-switch-testcase)
+              ("M-RET" . meghanada-local-variable)
+              ("C-M-." . helm-imenu)
+              ("M-r" . meghanada-reference)
+              ("M-t" . meghanada-typeinfo)
+              ("C-z" . hydra-meghanada/body))
   :config
   (use-package realgud
     :ensure t)
@@ -62,17 +66,7 @@
   (setq c-basic-offset 2)
   (setq meghanada-server-remote-debug t)
   (setq meghanada-javac-xlint "-Xlint:all,-processing")
-  (setq meghanada-server-install-dir (locate-user-emacs-file ".cache/meghanada/"))
-  :bind
-  (:map meghanada-mode-map
-        ("C-S-t" . meghanada-switch-testcase)
-        ("M-RET" . meghanada-local-variable)
-        ("C-M-." . helm-imenu)
-        ("M-r" . meghanada-reference)
-        ("M-t" . meghanada-typeinfo)
-        ("C-z" . hydra-meghanada/body))
-  :commands
-  (meghanada-mode))
+  (setq meghanada-server-install-dir (locate-user-emacs-file ".cache/meghanada/")))
 
 (defhydra hydra-meghanada (:hint nil :exit t)
 "
