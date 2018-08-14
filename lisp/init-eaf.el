@@ -30,7 +30,7 @@
 
 ;;; Code:
 
-(add-to-list 'load-path (expand-file-name "experimental/emacs-application-framework" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "experimental/eaf" user-emacs-directory))
 
 ;; https://github.com/manateelazycat/emacs-application-framework
 (require 'eaf)

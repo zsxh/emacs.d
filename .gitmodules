@@ -1,0 +1,3 @@
+[submodule "experimental/eaf"]
+	path = experimental/eaf
+	url = git@github.com:zsxh/emacs-application-framework.git
