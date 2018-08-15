@@ -85,6 +85,7 @@
 (require 'init-highlight)
 (require 'init-projectile)
 (require 'init-prog)
+(require 'init-debugger)
 
 ;; Language
 (require 'init-lsp)

@@ -36,7 +36,9 @@
   :bind (:map emacs-lisp-mode-map
               ("C-c C-z" . ielm)
               ("C-c C-c" . eval-defun)
-              ("C-c C-b" . eval-buffer)))
+              ("C-c C-b" . eval-buffer)
+              ("C-c C-:" . pp-eval-expression)
+              ("C-c C-d" . edebug-defun)))
 
 ;; Show function arglist or variable docstring
 ;; `global-eldoc-mode' is enabled by default.

@@ -47,14 +47,7 @@
   :after evil-collection
   :ensure t
   :config
-  (setq general-override-states '(insert
-                                  emacs
-                                  hybrid
-                                  normal
-                                  visual
-                                  motion
-                                  operator
-                                  replace))
+  (setq general-override-states '(insert emacs hybrid normal visual motion operator replace))
   (general-override-mode)
   (general-define-key
    :states '(normal visual motion emacs)
@@ -96,6 +89,9 @@
    ;; Files
    "f"   '(nil :which-key "file")
    "ff"  '(counsel-find-file :which-key "find files")
+   ;; git
+   "g"   '(nil :which-key "git")
+   "gs"  '(magit :which-key "magit")
    ;; Help
    "h"   '(nil :which-key "help")
    "hd"  '(nil :which-key "details")
@@ -106,7 +102,7 @@
    "hv"  '(helpful-variable :which-key "helpful-variable")
    "hp"  '(helpful-at-point :which-key "helpful-at-point")
    ;; Jump
-   "j"   '(nil :which-key "jump")
+   "j"   '(nil :which-key "jump/goto")
    "jd"  '(dired-jump :which-key "dired-jump")
    "jc"  '(avy-goto-char :which-key "avy-goto-char")
    "jl"  '(avy-goto-line :which-key "avy-goto-line")
@@ -133,12 +129,10 @@
    "ws"  '(hydra-window-scale/body :which-key "scale")
    ;; Toggle
    "T"   '(nil :which-key "toggle")
+   "Tf"  '(font-lock-mode :which-key "syntax highlighting")
    "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
    "Tn"  '(display-line-numbers-mode :which-key "display-line-numbers")
-   "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
-   ;; git
-   "g"   '(nil :which-key "git")
-   "gs"  '(magit :which-key "magit")))
+   "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")))
 
 (use-package hydra
   :ensure t
