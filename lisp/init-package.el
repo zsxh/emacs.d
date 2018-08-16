@@ -70,6 +70,7 @@
   :ensure t
   :init
   ;; (setq quelpa-self-upgrade-p nil)
+  (setq quelpa-update-melpa-p nil)
   (setq quelpa-checkout-melpa-p nil)
   :config
   ;; Using quelpa with :ensure

@@ -130,7 +130,6 @@
 
 ;; TODO: add-hook to prog-major-modes and set keybindings
 (use-package paredit
-  :ensure t
   :commands enable-paredit-mode
   :quelpa ((paredit :fetcher wiki) :upgrade nil))
 
