@@ -1,1 +1,3 @@
 * TODOs
+  - [ ] Paredit Settings
+  - [X] Use quelpa to build packages from source

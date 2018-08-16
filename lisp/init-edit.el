@@ -128,6 +128,12 @@
          ("M-g e" . avy-goto-word-0))
   :config (setq avy-style 'pre))
 
+;; TODO: add-hook to prog-major-modes and set keybindings
+(use-package paredit
+  :ensure t
+  :commands enable-paredit-mode
+  :quelpa ((paredit :fetcher wiki) :upgrade nil))
+
 
 (provide 'init-edit)
 

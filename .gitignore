@@ -64,3 +64,4 @@ bookmarks
 ignoreit.el
 .cache/*
 eaf/*
+quelpa/*

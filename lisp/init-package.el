@@ -64,6 +64,19 @@
 (eval-when-compile
   (require 'use-package))
 
+;; Build and install your Emacs Lisp packages on-the-fly and directly from source
+(use-package quelpa-use-package
+  :after (use-package)
+  :ensure t
+  :init
+  ;; (setq quelpa-self-upgrade-p nil)
+  (setq quelpa-checkout-melpa-p nil)
+  :config
+  ;; Using quelpa with :ensure
+  ;; (setq use-package-ensure-function 'quelpa)
+  )
+
+
 ;; Initialization benchmark
 (use-package benchmark-init
   :ensure t
