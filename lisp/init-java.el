@@ -53,7 +53,7 @@
 ;; meghanada
 (use-package meghanada
   :ensure t
-  :commands (meghanada-mode)
+  :commands meghanada-mode
   :hook (java-mode-hook . (lambda ()
                             (google-set-c-style)
                             (google-make-newline-indent)

@@ -32,7 +32,7 @@
 
 (use-package web-mode
   :ensure t
-  :commands (web-mode)
+  :commands web-mode
   :init
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))

@@ -31,7 +31,7 @@
 ;;; Code:
 
 (use-package evil-magit
-  :defer 3
+  :commands magit
   :ensure t)
 
 (with-eval-after-load 'evil-magit

@@ -34,6 +34,7 @@
   :ensure t
   :init
   (setq neo-show-hidden-files t)
+  :commands neotree-show
   :config
   (with-eval-after-load 'evil-collection
     ;; Evil-Keybindings

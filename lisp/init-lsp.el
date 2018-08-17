@@ -32,7 +32,7 @@
 
 (use-package lsp-mode
   :ensure t
-  :commands (lsp-mode)
+  :commands lsp-mode
   :init (setq lsp-inhibit-message t
               lsp-eldoc-render-all nil
               lsp-highlight-symbol-at-point nil)
