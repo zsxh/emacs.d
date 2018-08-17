@@ -30,6 +30,17 @@
 
 ;;; Code:
 
+;; lsp-java
+;; (use-package lsp-java
+;;   :ensure t
+;;   :requires init-lsp
+;;   :commands lsp-java-enable
+;;   :hook (java-mode . lsp-java-enable)
+;;   :config
+;;   (setq lsp-java-server-install-dir "~/.emacs.d/.cache/eclipse.jdt.ls/server"
+;;         lsp-java--workspace-folders (list (projectile-project-root))))
+
+;; lsp-intellij
 ;; (use-package lsp-intellij
 ;;   :commands lsp-intellij-enable
 ;;   :ensure t
@@ -38,6 +49,8 @@
 ;;                        (lsp-intellij-enable)))
 ;;   :config (push 'java-mode company-global-modes))
 
+
+;; meghanada
 (use-package meghanada
   :ensure t
   :commands (meghanada-mode)

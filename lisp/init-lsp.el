@@ -33,6 +33,9 @@
 (use-package lsp-mode
   :ensure t
   :commands (lsp-mode)
+  :init (setq lsp-inhibit-message t
+              lsp-eldoc-render-all nil
+              lsp-highlight-symbol-at-point nil)
   :config
   (require 'lsp-imenu)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
@@ -53,9 +56,18 @@
   :ensure t
   :hook (lsp-mode . lsp-ui-mode)
   :config
-  (setq lsp-ui-sideline-ignore-duplicate t)
+  (setq lsp-ui-sideline-enable t
+        lsp-ui-sideline-show-symbol t
+        lsp-ui-sideline-show-hover t
+        lsp-ui-sideline-show-code-actions t
+        lsp-ui-sideline-update-mode 'point
+        lsp-ui-sideline-ignore-duplicate t)
   (require 'lsp-ui-imenu)
-  (lsp-ui-imenu-enable t))
+  (lsp-ui-imenu-enable t)
+  (require 'lsp-ui-sideline)
+  (require 'lsp-ui-flycheck)
+  (lsp-ui-sideline-mode)
+  (lsp-ui-flycheck-enable t))
 
 (provide 'init-lsp)
 

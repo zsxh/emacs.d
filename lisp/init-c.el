@@ -67,8 +67,7 @@
       (user-error nil)))
   ;; By default files ending in .h are treated as c files rather than c++ files.
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-  :hook ((c-mode . cquery//enable)
-         (c++-mode . cquery//enable))
+  :hook ((c-mode c++-mode) . cquery//enable)
   :config
   (setq ccls-executable "/usr/bin/cquery")
   (setq cquery-extra-init-params

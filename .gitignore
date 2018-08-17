@@ -65,3 +65,4 @@ ignoreit.el
 .cache/*
 eaf/*
 quelpa/*
+workspace/*
