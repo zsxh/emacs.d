@@ -94,6 +94,7 @@
 (require 'init-python)
 (require 'init-java)
 (require 'init-web)
+(require 'init-julia)
 
 ;; Experimental
 (require 'init-experimental)
