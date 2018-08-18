@@ -54,16 +54,16 @@
 (use-package meghanada
   :ensure t
   :commands meghanada-mode
-  :hook (java-mode-hook . (lambda ()
-                            (google-set-c-style)
-                            (google-make-newline-indent)
-                            (meghanada-mode t)
-                            ;; (smartparens-mode t)
-                            (rainbow-delimiters-mode t)
-                            ;; (highlight-symbol-mode t)
-                            ;; use code format
-                            ;; (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
-                            ))
+  :hook (java-mode . (lambda ()
+                       (google-set-c-style)
+                       (google-make-newline-indent)
+                       (meghanada-mode t)
+                       ;; (smartparens-mode t)
+                       (rainbow-delimiters-mode t)
+                       ;; (highlight-symbol-mode t)
+                       ;; use code format
+                       ;; (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)
+                       ))
   :bind (:map meghanada-mode-map
               ("C-S-t" . meghanada-switch-testcase)
               ("M-RET" . meghanada-local-variable)
