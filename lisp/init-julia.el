@@ -35,12 +35,19 @@
   :defer t)
 
 (use-package ess-julia
-  :commands ess-julia-mode)
+  :commands ess-julia-mode
+  :init (add-to-list 'auto-mode-alist '("\\.jl\\'" . ess-julia-mode)))
+
+;; FIXME: lsp-julia got problem
+;; (use-package lsp-julia
+;;   :requires init-lsp
+;;   :quelpa ((lsp-julia :fetcher github :repo "non-Jedi/lsp-julia"))
+;;   :commands lsp-julia-enable
+;;   :hook (ess-julia-mode . lsp-julia-enable))
 
 (use-package julia-mode
   :ensure t
-  :defer t
-  :init (add-to-list 'auto-mode-alist '("\\.jl\\'" . ess-julia-mode)))
+  :defer t)
 
 (use-package julia-repl
   :ensure t
