@@ -45,9 +45,9 @@
     (kbd "SPC") nil
     "," nil)
   (require 'general)
-  (zsxh/define-major-key dired-mode-map
-                         "/" '(dired-narrow :which-key "dired-narrow")
-                         "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
+  (+funcs/define-major-key dired-mode-map
+                           "/" '(dired-narrow :which-key "dired-narrow")
+                           "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
 
 (provide 'init-dired)
 

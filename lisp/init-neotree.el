@@ -45,16 +45,16 @@
      :states '(normal visual insert neotree-mode)
      :keymaps 'neotree-mode-map
      :major-modes t
-     "h" 'zsxh/neotree-collapse-or-up
-     "l" 'zsxh/neotree-expand-or-open
+     "h" '+neotree/neotree-collapse-or-up
+     "l" '+neotree/neotree-expand-or-open
      "K" 'neotree-select-up-node
      "J" 'neotree-select-down-node))
   (with-eval-after-load 'winum
     ;; window 0 is reserved for file trees
-    (add-to-list 'winum-assign-functions #'zsxh/winum-neotree-assign-func)))
+    (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func)))
 
 ;; Code from Spacemacs
-(defun zsxh/neotree-expand-or-open (&optional arg)
+(defun +neotree/neotree-expand-or-open (&optional arg)
   "Expand or open a neotree node."
   (interactive)
   (let ((node (neo-buffer--get-filename-current-line)))
@@ -71,7 +71,7 @@
           (let ((mru-winum (winum-get-number (get-mru-window))))
             (apply 'neotree-enter (list mru-winum))))))))
 
-(defun zsxh/neotree-collapse ()
+(defun +neotree/neotree-collapse ()
   "Collapse a neotree node."
   (interactive)
   (let ((node (neo-buffer--get-filename-current-line)))
@@ -82,18 +82,18 @@
       (when neo-auto-indent-point
         (neo-point-auto-indent)))))
 
-(defun zsxh/neotree-collapse-or-up ()
+(defun +neotree/neotree-collapse-or-up ()
   "Collapse an expanded directory node or go to the parent node."
   (interactive)
   (let ((node (neo-buffer--get-filename-current-line)))
     (when node
       (if (file-directory-p node)
           (if (neo-buffer--expanded-node-p node)
-              (zsxh/neotree-collapse)
+              (+neotree/neotree-collapse)
             (neotree-select-up-node))
         (neotree-select-up-node)))))
 
-(defun zsxh/winum-neotree-assign-func ()
+(defun +neotree/winum-neotree-assign-func ()
   "Custom number assignment for neotree."
   (when (and (boundp 'neo-buffer-name)
              (string= (buffer-name) neo-buffer-name)

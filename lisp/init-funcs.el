@@ -30,7 +30,7 @@
 
 ;;; Code:
 
-(defun zsxh/new-empty-buffer ()
+(defun +funcs/new-empty-buffer ()
   "Create a new empty buffer.
 New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
 
@@ -54,7 +54,7 @@ If the buffer doesn't exist, create it and write the initial message into it."
         (insert initial-scratch-message)))
     (switch-to-buffer scratch-buffer)))
 
-(defmacro zsxh/switch-to-buffer-or-create (name)
+(defmacro +funcs/switch-to-buffer-or-create (name)
   "Switch to the NAME buffer.
 If the buffer doesn't exist, create it and write the initial message into it.
 
@@ -62,7 +62,7 @@ It returns a lambda function to switch to target buffer."
   (interactive)
   `(lambda () (interactive) (switch-buffer-or-create ,name)))
 
-(defmacro zsxh/define-major-key (mode-map &rest rest)
+(defmacro +funcs/define-major-key (mode-map &rest rest)
   "Define local leader keys with both \"SPC m\" and \",\" once.
 Need major-mode-map MODE-MAP and keybidngs map REST.
 
@@ -88,7 +88,7 @@ It returns a function to define local leader keys."
         :prefix ","
         ,@rest))))
 
-(defun zsxh/sudo-edit-current-file ()
+(defun +funcs/sudo-edit-current-file ()
   "Sudo edit current file."
   (interactive)
   (when (buffer-file-name)

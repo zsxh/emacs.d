@@ -40,8 +40,8 @@
 
 (with-eval-after-load 'yasnippet
   (require 'general)
-  (zsxh/define-major-key snippet-mode-map
-                         "t"   '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
+  (+funcs/define-major-key snippet-mode-map
+                           "t"   '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
 
 
 (provide 'init-yasnippet)

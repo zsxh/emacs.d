@@ -58,13 +58,13 @@
 ;; Mode Keybindings
 (with-eval-after-load 'evil-org
   (require 'general)
-  (zsxh/define-major-key org-mode-map
-                         "a"  '(org-agenda :which-key "agenda")
-                         "c"  '(nil :which-key "capture/clock")
-                         "cc" '(org-capture :which-key "capture")
-                         "ci" '(org-clock-in :which-key "clock-in")
-                         "co" '(org-clock-out :which-key "clock-out")
-                         "cr" '(org-clock-report :which-key "clock-report")))
+  (+funcs/define-major-key org-mode-map
+                           "a"  '(org-agenda :which-key "agenda")
+                           "c"  '(nil :which-key "capture/clock")
+                           "cc" '(org-capture :which-key "capture")
+                           "ci" '(org-clock-in :which-key "clock-in")
+                           "co" '(org-clock-out :which-key "clock-out")
+                           "cr" '(org-clock-report :which-key "clock-report")))
 
 ;; Org for blog
 (use-package org-page

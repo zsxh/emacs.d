@@ -73,15 +73,21 @@
    "7"   'winum-select-window-7
    "8"   'winum-select-window-8
    "9"   'winum-select-window-9
+   ;; Application
+   "a"   '(nil :which-key "application")
+   "ao"   '(nil :which-key "org")
+   "aoa"  '(org-agenda :which-key "org-agenda")
+   "aoc"  '(org-capture :which-key "org-capture")
+   "ap"   '(list-processes :which-key "list-processes")
    ;; Buffers
    "b"   '(nil :which-key "buffer")
    "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
    "bd"  '(kill-current-buffer :which-key "kill-current-buffer")
    "bi"  '(imenu-list-smart-toggle :which-key "imenu")
    "bI"  '(ibuffer :which-key "buffers list")
-   "bm"  `(,(zsxh/switch-to-buffer-or-create "*Messages*") :which-key "*Messages*")
-   "bn"  '(zsxh/new-empty-buffer :which-key "empty-buffer")
-   "bs"  `(,(zsxh/switch-to-buffer-or-create "*scratch*") :which-key "*scratch*")
+   "bm"  `(,(+funcs/switch-to-buffer-or-create "*Messages*") :which-key "*Messages*")
+   "bn"  '(+funcs/new-empty-buffer :which-key "empty-buffer")
+   "bs"  `(,(+funcs/switch-to-buffer-or-create "*scratch*") :which-key "*scratch*")
    ;; Error Flycheck
    "e"   '(nil :which-key "error")
    "el"  '(flycheck-list-errors :which-key "flycheck-list-errors")
@@ -89,7 +95,7 @@
    ;; Files
    "f"   '(nil :which-key "file")
    "ff"  '(counsel-find-file :which-key "find files")
-   "fe"  '(zsxh/sudo-edit-current-file :which-key "sudo edit current file")
+   "fe"  '(+funcs/sudo-edit-current-file :which-key "sudo edit current file")
    ;; git
    "g"   '(nil :which-key "git")
    "gs"  '(magit :which-key "magit")
@@ -109,10 +115,6 @@
    "jl"  '(avy-goto-line :which-key "avy-goto-line")
    "jw"  '(avy-goto-word-1 :which-key "avy-goto-word-1")
    "je"  '(avy-goto-word-0 :which-key "avy-goto-word-0")
-   ;; Org
-   "o"   '(nil :which-key "org")
-   "oa"  '(org-agenda :which-key "org-agenda")
-   "oc"  '(org-capture :which-key "org-capture")
    ;; Text
    "t"   '(nil :which-key "text")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
