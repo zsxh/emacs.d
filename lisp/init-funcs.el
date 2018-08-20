@@ -42,25 +42,18 @@ It returns the buffer (for elisp programing)."
     (setq buffer-offer-save t)
     $buf))
 
-(defun switch-buffer-or-create (name)
+(defun +funcs/switch-buffer-or-create (name)
   "Switch to the NAME buffer.
-If the buffer doesn't exist, create it and write the initial message into it."
-  (let* ((scratch-buffer-name name)
-         (scratch-buffer (get-buffer scratch-buffer-name)))
-    (unless scratch-buffer
-      (setq scratch-buffer (get-buffer-create scratch-buffer-name))
-      (with-current-buffer scratch-buffer
+If the buffer doesn't exist, create a lisp-interaction buffer
+and write the 'initial-scratch-message into it."
+  (let* ((target-buffer-name name)
+         (target-buffer (get-buffer target-buffer-name)))
+    (unless target-buffer
+      (setq target-buffer (get-buffer-create target-buffer-name))
+      (with-current-buffer target-buffer
         (lisp-interaction-mode)
         (insert initial-scratch-message)))
-    (switch-to-buffer scratch-buffer)))
-
-(defmacro +funcs/switch-to-buffer-or-create (name)
-  "Switch to the NAME buffer.
-If the buffer doesn't exist, create it and write the initial message into it.
-
-It returns a lambda function to switch to target buffer."
-  (interactive)
-  `(lambda () (interactive) (switch-buffer-or-create ,name)))
+    (switch-to-buffer target-buffer)))
 
 (defun +funcs/set-local-key (mode-map args)
   "Define local leader keys with both \"SPC m\" and \",\" once.
