@@ -69,26 +69,12 @@
 ;; KeyBindings
 (with-eval-after-load 'elisp-mode
   (require 'general)
-  (+funcs/define-major-key 'emacs-lisp-mode-map
+  (+funcs/define-major-key (emacs-lisp-mode-map lisp-interaction-mode-map)
                            "'"  '(ielm :which-key "ielm")
                            "e"  '(nil :which-key "eval")
                            "ed" '(eval-defun :which-key "eval-defun")
                            "ep" '(pp-eval-expression :which-key "eval-expression")
                            "ee" '(pp-eval-last-sexp :which-key "eval-last-sexp")
-                           "ej" '(eval-print-last-sexp :which-key "eval-print-last-sexp")
-                           "d"  '(nil :which-key "debug")
-                           "df" '(edebug-defun :which-key "edebug-defun")
-                           "m"  '(nil :which-key "macro")
-                           "mc" '(pp-macroexpand-last-sexp :which-key "macroexpand-last-sexp")
-                           "me" '(pp-macroexpand-expression :which-key "macroexpand-expression")
-                           "ms" '(macrostep-expand :which-key "macrostep-expand")
-                           "g"  '(nil :which-key "goto")
-                           "gd" '(evil-goto-definition :which-key "goto-definition"))
-  (+funcs/define-major-key 'lisp-interaction-mode-map
-                           "e"  '(nil :which-key "eval")
-                           "ed" '(eval-defun :which-key "eval-defun")
-                           "ep" '(eval-expression :which-key "eval-expression")
-                           "ee" '(eval-last-sexp :which-key "eval-last-sexp")
                            "ej" '(eval-print-last-sexp :which-key "eval-print-last-sexp")
                            "d"  '(nil :which-key "debug")
                            "df" '(edebug-defun :which-key "edebug-defun")

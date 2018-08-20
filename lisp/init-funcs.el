@@ -62,17 +62,14 @@ It returns a lambda function to switch to target buffer."
   (interactive)
   `(lambda () (interactive) (switch-buffer-or-create ,name)))
 
-(defmacro +funcs/define-major-key (mode-map &rest rest)
+(defun +funcs/set-local-key (mode-map args)
   "Define local leader keys with both \"SPC m\" and \",\" once.
-Need major-mode-map MODE-MAP and keybidngs map REST.
+Need major-mode-map MODE-MAP and keybidngs map ARGS.
 
-It returns a function to define local leader keys."
-  (interactive)
+It returns a code string to define local leader keys."
   (defun prefix-m (element)
     (if (stringp element) (format "m%s" element) element))
-  (let ((mode-map mode-map)
-        (rest rest)
-        (m-rest (mapcar #'prefix-m rest)))
+  (let ((m-args (mapcar #'prefix-m args)))
     `(progn
        (general-define-key
         :states '(normal visual motion emacs)
@@ -80,13 +77,25 @@ It returns a function to define local leader keys."
         :major-modes t
         :prefix "SPC"
         "m" '(nil :which-key "major")
-        ,@m-rest)
+        ,@m-args)
        (general-define-key
         :states '(normal visual motion emacs)
         :keymaps ',mode-map
         :major-modes t
         :prefix ","
-        ,@rest))))
+        ,@args))))
+
+(defmacro +funcs/define-major-key (m &rest args)
+  "Define local leader keys with both \"SPC m\" and \",\" once.
+Need major-mode-map(s) M and keybidngs map ARGS.
+M can be a atom mode-map or non-empty mode-map list.
+
+It returns a function to define local leader keys."
+  (interactive)
+  (if (atom m)
+      `,@(+funcs/set-local-key m args)
+    `(progn
+       ,@(mapcar (lambda (x) (+funcs/set-local-key x args)) m))))
 
 (defun +funcs/sudo-edit-current-file ()
   "Sudo edit current file."
