@@ -89,6 +89,7 @@
    ;; Files
    "f"   '(nil :which-key "file")
    "ff"  '(counsel-find-file :which-key "find files")
+   "fe"  '(zsxh/sudo-edit-current-file :which-key "sudo edit current file")
    ;; git
    "g"   '(nil :which-key "git")
    "gs"  '(magit :which-key "magit")

@@ -88,6 +88,14 @@ It returns a function to define local leader keys."
         :prefix ","
         ,@rest))))
 
+(defun zsxh/sudo-edit-current-file ()
+  "Sudo edit current file."
+  (interactive)
+  (when (buffer-file-name)
+    (let ((old-point (point)))
+      (find-file (concat "/sudo:root@localhost:" (buffer-file-name)))
+      (goto-char old-point))))
+
 
 (provide 'init-funcs)
 
