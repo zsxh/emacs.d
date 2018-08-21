@@ -31,7 +31,7 @@
 ;;; Code:
 
 ;; Minimal UI in init.el when emacs-version < 27
-(unless (version< emacs-version "27")
+(when (version< emacs-version "27")
   (scroll-bar-mode -1)
   (tool-bar-mode   -1)
   (tooltip-mode    -1)
