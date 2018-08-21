@@ -98,6 +98,7 @@
    "fe"  '(+funcs/sudo-edit-current-file :which-key "sudo edit current file")
    ;; git
    "g"   '(nil :which-key "git")
+   "gb"  '(magit-blame :which-key "magit-blame")
    "gs"  '(magit :which-key "magit")
    ;; Help
    "h"   '(nil :which-key "help")

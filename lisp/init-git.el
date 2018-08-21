@@ -31,7 +31,7 @@
 ;;; Code:
 
 (use-package evil-magit
-  :commands magit
+  :commands (magit magit-blame)
   :ensure t)
 
 (with-eval-after-load 'evil-magit
@@ -39,6 +39,7 @@
   (+funcs/define-major-key with-editor-mode-map
                            "c" '(with-editor-finish :which-key "with-editor-finish")
                            "k" '(with-editor-cancel :which-key "with-editor-cancel")))
+
 
 (provide 'init-git)
 
