@@ -48,7 +48,7 @@
   :config
   (with-eval-after-load 'package (evil-collection-init 'package-menu))
   (with-eval-after-load 'debug (evil-collection-init 'debug))
-  ;; (with-eval-after-load 'edebug (evil-collection-init 'edebug))
+  (with-eval-after-load 'edebug (evil-collection-init 'edebug))
   (with-eval-after-load 'realgud (evil-collection-init 'realgud))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
