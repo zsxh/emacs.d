@@ -32,7 +32,11 @@
 
 (use-package evil-magit
   :commands (magit magit-blame)
-  :ensure t)
+  :ensure t
+  ;; :hook (magit-blame-mode . (lambda () (setq magit-blame--style
+  ;;                                            '(headings (heading-format . "%H %-20a %C %s\n")))))
+  )
+
 
 (with-eval-after-load 'evil-magit
   (require 'general)
