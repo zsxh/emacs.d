@@ -30,20 +30,21 @@
 
 ;;; Code:
 
-(use-package evil-magit
+(use-package magit
   :commands (magit magit-blame)
   :ensure t
   ;; :hook (magit-blame-mode . (lambda () (setq magit-blame--style
   ;;                                            '(headings (heading-format . "%H %-20a %C %s\n")))))
-  )
-
-
-(with-eval-after-load 'evil-magit
+  :config
+  (require 'evil-magit)
   (require 'general)
   (+funcs/define-major-key with-editor-mode-map
                            "c" '(with-editor-finish :which-key "with-editor-finish")
-                           "k" '(with-editor-cancel :which-key "with-editor-cancel")))
+                           "k" '(with-editor-cancel :which-key "with-editor-cancel"))
 
+  (evil-define-key 'normal magit-blame-mode-map
+    "q" 'magit-blame-quit
+    "c" 'magit-blame-cycle-style))
 
 (provide 'init-git)
 

@@ -99,6 +99,7 @@
    ;; git
    "g"   '(nil :which-key "git")
    "gb"  '(magit-blame :which-key "magit-blame")
+   "gc"  '(magit-blame-cycle-style :which-key "magit-blame-cycle-style")
    "gs"  '(magit :which-key "magit")
    ;; Help
    "h"   '(nil :which-key "help")
