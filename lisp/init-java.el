@@ -79,7 +79,11 @@
   (setq c-basic-offset 2)
   (setq meghanada-server-remote-debug t)
   (setq meghanada-javac-xlint "-Xlint:all,-processing")
-  (setq meghanada-server-install-dir (locate-user-emacs-file ".cache/meghanada/")))
+  (setq meghanada-server-install-dir (locate-user-emacs-file ".cache/meghanada/"))
+
+  (require 'general)
+  (+funcs/define-major-key meghanada-mode-map
+                           "h" '(hydra-meghanada/body :which-key "hydra-meghanada")))
 
 (defhydra hydra-meghanada (:hint nil :exit t)
 "
