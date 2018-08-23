@@ -57,6 +57,16 @@
   (with-eval-after-load 'neotree (evil-collection-init 'neotree))
   (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list)))
 
+;; press "%" to jump
+;; usage: "%" jump between code block, tags
+;;        "va%" evilmi-select-items
+;;        "da%" evilmi-delete-items
+;; All commands support numeric argument like “3%”, “5va%” or “9da%”
+;;        “3%” will jump to a line 3 percentage down the file
+(use-package evil-matchit
+  :after evil
+  :ensure t
+  :config (global-evil-matchit-mode 1))
 
 (provide 'init-evil)
 
