@@ -114,6 +114,7 @@
    "j"   '(nil :which-key "jump/goto")
    "jd"  '(dired-jump :which-key "dired-jump")
    "jc"  '(avy-goto-char :which-key "avy-goto-char")
+   "jj"  '(avy-goto-char-in-line :which-key "avy-goto-char-in-line")
    "jl"  '(avy-goto-line :which-key "avy-goto-line")
    "jw"  '(avy-goto-word-1 :which-key "avy-goto-word-1")
    "je"  '(avy-goto-word-0 :which-key "avy-goto-word-0")

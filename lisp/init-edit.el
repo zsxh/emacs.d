@@ -122,10 +122,11 @@
 ;; jumping to visible text using a char-based decision tree
 (use-package avy
   :ensure t
-  :bind (("M-g c" . avy-goto-char)
-         ("M-g l" . avy-goto-line)
-         ("M-g w" . avy-goto-word-1)
-         ("M-g e" . avy-goto-word-0))
+  :bind (("C-c c" . avy-goto-char)
+         ("C-c j" . avy-goto-char-in-line)
+         ("C-c l" . avy-goto-line)
+         ("C-c w" . avy-goto-word-1)
+         ("C-c e" . avy-goto-word-0))
   :config (setq avy-style 'pre))
 
 ;; TODO: add-hook to prog-major-modes and set keybindings
