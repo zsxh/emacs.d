@@ -65,14 +65,14 @@ It returns a code string to define local leader keys."
   (let ((m-args (mapcar #'prefix-m args)))
     `(progn
        (general-define-key
-        :states '(normal visual motion emacs)
+        :states 'normal
         :keymaps ',mode-map
         :major-modes t
         :prefix "SPC"
         "m" '(nil :which-key "major")
         ,@m-args)
        (general-define-key
-        :states '(normal visual motion emacs)
+        :states 'normal
         :keymaps ',mode-map
         :major-modes t
         :prefix ","

@@ -33,12 +33,16 @@
 (use-package org
   :defer 1
   :ensure org-plus-contrib
+  ;; :bind (:map org-src-mode-map
+  ;;             (", c" . org-edit-src-exit)
+  ;;             (", k" . org-edit-src-abort))
   :config
   ;; org agenda
   (setq org-directory "~/org")
   (setq org-agenda-files '("~/org/gtd"))
   (setq org-default-notes-file (concat org-directory "/gtd/caputure.org")))
 
+;; evil for Org
 (use-package evil-org
   :after (org evil)
   :ensure t
@@ -55,16 +59,28 @@
     "?" 'org-agenda-view-mode-dispatch
     "0" 'digit-argument))
 
-;; Mode Keybindings
-(with-eval-after-load 'evil-org
+(with-eval-after-load 'org
   (require 'general)
+
+  ;; minor mode keybindings
+  (general-define-key
+   :definer 'minor-mode
+   :states 'normal
+   :keymaps 'org-src-mode
+   ",c" 'org-edit-src-exit
+   ",k" 'org-edit-src-abort)
+
+  ;; major mode keybindings
   (+funcs/define-major-key org-mode-map
                            "a"  '(org-agenda :which-key "agenda")
                            "c"  '(nil :which-key "capture/clock")
                            "cc" '(org-capture :which-key "capture")
                            "ci" '(org-clock-in :which-key "clock-in")
                            "co" '(org-clock-out :which-key "clock-out")
-                           "cr" '(org-clock-report :which-key "clock-report")))
+                           "cr" '(org-clock-report :which-key "clock-report")
+                           "'"  '(org-edit-special :which-key "editor")))
+
+
 
 ;; Org for blog
 (use-package org-page
