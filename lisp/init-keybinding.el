@@ -75,10 +75,11 @@
    "9"   'winum-select-window-9
    ;; Application
    "a"   '(nil :which-key "application")
-   "ao"   '(nil :which-key "org")
-   "aoa"  '(org-agenda :which-key "org-agenda")
-   "aoc"  '(org-capture :which-key "org-capture")
-   "ap"   '(list-processes :which-key "list-processes")
+   "ao"  '(nil :which-key "org")
+   "aoa" '(org-agenda :which-key "org-agenda")
+   "aoc" '(org-capture :which-key "org-capture")
+   "ap"  '(list-processes :which-key "list-processes")
+   "af"  '(describe-face :which-key "describe-face")
    ;; Buffers
    "b"   '(nil :which-key "buffer")
    "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
