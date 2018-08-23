@@ -56,7 +56,7 @@
    :non-normal-prefix "M-SPC"
    ;; misc
    "/"   '(counsel-rg :which-key "ripgrep")
-   "TAB" '(evil-switch-to-windows-last-buffer :which-key "last buffer")
+   "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
    "'"   '(shell-pop :which-key "shell-pop")
    "!"   '((lambda () (interactive) (call-interactively 'shell-command)) :which-key "shell-command")
@@ -95,7 +95,7 @@
    "ev"  '(flycheck-verify-setup :which-key "flycheck-verify-setup")
    ;; Files
    "f"   '(nil :which-key "file")
-   "ff"  '(counsel-find-file :which-key "find files")
+   "ff"  '(counsel-find-file :which-key "find-files")
    "fe"  '(+funcs/sudo-edit-current-file :which-key "sudo edit current file")
    ;; git
    "g"   '(nil :which-key "git")
@@ -125,18 +125,15 @@
    "ts"  '(hydra-text-scale/body :which-key "scale")
    ;; Window
    "w"   '(nil :which-key "window")
-   "wl"  '(windmove-right :which-key "move right")
-   "wh"  '(windmove-left :which-key "move left")
-   "wk"  '(windmove-up :which-key "move up")
-   "wj"  '(windmove-down :which-key "move bottom")
-   "w/"  '(split-window-right :which-key "split right")
-   "w-"  '(split-window-below :which-key "split bottom")
-   "wd"  '(delete-window :which-key "delete window")
-   "wm"  '(delete-other-windows :which-key "max")
+   "w/"  '(split-window-right :which-key "split-right")
+   "w-"  '(split-window-below :which-key "split-bottom")
+   "wd"  '(delete-window :which-key "delete-window")
+   "wm"  '(delete-other-windows :which-key "maximized")
    "ws"  '(hydra-window-scale/body :which-key "scale")
+   "ww"  '(ace-swap-window :which-key "swap-window")
    ;; Toggle
    "T"   '(nil :which-key "toggle")
-   "Tf"  '(font-lock-mode :which-key "syntax highlighting")
+   "Tf"  '(font-lock-mode :which-key "syntax-highlighting")
    "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
    "Tn"  '(display-line-numbers-mode :which-key "display-line-numbers")
    "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")))

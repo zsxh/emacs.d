@@ -98,6 +98,10 @@
     (setq imenu-list-focus-after-activation t
           imenu-list-auto-resize t)))
 
+(use-package ace-window
+  :ensure t
+  :commands (ace-swap-window))
+
 (provide 'init-ui)
 
 ;;; init-ui.el ends here
