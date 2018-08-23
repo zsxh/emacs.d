@@ -136,7 +136,8 @@
    "Tf"  '(font-lock-mode :which-key "syntax-highlighting")
    "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
    "Tn"  '(display-line-numbers-mode :which-key "display-line-numbers")
-   "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")))
+   "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
+   "Tz"  '(evil-toggle-fold :which-key "evil-toggle-fold")))
 
 (use-package hydra
   :ensure t

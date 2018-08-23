@@ -12,7 +12,8 @@
 ;; published by the Free Software Foundation; either version 2, or
 ;; (at your option) any later version.
 ;;
-;; This program is distributed in the hope that it will be useful,;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ;; General Public License for more details.
 ;;
@@ -67,6 +68,13 @@
   :after evil
   :ensure t
   :config (global-evil-matchit-mode 1))
+
+;; evil open/close/toggle folds rely on hideshow
+;; "z a" evil-toggle-fold
+;; "z m" evil-close-folds
+;; "z r" evil-open-folds
+(use-package hideshow
+  :hook (prog-mode . hs-minor-mode))
 
 (provide 'init-evil)
 
