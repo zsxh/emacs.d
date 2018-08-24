@@ -42,7 +42,7 @@
   ;; Hide other entries [2-9]
   (push '((nil . "select-window-[2-9]") . t) which-key-replacement-alist))
 
-;; Global keybinding
+;; Global keybinding with prefix key "SPC"
 (use-package general
   :after evil-collection
   :ensure t
@@ -92,6 +92,7 @@
    ;; Error Flycheck
    "e"   '(nil :which-key "error")
    "el"  '(flycheck-list-errors :which-key "flycheck-list-errors")
+   "et"  '(tiny-expand :which-key "tiny-expand")
    "ev"  '(flycheck-verify-setup :which-key "flycheck-verify-setup")
    ;; Files
    "f"   '(nil :which-key "file")

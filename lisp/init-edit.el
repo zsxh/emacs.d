@@ -130,9 +130,16 @@
   :config (setq avy-style 'pre))
 
 ;; TODO: add-hook to prog-major-modes and set keybindings
-(use-package paredit
+;; (use-package paredit
+;;   :ensure t
+;;   :commands enable-paredit-mode)
+
+;; inserting numeric ranges
+;; https://oremacs.com/2014/12/26/the-little-package-that-could/
+(use-package tiny
   :ensure t
-  :commands enable-paredit-mode)
+  :commands (tiny-expand)
+  :config (tiny-setup-default))
 
 
 (provide 'init-edit)
