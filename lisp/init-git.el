@@ -38,11 +38,12 @@
   :config
   (require 'evil-magit)
   (require 'general)
-  (+funcs/define-major-key with-editor-mode-map
-                           "c" '(with-editor-finish :which-key "with-editor-finish")
-                           "k" '(with-editor-cancel :which-key "with-editor-cancel"))
 
-  (evil-define-key 'normal magit-blame-mode-map
+  (evil-define-minor-mode-key 'normal 'with-editor-mode
+    ",c" 'with-editor-finish
+    ",k" 'with-editor-cancel)
+
+  (evil-define-minor-mode-key 'normal 'magit-blame-mode
     "q" 'magit-blame-quit
     "c" 'magit-blame-cycle-style))
 

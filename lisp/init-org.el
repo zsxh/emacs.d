@@ -59,16 +59,12 @@
     "?" 'org-agenda-view-mode-dispatch
     "0" 'digit-argument))
 
-(with-eval-after-load 'org
+(with-eval-after-load 'evil-org
   (require 'general)
 
-  ;; minor mode keybindings
-  (general-define-key
-   :definer 'minor-mode
-   :states 'normal
-   :keymaps 'org-src-mode
-   ",c" 'org-edit-src-exit
-   ",k" 'org-edit-src-abort)
+  (evil-define-minor-mode-key 'normal 'org-src-mode
+    ",c" 'org-edit-src-exit
+    ",k" 'org-edit-src-abort)
 
   ;; major mode keybindings
   (+funcs/define-major-key org-mode-map

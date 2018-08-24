@@ -52,7 +52,11 @@
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)
               :map lisp-interaction-mode-map
-              ("C-c e" . macrostep-expand)))
+              ("C-c e" . macrostep-expand))
+  :config
+  (with-eval-after-load 'evil
+    (evil-define-minor-mode-key 'normal 'macrostep-mode
+      "q" 'macrostep-collapse)))
 
 ;; Semantic code search for emacs lisp
 (use-package elisp-refs
