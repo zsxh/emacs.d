@@ -40,6 +40,11 @@
   ;; The last line is needed or no picked up by 'shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
+(with-eval-after-load 'term
+  (evil-define-key 'normal term-raw-map "p" 'term-paste)
+  (evil-define-key 'insert term-raw-map "\C-y" 'term-paste))
+
+
 (provide 'init-shell)
 
 ;;; init-shell.el ends here
