@@ -66,6 +66,11 @@
     ",c" 'org-edit-src-exit
     ",k" 'org-edit-src-abort)
 
+  (evil-define-minor-mode-key 'normal 'org-capture-mode
+    ",c" 'org-capture-finalize
+    ",k" 'org-capture-kill
+    ",w" 'org-capture-refile)
+
   ;; major mode keybindings
   (+funcs/define-major-key org-mode-map
                            "a"  '(org-agenda :which-key "agenda")
