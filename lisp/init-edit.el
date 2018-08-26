@@ -141,6 +141,14 @@
   :commands (tiny-expand)
   :config (tiny-setup-default))
 
+;; look through everything you've killed
+(use-package browse-kill-ring
+  :ensure t
+  :bind (("M-C-y" . browse-kill-ring)
+         :map browse-kill-ring-mode-map
+         ("j" . browse-kill-ring-forward)
+         ("k" . browse-kill-ring-previous)))
+
 
 (provide 'init-edit)
 
