@@ -44,13 +44,14 @@
 ;; swiper
 (use-package swiper
   :ensure t
-  :bind (("C-s" . swiper)))
+  :commands swiper)
 
 ;; counsel
 (use-package counsel
   :ensure t
   :bind (("C-x C-f" . counsel-find-file)
-         ("M-x" . counsel-M-x)))
+         ("M-x" . counsel-M-x)
+         ("C-s" . counsel-grep-or-swiper)))
 
 ;; ivy-posframe
 (use-package ivy-posframe
