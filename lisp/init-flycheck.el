@@ -32,8 +32,6 @@
 
 (use-package flycheck
   :ensure t
-  :diminish flycheck-mode
-  ;; :commands flycheck-mode
   :hook (prog-mode . global-flycheck-mode)
   :config
   (setq flycheck-indication-mode 'right-fringe)

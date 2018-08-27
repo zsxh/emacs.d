@@ -34,8 +34,8 @@
 (use-package ivy
   :ensure t
   :bind (:map ivy-minibuffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-j" . ivy-next-line))
+              ("C-k" . ivy-previous-line)
+              ("C-j" . ivy-next-line))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
@@ -44,14 +44,14 @@
 ;; swiper
 (use-package swiper
   :ensure t
-  :commands swiper)
+  :commands swiper
+  :bind ("C-s" . swiper))
 
 ;; counsel
 (use-package counsel
   :ensure t
   :bind (("C-x C-f" . counsel-find-file)
-         ("M-x" . counsel-M-x)
-         ("C-s" . counsel-grep-or-swiper)))
+         ("M-x" . counsel-M-x)))
 
 ;; ivy-posframe
 (use-package ivy-posframe

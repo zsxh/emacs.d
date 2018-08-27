@@ -32,7 +32,6 @@
 
 (use-package company
   :ensure t
-  :diminish company-mode
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :preface
   (defvar company-enable-yas t
