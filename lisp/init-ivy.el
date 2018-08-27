@@ -39,7 +39,10 @@
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t))
+  (setq enable-recursive-minibuffers t)
+  ;; use timer to improve the ivy-read performance,
+  ;; see https://github.com/abo-abo/swiper/issues/1218
+  (setq ivy-dynamic-exhibit-delay-ms 250))
 
 ;; swiper
 (use-package swiper
