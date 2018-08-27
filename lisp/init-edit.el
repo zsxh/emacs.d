@@ -45,16 +45,8 @@
 (setq set-mark-command-repeat-pop t)       ; Repeating C-SPC after popping mark pops it again
 (setq-default kill-whole-line t)           ; Kill line including '\n'
 
-;; (setq-default major-mode 'text-mode)
-;; (add-hook 'text-mode-hook
-;;           (lambda ()
-;;             (turn-on-auto-fill)
-;;             (diminish 'auto-fill-function)))
-
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
-
-(add-hook 'abbrev-mode-hook (lambda () (diminish 'abbrev-mode)))
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
@@ -65,7 +57,6 @@
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure t
-  :diminish auto-revert-mode
   :hook (after-init . global-auto-revert-mode))
 
 ;; An all-in-one comment command to rule them all
@@ -101,7 +92,6 @@
 ;; Treat undo history as a tree
 (use-package undo-tree
   :ensure t
-  :diminish undo-tree-mode
   :hook (after-init . global-undo-tree-mode))
 
 ;; Misc
