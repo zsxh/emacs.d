@@ -79,9 +79,10 @@
   :hook (after-init . electric-pair-mode))
 
 ;; Increase selected region by semantic units
-(use-package expand-region
-  :ensure t
-  :bind ("C-=" . er/expand-region))
+;; (use-package expand-region
+;;   :ensure t
+;;   :bind ("C-=" . er/expand-region))
+
 (setq mouse-drag-copy-region t)
 
 ;; Framework for mode-specific buffer indexes
@@ -97,12 +98,16 @@
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Disable default auto save
+(setq auto-save-default nil)
+
 ;; Use package auto-save instead of default auto save
-(setq auto-save-default nil)               ; Disable default auto save
-(require 'auto-save)
-(auto-save-enable)
-(setq auto-save-slient t)
-;; (setq auto-save-delete-trailing-whitespace t)
+(use-package auto-save
+  :ensure nil
+  :config
+  (auto-save-enable)
+  ;; (setq auto-save-delete-trailing-whitespace t)
+  (setq auto-save-slient t))
 
 ;; It allows you to select and edit matches interactively
 (use-package evil-multiedit
