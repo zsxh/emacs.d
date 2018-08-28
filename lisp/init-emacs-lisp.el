@@ -67,7 +67,8 @@
   :ensure t
   :commands lispy-mode
   :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
-         (lisp-interaction-mode . (lambda () (lispy-mode 1)))))
+         (lisp-interaction-mode . (lambda () (lispy-mode 1)))
+         (lisp-mode . (lambda () (lispy-mode 1)))))
 
 
 ;; KeyBindings

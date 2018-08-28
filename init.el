@@ -90,6 +90,7 @@
 ;; Language
 (require 'init-lsp)
 (require 'init-emacs-lisp)
+(require 'init-common-lisp)
 (require 'init-c)
 (require 'init-python)
 (require 'init-java)
