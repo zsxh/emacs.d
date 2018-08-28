@@ -144,6 +144,10 @@
          ("j" . browse-kill-ring-forward)
          ("k" . browse-kill-ring-previous)))
 
+;; fuzzy complete/search engine
+(use-package flx
+  :ensure t)
+
 
 (provide 'init-edit)
 

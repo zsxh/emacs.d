@@ -79,6 +79,12 @@
   ;; Note: Must be the last to involve all backends
   (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
 
+;; fuzzy complete
+(use-package company-flx
+  :after company
+  :ensure t
+  :config (company-flx-mode 1))
+
 
 (provide 'init-company)
 

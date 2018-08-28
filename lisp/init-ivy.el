@@ -54,7 +54,15 @@
 (use-package counsel
   :ensure t
   :bind (("C-x C-f" . counsel-find-file)
-         ("M-x" . counsel-M-x)))
+         ("M-x" . counsel-M-x))
+  :config
+  ;; ivy's fuzzy matcher
+  (with-eval-after-load 'flx
+    (setq ivy-re-builders-alist
+          '((ivy-switch-buffer . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
+    ;; no need with initial "^", since using fuzzy
+    (setq ivy-initial-inputs-alist nil)))
 
 ;; ivy-posframe
 (use-package ivy-posframe
