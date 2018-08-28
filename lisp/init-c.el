@@ -31,47 +31,44 @@
 ;;; Code:
 
 ;; Fixme: Recompile ccls, current ccls cant not found <iostream>
-;; (use-package ccls
-;;   :ensure t
-;;   :commands lsp-ccls-enable
-;;   :init
-;;   (defun ccls//enable ()
-;;     (condition-case nil
-;;         (lsp-ccls-enable)
-;;       (user-error nil))
-;;     )
-;;   :hook ((c-mode . (lambda ()
-;;                      (require 'init-lsp)
-;;                      (ccls//enable)))
-;;          (c++-mode . (lambda ()
-;;                        (require 'init-lsp)
-;;                        (ccls//enable))))
-;;   :config
-;;   (setq ccls-executable "~/Code/ccls/release/ccls")
-;;   ;; Log file
-;;   ;; (setq ccls-extra-args '("--log-file=/tmp/cq.log"))
-;;   ;; Cache directory, both relative and absolute paths are supported
-;;   ;; (setq ccls-cache-dir ".cquery_cached_index")
-;;   ;; Initialization options
-;;   (setq ccls-extra-init-params
-;;         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
-
-(use-package cquery
+(use-package ccls
   :ensure t
-  :requires (init-lsp)
-  :commands (lsp-cquery-enable)
+  :requires init-lsp
+  :commands lsp-ccls-enable
   :init
-  (defun cquery//enable ()
+  (defun ccls//enable ()
     (condition-case nil
-        (lsp-cquery-enable)
+        (lsp-ccls-enable)
       (user-error nil)))
   ;; By default files ending in .h are treated as c files rather than c++ files.
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-  :hook ((c-mode c++-mode) . cquery//enable)
+  :hook ((c-mode c++-mode) . ccls//enable)
   :config
-  (setq ccls-executable "/usr/bin/cquery")
-  (setq cquery-extra-init-params
+  (setq ccls-executable "/usr/bin/ccls")
+  ;; Log file
+  ;; (setq ccls-extra-args '("--log-file=/tmp/cq.log"))
+  ;; Cache directory, both relative and absolute paths are supported
+  ;; (setq ccls-cache-dir ".cquery_cached_index")
+  ;; Initialization options
+  (setq ccls-extra-init-params
         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
+
+;; (use-package cquery
+;;   :ensure t
+;;   :requires (init-lsp)
+;;   :commands (lsp-cquery-enable)
+;;   :init
+;;   (defun cquery//enable ()
+;;     (condition-case nil
+;;         (lsp-cquery-enable)
+;;       (user-error nil)))
+;;   ;; By default files ending in .h are treated as c files rather than c++ files.
+;;   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;;   :hook ((c-mode c++-mode) . cquery//enable)
+;;   :config
+;;   (setq ccls-executable "/usr/bin/cquery")
+;;   (setq cquery-extra-init-params
+;;         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
 
 (provide 'init-c)
 
