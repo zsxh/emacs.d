@@ -31,11 +31,8 @@
 ;;; Code:
 
 (use-package org
-  :defer 1
   :ensure org-plus-contrib
-  ;; :bind (:map org-src-mode-map
-  ;;             (", c" . org-edit-src-exit)
-  ;;             (", k" . org-edit-src-abort))
+  :mode ("\\.org\\'" . org-mode)
   :config
   ;; org agenda
   (setq org-directory "~/org")
@@ -53,13 +50,13 @@
               (evil-org-set-key-theme)
               ;; Open links and files with RET in normal state
               (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)))
+
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys)
   (evil-define-key 'motion org-agenda-mode-map
     "?" 'org-agenda-view-mode-dispatch
-    "0" 'digit-argument))
+    "0" 'digit-argument)
 
-(with-eval-after-load 'evil-org
   (require 'general)
 
   (evil-define-minor-mode-key 'normal 'org-src-mode
@@ -81,11 +78,9 @@
                            "cr" '(org-clock-report :which-key "clock-report")
                            "'"  '(org-edit-special :which-key "editor")))
 
-
-
 ;; Org for blog
 (use-package org-page
-  :defer 1
+  :after org
   :ensure t
   :config
   (setq op/repository-directory "~/org/zsxh.github.io")
@@ -102,6 +97,25 @@
 
   ;; (setq op/highlight-render 'htmlize)
   (setq op/theme 'mdo))
+
+;; An extension to restclient.el for emacs that provides org-babel support
+(when (package-installed-p 'restclient)
+  (use-package ob-restclient
+    :after org
+    :ensure t
+    :config
+    (org-babel-do-load-languages 'org-babel-load-languages '((restclient . t)))))
+
+;; ob-async enables asynchronous execution of org-babel src blocks
+(use-package ob-async
+  :after org
+  :ensure t
+  :config
+  (add-hook 'ob-async-pre-execute-src-block-hook
+            '(lambda ()
+               (setq inferior-julia-program-name "/usr/local/bin/julia")))
+  ;; ob-python define their own :async keyword that conflicts with ob-async
+  (setq ob-async-no-async-languages-alist '("ipython")))
 
 
 (provide 'init-org)

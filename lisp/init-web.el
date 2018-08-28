@@ -44,6 +44,18 @@
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
 
 
+;; This is a tool to manually explore and test HTTP REST webservices.
+;; Runs queries from a plain-text query sheet, displays results as a pretty-printed XML, JSON and even images.
+;; https://github.com/pashky/restclient.el
+(use-package restclient
+  :ensure t
+  :commands restclient-mode
+  :config
+  (use-package company-restclient
+    :ensure t)
+  (add-to-list 'company-backends 'company-restclient))
+
+
 (provide 'init-web)
 
 ;;; init-web.el ends here
