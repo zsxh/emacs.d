@@ -58,6 +58,7 @@
 
 ;; ivy-posframe
 (use-package ivy-posframe
+  :after counsel
   :ensure t
   :config
   (setq ivy-display-function #'ivy-posframe-display)
