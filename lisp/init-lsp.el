@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+;; Lsp do not support temporary buffer yet
+;; https://github.com/emacs-lsp/lsp-mode/issues/377
 (use-package lsp-mode
   :ensure t
   :commands lsp-mode

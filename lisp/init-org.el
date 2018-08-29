@@ -98,13 +98,19 @@
   ;; (setq op/highlight-render 'htmlize)
   (setq op/theme 'mdo))
 
+;; ========================
+;; Org Bable Configuations
+;; ========================
+
 ;; An extension to restclient.el for emacs that provides org-babel support
 (when (package-installed-p 'restclient)
   (use-package ob-restclient
     :after org
     :ensure t
     :config
-    (org-babel-do-load-languages 'org-babel-load-languages '((restclient . t)))))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((restclient . t)))))
 
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
@@ -113,9 +119,18 @@
   :config
   (add-hook 'ob-async-pre-execute-src-block-hook
             '(lambda ()
-               (setq inferior-julia-program-name "/usr/local/bin/julia")))
+               (setq inferior-julia-program-name "julia")))
   ;; ob-python define their own :async keyword that conflicts with ob-async
   (setq ob-async-no-async-languages-alist '("ipython")))
+
+;; https://github.com/gregsexton/ob-ipython
+(use-package ob-ipython
+  :after org
+  :ensure t
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((ipython . t))))
 
 
 (provide 'init-org)
