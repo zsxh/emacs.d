@@ -120,6 +120,9 @@
    "jl"  '(avy-goto-line :which-key "avy-goto-line")
    "jw"  '(avy-goto-word-1 :which-key "avy-goto-word-1")
    "je"  '(avy-goto-word-0 :which-key "avy-goto-word-0")
+   ;; Project
+   "p"   '(nil :which-key "project")
+   "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
    "t"   '(nil :which-key "text")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")

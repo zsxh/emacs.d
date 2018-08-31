@@ -57,6 +57,7 @@
   ;; (doom-themes-visual-bell-config)
 
   ;; Enable custom neotree theme
+  (setq doom-neotree-file-icons t)
   (doom-themes-neotree-config) ; all-the-icons fonts must be installed!
 
   ;; Corrects (and improves) org-mode's native fontification.

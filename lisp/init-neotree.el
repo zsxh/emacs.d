@@ -34,7 +34,7 @@
   :ensure t
   :init
   (setq neo-show-hidden-files t)
-  :commands neotree-show
+  :commands neo-global--window-exists-p
   :config
   (with-eval-after-load 'evil-collection
     ;; Evil-Keybindings
@@ -101,6 +101,14 @@
              ;; assigning 0 only to the top-left window
              (eq (selected-window) (frame-first-window)))
     0))
+
+(defun +neotree/find-project-root ()
+  (interactive)
+  (if (neo-global--window-exists-p)
+      (neotree-hide)
+    (let ((origin-buffer-file-name (buffer-file-name)))
+      (neotree-find (projectile-project-root))
+      (neotree-find origin-buffer-file-name))))
 
 
 (provide 'init-neotree)
