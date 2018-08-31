@@ -38,18 +38,20 @@
   :commands eaf-open)
 
 
-;; pdf viewer
+;; Pdf viewer settings
 (add-to-list 'auto-mode-alist
              '("\\.pdf\\'" . (lambda ()
                                (let ((filename buffer-file-name))
                                  (eaf-open filename)
                                  (kill-buffer (file-name-nondirectory filename))))))
 
+;; Better eshell
 ;; https://github.com/manateelazycat/aweshell
 (use-package aweshell
   :commands aweshell-new
   :quelpa ((aweshell :fetcher github :repo "manateelazycat/aweshell")))
 
+;; Emacs ripgrep plugin
 (use-package color-rg
   :commands (color-rg-search-input color-rg-search-project)
   :quelpa ((color-rg :fetcher github :repo "manateelazycat/color-rg")))

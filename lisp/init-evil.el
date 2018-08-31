@@ -30,6 +30,7 @@
 
 ;;; Code:
 
+;; Vim edit style
 (use-package evil
   :ensure t
   :init
@@ -43,6 +44,7 @@
   ;; but [escape] should switch back to normal state
   (define-key evil-insert-state-map [escape] 'evil-normal-state))
 
+;; Evil keybinding collection
 (use-package evil-collection
   :after evil
   :ensure t

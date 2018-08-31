@@ -67,13 +67,13 @@
     (sh-mode . sh-basic-offset)
     (web-mode . web-mode-markup-indent-offset)
     (yaml-mode . yaml-indent-offset))
-  "An alist where each key is either a symbol corresponding
+  "An alist where each key is either a symbol corresponding\
 to a major mode, a list of such symbols, or the symbol t,
 acting as default. The values are either integers, symbols
 or lists of these.")
 
 (defun +prog/set-evil-shift-width ()
-  "Set the value of `evil-shift-width' based on the indentation settings of the
+  "Set the value of `evil-shift-width' based on the indentation settings of the\
 current major mode."
   (let ((shift-width
          (catch 'break
