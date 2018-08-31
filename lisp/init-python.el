@@ -58,7 +58,7 @@
                          (+python/python-setup-shell))))
 
 ;; Extra Keybindings
-(with-eval-after-load 'lsp-python
+(with-eval-after-load 'python-mode
   (+funcs/try-general-major-key python-mode-map
                                 "'"  '(+python/repl :which-key "repl")
                                 "c"  '(nil :which-key "compile-exec")
