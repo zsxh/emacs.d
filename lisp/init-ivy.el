@@ -42,7 +42,14 @@
   (setq enable-recursive-minibuffers t)
   ;; use timer to improve the ivy-read performance,
   ;; see https://github.com/abo-abo/swiper/issues/1218
-  (setq ivy-dynamic-exhibit-delay-ms 250))
+  (setq ivy-dynamic-exhibit-delay-ms 250)
+    ;; ivy's fuzzy matcher
+  (with-eval-after-load 'flx
+    (setq ivy-re-builders-alist
+          '((ivy-switch-buffer . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
+    ;; no need with initial "^", since using fuzzy
+    (setq ivy-initial-inputs-alist nil)))
 
 ;; swiper
 (use-package swiper
@@ -54,15 +61,7 @@
 (use-package counsel
   :ensure t
   :bind (("C-x C-f" . counsel-find-file)
-         ("M-x" . counsel-M-x))
-  :config
-  ;; ivy's fuzzy matcher
-  (with-eval-after-load 'flx
-    (setq ivy-re-builders-alist
-          '((ivy-switch-buffer . ivy--regex-plus)
-            (t . ivy--regex-fuzzy)))
-    ;; no need with initial "^", since using fuzzy
-    (setq ivy-initial-inputs-alist nil)))
+         ("M-x" . counsel-M-x)))
 
 ;; ivy-posframe
 (use-package ivy-posframe

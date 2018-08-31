@@ -73,7 +73,8 @@
               ("C-z" . hydra-meghanada/body))
   :config
   (use-package realgud
-    :ensure t)
+    :ensure t
+    :defer t)
   (setq indent-tabs-mode nil)
   (setq tab-width 2)
   (setq c-basic-offset 2)
@@ -81,12 +82,11 @@
   (setq meghanada-javac-xlint "-Xlint:all,-processing")
   (setq meghanada-server-install-dir (locate-user-emacs-file ".cache/meghanada/"))
 
-  (require 'general)
-  (+funcs/define-major-key meghanada-mode-map
-                           "h" '(hydra-meghanada/body :which-key "hydra-meghanada")))
+  (+funcs/try-general-major-key java-mode-map
+                                "h" '(hydra-meghanada/body :which-key "hydra-meghanada")))
 
 (defhydra hydra-meghanada (:hint nil :exit t)
-"
+  "
 ^Edit^                           ^Tast or Task^
 ^^^^^^-------------------------------------------------------
 _f_: meghanada-compile-file      _m_: meghanada-restart

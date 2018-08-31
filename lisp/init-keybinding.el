@@ -42,9 +42,9 @@
   ;; Hide other entries [2-9]
   (push '((nil . "select-window-[2-9]") . t) which-key-replacement-alist))
 
-;; Global keybinding with prefix key "SPC"
+;; keybindings with which-key,evil well supported
 (use-package general
-  :after evil-collection
+  ;; :after evil
   :ensure t
   :config
   (setq general-override-states '(insert emacs hybrid normal visual motion operator replace))

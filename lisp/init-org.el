@@ -39,7 +39,7 @@
   (setq org-agenda-files '("~/org/gtd"))
   (setq org-default-notes-file (concat org-directory "/gtd/caputure.org")))
 
-;; evil for Org
+;; Org-mode keybindings
 (use-package evil-org
   :after (org evil)
   :ensure t
@@ -49,15 +49,14 @@
             (lambda ()
               (evil-org-set-key-theme)
               ;; Open links and files with RET in normal state
-              (evil-define-key 'normal org-mode-map (kbd "RET") 'org-open-at-point)))
+              (evil-define-key 'normal org-mode-map
+                (kbd "RET") 'org-open-at-point)))
 
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys)
   (evil-define-key 'motion org-agenda-mode-map
     "?" 'org-agenda-view-mode-dispatch
     "0" 'digit-argument)
-
-  (require 'general)
 
   (evil-define-minor-mode-key 'normal 'org-src-mode
     ",c" 'org-edit-src-exit
@@ -69,14 +68,14 @@
     ",w" 'org-capture-refile)
 
   ;; major mode keybindings
-  (+funcs/define-major-key org-mode-map
-                           "a"  '(org-agenda :which-key "agenda")
-                           "c"  '(nil :which-key "capture/clock")
-                           "cc" '(org-capture :which-key "capture")
-                           "ci" '(org-clock-in :which-key "clock-in")
-                           "co" '(org-clock-out :which-key "clock-out")
-                           "cr" '(org-clock-report :which-key "clock-report")
-                           "'"  '(org-edit-special :which-key "editor")))
+  (+funcs/try-general-major-key org-mode-map
+                                "a"  '(org-agenda :which-key "agenda")
+                                "c"  '(nil :which-key "capture/clock")
+                                "cc" '(org-capture :which-key "capture")
+                                "ci" '(org-clock-in :which-key "clock-in")
+                                "co" '(org-clock-out :which-key "clock-out")
+                                "cr" '(org-clock-report :which-key "clock-report")
+                                "'"  '(org-edit-special :which-key "editor")))
 
 ;; Org for blog
 (use-package org-page

@@ -45,14 +45,9 @@
                    helpful-function
                    helpful-macro
                    helpful-command))
-      (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist))))
-
-(with-eval-after-load 'helpful
-  (require 'general)
-  (general-define-key
-   :states '(normal visual motion)
-   :keymaps 'helpful-mode-map
-   "q" 'quit-window))
+      (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist)))
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal helpful-mode-map "q" 'quit-window)))
 
 
 (provide 'init-helpful)

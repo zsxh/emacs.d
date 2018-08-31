@@ -40,15 +40,12 @@
     ;; Evil-Keybindings
     (evil-collection-init 'neotree)
     ;; Custom Keybindings
-    (require 'general)
-    (general-define-key
-     :states '(normal visual insert neotree-mode)
-     :keymaps 'neotree-mode-map
-     :major-modes t
-     "h" '+neotree/neotree-collapse-or-up
-     "l" '+neotree/neotree-expand-or-open
-     "K" 'neotree-select-up-node
-     "J" 'neotree-select-down-node))
+    (evil-define-key 'normal neotree-mode-map
+      "h" '+neotree/neotree-collapse-or-up
+      "l" '+neotree/neotree-expand-or-open
+      "K" 'neotree-select-up-node
+      "J" 'neotree-select-down-node
+      "R" 'neotree-change-root))
   (with-eval-after-load 'winum
     ;; window 0 is reserved for file trees
     (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func)))

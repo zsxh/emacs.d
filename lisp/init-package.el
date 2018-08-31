@@ -30,8 +30,6 @@
 
 ;;; Code:
 
-(require 'package)
-
 ;; FIXME: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (with-eval-after-load 'package
@@ -52,9 +50,10 @@
         ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
 
 ;; Initialize packages
+(require 'package)
 (setq package-enable-at-startup nil)
-(when (version< emacs-version "27.0")
-  (package-initialize))
+(unless package--initialized
+  (package-initialize t))
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
@@ -72,7 +71,7 @@
   ;; (setq quelpa-self-upgrade-p nil)
   (setq quelpa-update-melpa-p nil)
   (setq quelpa-checkout-melpa-p nil)
-  :config
+  ;; :config
   ;; Using quelpa with :ensure
   ;; (setq use-package-ensure-function 'quelpa)
   )

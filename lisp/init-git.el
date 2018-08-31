@@ -36,13 +36,11 @@
   ;; :hook (magit-blame-mode . (lambda () (setq magit-blame--style
   ;;                                            '(headings (heading-format . "%H %-20a %C %s\n")))))
   :config
-  (require 'evil-magit)
-  (require 'general)
-
+  (use-package evil-magit
+    :ensure t)
   (evil-define-minor-mode-key 'normal 'with-editor-mode
     ",c" 'with-editor-finish
     ",k" 'with-editor-cancel)
-
   (evil-define-minor-mode-key 'normal 'magit-blame-mode
     "q" 'magit-blame-quit
     "c" 'magit-blame-cycle-style))

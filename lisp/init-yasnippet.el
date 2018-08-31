@@ -35,12 +35,9 @@
   :hook (after-init . yas-global-mode)
   :config
   (use-package yasnippet-snippets
-    :ensure t))
-
-(with-eval-after-load 'yasnippet
-  (require 'general)
-  (+funcs/define-major-key snippet-mode-map
-                           "t"   '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
+    :ensure t)
+  (+funcs/try-general-major-key snippet-mode-map
+                                "t"   '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
 
 
 (provide 'init-yasnippet)

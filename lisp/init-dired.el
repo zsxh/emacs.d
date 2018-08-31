@@ -29,25 +29,28 @@
 ;;
 
 ;;; Code:
- 
-;; dired "human-readable" format
-(setq dired-listing-switches "-alh")
 
-;;narrow dired to match filter
-(use-package dired-narrow
-  :ensure t
-  :commands dired-narrow)
 
 ;; dired local keybindings
-(with-eval-after-load 'evil-collection
-  (evil-collection-init 'dired)
-  (evil-collection-define-key 'normal 'dired-mode-map
-    (kbd "SPC") nil
-    "," nil)
-  (require 'general)
-  (+funcs/define-major-key dired-mode-map
-                           "/" '(dired-narrow :which-key "dired-narrow")
-                           "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
+(use-package dired
+  :ensure nil
+  :init
+  ;; dired "human-readable" format
+  (setq dired-listing-switches "-alh")
+  :config
+  ;;narrow dired to match filter
+  (use-package dired-narrow
+    :ensure t
+    :commands dired-narrow)
+
+  (with-eval-after-load 'evil-collection
+    (evil-collection-init 'dired)
+    (evil-define-key 'normal dired-mode-map
+      (kbd "SPC") nil
+      "," nil))
+  (+funcs/try-general-major-key dired-mode-map
+                                "/" '(dired-narrow :which-key "dired-narrow")
+                                "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
 
 (provide 'init-dired)
 

@@ -50,6 +50,9 @@
   :commands aweshell-new
   :quelpa ((aweshell :fetcher github :repo "manateelazycat/aweshell")))
 
+(use-package color-rg
+  :commands (color-rg-search-input color-rg-search-project)
+  :quelpa ((color-rg :fetcher github :repo "manateelazycat/color-rg")))
 
 (provide 'init-experimental)
 
