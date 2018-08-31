@@ -63,7 +63,31 @@
   :config
   (use-package company-restclient
     :ensure t)
-  (add-to-list 'company-backends 'company-restclient))
+  (add-to-list 'company-backends 'company-restclient)
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal restclient-mode-map
+      (kbd "RET") 'org-open-at-point)))
+
+;;;###autoload
+(defun +web/restclient-new-buffer ()
+  "Create a restclient buffer."
+  (interactive)
+  (let* ((restclient-buffer-name "*restclient*")
+         (restclient-buffer (get-buffer restclient-buffer-name)))
+    (unless restclient-buffer
+      (setq restclient-buffer (generate-new-buffer restclient-buffer-name))
+      (with-current-buffer restclient-buffer
+        (restclient-mode)
+        (insert "# -*- restclient -*-
+# https://github.com/pashky/restclient.el
+#
+# GET https://api.github.com
+# User-Agent: Emacs Restclien
+#
+# POST https://jira.atlassian.com/rest/api/2/search
+# Content-Type: application/json
+# {}\n")))
+    (switch-to-buffer restclient-buffer)))
 
 
 (provide 'init-web)

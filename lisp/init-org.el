@@ -33,6 +33,7 @@
 (use-package org
   :ensure org-plus-contrib
   :mode ("\\.org\\'" . org-mode)
+  :commands org-open-at-point
   :config
   ;; org agenda
   (setq org-directory "~/org")

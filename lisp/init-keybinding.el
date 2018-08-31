@@ -75,11 +75,12 @@
    "9"   'winum-select-window-9
    ;; Application
    "a"   '(nil :which-key "application")
+   "af"  '(describe-face :which-key "describe-face")
    "ao"  '(nil :which-key "org")
    "aoa" '(org-agenda :which-key "org-agenda")
    "aoc" '(org-capture :which-key "org-capture")
    "ap"  '(list-processes :which-key "list-processes")
-   "af"  '(describe-face :which-key "describe-face")
+   "ar"  '(+web/restclient-new-buffer :which-key "restclient")
    ;; Buffers
    "b"   '(nil :which-key "buffer")
    "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
