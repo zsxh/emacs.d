@@ -55,7 +55,7 @@
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
    ;; misc
-   "/"   '(counsel-rg :which-key "ripgrep")
+   "/"   '(color-rg-search-input :which-key "ripgrep-current-dir")
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
    "'"   '(shell-pop :which-key "shell-pop")
@@ -123,6 +123,7 @@
    "je"  '(avy-goto-word-0 :which-key "avy-goto-word-0")
    ;; Project
    "p"   '(nil :which-key "project")
+   "ps"  '(color-rg-search-project :which-key "search-project")
    "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
    "t"   '(nil :which-key "text")
