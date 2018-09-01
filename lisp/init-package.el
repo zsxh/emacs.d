@@ -76,8 +76,7 @@
   ;; (setq use-package-ensure-function 'quelpa)
   )
 
-
-;; Initialization benchmark
+;; Benchmark-init only measures time spent in `require' and `load'
 (use-package benchmark-init
   :ensure t
   :commands (benchmark-init/activate)
