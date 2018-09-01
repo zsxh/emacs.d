@@ -81,7 +81,7 @@
 (use-package benchmark-init
   :ensure t
   :commands (benchmark-init/activate)
-  :hook (emacs-startup . benchmark-init/deactivate)
+  :hook (after-init . benchmark-init/deactivate)
   :init (benchmark-init/activate))
 
 ;; Extensions
@@ -90,6 +90,21 @@
   :init
   (defalias 'upgrade-packages 'package-utils-upgrade-all)
   (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart))
+
+(defvar emacs-startup-time nil
+  "The time it took, in seconds, for Emacs to initialize.")
+
+(defun +package/display-benchmark (&optional return-p)
+  "Display a benchmark, showing number of packages and modules, and how quickly\
+they were loaded at startup.
+If RETURN-P, return the message as a string instead of displaying it."
+  (funcall (if return-p #'format #'message)
+           "Emacs Loaded %s packages in %.03fs"
+           (length package-activated-list)
+           (or emacs-startup-time
+               (setq emacs-startup-time (float-time (time-subtract (current-time) before-init-time))))))
+
+(add-hook 'emacs-startup-hook #'+package/display-benchmark)
 
 (provide 'init-package)
 
