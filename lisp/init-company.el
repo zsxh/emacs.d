@@ -48,6 +48,8 @@
          :map company-active-map
          ("C-p" . company-select-previous)
          ("C-n" . company-select-next)
+         ("C-k" . company-select-previous)
+         ("C-j" . company-select-next)
          ("TAB" . company-complete-common-or-cycle)
          ("<tab>" . company-complete-common-or-cycle)
          ("S-TAB" . company-select-previous)
