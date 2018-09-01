@@ -85,7 +85,6 @@ M can be a atom mode-map or non-empty mode-map list.
 
 It returns a function to define local leader keys."
   (with-eval-after-load 'general
-    (message (format "try %s" mode-map))
     (if (atom mode-map)
         `,@(+funcs/set-local-key mode-map args)
       `(progn
