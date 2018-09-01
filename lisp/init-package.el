@@ -81,7 +81,7 @@
 (use-package benchmark-init
   :ensure t
   :commands (benchmark-init/activate)
-  :hook (after-init . benchmark-init/deactivate)
+  :hook (emacs-startup . benchmark-init/deactivate)
   :init (benchmark-init/activate))
 
 ;; Extensions
