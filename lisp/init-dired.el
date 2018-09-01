@@ -30,8 +30,7 @@
 
 ;;; Code:
 
-
-;; dired local keybindings
+;; Dired Configs
 (use-package dired
   :ensure nil
   :init
@@ -51,6 +50,16 @@
   (+funcs/try-general-major-key dired-mode-map
                                 "/" '(dired-narrow :which-key "dired-narrow")
                                 "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
+
+;; Editable Dired mode configs
+(use-package wdired
+  :ensure nil
+  :defer t
+  :config
+  (+funcs/try-general-major-key wdired-mode-map
+                                "c" '(wdired-finish-edit :which-key "finish edit")
+                                "k" '(wdired-abort-changes :which-key "abort changes")
+                                "q" '(wdired-exit :which-key "exit")))
 
 (provide 'init-dired)
 
