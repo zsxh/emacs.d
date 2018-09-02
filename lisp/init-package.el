@@ -68,7 +68,7 @@
   :after (use-package)
   :ensure t
   :init
-  ;; (setq quelpa-self-upgrade-p nil)
+  (setq quelpa-self-upgrade-p nil)
   (setq quelpa-update-melpa-p nil)
   (setq quelpa-checkout-melpa-p nil)
   ;; :config
@@ -76,19 +76,51 @@
   ;; (setq use-package-ensure-function 'quelpa)
   )
 
-;; Benchmark-init only measures time spent in `require' and `load'
-(use-package benchmark-init
-  :ensure t
-  :commands (benchmark-init/activate)
-  :hook (after-init . benchmark-init/deactivate)
-  :init (benchmark-init/activate))
+;;;###autoload
+(defun +package/quelpa-upgrade ()
+  "Upgrade all packages found in `quelpa-cache'.
+This provides an easy way to upgrade all the packages for which
+the `quelpa' command has been run in the current Emacs session."
+  (interactive)
+  (when (quelpa-setup-p)
+    (let ((quelpa-upgrade-p t))
+      (when quelpa-self-upgrade-p
+        (quelpa-self-upgrade))
+      (setq quelpa-cache
+            (cl-remove-if-not #'package-installed-p quelpa-cache :key #'car))
+      (setq package-installed-by-quelpa
+            (seq-filter (lambda (item) (member ':fetcher item)) quelpa-cache))
+      (mapc (lambda (item)
+              (when (package-installed-p (car (quelpa-arg-rcp item)))
+                (quelpa item)))
+            package-installed-by-quelpa))))
 
 ;; Extensions
 (use-package package-utils
   :ensure t
   :init
   (defalias 'upgrade-packages 'package-utils-upgrade-all)
-  (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart))
+  (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart)
+  :config
+  (when (featurep 'quelpa)
+    (defalias 'upgrade-packages
+      (lambda ()
+        (interactive)
+        (package-utils-upgrade-all)
+        (+package/quelpa-upgrade)))
+    (defalias 'upgrade-packages-and-restart
+      (lambda ()
+        (interactive)
+        (upgrade-packages)
+        (sleep-for 1)
+        (restart-emacs)))))
+
+;; Benchmark-init only measures time spent in `require' and `load'
+(use-package benchmark-init
+  :ensure t
+  :commands (benchmark-init/activate)
+  :hook (after-init . benchmark-init/deactivate)
+  :init (benchmark-init/activate))
 
 (defvar emacs-startup-time nil
   "The time it took, in seconds, for Emacs to initialize.")
