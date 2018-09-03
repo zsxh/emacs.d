@@ -105,6 +105,7 @@
     0))
 
 (defun +neotree/find-project-root ()
+  "Select project root as node in NeoTree."
   (interactive)
   (if (neo-global--window-exists-p)
       (neotree-hide)
