@@ -73,7 +73,6 @@
 (require 'init-shell)
 (require 'init-helpful)
 (require 'init-edit)
-;; (require 'init-pyim)
 
 ;; Completion in Emacs
 (require 'init-ivy)
@@ -100,7 +99,7 @@
 
 ;; Experimental
 (require 'init-experimental)
-
+;; (require 'init-pyim)
 
 (provide 'init)
 
