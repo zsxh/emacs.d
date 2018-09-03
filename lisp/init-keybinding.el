@@ -55,7 +55,7 @@
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
    ;; misc
-   "/"   '(color-rg-search-input :which-key "ripgrep-current-dir")
+   "/"   '(color-rg-search-project :which-key "ripgrep-project")
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
    "'"   '(shell-pop :which-key "shell-pop")
