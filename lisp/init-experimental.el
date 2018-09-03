@@ -35,8 +35,7 @@
 
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
-  :commands eaf-open)
-
+  :commands (eaf-open eaf-open-url))
 
 ;; Pdf viewer settings
 (add-to-list 'auto-mode-alist
