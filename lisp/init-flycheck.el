@@ -38,7 +38,12 @@
   (setq flycheck-emacs-lisp-load-path 'inherit)
 
   ;; Only check while saving and opening files
-  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (with-eval-after-load 'evil-collection
+    (evil-collection-init 'flycheck)
+    (evil-define-key 'normal flycheck-error-list-mode-map
+      "j" 'flycheck-error-list-next-error
+      "k" 'flycheck-error-list-previous-error)))
 
 ;; Display Flycheck errors in GUI tooltips
 (if (display-graphic-p)
@@ -52,10 +57,10 @@
     :hook (flycheck-mode . flycheck-popup-tip-mode)))
 
 ;; Jump to and fix syntax errors via `avy'
-(use-package avy-flycheck
-  :after flycheck
-  :ensure t
-  :hook (flycheck-mode . avy-flycheck-setup))
+;; (use-package avy-flycheck
+;;   :after flycheck
+;;   :ensure t
+;;   :hook (flycheck-mode . avy-flycheck-setup))
 
 (provide 'init-flycheck)
 
