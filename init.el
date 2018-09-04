@@ -49,6 +49,9 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
+;; Customization
+(require 'init-custom)
+
 ;; Package Configuations
 (require 'init-package)
 
