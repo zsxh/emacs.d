@@ -83,7 +83,14 @@
   (setq meghanada-server-install-dir (locate-user-emacs-file ".cache/meghanada/"))
 
   (+funcs/try-general-major-key java-mode-map
-                                "h" '(hydra-meghanada/body :which-key "hydra-meghanada")))
+                                "h"  '(hydra-meghanada/body :which-key "help")
+                                "c"  '(nil :which-key "compile")
+                                "cf" '(meghanada-compile-file :which-key "compile-file")
+                                "cp" '(meghanada-compile-project :which-key "compile-project")
+                                "r"  '(nil :which-key "run")
+                                "rm" '(meghanada-exec-main :which-key "exec-main")
+                                "g"  '(nil :which-key "goto")
+                                "gd" '(meghanada-jump-declaration :which-key "jump-declaration")))
 
 (defhydra hydra-meghanada (:hint nil :exit t)
   "
