@@ -30,12 +30,18 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
+
 (let ((default-directory (expand-file-name "experimental" user-emacs-directory)))
   (normal-top-level-add-subdirs-to-load-path))
 
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
-  :commands (eaf-open eaf-open-url))
+  :commands (eaf-open eaf-open-url)
+  :config
+  (when personal-eaf-grip-token
+    (setq eaf-grip-token personal-eaf-grip-token)))
 
 ;; Pdf viewer settings
 (add-to-list 'auto-mode-alist
