@@ -46,6 +46,7 @@
 (setq-default kill-whole-line t)           ; Kill line including '\n'
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; (setq auto-save-default nil)               ; Disable default auto save
+(setq frame-title-format "emacs@%b")       ; Show buffer name in title
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
