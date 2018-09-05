@@ -104,6 +104,9 @@
 (require 'init-experimental)
 ;; (require 'init-pyim)
 
+;; Misc
+(require 'init-misc)
+
 (provide 'init)
 
 ;;; init.el ends here

@@ -75,7 +75,7 @@
    "9"   'winum-select-window-9
    ;; Application
    "a"   '(nil :which-key "application")
-   "af"  '(describe-face :which-key "describe-face")
+   "af"  '(elfeed :which-key "elfeed")
    "ao"  '(nil :which-key "org")
    "aoa" '(org-agenda :which-key "org-agenda")
    "aoc" '(org-capture :which-key "org-capture")
@@ -110,6 +110,7 @@
    "hdm" '((lambda () (interactive) (describe-variable 'major-mode)) :which-key "major-mode")
    "hdn" '((lambda () (interactive) (describe-variable 'minor-mode-list)) :which-key "minor-mode-list")
    "hf"  '(helpful-callable :which-key "helpful-callable")
+   "hF"  '(describe-face :which-key "describe-face")
    "hk"  '(helpful-key :which-key "helpful-key")
    "hv"  '(helpful-variable :which-key "helpful-variable")
    "hp"  '(helpful-at-point :which-key "helpful-at-point")
