@@ -60,7 +60,16 @@
 ;; `global-eldoc-mode' is enabled by default.
 (use-package eldoc
   :ensure nil
-  :diminish eldoc-mode)
+  :diminish eldoc-mode
+  :hook ((emacs-lisp-mode . turn-on-eldoc-mode)
+         (lisp-interaction-mode . turn-on-eldoc-mode)
+         (lisp-mode . turn-on-eldoc-mode))
+  ;; :config
+  ;; ;; Whenever the listed commands are used, ElDoc will automatically refresh the minibuffer.
+  ;; (eldoc-add-command
+  ;;  'paredit-backward-delete
+  ;;  'paredit-close-round)
+  )
 
 ;; Interactive macro expander
 (use-package macrostep
@@ -84,7 +93,20 @@
   :commands lispy-mode
   :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
          (lisp-interaction-mode . (lambda () (lispy-mode 1)))
-         (lisp-mode . (lambda () (lispy-mode 1)))))
+         (lisp-mode . (lambda () (lispy-mode 1))))
+  :bind (:map lispy-mode-map
+              ("s-k" . paredit-splice-sexp-killing-backward)))
+
+(use-package paredit
+  :ensure t
+  :commands paredit-splice-sexp-killing-backward
+  :bind (("s-0" . paredit-wrap-round)
+         ("s-[" . paredit-wrap-square)
+         ("s-{" . paredit-wrap-curly)
+         ("s-<" . paredit-wrap-angled)
+         ("s-\"" . paredit-meta-doublequote)
+         ("C-M-b" . paredit-backward)
+         ("C-M-f" . paredit-forward)))
 
 
 (provide 'init-emacs-lisp)
