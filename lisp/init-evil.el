@@ -55,7 +55,8 @@
   (with-eval-after-load 'realgud (evil-collection-init 'realgud))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
-  (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list)))
+  (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list))
+  (with-eval-after-load 'elfeed (evil-collection-init 'elfeed)))
 
 ;; press "%" to jump
 ;; usage: "%" jump between code block, tags
