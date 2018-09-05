@@ -56,7 +56,7 @@
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
-  :ensure t
+  :ensure nil
   :hook (after-init . global-auto-revert-mode))
 
 ;; An all-in-one comment command to rule them all
@@ -66,8 +66,8 @@
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
-  :defer 1
-  :ensure t
+  :ensure nil
+  :commands ediff
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq ediff-split-window-function 'split-window-horizontally)
@@ -75,7 +75,7 @@
 
 ;; automatic parenthesis pairing
 (use-package elec-pair
-  :ensure t
+  :ensure nil
   :hook (after-init . electric-pair-mode))
 
 ;; Increase selected region by semantic units
@@ -124,16 +124,11 @@
          ("C-c e" . avy-goto-word-0))
   :config (setq avy-style 'pre))
 
-;; TODO: add-hook to prog-major-modes and set keybindings
-;; (use-package paredit
-;;   :ensure t
-;;   :commands enable-paredit-mode)
-
 ;; inserting numeric ranges
 ;; https://oremacs.com/2014/12/26/the-little-package-that-could/
 (use-package tiny
   :ensure t
-  :commands (tiny-expand)
+  :commands tiny-expand
   :config (tiny-setup-default))
 
 ;; look through everything you've killed

@@ -40,9 +40,10 @@
   :commands
   (google-set-c-style))
 
+;; Evil shift indent
 (defvar prog--indent-variable-alist
   '(((awk-mode c-mode c++-mode java-mode groovy-mode
-      idl-mode java-mode objc-mode pike-mode) . c-basic-offset)
+               idl-mode java-mode objc-mode pike-mode) . c-basic-offset)
     (python-mode . python-indent-offset)
     (cmake-mode . cmake-tab-width)
     (coffee-mode . coffee-tab-width)
