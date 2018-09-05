@@ -1,4 +1,4 @@
-;; init-edit.el --- Editor Configurations	-*- lexical-binding: t -*-
+;; init-editor.el --- Editor Configurations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -44,6 +44,8 @@
 (setq make-backup-files nil)               ; Forbide to make backup files
 (setq set-mark-command-repeat-pop t)       ; Repeating C-SPC after popping mark pops it again
 (setq-default kill-whole-line t)           ; Kill line including '\n'
+(fset 'yes-or-no-p 'y-or-n-p)
+;; (setq auto-save-default nil)               ; Disable default auto save
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
@@ -86,24 +88,33 @@
 (setq mouse-drag-copy-region t)
 
 ;; Framework for mode-specific buffer indexes
-(use-package imenu
-  :defer 1
-  :ensure t)
+(use-package imenu-list
+  :ensure t
+  :commands imenu-list-smart-toggle
+  :init
+  (progn
+    (setq imenu-list-focus-after-activation t
+          imenu-list-auto-resize t)))
+
+;; Easy way to swqp window
+(use-package ace-window
+  :ensure t
+  :commands (ace-swap-window))
 
 ;; Treat undo history as a tree
 (use-package undo-tree
   :ensure t
   :hook (after-init . global-undo-tree-mode))
 
-;; Misc
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; Disable default auto save
-(setq auto-save-default nil)
+;; Numbered window shortcuts
+(use-package winum
+  :ensure t
+  :hook (after-init . winum-mode))
 
 ;; Use package auto-save instead of default auto save
 (use-package auto-save
   :ensure nil
+  :init (setq auto-save-default nil)
   :config
   (auto-save-enable)
   (setq auto-save-slient t)
@@ -143,7 +154,11 @@
 (use-package flx
   :ensure t)
 
+;; Emacs ripgrep plugin
+(use-package color-rg
+  :commands (color-rg-search-input color-rg-search-project)
+  :quelpa ((color-rg :fetcher github :repo "manateelazycat/color-rg")))
 
-(provide 'init-edit)
+(provide 'init-editor)
 
-;;; init-edit.el ends here
+;;; init-editor.el ends here

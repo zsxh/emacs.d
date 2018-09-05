@@ -89,22 +89,6 @@
 ;; Emacs startup *scratch* buffer
 (setq initial-buffer-choice t)
 
-;; Numbered window shortcuts
-(use-package winum
-  :ensure t
-  :hook (after-init . winum-mode))
-
-(use-package imenu-list
-  :defer t
-  :ensure t
-  :init
-  (progn
-    (setq imenu-list-focus-after-activation t
-          imenu-list-auto-resize t)))
-
-(use-package ace-window
-  :ensure t
-  :commands (ace-swap-window))
 
 (provide 'init-ui)
 

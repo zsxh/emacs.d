@@ -42,6 +42,9 @@
   :bind (:map lisp-mode-map
               ("C-c e" . macrostep-expand)))
 
+;; TODO quicklisp
+
+
 (provide 'init-common-lisp)
 
 ;;; init-common-lisp.el ends here

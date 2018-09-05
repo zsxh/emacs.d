@@ -30,6 +30,15 @@
 
 ;;; Code:
 
+;; Json config
+(use-package json-mode
+  :ensure t
+  :mode ("\\.json\\'" . json-mode)
+  :hook (json-mode . (lambda ()
+                       (make-local-variable 'js-indent-level)
+                       (setq js-indent-level 2))))
+
+;; Web mode for html,xml...
 (use-package web-mode
   :ensure t
   :commands web-mode
