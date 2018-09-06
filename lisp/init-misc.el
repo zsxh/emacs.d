@@ -43,7 +43,8 @@
           ("http://blog.binchen.org/rss.xml" chenbin)
           ("http://www.planet.emacsen.org/atom.xml" Planet Emacsen)
           ("https://emacs-china.org/latest.rss" emacs china)
-          ("https://emacs-china.org/posts.rss" emacs china))))
+          ("https://emacs-china.org/posts.rss" emacs china)
+          ("https://onelonecoder.com/feed/" onelonecoder))))
 
 
 (provide 'init-misc)
