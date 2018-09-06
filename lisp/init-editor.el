@@ -149,7 +149,10 @@
   :bind (("M-C-y" . browse-kill-ring)
          :map browse-kill-ring-mode-map
          ("j" . browse-kill-ring-forward)
-         ("k" . browse-kill-ring-previous)))
+         ("k" . browse-kill-ring-previous))
+  :config
+  (setq browse-kill-ring-highlight-current-entry t)
+  (setq browse-kill-ring-highlight-inserted-item t))
 
 ;; fuzzy complete/search engine
 (use-package flx
