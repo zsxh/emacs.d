@@ -52,9 +52,9 @@
 
 ;; Better eshell
 ;; https://github.com/manateelazycat/aweshell
-(use-package aweshell
-  :commands aweshell-new
-  :quelpa ((aweshell :fetcher github :repo "manateelazycat/aweshell")))
+;; (use-package aweshell
+;;   :commands aweshell-new
+;;   :quelpa ((aweshell :fetcher github :repo "manateelazycat/aweshell")))
 
 
 (provide 'init-experimental)
