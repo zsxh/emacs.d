@@ -31,7 +31,7 @@
 ;;; Code:
 
 
-;; rss reader
+;; Rss reader
 ;; https://github.com/skeeto/elfeed
 (use-package elfeed
   :ensure t
@@ -46,6 +46,34 @@
           ("https://emacs-china.org/posts.rss" emacs china)
           ("https://onelonecoder.com/feed/" onelonecoder))))
 
+;; Socks Proxy
+(setq proxy-mode-socks-proxy '("Default server" "socks" 1080 5))
+
+(use-package socks
+  :ensure nil
+  :defer t
+  :init
+  (defun proxy-mode-socks-enable ()
+    "Enable Socks proxy."
+    (setq url-gateway-method 'socks)
+    (setq socks-noproxy '("localhost"))
+    (setq socks-server proxy-mode-socks-proxy)
+    (setq proxy-mode-proxy-type "socks")
+    (message "socks proxy %s enabled" proxy-mode-socks-proxy))
+
+  (defun proxy-mode-socks-disable ()
+    "Disable Socks proxy."
+    (setq url-gateway-method 'native)
+    (setq proxy-mode-proxy-type nil)
+    (message "socks proxy diabled")))
+
+;;;###autoload
+(defun toggle-socks-proxy ()
+  "Toggle socks proxy."
+  (interactive)
+  (if (equal url-gateway-method 'native)
+      (proxy-mode-socks-enable)
+    (proxy-mode-socks-disable)))
 
 (provide 'init-misc)
 
