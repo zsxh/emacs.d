@@ -91,7 +91,7 @@
 # https://github.com/pashky/restclient.el
 #
 # GET https://api.github.com
-# User-Agent: Emacs Restclien
+# User-Agent: Emacs Restclient
 #
 # POST https://jira.atlassian.com/rest/api/2/search
 # Content-Type: application/json
