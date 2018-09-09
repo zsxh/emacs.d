@@ -7,5 +7,6 @@
 
 ;; (setq personal-eaf-grip-token "")       ; Github personal access token for eaf-markdown-previewer
 
+;; (setq personal-doom-theme 'doom-nord-light) ; doom-themes such as 'doom-vibrant, 'doom-nord-light
 
 ;;; custom.el ends here

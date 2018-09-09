@@ -39,6 +39,11 @@
 https://github.com/manateelazycat/emacs-application-framework#markdown-previewer"
   :type 'string)
 
+(defcustom personal-doom-theme 'doom-vibrant
+  "Customize doom-themes such as `doom-vibrant' `doom-nord-light'.
+Origin repo: https://github.com/hlissner/emacs-doom-themes"
+  :type 'symbol)
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (if (file-exists-p custom-file)
