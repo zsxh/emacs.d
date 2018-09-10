@@ -125,7 +125,7 @@ the `quelpa' command has been run in the current Emacs session."
   (defalias 'upgrade-packages 'package-utils-upgrade-all)
   (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart)
   :config
-  (when (featurep 'quelpa)
+  (with-eval-after-load 'quelpa
     (defalias 'upgrade-packages
       (lambda ()
         (interactive)

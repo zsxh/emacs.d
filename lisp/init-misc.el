@@ -47,8 +47,6 @@
           ("https://onelonecoder.com/feed/" onelonecoder))))
 
 ;; Socks Proxy
-(setq proxy-mode-socks-proxy '("Default server" "socks" 1080 5))
-
 (use-package socks
   :ensure nil
   :defer t
@@ -57,14 +55,12 @@
     "Enable Socks proxy."
     (setq url-gateway-method 'socks)
     (setq socks-noproxy '("localhost"))
-    (setq socks-server proxy-mode-socks-proxy)
-    (setq proxy-mode-proxy-type "socks")
-    (message "socks proxy %s enabled" proxy-mode-socks-proxy))
+    (setq socks-server '("Default server" "socks" 1080 5))
+    (message "socks proxy %s enabled" socks-server))
 
   (defun proxy-mode-socks-disable ()
     "Disable Socks proxy."
     (setq url-gateway-method 'native)
-    (setq proxy-mode-proxy-type nil)
     (message "socks proxy diabled")))
 
 ;;;###autoload
