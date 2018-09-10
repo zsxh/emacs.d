@@ -63,18 +63,41 @@
 (eval-when-compile
   (require 'use-package))
 
+;; Benchmark-init only measures time spent in `require' and `load'
+(use-package benchmark-init
+  :ensure t
+  :commands (benchmark-init/activate)
+  :hook (after-init . benchmark-init/deactivate)
+  :init (benchmark-init/activate))
+
+(defvar emacs-startup-time nil
+  "The time it took, in seconds, for Emacs to initialize.")
+
+(defun +package/display-benchmark (&optional return-p)
+  "Display a benchmark, showing number of packages and modules, and how quickly\
+they were loaded at startup.
+If RETURN-P, return the message as a string instead of displaying it."
+  (funcall (if return-p #'format #'message)
+           "Emacs Loaded %s packages in %.03fs"
+           (length package-activated-list)
+           (or emacs-startup-time
+               (setq emacs-startup-time (float-time (time-subtract (current-time) before-init-time))))))
+
+(add-hook 'emacs-startup-hook #'+package/display-benchmark)
+
 ;; Build and install your Emacs Lisp packages on-the-fly and directly from source
 (use-package quelpa-use-package
   :after (use-package)
   :ensure t
   :init
+  ;; Using quelpa with :ensure
+  ;; (setq use-package-ensure-function 'quelpa)
   (setq quelpa-self-upgrade-p nil)
   (setq quelpa-update-melpa-p nil)
   (setq quelpa-checkout-melpa-p nil)
-  ;; :config
-  ;; Using quelpa with :ensure
-  ;; (setq use-package-ensure-function 'quelpa)
-  )
+  ;; Avoid loading quelpa unless necessary.
+  ;; This improves performance, but can prevent packages from being updated automatically.
+  (setq quelpa-use-package-inhibit-loading-quelpa t))
 
 ;;;###autoload
 (defun +package/quelpa-upgrade ()
@@ -115,27 +138,6 @@ the `quelpa' command has been run in the current Emacs session."
         (sleep-for 1)
         (restart-emacs)))))
 
-;; Benchmark-init only measures time spent in `require' and `load'
-(use-package benchmark-init
-  :ensure t
-  :commands (benchmark-init/activate)
-  :hook (after-init . benchmark-init/deactivate)
-  :init (benchmark-init/activate))
-
-(defvar emacs-startup-time nil
-  "The time it took, in seconds, for Emacs to initialize.")
-
-(defun +package/display-benchmark (&optional return-p)
-  "Display a benchmark, showing number of packages and modules, and how quickly\
-they were loaded at startup.
-If RETURN-P, return the message as a string instead of displaying it."
-  (funcall (if return-p #'format #'message)
-           "Emacs Loaded %s packages in %.03fs"
-           (length package-activated-list)
-           (or emacs-startup-time
-               (setq emacs-startup-time (float-time (time-subtract (current-time) before-init-time))))))
-
-(add-hook 'emacs-startup-hook #'+package/display-benchmark)
 
 (provide 'init-package)
 
