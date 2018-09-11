@@ -87,27 +87,6 @@
 (use-package elisp-refs
   :ensure t)
 
-;; Short and sweet LISP editing
-(use-package lispy
-  :ensure t
-  :commands lispy-mode
-  :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
-         (lisp-interaction-mode . (lambda () (lispy-mode 1)))
-         (lisp-mode . (lambda () (lispy-mode 1))))
-  :bind (:map lispy-mode-map
-              ("s-k" . paredit-splice-sexp-killing-backward)))
-
-(use-package paredit
-  :ensure t
-  :commands paredit-splice-sexp-killing-backward
-  :bind (("s-0" . paredit-wrap-round)
-         ("s-[" . paredit-wrap-square)
-         ("s-{" . paredit-wrap-curly)
-         ("s-<" . paredit-wrap-angled)
-         ("s-\"" . paredit-meta-doublequote)
-         ("C-M-b" . paredit-backward)
-         ("C-M-f" . paredit-forward)))
-
 
 (provide 'init-emacs-lisp)
 
