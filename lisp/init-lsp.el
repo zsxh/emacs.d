@@ -40,7 +40,9 @@
               lsp-highlight-symbol-at-point nil)
   :config
   (require 'lsp-imenu)
-  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu))
+  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+  ;; Output the project root warning to *Messages* buffer
+  (setq lsp-message-project-root-warning t))
 
 (use-package company-lsp
   :after (company lsp-mode)
