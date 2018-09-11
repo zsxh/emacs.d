@@ -32,15 +32,41 @@
 
 (use-package sly
   :ensure t
-  :hook (lisp-mode . sly-mode)
+  :hook ((lisp-mode . sly-mode)
+         (sly-mode . +common-lisp|init-sly))
   :config
-  (setq inferior-lisp-program "sbcl"))
+  (setq inferior-lisp-program "sbcl")
+  (evil-set-initial-state 'sly-db-mode 'emacs))
 
 (use-package sly-macrostep
   :ensure t
   :commands macrostep-expand
   :bind (:map lisp-mode-map
               ("C-c e" . macrostep-expand)))
+
+(defun +common-lisp|init-sly ()
+  "Attempt to auto-start sly when opening a Lisp buffer."
+  (cond ((sly-connected-p))
+        ((executable-find inferior-lisp-program)
+         (let ((sly-auto-start 'always))
+           (sly-auto-start)
+           (add-hook 'kill-buffer-hook #'+common-lisp|cleanup-sly-maybe nil t)))
+        ((message "WARNING: Couldn't find `inferior-lisp-program' (%s)"
+                  inferior-lisp-program))))
+
+(defun +common-lisp|cleanup-sly-maybe ()
+  "Kill processes and leftover buffers when killing the last sly buffer."
+  (unless (cl-loop for buf in (delq (current-buffer) (buffer-list))
+                   if (and (buffer-local-value 'sly-mode buf)
+                           (get-buffer-window buf))
+                   return t)
+    (dolist (conn (sly--purge-connections))
+      (sly-quit-lisp-internal conn 'sly-quit-sentinel t))
+    (let (kill-buffer-hook kill-buffer-query-functions)
+      (mapc #'kill-buffer
+            (cl-loop for buf in (delq (current-buffer) (buffer-list))
+                     if (buffer-local-value 'sly-mode buf)
+                     collect buf)))))
 
 ;; TODO quicklisp
 
