@@ -105,6 +105,8 @@ If RETURN-P, return the message as a string instead of displaying it."
 This provides an easy way to upgrade all the packages for which
 the `quelpa' command has been run in the current Emacs session."
   (interactive)
+  (unless (featurep 'quelpa)
+    (require 'quelpa))
   (when (quelpa-setup-p)
     (let ((quelpa-upgrade-p t))
       (when quelpa-self-upgrade-p
@@ -125,7 +127,7 @@ the `quelpa' command has been run in the current Emacs session."
   (defalias 'upgrade-packages 'package-utils-upgrade-all)
   (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart)
   :config
-  (with-eval-after-load 'quelpa
+  (with-eval-after-load 'quelpa-use-package
     (defalias 'upgrade-packages
       (lambda ()
         (interactive)
