@@ -140,10 +140,11 @@
    "ww"  '(ace-swap-window :which-key "swap-window")
    ;; Toggle
    "T"   '(nil :which-key "toggle")
+   "Td"  '(toggle-debug-on-error :which-key "debug-on-error")
    "Tf"  '(font-lock-mode :which-key "syntax-highlighting")
    "Tl"  '(toggle-truncate-lines :which-key "truncate-lines")
    "Tn"  '(display-line-numbers-mode :which-key "display-line-numbers")
-   "Tp"  '(toggle-socks-proxy :which-key "toggle-socks-proxy")
+   "Tp"  '(toggle-socks-proxy :which-key "socks-proxy")
    "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
    "Tz"  '(evil-toggle-fold :which-key "evil-toggle-fold")))
 

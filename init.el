@@ -107,6 +107,8 @@
 ;; Misc
 (require 'init-misc)
 
+(add-hook 'emacs-startup-hook (lambda () (setq debug-on-error nil)))
+
 (provide 'init)
 
 ;;; init.el ends here
