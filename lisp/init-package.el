@@ -30,7 +30,6 @@
 
 ;;; Code:
 
-;; FIXME: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
 (with-eval-after-load 'package
   ;; Dont set custom package-user-dir, doesn't work well with (setq flycheck-emacs-lisp-load-path 'inherit)
