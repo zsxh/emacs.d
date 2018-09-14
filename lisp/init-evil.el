@@ -34,7 +34,7 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-integration nil)
+  (setq evil-want-keybinding nil)
   :config
   (evil-mode)
   ;; remove all keybindings from insert-state keymap,it is VERY VERY important
