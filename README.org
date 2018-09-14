@@ -1,3 +1,5 @@
 * TODOs
-  - [ ] Paredit Settings
+  - [ ] eglot instead of lsp-mode
+  - [ ] magithub
+  - [X] Paredit & lispy
   - [X] Use quelpa to build packages from source
