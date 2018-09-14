@@ -43,7 +43,13 @@
     ",k" 'with-editor-cancel)
   (evil-define-minor-mode-key 'normal 'magit-blame-mode
     "q" 'magit-blame-quit
-    "c" 'magit-blame-cycle-style))
+    "c" 'magit-blame-cycle-style)
+  (use-package magit-todos
+    :ensure t
+    :hook (magit-mode . magit-todos-mode)
+    :config
+    (with-eval-after-load 'evil-collection
+      (evil-collection-init 'magit-todos))))
 
 (provide 'init-git)
 
