@@ -50,6 +50,14 @@
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
+;; auth-sources
+(setq epg-pinentry-mode 'loopback)
+;; (setq epa-file-select-keys 0)
+;; ask encryption password once
+;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+;; (epa-file-enable)
+(add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
+
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
