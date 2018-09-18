@@ -38,6 +38,14 @@
                        (make-local-variable 'js-indent-level)
                        (setq js-indent-level 2))))
 
+;; YAML config
+(use-package yaml-mode
+  :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
+         ("Procfile\\'" . yaml-mode))
+  :config (add-hook 'yaml-mode-hook
+                    '(lambda ()
+                       (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
+
 ;; Web mode for html,xml...
 (use-package web-mode
   :ensure t
