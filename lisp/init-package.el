@@ -67,7 +67,11 @@
   :ensure t
   :commands (benchmark-init/activate)
   :hook (after-init . benchmark-init/deactivate)
-  :init (benchmark-init/activate))
+  :init (benchmark-init/activate)
+  :config
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal benchmark-init/tree-mode-map "q" 'quit-window)
+    (evil-define-key 'normal benchmark-init/tabulated-mode-map "q" 'quit-window)))
 
 (defvar emacs-startup-time nil
   "The time it took, in seconds, for Emacs to initialize.")

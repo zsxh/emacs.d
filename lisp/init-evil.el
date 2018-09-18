@@ -42,7 +42,11 @@
   ;; 把emacs模式下的按键绑定到Insert模式下
   (define-key evil-insert-state-map (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
   ;; but [escape] should switch back to normal state
-  (define-key evil-insert-state-map [escape] 'evil-normal-state))
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
+
+  ;; message-buffer-mode config
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window))
 
 ;; Evil keybinding collection
 (use-package evil-collection
