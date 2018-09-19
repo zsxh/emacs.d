@@ -47,13 +47,15 @@
   ;; :after evil
   :ensure t
   :config
-  (setq general-override-states '(insert emacs hybrid normal visual motion operator replace))
-  (general-override-mode)
+  ;; (setq general-override-states '(insert emacs hybrid normal visual motion operator replace))
+  ;; (general-override-mode)
   (general-define-key
-   :states '(normal visual motion emacs)
-   :keymaps 'override
+   :keymaps '(normal visual motion emacs)
+   ;; :states '(normal visual motion emacs)
+   ;; :keymaps 'override
    :prefix "SPC"
-   :non-normal-prefix "M-SPC"
+   :non-normal-prefix "C-SPC"
+   "" nil
    ;; misc
    "/"   '(color-rg-search-project :which-key "ripgrep-project")
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")

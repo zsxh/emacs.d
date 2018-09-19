@@ -45,7 +45,7 @@
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
 
   ;; message-buffer-mode config
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  ;; (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window)
 
   ;; compilation-mode config
