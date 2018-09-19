@@ -69,10 +69,12 @@
   :after counsel
   :ensure t
   :config
-  (setq ivy-display-function #'ivy-posframe-display)
+  ;; (setq ivy-display-function #'ivy-posframe-display)
+  (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
   (ivy-posframe-enable))
 
 (with-eval-after-load 'ivy-posframe
+  ;; Override ivy-posframe--display
   (defun ivy-posframe--display (str &optional poshandler)
     "Show STR in ivy's posframe."
     (if (not (ivy-posframe-workable-p))
