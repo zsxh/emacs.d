@@ -72,6 +72,36 @@
   (setq ivy-display-function #'ivy-posframe-display)
   (ivy-posframe-enable))
 
+(with-eval-after-load 'ivy-posframe
+  (defun ivy-posframe--display (str &optional poshandler)
+    "Show STR in ivy's posframe."
+    (if (not (ivy-posframe-workable-p))
+        (ivy-display-function-fallback str)
+      (with-selected-window (ivy--get-window ivy-last)
+        (posframe-show
+         ivy-posframe-buffer
+         :font ivy-posframe-font
+         :string
+         (with-current-buffer (get-buffer-create " *Minibuf-1*")
+           (let ((point (point))
+                 (string (if ivy-posframe--ignore-prompt
+                             str
+                           (concat (buffer-string) "  " str))))
+             (add-text-properties (- point 1) point '(face ivy-posframe-cursor) string)
+             string))
+         :position (point)
+         :poshandler poshandler
+         ;; :background-color (face-attribute 'ivy-posframe :background)
+         :background-color "#E0E0E0"
+         :foreground-color (face-attribute 'ivy-posframe :foreground)
+         :height (or ivy-posframe-height ivy-height)
+         ;; :width (or ivy-posframe-width (/ (window-width) 2))
+         :width (or ivy-posframe-width (frame-width))
+         :min-height (or ivy-posframe-min-height 10)
+         :min-width (or ivy-posframe-min-width 50)
+         :internal-border-width ivy-posframe-border-width
+         :override-parameters ivy-posframe-parameters)))))
+
 (use-package ivy-xref
   :ensure t
   :commands ivy-xref-show-xrefs
