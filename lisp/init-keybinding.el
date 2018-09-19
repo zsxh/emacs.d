@@ -124,6 +124,7 @@
    "je"  '(avy-goto-word-0 :which-key "avy-goto-word-0")
    ;; Project
    "p"   '(nil :which-key "project")
+   "pf"  '(projectile-find-file :which-key "projectile-find-file")
    "ps"  '(color-rg-search-project :which-key "search-project")
    "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
