@@ -76,6 +76,9 @@
                                 "ci" '(org-clock-in :which-key "clock-in")
                                 "co" '(org-clock-out :which-key "clock-out")
                                 "cr" '(org-clock-report :which-key "clock-report")
+                                "t"  '(nil :which-key "toggle")
+                                "ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
+                                "tl" '(org-toggle-link-display :which-key "toggle-link-display")
                                 "'"  '(org-edit-special :which-key "editor")))
 
 ;; Org for blog
