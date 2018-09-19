@@ -44,15 +44,13 @@
 
 ;; keybindings with which-key,evil well supported
 (use-package general
-  ;; :after evil
   :ensure t
   :config
   ;; (setq general-override-states '(insert emacs hybrid normal visual motion operator replace))
   ;; (general-override-mode)
   (general-define-key
-   :keymaps '(normal visual motion emacs)
-   ;; :states '(normal visual motion emacs)
-   ;; :keymaps 'override
+   :states '(normal visual motion emacs)
+   :keymaps '(override global)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "" nil
