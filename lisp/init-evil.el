@@ -46,7 +46,14 @@
 
   ;; message-buffer-mode config
   (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window))
+  (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window)
+
+  ;; compilation-mode config
+  (with-eval-after-load 'compilation-mode
+    (define-key compilation-mode-map "g" nil)
+    (define-key compilation-mode-map "gr" 'recompile)
+    (evil-set-initial-state 'compilation-mode-map 'normal)
+    (evil-define-key 'normal compilation-mode-map "gr" 'recompile)))
 
 ;; Evil keybinding collection
 (use-package evil-collection
