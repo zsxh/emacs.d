@@ -49,11 +49,12 @@
   (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window)
 
   ;; compilation-mode config
-  (with-eval-after-load 'compilation-mode
+  (defun +evil/compilation-mode-config ()
     (define-key compilation-mode-map "g" nil)
     (define-key compilation-mode-map "gr" 'recompile)
-    (evil-set-initial-state 'compilation-mode-map 'normal)
-    (evil-define-key 'normal compilation-mode-map "gr" 'recompile)))
+    (evil-set-initial-state 'compilation-mode 'normal)
+    (evil-define-key 'normal compilation-mode-map "gr" 'recompile))
+  (add-hook 'compilation-mode-hook #'+evil/compilation-mode-config))
 
 ;; Evil keybinding collection
 (use-package evil-collection
