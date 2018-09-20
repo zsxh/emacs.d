@@ -30,13 +30,26 @@
 
 ;;; Code:
 
+(defvar exec-path-from-shell-initialize-p nil)
+
 (use-package exec-path-from-shell
   :defer 1
   :ensure t
   :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)
-    (exec-path-from-shell-copy-env "LANG")))
+  (defun +env/load-shell-env ()
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)
+      (exec-path-from-shell-copy-env "LANG")))
+  ;; Initialize
+  (+env/load-shell-env)
+
+  (defun exec-path-from-shell-advice ()
+    (if exec-path-from-shell-initialize-p
+        (message "All shell environment variables already loaded in Emacs!")
+      (setq exec-path-from-shell-initialize-p t)
+      (+env/load-shell-env)))
+
+  (advice-add #'exec-path-from-shell-initialize :override #'exec-path-from-shell-advice))
 
 (provide 'init-exec-path)
 
