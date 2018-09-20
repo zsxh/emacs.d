@@ -50,6 +50,15 @@
                                  (eaf-open filename)
                                  (kill-buffer (file-name-nondirectory filename))))))
 
+;; Markdowm Previewer
+(with-eval-after-load 'markdown-mode
+  (defun eaf-markdown-previewer ()
+    "Markdown Previewer."
+    (interactive)
+    (eaf-open buffer-file-name))
+  (+funcs/try-general-major-key markdown-mode-map
+                                "v" '(eaf-markdown-previewer :which-key "previewer")))
+
 ;; Better eshell
 ;; https://github.com/manateelazycat/aweshell
 ;; (use-package aweshell
