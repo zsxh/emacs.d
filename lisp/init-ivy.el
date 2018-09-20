@@ -75,7 +75,7 @@
 
 (with-eval-after-load 'ivy-posframe
   ;; Override ivy-posframe--display
-  (defun ivy-posframe--display (str &optional poshandler)
+  (defun ivy-posframe--display-advice (str &optional poshandler)
     "Show STR in ivy's posframe."
     (if (not (ivy-posframe-workable-p))
         (ivy-display-function-fallback str)
@@ -102,7 +102,8 @@
          :min-height (or ivy-posframe-min-height 10)
          :min-width (or ivy-posframe-min-width 50)
          :internal-border-width ivy-posframe-border-width
-         :override-parameters ivy-posframe-parameters)))))
+         :override-parameters ivy-posframe-parameters))))
+  (advice-add #'ivy-posframe--display :override #'ivy-posframe--display-advice))
 
 (use-package ivy-xref
   :ensure t
