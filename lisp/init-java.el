@@ -90,7 +90,8 @@
                                 "r"  '(nil :which-key "run")
                                 "rm" '(meghanada-exec-main :which-key "exec-main")
                                 "g"  '(nil :which-key "goto")
-                                "gd" '(meghanada-jump-declaration :which-key "jump-declaration")))
+                                "gd" '(meghanada-jump-declaration :which-key "jump-declaration")
+                                "gs" '(meghanada-jump-symbol :which-key "find-class")))
 
 (defhydra hydra-meghanada (:hint nil :exit t)
   "
