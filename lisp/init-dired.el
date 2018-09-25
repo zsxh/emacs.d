@@ -37,6 +37,9 @@
   ;; dired "human-readable" format
   (setq dired-listing-switches "-alh")
   :config
+  ;; Customize dired-directory foreground color
+  (set-face-foreground 'dired-directory "#3B6EA8")
+
   ;;narrow dired to match filter
   (use-package dired-narrow
     :ensure t

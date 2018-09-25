@@ -47,7 +47,8 @@
           lisp-mode
           emacs-lisp-mode
           python-mode
-          org-mode)
+          org-mode
+          help-mode)
          . rainbow-mode))
 
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
