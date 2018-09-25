@@ -81,6 +81,9 @@
    "aoc" '(org-capture :which-key "org-capture")
    "ap"  '(list-processes :which-key "list-processes")
    "ar"  '(+web/restclient-new-buffer :which-key "restclient")
+   "ay"  '(nil :which-key "youdao")
+   "ayy" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
+   "ayv" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
    ;; Buffers
    "b"   '(nil :which-key "buffer")
    "bb"  '(switch-to-buffer :which-key "switch-to-buffer")

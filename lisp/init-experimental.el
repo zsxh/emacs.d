@@ -57,7 +57,7 @@
     (interactive)
     (eaf-open buffer-file-name))
   (+funcs/try-general-major-key markdown-mode-map
-                                "v" '(eaf-markdown-previewer :which-key "previewer")))
+                                "p" '(eaf-markdown-previewer :which-key "previewer")))
 
 ;; Better eshell
 ;; https://github.com/manateelazycat/aweshell

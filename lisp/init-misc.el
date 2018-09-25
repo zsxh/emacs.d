@@ -71,6 +71,20 @@
       (proxy-mode-socks-enable)
     (proxy-mode-socks-disable)))
 
+;; Youdao
+(use-package youdao-dictionary
+  :ensure t
+  :commands (youdao-dictionary-search-at-point+
+             youdao-dictionary-search-at-point-tooltip
+             youdao-dictionary-play-voice-at-point)
+  :config
+  (setq url-automatic-caching t)
+  (with-eval-after-load 'markdown-mode
+    (+funcs/try-general-major-key markdown-mode-map
+                                  "y" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
+                                  "v" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point"))))
+
+
 (provide 'init-misc)
 
 ;;; init-misc.el ends here
