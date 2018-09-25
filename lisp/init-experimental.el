@@ -65,6 +65,12 @@
 ;;   :commands aweshell-new
 ;;   :quelpa ((aweshell :fetcher github :repo "manateelazycat/aweshell")))
 
+;; This extension will ask me Chinese words and then insert translation as variable or function name.
+;; https://github.com/manateelazycat/insert-translated-name
+(use-package insert-translated-name
+  :commands insert-translated-name-insert
+  :quelpa ((insert-translated-name :fetcher github :repo "manateelazycat/insert-translated-name")))
+
 
 (provide 'init-experimental)
 

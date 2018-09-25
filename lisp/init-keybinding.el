@@ -129,6 +129,8 @@
    "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
    "t"   '(nil :which-key "text")
+   "ti"  '(nil :which-key "insert")
+   "tit" '(insert-translated-name-insert :which-key "chinese->engish")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
    "ts"  '(hydra-text-scale/body :which-key "scale")
    ;; Window
