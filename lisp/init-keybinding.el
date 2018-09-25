@@ -137,6 +137,7 @@
    "w"   '(nil :which-key "window")
    "w/"  '(split-window-right :which-key "split-right")
    "w-"  '(split-window-below :which-key "split-bottom")
+   "wb"  '(balance-windows :which-key "balance-windows")
    "wd"  '(delete-window :which-key "delete-window")
    "wm"  '(delete-other-windows :which-key "maximized")
    "ws"  '(hydra-window-scale/body :which-key "scale")
