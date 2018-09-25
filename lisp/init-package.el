@@ -111,17 +111,37 @@ the `quelpa' command has been run in the current Emacs session."
   (unless (featurep 'quelpa)
     (require 'quelpa))
   (when (quelpa-setup-p)
-    (let ((quelpa-upgrade-p t))
+    (let ((quelpa-upgrade-p t)
+          (packages-installed-by-quelpa nil))
       (when quelpa-self-upgrade-p
         (quelpa-self-upgrade))
       (setq quelpa-cache
             (cl-remove-if-not #'package-installed-p quelpa-cache :key #'car))
-      (setq package-installed-by-quelpa
+      (setq packages-installed-by-quelpa
             (seq-filter (lambda (item) (member ':fetcher item)) quelpa-cache))
       (mapc (lambda (item)
               (when (package-installed-p (car (quelpa-arg-rcp item)))
                 (quelpa item)))
-            package-installed-by-quelpa))))
+            packages-installed-by-quelpa)
+      ;; Delete outdate packages
+      (dolist (package-info packages-installed-by-quelpa)
+        (let ((package (car package-info)))
+          (+package/delete-outdate-package package))))))
+
+(defun +package/delete-outdate-package (package)
+  "Delete PACKAGE outdate versions."
+  (let* ((p-desc-list (cdr (assq package package-alist)))
+         (p-desc-next (car p-desc-list))
+         (p-desc-else (cdr p-desc-list))
+         (p-desc-to-delete nil))
+    (dolist (p-desc p-desc-else)
+      (if (version-list-<= (package-desc-version p-desc-next) (package-desc-version p-desc))
+          (progn
+            (setf p-desc-to-delete p-desc-next)
+            (setf p-desc-next p-desc))
+        (setf p-desc-to-delete p-desc))
+      (package-delete p-desc-to-delete)
+      (format "package %s deleted" (package-desc-full-name p-desc-to-delete)))))
 
 ;; Extensions
 (use-package package-utils
