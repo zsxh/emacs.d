@@ -76,11 +76,11 @@
 (setq display-time-default-load-average nil) ; don't show load avera
 (display-time-mode)
 
-;; Font
+;; Frame font
 ;; (set-frame-font "SF Mono 13" nil t)
 (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)
 
-;; org table font
+;; Org table font
 (custom-set-faces
  '(org-table ((t (:family "Ubuntu Mono derivative Powerline")))))
 
