@@ -166,7 +166,7 @@
     ("l" enlarge-window-horizontally "enlarger-window-horizontally" :color pink)
     ("j" shrink-window "shrink-window" :color pink)
     ("k" enlarge-window "enlarge-window" :color pink)
-    ("f" balance-windows "balance" :color pink)
+    ("b" balance-windows "balance" :color pink)
     ("q" nil "cancel" :color blue)))
 
 (provide 'init-keybinding)
