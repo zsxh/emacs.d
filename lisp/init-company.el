@@ -36,13 +36,18 @@
   :preface
   (defvar company-enable-yas t
     "Enable yasnippet for all backends.")
-
   (defun company-backend-with-yas (backend)
     (if (or (not company-enable-yas)
             (and (listp backend) (member 'company-yasnippet backend)))
         backend
       (append (if (consp backend) backend (list backend))
               '(:with company-yasnippet))))
+  (defun company-backend-separate-yas (backend)
+    (if (or (not company-enable-yas)
+            (and (listp backend) (member 'company-yasnippet backend)))
+        backend
+      (append (if (consp backend) backend (list backend))
+              '(:separate company-yasnippet))))
   :bind (("M-/" . yas-expand)
          ("C-c C-y" . company-yasnippet)
          :map company-active-map
@@ -61,17 +66,19 @@
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
-        company-idle-delay .2               ; decrease delay before autocompletion popup shows
-        company-echo-delay 0                ; remove annoying blinking
+        company-idle-delay .2 ; decrease delay before autocompletion popup shows
+        company-echo-delay 0  ; remove annoying blinking
         company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
 
-
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
-  (setq company-backends (mapcar #'company-backend-with-yas company-backends)))
+  ;; (setq company-backends (mapcar #'company-backend-with-yas company-backends))
+
+  ;; https://emacs-china.org/t/topic/5972
+  (setq company-backends '((:separate company-capf company-dabbrev))))
 
 ;; Popup documentation for completion candidates
 (when (display-graphic-p)

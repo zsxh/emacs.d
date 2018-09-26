@@ -51,9 +51,10 @@
   (setq company-lsp-enable-snippet t
         company-lsp-cache-candidates nil
         company-transformers nil
-        company-lsp-async t)
+        company-lsp-async t
+        company-lsp-enable-recompletion t)
   ;; (push 'company-lsp company-backends)
-  (push '(company-lsp :with company-yasnippet) company-backends))
+  (push '(company-lsp :seperate company-yasnippet) company-backends))
 
 (use-package lsp-ui
   :after lsp-mode
