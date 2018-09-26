@@ -109,6 +109,7 @@
    "gs"  '(magit :which-key "magit")
    ;; Help
    "h"   '(nil :which-key "help")
+   "hc"  '(company-diag :which-key "company-diag")
    "hd"  '(nil :which-key "details")
    "hdm" '((lambda () (interactive) (describe-variable 'major-mode)) :which-key "major-mode")
    "hdn" '((lambda () (interactive) (describe-variable 'minor-mode-list)) :which-key "minor-mode-list")

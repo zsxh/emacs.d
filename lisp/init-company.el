@@ -33,21 +33,6 @@
 (use-package company
   :ensure t
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
-  :preface
-  (defvar company-enable-yas t
-    "Enable yasnippet for all backends.")
-  (defun company-backend-with-yas (backend)
-    (if (or (not company-enable-yas)
-            (and (listp backend) (member 'company-yasnippet backend)))
-        backend
-      (append (if (consp backend) backend (list backend))
-              '(:with company-yasnippet))))
-  (defun company-backend-separate-yas (backend)
-    (if (or (not company-enable-yas)
-            (and (listp backend) (member 'company-yasnippet backend)))
-        backend
-      (append (if (consp backend) backend (list backend))
-              '(:separate company-yasnippet))))
   :bind (("M-/" . yas-expand)
          ("C-c C-y" . company-yasnippet)
          :map company-active-map
@@ -71,14 +56,7 @@
         company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
-        company-dabbrev-downcase nil)
-
-  ;; Support yas in commpany
-  ;; Note: Must be the last to involve all backends
-  ;; (setq company-backends (mapcar #'company-backend-with-yas company-backends))
-
-  ;; https://emacs-china.org/t/topic/5972
-  (setq company-backends '((:separate company-capf company-dabbrev))))
+        company-dabbrev-downcase nil))
 
 ;; Popup documentation for completion candidates
 (when (display-graphic-p)
