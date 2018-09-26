@@ -54,6 +54,8 @@
   :commands lsp-python-enable
   :hook (python-mode . (lambda ()
                          (setq-local python-indent-offset 2)
+                         (setq-local company-backends
+                                     '((company-lsp :separate company-yasnippet)))
                          (lsp-python-enable)
                          (+python/python-setup-shell))))
 

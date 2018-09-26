@@ -42,7 +42,10 @@
       (user-error nil)))
   ;; By default files ending in .h are treated as c files rather than c++ files.
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-  :hook ((c-mode c++-mode) . ccls//enable)
+  :hook ((c-mode c++-mode) . (lambda ()
+                               (setq-local company-backends
+                                           '((company-lsp :separate company-yasnippet)))
+                               (ccls//enable)))
   :config
   (setq ccls-executable "/usr/bin/ccls")
   ;; Log file
