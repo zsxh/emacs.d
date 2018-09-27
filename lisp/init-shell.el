@@ -48,6 +48,12 @@
     (evil-define-key 'normal term-raw-map "p" 'term-paste)
     (evil-define-key 'insert term-raw-map "\C-y" 'term-paste)))
 
+(defun +shell/projectile-shell-pop ()
+  "Open a term buffer at projectile project root."
+  (interactive)
+  (let ((default-directory (projectile-project-root)))
+    (call-interactively 'shell-pop)))
+
 
 (provide 'init-shell)
 
