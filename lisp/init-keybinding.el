@@ -121,6 +121,7 @@
    ;; Jump
    "j"   '(nil :which-key "jump/goto")
    "jd"  '(dired-jump :which-key "dired-jump")
+   "jD"  '(dired-jump-other-window :which-key "dired-jump-other-window")
    "jc"  '(avy-goto-char :which-key "avy-goto-char")
    "jj"  '(avy-goto-char-in-line :which-key "avy-goto-char-in-line")
    "jl"  '(avy-goto-line :which-key "avy-goto-line")

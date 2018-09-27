@@ -90,7 +90,9 @@
   (+funcs/try-general-major-key markdown-mode-map
                                 "y" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
                                 "v" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
-                                "p" '(eaf-markdown-previewer :which-key "previewer")))
+                                "p" '(eaf-markdown-previewer :which-key "previewer")
+                                "t" '(nil :which-key "toggle")
+                                "ti" '(markdown-toggle-inline-images :which-key "inline-images")))
 ;; Markdowm Previewer
 
 (provide 'init-misc)
