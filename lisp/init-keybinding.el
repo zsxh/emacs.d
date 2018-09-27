@@ -54,8 +54,6 @@
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
    "" nil
-   ;; misc
-   "/"   '(color-rg-search-input :which-key "rg-current-directory")
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
    "SPC" '(counsel-M-x :which-key "M-x")
    "'"   '(shell-pop :which-key "shell-pop")
@@ -63,6 +61,8 @@
    ":"   '((lambda () (interactive) (call-interactively 'eval-expression)) :which-key "eval-expression")
    ";"   '(comment-dwim-2 :which-key "comment-line")
    "0"   '(neotree-show :which-key "neotree")
+   "/"   '(color-rg-search-input :which-key "rg-current-directory")
+   "?"   '(find-name-dired :which-key "search-files")
    ;; winum-select-window
    "1"   'winum-select-window-1
    "2"   'winum-select-window-2
@@ -102,7 +102,7 @@
    "f"   '(nil :which-key "file")
    "ff"  '(counsel-find-file :which-key "find-files")
    "fe"  '(+funcs/sudo-edit-current-file :which-key "sudo edit current file")
-   ;; git
+   ;; Git
    "g"   '(nil :which-key "git")
    "gb"  '(magit-blame :which-key "magit-blame")
    "gc"  '(magit-blame-cycle-style :which-key "magit-blame-cycle-style")

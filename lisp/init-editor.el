@@ -58,6 +58,7 @@
 ;; (epa-file-enable)
 (add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
 
+(setq read-file-name-completion-ignore-case t) ; file ignores case
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
