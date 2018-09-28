@@ -91,7 +91,8 @@
                                 "rm" '(meghanada-exec-main :which-key "exec-main")
                                 "g"  '(nil :which-key "goto")
                                 "gd" '(meghanada-jump-declaration :which-key "jump-declaration")
-                                "gs" '(meghanada-jump-symbol :which-key "find-class")))
+                                "gs" '(meghanada-jump-symbol :which-key "find-class")
+                                "j"  '(+java/set-jdk :which-key "set-jdk")))
 
 (defhydra hydra-meghanada (:hint nil :exit t)
   "
@@ -128,6 +129,26 @@ _q_: exit
 
   ("q" exit)
   ("z" nil "leave"))
+
+(defvar jdk-installed-dir "/usr/local/"
+  "JDK isntalled directory.")
+
+;;;###autoload
+(defun +java/set-jdk (name)
+  "Set JDK version as NAME."
+  (interactive (list (completing-read "JDK-version: " (+java/java-version-list))))
+  (let ((target (expand-file-name name jdk-installed-dir))
+        (link-name (expand-file-name "jdk" jdk-installed-dir)))
+    (+funcs/sudo-shell-command (concat "ln -nsf " target " " link-name))))
+
+(defun +java/java-version-list ()
+  "Return all jdks in list."
+  (let ((files (directory-files jdk-installed-dir))
+        (result nil))
+    (dolist (file files)
+      (if (string-match "jdk-" file)
+          (push file result)))
+    result))
 
 
 (provide 'init-java)
