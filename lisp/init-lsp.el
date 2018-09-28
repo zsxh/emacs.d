@@ -37,7 +37,7 @@
   :commands lsp-mode
   :init (setq lsp-inhibit-message t
               lsp-eldoc-render-all nil
-              lsp-highlight-symbol-at-point nil)
+              lsp-highlight-symbol-at-point t)
   :config
   (require 'lsp-imenu)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
@@ -58,6 +58,11 @@
   :after lsp-mode
   :ensure t
   :hook (lsp-mode . lsp-ui-mode)
+  :bind (:map lsp-ui-peek-mode-map
+              ("j" . lsp-ui-peek--select-next)
+              ("k" . lsp-ui-peek--select-prev)
+              ("C-j" . lsp-ui-peek--select-next)
+              ("C-k" . lsp-ui-peek--select-prev))
   :config
   (setq lsp-ui-sideline-enable t
         lsp-ui-sideline-show-symbol t

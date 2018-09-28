@@ -67,7 +67,7 @@
                                 "cc" '(+python/python-execute-file :which-key "execute-file")
                                 "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")
                                 "g"  '(nil :which-key "go")
-                                "gd" '(xref-find-definitions :which-key "goto-definition")
+                                "gd" '(xref-find-definitions :which-key "find-definitions")
                                 "gr" '(xref-find-references :which-key "find-references")
                                 "r"  '(nil :which-key "refactor")
                                 "rr" '(lsp-rename :which-key "rename")))

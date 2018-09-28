@@ -56,6 +56,15 @@
   (setq ccls-extra-init-params
         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
 
+(with-eval-after-load 'ccls
+  (when (featurep 'evil)
+    (evil-set-initial-state 'ccls-tree-mode 'emacs))
+  (+funcs/try-general-major-key '(c-mode-map c++-mode-map)
+                                "g" '(nil :which-key "go")
+                                "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+                                "gr" '(lsp-ui-peek-find-references :which-key "find-references")
+                                "gh" '(ccls-member-hierarchy :which-key "member-hierarchy")))
+
 ;; Experimental: c/c++-mode use ccls as default
 ;; (use-package eglot
 ;;   :ensure t
