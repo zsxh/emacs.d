@@ -98,6 +98,12 @@ It returns a function to define local leader keys."
       (find-file (concat "/sudo:root@localhost:" (buffer-file-name)))
       (goto-char old-point))))
 
+(defun +funcs/sudo-shell-command (command)
+  "Sudo execute string COMMAND in inferior shell; display output."
+  (interactive (list (read-shell-command "Shell Command: ")))
+  (shell-command (concat "echo " (shell-quote-argument (read-passwd "Password: "))
+                         " | sudo -S " command)))
+
 
 (provide 'init-funcs)
 
