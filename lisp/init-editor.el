@@ -212,6 +212,13 @@
          ("C-M-b" . paredit-backward)
          ("C-M-f" . paredit-forward)))
 
+;; M-<up> move-line-up
+;; M-<down> move-line-down
+;; Dont try moving region in evil normal state, use V DD P instead
+(use-package move-dup
+  :ensure t
+  :hook (emacs-startup . global-move-dup-mode))
+
 
 (provide 'init-editor)
 
