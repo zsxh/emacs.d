@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(eval-when-compile
+  (require 'init-custom))
 
 ;; Rss reader
 ;; https://github.com/skeeto/elfeed
@@ -37,15 +39,8 @@
   :ensure t
   :commands elfeed
   :config
-  (setq elfeed-feeds
-        '(("http://www.norvig.com/rss-feed.xml" norvig)
-          ("https://oremacs.com/atom.xml" oremacs)
-          ("http://blog.binchen.org/rss.xml" chenbin)
-          ("http://www.planet.emacsen.org/atom.xml" Planet Emacsen)
-          ("https://emacs-china.org/latest.rss" emacs china)
-          ("https://emacs-china.org/posts.rss" emacs china)
-          ("https://onelonecoder.com/feed/" onelonecoder)
-          ("http://winterbe.com/atom.xml" Benjamin Winterberg))))
+  (when personal-elfeed-feeds
+    (setq elfeed-feeds personal-elfeed-feeds)))
 
 ;; Socks Proxy
 (use-package socks

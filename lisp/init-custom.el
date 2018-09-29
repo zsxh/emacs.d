@@ -44,6 +44,10 @@ https://github.com/manateelazycat/emacs-application-framework#markdown-previewer
 Origin repo: https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)
 
+(defcustom personal-elfeed-feeds nil
+  "Rss feeds, eg: ((\"https://oremacs.com/atom.xml\" oremacs))."
+  :type 'cons)
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (if (file-exists-p custom-file)
