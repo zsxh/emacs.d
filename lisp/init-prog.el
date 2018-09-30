@@ -30,6 +30,13 @@
 
 ;;; Code:
 
+;; https://gitlab.com/jgkamat/rmsbolt
+;; RMSBolt tries to make it easy to see what your compiler is doing.
+;; It does this by showing you the assembly output of a given source code file.
+(use-package rmsbolt
+  :ensure t
+  :commands rmsbolt-mode)
+
 (use-package autodisass-java-bytecode
   :ensure t
   :defer t)
