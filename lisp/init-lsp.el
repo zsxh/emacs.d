@@ -37,7 +37,7 @@
   :commands lsp-mode
   :init (setq lsp-inhibit-message t
               lsp-eldoc-render-all nil
-              lsp-highlight-symbol-at-point t)
+              lsp-highlight-symbol-at-point nil)
   :config
   (require 'lsp-imenu)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
@@ -54,10 +54,10 @@
         company-lsp-async t
         company-lsp-enable-recompletion t))
 
-(use-package lsp-ui
+ (use-package lsp-ui
   :after lsp-mode
   :ensure t
-  :hook (lsp-mode . lsp-ui-mode)
+  :hook (lsp-after-open . lsp-ui-mode)
   :bind (:map lsp-ui-peek-mode-map
               ("j" . lsp-ui-peek--select-next)
               ("k" . lsp-ui-peek--select-prev)
@@ -76,6 +76,15 @@
   (require 'lsp-ui-flycheck)
   (lsp-ui-sideline-mode)
   (lsp-ui-flycheck-enable t))
+
+;; Debug Adapter Protocol for Emacs
+(use-package dap-mode
+  :after lsp-mode
+  :ensure t
+  :config
+  (dap-mode t)
+  (dap-ui-mode t))
+
 
 (provide 'init-lsp)
 
