@@ -55,27 +55,22 @@
         company-lsp-enable-recompletion t))
 
  (use-package lsp-ui
-  :after lsp-mode
-  :ensure t
-  :hook (lsp-after-open . lsp-ui-mode)
-  :bind (:map lsp-ui-peek-mode-map
-              ("j" . lsp-ui-peek--select-next)
-              ("k" . lsp-ui-peek--select-prev)
-              ("C-j" . lsp-ui-peek--select-next)
-              ("C-k" . lsp-ui-peek--select-prev))
-  :config
-  (setq lsp-ui-sideline-enable t
-        lsp-ui-sideline-show-symbol t
-        lsp-ui-sideline-show-hover t
-        lsp-ui-sideline-show-code-actions t
-        lsp-ui-sideline-update-mode 'point
-        lsp-ui-sideline-ignore-duplicate t)
-  (require 'lsp-ui-imenu)
-  (lsp-ui-imenu-enable t)
-  (require 'lsp-ui-sideline)
-  (require 'lsp-ui-flycheck)
-  (lsp-ui-sideline-mode)
-  (lsp-ui-flycheck-enable t))
+   :after lsp-mode
+   :ensure t
+   :preface (setq lsp-ui-doc-enable nil)
+   :hook (lsp-after-open . lsp-ui-mode)
+   :bind (:map lsp-ui-peek-mode-map
+               ("j" . lsp-ui-peek--select-next)
+               ("k" . lsp-ui-peek--select-prev)
+               ("C-j" . lsp-ui-peek--select-next)
+               ("C-k" . lsp-ui-peek--select-prev))
+   :config
+   (setq lsp-ui-sideline-show-symbol t
+         lsp-ui-sideline-show-hover t
+         lsp-ui-sideline-show-code-actions t
+         lsp-ui-sideline-update-mode 'point
+         lsp-ui-sideline-ignore-duplicate t)
+   (set-face-foreground 'lsp-ui-sideline-code-action "#FF8C00"))
 
 ;; Debug Adapter Protocol for Emacs
 (use-package dap-mode
