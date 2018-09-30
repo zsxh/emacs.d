@@ -118,7 +118,7 @@ the `quelpa' command has been run in the current Emacs session."
       (setq quelpa-cache
             (cl-remove-if-not #'package-installed-p quelpa-cache :key #'car))
       (setq packages-installed-by-quelpa
-            (seq-filter (lambda (item) (member ':fetcher item)) quelpa-cache))
+            (seq-filter (lambda (item) (memq ':fetcher item)) quelpa-cache))
       (mapc (lambda (item)
               (when (package-installed-p (car (quelpa-arg-rcp item)))
                 (quelpa item)))
