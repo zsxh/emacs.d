@@ -78,7 +78,10 @@
   :ensure t
   :config
   (dap-mode t)
-  (dap-ui-mode t))
+  (dap-ui-mode t)
+  (add-hook 'dap-ui-repl-mode-hook
+            (lambda ()
+              (setq-local company-minimum-prefix-length 0))))
 
 
 (provide 'init-lsp)
