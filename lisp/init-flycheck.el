@@ -34,11 +34,11 @@
   :ensure t
   :hook (prog-mode . global-flycheck-mode)
   :config
-  (setq flycheck-indication-mode 'left-fringe)
+  (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)
-
   ;; Only check while saving and opening files
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'flycheck)
     (evil-define-key 'normal flycheck-error-list-mode-map
