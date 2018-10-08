@@ -38,6 +38,10 @@
 
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
+  :init
+  (defun eaf-qutebrowser (url &optional arguments)
+    (interactive "MOpen url with EAF:")
+    (eaf-open url "browser" arguments))
   :commands (eaf-open eaf-open-url)
   :config
   (when personal-eaf-grip-token
