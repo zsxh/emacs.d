@@ -73,6 +73,9 @@
 ;;   :init (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 ;;   :hook ((c-mode c++-mode) . eglot-ensure))
 
+(use-package cmake-mode
+  :ensure t)
+
 
 (provide 'init-c)
 
