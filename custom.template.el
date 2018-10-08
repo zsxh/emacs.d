@@ -5,8 +5,19 @@
 ;;; Code:
 
 
-;; (setq personal-eaf-grip-token "")       ; Github personal access token for eaf-markdown-previewer
+;; Github token string for eaf-markdown-previewer
+(setq personal-eaf-grip-token nil)
 
-;; (setq personal-doom-theme 'doom-nord-light) ; doom-themes such as 'doom-vibrant, 'doom-nord-light
+;; Emacs theme "doom-vibrant" "doom-nord-light"
+(setq personal-doom-theme "doom-nord-light")
+
+;; Rss feeds
+(setq personal-elfeed-feeds
+      '(("https://emacs-china.org/latest.rss" emacs china)
+        ("https://emacs-china.org/posts.rss" emacs china)))
+
+;; Frame startup size, "max" or "fullscreen"
+(setq personal-frame-startup-size "max")
+
 
 ;;; custom.el ends here

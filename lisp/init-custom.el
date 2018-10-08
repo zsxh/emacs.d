@@ -39,14 +39,18 @@
 https://github.com/manateelazycat/emacs-application-framework#markdown-previewer"
   :type 'string)
 
-(defcustom personal-doom-theme 'doom-vibrant
-  "Customize doom-themes such as `doom-vibrant' `doom-nord-light'.
+(defcustom personal-doom-theme "doom-vibrant"
+  "Customize doom-themes such as `\"doom-vibrant\"' `\"doom-nord-light\"'.
 Origin repo: https://github.com/hlissner/emacs-doom-themes"
-  :type 'symbol)
+  :type 'string)
 
 (defcustom personal-elfeed-feeds nil
   "Rss feeds, eg: ((\"https://oremacs.com/atom.xml\" oremacs))."
   :type 'cons)
+
+(defcustom personal-frame-startup-size "max"
+  "Startup frame size. `\"max\"' means maximized frame and `\"fullscreen\"' means fullscreen frame."
+  :type 'string)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 

@@ -40,9 +40,10 @@
   (tooltip-mode    -1)
   (menu-bar-mode   -1))
 
-;; Startup windows size
-;; (toggle-frame-maximized)
-(toggle-frame-fullscreen)
+;; Startup frame size
+(if (string= personal-frame-startup-size "max")
+    (toggle-frame-maximized)
+  (toggle-frame-fullscreen))
 
 ;; Theme
 (use-package all-the-icons
@@ -54,7 +55,7 @@
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme personal-doom-theme t)
+  (load-theme (intern personal-doom-theme) t)
 
   ;; Enable flashing mode-line on errors
   ;; (doom-themes-visual-bell-config)
