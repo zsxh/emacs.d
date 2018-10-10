@@ -59,14 +59,16 @@
     "?" 'org-agenda-view-mode-dispatch
     "0" 'digit-argument)
 
-  (evil-define-minor-mode-key 'normal 'org-src-mode
-    ",c" 'org-edit-src-exit
-    ",k" 'org-edit-src-abort)
+  (with-eval-after-load 'org-src
+    (evil-define-minor-mode-key 'normal 'org-src-mode
+      ",c" 'org-edit-src-exit
+      ",k" 'org-edit-src-abort))
 
-  (evil-define-minor-mode-key 'normal 'org-capture-mode
-    ",c" 'org-capture-finalize
-    ",k" 'org-capture-kill
-    ",w" 'org-capture-refile)
+  (with-eval-after-load 'org-capture
+    (evil-define-minor-mode-key 'normal 'org-capture-mode
+      ",c" 'org-capture-finalize
+      ",k" 'org-capture-kill
+      ",w" 'org-capture-refile))
 
   ;; major mode keybindings
   (+funcs/try-general-major-key org-mode-map
