@@ -90,7 +90,7 @@
    "bd"  '(kill-current-buffer :which-key "kill-current-buffer")
    "bi"  '(imenu-list-smart-toggle :which-key "imenu")
    "bI"  '(ibuffer :which-key "buffers list")
-   "bm"  '((lambda () (interactive) (+funcs/switch-buffer-or-create "*Messages*")) :which-key "*Messages*")
+   "bm"  '((lambda () (interactive) (switch-to-buffer (messages-buffer))) :which-key "*Messages*")
    "bn"  '(+funcs/new-empty-buffer :which-key "empty-buffer")
    "bs"  '((lambda () (interactive) (+funcs/switch-buffer-or-create "*scratch*")) :which-key "*scratch*")
    ;; Error Flycheck
