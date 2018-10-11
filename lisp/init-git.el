@@ -36,6 +36,11 @@
   ;; :hook (magit-blame-mode . (lambda () (setq magit-blame--style
   ;;                                            '(headings (heading-format . "%H %-20a %C %s\n")))))
   :config
+
+  ;; https://github.com/magit/magit/issues/2371#issuecomment-152746346
+  ;; value nil, vc mode-line update when buffer changed. t, update every auto-revert-interval seconds
+  ;; (setq auto-revert-check-vc-info t)
+
   (use-package evil-magit
     :ensure t)
   (evil-define-minor-mode-key 'normal 'with-editor-mode
