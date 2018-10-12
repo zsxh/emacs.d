@@ -126,6 +126,12 @@
   :commands insert-translated-name-insert
   :quelpa ((insert-translated-name :fetcher github :repo "manateelazycat/insert-translated-name")))
 
+;; Use system-wide command instead now
+;; Simplified and community-driven man pages
+;; (use-package tldr
+;;   :ensure t
+;;   :commands tldr)
+
 
 (provide 'init-experimental)
 
