@@ -52,8 +52,13 @@
   (defun +evil/compilation-mode-config ()
     (define-key compilation-mode-map "g" nil)
     (define-key compilation-mode-map "gr" 'recompile)
+    (define-key compilation-mode-map "h" nil)
+    (define-key compilation-mode-map "H" 'describe-mode)
     (evil-set-initial-state 'compilation-mode 'normal)
-    (evil-define-key 'normal compilation-mode-map "gr" 'recompile))
+    (evil-define-key 'normal compilation-mode-map
+      "gr" 'recompile
+      "H"  'describe-mode)
+    (evil-define-key 'motion compilation-mode-map "h" 'evil-backward-char))
   (add-hook 'compilation-mode-hook #'+evil/compilation-mode-config))
 
 ;; Evil keybinding collection
