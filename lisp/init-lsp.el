@@ -84,7 +84,7 @@
               (setq-local company-minimum-prefix-length 0)))
 
   ;; FIXME: my dap debug key settings
-  (defvar +dap/debug-minor-mode-map
+  (defvar +dap/debug-mode-map
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "n") 'dap-next)
       (define-key map (kbd "s") 'dap-step-in)
@@ -96,17 +96,17 @@
       map)
     "my dap mode debug keybindings")
 
-  (define-minor-mode +dap/debug-minor-mode
+  (define-minor-mode +dap/debug-mode
     "A minor mode for dap debug key settings."
     :init-value nil
-    :keymap +dap/debug-minor-mode-map)
+    :keymap +dap/debug-mode-map)
 
-  (define-global-minor-mode global-dap/debug-minor-mode +dap/debug-minor-mode
-    (lambda () (when (memq major-mode '(java-mode)) (+dap/debug-minor-mode))))
+  (define-global-minor-mode global-dap/debug-mode +dap/debug-mode
+    (lambda () (when (memq major-mode '(java-mode)) (+dap/debug-mode))))
 
   (with-eval-after-load 'evil
     (defun +dap/evil-debug-key-settings ()
-      (evil-define-key 'normal +dap/debug-minor-mode-map
+      (evil-define-key 'normal +dap/debug-mode-map
         "n" 'dap-next
         "s" 'dap-step-in
         "o" 'dap-step-out
@@ -114,15 +114,17 @@
         "B" 'dap-breakpoint-condition
         "c" 'dap-continue
         "C" 'dap-disconnect))
-    (add-hook '+dap/debug-minor-mode-hook #'+dap/evil-debug-key-settings))
+    (add-hook '+dap/debug-mode-hook #'+dap/evil-debug-key-settings))
 
   ;; `evil-define-key' for minor mode does not take effect until a state transition
   ;; Issue: https://github.com/emacs-evil/evil/issues/301
   (defun +dap/debug-key-settings--toggle ()
     (interactive)
-    (if +dap/debug-minor-mode
-        (global-dap/debug-minor-mode -1)
-      (global-dap/debug-minor-mode)
+    (if +dap/debug-mode
+        (progn
+          (global-dap/debug-mode -1)
+          (message "+dap/debug mode disabled"))
+      (global-dap/debug-mode)
       (when evil-mode
         (if (eq evil-state 'normal)
             (progn
@@ -131,7 +133,8 @@
           (progn
             (let ((cur-state evil-state))
               (evil-change-state 'normal)
-              (evil-change-state cur-state))))))))
+              (evil-change-state cur-state)))))
+      (message "+dap/debug mode enabled"))))
 
 
 (provide 'init-lsp)
