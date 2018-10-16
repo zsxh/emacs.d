@@ -49,12 +49,21 @@
   (when (featurep 'dap-mode)
     (require 'dap-java))
   (+funcs/try-general-major-key java-mode-map
+                                "d"  '(nil :which-key "debug")
+                                "db" '(dap-breakpoint-toggle :which-key "breakpoint")
+                                "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
+                                "dr" '(dap-java-debug :which-key "debug")
+                                "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
+                                "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
+                                "dk" '(+dap/debug-key-settings--toggle :which-key "toggle-debug-keybindings")
                                 "f"  '(lsp-format-buffer :which-key "format")
                                 "g"  '(nil :which-key "go")
                                 "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
                                 "gr" '(lsp-ui-peek-find-references :which-key "find-references")
-                                "gh" '(ccls-member-hierarchy :which-key "member-hierarchy")
                                 "j"  '(+java/set-jdk :which-key "set-jdk")
+                                "r"  '(nil :which-key "run")
+                                "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
+                                "rT" '(dap-java-run-test-class :which-key "run-junit-class")
                                 "R"  '(lsp-rename :which-key "rename")))
 
 (defvar jdk-installed-dir "/usr/local/"

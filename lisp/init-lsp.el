@@ -81,7 +81,57 @@
   (dap-ui-mode t)
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
-              (setq-local company-minimum-prefix-length 0))))
+              (setq-local company-minimum-prefix-length 0)))
+
+  ;; FIXME: my dap debug key settings
+  (defvar +dap/debug-minor-mode-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "n") 'dap-next)
+      (define-key map (kbd "s") 'dap-step-in)
+      (define-key map (kbd "o") 'dap-step-out)
+      (define-key map (kbd "b") 'dap-breakpoint-toggle)
+      (define-key map (kbd "B") 'dap-breakpoint-condition)
+      (define-key map (kbd "c") 'dap-continue)
+      (define-key map (kbd "C") 'dap-disconnect)
+      map)
+    "my dap mode debug keybindings")
+
+  (define-minor-mode +dap/debug-minor-mode
+    "A minor mode for dap debug key settings."
+    :init-value nil
+    :keymap +dap/debug-minor-mode-map)
+
+  (define-global-minor-mode global-dap/debug-minor-mode +dap/debug-minor-mode
+    (lambda () (when (memq major-mode '(java-mode)) (+dap/debug-minor-mode))))
+
+  (with-eval-after-load 'evil
+    (defun +dap/evil-debug-key-settings ()
+      (evil-define-key 'normal +dap/debug-minor-mode-map
+        "n" 'dap-next
+        "s" 'dap-step-in
+        "o" 'dap-step-out
+        "b" 'dap-breakpoint-toggle
+        "B" 'dap-breakpoint-condition
+        "c" 'dap-continue
+        "C" 'dap-disconnect))
+    (add-hook '+dap/debug-minor-mode-hook #'+dap/evil-debug-key-settings))
+
+  ;; `evil-define-key' for minor mode does not take effect until a state transition
+  ;; Issue: https://github.com/emacs-evil/evil/issues/301
+  (defun +dap/debug-key-settings--toggle ()
+    (interactive)
+    (if +dap/debug-minor-mode
+        (global-dap/debug-minor-mode -1)
+      (global-dap/debug-minor-mode)
+      (when evil-mode
+        (if (eq evil-state 'normal)
+            (progn
+              (evil-change-state 'emacs)
+              (evil-change-state 'normal))
+          (progn
+            (let ((cur-state evil-state))
+              (evil-change-state 'normal)
+              (evil-change-state cur-state))))))))
 
 
 (provide 'init-lsp)
