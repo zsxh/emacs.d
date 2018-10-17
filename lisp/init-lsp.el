@@ -116,16 +116,17 @@
         "C" 'dap-disconnect))
     (add-hook '+dap/debug-mode-hook #'+dap/evil-debug-key-settings))
 
-  ;; `evil-define-key' for minor mode does not take effect until a state transition
-  ;; Issue: https://github.com/emacs-evil/evil/issues/301
-  (defun +dap/debug-key-settings--toggle ()
-    (interactive)
-    (if +dap/debug-mode
-        (progn
-          (global-dap/debug-mode -1)
-          (message "+dap/debug mode disabled"))
+  (defun +dap/debug-mode-disable (&optional args)
+    (when +dap/debug-mode
+      (global-dap/debug-mode -1)
+      "+dap/debug mode disabled"))
+
+  (defun +dap/debug-mode-enable (&optional args)
+    (unless +dap/debug-mode
       (global-dap/debug-mode)
-      (when evil-mode
+      ;; `evil-define-key' for minor mode does not take effect until a state transition
+      ;; Issue: https://github.com/emacs-evil/evil/issues/301
+      (when (and (featurep 'evil) evil-mode)
         (if (eq evil-state 'normal)
             (progn
               (evil-change-state 'emacs)
@@ -134,7 +135,18 @@
             (let ((cur-state evil-state))
               (evil-change-state 'normal)
               (evil-change-state cur-state)))))
-      (message "+dap/debug mode enabled"))))
+      "+dap/debug mode enabled"))
+
+  ;; Manual
+  (defun +dap/debug-key-settings--toggle ()
+    (interactive)
+    (if +dap/debug-mode
+        (+dap/debug-mode-disable)
+      (+dap/debug-mode-enable)))
+
+  ;; Auto
+  (add-hook 'dap-session-created-hook #'+dap/debug-mode-enable)
+  (add-hook 'dap-terminated-hook #'+dap/debug-mode-disable))
 
 
 (provide 'init-lsp)
