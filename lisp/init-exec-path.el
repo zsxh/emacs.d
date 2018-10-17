@@ -39,7 +39,7 @@
   (defun +env/load-shell-env ()
     (when (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize)
-      (exec-path-from-shell-copy-env "LANG")))
+      (exec-path-from-shell-copy-envs '("LANG" "LD_LIBRARY_PATH"))))
   ;; Initialize
   (+env/load-shell-env)
 
