@@ -52,17 +52,26 @@
   :ensure t
   :requires init-lsp
   :commands lsp-python-enable
-  :hook (python-mode . (lambda ()
-                         (setq-local python-indent-offset 2)
-                         (setq-local company-backends
-                                     '((company-lsp :separate company-yasnippet)))
-                         (lsp-python-enable)
-                         (+python/python-setup-shell))))
+  :preface
+  (defun +python/lsp-python-config ()
+    (setq-local python-indent-offset 2)
+    (setq-local company-backends
+                '((company-lsp :separate company-yasnippet)))
+    (lsp-python-enable)
+    (+python/python-setup-shell))
+  :hook (python-mode . +python/lsp-python-config)
+  :config
+  (when (featurep 'dap-mode)
+    (require 'dap-python)))
 
 ;; Extra Keybindings
 (with-eval-after-load 'python
   (+funcs/try-general-major-key python-mode-map
                                 "'"  '(+python/repl :which-key "repl")
+                                "d"  '(nil :which-key "debug")
+                                "db" '(dap-breakpoint-toggle :which-key "breakpoint")
+                                "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
+                                "dr" '(dap-debug :which-key "debug")
                                 "c"  '(nil :which-key "compile-exec")
                                 "cc" '(+python/python-execute-file :which-key "execute-file")
                                 "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")

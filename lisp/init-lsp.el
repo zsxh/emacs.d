@@ -102,7 +102,9 @@
     :keymap +dap/debug-mode-map)
 
   (define-global-minor-mode global-dap/debug-mode +dap/debug-mode
-    (lambda () (when (memq major-mode '(java-mode)) (+dap/debug-mode))))
+    (lambda ()
+      (when (memq major-mode '(java-mode python-mode))
+        (+dap/debug-mode))))
 
   (with-eval-after-load 'evil
     (defun +dap/evil-debug-key-settings ()
