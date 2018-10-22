@@ -26,10 +26,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
+        <version>3.8.0</version>
         <configuration>
+          <!-- java 9 以下用 source/target -->
           <source>1.8</source>
           <target>1.8</target>
+          <!-- java 9 以上可以用 release -->
+          <!-- <release>8</release> -->
         </configuration>
       </plugin>
       <plugin>
@@ -41,7 +44,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>$0</mainClass>
+              <mainClass>${0:MainClass}</mainClass>
             </manifest>
           </archive>
         </configuration>
