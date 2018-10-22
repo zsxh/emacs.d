@@ -220,6 +220,9 @@
   :hook (emacs-startup . global-move-dup-mode))
 
 
+(use-package popwin
+  :ensure t)
+
 (provide 'init-editor)
 
 ;;; init-editor.el ends here

@@ -93,9 +93,11 @@
    "bm"  '((lambda () (interactive) (switch-to-buffer (messages-buffer))) :which-key "*Messages*")
    "bn"  '(+funcs/new-empty-buffer :which-key "empty-buffer")
    "bs"  '((lambda () (interactive) (+funcs/switch-buffer-or-create "*scratch*")) :which-key "*scratch*")
-   ;; Error Flycheck
+   ;; Error
    "e"   '(nil :which-key "error")
-   "el"  '(flycheck-list-errors :which-key "flycheck-list-errors")
+   "el"  '(+flycheck/toggle-flycheck-error-list :which-key "list-errors")
+   "eL"  '(+flycheck/goto-flycheck-error-list :which-key "list-errors-and-focus")
+   "ep"  '(+flycheck/popup-errors :which-key "popup-errors")
    "et"  '(tiny-expand :which-key "tiny-expand")
    "ev"  '(flycheck-verify-setup :which-key "flycheck-verify-setup")
    ;; Files
