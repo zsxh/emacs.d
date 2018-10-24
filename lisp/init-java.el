@@ -40,11 +40,14 @@
     (setq-local company-minimum-prefix-length 0)
     (setq-local company-backends
                 '((company-lsp :separate company-yasnippet)))
-    (lsp-java-enable))
+    ;; FIXME: lsp workspace doesnot work well
+    (setq lsp-java--workspace-folders (list (projectile-project-root)))
+    (lsp-java-enable)
+    ;; (lsp-workspace-folders-add (list (lsp-java--get-root)))
+    )
   :hook (java-mode . +java/lsp-java-configs)
   :config
-  (setq lsp-java-server-install-dir "~/.emacs.d/.cache/eclipse.jdt.ls/server"
-        lsp-java--workspace-folders (list (projectile-project-root)))
+  (setq lsp-java-server-install-dir "~/.emacs.d/.cache/eclipse.jdt.ls/server")
   ;; debugger
   (when (featurep 'dap-mode)
     (require 'dap-java))
