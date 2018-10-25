@@ -45,6 +45,11 @@
                (funcall fn)))))
   (advice-add 'show-paren-function :around #'show-paren-function-advice))
 
+;; Similar to show-paren-mode
+;; (use-package highlight-parentheses
+;;   :ensure t
+;;   :hook (after-init . global-highlight-parentheses-mode))
+
 ;; Color String
 (use-package rainbow-mode
   :ensure t
