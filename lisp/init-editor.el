@@ -128,7 +128,7 @@
   :config
   (auto-save-enable)
   (setq auto-save-slient t)
-  (setq auto-save-delete-trailing-whitespace t))
+  (add-hook 'prog-mode-hook (lambda () (setq-local auto-save-delete-trailing-whitespace t))))
 
 ;; It allows you to select and edit matches interactively
 (use-package evil-multiedit
@@ -219,9 +219,9 @@
   :ensure t
   :hook (emacs-startup . global-move-dup-mode))
 
-
 (use-package popwin
   :ensure t)
+
 
 (provide 'init-editor)
 

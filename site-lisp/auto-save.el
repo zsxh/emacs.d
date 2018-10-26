@@ -6,8 +6,8 @@
 ;; Maintainer: Andy Stewart lazycat.manatee@gmail.com
 ;; Copyright (C) 2013 ~ 2014, Andy Stewart, all rights reserved.
 ;; Created: 2013-12-31 00:32:00
-;; Version: 0.2
-;; Last-Updated: 2018-07-06 20:42:15
+;; Version: 0.4
+;; Last-Updated: 2018-10-05 08:00:39
 ;;           By: Andy Stewart
 ;; URL:
 ;; Keywords: autosave
@@ -54,19 +54,25 @@
 ;; (require 'init-auto-save)
 ;; (auto-save-enable)
 ;;
-;; Set `auto-save-slient' with non-nil if want emacs save files slient:
-;; (setq auto-save-slient t)
+;; Set `auto-save-silent' with non-nil if want emacs save files slient:
+;; (setq auto-save-silent t)
 ;;
 ;; No need more.
 
 ;;; Change log:
+;;
+;; 2018/10/05
+;;      * Update font lock before save file.
+;;
+;; 2018/08/14
+;;      *Fixed typo, change `auto-save-slient' to `auto-save-silent'.
 ;;
 ;; 2018/07/06
 ;;      * Add new option `auto-save-delete-trailing-whitespace'.
 ;;
 ;; 2014/01/04
 ;;      * Add new function `auto-save-enable' to enable auto-save in user config file.
-;;      * Add options: `auto-save-idle' and `auto-save-slient'.
+;;      * Add options: `auto-save-idle' and `auto-save-silent'.
 ;;
 ;; 2008/10/20
 ;;      First released.
@@ -96,7 +102,7 @@
   :type 'integer
   :group 'auto-save)
 
-(defcustom auto-save-slient nil
+(defcustom auto-save-silent nil
   "Nothing to dirty minibuffer if this option is non-nil."
   :type 'boolean
   :group 'auto-save)
@@ -121,13 +127,13 @@ avoid delete current indent space when you programming."
           (if (and (buffer-file-name) (buffer-modified-p))
               (progn
                 (push (buffer-name) autosave-buffer-list)
-                (if auto-save-slient
+                (if auto-save-silent
                     (with-temp-message ""
                       (basic-save-buffer))
                   (basic-save-buffer))
                 )))
         ;; Tell user when auto save files.
-        (unless auto-save-slient
+        (unless auto-save-silent
           (cond
            ;; It's stupid tell user if nothing to save.
            ((= (length autosave-buffer-list) 1)
@@ -156,7 +162,9 @@ avoid delete current indent space when you programming."
 (defun auto-save-enable ()
   (interactive)
   (run-with-idle-timer auto-save-idle t #'auto-save-buffers)
-  (add-hook 'before-save-hook 'auto-save-delete-trailing-whitespace-except-current-line))
+  (add-hook 'before-save-hook 'auto-save-delete-trailing-whitespace-except-current-line)
+  (add-hook 'before-save-hook 'font-lock-flush)
+  )
 
 (provide 'auto-save)
 
