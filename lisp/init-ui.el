@@ -70,7 +70,12 @@
 (use-package doom-modeline
   :ensure t
   :defer t
-  :hook (after-init . doom-modeline-init))
+  :preface
+  (defun my-doomline-init ()
+    (doom-modeline-init)
+    (with-current-buffer "*Messages*"
+      (doom-modeline-set-modeline 'main)))
+  :hook (after-init . my-doomline-init))
 
 ;; Display time on modeline
 (setq display-time-format "%Y/%m/%d 周%a %H:%M")
