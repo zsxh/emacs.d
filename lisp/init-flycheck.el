@@ -32,7 +32,7 @@
 
 (use-package flycheck
   :ensure t
-  :hook (prog-mode . global-flycheck-mode)
+  :hook (lsp-mode . flycheck-mode)
   :config
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)
