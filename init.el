@@ -91,6 +91,7 @@
 (require 'init-debugger)
 
 ;; Language
+(require 'init-eglot)
 (require 'init-lsp)
 (require 'init-emacs-lisp)
 (require 'init-common-lisp)
