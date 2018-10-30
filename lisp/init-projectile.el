@@ -39,7 +39,11 @@
   :hook (after-init . projectile-mode)
   :config
   ;; switch project to project root dir instead of project file
-  (setq projectile-switch-project-action #'projectile-dired))
+  (setq projectile-switch-project-action #'projectile-dired)
+  (with-eval-after-load 'ivy
+    (setq projectile-completion-system 'ivy))
+  ;; cache file in ~/.emacs.d/projectile.cache
+  (setq projectile-enable-caching t))
 
 
 (provide 'init-projectile)
