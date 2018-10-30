@@ -36,7 +36,10 @@
 
 (use-package projectile
   :ensure t
-  :hook (after-init . projectile-mode))
+  :hook (after-init . projectile-mode)
+  :config
+  ;; switch project to project root dir instead of project file
+  (setq projectile-switch-project-action #'projectile-dired))
 
 
 (provide 'init-projectile)
