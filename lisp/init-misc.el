@@ -74,7 +74,9 @@
              youdao-dictionary-search-at-point-tooltip
              youdao-dictionary-play-voice-at-point)
   :config
-  (setq url-automatic-caching t))
+  (setq url-automatic-caching t)
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal youdao-dictionary-mode-map "q" 'quit-window)))
 
 ;; Markdowm
 (with-eval-after-load 'markdown-mode
