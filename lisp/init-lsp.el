@@ -37,7 +37,7 @@
   :commands lsp-mode
   :init (setq lsp-inhibit-message t
               lsp-eldoc-render-all nil
-              lsp-highlight-symbol-at-point nil)
+              lsp-highlight-symbol-at-point t)
   :config
   (require 'lsp-imenu)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
@@ -57,7 +57,9 @@
  (use-package lsp-ui
    :after lsp-mode
    :ensure t
-   :preface (setq lsp-ui-doc-enable nil)
+   ;; disable lsp-ui doc and sideline
+   :preface (setq lsp-ui-doc-enable nil
+                  lsp-ui-sideline-enable nil)
    :hook (lsp-after-open . lsp-ui-mode)
    :bind (:map lsp-ui-peek-mode-map
                ("j" . lsp-ui-peek--select-next)
