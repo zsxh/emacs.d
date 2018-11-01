@@ -42,6 +42,16 @@ It returns the buffer (for elisp programing)."
     (setq buffer-offer-save t)
     $buf))
 
+(defun +funcs/switch-empty-buffer-or-create (name)
+  "Switch or create a new empty buffer.
+New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”, etc.
+
+It returns the buffer (for elisp programing)."
+  (let ((target-buffer (get-buffer name)))
+    (if target-buffer
+        (switch-to-buffer target-buffer)
+      (+funcs/new-empty-buffer))))
+
 (defun +funcs/switch-buffer-or-create (name)
   "Switch to the NAME buffer.
 If the buffer doesn't exist, create a lisp-interaction buffer

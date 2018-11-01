@@ -92,7 +92,8 @@
    "bi"  '(imenu-list-smart-toggle :which-key "imenu")
    "bI"  '(ibuffer :which-key "buffers list")
    "bm"  '((lambda () (interactive) (switch-to-buffer (messages-buffer))) :which-key "*Messages*")
-   "bn"  '(+funcs/new-empty-buffer :which-key "empty-buffer")
+   "bn"  '((lambda () (interactive) (+funcs/switch-empty-buffer-or-create "untitled")) :which-key "empty-buffer")
+   "bN"  '(+funcs/new-empty-buffer :which-key "empty-buffer")
    "bs"  '((lambda () (interactive) (+funcs/switch-buffer-or-create "*scratch*")) :which-key "*scratch*")
    ;; Error
    "e"   '(nil :which-key "error")
