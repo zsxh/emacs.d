@@ -42,12 +42,12 @@
     ;; Custom Keybindings
     (evil-define-key 'normal neotree-mode-map
       "h" '+neotree/neotree-collapse-or-up
-      "l" '+neotree/neotree-expand-or-open
+      "l" '+neotree/neotree-expand
       "K" 'neotree-select-up-node
       "J" 'neotree-select-down-node
       "R" 'neotree-change-root
       "\C-a" 'move-beginning-of-line
-      "\C-e" 'move-end-of-line))
+      "\C-e" 'move-end-of-line)
   (with-eval-after-load 'winum
     ;; window 0 is reserved for file trees
     (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func)))
@@ -69,6 +69,19 @@
             (neotree-enter arg)
           (let ((mru-winum (winum-get-number (get-mru-window))))
             (apply 'neotree-enter (list mru-winum))))))))
+
+(defun +neotree/neotree-expand ()
+  "Expand a neotree node"
+  (interactive)
+  (let ((node (neo-buffer--get-filename-current-line)))
+    (when node
+      (if (file-directory-p node)
+          (progn
+            (neo-buffer--set-expand node t)
+            (neo-buffer--refresh t)
+            (when neo-auto-indent-point
+              (forward-line)
+              (neo-point-auto-indent)))))))
 
 (defun +neotree/neotree-collapse ()
   "Collapse a neotree node."
