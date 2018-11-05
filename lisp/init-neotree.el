@@ -47,7 +47,7 @@
       "J" 'neotree-select-down-node
       "R" 'neotree-change-root
       "\C-a" 'move-beginning-of-line
-      "\C-e" 'move-end-of-line)
+      "\C-e" 'move-end-of-line))
   (with-eval-after-load 'winum
     ;; window 0 is reserved for file trees
     (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func)))
