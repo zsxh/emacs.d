@@ -36,7 +36,8 @@
   :bind (:map ivy-minibuffer-map
               ("C-k" . ivy-previous-line)
               ("C-j" . ivy-next-line)
-              ("C-M-j" . ivy-immediate-done))
+              ("C-M-j" . ivy-immediate-done)
+              ("C-c C-o" . ivy-occur))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
