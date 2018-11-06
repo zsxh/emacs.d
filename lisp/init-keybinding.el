@@ -124,13 +124,14 @@
    "hp"  '(helpful-at-point :which-key "helpful-at-point")
    ;; Jump
    "j"   '(nil :which-key "jump/goto")
+   "jc"  '(avy-goto-char :which-key "avy-goto-char")
    "jd"  '(dired-jump :which-key "dired-jump")
    "jD"  '(dired-jump-other-window :which-key "dired-jump-other-window")
-   "jc"  '(avy-goto-char :which-key "avy-goto-char")
+   "je"  '(avy-goto-word-0 :which-key "avy-goto-word-0")
+   "jf"  '(find-file-at-point :which-key "find-file-at-point")
    "jj"  '(avy-goto-char-in-line :which-key "avy-goto-char-in-line")
    "jl"  '(avy-goto-line :which-key "avy-goto-line")
    "jw"  '(avy-goto-word-1 :which-key "avy-goto-word-1")
-   "je"  '(avy-goto-word-0 :which-key "avy-goto-word-0")
    ;; Project
    "p"   '(nil :which-key "project")
    "p/"  '(color-rg-search-project :which-key "rg-search-project")
