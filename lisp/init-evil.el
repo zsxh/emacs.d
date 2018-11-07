@@ -59,7 +59,11 @@
       "gr" 'recompile
       "H"  'describe-mode)
     (evil-define-key 'motion compilation-mode-map "h" 'evil-backward-char))
-  (add-hook 'compilation-mode-hook #'+evil/compilation-mode-config))
+  (add-hook 'compilation-mode-hook #'+evil/compilation-mode-config)
+
+  ;; https://emacs.stackexchange.com/questions/31438/possible-not-to-use-undo-tree-in-evil-mode/34214#34214
+  ;; https://github.com/emacs-evil/evil/issues/1074
+  (setq undo-tree-enable-undo-in-region nil))
 
 ;; Evil keybinding collection
 (use-package evil-collection
