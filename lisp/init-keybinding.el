@@ -137,7 +137,7 @@
    "p/"  '(color-rg-search-project :which-key "rg-search-project")
    "p'"  '(+shell/projectile-shell-pop :which-key "projectile-root-shell-pop")
    "pd"  '(projectile-dired :which-key "projectile-dired")
-   "pf"  '(projectile-find-file :which-key "projectile-find-file")
+   "pf"  '(counsel-git :which-key "counsel-git-find-file")
    "pp"  '(projectile-switch-project :which-key "projectile-switch-project")
    "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
