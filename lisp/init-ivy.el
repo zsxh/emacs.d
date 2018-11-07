@@ -68,8 +68,8 @@
 
 ;; ivy-posframe
 (use-package ivy-posframe
-  :after ivy
-  :ensure t
+  ;; :after ivy
+  :defer t
   :config
   ;; (setq ivy-display-function #'ivy-posframe-display)
   (setq ivy-display-function #'ivy-posframe-display-at-frame-bottom-left)
