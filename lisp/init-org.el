@@ -38,7 +38,14 @@
   ;; org agenda
   (setq org-directory "~/org")
   (setq org-agenda-files '("~/org/gtd"))
-  (setq org-default-notes-file (concat org-directory "/gtd/caputure.org")))
+  (setq org-default-notes-file (concat org-directory "/gtd/caputure.org"))
+  ;; Org table font
+  (custom-set-faces
+   '(org-table ((t (:family "Ubuntu Mono derivative Powerline")))))
+  (set-face-background 'org-block "#E0E0E0")
+  (set-face-background 'org-quote nil)
+  (set-face-background 'org-block-begin-line nil)
+  (set-face-background 'org-block-end-line nil))
 
 ;; Org-mode keybindings
 (use-package evil-org

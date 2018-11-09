@@ -86,10 +86,6 @@
 ;; (set-frame-font "SF Mono 13" nil t)
 (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)
 
-;; Org table font
-(custom-set-faces
- '(org-table ((t (:family "Ubuntu Mono derivative Powerline")))))
-
 ;; Line Number
 ;; (use-package display-line-numbers
 ;;   :ensure nil
