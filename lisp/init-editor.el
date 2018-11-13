@@ -128,7 +128,8 @@
   :config
   (auto-save-enable)
   (setq auto-save-slient t)
-  (add-hook 'prog-mode-hook (lambda () (setq-local auto-save-delete-trailing-whitespace t))))
+  (dolist (hook (list 'prog-mode-hook 'yaml-mode-hook))
+    (add-hook hook (lambda () (setq-local auto-save-delete-trailing-whitespace t)))))
 
 ;; It allows you to select and edit matches interactively
 (use-package evil-multiedit
