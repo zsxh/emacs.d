@@ -135,10 +135,11 @@
    ;; Project
    "p"   '(nil :which-key "project")
    "p/"  '(color-rg-search-project :which-key "rg-search-project")
-   "p'"  '(+shell/projectile-shell-pop :which-key "projectile-root-shell-pop")
-   "pd"  '(projectile-dired :which-key "projectile-dired")
-   "pf"  '(counsel-git :which-key "counsel-git-find-file")
-   "pp"  '(projectile-switch-project :which-key "projectile-switch-project")
+   "p'"  '(+shell/projectile-shell-pop :which-key "project-root-shell-pop")
+   "pb"  '(projectile-switch-to-buffer :which-key "switch-to-project-buffer")
+   "pd"  '(projectile-dired :which-key "project-root-dired")
+   "pf"  '(counsel-git :which-key "project-find-file")
+   "pp"  '(projectile-switch-project :which-key "switch-project")
    "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
    "t"   '(nil :which-key "text")
