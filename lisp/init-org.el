@@ -45,7 +45,30 @@
   (set-face-background 'org-block "#E0E0E0")
   (set-face-background 'org-quote nil)
   (set-face-background 'org-block-begin-line nil)
-  (set-face-background 'org-block-end-line nil))
+  (set-face-background 'org-block-end-line nil)
+
+  ;; An extension to restclient.el for emacs that provides org-babel support
+  (when (package-installed-p 'restclient)
+    (use-package ob-restclient
+      :after org
+      :ensure t))
+
+  ;; https://github.com/gregsexton/ob-ipython
+  ;; enable ob-ipython and ob-python
+  (use-package ob-ipython
+    :after org
+    :ensure t)
+
+  ;; enable ob-*lang* yourself
+  (require 'ob-shell)
+
+  (org-babel-do-load-languages 'org-babel-do-load-languages
+                               '((emacs-lisp . t)
+                                 (shell . t)
+                                 (java . t)
+                                 (python . t)
+                                 (ipython . t)
+                                 (restclient . t))))
 
 ;; Org-mode keybindings
 (use-package evil-org
@@ -110,20 +133,6 @@
   ;; (setq op/highlight-render 'htmlize)
   (setq op/theme 'mdo))
 
-;; ========================
-;; Org Bable Configuations
-;; ========================
-
-;; An extension to restclient.el for emacs that provides org-babel support
-(when (package-installed-p 'restclient)
-  (use-package ob-restclient
-    :after org
-    :ensure t
-    :config
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((restclient . t)))))
-
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
   :after org
@@ -134,15 +143,6 @@
                (setq inferior-julia-program-name "julia")))
   ;; ob-python define their own :async keyword that conflicts with ob-async
   (setq ob-async-no-async-languages-alist '("ipython")))
-
-;; https://github.com/gregsexton/ob-ipython
-(use-package ob-ipython
-  :after org
-  :ensure t
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((ipython . t))))
 
 
 (provide 'init-org)
