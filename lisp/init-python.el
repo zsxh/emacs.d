@@ -62,7 +62,23 @@
   :hook (python-mode . +python/lsp-python-config)
   :config
   (when (featurep 'dap-mode)
-    (require 'dap-python)))
+    (require 'dap-python))
+
+  ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+  (defun org-babel-edit-prep:python (babel-info)
+    "Prepare the local buffer environment for Org source block."
+    (let ((lsp-file (or (->> babel-info caddr (alist-get :file))
+                        buffer-file-name)))
+      (setq-local buffer-file-name lsp-file)
+      (setq-local lsp-buffer-uri (lsp--path-to-uri buffer-file-name))
+      (+python/lsp-python-config)))
+  (defun org-babel-edit-prep:ipython (babel-info)
+    "Prepare the local buffer environment for Org source block."
+    (let ((lsp-file (or (->> babel-info caddr (alist-get :file))
+                        buffer-file-name)))
+      (setq-local buffer-file-name lsp-file)
+      (setq-local lsp-buffer-uri (lsp--path-to-uri buffer-file-name))
+      (+python/lsp-python-config))))
 
 ;; Extra Keybindings
 (with-eval-after-load 'python
