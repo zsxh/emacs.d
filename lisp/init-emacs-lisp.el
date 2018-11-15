@@ -39,6 +39,8 @@
               ("C-c C-b" . eval-buffer)
               ("C-c C-:" . pp-eval-expression)
               ("C-c C-d" . edebug-defun))
+  :hook (emacs-lisp-mode . (lambda ()
+                             (setq-local company-backends '((company-capf)))))
   :config
   (+funcs/try-general-major-key (emacs-lisp-mode-map lisp-interaction-mode-map)
                                 "'"  '(ielm :which-key "ielm")
@@ -87,6 +89,9 @@
 (use-package elisp-refs
   :ensure t)
 
+;; Set lisp-interaction-mode company-backends
+(add-hook 'lisp-interaction-mode-hook
+          #'(lambda () (setq-local company-backends '((company-capf)))))
 
 (provide 'init-emacs-lisp)
 
