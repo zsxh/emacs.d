@@ -92,7 +92,9 @@
 ;; "z m" evil-close-folds
 ;; "z r" evil-open-folds
 (use-package hideshow
-  :hook (prog-mode . hs-minor-mode))
+  :hook (prog-mode . hs-minor-mode)
+  :config
+  (define-key evil-normal-state-map (kbd "z f") 'hs-hide-level))
 
 (provide 'init-evil)
 
