@@ -60,6 +60,8 @@
 
 (setq read-file-name-completion-ignore-case t) ; file ignores case
 
+(setq-default truncate-lines t)
+
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
 (setq-default c-basic-offset   2
