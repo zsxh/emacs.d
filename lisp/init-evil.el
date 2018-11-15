@@ -61,6 +61,16 @@
     (evil-define-key 'motion compilation-mode-map "h" 'evil-backward-char))
   (add-hook 'compilation-mode-hook #'+evil/compilation-mode-config)
 
+  ;; process-menu-mode config
+  (defun +evil/process-menu-mode-config ()
+    (evil-define-key 'normal process-menu-mode-map
+      "S" 'tabulated-list-sort
+      "d" 'process-menu-delete-process
+      "g" 'revert-buffer
+      "?" 'discribe-mode
+      "q" 'quit-window))
+  (add-hook 'process-menu-mode-hook #'+evil/process-menu-mode-config)
+
   ;; https://emacs.stackexchange.com/questions/31438/possible-not-to-use-undo-tree-in-evil-mode/34214#34214
   ;; https://github.com/emacs-evil/evil/issues/1074
   (setq undo-tree-enable-undo-in-region nil))
