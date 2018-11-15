@@ -35,13 +35,21 @@
   :mode ("\\.org\\'" . org-mode)
   :commands org-open-at-point
   :config
+  (setq org-confirm-babel-evaluate nil) ;don't prompt me to confirm everytime I want to evaluate a block
+
+  ;; display/update images in the buffer after I evaluate
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+
   ;; org agenda
   (setq org-directory "~/org")
   (setq org-agenda-files '("~/org/gtd"))
   (setq org-default-notes-file (concat org-directory "/gtd/caputure.org"))
+
   ;; Org table font
   (custom-set-faces
    '(org-table ((t (:family "Ubuntu Mono derivative Powerline")))))
+
+  ;; Org block face
   (set-face-background 'org-block "#E0E0E0")
   (set-face-background 'org-quote nil)
   (set-face-background 'org-block-begin-line nil)
