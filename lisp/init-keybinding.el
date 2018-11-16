@@ -138,7 +138,8 @@
    "p'"  '(+shell/projectile-shell-pop :which-key "project-root-shell-pop")
    "pb"  '(projectile-switch-to-buffer :which-key "switch-to-project-buffer")
    "pd"  '(projectile-dired :which-key "project-root-dired")
-   "pf"  '(counsel-git :which-key "project-find-file")
+   "pf"  '(project-find-file :which-key "project-find-file")
+   "pg"  '(counsel-git :which-key "counsel-git")
    "pp"  '(projectile-switch-project :which-key "switch-project")
    "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
