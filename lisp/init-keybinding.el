@@ -122,6 +122,8 @@
    "hk"  '(helpful-key :which-key "helpful-key")
    "hv"  '(helpful-variable :which-key "helpful-variable")
    "hp"  '(helpful-at-point :which-key "helpful-at-point")
+   "hw"  '(nil :which-key "which-key")
+   "hwk" '(which-key-show-top-level :which-key "show-top-level")
    ;; Jump
    "j"   '(nil :which-key "jump/goto")
    "jc"  '(avy-goto-char :which-key "avy-goto-char")
