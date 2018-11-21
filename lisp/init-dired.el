@@ -35,7 +35,7 @@
   :ensure nil
   :init
   ;; dired "human-readable" format
-  (setq dired-listing-switches "-alh --group-directories-first")
+  (setq dired-listing-switches "-alh --time-style=long-iso --group-directories-first")
   :config
   ;; Customize dired-directory foreground color
   (set-face-foreground 'dired-directory "#3B6EA8")
