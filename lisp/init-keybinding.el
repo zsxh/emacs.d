@@ -150,6 +150,11 @@
    "tit" '(insert-translated-name-insert :which-key "chinese->engish")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
    "ts"  '(hydra-text-scale/body :which-key "scale")
+   ;; View
+   "v"   '(nil :which-key "view")
+   "vn"  '(ivy-push-view :which-key "ivy-push-view")
+   "vd"  '(ivy-pop-view :which-key "ivy-pop-view")
+   "vv"  '(ivy-switch-view :which-key "ivy-switch-view")
    ;; Window
    "w"   '(nil :which-key "window")
    "w/"  '(split-window-right :which-key "split-right")
