@@ -40,6 +40,7 @@
   :commands pyenv-mode
   :hook (python-mode . pyenv-mode))
 
+;; https://emacs-china.org/t/emacs-pipenv-el-make-process-color-code-0m/7614
 (use-package pipenv
   :ensure t
   :commands pipenv-mode
