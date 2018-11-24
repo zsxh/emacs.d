@@ -36,6 +36,9 @@
   :defer 1
   :ensure t
   :config
+  ;; Performance improvement: I already set environment variable in .zshenv,so no need to check .zshrc
+  (setq exec-path-from-shell-check-startup-files nil)
+
   (defun +env/load-shell-env ()
     (when (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize)
