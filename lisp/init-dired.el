@@ -52,17 +52,27 @@
       "," nil))
   (+funcs/try-general-major-key dired-mode-map
                                 "/" '(dired-narrow :which-key "dired-narrow")
-                                "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
+                                "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp"))
+
+  ;; Editable Dired mode configs
+  (with-eval-after-load 'wdired
+    (+funcs/try-general-major-key wdired-mode-map
+                                  "c" '(wdired-finish-edit :which-key "finish edit")
+                                  "k" '(wdired-abort-changes :which-key "abort changes")
+                                  "q" '(wdired-exit :which-key "exit"))
+    (when all-the-icons-dired-mode
+      (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
+      (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode))))))
 
 ;; Editable Dired mode configs
-(use-package wdired
-  :ensure nil
-  :defer t
-  :config
-  (+funcs/try-general-major-key wdired-mode-map
-                                "c" '(wdired-finish-edit :which-key "finish edit")
-                                "k" '(wdired-abort-changes :which-key "abort changes")
-                                "q" '(wdired-exit :which-key "exit")))
+;; (use-package wdired
+;;   :ensure nil
+;;   :defer t
+;;   :config
+;;   (+funcs/try-general-major-key wdired-mode-map
+;;                                 "c" '(wdired-finish-edit :which-key "finish edit")
+;;                                 "k" '(wdired-abort-changes :which-key "abort changes")
+;;                                 "q" '(wdired-exit :which-key "exit")))
 
 (provide 'init-dired)
 
