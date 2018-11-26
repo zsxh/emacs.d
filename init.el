@@ -107,6 +107,7 @@
 
 ;; Misc
 (require 'init-misc)
+(require 'init-keyfreq)
 
 (add-hook 'emacs-startup-hook (lambda () (setq debug-on-error nil)))
 
