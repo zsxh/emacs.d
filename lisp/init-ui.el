@@ -83,7 +83,9 @@
     (doom-modeline-init)
     (with-current-buffer "*Messages*"
       (doom-modeline-set-modeline 'main)))
-  :hook (after-init . my-doomline-init))
+  :hook (after-init . my-doomline-init)
+  :config
+  (setq doom-modeline-major-mode-icon nil))
 
 ;; Display time on modeline
 (setq display-time-format "%Y/%m/%d 周%a %H:%M")
