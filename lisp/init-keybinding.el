@@ -105,7 +105,8 @@
    ;; Files
    "f"   '(nil :which-key "file")
    "ff"  '(counsel-find-file :which-key "find-files")
-   "fe"  '(+funcs/sudo-edit-current-file :which-key "sudo edit current file")
+   "fe"  '(+funcs/sudo-edit-current-file :which-key "sudo-edit-current-file")
+   "fp"  '(xah-copy-file-path :which-key "copy-file-path")
    ;; Git
    "g"   '(nil :which-key "git")
    "gb"  '(magit-blame :which-key "magit-blame")
@@ -146,10 +147,13 @@
    "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
    "t"   '(nil :which-key "text")
+   "tb"  '(xah-select-block :which-key "select-block")
+   "td"  '(xah-delete-current-text-block :which-key "delete-block")
    "ti"  '(nil :which-key "insert")
    "tit" '(insert-translated-name-insert :which-key "chinese->engish")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
    "ts"  '(hydra-text-scale/body :which-key "scale")
+   "tw"  '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    ;; View
    "v"   '(nil :which-key "view")
    "vn"  '(ivy-push-view :which-key "ivy-push-view")
