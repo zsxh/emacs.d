@@ -108,10 +108,11 @@
     (setq imenu-list-focus-after-activation t
           imenu-list-auto-resize t)))
 
-;; Easy way to swqp window
+;; Easy way to jump/swap window
 (use-package ace-window
   :ensure t
-  :commands (ace-swap-window))
+  :bind (("C-u" . ace-window))
+  :commands (ace-window ace-swap-window))
 
 ;; Treat undo history as a tree
 (use-package undo-tree
