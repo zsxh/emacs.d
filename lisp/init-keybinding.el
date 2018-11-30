@@ -121,6 +121,7 @@
    "hf"  '(helpful-callable :which-key "helpful-callable")
    "hF"  '(describe-face :which-key "describe-face")
    "hk"  '(helpful-key :which-key "helpful-key")
+   "hS"  '(hydra-emacs-cheatsheet/body :which-key "my-emacs-cheatsheet")
    "hv"  '(helpful-variable :which-key "helpful-variable")
    "hp"  '(helpful-at-point :which-key "helpful-at-point")
    "hw"  '(nil :which-key "which-key")
@@ -193,7 +194,15 @@
     ("j" shrink-window "shrink-window" :color pink)
     ("k" enlarge-window "enlarge-window" :color pink)
     ("b" balance-windows "balance" :color pink)
-    ("q" nil "cancel" :color blue)))
+    ("q" nil "cancel" :color blue))
+  (defhydra hydra-emacs-cheatsheet (:color pink :hint nil :exit t)
+    "
+    ^Emacs Cheatsheet^
+    ^^^^^----------------------
+    _s_: \"C-x TAB\" indent-rigidly
+    "
+    ("s" indent-rigidly)                ; shift line[s] left/right
+    ("c" nil "cancel")))
 
 (provide 'init-keybinding)
 
