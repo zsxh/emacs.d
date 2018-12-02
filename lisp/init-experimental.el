@@ -56,18 +56,35 @@
             (cond
              ;; 为了 helm-dash browser 为 eaf 时,设置j->down,k->up
              ((and (eq major-mode 'eaf-mode)
-                   (evil-normal-state-p)
+                   (not (evil-emacs-state-p))
                    (string-equal buffer-app-name "browser"))
               (progn
                 (let ((key-desc (key-description (make-vector 1 last-command-event)))
                       (target-desc nil))
-                  (cond
-                   ((string-equal key-desc "j")
-                    (setq target-desc "<down>"))
-                   ((string-equal key-desc "k")
-                    (setq target-desc "<up>")))
-                  (eaf-call "send_key" buffer-id target-desc))
-                (setq last-command-event nil)))
+                  (when (member key-desc '("j" "k"))
+                    (cond
+                     ((string-equal key-desc "j")
+                      (eaf-call "send_key" buffer-id "<down>"))
+                     ((string-equal key-desc "k")
+                      (eaf-call "send_key"  buffer-id "<up>")))
+                    (setq last-command-event nil)))))
+
+             ;; for pdfviewer
+             ((and (eq major-mode 'eaf-mode)
+                   (not (evil-emacs-state-p))
+                   (string-equal buffer-app-name "pdfviewer"))
+              (progn
+                (let* ((event last-command-event)
+                       (key (make-vector 1 event))
+                       (key-command (format "%s" (key-binding key)))
+                       (key-desc (key-description key)))
+                  (when (or
+                         (equal key-command "digit-argument")
+                         (member key-desc '("j" "k" "f" "b" "," "." "t" "-" "=" "0" "g" "p" "[" "]")))
+                    (if (string-equal key-desc "f")
+                        (eaf-call "send_key" buffer-id "SPC")
+                      (eaf-call "send_key" buffer-id key-desc))
+                    (setq last-command-event nil)))))
 
              ;; 其余根据evil mode state 再决定
              ((and (eq major-mode 'eaf-mode)
