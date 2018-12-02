@@ -38,11 +38,11 @@
 
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
-  :init
+  :commands (eaf-open eaf-open-url)
+  :preface
   (defun eaf-qutebrowser ()
     (interactive)
     (eaf-open "eaf-qutebrowser"))
-  :commands (eaf-open eaf-open-url)
   :config
   (when personal-eaf-grip-token
     (setq eaf-grip-token personal-eaf-grip-token))
@@ -53,51 +53,69 @@
     (unless
         (ignore-errors
           (with-current-buffer (buffer-name)
-            (when (and (eq major-mode 'eaf-mode)
-                       (evil-emacs-state-p))
-              (let* ((event last-command-event)
-                     (key (make-vector 1 event))
-                     (key-command (format "%s" (key-binding key)))
-                     (key-desc (key-description key)))
+            (cond
+             ;; 为了 helm-dash browser 为 eaf 时,设置j->down,k->up
+             ((and (eq major-mode 'eaf-mode)
+                   (evil-normal-state-p)
+                   (string-equal buffer-app-name "browser"))
+              (progn
+                (let ((key-desc (key-description (make-vector 1 last-command-event)))
+                      (target-desc nil))
+                  (cond
+                   ((string-equal key-desc "j")
+                    (setq target-desc "<down>"))
+                   ((string-equal key-desc "k")
+                    (setq target-desc "<up>")))
+                  (eaf-call "send_key" buffer-id target-desc))
+                (setq last-command-event nil)))
 
-                ;; Uncomment for debug.
-                ;; (message (format "!!!!! %s %s %s %s" event key key-command key-desc))
+             ;; 其余根据evil mode state 再决定
+             ((and (eq major-mode 'eaf-mode)
+                   (evil-emacs-state-p))
+              (progn
+                (let* ((event last-command-event)
+                       (key (make-vector 1 event))
+                       (key-command (format "%s" (key-binding key)))
+                       (key-desc (key-description key)))
 
-                (cond
-                 ;; Just send event when user insert single character.
-                 ;; Don't send event 'M' if user press Ctrl + M.
-                 ((and
-                   (or
-                    (equal key-command "self-insert-command")
-                    (equal key-command "completion-select-if-within-overlay"))
-                   (equal 1 (string-width (this-command-keys))))
-                  (eaf-call "send_key" buffer-id key-desc))
-                 ((string-match "^[CMSs]-.*" key-desc)
-                  (eaf-call "send_keystroke" buffer-id key-desc))
-                 ((or
-                   (equal key-command "nil")
-                   (equal key-desc "RET")
-                   (equal key-desc "DEL")
-                   (equal key-desc "TAB")
-                   (equal key-desc "<backtab>")
-                   (equal key-desc "<home>")
-                   (equal key-desc "<end>")
-                   (equal key-desc "<left>")
-                   (equal key-desc "<right>")
-                   (equal key-desc "<up>")
-                   (equal key-desc "<down>")
-                   (equal key-desc "<prior>")
-                   (equal key-desc "<next>"))
-                  (eaf-call "send_key" buffer-id key-desc))
-                 (t
-                  (unless (or
-                           (equal key-command "keyboard-quit")
-                           (equal key-command "kill-this-buffer")
-                           (equal key-command "eaf-open"))
-                    (ignore-errors (call-interactively (key-binding key)))))))
-              ;; Set `last-command-event' with nil, emacs won't notify me buffer is ready-only,
-              ;; because i insert nothing in buffer.
-              (setq last-command-event nil))))
+                  ;; Uncomment for debug.
+                  ;; (message (format "!!!!! %s %s %s %s" event key key-command key-desc))
+
+                  (cond
+                   ;; Just send event when user insert single character.
+                   ;; Don't send event 'M' if user press Ctrl + M.
+                   ((and
+                     (or
+                      (equal key-command "self-insert-command")
+                      (equal key-command "completion-select-if-within-overlay"))
+                     (equal 1 (string-width (this-command-keys))))
+                    (eaf-call "send_key" buffer-id key-desc))
+                   ((string-match "^[CMSs]-.*" key-desc)
+                    (eaf-call "send_keystroke" buffer-id key-desc))
+                   ((or
+                     (equal key-command "nil")
+                     (equal key-desc "RET")
+                     (equal key-desc "DEL")
+                     (equal key-desc "TAB")
+                     (equal key-desc "<backtab>")
+                     (equal key-desc "<home>")
+                     (equal key-desc "<end>")
+                     (equal key-desc "<left>")
+                     (equal key-desc "<right>")
+                     (equal key-desc "<up>")
+                     (equal key-desc "<down>")
+                     (equal key-desc "<prior>")
+                     (equal key-desc "<next>"))
+                    (eaf-call "send_key" buffer-id key-desc))
+                   (t
+                    (unless (or
+                             (equal key-command "keyboard-quit")
+                             (equal key-command "kill-this-buffer")
+                             (equal key-command "eaf-open"))
+                      (ignore-errors (call-interactively (key-binding key)))))))
+                ;; Set `last-command-event' with nil, emacs won't notify me buffer is ready-only,
+                ;; because i insert nothing in buffer.
+                (setq last-command-event nil))))))
       ;; If something wrong in `eaf-monitor-key-event', emacs will remove `eaf-monitor-key-event' from `pre-command-hook' hook list.
       ;; Then we add `eaf-monitor-key-event' in `pre-command-hook' list again, hahahaha.
       (run-with-timer

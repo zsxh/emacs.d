@@ -43,8 +43,8 @@
   :commands (helm-dash helm-dash-at-point)
   :preface
   (setq helm-dash-docsets-path (expand-file-name "~/.local/share/Zeal/Zeal/docsets"))
-  (setq helm-dash-browser-func 'eww)
-  ;; (setq helm-dash-browser-func 'eaf-open-url)
+  ;; (setq helm-dash-browser-func 'eww)
+  (setq helm-dash-browser-func 'eaf-open-url)
   :config
   (setq helm-dash-common-docsets (helm-dash-installed-docsets)))
 
