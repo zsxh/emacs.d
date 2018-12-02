@@ -33,7 +33,7 @@
 (use-package eglot
   :ensure t
   :hook ((sh-mode . eglot-ensure)
-         ((js-mode typescript-mode) . eglot-ensure)
+         ;; ((js-mode typescript-mode) . eglot-ensure)
          (go-mode . eglot-ensure)))
 
 ;; Experimental
