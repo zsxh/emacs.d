@@ -95,6 +95,11 @@
    "bn"  '((lambda () (interactive) (+funcs/switch-empty-buffer-or-create "untitled")) :which-key "empty-buffer")
    "bN"  '(+funcs/new-empty-buffer :which-key "empty-buffer")
    "bs"  '((lambda () (interactive) (+funcs/switch-buffer-or-create "*scratch*")) :which-key "*scratch*")
+   ;; Doc
+   "d"   '(nil :which-key "doc")
+   "dd"  '(zeal-at-point :which-key "zeal-at-point")
+   "dh"  '(helm-dash-at-point :which-key "helm-dash-at-point")
+   "dH"  '(helm-dash :which-key "helm-dash")
    ;; Error
    "e"   '(nil :which-key "error")
    "el"  '(+flycheck/toggle-flycheck-error-list :which-key "list-errors")

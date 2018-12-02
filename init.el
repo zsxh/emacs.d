@@ -76,6 +76,7 @@
 (require 'init-shell)
 (require 'init-helpful)
 (require 'init-editor)
+(require 'init-doc)
 
 ;; Completion in Emacs
 (require 'init-ivy)
@@ -100,6 +101,7 @@
 (require 'init-java)
 (require 'init-web)
 (require 'init-julia)
+(require 'init-js)
 
 ;; Experimental
 (require 'init-experimental)
