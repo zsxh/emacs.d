@@ -37,16 +37,6 @@
   :ensure t
   :commands rmsbolt-mode)
 
-(use-package autodisass-java-bytecode
-  :ensure t
-  :defer t)
-
-(use-package google-c-style
-  :defer t
-  :ensure t
-  :commands
-  (google-set-c-style))
-
 ;; Evil shift indent
 (defvar prog--indent-variable-alist
   '(((awk-mode c-mode c++-mode java-mode groovy-mode
