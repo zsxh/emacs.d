@@ -93,9 +93,9 @@
   :hook (after-init . electric-pair-mode))
 
 ;; Increase selected region by semantic units
-;; (use-package expand-region
-;;   :ensure t
-;;   :bind ("C-=" . er/expand-region))
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
 
 (setq mouse-drag-copy-region t)
 
