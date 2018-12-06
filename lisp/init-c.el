@@ -53,7 +53,7 @@
   ;; Cache directory, both relative and absolute paths are supported
   ;; (setq ccls-cache-dir ".cquery_cached_index")
   ;; Initialization options
-  (setq ccls-extra-init-params
+  (setq ccls-initialization-options
         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
 
 (with-eval-after-load 'ccls

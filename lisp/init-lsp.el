@@ -37,7 +37,7 @@
   :commands lsp-mode
   :init (setq lsp-inhibit-message t
               lsp-eldoc-render-all nil
-              lsp-highlight-symbol-at-point t)
+              lsp-highlight-symbol-at-point nil)
   :config
   (require 'lsp-imenu)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)

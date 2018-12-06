@@ -38,10 +38,11 @@
   :preface
   (defun +java/lsp-java-configs ()
     (setq-local company-minimum-prefix-length 0)
+    (setq-local company-lsp-cache-candidates t)
     (setq-local company-backends
                 '((company-lsp :separate company-yasnippet)))
     ;; FIXME: lsp workspace doesnot work well
-    (setq lsp-java--workspace-folders (list (projectile-project-root)))
+    ;; (setq lsp-java--workspace-folders (list (projectile-project-root)))
     (lsp-java-enable)
     ;; (lsp-workspace-folders-add (list (lsp-java--get-root)))
     )
@@ -62,6 +63,7 @@
                                 "f"  '(lsp-format-buffer :which-key "format")
                                 "g"  '(nil :which-key "go")
                                 "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+                                "gi" '(lsp-goto-implementation :which-key "find-implementation")
                                 "gr" '(lsp-ui-peek-find-references :which-key "find-references")
                                 "i"  '(nil :which-key "implement")
                                 "ic" '(lsp-java-add-import :which-key "import-class")
