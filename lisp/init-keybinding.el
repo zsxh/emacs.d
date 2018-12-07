@@ -104,8 +104,9 @@
    "e"   '(nil :which-key "error")
    "el"  '(+flycheck/toggle-flycheck-error-list :which-key "list-errors")
    "eL"  '(+flycheck/goto-flycheck-error-list :which-key "list-errors-and-focus")
+   "en"  '(flycheck-next-error :which-key "next-error")
+   "eN"  '(flycheck-previous-error :which-key "previous-error")
    "ep"  '(+flycheck/popup-errors :which-key "popup-errors")
-   "et"  '(tiny-expand :which-key "tiny-expand")
    "ev"  '(flycheck-verify-setup :which-key "flycheck-verify-setup")
    ;; Files
    "f"   '(nil :which-key "file")
@@ -159,6 +160,7 @@
    "tit" '(insert-translated-name-insert :which-key "chinese->engish")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
    "ts"  '(hydra-text-scale/body :which-key "scale")
+   ;; "tt"  '(tiny-expand :which-key "tiny-expand")
    "tw"  '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    ;; View
    "v"   '(nil :which-key "view")
