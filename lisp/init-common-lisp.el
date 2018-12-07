@@ -37,12 +37,13 @@
   :config
   (setq inferior-lisp-program "sbcl")
   (evil-set-initial-state 'sly-db-mode 'emacs)
-  (+funcs/try-general-major-key lisp-mode-map
-                                "'"  '(sly-mrepl :which-key "repl")
-                                "g"  '(nil :which-key "goto")
-                                "gd" '(sly-edit-definition "" :which-key "goto-definition")
-                                "m"  '(nil :which-key "macro")
-                                "ms" '(macrostep-expand :which-key "macrostep-expand"))
+  (+funcs/set-leader-keys-for-major-mode
+   lisp-mode-map
+   "'"  '(sly-mrepl :which-key "repl")
+   "g"  '(nil :which-key "goto")
+   "gd" '(sly-edit-definition "" :which-key "goto-definition")
+   "m"  '(nil :which-key "macro")
+   "ms" '(macrostep-expand :which-key "macrostep-expand"))
   (with-eval-after-load 'evil
     (evil-define-key 'normal sly-xref-mode-map
       (kbd "RET") 'sly-goto-xref)

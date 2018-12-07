@@ -51,12 +51,14 @@
   (add-hook 'js-mode-hook 'my-js-hook)
   :hook ((js-mode typescript-mode js3-mode rjsx-mode) . +js/lsp-configs)
   :config
-  (+funcs/try-general-major-key js-mode-map
-                                "f" '(lsp-format-buffer :which-key "format")
-                                "g" '(nil :which-key "go")
-                                "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
-                                "gr" '(lsp-ui-peek-find-references :which-key "find-references")
-                                "R" '(lsp-rename :which-key "rename")))
+  (+funcs/set-leader-keys-for-major-mode
+   js-mode-map
+   "f" '(lsp-format-buffer :which-key "format")
+   "g" '(nil :which-key "go")
+   "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+   "gr" '(lsp-ui-peek-find-references :which-key "find-references")
+   "R" '(lsp-rename :which-key "rename")))
+
 
 (provide 'init-js)
 

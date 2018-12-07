@@ -83,20 +83,21 @@
 
 ;; Extra Keybindings
 (with-eval-after-load 'python
-  (+funcs/try-general-major-key python-mode-map
-                                "'"  '(+python/repl :which-key "repl")
-                                "d"  '(nil :which-key "debug")
-                                "db" '(dap-breakpoint-toggle :which-key "breakpoint")
-                                "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
-                                "dr" '(dap-debug :which-key "debug")
-                                "c"  '(nil :which-key "compile-exec")
-                                "cc" '(+python/python-execute-file :which-key "execute-file")
-                                "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")
-                                "f"  '(lsp-format-buffer :which-key "format")
-                                "g"  '(nil :which-key "go")
-                                "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
-                                "gr" '(lsp-ui-peek-find-references :which-key "find-references")
-                                "R" '(lsp-rename :which-key "rename")))
+  (+funcs/set-leader-keys-for-major-mode
+   python-mode-map
+   "'"  '(+python/repl :which-key "repl")
+   "d"  '(nil :which-key "debug")
+   "db" '(dap-breakpoint-toggle :which-key "breakpoint")
+   "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
+   "dr" '(dap-debug :which-key "debug")
+   "c"  '(nil :which-key "compile-exec")
+   "cc" '(+python/python-execute-file :which-key "execute-file")
+   "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")
+   "f"  '(lsp-format-buffer :which-key "format")
+   "g"  '(nil :which-key "go")
+   "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+   "gr" '(lsp-ui-peek-find-references :which-key "find-references")
+   "R" '(lsp-rename :which-key "rename")))
 
 (defun +python/pyenv-executable-find (command)
   (executable-find command))

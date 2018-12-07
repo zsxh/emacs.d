@@ -59,13 +59,14 @@
 (with-eval-after-load 'ccls
   (when (featurep 'evil)
     (evil-set-initial-state 'ccls-tree-mode 'emacs))
-  (+funcs/try-general-major-key '(c-mode-map c++-mode-map)
-                                "f"  '(lsp-format-buffer :which-key "format")
-                                "g"  '(nil :which-key "go")
-                                "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
-                                "gr" '(lsp-ui-peek-find-references :which-key "find-references")
-                                "gh" '(ccls-member-hierarchy :which-key "member-hierarchy")
-                                "R"  '(lsp-rename :which-key "rename")))
+  (+funcs/set-leader-keys-for-major-mode
+   '(c-mode-map c++-mode-map)
+   "f"  '(lsp-format-buffer :which-key "format")
+   "g"  '(nil :which-key "go")
+   "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+   "gr" '(lsp-ui-peek-find-references :which-key "find-references")
+   "gh" '(ccls-member-hierarchy :which-key "member-hierarchy")
+   "R"  '(lsp-rename :which-key "rename")))
 
 ;; Experimental: c/c++-mode use ccls as default
 ;; (use-package eglot

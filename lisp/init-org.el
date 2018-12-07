@@ -109,17 +109,18 @@
       ",w" 'org-capture-refile))
 
   ;; major mode keybindings
-  (+funcs/try-general-major-key org-mode-map
-                                "a"  '(org-agenda :which-key "agenda")
-                                "c"  '(nil :which-key "capture/clock")
-                                "cc" '(org-capture :which-key "capture")
-                                "ci" '(org-clock-in :which-key "clock-in")
-                                "co" '(org-clock-out :which-key "clock-out")
-                                "cr" '(org-clock-report :which-key "clock-report")
-                                "t"  '(nil :which-key "toggle")
-                                "ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
-                                "tl" '(org-toggle-link-display :which-key "toggle-link-display")
-                                "'"  '(org-edit-special :which-key "editor")))
+  (+funcs/set-leader-keys-for-major-mode
+   org-mode-map
+   "a"  '(org-agenda :which-key "agenda")
+   "c"  '(nil :which-key "capture/clock")
+   "cc" '(org-capture :which-key "capture")
+   "ci" '(org-clock-in :which-key "clock-in")
+   "co" '(org-clock-out :which-key "clock-out")
+   "cr" '(org-clock-report :which-key "clock-report")
+   "t"  '(nil :which-key "toggle")
+   "ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
+   "tl" '(org-toggle-link-display :which-key "toggle-link-display")
+   "'"  '(org-edit-special :which-key "editor")))
 
 ;; Org for blog
 (use-package org-page
