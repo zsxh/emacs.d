@@ -32,7 +32,7 @@
 
 (use-package company
   :ensure t
-  :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
+  ;; :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :bind (("M-/" . yas-expand)
          ("C-c C-y" . company-yasnippet)
          :map company-active-map
@@ -40,9 +40,8 @@
          ("C-n" . company-select-next)
          ("C-k" . company-select-previous)
          ("C-j" . company-select-next)
-         ("TAB" . company-complete-common-or-cycle)
-         ("<tab>" . company-complete-common-or-cycle)
-         ("S-TAB" . company-select-previous)
+         ("TAB" . company-complete-common)
+         ("<tab>" . company-complete-common)
          ("<backtab>" . company-select-previous)
          :map company-search-map
          ("C-p" . company-select-previous)
@@ -52,11 +51,12 @@
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
         company-idle-delay .5 ; decrease delay before autocompletion popup shows
-        company-echo-delay 0  ; remove annoying blinking
+        ;; company-echo-delay 0  ; remove annoying blinking
         company-minimum-prefix-length 2
-        company-require-match nil
-        company-dabbrev-ignore-case nil
-        company-dabbrev-downcase nil))
+        ;; company-require-match nil
+        ;; company-dabbrev-ignore-case nil
+        ;; company-dabbrev-downcase nil
+        ))
 
 ;; Popup documentation for completion candidates
 (when (display-graphic-p)
