@@ -41,11 +41,7 @@
     (setq-local company-lsp-cache-candidates t)
     (setq-local company-backends
                 '((company-lsp :separate company-yasnippet)))
-    ;; FIXME: lsp workspace doesnot work well
-    ;; (setq lsp-java--workspace-folders (list (projectile-project-root)))
-    (lsp-java-enable)
-    ;; (lsp-workspace-folders-add (list (lsp-java--get-root)))
-    )
+    (lsp-java-enable))
   :hook (java-mode . +java/lsp-java-configs)
   :config
   (setq lsp-java-server-install-dir "~/.emacs.d/.cache/eclipse.jdt.ls/server")
