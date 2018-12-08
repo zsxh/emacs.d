@@ -47,8 +47,15 @@
   (when personal-eaf-grip-token
     (setq eaf-grip-token personal-eaf-grip-token))
 
-  ;; override
+  ;; hack eaf for evil-mode
   ;; send-key only in evil-emacs-state
+  (add-hook 'eaf-mode-hook
+            (lambda ()
+              (setq-local evil-motion-state-map nil)
+              ;; "C-z" normal-state -> emacs-state
+              (setq-local evil-normal-state-map
+                          '(keymap (26 . evil-emacs-state)))))
+
   (defun eaf-monitor-key-event ()
     (unless
         (ignore-errors
