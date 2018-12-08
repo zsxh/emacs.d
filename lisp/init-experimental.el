@@ -53,8 +53,11 @@
             (lambda ()
               (setq-local evil-motion-state-map nil)
               ;; "C-z" normal-state -> emacs-state
+              ;; ":" evil-ex
               (setq-local evil-normal-state-map
-                          '(keymap (26 . evil-emacs-state)))))
+                          '(keymap
+                            (58 . evil-ex)
+                            (26 . evil-emacs-state)))))
 
   (defun eaf-monitor-key-event ()
     (unless
