@@ -30,35 +30,26 @@
 
 ;;; Code:
 
-(use-package lsp-javascript-typescript
-  :ensure t
-  :requires init-lsp
-  :commands lsp-javascript-typescript-enable
-  :preface
-  (defun +js/lsp-configs ()
-    (setq-local company-backends '((company-lsp :seperate company-yasnippet)))
-    (lsp-javascript-typescript-enable))
+(defun +js/lsp-js-config ()
+  (+js/set-leader-keys)
+  (lsp))
 
-  ;; https://github.com/emacs-lsp/lsp-javascript
-  (defun my-company-transformer (candidates)
-    (let ((completion-ignore-case t))
-      (all-completions (company-grab-symbol) candidates)))
+(add-hook 'js-mode-hook '+js/lsp-js-config)
+(add-hook 'typescript-mode-hook '+js/lsp-js-config)
+(add-hook 'js3-mode-hook '+js/lsp-js-config)
+(add-hook 'rjsx-mode-hook '+js/lsp-js-config)
 
-  (defun my-js-hook nil
-    (make-local-variable 'company-transformers)
-    (push 'my-company-transformer company-transformers))
-
-  (add-hook 'js-mode-hook 'my-js-hook)
-  :hook ((js-mode typescript-mode js3-mode rjsx-mode) . +js/lsp-configs)
-  :config
+(defun +js/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
    js-mode-map
+   "e"  '(nil :which-key "error")
+   "en" '(flymake-goto-next-error :which-key "next-error")
+   "eN" '(flymake-goto-prev-error :which-key "prev-error")
    "f" '(lsp-format-buffer :which-key "format")
    "g" '(nil :which-key "go")
    "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
    "gr" '(lsp-ui-peek-find-references :which-key "find-references")
    "R" '(lsp-rename :which-key "rename")))
-
 
 (provide 'init-js)
 

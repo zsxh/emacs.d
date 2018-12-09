@@ -46,10 +46,6 @@
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'realgud)))
 
-;; dap-mode
-
-
-
 (provide 'init-debugger)
 
 ;;; init-debugger.el ends here

@@ -30,37 +30,34 @@
 
 ;;; Code:
 
-;; Fixme: Recompile ccls, current ccls cant not found <iostream>
-(use-package ccls
-  :ensure t
-  :requires init-lsp
-  :commands lsp-ccls-enable
-  :init
-  (defun ccls//enable ()
-    (condition-case nil
-        (lsp-ccls-enable)
-      (user-error nil)))
-  ;; By default files ending in .h are treated as c files rather than c++ files.
-  (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-  :hook ((c-mode c++-mode) . (lambda ()
-                               (setq-local company-backends
-                                           '((company-lsp :separate company-yasnippet)))
-                               (ccls//enable)))
-  :config
-  (setq ccls-executable "/usr/bin/ccls")
-  ;; Log file
-  ;; (setq ccls-extra-args '("--log-file=/tmp/cq.log"))
-  ;; Cache directory, both relative and absolute paths are supported
-  ;; (setq ccls-cache-dir ".cquery_cached_index")
-  ;; Initialization options
-  (setq ccls-initialization-options
-        '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
+;; By default files ending in .h are treated as c files rather than c++ files.
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-(with-eval-after-load 'ccls
+(use-package ccls
+  :defer t
+  :quelpa ((ccls :fetcher github :repo "MaskRay/emacs-ccls")))
+
+(defun +c/lsp-ccls-config ()
+  (require 'ccls)
+  (setq ccls-executable "/usr/bin/ccls")
+  (setq ccls-initialization-options
+        '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
   (when (featurep 'evil)
     (evil-set-initial-state 'ccls-tree-mode 'emacs))
+  (setq-local company-backends
+              '((company-lsp :separate company-yasnippet)))
+  (+c/set-leader-keys)
+  (lsp))
+
+(add-hook 'c-mode-hook '+c/lsp-ccls-config)
+(add-hook 'c++-mode-hook '+c/lsp-ccls-config)
+
+(defun +c/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
    '(c-mode-map c++-mode-map)
+   "e"  '(nil :which-key "error")
+   "en" '(flymake-goto-next-error :which-key "next-error")
+   "eN" '(flymake-goto-prev-error :which-key "prev-error")
    "f"  '(lsp-format-buffer :which-key "format")
    "g"  '(nil :which-key "go")
    "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
@@ -68,15 +65,25 @@
    "gh" '(ccls-member-hierarchy :which-key "member-hierarchy")
    "R"  '(lsp-rename :which-key "rename")))
 
-;; Experimental: c/c++-mode use ccls as default
-;; (use-package eglot
-;;   :ensure t
-;;   :init (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-;;   :hook ((c-mode c++-mode) . eglot-ensure))
-
 (use-package cmake-mode
   :ensure t)
 
+;; (defun +eglot/c-c++-config ()
+;;   (setq-local company-backends '(company-clang))
+;;   (eglot-ensure)
+;;   (+funcs/set-leader-keys-for-major-mode
+;;    '(c-mode-map c++-mode-map)
+;;    "e"  '(nil :which-key "error")
+;;    "en" '(flymake-goto-next-error :which-key "next-error")
+;;    "eN" '(flymake-goto-prev-error :which-key "prev-error")
+;;    "f"  '(eglot-format :which-key "format")
+;;    "g"  '(nil :which-key "go")
+;;    "gd" '(xref-find-definitions :which-key "find-definitions")
+;;    "gr" '(xref-find-references :which-key "find-references")
+;;    "R"  '(eglot-rename :which-key "rename")))
+
+;; (add-hook 'c-mode-hook '+eglot/c-c++-config)
+;; (add-hook 'c++-mode-hook '+eglot/c-c++-config)
 
 (provide 'init-c)
 

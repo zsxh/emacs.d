@@ -30,9 +30,11 @@
 
 ;;; Code:
 
+;; TODO: Deprecated, it will be replaced by `flymake'
 (use-package flycheck
   :ensure t
-  :hook (lsp-mode . flycheck-mode)
+  :defer t
+  ;; :hook (lsp-mode . flycheck-mode)
   :config
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)

@@ -49,23 +49,40 @@
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended))
 
-(use-package lsp-python
-  :ensure t
-  :requires init-lsp
-  :commands lsp-python-enable
-  :preface
-  (defun +python/lsp-python-config ()
-    (setq-local python-indent-offset 2)
-    (setq-local company-backends
-                '((company-lsp :separate company-yasnippet)))
-    (lsp-python-enable)
-    (+python/python-setup-shell))
-  :hook (python-mode . +python/lsp-python-config)
-  :config
-  (when (featurep 'dap-mode)
-    (require 'dap-python))
+(defun +python/lsp-python-config ()
+  (setq-local python-indent-offset 2)
+  (setq-local company-backends
+              '((company-lsp :separate company-yasnippet)))
+  (+python/python-setup-shell)
+  (+python/set-leader-keys)
+  (lsp)
+  (use-package dap-python))
 
-  ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+(add-hook 'python-mode-hook '+python/lsp-python-config)
+
+(defun +python/set-leader-keys ()
+  (+funcs/set-leader-keys-for-major-mode
+   python-mode-map
+   "'"  '(+python/repl :which-key "repl")
+   "c"  '(nil :which-key "compile-exec")
+   "cc" '(+python/python-execute-file :which-key "execute-file")
+   "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")
+   "d"  '(nil :which-key "debug")
+   "db" '(dap-breakpoint-toggle :which-key "breakpoint")
+   "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
+   "dr" '(dap-debug :which-key "debug")
+   "e"  '(nil :which-key "error")
+   "en" '(flymake-goto-next-error :which-key "next-error")
+   "eN" '(flymake-goto-prev-error :which-key "prev-error")
+   "f"  '(lsp-format-buffer :which-key "format")
+   "g"  '(nil :which-key "go")
+   "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+   "gr" '(lsp-ui-peek-find-references :which-key "find-references")
+   "R" '(lsp-rename :which-key "rename")))
+
+;; lsp code completion for org babel code block
+;; https://github.com/emacs-lsp/lsp-mode/issues/377
+(with-eval-after-load 'lsp-python
   (defun org-babel-edit-prep:python (babel-info)
     "Prepare the local buffer environment for Org source block."
     (let ((lsp-file (or (->> babel-info caddr (alist-get :file))
@@ -80,24 +97,6 @@
       (setq-local buffer-file-name lsp-file)
       (setq-local lsp-buffer-uri (lsp--path-to-uri buffer-file-name))
       (+python/lsp-python-config))))
-
-;; Extra Keybindings
-(with-eval-after-load 'python
-  (+funcs/set-leader-keys-for-major-mode
-   python-mode-map
-   "'"  '(+python/repl :which-key "repl")
-   "d"  '(nil :which-key "debug")
-   "db" '(dap-breakpoint-toggle :which-key "breakpoint")
-   "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
-   "dr" '(dap-debug :which-key "debug")
-   "c"  '(nil :which-key "compile-exec")
-   "cc" '(+python/python-execute-file :which-key "execute-file")
-   "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")
-   "f"  '(lsp-format-buffer :which-key "format")
-   "g"  '(nil :which-key "go")
-   "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
-   "gr" '(lsp-ui-peek-find-references :which-key "find-references")
-   "R" '(lsp-rename :which-key "rename")))
 
 (defun +python/pyenv-executable-find (command)
   (executable-find command))

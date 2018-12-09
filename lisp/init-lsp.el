@@ -33,59 +33,58 @@
 ;; Lsp do not support temporary buffer yet
 ;; https://github.com/emacs-lsp/lsp-mode/issues/377
 (use-package lsp-mode
-  :ensure t
-  :commands lsp-mode
-  :init (setq lsp-inhibit-message t
-              lsp-eldoc-render-all nil
-              lsp-highlight-symbol-at-point nil)
+  :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
+  :commands lsp
   :config
-  (require 'lsp-imenu)
-  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
-  ;; Output the project root warning to *Messages* buffer
-  (setq lsp-message-project-root-warning t))
+  (require 'lsp-clients)
+  (setq lsp-auto-guess-root t
+        lsp-inhibit-message t
+        lsp-eldoc-render-all nil
+        lsp-keep-workspace-alive nil))
 
-(use-package company-lsp
-  :after (company lsp-mode)
+;; TODO: check out what lsp--auto-configure have done
+;; (use-package company-lsp
+;;   :after (company lsp)
+;;   :ensure t
+;;   :config
+;;   (setq company-lsp-enable-snippet t
+;;         company-lsp-cache-candidates nil
+;;         company-transformers nil
+;;         company-lsp-async t
+;;         company-lsp-enable-recompletion t))
+
+(use-package lsp-ui
+  :after lsp
   :ensure t
+  ;; disable lsp-ui doc and sideline
+  :preface (setq lsp-ui-doc-enable nil
+                 lsp-ui-sideline-enable nil)
+  :bind (:map lsp-ui-peek-mode-map
+              ("j" . lsp-ui-peek--select-next)
+              ("k" . lsp-ui-peek--select-prev)
+              ("C-j" . lsp-ui-peek--select-next)
+              ("C-k" . lsp-ui-peek--select-prev))
   :config
-  (setq company-lsp-enable-snippet t
-        company-lsp-cache-candidates nil
-        company-transformers nil
-        company-lsp-async t
-        company-lsp-enable-recompletion t))
-
- (use-package lsp-ui
-   :after lsp-mode
-   :ensure t
-   ;; disable lsp-ui doc and sideline
-   :preface (setq lsp-ui-doc-enable nil
-                  lsp-ui-sideline-enable nil)
-   :hook (lsp-after-open . lsp-ui-mode)
-   :bind (:map lsp-ui-peek-mode-map
-               ("j" . lsp-ui-peek--select-next)
-               ("k" . lsp-ui-peek--select-prev)
-               ("C-j" . lsp-ui-peek--select-next)
-               ("C-k" . lsp-ui-peek--select-prev))
-   :config
-   (setq lsp-ui-sideline-show-symbol t
-         lsp-ui-sideline-show-hover t
-         lsp-ui-sideline-show-code-actions t
-         lsp-ui-sideline-update-mode 'point
-         lsp-ui-sideline-ignore-duplicate t)
-   (set-face-foreground 'lsp-ui-sideline-code-action "#FF8C00"))
+  (setq lsp-ui-sideline-show-symbol t
+        lsp-ui-sideline-show-hover t
+        lsp-ui-sideline-show-code-actions t
+        lsp-ui-sideline-update-mode 'point
+        lsp-ui-sideline-ignore-duplicate t)
+  (set-face-foreground 'lsp-ui-sideline-code-action "#FF8C00"))
 
 ;; Debug Adapter Protocol for Emacs
 (use-package dap-mode
-  :after lsp-mode
+  :after lsp
   :ensure t
   :config
   (dap-mode t)
   (dap-ui-mode t)
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
-              (setq-local company-minimum-prefix-length 0)))
+              (setq-local company-minimum-prefix-length 0))))
 
-  ;; FIXME: my dap debug key settings
+;; add minor mode(keybindings) for lsp debug
+(with-eval-after-load 'dap-mode
   (defvar +dap/debug-mode-map
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "n") 'dap-next)

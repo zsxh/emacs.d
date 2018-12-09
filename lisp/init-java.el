@@ -30,46 +30,52 @@
 
 ;;; Code:
 
-;; lsp-java
 (use-package lsp-java
-  :ensure t
-  :requires init-lsp
-  :commands lsp-java-enable
-  :preface
-  (defun +java/lsp-java-configs ()
-    (setq-local company-minimum-prefix-length 0)
-    (setq-local company-lsp-cache-candidates t)
-    (setq-local company-backends
-                '((company-lsp :separate company-yasnippet)))
-    (lsp-java-enable))
-  :hook (java-mode . +java/lsp-java-configs)
-  :config
-  (setq lsp-java-server-install-dir "~/.emacs.d/.cache/eclipse.jdt.ls/server")
-  ;; debugger
-  (when (featurep 'dap-mode)
-    (require 'dap-java))
+  :defer t
+  :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
+  :init
+  (setq lsp-java-server-install-dir "~/.emacs.d/.cache/eclipse.jdt.ls/server"))
+
+(use-package dap-java :after (lsp-java))
+
+(defun +java/lsp-java-config ()
+  (require 'lsp-java)
+  (setq-local company-minimum-prefix-length 0)
+  ;; (setq-local company-lsp-cache-candidates t)
+  (setq-local company-backends
+              '((company-lsp :separate company-yasnippet)))
+  (+java/set-leader-keys)
+  (lsp))
+
+(add-hook 'java-mode-hook '+java/lsp-java-config)
+
+(defun +java/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
    java-mode-map
-   "d"  '(nil :which-key "debug")
+   "d" '(nil :which-key "debug")
    "db" '(dap-breakpoint-toggle :which-key "breakpoint")
    "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
    "dr" '(dap-java-debug :which-key "debug")
    "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
    "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
    "dk" '(+dap/debug-key-settings--toggle :which-key "toggle-debug-keybindings")
-   "f"  '(lsp-format-buffer :which-key "format")
-   "g"  '(nil :which-key "go")
+   "e"  '(nil :which-key "error")
+   "en" '(flymake-goto-next-error :which-key "next-error")
+   "eN" '(flymake-goto-prev-error :which-key "prev-error")
+   "f" '(lsp-format-buffer :which-key "format")
+   "g" '(nil :which-key "go")
    "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
    "gi" '(lsp-goto-implementation :which-key "find-implementation")
    "gr" '(lsp-ui-peek-find-references :which-key "find-references")
-   "i"  '(nil :which-key "implement")
+   "i" '(nil :which-key "implement")
    "ic" '(lsp-java-add-import :which-key "import-class")
    "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
-   "j"  '(+java/set-jdk :which-key "set-jdk")
-   "r"  '(nil :which-key "run")
+   "j" '(+java/set-jdk :which-key "set-jdk")
+   "r" '(nil :which-key "run")
    "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
    "rT" '(dap-java-run-test-class :which-key "run-junit-class")
-   "R"  '(lsp-rename :which-key "rename")))
+   "R" '(lsp-rename :which-key "rename")))
+
 
 (defvar jdk-installed-dir "/usr/local/"
   "JDK isntalled directory.")
