@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(require 'init-lsp)
+
 (defun +js/lsp-js-config ()
   (+js/set-leader-keys)
   (lsp))
