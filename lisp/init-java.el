@@ -54,6 +54,7 @@
 (defun +java/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
    java-mode-map
+   "a" '(lsp-execute-code-action :which-key "code-action")
    "d" '(nil :which-key "debug")
    "db" '(dap-breakpoint-toggle :which-key "breakpoint")
    "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
@@ -79,20 +80,22 @@
    "R" '(lsp-rename :which-key "rename")))
 
 
-(defvar jdk-installed-dir "/usr/local/"
-  "JDK isntalled directory.")
+(defvar jdks-installed-dir "/usr/local/"
+  "JDKs intalled directory.")
 
 ;;;###autoload
-(defun +java/set-jdk (name)
-  "Set JDK version as NAME."
+(defun +java/set-jdk (jdk-version)
+  "Select JDK-VERSION in `jdks-installed-dir' as global version,
+JDK-VERSION directory name prefix `jdk-' is required,
+`jdks-installed-dir'/jdk/bin in $PATH is required."
   (interactive (list (completing-read "JDK-version: " (+java/java-version-list))))
-  (let ((target (expand-file-name name jdk-installed-dir))
-        (link-name (expand-file-name "jdk" jdk-installed-dir)))
+  (let ((target (expand-file-name jdk-version jdks-installed-dir))
+        (link-name (expand-file-name "jdk" jdks-installed-dir)))
     (+funcs/sudo-shell-command (concat "ln -nsf " target " " link-name))))
 
 (defun +java/java-version-list ()
-  "Return all jdks in list."
-  (let ((files (directory-files jdk-installed-dir))
+  "Find all jdks which start with `jdk-' in `jdks-installed-dir'"
+  (let ((files (directory-files jdks-installed-dir))
         (result nil))
     (dolist (file files)
       (if (string-match "jdk-" file)

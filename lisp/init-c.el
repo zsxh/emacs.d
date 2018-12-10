@@ -57,6 +57,7 @@
 (defun +c/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
    '(c-mode-map c++-mode-map)
+   "a" '(lsp-execute-code-action :which-key "code-action")
    "e"  '(nil :which-key "error")
    "en" '(flymake-goto-next-error :which-key "next-error")
    "eN" '(flymake-goto-prev-error :which-key "prev-error")

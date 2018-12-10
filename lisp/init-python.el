@@ -66,6 +66,7 @@
   (+funcs/set-leader-keys-for-major-mode
    python-mode-map
    "'"  '(+python/repl :which-key "repl")
+   "a" '(lsp-execute-code-action :which-key "code-action")
    "c"  '(nil :which-key "compile-exec")
    "cc" '(+python/python-execute-file :which-key "execute-file")
    "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")
