@@ -38,6 +38,7 @@
   :config
   (require 'lsp-clients)
   (setq lsp-auto-guess-root t
+        lsp-prefer-flymake nil
         lsp-inhibit-message t
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil))
