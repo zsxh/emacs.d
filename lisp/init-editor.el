@@ -226,6 +226,10 @@
 (use-package popwin
   :ensure t)
 
+(use-package string-inflection
+  :ensure t
+  :commands string-inflection-all-cycle)
+
 
 (provide 'init-editor)
 

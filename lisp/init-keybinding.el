@@ -160,6 +160,7 @@
    "tit" '(insert-translated-name-insert :which-key "chinese->engish")
    "tm"  '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
    "ts"  '(hydra-text-scale/body :which-key "scale")
+   "tS"  '(hydra-string-inflection/body :which-key "string-inflection-cycle")
    ;; "tt"  '(tiny-expand :which-key "tiny-expand")
    "tw"  '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    ;; View
@@ -186,30 +187,38 @@
    "Tx"  '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
    "Tz"  '(evil-toggle-fold :which-key "evil-toggle-fold")))
 
-(use-package hydra
-  :ensure t
-  :config
-  (defhydra hydra-text-scale (:hint nil)
-    "zoom"
-    ("k" text-scale-increase "text-scale-increase" :color pink)
-    ("j" text-scale-decrease "text-scale-decrease" :color pink)
-    ("q" nil "cancel" :color blue))
-  (defhydra hydra-window-scale (:hint nil)
-    "scale window"
-    ("h" shrink-window-horizontally "shrink-window-horizontally" :color pink)
-    ("l" enlarge-window-horizontally "enlarger-window-horizontally" :color pink)
-    ("j" shrink-window "shrink-window" :color pink)
-    ("k" enlarge-window "enlarge-window" :color pink)
-    ("b" balance-windows "balance" :color pink)
-    ("q" nil "cancel" :color blue))
-  (defhydra hydra-emacs-cheatsheet (:color pink :hint nil :exit t)
-    "
+(use-package hydra :ensure t)
+
+(defhydra hydra-text-scale (:hint nil)
+  "zoom"
+  ("k" text-scale-increase "text-scale-increase" :color pink)
+  ("j" text-scale-decrease "text-scale-decrease" :color pink)
+  ("q" nil "quit" :color blue))
+
+(defhydra hydra-window-scale (:hint nil)
+  "scale window"
+  ("h" shrink-window-horizontally "shrink-window-horizontally" :color pink)
+  ("l" enlarge-window-horizontally "enlarger-window-horizontally" :color pink)
+  ("j" shrink-window "shrink-window" :color pink)
+  ("k" enlarge-window "enlarge-window" :color pink)
+  ("b" balance-windows "balance" :color pink)
+  ("q" nil "quit" :color blue))
+
+(defhydra hydra-emacs-cheatsheet (:color pink :hint nil :exit t)
+  "
     ^Emacs Cheatsheet^
     ^^^^^----------------------
     _s_: \"C-x TAB\" indent-rigidly
     "
-    ("s" indent-rigidly)                ; shift line[s] left/right
-    ("c" nil "cancel")))
+  ("s" indent-rigidly)                  ; shift line[s] left/right
+  ("q" nil "quit"))
+
+(defhydra hydra-string-inflection (:hint nil)
+  "cycle text objects through camelCase, kebab-case, snake case and UPPER CASE.
+"
+  ("s" string-inflection-all-cycle "string-inflection-all-cycle" :color pink)
+  ("q" nil "quit" :color blue))
+
 
 (provide 'init-keybinding)
 
