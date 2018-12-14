@@ -85,12 +85,20 @@
       (doom-modeline-set-modeline 'main)))
   :hook (after-init . my-doomline-init)
   :config
-  (setq doom-modeline-major-mode-icon nil))
+  (setq doom-modeline-major-mode-icon nil)
+  (setq doom-modeline-buffer-file-name-style 'buffer-name))
 
 ;; Display time on modeline
 (setq display-time-format "%Y/%m/%d 周%a %H:%M")
 (setq display-time-default-load-average nil) ; don't show load avera
 (display-time-mode)
+
+(defun +ui/toggle-display-time-mode ()
+  (if (<= (window-width) 85)
+      (display-time-mode -1)
+    (display-time-mode 1)))
+
+(add-hook 'window-configuration-change-hook '+ui/toggle-display-time-mode)
 
 ;; Frame font
 ;; (set-frame-font "SF Mono 13" nil t)
