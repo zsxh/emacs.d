@@ -79,6 +79,7 @@
 (require 'init-ivy)
 
 ;; Programing
+(require 'init-project)
 (require 'init-completion)
 (require 'init-flycheck)
 (require 'init-git)
