@@ -30,7 +30,7 @@
 
 ;;; Code:
 
-(require 'init-lsp)
+(require 'init-language-server)
 
 ;; By default files ending in .h are treated as c files rather than c++ files.
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))

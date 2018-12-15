@@ -1,4 +1,4 @@
-;; init-projectile.el --- projectile configurations	-*- lexical-binding: t -*-
+;; init-project.el --- project configurations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;;  projectile configurations
+;;  project configurations
 ;;
 
 ;;; Code:
@@ -46,6 +46,13 @@
   (setq projectile-enable-caching t))
 
 
-(provide 'init-projectile)
+;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 
-;;; init-projectile.el ends here
+(use-package persp-mode
+  :ensure t
+  :defer t)
+
+
+(provide 'init-project)
+
+;;; init-project.el ends here

@@ -30,6 +30,27 @@
 
 ;;; Code:
 
+;;;;;;;;;;;;;; DOC ;;;;;;;;;;;;;;
+
+;; require `zeal' installation
+;; zeal (dash for linux)
+(use-package zeal-at-point
+  :ensure t
+  :commands zeal-at-point)
+
+;; helm-dash
+(use-package helm-dash
+  :ensure t
+  :commands (helm-dash helm-dash-at-point)
+  :preface
+  (setq helm-dash-docsets-path (expand-file-name "~/.local/share/Zeal/Zeal/docsets"))
+  ;; (setq helm-dash-browser-func 'eww)
+  (setq helm-dash-browser-func 'eaf-open-url)
+  :config
+  (setq helm-dash-common-docsets (helm-dash-installed-docsets)))
+
+;;;;;;;;;;;;;; EDIT ;;;;;;;;;;;;;;
+
 ;; Structured editing
 (use-package paredit
   :ensure t
@@ -42,6 +63,7 @@
          ("C-M-f" . paredit-forward))
   :hook (prog-mode . enable-paredit-mode)
   :config
+  ;; prevent whitespace between function and paren
   (defun +paredit/space-for-delimiter-p (endp delimiter)
     (or (member 'font-lock-keyword-face (text-properties-at (1- (point))))
         (not (derived-mode-p 'basic-mode

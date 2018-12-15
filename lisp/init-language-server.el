@@ -1,4 +1,4 @@
-;; init-lsp.el --- lsp-mode Configurations	-*- lexical-binding: t -*-
+;; init-language-server.el --- language-server Configurations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,10 +25,29 @@
 
 ;;; Commentary:
 ;;
-;;  lsp-mode Configurations
+;;  language-server Configurations
 ;;
 
 ;;; Code:
+
+;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
+
+(use-package eglot
+  :ensure t
+  :commands eglot-ensure
+  :hook ((sh-mode . eglot-ensure)
+         ;; ((js-mode typescript-mode) . eglot-ensure)
+         (go-mode . eglot-ensure)))
+
+;; Experimental
+;; TODO: Move to init-go.el
+(use-package go-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+  :commands go-mode)
+
+;;;;;;;;;;;;;; Lsp-mode ;;;;;;;;;;;;;;
 
 ;; Lsp do not support temporary buffer yet
 ;; https://github.com/emacs-lsp/lsp-mode/issues/377
@@ -153,6 +172,6 @@
   (add-hook 'dap-terminated-hook #'+dap/debug-mode-disable))
 
 
-(provide 'init-lsp)
+(provide 'init-language-server)
 
-;;; init-lsp.el ends here
+;;; init-language-server.el ends here

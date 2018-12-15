@@ -69,31 +69,25 @@
 (require 'init-keybinding)
 
 ;; Feature
-(require 'init-dired)
-(require 'init-ibuffer)
+(require 'init-emacs-enhancement)
 (require 'init-neotree)
 (require 'init-org)
 (require 'init-shell)
-(require 'init-helpful)
 (require 'init-editor)
-(require 'init-doc)
 
 ;; Completion in Emacs
 (require 'init-ivy)
 
 ;; Programing
-(require 'init-company)
-(require 'init-yasnippet)
+(require 'init-completion)
 (require 'init-flycheck)
 (require 'init-git)
 (require 'init-highlight)
-(require 'init-projectile)
 (require 'init-prog)
 (require 'init-debugger)
 
 ;; Language
-(require 'init-eglot)
-(require 'init-lsp)
+(require 'init-language-server)
 (require 'init-emacs-lisp)
 (require 'init-common-lisp)
 (require 'init-c)

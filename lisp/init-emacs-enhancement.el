@@ -1,4 +1,4 @@
-;; init-dired.el --- Dired	-*- lexical-binding: t -*-
+;; init-emacs-enhancement.el --- enhance emacs	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,10 +25,43 @@
 
 ;;; Commentary:
 ;;
-;;  Dired
+;;  enhance emacs
 ;;
 
 ;;; Code:
+
+;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
+
+;; A better *Help* buffer
+(use-package helpful
+  :ensure t
+  :defines ivy-initial-inputs-alist
+  :bind (("C-c C-d" . helpful-at-point)
+         ("C-h f" . helpful-callable) ;; replace built-in `describe-function'
+         ("C-h k" . helpful-key)
+         ("C-h v" . helpful-variable))
+  :config
+  (with-eval-after-load 'ivy
+    (dolist (cmd '(helpful-callable
+                   helpful-variable
+                   helpful-function
+                   helpful-macro
+                   helpful-command))
+      (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist)))
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal helpful-mode-map "q" 'quit-window)))
+
+;;;;;;;;;;;;;; *Buffer* ;;;;;;;;;;;;;;
+
+(use-package ibuffer-vc
+  :ensure t
+  :bind (("C-x C-b" . ibuffer))
+  :hook ((ibuffer . (lambda ()
+                      (ibuffer-vc-set-filter-groups-by-vc-root)
+                      (unless (eq ibuffer-sorting-mode 'alphabetic)
+                        (ibuffer-do-sort-by-alphabetic))))))
+
+;;;;;;;;;;;;;; Dired ;;;;;;;;;;;;;;
 
 ;; Dired Configs
 (use-package dired
@@ -67,6 +100,6 @@
       (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode))))))
 
 
-(provide 'init-dired)
+(provide 'init-emacs-enhancement)
 
-;;; init-dired.el ends here
+;;; init-emacs-enhancement.el ends here

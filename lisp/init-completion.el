@@ -1,4 +1,4 @@
-;; init-company.el --- commpany configurations	-*- lexical-binding: t -*-
+;; init-completion.el --- commpletion configurations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;;  Company Configuations
+;;  Code Completion Configuations
 ;;
 
 ;;; Code:
@@ -74,7 +74,17 @@
   :ensure t
   :config (company-flx-mode 1))
 
+(use-package yasnippet
+  :ensure t
+  :hook (after-init . yas-global-mode)
+  :config
+  (use-package yasnippet-snippets
+    :ensure t)
+  (+funcs/set-leader-keys-for-major-mode
+   snippet-mode-map
+   "t"   '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
 
-(provide 'init-company)
 
-;;; init-company.el ends here
+(provide 'init-completion)
+
+;;; init-completion.el ends here

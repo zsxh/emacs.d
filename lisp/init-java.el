@@ -30,8 +30,7 @@
 
 ;;; Code:
 
-(require 'init-lsp)
-
+(require 'init-language-server)
 (use-package lsp-java
   :defer t
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))

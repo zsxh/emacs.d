@@ -49,8 +49,7 @@
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended))
 
-(require 'init-lsp)
-
+(require 'init-language-server)
 (defun +python/lsp-python-config ()
   (setq-local python-indent-offset 2)
   (setq-local company-backends
