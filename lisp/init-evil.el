@@ -31,6 +31,7 @@
 ;;; Code:
 
 ;; Vim edit style
+;; tips: press "%" in normal mode to jump between code block, tags
 (use-package evil
   :ensure t
   :init
@@ -86,16 +87,6 @@
   (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list))
   (with-eval-after-load 'elfeed (evil-collection-init 'elfeed)))
 
-;; press "%" to jump
-;; usage: "%" jump between code block, tags
-;;        "va%" evilmi-select-items
-;;        "da%" evilmi-delete-items
-;; All commands support numeric argument like “3%”, “5va%” or “9da%”
-;;        “3%” will jump to a line 3 percentage down the file
-(use-package evil-matchit
-  :after evil
-  :ensure t
-  :config (global-evil-matchit-mode 1))
 
 ;; evil open/close/toggle folds rely on hideshow
 ;; "z a" evil-toggle-fold
