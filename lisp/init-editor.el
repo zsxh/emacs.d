@@ -88,9 +88,9 @@
   (setq ediff-merge-split-window-function 'split-window-horizontally))
 
 ;; automatic parenthesis pairing
-(use-package elec-pair
-  :ensure nil
-  :hook (after-init . electric-pair-mode))
+;; (use-package elec-pair
+;;   :ensure nil
+;;   :hook (after-init . electric-pair-mode))
 
 ;; Increase selected region by semantic units
 (use-package expand-region
@@ -176,46 +176,6 @@
   :commands (color-rg-search-input color-rg-search-project)
   :quelpa ((color-rg :fetcher github :repo "manateelazycat/color-rg")))
 
-;; Short and sweet LISP editing
-(use-package lispy
-  :ensure t
-  :commands lispy-mode
-  :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
-         (lisp-interaction-mode . (lambda () (lispy-mode 1)))
-         (lisp-mode . (lambda () (lispy-mode 1))))
-  :bind (:map lispy-mode-map
-              ("s-k" . paredit-splice-sexp-killing-backward))
-  :config
-  (require 'le-lisp)
-  (setq lispy-use-sly t)
-
-  ;; Replace lispy--eavl-lisp function
-  (defun lispy--eval-lisp-advice (str)
-    "Eval STR as Common Lisp code."
-    (let* ((deactivate-mark nil)
-           (result (with-current-buffer (process-buffer (lispy--cl-process))
-                     (if lispy-use-sly
-                         (sly-interactive-eval str)
-                       (slime-eval `(swank:eval-and-grab-output ,str))))))
-      (if (equal (car result) "")
-          (cadr result)
-        (concat (propertize (car result)
-                            'face 'font-lock-string-face)
-                "\n\n"
-                (cadr result)))))
-  (advice-add #'lispy--eval-lisp :override #'lispy--eval-lisp-advice))
-
-(use-package paredit
-  :ensure t
-  :commands paredit-splice-sexp-killing-backward
-  :bind (("s-0" . paredit-wrap-round)
-         ("s-[" . paredit-wrap-square)
-         ("s-{" . paredit-wrap-curly)
-         ("s-<" . paredit-wrap-angled)
-         ("s-\"" . paredit-meta-doublequote)
-         ("C-M-b" . paredit-backward)
-         ("C-M-f" . paredit-forward)))
-
 ;; M-<up> move-line-up
 ;; M-<down> move-line-down
 ;; Dont try moving region in evil normal state, use V DD P instead
@@ -225,10 +185,6 @@
 
 (use-package popwin
   :ensure t)
-
-(use-package string-inflection
-  :ensure t
-  :commands string-inflection-all-cycle)
 
 
 (provide 'init-editor)

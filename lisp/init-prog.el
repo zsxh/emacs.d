@@ -30,6 +30,75 @@
 
 ;;; Code:
 
+;; Structured editing
+(use-package paredit
+  :ensure t
+  :bind (("s-0" . paredit-wrap-round)
+         ("s-[" . paredit-wrap-square)
+         ("s-{" . paredit-wrap-curly)
+         ("s-<" . paredit-wrap-angled)
+         ("s-\"" . paredit-meta-doublequote)
+         ("C-M-b" . paredit-backward)
+         ("C-M-f" . paredit-forward))
+  :hook (prog-mode . enable-paredit-mode)
+  :config
+  (defun +paredit/space-for-delimiter-p (endp delimiter)
+    (or (member 'font-lock-keyword-face (text-properties-at (1- (point))))
+        (not (derived-mode-p 'basic-mode
+                             'c++-mode
+                             'c-mode
+                             'coffee-mode
+                             'csharp-mode
+                             'd-mode
+                             'dart-mode
+                             'go-mode
+                             'java-mode
+                             'js-mode
+                             'lua-mode
+                             'objc-mode
+                             'pascal-mode
+                             'python-mode
+                             'r-mode
+                             'ruby-mode
+                             'rust-mode
+                             'typescript-mode))))
+  (add-to-list 'paredit-space-for-delimiter-predicates '+paredit/space-for-delimiter-p))
+
+;; Short and sweet LISP editing
+(use-package lispy
+  :ensure t
+  :after paredit
+  :commands lispy-mode
+  :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
+         (lisp-interaction-mode . (lambda () (lispy-mode 1)))
+         (lisp-mode . (lambda () (lispy-mode 1))))
+  :bind (:map lispy-mode-map
+              ("s-k" . paredit-splice-sexp-killing-backward))
+  :config
+  (require 'le-lisp)
+  (setq lispy-use-sly t)
+
+  ;; Replace lispy--eavl-lisp function
+  (defun lispy--eval-lisp-advice (str)
+    "Eval STR as Common Lisp code."
+    (let* ((deactivate-mark nil)
+           (result (with-current-buffer (process-buffer (lispy--cl-process))
+                     (if lispy-use-sly
+                         (sly-interactive-eval str)
+                       (slime-eval `(swank:eval-and-grab-output ,str))))))
+      (if (equal (car result) "")
+          (cadr result)
+        (concat (propertize (car result)
+                            'face 'font-lock-string-face)
+                "\n\n"
+                (cadr result)))))
+  (advice-add #'lispy--eval-lisp :override #'lispy--eval-lisp-advice))
+
+;; Change variable name style
+(use-package string-inflection
+  :ensure t
+  :commands string-inflection-all-cycle)
+
 ;; https://gitlab.com/jgkamat/rmsbolt
 ;; RMSBolt tries to make it easy to see what your compiler is doing.
 ;; It does this by showing you the assembly output of a given source code file.
