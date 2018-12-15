@@ -126,7 +126,7 @@
 
 ;; Use package auto-save instead of default auto save
 (use-package auto-save
-  :ensure nil
+  :quelpa ((auto-save :fetcher github :repo "manateelazycat/auto-save"))
   :init (setq auto-save-default nil)
   :config
   (auto-save-enable)
