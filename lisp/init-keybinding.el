@@ -130,6 +130,7 @@
    "hS"  '(hydra-emacs-cheatsheet/body :which-key "my-emacs-cheatsheet")
    "hv"  '(helpful-variable :which-key "helpful-variable")
    "hp"  '(helpful-at-point :which-key "helpful-at-point")
+   "hu"  '(upgrade-packages :which-key "upgrade-packages")
    "hw"  '(nil :which-key "which-key")
    "hwk" '(which-key-show-top-level :which-key "show-top-level")
    ;; Jump
