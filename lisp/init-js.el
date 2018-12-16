@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-language-server)
+
 (defun +js/lsp-js-config ()
   (+js/set-leader-keys)
   (lsp))

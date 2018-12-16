@@ -46,10 +46,10 @@
         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
   (when (featurep 'evil)
     (evil-set-initial-state 'ccls-tree-mode 'emacs))
-  (setq-local company-backends
-              '((company-lsp :separate company-yasnippet)))
   (+c/set-leader-keys)
-  (lsp))
+  (lsp)
+  (setq-local company-backends
+              '((company-lsp :separate company-yasnippet))))
 
 (add-hook 'c-mode-hook '+c/lsp-ccls-config)
 (add-hook 'c++-mode-hook '+c/lsp-ccls-config)

@@ -31,6 +31,7 @@
 ;;; Code:
 
 (require 'init-language-server)
+
 (use-package lsp-java
   :defer t
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
@@ -43,10 +44,10 @@
   (require 'lsp-java)
   (setq-local company-minimum-prefix-length 0)
   ;; (setq-local company-lsp-cache-candidates t)
-  (setq-local company-backends
-              '((company-lsp :separate company-yasnippet)))
   (+java/set-leader-keys)
-  (lsp))
+  (lsp)
+  (setq-local company-backends
+              '((company-lsp :separate company-yasnippet))))
 
 (add-hook 'java-mode-hook '+java/lsp-java-config)
 

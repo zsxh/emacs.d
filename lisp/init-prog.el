@@ -83,7 +83,8 @@
                              'r-mode
                              'ruby-mode
                              'rust-mode
-                             'typescript-mode))))
+                             'typescript-mode
+                             'julia-mode))))
   (add-to-list 'paredit-space-for-delimiter-predicates '+paredit/space-for-delimiter-p))
 
 ;; Short and sweet LISP editing
