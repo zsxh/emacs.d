@@ -32,6 +32,13 @@
 
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
 
+(use-package elisp-demos
+  :ensure t
+  :init
+  (advice-add 'describe-function-1 :after #'elisp-demos-advice-describe-function-1)
+  (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
+  :commands elisp-demos--search)
+
 ;; A better *Help* buffer
 (use-package helpful
   :ensure t
@@ -49,7 +56,9 @@
                    helpful-command))
       (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist)))
   (with-eval-after-load 'evil
-    (evil-define-key 'normal helpful-mode-map "q" 'quit-window)))
+    (evil-define-key 'normal helpful-mode-map "q" 'quit-window))
+  (when (featurep 'elisp-demos)
+    (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)))
 
 ;;;;;;;;;;;;;; *Buffer* ;;;;;;;;;;;;;;
 
