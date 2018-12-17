@@ -104,7 +104,7 @@
      "c" '(wdired-finish-edit :which-key "finish edit")
      "k" '(wdired-abort-changes :which-key "abort changes")
      "q" '(wdired-exit :which-key "exit"))
-    (when all-the-icons-dired-mode
+    (with-eval-after-load 'all-the-icons-dired
       (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
       (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode))))))
 
