@@ -64,8 +64,10 @@
    "eN" '(flymake-goto-prev-error :which-key "prev-error")
    "f"  '(lsp-format-buffer :which-key "format")
    "g"  '(nil :which-key "go")
-   "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
-   "gr" '(lsp-ui-peek-find-references :which-key "find-references")
+   "gd" '(lsp-find-definition :which-key "find-definitions")
+   "gr" '(lsp-find-references :which-key "find-references")
+   ;; "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+   ;; "gr" '(lsp-ui-peek-find-references :which-key "find-references")
    "gh" '(ccls-member-hierarchy :which-key "member-hierarchy")
    "R"  '(lsp-rename :which-key "rename")))
 
