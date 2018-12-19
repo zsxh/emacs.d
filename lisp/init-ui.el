@@ -94,7 +94,7 @@
 (display-time-mode)
 
 (defun +ui/toggle-display-time-mode ()
-  (if (<= (window-width) 85)
+  (if (<= (window-width) 110)
       (display-time-mode -1)
     (display-time-mode 1)))
 
