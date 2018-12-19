@@ -19,5 +19,8 @@
 ;; Frame startup size, "max" or "fullscreen"
 (setq personal-frame-startup-size "max")
 
+;; "Shell used in `term' and `ansi-term'."
+(setq personal-shell-executable "/usr/bin/zsh")
+
 
 ;;; custom.el ends here

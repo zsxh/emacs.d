@@ -52,6 +52,10 @@ Origin repo: https://github.com/hlissner/emacs-doom-themes"
   "Startup frame size. `\"max\"' means maximized frame and `\"fullscreen\"' means fullscreen frame."
   :type 'string)
 
+(defcustom personal-shell-executable "/usr/bin/zsh"
+  "Shell used in `term' and `ansi-term'."
+  :type 'string)
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (if (file-exists-p custom-file)

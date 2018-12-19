@@ -72,7 +72,7 @@
 (require 'init-emacs-enhancement)
 (require 'init-neotree)
 (require 'init-org)
-(require 'init-shell)
+(require 'init-shell-term)
 (require 'init-editor)
 
 ;; Completion in Emacs
