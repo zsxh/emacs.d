@@ -97,6 +97,16 @@
   :config
   (define-key evil-normal-state-map (kbd "z f") 'hs-hide-level))
 
+;; https://github.com/VanLaser/evil-nl-break-undo
+;; It means that, for example, after you write an entire paragraph in insert state,
+;; and then you hit u in normal state to undo, changes are undone line by line,
+;; instead of the whole paragraph disappearing with one swift stroke.
+(use-package evil-nl-break-undo
+  :after evil
+  :ensure t
+  :hook ((text-mode prog-mode) . evil-nl-break-undo-mode))
+
+
 (provide 'init-evil)
 
 ;;; init-evil.el ends here
