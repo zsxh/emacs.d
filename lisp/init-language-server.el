@@ -30,6 +30,26 @@
 
 ;;; Code:
 
+;;;;;;;;;;;;;; LANGUAGE SUPPORT ;;;;;;;;;;;;;;
+
+(use-package go-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+  :commands go-mode)
+
+;; Install rls first, see https://github.com/rust-lang/rls
+;; >$ rustup component add rls-preview rust-analysis rust-src
+(use-package rust-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  :commands rust-mode
+  :hook (rust-mode . lsp)
+  ;; :hook (rust-mode . eglot-ensure)
+  :config
+  (setq rust-indent-offset 2))
+
 ;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
 
 (use-package eglot
@@ -38,14 +58,6 @@
   :hook ((sh-mode . eglot-ensure)
          ;; ((js-mode typescript-mode) . eglot-ensure)
          (go-mode . eglot-ensure)))
-
-;; Experimental
-;; TODO: Move to init-go.el
-(use-package go-mode
-  :ensure t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-  :commands go-mode)
 
 ;;;;;;;;;;;;;; Lsp-mode ;;;;;;;;;;;;;;
 
@@ -74,7 +86,7 @@
 ;;         company-lsp-enable-recompletion t))
 
 (use-package lsp-ui
-  :after lsp
+  :after lsp-mode
   :ensure t
   ;; disable lsp-ui doc and sideline
   :preface (setq lsp-ui-doc-enable nil
@@ -94,7 +106,7 @@
 
 ;; Debug Adapter Protocol for Emacs
 (use-package dap-mode
-  :after lsp
+  :after lsp-mode
   :ensure t
   :config
   (dap-mode t)
