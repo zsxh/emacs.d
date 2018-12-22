@@ -32,6 +32,7 @@
 
 (use-package magit
   :commands (magit magit-blame)
+  :defer 10
   :ensure t
   :config
   ;; https://github.com/magit/magit/issues/2371#issuecomment-152746346
@@ -58,6 +59,10 @@
   (setq magit-todos-auto-group-items 'always)
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit-todos)))
+
+(use-package forge
+  :ensure t
+  :after magit)
 
 
 (provide 'init-git)
