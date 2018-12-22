@@ -81,6 +81,13 @@
   (setq multi-term-program personal-shell-executable))
 
 
+;; Better eshell
+;; https://github.com/manateelazycat/aweshell
+;; (use-package aweshell
+;;   :commands aweshell-new
+;;   :quelpa ((aweshell :fetcher github :repo "manateelazycat/aweshell")))
+
+
 (provide 'init-shell-term)
 
 ;;; init-shell-term.el ends here

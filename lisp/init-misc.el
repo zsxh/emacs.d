@@ -42,31 +42,6 @@
   (when personal-elfeed-feeds
     (setq elfeed-feeds personal-elfeed-feeds)))
 
-;; Socks Proxy
-(use-package socks
-  :ensure nil
-  :defer t
-  :init
-  (defun proxy-mode-socks-enable ()
-    "Enable Socks proxy."
-    (setq url-gateway-method 'socks)
-    (setq socks-noproxy '("localhost"))
-    (setq socks-server '("Default server" "socks" 1080 5))
-    (message "socks proxy %s enabled" socks-server))
-
-  (defun proxy-mode-socks-disable ()
-    "Disable Socks proxy."
-    (setq url-gateway-method 'native)
-    (message "socks proxy diabled")))
-
-;;;###autoload
-(defun toggle-socks-proxy ()
-  "Toggle socks proxy."
-  (interactive)
-  (if (equal url-gateway-method 'native)
-      (proxy-mode-socks-enable)
-    (proxy-mode-socks-disable)))
-
 ;; Youdao
 (use-package youdao-dictionary
   :ensure t
@@ -92,7 +67,36 @@
    "t" '(nil :which-key "toggle")
    "ti" '(markdown-toggle-inline-images :which-key "inline-images")))
 
-;; Markdowm Previewer
+;; This extension will ask me Chinese words and then insert translation as variable or function name.
+;; https://github.com/manateelazycat/insert-translated-name
+(use-package insert-translated-name
+  :commands insert-translated-name-insert
+  :quelpa ((insert-translated-name :fetcher github :repo "manateelazycat/insert-translated-name")))
+
+;; Socks Proxy
+(use-package socks
+  :ensure nil
+  :defer t
+  :init
+  (defun proxy-mode-socks-enable ()
+    "Enable Socks proxy."
+    (setq url-gateway-method 'socks)
+    (setq socks-noproxy '("localhost"))
+    (setq socks-server '("Default server" "socks" 1080 5))
+    (message "socks proxy %s enabled" socks-server))
+
+  (defun proxy-mode-socks-disable ()
+    "Disable Socks proxy."
+    (setq url-gateway-method 'native)
+    (message "socks proxy diabled")))
+
+;;;###autoload
+(defun toggle-socks-proxy ()
+  "Toggle socks proxy."
+  (interactive)
+  (if (equal url-gateway-method 'native)
+      (proxy-mode-socks-enable)
+    (proxy-mode-socks-disable)))
 
 (provide 'init-misc)
 

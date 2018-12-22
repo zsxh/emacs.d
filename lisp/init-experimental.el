@@ -159,17 +159,6 @@
                                  (eaf-open filename)
                                  (kill-buffer (file-name-nondirectory filename))))))
 
-;; Better eshell
-;; https://github.com/manateelazycat/aweshell
-;; (use-package aweshell
-;;   :commands aweshell-new
-;;   :quelpa ((aweshell :fetcher github :repo "manateelazycat/aweshell")))
-
-;; This extension will ask me Chinese words and then insert translation as variable or function name.
-;; https://github.com/manateelazycat/insert-translated-name
-(use-package insert-translated-name
-  :commands insert-translated-name-insert
-  :quelpa ((insert-translated-name :fetcher github :repo "manateelazycat/insert-translated-name")))
 
 ;; Use system-wide command instead now
 ;; Simplified and community-driven man pages

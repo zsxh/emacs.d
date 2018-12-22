@@ -61,7 +61,7 @@
    ":"   '(eval-expression :which-key "eval-expression")
    ";"   '(comment-dwim-2 :which-key "comment-line")
    "0"   '(neotree-show :which-key "neotree")
-   "/"   '(color-rg-search-input :which-key "rg-current-directory")
+   "/"   '(color-rg-search-input :which-key "rg-current-dir")
    "?"   '(find-name-dired :which-key "search-files")
    ;; winum-select-window
    "1"   'winum-select-window-1
