@@ -1,4 +1,4 @@
-;; init-flycheck.el --- Flycheck Configuations	-*- lexical-binding: t -*-
+;; init-syntax-checking.el --- Syntax Checking Configuations	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2018 Zsxh Chen
 
@@ -25,10 +25,20 @@
 
 ;;; Commentary:
 ;;
-;;  Flycheck Configuations
+;;  Syntax Checking Configuations
 ;;
 
 ;;; Code:
+
+;;;;;;;;;;;;;; FLYMAKE ;;;;;;;;;;;;;;
+
+(use-package flymake-diagnostic-at-point
+  :after flymake
+  :hook (flymake-mode . flymake-diagnostic-at-point-mode))
+
+
+
+;;;;;;;;;;;;;; FLYCHECK ;;;;;;;;;;;;;;
 
 ;; TODO: Deprecated, it will be replaced by `flymake'
 (use-package flycheck
@@ -144,6 +154,6 @@ If the error list is visible, hide it.  Otherwise, show it."
 ;;   :ensure t
 ;;   :hook (flycheck-mode . avy-flycheck-setup))
 
-(provide 'init-flycheck)
+(provide 'init-syntax-checking)
 
-;;; init-flycheck.el ends here
+;;; init-syntax-checking.el ends here

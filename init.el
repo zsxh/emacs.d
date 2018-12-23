@@ -81,7 +81,7 @@
 ;; Programing
 (require 'init-project)
 (require 'init-completion)
-(require 'init-flycheck)
+(require 'init-syntax-checking)
 (require 'init-git)
 (require 'init-highlight)
 (require 'init-prog)
