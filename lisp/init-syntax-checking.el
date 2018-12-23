@@ -33,14 +33,12 @@
 ;;;;;;;;;;;;;; FLYMAKE ;;;;;;;;;;;;;;
 
 (use-package flymake-diagnostic-at-point
+  :quelpa ((flymake-diagnostic-at-point :fetcher github :repo "meqif/flymake-diagnostic-at-point"))
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
-
-
 ;;;;;;;;;;;;;; FLYCHECK ;;;;;;;;;;;;;;
 
-;; TODO: Deprecated, it will be replaced by `flymake'
 (use-package flycheck
   :ensure t
   :defer t
