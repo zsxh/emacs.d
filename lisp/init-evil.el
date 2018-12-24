@@ -45,6 +45,10 @@
   ;; but [escape] should switch back to normal state
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
 
+  ;; customize my vim normal state keybindings
+  (define-key evil-normal-state-map (kbd "C-n") 'next-line)
+  (define-key evil-normal-state-map (kbd "C-p") 'previous-line)
+
   ;; message-buffer-mode config
   ;; (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window)
