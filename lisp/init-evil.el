@@ -84,8 +84,7 @@
   (with-eval-after-load 'package (evil-collection-init 'package-menu))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
-  (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list))
-  (with-eval-after-load 'elfeed (evil-collection-init 'elfeed)))
+  (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list)))
 
 
 ;; evil open/close/toggle folds rely on hideshow

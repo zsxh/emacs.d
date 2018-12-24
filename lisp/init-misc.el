@@ -40,7 +40,9 @@
   :commands elfeed
   :config
   (when personal-elfeed-feeds
-    (setq elfeed-feeds personal-elfeed-feeds)))
+    (setq elfeed-feeds personal-elfeed-feeds))
+  (when (featurep 'evil-collection)
+    (evil-collection-init 'elfeed)))
 
 ;; Youdao
 (use-package youdao-dictionary
