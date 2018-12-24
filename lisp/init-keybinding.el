@@ -85,6 +85,7 @@
    "ays" '(youdao-dictionary-search-from-input :which-key "search-from-input")
    "ayy" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
    "ayv" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
+   "aw"   '(eww :which-key "emacs-web-wowser")
    ;; Buffers
    "b"   '(nil :which-key "buffer")
    "bb"  '(switch-to-buffer :which-key "switch-to-buffer")
