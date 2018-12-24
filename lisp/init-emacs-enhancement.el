@@ -110,20 +110,15 @@
       (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
       (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode))))))
 
-;;;;;;;;;;;;;; Emacs Web Wowser ;;;;;;;;;;;;;;
 
-(use-package eww
-  :defer t
-  :config
-  (when (featurep 'evil-collection)
-    (evil-collection-init 'eww)))
+;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 
 (use-package shr
   :defer t
   :config
+  ;; (setq shr-inhibit-images t)
   ;; Don't use proportional fonts for text
-  (setq shr-use-fonts nil)
-  (setq shr-inhibit-images t))
+  (setq shr-use-fonts nil))
 
 ;; This package adds syntax highlighting support for code block in HTML, rendered by shr.el.
 ;; The probably most famous user of shr.el is EWW (the Emacs Web Wowser).
@@ -137,6 +132,32 @@
     (with-eval-after-load 'eww
       (advice-add 'eww-display-html :around
                   'eww-display-html--override-shr-external-rendering-functions))))
+
+
+;;;;;;;;;;;;;; Emacs Web Wowser ;;;;;;;;;;;;;;
+
+(use-package eww
+  :defer t
+  :preface
+  (defun +eww/toggle-images-display ()
+    "Toggle whether images are loaded and reload the current page from cache."
+    (interactive)
+    (setq-local shr-inhibit-images (not shr-inhibit-images))
+    (eww-reload t)
+    (message "Images are now %s"
+             (if shr-inhibit-images "off" "on")))
+  :bind (:map eww-mode-map
+              ("I" . +eww/toggle-images-display)
+              :map eww-link-keymap
+              ("I" . +eww/toggle-images-display))
+  :hook (eww-mode . (lambda ()
+                      (setq-local shr-inhibit-images t)))
+  :config
+  (when (featurep 'evil)
+    (require 'evil-collection)
+    (evil-collection-init 'eww)
+    (evil-define-key 'normal eww-mode-map "gv" #'+eww/toggle-images-display)
+    (evil-define-key 'normal eww-link-keymap "gv" #'+eww/toggle-images-display)))
 
 
 (provide 'init-emacs-enhancement)
