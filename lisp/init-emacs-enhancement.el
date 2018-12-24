@@ -34,14 +34,15 @@
 
 (use-package elisp-demos
   :ensure t
+  :defer t
   :init
   (advice-add 'describe-function-1 :after #'elisp-demos-advice-describe-function-1)
-  (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
-  :commands elisp-demos--search)
+  (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
 
 ;; A better *Help* buffer
 (use-package helpful
   :ensure t
+  :defer t
   :defines ivy-initial-inputs-alist
   :bind (("C-c C-d" . helpful-at-point)
          ("C-h f" . helpful-callable) ;; replace built-in `describe-function'
@@ -64,6 +65,7 @@
 
 (use-package ibuffer-vc
   :ensure t
+  :after ibuffer
   :bind (("C-x C-b" . ibuffer))
   :hook ((ibuffer . (lambda ()
                       (ibuffer-vc-set-filter-groups-by-vc-root)
@@ -74,7 +76,7 @@
 
 ;; Dired Configs
 (use-package dired
-  :ensure nil
+  :defer t
   :init
   ;; dired "human-readable" format
   (setq dired-listing-switches "-alh --time-style=long-iso --group-directories-first")
@@ -107,6 +109,34 @@
     (with-eval-after-load 'all-the-icons-dired
       (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
       (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode))))))
+
+;;;;;;;;;;;;;; Emacs Web Wowser ;;;;;;;;;;;;;;
+
+(use-package eww
+  :defer t
+  :config
+  (when (featurep 'evil-collection)
+    (evil-collection-init 'eww)))
+
+(use-package shr
+  :defer t
+  :config
+  ;; Don't use proportional fonts for text
+  (setq shr-use-fonts nil)
+  (setq shr-inhibit-images t))
+
+;; This package adds syntax highlighting support for code block in HTML, rendered by shr.el.
+;; The probably most famous user of shr.el is EWW (the Emacs Web Wowser).
+(use-package shr-tag-pre-highlight
+  :ensure t
+  :after shr
+  :config
+  (add-to-list 'shr-external-rendering-functions
+               '(pre . shr-tag-pre-highlight))
+  (when (version< emacs-version "26")
+    (with-eval-after-load 'eww
+      (advice-add 'eww-display-html :around
+                  'eww-display-html--override-shr-external-rendering-functions))))
 
 
 (provide 'init-emacs-enhancement)
