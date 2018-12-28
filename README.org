@@ -53,7 +53,7 @@ Updated: <2018-12-29 六>
     - =yasnippets=
       snippets 
     - =magit=
-      dawn good git support
+      damn good git support
     - =paren, rainbow-mode=
       highlight parenthesis and color string
     - =zeal-at-point, helm-dash=
