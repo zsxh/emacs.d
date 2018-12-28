@@ -1,53 +1,85 @@
 Updated: <2018-12-29 六>
 
 * Features
-  - org mode
-    - org :: take note
-    - org-agenda :: gtd
-    - org-babel :: code blocks, also work well with jupyter
-  - editor enhancement :: automatic parenthesis pairing, highlight ...
-  - package management
-    - use-package :: config packages
-    - quelpa-use-package :: build and install package directly from source, such as github
-  - ui
-    - doom-theme :: fancy theme
-    - modeline :: provide useful file information in the bottom
-  - emacs environment
-    - exec-path-from-shell :: copy system enviroment into emacs, such as PATH
-  - evil :: emulates the main features of Vim
-  - leader key :: press "SPC" in vim normal state just like spacemacs
-  - emacs enhancement
-    - helpful :: better *Help* buffer 
-    - elisp-demos :: display elisp examples in *Help* buffer
-    - ibuffer-vc :: group buffers by project
-    - all-the-icons-dired :: fantasy file manager
-    - eww :: emacs web browser, not support js, but good for reading web doc
-  - neotree :: A tree plugin like NerdTree for Vim
-  - shell and terminal
-  - ivy :: completion for emacs command
-  - programming
-    - eglot/lsp-mode :: language server supoort
-    - projectile/project :: project management and navigation
-    - company-mode :: code completion 
-    - yasnippets :: snippets 
-    - magit :: dawn good git support
-    - paren, rainbow-mode :: highlight parenthesis and color string
-    - zeal-at-point, helm-dash :: offline documentation browser
-    - paredit, lispy :: structure edit
-  - others
-    - eaf :: emacs-application-framework for browsering web, previewing markdown, pdf ...
-    - elfeed :: rss
-    - youdao-dictionary :: translate english to chinese at point
-    - insert-translated-name :: Insert translated string, type chinese insertd english for short
+  - =org mode=
+    - =org=
+      take note
+    - =org-agenda=
+      gtd
+    - =org-babel=
+      code blocks, also work well with jupyter
+  - =editor enhancement=
+      automatic parenthesis pairing, highlight ...
+  - =package management=
+    - =use-package=
+      config packages
+    - =quelpa-use-package=
+      build and install package directly from source, such as github
+  - =ui=
+    - =doom-theme=
+      fancy theme
+    - =modeline=
+      provide useful file information in the bottom
+  - =emacs environment=
+    - =exec-path-from-shell=
+      copy system enviroment into emacs, such as PATH
+  - =evil=
+      emulates the main features of Vim
+  - =leader key=
+      press "SPC" in vim normal state just like spacemacs
+  - =emacs enhancement=
+    - =helpful=
+      better *Help* buffer 
+    - =elisp-demos=
+      display elisp examples in *Help* buffer
+    - =ibuffer-vc=
+      group buffers by project
+    - =all-the-icons-dired=
+      fantasy file manager
+    - =eww=
+      emacs web browser, not support js, but good for reading web doc
+  - =neotree=
+      A tree plugin like NerdTree for Vim
+  - =shell and terminal=
+  - =ivy=
+      completion for emacs command
+  - =programming=
+    - =eglot/lsp-mode=
+      language server supoort
+    - =projectile/project=
+      project management and navigation
+    - =company-mode=
+      code completion 
+    - =yasnippets=
+      snippets 
+    - =magit=
+      dawn good git support
+    - =paren, rainbow-mode=
+      highlight parenthesis and color string
+    - =zeal-at-point, helm-dash=
+      offline documentation browser
+    - =paredit, lispy=
+      structure edit
+  - =others=
+    - =eaf=
+      emacs-application-framework for browsering web, previewing markdown, pdf ...
+    - =elfeed=
+      rss
+    - =youdao-dictionary=
+      translate english to chinese at point
+    - =insert-translated-name=
+      Insert translated string, type chinese insertd english for short
 
 * Languages Support 
-  - [X] c/c++
-  - [X] java
-  - [X] python
-  - [X] rust
-  - [X] go
-  - [X] common-lisp
-  - [ ] js :: performance issue
-  - [ ] julia :: not yet stable for julia 1.0
+  - [X] =c/c++=
+  - [X] =java=
+  - [X] =python=
+  - [X] =rust=
+  - [X] =go=
+  - [X] =common-lisp=
+  - [ ] =js=
+        performance issue
+  - [ ] =julia=
+        not yet stable for julia 1.0
 
 * TODOs
