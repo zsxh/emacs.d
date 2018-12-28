@@ -110,7 +110,7 @@
 
   ;; major mode keybindings
   (+funcs/set-leader-keys-for-major-mode
-   org-mode-map
+   'org-mode-map
    "a"  '(org-agenda :which-key "agenda")
    "c"  '(nil :which-key "capture/clock")
    "cc" '(org-capture :which-key "capture")

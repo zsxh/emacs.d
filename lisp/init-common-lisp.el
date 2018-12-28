@@ -33,17 +33,21 @@
 (use-package sly
   :ensure t
   :hook ((lisp-mode . sly-mode)
-         (sly-mode . +common-lisp|init-sly))
+         (sly-mode . +common-lisp/init-sly)
+         (sly-mode . +common-lisp/sly-config))
   :config
   (setq inferior-lisp-program "sbcl")
-  (evil-set-initial-state 'sly-db-mode 'emacs)
+  (evil-set-initial-state 'sly-db-mode 'emacs))
+
+(defun +common-lisp/sly-config ()
   (+funcs/set-leader-keys-for-major-mode
-   lisp-mode-map
-   "'"  '(sly-mrepl :which-key "repl")
-   "g"  '(nil :which-key "goto")
+   'lisp-mode-map
+   "'" '(sly-mrepl :which-key "repl")
+   "g" '(nil :which-key "goto")
    "gd" '(sly-edit-definition "" :which-key "goto-definition")
-   "m"  '(nil :which-key "macro")
+   "m" '(nil :which-key "macro")
    "ms" '(macrostep-expand :which-key "macrostep-expand"))
+
   (with-eval-after-load 'evil
     (evil-define-key 'normal sly-xref-mode-map
       (kbd "RET") 'sly-goto-xref)
@@ -56,17 +60,17 @@
   :bind (:map lisp-mode-map
               ("C-c e" . macrostep-expand)))
 
-(defun +common-lisp|init-sly ()
+(defun +common-lisp/init-sly ()
   "Attempt to auto-start sly when opening a Lisp buffer."
   (cond ((sly-connected-p))
         ((executable-find inferior-lisp-program)
          (let ((sly-auto-start 'always))
            (sly-auto-start)
-           (add-hook 'kill-buffer-hook #'+common-lisp|cleanup-sly-maybe nil t)))
+           (add-hook 'kill-buffer-hook #'+common-lisp/cleanup-sly-maybe nil t)))
         ((message "WARNING: Couldn't find `inferior-lisp-program' (%s)"
                   inferior-lisp-program))))
 
-(defun +common-lisp|cleanup-sly-maybe ()
+(defun +common-lisp/cleanup-sly-maybe ()
   "Kill processes and leftover buffers when killing the last sly buffer."
   (unless (cl-loop for buf in (delq (current-buffer) (buffer-list))
                    if (and (buffer-local-value 'sly-mode buf)

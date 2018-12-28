@@ -94,15 +94,17 @@
     (evil-define-key 'normal dired-mode-map
       (kbd "SPC") nil
       "," nil))
-  (+funcs/set-leader-keys-for-major-mode
-   dired-mode-map
-   "/" '(dired-narrow :which-key "dired-narrow")
-   "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp"))
+
+  (with-eval-after-load 'dired
+    (+funcs/set-leader-keys-for-major-mode
+     'dired-mode-map
+     "/" '(dired-narrow :which-key "dired-narrow")
+     "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
 
   ;; Editable Dired mode configs
   (with-eval-after-load 'wdired
     (+funcs/set-leader-keys-for-major-mode
-     wdired-mode-map
+     'wdired-mode-map
      "c" '(wdired-finish-edit :which-key "finish edit")
      "k" '(wdired-abort-changes :which-key "abort changes")
      "q" '(wdired-exit :which-key "exit"))

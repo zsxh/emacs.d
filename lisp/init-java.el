@@ -54,8 +54,7 @@
 
 (defun +java/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
-   java-mode-map
-   "a" '(lsp-execute-code-action :which-key "code-action")
+   'java-mode-map
    "d" '(nil :which-key "debug")
    "db" '(dap-breakpoint-toggle :which-key "breakpoint")
    "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
@@ -63,22 +62,13 @@
    "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
    "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
    "dk" '(+dap/debug-key-settings--toggle :which-key "toggle-debug-keybindings")
-   "e"  '(nil :which-key "error")
-   "en" '(flymake-goto-next-error :which-key "next-error")
-   "eN" '(flymake-goto-prev-error :which-key "prev-error")
-   "f" '(lsp-format-buffer :which-key "format")
-   "g" '(nil :which-key "go")
-   "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
-   "gi" '(lsp-goto-implementation :which-key "find-implementation")
-   "gr" '(lsp-ui-peek-find-references :which-key "find-references")
    "i" '(nil :which-key "implement")
    "ic" '(lsp-java-add-import :which-key "import-class")
    "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
    "j" '(+java/set-jdk :which-key "set-jdk")
    "r" '(nil :which-key "run")
    "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
-   "rT" '(dap-java-run-test-class :which-key "run-junit-class")
-   "R" '(lsp-rename :which-key "rename")))
+   "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
 
 
 (defvar jdks-installed-dir "/usr/local/"

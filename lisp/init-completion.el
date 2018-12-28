@@ -80,9 +80,10 @@
   :config
   (use-package yasnippet-snippets
     :ensure t)
-  (+funcs/set-leader-keys-for-major-mode
-   snippet-mode-map
-   "t"   '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
+  (with-eval-after-load 'snippet
+    (+funcs/set-leader-keys-for-major-mode
+     'snippet-mode-map
+     "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet"))))
 
 
 (provide 'init-completion)

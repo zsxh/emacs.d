@@ -65,9 +65,9 @@ and write the 'initial-scratch-message into it."
         (insert initial-scratch-message)))
     (switch-to-buffer target-buffer)))
 
-(defun +funcs/set-leader-key (mode-map args)
+(defmacro +funcs/set-leader-keys-for-major-mode (mode-map &rest args)
   "Use general.el to define leader keys with both \"SPC m\" and \",\".
-Need major-mode-map MODE-MAP and keybidngs map ARGS.
+Need major-mode-map symbol MODE-MAP and keybidngs map ARGS.
 
 It returns a code string to define local leader keys."
   (defun prefix-m (element)
@@ -76,29 +76,17 @@ It returns a code string to define local leader keys."
     `(progn
        (general-define-key
         :states 'normal
-        :keymaps ',mode-map
+        :keymaps ,mode-map
         :major-modes t
         :prefix "SPC"
         "m" '(nil :which-key "major")
         ,@m-args)
        (general-define-key
         :states 'normal
-        :keymaps ',mode-map
+        :keymaps ,mode-map
         :major-modes t
         :prefix ","
         ,@args))))
-
-(defmacro +funcs/set-leader-keys-for-major-mode (mode-map &rest args)
-  "Use general.el to define local leader keys with both \"SPC m\" and \",\".
-Need MODE-MAP(atom or list) and keybidngs map ARGS.
-M can be a atom mode-map or non-empty mode-map list.
-
-It returns a function to define local leader keys."
-  (with-eval-after-load 'general
-    (if (atom mode-map)
-        `,@(+funcs/set-leader-key mode-map args)
-      `(progn
-         ,@(mapcar (lambda (x) (+funcs/set-leader-key x args)) mode-map)))))
 
 
 (defun +funcs/sudo-edit-current-file ()

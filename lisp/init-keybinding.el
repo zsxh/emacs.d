@@ -103,14 +103,6 @@
    "dd"  '(zeal-at-point :which-key "zeal-at-point")
    "dh"  '(helm-dash-at-point :which-key "helm-dash-at-point")
    "dH"  '(helm-dash :which-key "helm-dash")
-   ;; Error
-   "e"   '(nil :which-key "error")
-   "el"  '(+flycheck/toggle-flycheck-error-list :which-key "list-errors")
-   "eL"  '(+flycheck/goto-flycheck-error-list :which-key "list-errors-and-focus")
-   "en"  '(flycheck-next-error :which-key "next-error")
-   "eN"  '(flycheck-previous-error :which-key "previous-error")
-   "ep"  '(+flycheck/popup-errors :which-key "popup-errors")
-   "ev"  '(flycheck-verify-setup :which-key "flycheck-verify-setup")
    ;; Files
    "f"   '(nil :which-key "file")
    "ff"  '(counsel-find-file :which-key "find-files")

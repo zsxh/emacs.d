@@ -43,7 +43,7 @@
 
 (defun +js/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
-   js-mode-map
+   'js-mode-map
    "e"  '(nil :which-key "error")
    "en" '(flymake-goto-next-error :which-key "next-error")
    "eN" '(flymake-goto-prev-error :which-key "prev-error")

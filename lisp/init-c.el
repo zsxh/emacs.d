@@ -55,41 +55,9 @@
 (add-hook 'c-mode-hook '+c/lsp-ccls-config)
 (add-hook 'c++-mode-hook '+c/lsp-ccls-config)
 
-(defun +c/set-leader-keys ()
-  (+funcs/set-leader-keys-for-major-mode
-   '(c-mode-map c++-mode-map)
-   "a" '(lsp-execute-code-action :which-key "code-action")
-   "e"  '(nil :which-key "error")
-   "en" '(flymake-goto-next-error :which-key "next-error")
-   "eN" '(flymake-goto-prev-error :which-key "prev-error")
-   "f"  '(lsp-format-buffer :which-key "format")
-   "g"  '(nil :which-key "go")
-   "gd" '(lsp-find-definition :which-key "find-definitions")
-   "gr" '(lsp-find-references :which-key "find-references")
-   ;; "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
-   ;; "gr" '(lsp-ui-peek-find-references :which-key "find-references")
-   "gh" '(ccls-member-hierarchy :which-key "member-hierarchy")
-   "R"  '(lsp-rename :which-key "rename")))
-
 (use-package cmake-mode
   :ensure t)
 
-;; (defun +eglot/c-c++-config ()
-;;   (setq-local company-backends '(company-clang))
-;;   (eglot-ensure)
-;;   (+funcs/set-leader-keys-for-major-mode
-;;    '(c-mode-map c++-mode-map)
-;;    "e"  '(nil :which-key "error")
-;;    "en" '(flymake-goto-next-error :which-key "next-error")
-;;    "eN" '(flymake-goto-prev-error :which-key "prev-error")
-;;    "f"  '(eglot-format :which-key "format")
-;;    "g"  '(nil :which-key "go")
-;;    "gd" '(xref-find-definitions :which-key "find-definitions")
-;;    "gr" '(xref-find-references :which-key "find-references")
-;;    "R"  '(eglot-rename :which-key "rename")))
-
-;; (add-hook 'c-mode-hook '+eglot/c-c++-config)
-;; (add-hook 'c++-mode-hook '+eglot/c-c++-config)
 
 (provide 'init-c)
 
