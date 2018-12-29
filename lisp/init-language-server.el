@@ -14,17 +14,17 @@
 
 (use-package go-mode
   :ensure t
+  :defer t
   :init
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-  :commands go-mode)
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
 
 ;; Install rls first, see https://github.com/rust-lang/rls
 ;; >$ rustup component add rls-preview rust-analysis rust-src
 (use-package rust-mode
   :ensure t
+  :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-  :commands rust-mode
   :hook (rust-mode . lsp)
   ;; :hook (rust-mode . eglot-ensure)
   :config

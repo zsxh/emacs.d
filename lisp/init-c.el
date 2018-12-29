@@ -36,7 +36,11 @@
 (add-hook 'c++-mode-hook '+c/lsp-ccls-config)
 
 (use-package cmake-mode
-  :ensure t)
+  :ensure t
+  :defer t
+  :init
+  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
+  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode)))
 
 
 (provide 'init-c)

@@ -13,6 +13,7 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
+  :defer t
   :bind (:map emacs-lisp-mode-map
               ("C-c C-z" . ielm)
               ("C-c C-c" . eval-defun)
