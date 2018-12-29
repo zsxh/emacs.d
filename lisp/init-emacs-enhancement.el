@@ -57,41 +57,64 @@
 ;; Dired Configs
 (use-package dired
   :defer t
-  :init
+  :config
   ;; dired "human-readable" format
   (setq dired-listing-switches "-alh --time-style=long-iso --group-directories-first")
-  :config
   ;; Customize dired-directory foreground color
-  (set-face-foreground 'dired-directory "#3B6EA8")
+  (set-face-foreground 'dired-directory "#3B6EA8"))
 
-  ;;narrow dired to match filter
-  (use-package dired-narrow
-    :ensure t
-    :commands dired-narrow)
+(use-package all-the-icons-dired
+  :ensure t
+  :after dired
+  :hook (dired-mode . all-the-icons-dired-mode)
+  :config
+  (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8")
+  (use-package font-lock+ :quelpa (font-lock+ :fetcher wiki)))
 
+;; https://github.com/Fuco1/dired-hacks
+;; Collection of useful dired additions
+
+;; customizable highlighting for files in dired listings
+(use-package dired-rainbow
+  :ensure t
+  :after dired
+  :config
+  (when (string-match "--time-style=long-iso" dired-listing-switches)
+    (setq dired-rainbow-date-regexp "[0-9]\\{4\\}-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]"))
+  ;; highlight executable files, but not directories
+  (dired-rainbow-define-chmod executable-unix "#7BC91D" "-[rw-]+x.*")
+  (with-eval-after-load 'all-the-icons-dired
+    (setq dired-rainbow-date-regexp (format "%s%s" dired-rainbow-date-regexp "[ ]."))
+    (dired-rainbow-define-chmod executable-unix "#7BC91D" "-[rw-]+x.*")))
+
+;; narrow dired to match filter
+(use-package dired-narrow
+  :ensure t
+  :after dired
+  :commands dired-narrow)
+
+(with-eval-after-load 'dired
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'dired)
     (evil-define-key 'normal dired-mode-map
       (kbd "SPC") nil
       "," nil))
 
-  (with-eval-after-load 'dired
-    (+funcs/set-leader-keys-for-major-mode
-     'dired-mode-map
-     "/" '(dired-narrow :which-key "dired-narrow")
-     "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
+  (+funcs/set-leader-keys-for-major-mode
+   'dired-mode-map
+   "/" '(dired-narrow :which-key "dired-narrow")
+   "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
 
-  ;; Editable Dired mode configs
-  (with-eval-after-load 'wdired
-    (+funcs/set-leader-keys-for-major-mode
-     'wdired-mode-map
-     "c" '(wdired-finish-edit :which-key "finish edit")
-     "k" '(wdired-abort-changes :which-key "abort changes")
-     "q" '(wdired-exit :which-key "exit"))
-    (with-eval-after-load 'all-the-icons-dired
-      (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
-      (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode))))))
-
+;; Editable Dired mode configs
+(with-eval-after-load 'wdired
+  (+funcs/set-leader-keys-for-major-mode
+   'wdired-mode-map
+   "c" '(wdired-finish-edit :which-key "finish edit")
+   "k" '(wdired-abort-changes :which-key "abort changes")
+   "q" '(wdired-exit :which-key "exit"))
+  (with-eval-after-load 'all-the-icons-dired
+    (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
+    (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode)))))
 
 ;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 
@@ -122,7 +145,7 @@
   :defer t
   :preface
   (defun +eww/toggle-images-display ()
-    "Toggle whether images are loaded and reload the current page from cache."
+  "Toggle whether images are loaded and reload the current page from cache."
     (interactive)
     (setq-local shr-inhibit-images (not shr-inhibit-images))
     (eww-reload t)

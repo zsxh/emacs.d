@@ -27,15 +27,8 @@
 
 ;; Theme
 (use-package all-the-icons
-  :ensure t)
-
-(use-package all-the-icons-dired
   :ensure t
-  :after dired
-  :hook (dired-mode . all-the-icons-dired-mode)
-  :config
-  (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8")
-  (use-package font-lock+ :quelpa (font-lock+ :fetcher wiki)))
+  :defer t)
 
 (use-package doom-themes
   :ensure t
