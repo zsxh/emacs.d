@@ -10,9 +10,18 @@
 
 ;;; Code:
 
+(require 'init-language-server)
+
+;; $> julia
+;; julia> ]
+;; (v1.0) pkg> add LanguageServer#c2b6a5c
+;; FIXME: julia language server not working now, the client will throw out nil lsp-workspace error.
+
 (use-package julia-mode
   :ensure t
   :defer t)
+
+(add-hook 'julia-mode-hook 'lsp)
 
 (use-package julia-repl
   :ensure t
@@ -20,8 +29,6 @@
   :hook (julia-mode . julia-repl-mode))
 
 ;; for eglot
-
-;; (require 'init-eglot)
 
 ;; (with-eval-after-load 'eglot
 ;;   (add-to-list 'eglot-server-programs
@@ -33,49 +40,55 @@
 
 ;; (add-hook 'julia-mode-hook 'eglot-ensure)
 
-
 ;; for lsp
 
-;; (require 'lsp)
-;; (require 'lsp-clients)
-;; ;; (defcustom lsp-clients-julia-server-command
-;; ;;   "julia --startup-file=no --history-file=no -e \"using LanguageServer, Sockets, SymbolServer; server = LanguageServer.LanguageServerInstance(stdin, stdout, false, \\\"~/.julia/enviroments/v1.0\\\", \\\"\\\", Dict()); run(server);\""
-;; ;;   "The julia language server executable to use."
-;; ;;   :group 'lsp-julia
-;; ;;   :type 'string)
+(defcustom lsp-julia-default-environment "~/.julia/environments/v1.0"
+  "The path to the default environment."
+  :type 'string
+  :group 'lsp-julia)
 
-;; (defcustom lsp-clients-julia-executable "julia"
-;;   "The julia executable to use.
-;; Leave as just the executable name to use the default behavior of
-;; finding the executable with `exec-path'."
-;;   :group 'lsp-julia
-;;   :risky t
-;;   :type 'file)
+(defcustom lsp-julia-command "julia"
+  "Command to invoke julia with."
+  :type 'string
+  :group 'lsp-julia)
 
-;; (defcustom lsp-clients-julia-args '()
-;;   "Extra arguments for the julia executable."
-;;   :group 'lsp-julia
-;;   :risky t
-;;   :type '(repeat string))
+(defcustom lsp-julia-flags '("--startup-file=no" "--history-file=no")
+  "List of additional flags to call julia with."
+  :type '(repeat (string :tag "argument"))
+  :group 'lsp-julia)
 
-;; (setq lsp-clients-julia-args '("--startup-file=no"
-;;                                "--history-file=no"
-;;                                "-e"
-;;                                "using LanguageServer, Sockets, SymbolServer; server = LanguageServer.LanguageServerInstance(stdin, stdout, false, \"~./julia/enviroments/v1.0\", \"\", Dict()); run(server);"))
+(defcustom lsp-julia-timeout 30
+  "Time before lsp-mode should assume julia just ain't gonna start."
+  :type 'number
+  :group 'lsp-julia)
 
-;; (defun lsp-clients--julia-command ()
-;;   "Generate the language server startup command."
-;;   `(,lsp-clients-julia-executable ,@lsp-clients-julia-args))
+(defun lsp-julia--get-root ()
+  (let ((dir (locate-dominating-file default-directory "Project.toml")))
+    (if dir (expand-file-name dir)
+      (expand-file-name lsp-julia-default-environment))))
 
-;; (lsp-register-client
-;;  (make-lsp-client
-;;   :new-connection (lsp-stdio-connection 'lsp-clients--julia-command)
-;;   :major-modes '(julia-mode)
-;;   :server-id 'julia))
+(defun lsp-julia--rls-command ()
+  `(,lsp-julia-command
+    ,@lsp-julia-flags
+    ,(concat "-e using LanguageServer, Sockets, SymbolServer;"
+             " server = LanguageServer.LanguageServerInstance("
+             " stdin, stdout, false,"
+             " \"" (lsp-julia--get-root) "\","
+             " \"\", Dict());"
+             " server.runlinter = true;"
+             " run(server);")))
 
-;; (add-hook 'julia-mode-hook (lambda ()
-;;                              (lsp)
-;;                              (setq-local company-backends '(company-capf))))
+(defconst lsp-julia--handlers
+  '(("window/setStatusBusy" .
+     (lambda (w _p)))
+    ("window/setStatusReady" .
+     (lambda(w _p)))))
+
+(with-eval-after-load 'lsp-clients
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection 'lsp-julia--rls-command)
+                    :major-modes '(julia-mode)
+                    :server-id 'julia-ls)))
 
 
 (provide 'init-julia)
