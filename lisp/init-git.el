@@ -40,9 +40,10 @@
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit-todos)))
 
-(use-package forge
-  :ensure t
-  :after magit)
+;; TODO: config forge and github, gitlab ...
+;; (use-package forge
+;;   :ensure t
+;;   :after magit)
 
 
 (provide 'init-git)
