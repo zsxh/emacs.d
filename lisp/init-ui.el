@@ -74,8 +74,16 @@
 (add-hook 'window-configuration-change-hook '+ui/toggle-display-time-mode)
 
 ;; Frame font
-;; (set-frame-font "SF Mono 13" nil t)
+;; english and others charsets SF Mono
+;; chinese and some other charsets Source Han Serirf
+;; download ans install default fonts:
+;; SF Mono: https://github.com/ZulwiyozaPutra/SF-Mono-Font
+;; Source Han Serief: https://github.com/adobe-fonts/source-han-serif
 (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+                    charset (font-spec :family "Source Han Serif"))
+  (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
 
 ;; Line Number
 ;; (use-package display-line-numbers
