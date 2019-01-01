@@ -26,9 +26,8 @@
   ;; (setq-local company-lsp-cache-candidates t)
   (+java/set-leader-keys)
   (lsp)
-  ;; (setq-local company-backends
-  ;;             '((company-lsp :separate company-yasnippet)))
-  )
+  (setq-local company-backends
+              '((company-lsp :separate company-yasnippet))))
 
 (add-hook 'java-mode-hook '+java/lsp-java-config)
 

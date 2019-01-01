@@ -25,7 +25,11 @@
   :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-  :hook (rust-mode . lsp)
+  :hook (rust-mode . (lambda ()
+                       (lsp)
+                       ;; FIXME: enable company-yasnippet, but can be messy
+                       (setq-local company-backends
+                                   '((company-lsp :separate company-yasnippet)))))
   ;; :hook (rust-mode . eglot-ensure)
   :config
   (setq rust-indent-offset 2))
@@ -101,16 +105,9 @@
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil))
 
-;; TODO: check out what lsp--auto-configure have done
 ;; (use-package company-lsp
-;;   :after (company lsp)
-;;   :ensure t
-;;   :config
-;;   (setq company-lsp-enable-snippet t
-;;         company-lsp-cache-candidates nil
-;;         company-transformers nil
-;;         company-lsp-async t
-;;         company-lsp-enable-recompletion t))
+;;   :after (company lsp-mode)
+;;   :ensure t)
 
 (use-package lsp-ui
   :after lsp-mode

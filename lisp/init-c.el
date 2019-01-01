@@ -28,9 +28,8 @@
     (evil-set-initial-state 'ccls-tree-mode 'emacs))
   (+c/set-leader-keys)
   (lsp)
-  ;; (setq-local company-backends
-  ;;             '((company-lsp :separate company-yasnippet)))
-  )
+  (setq-local company-backends
+              '((company-lsp :separate company-yasnippet))))
 
 (add-hook 'c-mode-hook '+c/lsp-ccls-config)
 (add-hook 'c++-mode-hook '+c/lsp-ccls-config)
