@@ -35,51 +35,56 @@
   (setq rust-indent-offset 2))
 
 ;;;;;;;;;;;;;; Language Common Leader Keys ;;;;;;;;;;;;;;
+(with-eval-after-load 'eglot
+  (advice-add 'eglot-ensure :after '+language-server/set-leader-keys))
+(with-eval-after-load 'lsp-mode
+  (advice-add 'lsp :after '+language-server/set-leader-keys))
 
-(dolist (hook (list 'eglot-mode-hook 'lsp-mode-hook))
-  (add-hook hook #'+language-server/set-leader-keys))
-
-(defun +language-server/set-leader-keys ()
+(defun +language-server/set-leader-keys (&rest args)
   (let ((major-mode-map (intern (concat (symbol-name major-mode) "-map"))))
     (+language-server/set-normal-leader-keys major-mode-map)
     (+language-server/set-synax-check-leader-keys major-mode-map)))
 
 (defun +language-server/set-synax-check-leader-keys (major-mode-map)
-  (if (or (featurep 'flymake) (featurep 'flycheck))
-      (if flymake-mode
-          (+funcs/set-leader-keys-for-major-mode
-           major-mode-map
-           "e" '(nil :which-key "error")
-           "en" '(flymake-goto-next-error :which-key "next-error")
-           "ep" '(flymake-goto-prev-error :which-key "prev-error"))
-        (+funcs/set-leader-keys-for-major-mode
-         major-mode-map
-         "e" '(nil :which-key "error")
-         "en" '(flycheck-next-error :which-key "next-error")
-         "ep" '(flycheck-previous-error :which-key "prev-error")))
-    (message "[warn] language server requires 'flymake or 'flycheck.")))
+  (cond ((or
+          (and (boundp 'flymake-mode) flymake-mode)
+          (not (boundp 'lsp-mode))
+          (not lsp-mode))
+         (+funcs/set-leader-keys-for-major-mode
+          major-mode-map
+          "e" '(nil :which-key "error")
+          "en" '(flymake-goto-next-error :which-key "next-error")
+          "ep" '(flymake-goto-prev-error :which-key "prev-error")))
+        ((and (boundp 'flycheck-mode) flycheck-mode)
+         (with-eval-after-load 'flycheck
+           (+funcs/set-leader-keys-for-major-mode
+            major-mode-map
+            "e" '(nil :which-key "error")
+            "en" '(flycheck-next-error :which-key "next-error")
+            "ep" '(flycheck-previous-error :which-key "prev-error"))))
+        (t (message "[error] language server requires 'flymake or 'flycheck."))))
 
 (defun +language-server/set-normal-leader-keys (major-mode-map)
-  (if (or (featurep 'lsp-mode) (featurep 'eglot))
-      (if lsp-mode
-          (+funcs/set-leader-keys-for-major-mode
-           major-mode-map
-           "A" '(lsp-execute-code-action :which-key "code-action")
-           "f" '(lsp-format-buffer :which-key "format")
-           "g" '(nil :which-key "go")
-           "gd" '(lsp-find-definition :which-key "find-definitions")
-           "gi" '(lsp-find-implementation :which-key "find-implementation")
-           "gr" '(lsp-find-references :which-key "find-references")
-           "R" '(lsp-rename :which-key "rename"))
-        (+funcs/set-leader-keys-for-major-mode
-         major-mode-map
-         "A" '(eglot-code-actions :which-key "code-action")
-         "f" '(eglot-format :which-key "format")
-         "g" '(nil :which-key "go")
-         "gd" '(xref-find-definitions :which-key "find-definitions")
-         "gr" '(xref-find-references :which-key "find-references")
-         "R" '(eglot-rename :which-key "rename")))
-    (message "[error] language server requires 'lsp-mode or 'eglot")))
+  (cond ((and (boundp 'lsp-mode) lsp-mode)
+         (+funcs/set-leader-keys-for-major-mode
+          major-mode-map
+          "A" '(lsp-execute-code-action :which-key "code-action")
+          "f" '(lsp-format-buffer :which-key "format")
+          "g" '(nil :which-key "go")
+          "gd" '(lsp-find-definition :which-key "find-definitions")
+          "gi" '(lsp-find-implementation :which-key "find-implementation")
+          "gr" '(lsp-find-references :which-key "find-references")
+          "R" '(lsp-rename :which-key "rename")))
+        ((featurep 'eglot)
+         (+funcs/set-leader-keys-for-major-mode
+          major-mode-map
+          "A" '(eglot-code-actions :which-key "code-action")
+          "f" '(eglot-format :which-key "format")
+          "g" '(nil :which-key "go")
+          "gd" '(xref-find-definitions :which-key "find-definitions")
+          "gr" '(xref-find-references :which-key "find-references")
+          "R" '(eglot-rename :which-key "rename")))
+        (t (message "[error] language server requires 'lsp-mode or 'eglot"))))
 
 ;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
 
