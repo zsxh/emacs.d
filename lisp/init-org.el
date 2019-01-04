@@ -52,7 +52,7 @@
   (when (>= emacs-major-version 26)
     (require 'ob-shell))
 
-  (if emacs/>=26p
+  (if (>= emacs-major-version 26)
       (cl-pushnew '(shell . t) load-language-list)
     (cl-pushnew '(sh . t) load-language-list))
 
