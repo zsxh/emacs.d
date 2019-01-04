@@ -71,3 +71,4 @@ games/*
 /persp-confs/
 /forge-database.sqlite
 /eww-bookmarks
+/.dap-breakpoints
