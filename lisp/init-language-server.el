@@ -47,15 +47,14 @@
 
 (defun +language-server/set-synax-check-leader-keys (major-mode-map)
   (cond ((or
-          (and (boundp 'flymake-mode) flymake-mode)
-          (not (boundp 'lsp-mode))
-          (not lsp-mode))
+          (bound-and-true-p flymake-mode)
+          (not (bound-and-true-p lsp-mode)))
          (+funcs/set-leader-keys-for-major-mode
           major-mode-map
           "e" '(nil :which-key "error")
           "en" '(flymake-goto-next-error :which-key "next-error")
           "ep" '(flymake-goto-prev-error :which-key "prev-error")))
-        ((and (boundp 'flycheck-mode) flycheck-mode)
+        ((bound-and-true-p flycheck-mode)
          (with-eval-after-load 'flycheck
            (+funcs/set-leader-keys-for-major-mode
             major-mode-map
@@ -65,7 +64,7 @@
         (t (message "[error] language server requires 'flymake or 'flycheck."))))
 
 (defun +language-server/set-normal-leader-keys (major-mode-map)
-  (cond ((and (boundp 'lsp-mode) lsp-mode)
+  (cond ((bound-and-true-p lsp-mode)
          (+funcs/set-leader-keys-for-major-mode
           major-mode-map
           "A" '(lsp-execute-code-action :which-key "code-action")
