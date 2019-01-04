@@ -92,6 +92,7 @@
    "g"   '(nil :which-key "git")
    "gb"  '(magit-blame :which-key "magit-blame")
    "gc"  '(magit-blame-cycle-style :which-key "magit-blame-cycle-style")
+   "gf"  '(magit-file-popup :which-key "magit-file-popup")
    "gs"  '(magit :which-key "magit")
    ;; Help
    "h"   '(nil :which-key "help")

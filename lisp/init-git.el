@@ -11,7 +11,7 @@
 ;;; Code:
 
 (use-package magit
-  :commands (magit magit-blame)
+  :commands (magit magit-blame magit-file-popup)
   :defer 10
   :ensure t
   :config
