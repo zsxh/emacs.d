@@ -53,24 +53,6 @@
    "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
    "dr" '(dap-debug :which-key "debug")))
 
-;; lsp code completion for org babel code block
-;; https://github.com/emacs-lsp/lsp-mode/issues/377
-(with-eval-after-load 'lsp-python
-  (defun org-babel-edit-prep:python (babel-info)
-    "Prepare the local buffer environment for Org source block."
-    (let ((lsp-file (or (->> babel-info caddr (alist-get :file))
-                        buffer-file-name)))
-      (setq-local buffer-file-name lsp-file)
-      (setq-local lsp-buffer-uri (lsp--path-to-uri buffer-file-name))
-      (+python/lsp-python-config)))
-  (defun org-babel-edit-prep:ipython (babel-info)
-    "Prepare the local buffer environment for Org source block."
-    (let ((lsp-file (or (->> babel-info caddr (alist-get :file))
-                        buffer-file-name)))
-      (setq-local buffer-file-name lsp-file)
-      (setq-local lsp-buffer-uri (lsp--path-to-uri buffer-file-name))
-      (+python/lsp-python-config))))
-
 (defun +python/pyenv-executable-find (command)
   (executable-find command))
 

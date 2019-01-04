@@ -35,28 +35,54 @@
   (set-face-background 'org-block-begin-line nil)
   (set-face-background 'org-block-end-line nil)
 
-  ;; An extension to restclient.el for emacs that provides org-babel support
-  (when (package-installed-p 'restclient)
-    (use-package ob-restclient
-      :after org
-      :ensure t))
+  (defvar load-language-list '((emacs-lisp . t)
+                               (perl . t)
+                               (python . t)
+                               (ruby . t)
+                               (js . t)
+                               (css . t)
+                               (sass . t)
+                               (C . t)
+                               (java . t)
+                               (plantuml . t)))
+
+  ;; enable ob-*lang* yourself
+
+  ;; ob-sh renamed to ob-shell since 26.1.
+  (when (>= emacs-major-version 26)
+    (require 'ob-shell))
+
+  (if emacs/>=26p
+      (cl-pushnew '(shell . t) load-language-list)
+    (cl-pushnew '(sh . t) load-language-list))
+
+  (use-package ob-go
+    :ensure t
+    :after org
+    :init (cl-pushnew '(go . t) load-language-list))
+
+  (use-package ob-rust
+    :ensure t
+    :after org
+    :init (cl-pushnew '(rust . t) load-language-list))
 
   ;; https://github.com/gregsexton/ob-ipython
   ;; enable ob-ipython and ob-python
   (use-package ob-ipython
+    :ensure t
     :after org
-    :ensure t)
+    :if (executable-find "jupyter")     ; DO NOT remove
+    :init (cl-pushnew '(ipython . t) load-language-list))
 
-  ;; enable ob-*lang* yourself
-  (require 'ob-shell)
+  ;; An extension to restclient.el for emacs that provides org-babel support
+  (when (package-installed-p 'restclient)
+    (use-package ob-restclient
+      :ensure t
+      :after org
+      :init (cl-pushnew '(restclient . t) load-language-list)))
 
-  (org-babel-do-load-languages 'org-babel-do-load-languages
-                               '((emacs-lisp . t)
-                                 (shell . t)
-                                 (java . t)
-                                 (python . t)
-                                 (ipython . t)
-                                 (restclient . t))))
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               load-language-list))
 
 ;; Org-mode keybindings
 (use-package evil-org
