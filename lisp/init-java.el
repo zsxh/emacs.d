@@ -14,9 +14,7 @@
 
 (use-package lsp-java
   :defer t
-  :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
-  :init
-  (setq lsp-java-server-install-dir "~/.emacs.d/.cache/eclipse.jdt.ls/server"))
+  :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java")))
 
 (use-package dap-java :after (lsp-java))
 

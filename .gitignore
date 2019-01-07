@@ -67,8 +67,8 @@ eaf/*
 quelpa/*
 workspace/*
 games/*
-/eclipse.jdt.ls/runner/junit-platform-console-standalone.jar
 /persp-confs/
 /forge-database.sqlite
 /eww-bookmarks
 /.dap-breakpoints
+/eclipse.jdt.ls/
