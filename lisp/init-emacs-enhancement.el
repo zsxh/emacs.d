@@ -82,10 +82,10 @@
   (when (string-match "--time-style=long-iso" dired-listing-switches)
     (setq dired-rainbow-date-regexp "[0-9]\\{4\\}-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]"))
   ;; highlight executable files, but not directories
-  (dired-rainbow-define-chmod executable-unix "#7BC91D" "-[rw-]+x.*")
+  (dired-rainbow-define-chmod executable-unix "#4F894C" "-[rw-]+x.*")
   (with-eval-after-load 'all-the-icons-dired
     (setq dired-rainbow-date-regexp (format "%s%s" dired-rainbow-date-regexp "[ ]."))
-    (dired-rainbow-define-chmod executable-unix "#7BC91D" "-[rw-]+x.*")))
+    (dired-rainbow-define-chmod executable-unix "#4F894C" "-[rw-]+x.*")))
 
 ;; narrow dired to match filter
 (use-package dired-narrow
