@@ -12,11 +12,11 @@
 
 (require 'init-language-server)
 
+;; https://github.com/JuliaEditorSupport/LanguageServer.jl/issues/300
+;; Install Julia LanguageServer
 ;; $> julia
 ;; julia> ]
-;; (v1.0) pkg> add LanguageServer#c2b6a5c
-;; FIXME: julia language server not working now, the client will throw out nil lsp-workspace error.
-
+;; (v1.0) pkg> add LanguageServer#master StaticLint#master DocumentFormat#master SymbolServer#master
 (use-package julia-mode
   :ensure t
   :defer t)
