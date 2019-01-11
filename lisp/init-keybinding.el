@@ -42,7 +42,6 @@
    ";"   '(comment-dwim-2 :which-key "comment-line")
    "0"   '(neotree-show :which-key "neotree")
    "/"   '(color-rg-search-input :which-key "rg-current-dir")
-   "?"   '(find-name-dired :which-key "search-files")
    ;; winum-select-window
    "1"   'winum-select-window-1
    "2"   'winum-select-window-2
@@ -88,6 +87,7 @@
    "ff"  '(counsel-find-file :which-key "find-files")
    "fe"  '(+funcs/sudo-edit-current-file :which-key "sudo-edit-current-file")
    "fp"  '(xah-copy-file-path :which-key "copy-file-path")
+   "fs"  '(find-name-dired :which-key "search-files")
    ;; Git
    "g"   '(nil :which-key "git")
    "gb"  '(magit-blame :which-key "magit-blame")
@@ -132,6 +132,7 @@
    ;; Text
    "t"   '(nil :which-key "text")
    "tb"  '(xah-select-block :which-key "select-block")
+   "tB"  '(comment-box :which-key "comment-box")
    "td"  '(xah-delete-current-text-block :which-key "delete-block")
    "ti"  '(nil :which-key "insert")
    "tit" '(insert-translated-name-insert :which-key "chinese->engish")
