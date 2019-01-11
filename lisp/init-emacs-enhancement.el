@@ -63,6 +63,36 @@
   ;; Customize dired-directory foreground color
   (set-face-foreground 'dired-directory "#3B6EA8"))
 
+;; narrow dired to match filter
+(use-package dired-narrow
+  :ensure t
+  :after dired
+  :commands dired-narrow)
+
+(with-eval-after-load 'dired
+  (with-eval-after-load 'evil-collection
+    (evil-collection-init 'dired)
+    (evil-define-key 'normal dired-mode-map
+      (kbd "SPC") nil
+      "," nil
+      "F" 'dired-create-empty-file))
+
+  (+funcs/set-leader-keys-for-major-mode
+   'dired-mode-map
+   "/" '(dired-narrow :which-key "dired-narrow")
+   "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
+
+;; Editable Dired mode configs
+(with-eval-after-load 'wdired
+  (+funcs/set-leader-keys-for-major-mode
+   'wdired-mode-map
+   "c" '(wdired-finish-edit :which-key "finish edit")
+   "k" '(wdired-abort-changes :which-key "abort changes")
+   "q" '(wdired-exit :which-key "exit"))
+  (with-eval-after-load 'all-the-icons-dired
+    (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
+    (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode)))))
+
 (use-package all-the-icons-dired
   :ensure t
   :after dired
@@ -86,35 +116,6 @@
   (with-eval-after-load 'all-the-icons-dired
     (setq dired-rainbow-date-regexp (format "%s%s" dired-rainbow-date-regexp "[ ]."))
     (dired-rainbow-define-chmod executable-unix "#4F894C" "-[rw-]+x.*")))
-
-;; narrow dired to match filter
-(use-package dired-narrow
-  :ensure t
-  :after dired
-  :commands dired-narrow)
-
-(with-eval-after-load 'dired
-  (with-eval-after-load 'evil-collection
-    (evil-collection-init 'dired)
-    (evil-define-key 'normal dired-mode-map
-      (kbd "SPC") nil
-      "," nil))
-
-  (+funcs/set-leader-keys-for-major-mode
-   'dired-mode-map
-   "/" '(dired-narrow :which-key "dired-narrow")
-   "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
-
-;; Editable Dired mode configs
-(with-eval-after-load 'wdired
-  (+funcs/set-leader-keys-for-major-mode
-   'wdired-mode-map
-   "c" '(wdired-finish-edit :which-key "finish edit")
-   "k" '(wdired-abort-changes :which-key "abort changes")
-   "q" '(wdired-exit :which-key "exit"))
-  (with-eval-after-load 'all-the-icons-dired
-    (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
-    (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode)))))
 
 ;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 
