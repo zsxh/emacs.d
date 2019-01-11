@@ -10,9 +10,12 @@
 
 ;;; Code:
 
+;; https://orgmode.org/Changes.html
 (use-package org
   :ensure org-plus-contrib
   :mode ("\\.org\\'" . org-mode)
+  :bind (:map org-mode-map
+              ("C-c C-," . org-insert-structure-template))
   :commands org-open-at-point
   :config
   (setq org-confirm-babel-evaluate nil) ;don't prompt me to confirm everytime I want to evaluate a block
@@ -123,9 +126,12 @@
    "ci" '(org-clock-in :which-key "clock-in")
    "co" '(org-clock-out :which-key "clock-out")
    "cr" '(org-clock-report :which-key "clock-report")
-   "t"  '(nil :which-key "toggle")
-   "ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
-   "tl" '(org-toggle-link-display :which-key "toggle-link-display")
+   "i"  '(nil :which-key "insert")
+   "is" '(org-insert-structure-template :which-key "structure-template")
+   "it" '(org-time-stamp :which-key "time-stamp")
+   "T"  '(nil :which-key "toggle")
+   "Ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
+   "Tl" '(org-toggle-link-display :which-key "toggle-link-display")
    "'"  '(org-edit-special :which-key "editor")))
 
 ;; Org for blog
