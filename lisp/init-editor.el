@@ -110,7 +110,7 @@
   :init (setq auto-save-default nil)
   :config
   (auto-save-enable)
-  (setq auto-save-slient t)
+  (setq auto-save-silent t)
   (dolist (hook (list 'prog-mode-hook 'yaml-mode-hook))
     (add-hook hook (lambda () (setq-local auto-save-delete-trailing-whitespace t)))))
 
