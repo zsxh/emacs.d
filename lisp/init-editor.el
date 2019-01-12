@@ -56,7 +56,9 @@
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :ensure t
-  :bind ("M-;" . comment-dwim-2))
+  :bind ("M-;" . comment-dwim-2)
+  :preface
+  (setq cd2/region-command 'cd2/comment-or-uncomment-region))
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
