@@ -25,8 +25,11 @@
 (setq set-mark-command-repeat-pop t)       ; Repeating C-SPC after popping mark pops it again
 (setq-default kill-whole-line t)           ; Kill line including '\n'
 (fset 'yes-or-no-p 'y-or-n-p)
-;; (setq auto-save-default nil)               ; Disable default auto save
-(setq frame-title-format "emacs@%b")       ; Show buffer name in title
+;; (setq auto-save-default nil)               ; Disable built in default auto save
+(setq read-file-name-completion-ignore-case t) ; file ignores case
+(setq-default truncate-lines t)
+;; (setq use-dialog-box nil)                  ; no gui dialog box popups
+(setq confirm-kill-processes nil)          ; just kill the process on exit
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
@@ -37,10 +40,6 @@
 ;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 ;; (epa-file-enable)
 (add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
-
-(setq read-file-name-completion-ignore-case t) ; file ignores case
-
-(setq-default truncate-lines t)
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs

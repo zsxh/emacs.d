@@ -20,6 +20,12 @@
   (tooltip-mode    -1)
   (menu-bar-mode   -1))
 
+;; Show buffer name in title
+(setq frame-title-format "emacs@%b")
+
+;; Disable cursor blinking
+(blink-cursor-mode 0)
+
 ;; Startup frame size
 (if (string= personal-frame-startup-size "max")
     (toggle-frame-maximized)
