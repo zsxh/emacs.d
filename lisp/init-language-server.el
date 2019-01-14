@@ -222,7 +222,7 @@
       (global-dap/debug-mode)
       ;; `evil-define-key' for minor mode does not take effect until a state transition
       ;; Issue: https://github.com/emacs-evil/evil/issues/301
-      (when (and (featurep 'evil) evil-mode)
+      (when (bound-and-true-p evil-mode)
         (if (eq evil-state 'normal)
             (progn
               (evil-change-state 'emacs)
