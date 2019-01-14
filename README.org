@@ -1,4 +1,4 @@
-Updated: <2018-12-29 六>
+Updated: <2019-01-14 一> 
 
 * Features
   - =org mode=
@@ -45,7 +45,9 @@ Updated: <2018-12-29 六>
       completion for emacs command
   - =programming=
     - =eglot/lsp-mode=
-      language server supoort
+      language server supoort: code completion, reformat, find definitions, etc.
+    - =dap-mode=
+      debuger (require lsp-mode)
     - =projectile/project=
       project management and navigation
     - =company-mode=
@@ -77,9 +79,8 @@ Updated: <2018-12-29 六>
   - [X] =rust=
   - [X] =go=
   - [X] =common-lisp=
+  - [X] =julia=
   - [ ] =js=
         performance issue
-  - [ ] =julia=
-        not yet stable for julia 1.0
 
 * TODOs
