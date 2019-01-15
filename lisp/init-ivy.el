@@ -25,7 +25,7 @@
   ;; use timer to improve the ivy-read performance,
   ;; see https://github.com/abo-abo/swiper/issues/1218
   (setq ivy-dynamic-exhibit-delay-ms 250)
-    ;; ivy's fuzzy matcher
+  ;; ivy's fuzzy matcher
   (with-eval-after-load 'flx
     (setq ivy-re-builders-alist
           '((ivy-switch-buffer . ivy--regex-plus)
@@ -33,6 +33,11 @@
             (t . ivy--regex-fuzzy)))
     ;; no need with initial "^", since using fuzzy
     (setq ivy-initial-inputs-alist nil)))
+
+;; Fuzzy complete
+(use-package flx
+  :ensure t
+  :defer t)
 
 ;; swiper
 (use-package swiper

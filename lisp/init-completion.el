@@ -48,11 +48,10 @@
     :hook (global-company-mode . company-quickhelp-mode)
     :config (setq company-quickhelp-delay 0.3)))
 
-;; Fuzzy complete
-(use-package company-flx
-  :after company
-  :ensure t
-  :config (company-flx-mode 1))
+;; (use-package company-flx
+;;   :after company
+;;   :ensure t
+;;   :config (company-flx-mode 1))
 
 (use-package yasnippet
   :ensure t
