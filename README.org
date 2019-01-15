@@ -1,4 +1,4 @@
-Updated: <2019-01-14 一> 
+Updated: <2019-01-16 三> 
 
 * Features
   - =org mode=
@@ -73,14 +73,13 @@ Updated: <2019-01-14 一>
       Insert translated string, type chinese insertd english for short
 
 * Languages Support 
-  - [X] =c/c++=
-  - [X] =java=
-  - [X] =python=
-  - [X] =rust=
-  - [X] =go=
-  - [X] =common-lisp=
-  - [X] =julia=
-  - [ ] =js=
-        performance issue
+  - [X] =C/C++= supported by [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
+  - [X] =Java= supported by [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
+  - [X] =Python= pip install ‘python-language-server[all]’
+  - [X] =Rust= rustup component add rls rust-analysis rust-src
+  - [X] =Go= build and install [[https://github.com/sourcegraph/go-langserver][go-langserver]]
+  - [X] =Common-Lisp= [[https://github.com/joaotavora/sly][supported by sly]]
+  - [X] =Julia= (v1.0) pkg> add LanguageServer#master StaticLint#master DocumentFormat#master SymbolServer#master
+  - [X] =Javascript/Typescript= npm i -g javascript-typescript-langserver
 
 * TODOs
