@@ -64,6 +64,62 @@
      'snippet-mode-map
      "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet"))))
 
+;; performance issue with `company-box-doc' https://github.com/sebastiencs/company-box/issues/19
+;; (use-package company-box
+;;   :ensure t
+;;   :diminish
+;;   :if (>= emacs-major-version 26)
+;;   :functions (all-the-icons-faicon
+;;               all-the-icons-material
+;;               all-the-icons-octicon
+;;               all-the-icons-alltheicon)
+;;   :hook (company-mode . company-box-mode)
+;;   :init (setq company-box-enable-icon (display-graphic-p))
+;;   :config
+;;   (with-eval-after-load 'all-the-icons
+;;     (setq company-box-backends-colors nil
+;;           company-box-max-candidates 50
+
+;;           company-box-icons-unknown (all-the-icons-octicon "file-text" :v-adjust -0.05 :face 'all-the-icons-purple)
+
+;;           company-box-icons-yasnippet (all-the-icons-faicon "code" :v-adjust -0.0575 :face 'all-the-icons-green)
+
+;;           company-box-icons-elisp
+;;           (list
+;;            (all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'all-the-icons-purple) ; Function
+;;            (all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue) ; Variable
+;;            (all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'all-the-icons-orange) ; Feature
+;;            (all-the-icons-material "palette" :v-adjust -0.2 :face 'all-the-icons-pink) ; Face
+;;            )
+
+;;           company-box-icons-lsp
+;;           `((1 . ,(all-the-icons-faicon "file-text-o" :v-adjust -0.0575 :face 'all-the-icons-green)) ; text
+;;             (2 . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'all-the-icons-purple)) ; method
+;;             (3 . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'all-the-icons-purple)) ; function
+;;             (4 . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'all-the-icons-purple)) ; constructor
+;;             (5 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; field
+;;             (6 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; variable
+;;             (7 . ,(all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'all-the-icons-orange)) ; class
+;;             (8 . ,(all-the-icons-faicon "cogs" :v-adjust -0.0575 :face 'all-the-icons-orange)) ; interface
+;;             (9 . ,(all-the-icons-alltheicon "less" :face 'all-the-icons-orange)) ; module
+;;             (10 . ,(all-the-icons-faicon "wrench" :v-adjust -0.0575 :face 'all-the-icons-dred)) ; property
+;;             (11 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; unit
+;;             (12 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; value
+;;             (13 . ,(all-the-icons-material "content_copy" :v-adjust -0.2 :face 'all-the-icons-blue-alt)) ; enum
+;;             (14 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; keyword
+;;             (15 . ,(all-the-icons-material "content_paste" :v-adjust -0.2 :face 'all-the-icons-blue-alt)) ; snippet
+;;             (16 . ,(all-the-icons-material "palette" :v-adjust -0.2 :face 'all-the-icons-pink)) ; color
+;;             (17 . ,(all-the-icons-faicon "file" :v-adjust -0.0575 :face 'all-the-icons-lcyan)) ; file
+;;             (18 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; reference
+;;             (19 . ,(all-the-icons-faicon "folder" :v-adjust -0.0575 :face 'all-the-icons-lcyan)) ; folder
+;;             (20 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; enumMember
+;;             (21 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; constant
+;;             (22 . ,(all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'all-the-icons-orange)) ; struct
+;;             (23 . ,(all-the-icons-faicon "bolt" :v-adjust -0.0575 :face 'all-the-icons-yellow)) ; event
+;;             (24 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; operator
+;;             (25 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; TypeParameter
+;;             ))))
+
 
 (provide 'init-completion)
 
