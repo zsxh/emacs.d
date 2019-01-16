@@ -34,11 +34,6 @@
     ;; no need with initial "^", since using fuzzy
     (setq ivy-initial-inputs-alist nil)))
 
-;; Fuzzy complete
-(use-package flx
-  :ensure t
-  :defer t)
-
 ;; swiper
 (use-package swiper
   :ensure t
