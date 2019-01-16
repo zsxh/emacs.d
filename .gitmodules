@@ -1,3 +1,6 @@
-[submodule "experimental/emacs-application-framework"]
-	path = experimental/emacs-application-framework
+[submodule "submodules/org-page"]
+	path = submodules/org-page
+	url = https://github.com/zsxh/org-page
+[submodule "submodules/emacs-application-framework"]
+	path = submodules/emacs-application-framework
 	url = https://github.com/manateelazycat/emacs-application-framework

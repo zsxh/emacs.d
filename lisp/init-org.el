@@ -137,7 +137,6 @@
 ;; Org for blog
 (use-package org-page
   :after org
-  :ensure t
   :config
   (setq op/repository-directory "~/org/zsxh.github.io")
   (setq op/site-domain "https://zsxh.github.io/")

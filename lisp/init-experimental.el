@@ -13,9 +13,6 @@
 (eval-when-compile
   (require 'init-custom))
 
-(let ((default-directory (expand-file-name "experimental" user-emacs-directory)))
-  (normal-top-level-add-subdirs-to-load-path))
-
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
   :commands (eaf-open eaf-open-url)
