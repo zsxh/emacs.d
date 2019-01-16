@@ -83,3 +83,11 @@ Updated: <2019-01-16 三>
   - [X] =Javascript/Typescript= npm i -g javascript-typescript-langserver
 
 * TODOs
+  * Debugger require lsp-mode and dap-mode now
+    - [ ] =C/C++= require [[https://github.com/yyoncho/dap-mode/#lldb][dap-lldb]], haven't test yet
+    - [X] =Java= require 'dap-java
+    - [X] =Python= require 'dap-python
+    - [ ] =Rust= waiting for rust-lldb
+    - [ ] =Go=
+    - [ ] =Julia=
+    - [ ] =Javascript/Typescript=
