@@ -12,13 +12,20 @@
 
 ;;;;;;;;;;;;;; LANGUAGE SUPPORT ;;;;;;;;;;;;;;
 
+;; require go language server `bingo'
+;; https://github.com/saibing/bingo/wiki/Install
 (use-package go-mode
   :ensure t
   :defer t
   :init
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+  :hook (go-mode . (lambda ()
+                     (lsp)
+                     ;; FIXME: enable company-yasnippet, but can be messy
+                     (setq-local company-backends
+                                 '((company-lsp :separate company-yasnippet))))))
 
-;; Install rls first, see https://github.com/rust-lang/rls
+;; require `rls' https://github.com/rust-lang/rls
 ;; >$ rustup component add rls-preview rust-analysis rust-src
 (use-package rust-mode
   :ensure t
@@ -30,7 +37,6 @@
                        ;; FIXME: enable company-yasnippet, but can be messy
                        (setq-local company-backends
                                    '((company-lsp :separate company-yasnippet)))))
-  ;; :hook (rust-mode . eglot-ensure)
   :config
   (setq rust-indent-offset 2))
 
@@ -90,9 +96,7 @@
 (use-package eglot
   :ensure t
   :commands eglot-ensure
-  :hook ((sh-mode . eglot-ensure)
-         ;; ((js-mode typescript-mode) . eglot-ensure)
-         (go-mode . eglot-ensure)))
+  :hook ((sh-mode . eglot-ensure)))
 
 ;;;;;;;;;;;;;; Lsp-mode ;;;;;;;;;;;;;;
 

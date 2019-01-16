@@ -77,7 +77,7 @@ Updated: <2019-01-16 三>
   - [X] =Java= supported by [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
   - [X] =Python= pip install ‘python-language-server[all]’
   - [X] =Rust= rustup component add rls rust-analysis rust-src
-  - [X] =Go= build and install [[https://github.com/sourcegraph/go-langserver][go-langserver]]
+  - [X] =Go= supported by [[https://github.com/saibing/bingo][bingo]]
   - [X] =Common-Lisp= [[https://github.com/joaotavora/sly][supported by sly]]
   - [X] =Julia= (v1.0) pkg> add LanguageServer#master StaticLint#master DocumentFormat#master SymbolServer#master
   - [X] =Javascript/Typescript= npm i -g javascript-typescript-langserver
