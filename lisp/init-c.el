@@ -27,9 +27,7 @@
   (when (featurep 'evil)
     (evil-set-initial-state 'ccls-tree-mode 'emacs))
   (+c/set-leader-keys)
-  (lsp)
-  (setq-local company-backends
-              '((company-lsp :separate company-yasnippet))))
+  (lsp))
 
 (add-hook 'c-mode-hook '+c/lsp-ccls-config)
 (add-hook 'c++-mode-hook '+c/lsp-ccls-config)

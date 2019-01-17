@@ -23,9 +23,7 @@
   (setq-local company-minimum-prefix-length 0)
   ;; (setq-local company-lsp-cache-candidates t)
   (+java/set-leader-keys)
-  (lsp)
-  (setq-local company-backends
-              '((company-lsp :separate company-yasnippet))))
+  (lsp))
 
 (add-hook 'java-mode-hook '+java/lsp-java-config)
 
