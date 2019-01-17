@@ -32,6 +32,7 @@
 (defun +java/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
    'java-mode-map
+   "c" '(+java/compile :which-key "compile")
    "d" '(nil :which-key "debug")
    "db" '(dap-breakpoint-toggle :which-key "breakpoint")
    "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
@@ -56,12 +57,13 @@
   "Select JDK-VERSION in `jdks-installed-dir' as global version,
 JDK-VERSION directory name prefix `jdk-' is required,
 `jdks-installed-dir'/jdk/bin in $PATH is required."
-  (interactive (list (completing-read "JDK-version: " (+java/java-version-list))))
+  (interactive (list (completing-read "JDK-version: " (+java/list-jdk-version))))
   (let ((target (expand-file-name jdk-version jdks-installed-dir))
         (link-name (expand-file-name "jdk" jdks-installed-dir)))
     (+funcs/sudo-shell-command (concat "ln -nsf " target " " link-name))))
 
-(defun +java/java-version-list ()
+;;;###autoload
+(defun +java/list-jdk-version ()
   "Find all jdks which start with `jdk-' in `jdks-installed-dir'"
   (let ((files (directory-files jdks-installed-dir))
         (result nil))
@@ -69,6 +71,13 @@ JDK-VERSION directory name prefix `jdk-' is required,
       (if (string-match "jdk-" file)
           (push file result)))
     result))
+
+;;;###autoload
+(defun +java/compile ()
+  (interactive)
+  (let ((default-directory (projectile-project-root))
+        (compile-command "mvn clean compile test-compile"))
+    (compile compile-command)))
 
 
 (provide 'init-java)
