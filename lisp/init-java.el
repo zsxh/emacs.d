@@ -13,21 +13,18 @@
 (require 'init-language-server)
 
 (use-package lsp-java
-  :defer t
+  :after lsp-mode
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java")))
 
 (use-package dap-java :after (lsp-java))
 
 (defun +java/lsp-java-config ()
-  (require 'lsp-java)
   (setq-local company-minimum-prefix-length 0)
-  ;; (setq-local company-lsp-cache-candidates t)
-  (+java/set-leader-keys)
   (lsp))
 
 (add-hook 'java-mode-hook '+java/lsp-java-config)
 
-(defun +java/set-leader-keys ()
+(with-eval-after-load 'cc-mode
   (+funcs/set-leader-keys-for-major-mode
    'java-mode-map
    "c" '(+java/compile :which-key "compile")
@@ -45,7 +42,6 @@
    "r" '(nil :which-key "run")
    "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
    "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
-
 
 (defvar jdks-installed-dir "/usr/local/"
   "JDKs intalled directory.")

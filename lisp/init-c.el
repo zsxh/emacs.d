@@ -16,21 +16,17 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 (use-package ccls
-  :defer t
-  :quelpa ((ccls :fetcher github :repo "MaskRay/emacs-ccls")))
-
-(defun +c/lsp-ccls-config ()
-  (require 'ccls)
-  (setq ccls-executable "/usr/bin/ccls")
-  (setq ccls-initialization-options
-        '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
+  :after lsp-mode
+  :quelpa ((ccls :fetcher github :repo "MaskRay/emacs-ccls"))
+  :config
   (when (featurep 'evil)
     (evil-set-initial-state 'ccls-tree-mode 'emacs))
-  (+c/set-leader-keys)
-  (lsp))
+  (setq ccls-executable "/usr/bin/ccls")
+  (setq ccls-initialization-options
+        '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
 
-(add-hook 'c-mode-hook '+c/lsp-ccls-config)
-(add-hook 'c++-mode-hook '+c/lsp-ccls-config)
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
 
 (use-package cmake-mode
   :ensure t

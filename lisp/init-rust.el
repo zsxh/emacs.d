@@ -40,16 +40,14 @@
     (interactive)
     (+rust/cargo-command "cargo check"))
 
-  (defun +rust/set-leader-keys ()
-    (+funcs/set-leader-keys-for-major-mode
-     'rust-mode-map
-     "c" '(nil :which-key "cargo")
-     "cc" '(+rust/cargo-check :which-key "check")
-     "cr" '(+rust/cargo-run :which-key "run")
-     "ct" '(+rust/cargo-test :which-key "test")))
+  (+funcs/set-leader-keys-for-major-mode
+   'rust-mode-map
+   "c" '(nil :which-key "cargo")
+   "cc" '(+rust/cargo-check :which-key "check")
+   "cr" '(+rust/cargo-run :which-key "run")
+   "ct" '(+rust/cargo-test :which-key "test")))
 
-  (add-hook 'rust-mode-hook '+rust/set-leader-keys)
-  (add-hook 'rust-mode-hook 'lsp))
+(add-hook 'rust-mode-hook 'lsp)
 
 
 (provide 'init-rust)
