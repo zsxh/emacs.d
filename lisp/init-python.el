@@ -30,16 +30,15 @@
         #'pipenv-projectile-after-switch-extended))
 
 (require 'init-language-server)
-(defun +python/lsp-python-config ()
+
+(with-eval-after-load 'python
   (setq-local python-indent-offset 2)
-  (setq-local company-backends
-              '((company-lsp :separate company-yasnippet)))
   (+python/python-setup-shell)
   (+python/set-leader-keys)
-  (lsp)
-  (use-package dap-python))
+  (with-eval-after-load 'dap-mode
+    (use-package dap-python)))
 
-(add-hook 'python-mode-hook '+python/lsp-python-config)
+(add-hook 'python-mode-hook 'lsp)
 
 (defun +python/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
