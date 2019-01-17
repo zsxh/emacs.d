@@ -75,7 +75,7 @@ Updated: <2019-01-16 三>
 * Languages Support 
   - [X] =C/C++= supported by [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
   - [X] =Java= supported by [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
-  - [X] =Python= pip install ‘python-language-server[all]’
+  - [X] =Python= pip install 'python-language-server[all]'
   - [X] =Rust= rustup component add rls rust-analysis rust-src
   - [X] =Go= supported by [[https://github.com/saibing/bingo][bingo]]
   - [X] =Common-Lisp= [[https://github.com/joaotavora/sly][supported by sly]]
