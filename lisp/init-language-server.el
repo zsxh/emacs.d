@@ -19,26 +19,7 @@
   :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-  :hook (go-mode . (lambda ()
-                     (lsp)
-                     ;; FIXME: enable company-yasnippet, but can be messy
-                     (setq-local company-backends
-                                 '((company-lsp :separate company-yasnippet))))))
-
-;; require `rls' https://github.com/rust-lang/rls
-;; >$ rustup component add rls-preview rust-analysis rust-src
-(use-package rust-mode
-  :ensure t
-  :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-  :hook (rust-mode . (lambda ()
-                       (lsp)
-                       ;; FIXME: enable company-yasnippet, but can be messy
-                       (setq-local company-backends
-                                   '((company-lsp :separate company-yasnippet)))))
-  :config
-  (setq rust-indent-offset 2))
+  :hook (go-mode . lsp))
 
 ;;;;;;;;;;;;;; Language Common Leader Keys ;;;;;;;;;;;;;;
 (with-eval-after-load 'eglot
@@ -111,7 +92,12 @@
         lsp-prefer-flymake nil
         lsp-inhibit-message t
         lsp-eldoc-render-all nil
-        lsp-keep-workspace-alive nil))
+        lsp-keep-workspace-alive nil)
+  ;; FIXME: enable company-yasnippet, but can be messy
+  (advice-add 'lsp :after
+              (lambda ()
+                (setq-local company-backends
+                            '((company-lsp :separate company-yasnippet))))))
 
 ;; (use-package company-lsp
 ;;   :after (company lsp-mode)

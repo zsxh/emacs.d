@@ -82,6 +82,7 @@
 (require 'init-web)
 (require 'init-julia)
 (require 'init-js)
+(require 'init-rust)
 
 ;; Experimental
 (require 'init-experimental)
