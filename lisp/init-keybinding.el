@@ -82,6 +82,11 @@
    "dd"  '(zeal-at-point :which-key "zeal-at-point")
    "dh"  '(helm-dash-at-point :which-key "helm-dash-at-point")
    "dH"  '(helm-dash :which-key "helm-dash")
+   ;; Code/Doc
+   "c"   '(nil :which-key "code/doc")
+   "cc"  '(symbol-overlay-remove-all :which-key "highlight-remove-all")
+   "ch"  '(symbol-overlay-put :which-key "highlight-toggle")
+   "cH"  '(symbol-overlay-map-help :which-key "hightlight-help")
    ;; Files
    "f"   '(nil :which-key "file")
    "ff"  '(counsel-find-file :which-key "find-files")

@@ -25,10 +25,31 @@
                (funcall fn)))))
   (advice-add 'show-paren-function :around #'show-paren-function-advice))
 
-;; Similar to show-paren-mode
-;; (use-package highlight-parentheses
-;;   :ensure t
-;;   :hook (after-init . global-highlight-parentheses-mode))
+;; Highlight Symbol
+(use-package symbol-overlay
+  :ensure t
+  :defer t
+  :config
+  (defun symbol-overlay-goto-first ()
+    (interactive)
+    (let* ((symbol (symbol-overlay-get-symbol))
+           (keyword (symbol-overlay-assoc symbol))
+           (a-symbol (car keyword))
+           (before (symbol-overlay-get-list a-symbol 'car))
+           (count (length before)))
+      (symbol-overlay-jump-call 'symbol-overlay-basic-jump (- count))))
+
+  (defun symbol-overlay-goto-last ()
+    (interactive)
+    (let* ((symbol (symbol-overlay-get-symbol))
+           (keyword (symbol-overlay-assoc symbol))
+           (a-symbol (car keyword))
+           (after (symbol-overlay-get-list a-symbol 'cdr))
+           (count (length after)))
+      (symbol-overlay-jump-call 'symbol-overlay-basic-jump (- count 1))))
+
+  (define-key symbol-overlay-map (kbd "<") 'symbol-overlay-goto-first)
+  (define-key symbol-overlay-map (kbd ">") 'symbol-overlay-goto-last))
 
 ;; Color String
 (use-package rainbow-mode
@@ -71,6 +92,7 @@
   (ansi-color-apply-on-region (point-min) (point-max))
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
 
 (provide 'init-highlight)
 
