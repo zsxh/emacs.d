@@ -1,8 +1,8 @@
-Updated: <2019-01-16 三> 
+Updated: <2019-01-18 五> 
 
 * Features
-  - =org mode=
-    - =org=
+  - =org=
+    - =org-mode=
       take note
     - =org-agenda=
       gtd
@@ -62,6 +62,8 @@ Updated: <2019-01-16 三>
       offline documentation browser
     - =paredit, lispy=
       structure edit
+    - =symbol-overlay=
+      highlight symbol, nice package for reading code
   - =others=
     - =eaf=
       emacs-application-framework for browsering web, previewing markdown, pdf ...
