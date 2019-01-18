@@ -61,15 +61,8 @@
   ;; dired "human-readable" format
   (setq dired-listing-switches "-alh --time-style=long-iso --group-directories-first")
   ;; Customize dired-directory foreground color
-  (set-face-foreground 'dired-directory "#3B6EA8"))
+  (set-face-foreground 'dired-directory "#3B6EA8")
 
-;; narrow dired to match filter
-(use-package dired-narrow
-  :ensure t
-  :after dired
-  :commands dired-narrow)
-
-(with-eval-after-load 'dired
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'dired)
     (evil-define-key 'normal dired-mode-map
@@ -81,6 +74,17 @@
    'dired-mode-map
    "/" '(dired-narrow :which-key "dired-narrow")
    "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
+
+(with-eval-after-load 'find-dired
+  (setq find-ls-option
+        (cons "-print0 | xargs -0 ls -alhdN" "")))
+
+;; narrow dired to match filter
+(use-package dired-narrow
+  :ensure t
+  :after dired
+  :commands dired-narrow)
+
 
 ;; Editable Dired mode configs
 (with-eval-after-load 'wdired
