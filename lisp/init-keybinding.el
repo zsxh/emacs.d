@@ -77,14 +77,10 @@
    "bn"  '((lambda () (interactive) (+funcs/switch-empty-buffer-or-create "untitled")) :which-key "empty-buffer")
    "bN"  '(+funcs/new-empty-buffer :which-key "empty-buffer")
    "bs"  '((lambda () (interactive) (+funcs/switch-buffer-or-create "*scratch*")) :which-key "*scratch*")
-   ;; Doc
-   "d"   '(nil :which-key "doc")
-   "dd"  '(zeal-at-point :which-key "zeal-at-point")
-   "dh"  '(helm-dash-at-point :which-key "helm-dash-at-point")
-   "dH"  '(helm-dash :which-key "helm-dash")
    ;; Code/Doc
    "c"   '(nil :which-key "code/doc")
    "cc"  '(symbol-overlay-remove-all :which-key "highlight-remove-all")
+   "cd"  '(helm-dash-at-point :which-key "helm-dash-at-point")
    "ch"  '(symbol-overlay-put :which-key "highlight-toggle")
    "cH"  '(symbol-overlay-map-help :which-key "hightlight-help")
    ;; Files

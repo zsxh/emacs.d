@@ -18,6 +18,7 @@
   :ensure t
   :commands zeal-at-point)
 
+;; require `zeal' or `dash' docsets
 ;; helm-dash
 (use-package helm-dash
   :ensure t
