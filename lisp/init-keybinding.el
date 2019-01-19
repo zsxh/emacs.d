@@ -81,8 +81,8 @@
    "c"   '(nil :which-key "code/doc")
    "cc"  '(symbol-overlay-remove-all :which-key "highlight-remove-all")
    "cd"  '(helm-dash-at-point :which-key "helm-dash-at-point")
-   "ch"  '(symbol-overlay-put :which-key "highlight-toggle")
-   "cH"  '(symbol-overlay-map-help :which-key "hightlight-help")
+   "ch"  '(symbol-overlay-map-help :which-key "hightlight-help")
+   "ci"  '(symbol-overlay-put :which-key "highlight-input")
    ;; Files
    "f"   '(nil :which-key "file")
    "ff"  '(counsel-find-file :which-key "find-files")

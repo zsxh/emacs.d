@@ -18,36 +18,36 @@
   :ensure t
   :defer t
   :init
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode)))
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+  (add-hook 'rust-mode-hook 'lsp)
+  :config
+  (setq rust-indent-offset 2))
 
-(with-eval-after-load 'rust-mode
-  (setq rust-indent-offset 2)
-
-  (defun +rust/cargo-command (command)
-    (let ((default-directory (projectile-project-root))
-          (compile-command command))
-      (compile compile-command)))
-
-  (defun +rust/cargo-run ()
-    (interactive)
-    (+rust/cargo-command "cargo run"))
-
-  (defun +rust/cargo-test ()
-    (interactive)
-    (+rust/cargo-command "cargo test"))
-
-  (defun +rust/cargo-check ()
-    (interactive)
-    (+rust/cargo-command "cargo check"))
-
+(use-package cargo
+  :ensure t
+  :after rust-mode
+  :config
   (+funcs/set-leader-keys-for-major-mode
    'rust-mode-map
    "c" '(nil :which-key "cargo")
-   "cc" '(+rust/cargo-check :which-key "check")
-   "cr" '(+rust/cargo-run :which-key "run")
-   "ct" '(+rust/cargo-test :which-key "test")))
-
-(add-hook 'rust-mode-hook 'lsp)
+   "c." '(cargo-process-repeat :which-key "repeat-last-command")
+   "cC" '(cargo-process-clean :which-key "clean")
+   "cX" '(cargo-process-run-example :which-key "run-example")
+   "cc" '(cargo-process-build :which-key "build")
+   "cd" '(cargo-process-doc :which-key "generate-doc")
+   "cD" '(cargo-process-doc-open :which-key "open-doc")
+   "ce" '(cargo-process-bench :which-key "benchmark")
+   "cf" '(cargo-process-fmt :which-key "fmt")
+   "ci" '(cargo-process-init :which-key "init")
+   "cl" '(cargo-process-clippy :which-key "clippy")
+   "cn" '(cargo-process-new :which-key "new")
+   "co" '(cargo-process-current-file-tests :which-key "current-file-unit-test")
+   "cs" '(cargo-process-search :which-key "search")
+   "ct" '(cargo-process-current-test :which-key "current-unit-test")
+   "cu" '(cargo-process-update :which-key "update-dependencies")
+   "cx" '(cargo-process-run :which-key "run")
+   "cv" '(cargo-process-check :which-key "check")
+   "cT" '(cargo-process-test :which-key "all-unit-tests")))
 
 
 (provide 'init-rust)
