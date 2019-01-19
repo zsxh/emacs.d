@@ -79,13 +79,6 @@
   (setq find-ls-option
         (cons "-print0 | xargs -0 ls -alhdN" "")))
 
-;; narrow dired to match filter
-(use-package dired-narrow
-  :ensure t
-  :after dired
-  :commands dired-narrow)
-
-
 ;; Editable Dired mode configs
 (with-eval-after-load 'wdired
   (+funcs/set-leader-keys-for-major-mode
@@ -105,8 +98,25 @@
   (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8")
   (use-package font-lock+ :quelpa (font-lock+ :fetcher wiki)))
 
+;;;;;;;;;;;;;;;;;
+;; Dired Tools ;;
+;;;;;;;;;;;;;;;;;
+
 ;; https://github.com/Fuco1/dired-hacks
 ;; Collection of useful dired additions
+
+;; narrow dired to match filter
+(use-package dired-narrow
+  :ensure t
+  :after dired
+  :commands dired-narrow)
+
+;; open files with external applications(just for linux now)
+(use-package dired-open
+  :ensure t
+  :after dired
+  :bind (:map dired-mode-map
+              ("C-<return>" . dired-open-xdg)))
 
 ;; customizable highlighting for files in dired listings
 (use-package dired-rainbow
