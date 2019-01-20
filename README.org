@@ -82,7 +82,7 @@ Updated: <2019-01-18 五>
   - [X] =Go= supported by [[https://github.com/saibing/bingo][bingo]]
   - [X] =Common-Lisp= [[https://github.com/joaotavora/sly][supported by sly]]
   - [X] =Julia= (v1.0) pkg> add LanguageServer#master StaticLint#master DocumentFormat#master SymbolServer#master
-  - [X] =Javascript/Typescript= npm i -g javascript-typescript-langserver
+  - [X] =Javascript/Typescript= npm i -g typescript typescript-language-server
 
 * TODOs
   * Debugger require lsp-mode and dap-mode now
