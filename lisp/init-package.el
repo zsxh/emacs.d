@@ -99,10 +99,11 @@ the `quelpa' command has been run in the current Emacs session."
             (cl-remove-if-not #'package-installed-p quelpa-cache :key #'car))
       (setq packages-installed-by-quelpa
             (seq-filter (lambda (item) (memq ':fetcher item)) quelpa-cache))
-      (mapc (lambda (item)
-              (when (package-installed-p (car (quelpa-arg-rcp item)))
-                (quelpa item)))
-            packages-installed-by-quelpa)
+      (ignore-errors
+        (mapc (lambda (item)
+                (when (package-installed-p (car (quelpa-arg-rcp item)))
+                  (quelpa item)))
+              packages-installed-by-quelpa))
       ;; Delete outdate packages
       (dolist (package-info packages-installed-by-quelpa)
         (let ((package (car package-info)))
