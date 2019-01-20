@@ -24,12 +24,14 @@
   :ensure t
   :after magit
   :config
-  (evil-define-minor-mode-key 'normal 'with-editor-mode
-    ",c" 'with-editor-finish
-    ",k" 'with-editor-cancel)
-  (evil-define-minor-mode-key 'normal 'magit-blame-mode
-    "q" 'magit-blame-quit
-    "c" 'magit-blame-cycle-style))
+  (with-eval-after-load 'with-editor
+    (evil-define-minor-mode-key 'normal 'with-editor-mode
+      ",c" 'with-editor-finish
+      ",k" 'with-editor-cancel))
+  (with-eval-after-load 'magit-blame
+    (evil-define-minor-mode-key 'normal 'magit-blame-mode
+      "q" 'magit-blame-quit
+      "c" 'magit-blame-cycle-style)))
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
@@ -44,6 +46,21 @@
 ;; (use-package forge
 ;;   :ensure t
 ;;   :after magit)
+
+;; Walk through git revisions of a file
+(use-package git-timemachine
+  :ensure t
+  :defer t
+  :config
+  (evil-define-minor-mode-key 'normal 'git-timemachine-mode
+    "p" 'git-timemachine-show-previous-revision
+    "n" 'git-timemachine-show-next-revision
+    "q" 'git-timemachine-quit
+    "b" 'git-timemachine-blame
+    "gtg" 'git-timemachine-show-nth-revision
+    "gtt" 'git-timemachine-show-revision-fuzzy
+    "gty" 'git-timemachine-kill-abbreviated-revision
+    "gtY" 'git-timemachine-kill-revision))
 
 
 (provide 'init-git)

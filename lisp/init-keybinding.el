@@ -94,7 +94,8 @@
    "gb"  '(magit-blame :which-key "magit-blame")
    "gc"  '(magit-blame-cycle-style :which-key "magit-blame-cycle-style")
    "gf"  '(magit-file-popup :which-key "magit-file-popup")
-   "gs"  '(magit :which-key "magit")
+   "gs"  '(magit :which-key "magit-status")
+   "gt"  '(git-timemachine :which-key "git-timemachine")
    ;; Help
    "h"   '(nil :which-key "help")
    "hc"  '(company-diag :which-key "company-diag")
