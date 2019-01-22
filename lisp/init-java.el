@@ -16,13 +16,12 @@
   :after lsp-mode
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java")))
 
-(use-package dap-java :after (lsp-java))
+(use-package dap-java
+  :after (lsp-java)
+  :config
+  (advice-add 'dap-java-debug :after (lambda (debug-args) (dap-go-to-output-buffer))))
 
-(defun +java/lsp-java-config ()
-  (setq-local company-minimum-prefix-length 0)
-  (lsp))
-
-(add-hook 'java-mode-hook '+java/lsp-java-config)
+(add-hook 'java-mode-hook 'lsp)
 
 (with-eval-after-load 'cc-mode
   (+funcs/set-leader-keys-for-major-mode
@@ -49,7 +48,7 @@
 ;;;###autoload
 (defun +java/set-jdk (jdk-version)
   "Select JDK-VERSION in `jdks-installed-dir' as global version,
-JDK-VERSION directory name prefix `jdk-' is required,
+JDK-VERSION directory name prefix \"jdk-\" is required,
 `jdks-installed-dir'/jdk/bin in $PATH is required."
   (interactive (list (completing-read "JDK-version: " (+java/list-jdk-version))))
   (let ((target (expand-file-name jdk-version jdks-installed-dir))
@@ -58,7 +57,7 @@ JDK-VERSION directory name prefix `jdk-' is required,
 
 ;;;###autoload
 (defun +java/list-jdk-version ()
-  "Find all jdks which start with `jdk-' in `jdks-installed-dir'"
+  "Find all jdks which start with \"jdk-\" in `jdks-installed-dir'"
   (let ((files (directory-files jdks-installed-dir))
         (result nil))
     (dolist (file files)
