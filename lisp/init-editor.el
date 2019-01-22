@@ -30,6 +30,7 @@
 (setq-default truncate-lines t)
 ;; (setq use-dialog-box nil)                  ; no gui dialog box popups
 (setq confirm-kill-processes nil)          ; just kill the process on exit
+(setq column-number-mode t)                ; enable column number
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
