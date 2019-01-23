@@ -76,8 +76,7 @@
 
 (use-package eglot
   :ensure t
-  :commands eglot-ensure
-  :hook ((sh-mode . eglot-ensure)))
+  :commands eglot-ensure)
 
 ;;;;;;;;;;;;;; Lsp-mode ;;;;;;;;;;;;;;
 
