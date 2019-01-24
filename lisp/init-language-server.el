@@ -184,7 +184,7 @@
     :init-value nil
     :keymap +dap/debug-mode-map)
 
-  (define-global-minor-mode global-dap/debug-mode +dap/debug-mode
+  (define-global-minor-mode +dap/global-debug-mode +dap/debug-mode
     (lambda ()
       (when (memq major-mode '(java-mode python-mode))
         (+dap/debug-mode))))
@@ -202,13 +202,13 @@
     (add-hook '+dap/debug-mode-hook #'+dap/evil-debug-key-settings))
 
   (defun +dap/debug-mode-disable (&optional args)
-    (when +dap/debug-mode
-      (global-dap/debug-mode -1)
-      (message "+dap/debug mode disabled")))
+    (when +dap/global-debug-mode
+      (+dap/global-debug-mode -1)
+      (message "+dap/global-debug-mode disabled")))
 
   (defun +dap/debug-mode-enable (&optional args)
-    (unless +dap/debug-mode
-      (global-dap/debug-mode)
+    (unless +dap/global-debug-mode
+      (+dap/global-debug-mode)
       ;; `evil-define-key' for minor mode does not take effect until a state transition
       ;; Issue: https://github.com/emacs-evil/evil/issues/301
       (when (bound-and-true-p evil-mode)
@@ -220,7 +220,7 @@
             (let ((cur-state evil-state))
               (evil-change-state 'normal)
               (evil-change-state cur-state)))))
-      (message "+dap/debug mode enabled")))
+      (message "+dap/global-debug-mode enabled")))
 
   ;; Manual toggle
   (defun +dap/debug-key-settings--toggle ()
