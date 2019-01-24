@@ -204,7 +204,8 @@
   (defun +dap/debug-mode-disable (&optional args)
     (when +dap/global-debug-mode
       (+dap/global-debug-mode -1)
-      (message "+dap/global-debug-mode disabled")))
+      (let ((inhibit-message t))
+        (message "+dap/global-debug-mode disabled"))))
 
   (defun +dap/debug-mode-enable (&optional args)
     (unless +dap/global-debug-mode
@@ -220,7 +221,8 @@
             (let ((cur-state evil-state))
               (evil-change-state 'normal)
               (evil-change-state cur-state)))))
-      (message "+dap/global-debug-mode enabled")))
+      (let ((inhibit-message t))
+        (message "+dap/global-debug-mode enabled"))))
 
   ;; Manual toggle
   (defun +dap/debug-key-settings--toggle ()
