@@ -12,13 +12,12 @@
 
 (require 'init-language-server)
 
-(defun +js/lsp-js-config ()
-  (lsp))
+;; Install js language server
+;; npm i -g typescript typescript-language-server
+(dolist (js-lang '(js typescript js3 rjsx))
+  (let ((js-lang-hook (intern (format "%s-mode-hook" js-lang))))
+    (add-hook js-lang-hook 'lsp)))
 
-(add-hook 'js-mode-hook '+js/lsp-js-config)
-(add-hook 'typescript-mode-hook '+js/lsp-js-config)
-(add-hook 'js3-mode-hook '+js/lsp-js-config)
-(add-hook 'rjsx-mode-hook '+js/lsp-js-config)
 
 (provide 'init-js)
 
