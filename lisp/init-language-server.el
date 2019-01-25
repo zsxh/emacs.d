@@ -144,6 +144,7 @@
                 (format "Prepare local buffer environment for org source block (%s)."
                         (upcase ,lang))))))))
 
+;; FIXME: ipython doesn't work, use python instead
 (defvar org-babel-lang-list
   '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
 
