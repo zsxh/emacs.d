@@ -18,8 +18,11 @@
   :commands shell-pop
   :config
   (setq shell-pop-term-shell personal-shell-executable)
-  ;; (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
-  (setq shell-pop-shell-type '("multi-term" "*multi-term*" (lambda () (multi-term))))
+  (cond ((functionp 'vterm)
+         (setq shell-pop-shell-type '("vterm" "*vterm*" (lambda () (vterm)))))
+        ((functionp 'multi-term)
+         (setq shell-pop-shell-type '("multi-term" "*multi-term*" (lambda () (multi-term)))))
+        (t (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))))
   (setq shell-pop-window-position "bottom")
   ;; The last line is needed or no picked up by 'shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
@@ -30,6 +33,26 @@
   (let ((default-directory (projectile-project-root)))
     (call-interactively 'shell-pop)))
 
+;; HIGHLY RECOMMENDED
+;; require libvterm and emacs-livterm, build it yourself
+;; https://github.com/akermu/emacs-libvterm
+(use-package vterm
+  :if (file-executable-p (concat user-emacs-directory "submodules/emacs-libvterm/vterm-module.so"))
+  :commands (vterm vterm-other-window)
+  :config
+  ;; FIXME: Error during redisplay: (vterm--window-size-change #<window 8 on *vterm-1*>) signaled (error "Window is on a different frame")
+  (defun vterm--delayed-redraw(buffer)
+    (if (buffer-live-p buffer)
+        (with-current-buffer buffer
+          (let ((inhibit-redisplay t)
+                (inhibit-read-only t))
+            (when vterm--term
+              (vterm--redraw vterm--term)))
+          (setq vterm--redraw-timer nil))))
+  (defun vterm-kill-buffer-after-exit (buf)
+    (when (buffer-live-p buf)
+      (kill-buffer buf)))
+  (add-hook 'vterm-exit-functions 'vterm-kill-buffer-after-exit))
 
 (use-package term
   :ensure nil
@@ -52,14 +75,12 @@
     (evil-define-key 'normal term-raw-map "p" 'term-paste)
     (evil-define-key 'insert term-raw-map "\C-y" 'term-paste)))
 
-
 ;; https://www.emacswiki.org/emacs/MultiTerm
 (use-package multi-term
   :quelpa (multi-term :fetcher wiki)
   :commands multi-term
   :config
   (setq multi-term-program personal-shell-executable))
-
 
 ;; Better eshell
 ;; https://github.com/manateelazycat/aweshell
