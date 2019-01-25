@@ -1,4 +1,4 @@
-Updated: <2019-01-18 五> 
+Updated: <2019-01-26 六>
 
 * Features
   - =org=
@@ -41,6 +41,10 @@ Updated: <2019-01-18 五>
   - =neotree=
       A tree plugin like NerdTree for Vim
   - =shell and terminal=
+    - =eshell=
+      emacs shell
+    - =emacs-libvterm=
+      emacs libvterm intergration, great terminal in emacs, better than ansi-term
   - =ivy=
       completion for emacs command
   - =programming=
