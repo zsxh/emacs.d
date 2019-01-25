@@ -130,7 +130,7 @@
          (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
     `(progn
        (defun ,intern-pre (info)
-         (let ((lsp-file (or (->> info caddr (alist-get :file))
+         (let ((lsp-file (or (->> info caddr (alist-get :lspfile))
                              buffer-file-name)))
            (setq-local buffer-file-name lsp-file)
            (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
