@@ -99,6 +99,17 @@
   :ensure t
   :commands string-inflection-all-cycle)
 
+;; evil open/close/toggle folds rely on hideshow
+;; "z a" evil-toggle-fold
+;; "z m" evil-close-folds
+;; "z r" evil-open-folds
+(use-package hideshow
+  :commands hs-minor-mode
+  :hook (prog-mode . hs-minor-mode)
+  :config
+  (with-eval-after-load 'evil
+    (define-key evil-normal-state-map (kbd "z f") 'hs-hide-level)))
+
 ;; https://gitlab.com/jgkamat/rmsbolt
 ;; RMSBolt tries to make it easy to see what your compiler is doing.
 ;; It does this by showing you the assembly output of a given source code file.
