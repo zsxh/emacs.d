@@ -1,4 +1,4 @@
-Updated: <2019-01-26 六>
+Updated: <2019-01-28 一>
 
 * Features
   - =org=
@@ -16,6 +16,8 @@ Updated: <2019-01-26 六>
     - =quelpa-use-package=
       build and install package directly from source, such as github
   - =ui=
+    - =all-the-icons=
+      [[https://github.com/domtronn/all-the-icons.el#installing-fonts][Intalling Fonts]]
     - =doom-theme=
       fancy theme
     - =modeline=
@@ -45,6 +47,7 @@ Updated: <2019-01-26 六>
       emacs shell
     - =emacs-libvterm=
       emacs libvterm intergration, great terminal in emacs, better than ansi-term
+      [[https://github.com/akermu/emacs-libvterm][Installing Emacs-libvterm]]
   - =ivy=
       completion for emacs command
   - =programming=
@@ -64,7 +67,8 @@ Updated: <2019-01-26 六>
       highlight parenthesis and color string
     - =zeal-at-point, helm-dash=
       offline documentation browser
-    - =paredit, lispy=
+      [[https://zealdocs.org/][Installing Zeal]]
+    - =awesome-pair, lispy=
       structure edit
     - =symbol-overlay=
       highlight symbol, nice package for reading code
