@@ -32,52 +32,44 @@
 
 ;;;;;;;;;;;;;; EDIT ;;;;;;;;;;;;;;
 
-;; Structured editing
-(use-package paredit
-  :ensure t
-  :bind (("s-0" . paredit-wrap-round)
-         ("s-[" . paredit-wrap-square)
-         ("s-{" . paredit-wrap-curly)
-         ("s-<" . paredit-wrap-angled)
-         ("s-\"" . paredit-meta-doublequote)
-         ("C-M-b" . paredit-backward)
-         ("C-M-f" . paredit-forward))
-  :hook (prog-mode . enable-paredit-mode)
+
+(use-package awesome-pair
+  :commands awesome-pair-mode
+  :hook (prog-mode . awesome-pair-mode)
+  :bind (:map
+         awesome-pair-mode-map
+         ("(" . 'awesome-pair-open-round)
+         ("[" . 'awesome-pair-open-bracket)
+         ("{" . 'awesome-pair-open-curly)
+         (")" . 'awesome-pair-close-round)
+         ("]" . 'awesome-pair-close-bracket)
+         ("}" . 'awesome-pair-close-curly)
+         ("%" . 'awesome-pair-match-paren)
+         ("\"" . 'awesome-pair-double-quote)
+         ("M-o" . 'awesome-pair-backward-delete)
+         ("C-k" . 'awesome-pair-kill)
+         ("M-\"" . 'awesome-pair-wrap-double-quote)
+         ("M-[" . 'awesome-pair-wrap-bracket)
+         ("M-{" . 'awesome-pair-wrap-curly)
+         ("M-(" . 'awesome-pair-wrap-round)
+         ("M-)" . 'awesome-pair-unwrap)
+         ("M-p" . 'awesome-pair-jump-right)
+         ("M-n" . 'awesome-pair-jump-left)
+         ("M-RET" . 'awesome-pair-jump-out-pair-and-newline))
   :config
-  ;; prevent whitespace between function and paren
-  (defun +paredit/space-for-delimiter-p (endp delimiter)
-    (or (member 'font-lock-keyword-face (text-properties-at (1- (point))))
-        (not (derived-mode-p 'basic-mode
-                             'c++-mode
-                             'c-mode
-                             'coffee-mode
-                             'csharp-mode
-                             'd-mode
-                             'dart-mode
-                             'go-mode
-                             'java-mode
-                             'js-mode
-                             'lua-mode
-                             'objc-mode
-                             'pascal-mode
-                             'python-mode
-                             'r-mode
-                             'ruby-mode
-                             'rust-mode
-                             'typescript-mode
-                             'julia-mode))))
-  (add-to-list 'paredit-space-for-delimiter-predicates '+paredit/space-for-delimiter-p))
+  (with-eval-after-load 'lispy
+    (define-key lispy-mode-map (kbd "M-o") 'awesome-pair-backward-delete)
+    (define-key lispy-mode-map (kbd "M-p") 'awesome-pair-jump-right)
+    (define-key lispy-mode-map (kbd "M-n") 'awesome-pair-jump-left)
+    (define-key lispy-mode-map (kbd "M-RET") 'awesome-pair-jump-out-pair-and-newline)))
 
 ;; Short and sweet LISP editing
 (use-package lispy
   :ensure t
-  :after paredit
   :commands lispy-mode
   :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
          (lisp-interaction-mode . (lambda () (lispy-mode 1)))
          (lisp-mode . (lambda () (lispy-mode 1))))
-  :bind (:map lispy-mode-map
-              ("s-k" . paredit-splice-sexp-killing-backward))
   :config
   (require 'le-lisp)
   (setq lispy-use-sly t)
