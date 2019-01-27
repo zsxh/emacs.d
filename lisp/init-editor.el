@@ -160,9 +160,6 @@
   :ensure t
   :hook (emacs-startup . global-move-dup-mode))
 
-(use-package popwin
-  :ensure t)
-
 
 (provide 'init-editor)
 

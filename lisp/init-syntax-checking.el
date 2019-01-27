@@ -19,11 +19,16 @@
 
 ;;;;;;;;;;;;;; FLYCHECK ;;;;;;;;;;;;;;
 
+(use-package popwin
+  :ensure t
+  :defer t)
+
 (use-package flycheck
   :ensure t
   :defer t
-  ;; :hook (lsp-mode . flycheck-mode)
   :config
+  (require 'popwin)
+
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)
   ;; Only check while saving and opening files
@@ -82,55 +87,51 @@
       "j" 'flycheck-error-list-next-error
       "k" 'flycheck-error-list-previous-error)))
 
-;; Display Flycheck errors in GUI tooltips
-(if (display-graphic-p)
-    (use-package flycheck-posframe
+(with-eval-after-load 'flycheck
+  ;; Display Flycheck errors in GUI tooltips
+  (if (display-graphic-p)
+      (use-package flycheck-posframe
+        :after flycheck
+        :ensure t
+        :hook (flycheck-mode . flycheck-posframe-mode))
+    (use-package flycheck-popup-tip
       :after flycheck
       :ensure t
-      :hook (flycheck-mode . flycheck-posframe-mode))
-  (use-package flycheck-popup-tip
-    :after flycheck
-    :ensure t
-    :hook (flycheck-mode . flycheck-popup-tip-mode)))
+      :hook (flycheck-mode . flycheck-popup-tip-mode)))
 
-;; toggle flycheck window
-(defun +flycheck/toggle-flycheck-error-list ()
-  "Toggle flycheck's error list window.
+  ;; toggle flycheck window
+  (defun +flycheck/toggle-flycheck-error-list ()
+    "Toggle flycheck's error list window.
 If the error list is visible, hide it.  Otherwise, show it."
-  (interactive)
-  (-if-let (window (flycheck-get-error-list-window))
-      (quit-window nil window)
-    (flycheck-list-errors)))
+    (interactive)
+    (-if-let (window (flycheck-get-error-list-window))
+        (quit-window nil window)
+      (flycheck-list-errors)))
 
-(defun +flycheck/goto-flycheck-error-list ()
-  "Open and go to the error list buffer."
-  (interactive)
-  (unless (get-buffer-window (get-buffer flycheck-error-list-buffer))
-    (flycheck-list-errors)
-    (switch-to-buffer-other-window flycheck-error-list-buffer)))
+  (defun +flycheck/goto-flycheck-error-list ()
+    "Open and go to the error list buffer."
+    (interactive)
+    (unless (get-buffer-window (get-buffer flycheck-error-list-buffer))
+      (flycheck-list-errors)
+      (switch-to-buffer-other-window flycheck-error-list-buffer)))
 
-(defun +flycheck/popup-errors ()
-  "Show the error list for the current buffer."
-  (interactive)
-  (unless flycheck-mode
-    (user-error "Flycheck mode not enabled"))
-  ;; Create and initialize the error list
-  (unless (get-buffer flycheck-error-list-buffer)
-    (with-current-buffer (get-buffer-create flycheck-error-list-buffer)
-      (flycheck-error-list-mode)))
-  (flycheck-error-list-set-source (current-buffer))
-  ;; Reset the error filter
-  (flycheck-error-list-reset-filter)
-  ;; Popup the error list in the bottom window
-  (popwin:popup-buffer flycheck-error-list-buffer)
-  ;; Finally, refresh the error list to show the most recent errors
-  (flycheck-error-list-refresh))
+  (defun +flycheck/popup-errors ()
+    "Show the error list for the current buffer."
+    (interactive)
+    (unless flycheck-mode
+      (user-error "Flycheck mode not enabled"))
+    ;; Create and initialize the error list
+    (unless (get-buffer flycheck-error-list-buffer)
+      (with-current-buffer (get-buffer-create flycheck-error-list-buffer)
+        (flycheck-error-list-mode)))
+    (flycheck-error-list-set-source (current-buffer))
+    ;; Reset the error filter
+    (flycheck-error-list-reset-filter)
+    ;; Popup the error list in the bottom window
+    (popwin:popup-buffer flycheck-error-list-buffer)
+    ;; Finally, refresh the error list to show the most recent errors
+    (flycheck-error-list-refresh)))
 
-;; Jump to and fix syntax errors via `avy'
-;; (use-package avy-flycheck
-;;   :after flycheck
-;;   :ensure t
-;;   :hook (flycheck-mode . avy-flycheck-setup))
 
 (provide 'init-syntax-checking)
 
