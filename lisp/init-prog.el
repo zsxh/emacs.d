@@ -32,6 +32,10 @@
 
 ;;;;;;;;;;;;;; EDIT ;;;;;;;;;;;;;;
 
+;; automatic parenthesis pairing for non prog mode
+(use-package elec-pair
+  :ensure nil
+  :hook (after-init . electric-pair-mode))
 
 (use-package awesome-pair
   :commands awesome-pair-mode

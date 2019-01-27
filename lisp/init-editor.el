@@ -69,11 +69,6 @@
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-merge-split-window-function 'split-window-horizontally))
 
-;; automatic parenthesis pairing for non prog mode
-(use-package elec-pair
-  :ensure nil
-  :hook (after-init . electric-pair-mode))
-
 ;; Increase selected region by semantic units
 (use-package expand-region
   :ensure t
