@@ -28,6 +28,9 @@
          ("M-e" . evil-scroll-line-down)
          ("M-y" . evil-scroll-line-up))
   :config
+  ;; don't move cursor back, otherwise it will cause problem with lispy/awesome-pair
+  (setq evil-move-cursor-back nil)
+
   ;; remove all keybindings from insert-state keymap,it is VERY VERY important
   (setcdr evil-insert-state-map nil)
   ;; 把emacs模式下的按键绑定到Insert模式下
