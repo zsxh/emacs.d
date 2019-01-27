@@ -31,11 +31,13 @@
     (toggle-frame-maximized)
   (toggle-frame-fullscreen))
 
-;; Theme
+;; Installing Fonts
+;; https://github.com/domtronn/all-the-icons.el#installing-fonts
 (use-package all-the-icons
   :ensure t
   :defer t)
 
+;; Theme
 (use-package doom-themes
   :ensure t
   :config
