@@ -117,17 +117,6 @@
   :ensure t
   :commands rmsbolt-mode)
 
-(setq my-read-only-dir-re (format "^%s" (expand-file-name "elpa" user-emacs-directory)))
-
-(defun my-open-buffer-as-read-only ()
-    "All buffers opened from directory my-read-only-dir-re are set read-only."
-    (if (and buffer-file-name  ;; buffer is associated with a file
-             (string-match my-read-only-dir-re buffer-file-name)  ;; directory name matches
-             (not buffer-read-only))  ;; buffer is writable
-      (read-only-mode 1)))
-
-(add-hook 'find-file-hook  #'my-open-buffer-as-read-only)
-
 ;; Evil shift indent
 (defvar prog--indent-variable-alist
   '(((awk-mode c-mode c++-mode java-mode groovy-mode
