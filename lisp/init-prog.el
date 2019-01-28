@@ -57,14 +57,14 @@
          ("M-{" . 'awesome-pair-wrap-curly)
          ("M-(" . 'awesome-pair-wrap-round)
          ("M-)" . 'awesome-pair-unwrap)
-         ("M-p" . 'awesome-pair-jump-right)
-         ("M-n" . 'awesome-pair-jump-left)
+         ("M-n" . 'awesome-pair-jump-right)
+         ("M-p" . 'awesome-pair-jump-left)
          ("M-RET" . 'awesome-pair-jump-out-pair-and-newline))
   :config
   (with-eval-after-load 'lispy
     (define-key lispy-mode-map (kbd "M-o") 'awesome-pair-backward-delete)
-    (define-key lispy-mode-map (kbd "M-p") 'awesome-pair-jump-right)
-    (define-key lispy-mode-map (kbd "M-n") 'awesome-pair-jump-left)
+    (define-key lispy-mode-map (kbd "M-n") 'awesome-pair-jump-right)
+    (define-key lispy-mode-map (kbd "M-p") 'awesome-pair-jump-left)
     (define-key lispy-mode-map (kbd "M-RET") 'awesome-pair-jump-out-pair-and-newline)))
 
 ;; Short and sweet LISP editing
@@ -116,6 +116,17 @@
 (use-package rmsbolt
   :ensure t
   :commands rmsbolt-mode)
+
+(setq my-read-only-dir-re (format "^%s" (expand-file-name "elpa" user-emacs-directory)))
+
+(defun my-open-buffer-as-read-only ()
+    "All buffers opened from directory my-read-only-dir-re are set read-only."
+    (if (and buffer-file-name  ;; buffer is associated with a file
+             (string-match my-read-only-dir-re buffer-file-name)  ;; directory name matches
+             (not buffer-read-only))  ;; buffer is writable
+      (read-only-mode 1)))
+
+(add-hook 'find-file-hook  #'my-open-buffer-as-read-only)
 
 ;; Evil shift indent
 (defvar prog--indent-variable-alist
