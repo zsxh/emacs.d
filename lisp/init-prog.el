@@ -51,6 +51,8 @@
          ("%" . 'awesome-pair-match-paren)
          ("\"" . 'awesome-pair-double-quote)
          ("M-o" . 'awesome-pair-backward-delete)
+         ("DEL" . 'awesome-pair-backward-delete)
+         ("C-d" . 'awesome-pair-forward-delete)
          ("C-k" . 'awesome-pair-kill)
          ("M-\"" . 'awesome-pair-wrap-double-quote)
          ("M-[" . 'awesome-pair-wrap-bracket)
