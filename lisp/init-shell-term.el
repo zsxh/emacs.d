@@ -40,8 +40,7 @@
   :if (file-executable-p (concat user-emacs-directory "submodules/emacs-libvterm/vterm-module.so"))
   :commands (vterm vterm-other-window)
   :config
-  (set-face-foreground 'vterm-color-black "#a8aab0")
-  (set-face-background 'vterm-color-black "#a8aab0")
+  (setf (elt ansi-color-names-vector 0) (doom-color 'bg))
   ;; FIXME: Error during redisplay: (vterm--window-size-change #<window 8 on *vterm-1*>) signaled (error "Window is on a different frame")
   (defun vterm--delayed-redraw(buffer)
     (if (buffer-live-p buffer)
