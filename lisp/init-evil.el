@@ -23,6 +23,8 @@
          evil-normal-state-map
          ("C-n" . next-line)
          ("C-p" . previous-line)
+         ("C-d" . evil-scroll-down)
+         ("C-u" . evil-scroll-up)
          ("C-a" . move-beginning-of-line)
          ("C-e" . move-end-of-line)
          ("M-e" . evil-scroll-line-down)

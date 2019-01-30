@@ -88,7 +88,7 @@
 ;; Easy way to jump/swap window
 (use-package ace-window
   :ensure t
-  :bind (("C-u" . ace-window))
+  :bind (("M-u" . ace-window))
   :commands (ace-window ace-swap-window))
 
 ;; Treat undo history as a tree
