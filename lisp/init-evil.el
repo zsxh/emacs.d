@@ -49,7 +49,9 @@
   :after evil
   :ensure t
   :config
-  (with-eval-after-load 'package (evil-collection-init 'package-menu))
+  (with-eval-after-load 'package
+    (require 'evil-collection-package-menu)
+    (evil-collection-package-menu-setup))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list)))
