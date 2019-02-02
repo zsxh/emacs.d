@@ -25,6 +25,22 @@
   ;; cache file in ~/.emacs.d/projectile.cache
   (setq projectile-enable-caching t))
 
+(with-eval-after-load 'projectile
+  (defun +project/projectile-buffer-filter (name)
+    (or (string-prefix-p "*" name)
+        (and
+         (string-prefix-p "magit" name)
+         (file-name-extension name))
+        (equal (buffer-name (current-buffer)) name)))
+
+  (defun +project/projectile-switch-buffer ()
+    "Switch to a project buffer."
+    (interactive)
+    (switch-to-buffer
+     (projectile-completing-read
+      "Switch to buffer: "
+      (cl-remove-if #'+project/projectile-buffer-filter
+                    (projectile-project-buffer-names))))))
 
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 
