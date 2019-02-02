@@ -151,7 +151,14 @@
 ;; Emacs ripgrep plugin
 (use-package color-rg
   :commands (color-rg-search-input color-rg-search-project)
-  :quelpa ((color-rg :fetcher github :repo "manateelazycat/color-rg")))
+  :quelpa ((color-rg :fetcher github :repo "manateelazycat/color-rg"))
+  :config
+  (with-eval-after-load 'evil
+    ;; Most evil key bindings still works,
+    ;; but we let color-rg's hotkeys take priority.
+    (evil-make-overriding-map color-rg-mode-map 'normal)
+    (evil-make-overriding-map color-rg-mode-edit-map 'normal)
+    (add-hook 'color-rg-mode-hook #'evil-normalize-keymaps)))
 
 ;; M-<up> move-line-up
 ;; M-<down> move-line-down

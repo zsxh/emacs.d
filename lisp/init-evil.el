@@ -49,9 +49,6 @@
   :after evil
   :ensure t
   :config
-  (with-eval-after-load 'package
-    (require 'evil-collection-package-menu)
-    (evil-collection-package-menu-setup))
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list)))
@@ -91,7 +88,13 @@
       "g" 'revert-buffer
       "?" 'discribe-mode
       "q" 'quit-window))
-  (add-hook 'process-menu-mode-hook #'+evil/process-menu-mode-config))
+  (add-hook 'process-menu-mode-hook #'+evil/process-menu-mode-config)
+
+  ;; package-menu-mode-map have higher priority than evil key bingdings
+  (with-eval-after-load 'package
+    (evil-set-initial-state 'package-menu-mode 'normal)
+    (evil-make-overriding-map package-menu-mode-map 'normal)
+    (add-hook 'package-menu-mode-hook #'evil-normalize-keymaps)))
 
 
 (provide 'init-evil)
