@@ -91,7 +91,7 @@
         lsp-prefer-flymake nil
         lsp-inhibit-message t
         lsp-eldoc-render-all nil
-        lsp-keep-workspace-alive nil)
+        lsp-keep-workspace-alive t)
   ;; FIXME: enable company-yasnippet, but can be messy
   (advice-add 'lsp :after
               (lambda ()
