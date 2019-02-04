@@ -144,15 +144,6 @@
                 (format "Prepare local buffer environment for org source block (%s)."
                         (upcase ,lang))))))))
 
-;; FIXME: ipython doesn't work, use python instead
-(defvar org-babel-lang-list
-  '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
-
-(add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
-
-(dolist (lang org-babel-lang-list)
-  (eval `(lsp-org-babel-enbale ,lang)))
-
 
 (provide 'init-language-server)
 
