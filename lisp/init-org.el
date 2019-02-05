@@ -75,7 +75,34 @@
     :ensure t
     :after org
     :if (executable-find "jupyter")     ; DO NOT remove
-    :init (cl-pushnew '(ipython . t) load-language-list))
+    :init (cl-pushnew '(ipython . t) load-language-list)
+    :config
+    ;; fix: pandas dataframe output header is not aligned to column
+    ;; https://github.com/gregsexton/ob-ipython/issues/171
+    (defun ob-ipython--render (file-or-nil values)
+      (let ((org (lambda (value) value))
+            (png (lambda (value)
+                   (let ((file (or file-or-nil (ob-ipython--generate-file-name ".png"))))
+                     (ob-ipython--write-base64-string file value)
+                     (format "[[file:%s]]" file))))
+            (svg (lambda (value)
+                   (let ((file (or file-or-nil (ob-ipython--generate-file-name ".svg"))))
+                     (ob-ipython--write-string-to-file file value)
+                     (format "[[file:%s]]" file))))
+            (html (lambda (value)))
+            (txt (lambda (value)
+                   (let ((lines (s-lines value)))
+                     (if (cdr lines)
+                         (->> lines
+                              (-map 's-trim-right)
+                              (s-join "\n  ")
+                              (s-concat "  ")
+                              (format "#+BEGIN_EXAMPLE\n%s\n#+END_EXAMPLE"))
+                       (s-concat ": " (car lines)))))))
+        (or (-when-let (val (cdr (assoc 'text/org values))) (funcall org val))
+            (-when-let (val (cdr (assoc 'image/png values))) (funcall png val))
+            (-when-let (val (cdr (assoc 'image/svg+xml values))) (funcall svg val))
+            (-when-let (val (cdr (assoc 'text/plain values))) (funcall txt val))))))
 
   ;; An extension to restclient.el for emacs that provides org-babel support
   (when (package-installed-p 'restclient)
@@ -138,6 +165,7 @@
    "i"  '(nil :which-key "insert")
    "is" '(org-insert-structure-template :which-key "structure-template")
    "it" '(org-time-stamp :which-key "time-stamp")
+   "R"  '(+org/remove-all-result-blocks :which-key "remove-all-result-blocks")
    "T"  '(nil :which-key "toggle")
    "Ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
    "Tl" '(org-toggle-link-display :which-key "toggle-link-display")
@@ -172,6 +200,14 @@
                (setq inferior-julia-program-name "julia")))
   ;; ob-python define their own :async keyword that conflicts with ob-async
   (setq ob-async-no-async-languages-alist '("ipython")))
+
+(with-eval-after-load 'org
+  (defun +org/remove-all-result-blocks ()
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (while (search-forward "#+begin_src " nil t)
+        (org-babel-remove-result)))))
 
 
 (provide 'init-org)
