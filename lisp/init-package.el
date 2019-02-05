@@ -130,6 +130,7 @@ the `quelpa' command has been run in the current Emacs session."
   :init
   (defalias 'upgrade-packages 'package-utils-upgrade-all)
   (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart)
+  :commands package-utils-upgrade-all
   :config
   (with-eval-after-load 'quelpa-use-package
     (advice-add #'upgrade-packages :after #'+package/quelpa-upgrade)

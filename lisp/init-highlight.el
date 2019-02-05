@@ -86,11 +86,16 @@
 ;;     (diff-hl-margin-mode))
 ;;   )
 
-(require 'ansi-color)
+(use-package ansi-color
+  :ensure nil
+  :commands ansi-color-apply-on-region)
+
+;;;###autoload
 (defun colorize-compilation-buffer ()
   (toggle-read-only)
   (ansi-color-apply-on-region (point-min) (point-max))
   (toggle-read-only))
+
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 
