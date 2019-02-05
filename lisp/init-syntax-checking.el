@@ -13,7 +13,7 @@
 ;;;;;;;;;;;;;; FLYMAKE ;;;;;;;;;;;;;;
 
 (use-package flymake-diagnostic-at-point
-  :quelpa ((flymake-diagnostic-at-point :fetcher github :repo "meqif/flymake-diagnostic-at-point"))
+  :ensure t
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
