@@ -156,20 +156,26 @@
   ;; major mode keybindings
   (+funcs/set-leader-keys-for-major-mode
    'org-mode-map
-   "a"  '(org-agenda :which-key "agenda")
-   "c"  '(nil :which-key "capture/clock")
+   "a" '(org-agenda :which-key "agenda")
+   "b" '(nil :which-key "block")
+   "bf" '(+org/babel-result-hide-all :which-key "fold-all-results")
+   "bF" '(+org/babel-result-show-all :which-key "show-all-results")
+   "br" '(org-babel-remove-result :which-key "remove-result")
+   "bR" '(+org/remove-all-result-blocks :which-key "remove-all-results")
+   "c" '(nil :which-key "capture/clock")
    "cc" '(org-capture :which-key "capture")
    "ci" '(org-clock-in :which-key "clock-in")
    "co" '(org-clock-out :which-key "clock-out")
    "cr" '(org-clock-report :which-key "clock-report")
-   "i"  '(nil :which-key "insert")
+   "i" '(nil :which-key "insert")
    "is" '(org-insert-structure-template :which-key "structure-template")
    "it" '(org-time-stamp :which-key "time-stamp")
-   "R"  '(+org/remove-all-result-blocks :which-key "remove-all-result-blocks")
-   "T"  '(nil :which-key "toggle")
+   "n" '(org-babel-next-src-block :which-key "next-src-block")
+   "p" '(org-babel-previous-src-block :which-key "previous-src-block")
+   "T" '(nil :which-key "toggle")
    "Ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
    "Tl" '(org-toggle-link-display :which-key "toggle-link-display")
-   "'"  '(org-edit-special :which-key "editor")))
+   "'" '(org-edit-special :which-key "editor")))
 
 ;; Org for blog
 (use-package org-page
@@ -203,11 +209,34 @@
 
 (with-eval-after-load 'org
   (defun +org/remove-all-result-blocks ()
+    "Remove all results in the current buffer."
     (interactive)
     (save-excursion
       (goto-char (point-min))
       (while (search-forward "#+begin_src " nil t)
-        (org-babel-remove-result)))))
+        (org-babel-remove-result))))
+
+  (defun +org/babel-result-show-all ()
+    "Show all results in the current buffer."
+    (interactive)
+    (org-babel-show-result-all)
+    (when (featurep 'ob-ipython)
+      (save-excursion
+        (goto-char (point-min))
+        (while (search-forward ":results:" nil t)
+          (forward-line)
+          (org-reveal)))))
+
+  (defun +org/babel-result-hide-all ()
+    "Fold all results in the current buffer."
+    (interactive)
+    (org-babel-show-result-all)
+    (save-excursion
+      ;; org-babel-result-hide-all may not work without (goto-char (point-min))
+      (goto-char (point-min))
+      (while (re-search-forward org-babel-result-regexp nil t)
+        (save-excursion (goto-char (match-beginning 0))
+                        (org-babel-hide-result-toggle-maybe))))))
 
 
 (provide 'init-org)
