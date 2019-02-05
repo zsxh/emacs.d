@@ -29,11 +29,17 @@
 ;;;;;;;;;;;;;; Debug Adapter Protocol for Emacs ;;;;;;;;;;;;;;
 
 (use-package dap-mode
-  :after lsp-mode
-  :ensure t
+  :quelpa ((dap-mode :fetcher github :repo "yyoncho/dap-mode"))
+  :commands dap-mode
+  :init
+  (defun +dap/enable ()
+    (dap-mode 1)
+    (dap-ui-mode 1))
+  (advice-add 'lsp :after #'+dap/enable)
   :config
-  (dap-mode t)
-  (dap-ui-mode t)
+  ;; TODO: find a proper way to load 'cl
+  (when (not (functionp 'first))
+    (require 'cl))
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
               (setq-local company-minimum-prefix-length 0))))

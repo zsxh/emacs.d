@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+(require 'init-language-server)
+
 ;; Somehow pipenv cant really active virtulenv, but i found pyvenv do a good job for this
 (use-package pyvenv
   :ensure t
@@ -29,38 +31,32 @@
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended))
 
-(require 'init-language-server)
+(progn
+  ;; Install https://github.com/andrew-christianson/lsp-python-ms/
+  ;; cd ~/.emacs.d
+  ;; git clone https://github.com/Microsoft/python-language-server.git --depth 1
+  ;; cd python-language-server/src/LanguageServer/Impl
+  ;; dotnet build -c Release -r linux-x64
+  (setq +python/ms-python-language-server-dir
+        (expand-file-name "python-language-server" user-emacs-directory))
 
-(with-eval-after-load 'python
-  (setq-local python-indent-offset 2)
-  (+python/python-setup-shell)
-  (+python/set-leader-keys)
-  (with-eval-after-load 'dap-mode
-    (use-package dap-python)))
+  ;; for dev build of language server
+  (setq lsp-python-ms-dir
+        (expand-file-name "output/bin/Release/" +python/ms-python-language-server-dir))
 
-;; Install https://github.com/andrew-christianson/lsp-python-ms/
-;; cd ~/.emacs.d
-;; git clone https://github.com/Microsoft/python-language-server.git --depth 1
-;; cd python-language-server/src/LanguageServer/Impl
-;; dotnet build -c Release -r linux-x64
+  ;; for executable of language server, if it's not symlinked on your PATH
+  (setq lsp-python-ms-executable
+        (expand-file-name "Microsoft.Python.LanguageServer.LanguageServer" lsp-python-ms-dir))
 
-(setq +python/ms-python-language-server-dir
-      (expand-file-name "python-language-server" user-emacs-directory))
+  (use-package lsp-python-ms
+    :if (file-executable-p lsp-python-ms-executable)
+    :after lsp-mode
+    :quelpa ((lsp-python-ms :fetcher github :repo "andrew-christianson/lsp-python-ms")))
 
-;; for dev build of language server
-(setq lsp-python-ms-dir
-      (expand-file-name "output/bin/Release/" +python/ms-python-language-server-dir))
+  (add-hook 'python-mode-hook 'lsp)
 
-;; for executable of language server, if it's not symlinked on your PATH
-(setq lsp-python-ms-executable
-      (expand-file-name "Microsoft.Python.LanguageServer.LanguageServer" lsp-python-ms-dir))
-
-(use-package lsp-python-ms
-  :if (file-executable-p lsp-python-ms-executable)
-  :after lsp-mode
-  :quelpa ((lsp-python-ms :fetcher github :repo "andrew-christianson/lsp-python-ms")))
-
-(add-hook 'python-mode-hook 'lsp)
+  (use-package dap-python
+    :after (lsp-mode dap-mode)))
 
 (defun +python/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode
@@ -141,6 +137,12 @@
   (switch-to-buffer-other-window "*compilation*")
   (end-of-buffer)
   (evil-normal-state))
+
+(setq python-indent-offset 2)
+
+(with-eval-after-load 'python
+  (+python/python-setup-shell)
+  (+python/set-leader-keys))
 
 
 (provide 'init-python)
