@@ -40,6 +40,7 @@
 ;; Theme
 (use-package doom-themes
   :ensure t
+  :if (display-graphic-p)
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
