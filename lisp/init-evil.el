@@ -50,8 +50,7 @@
   :ensure t
   :config
   (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
-  (with-eval-after-load 'ediff (evil-collection-init 'ediff))
-  (with-eval-after-load 'imenu-list (evil-collection-init 'imenu-list)))
+  (with-eval-after-load 'ediff (evil-collection-init 'ediff)))
 
 ;; https://github.com/VanLaser/evil-nl-break-undo
 ;; It means that, for example, after you write an entire paragraph in insert state,
@@ -63,38 +62,39 @@
   :hook ((text-mode prog-mode) . evil-nl-break-undo-mode))
 
 (with-eval-after-load 'evil
-  ;; message-buffer-mode config
-  ;; (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window)
-
-  ;; compilation-mode config
-  (defun +evil/compilation-mode-config ()
-    (define-key compilation-mode-map "g" nil)
-    (define-key compilation-mode-map "gr" 'recompile)
-    (define-key compilation-mode-map "h" nil)
-    (define-key compilation-mode-map "H" 'describe-mode)
-    (evil-set-initial-state 'compilation-mode 'normal)
-    (evil-define-key 'normal compilation-mode-map
-      "gr" 'recompile
-      "H" 'describe-mode)
-    (evil-define-key 'motion compilation-mode-map "h" 'evil-backward-char))
-  (add-hook 'compilation-mode-hook #'+evil/compilation-mode-config)
-
-  ;; process-menu-mode config
-  (defun +evil/process-menu-mode-config ()
-    (evil-define-key 'normal process-menu-mode-map
-      "S" 'tabulated-list-sort
-      "d" 'process-menu-delete-process
-      "g" 'revert-buffer
-      "?" 'discribe-mode
-      "q" 'quit-window))
-  (add-hook 'process-menu-mode-hook #'+evil/process-menu-mode-config)
+  ;; evil key bindings for some emacs built-in packages
 
   ;; package-menu-mode-map have higher priority than evil key bingdings
   (with-eval-after-load 'package
     (evil-set-initial-state 'package-menu-mode 'normal)
     (evil-make-overriding-map package-menu-mode-map 'normal)
-    (add-hook 'package-menu-mode-hook #'evil-normalize-keymaps)))
+    ;; (add-hook 'package-menu-mode-hook #'evil-normalize-keymaps)
+    )
+
+  ;; message-buffer-mode evil key bindings
+  (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window)
+
+  ;; compilation-mode evil key bindings
+  (with-eval-after-load 'compile
+    (evil-set-initial-state 'compilation-mode 'normal)
+    (evil-define-key 'normal compilation-mode-map
+      "h" 'evil-backward-char
+      "gg" 'evil-goto-first-line
+      "gr" 'recompile))
+
+  ;; evil keybindings for simple package
+  (with-eval-after-load 'simple
+    (evil-set-initial-state 'process-menu-mode 'normal)
+    (evil-make-overriding-map process-menu-mode-map 'normal)
+
+    (evil-set-initial-state 'special-mode 'normal)
+    (evil-make-overriding-map special-mode-map 'normal))
+
+  (with-eval-after-load 'imenu-list
+    (evil-define-key 'normal imenu-list-major-mode-map
+      "d" 'imenu-list-display-entry
+      "gg" 'evil-goto-first-line
+      "gr" 'imenu-list-refresh)))
 
 
 (provide 'init-evil)
