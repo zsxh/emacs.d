@@ -94,7 +94,16 @@
     (evil-define-key 'normal imenu-list-major-mode-map
       "d" 'imenu-list-display-entry
       "gg" 'evil-goto-first-line
-      "gr" 'imenu-list-refresh)))
+      "gr" 'imenu-list-refresh))
+
+  (with-eval-after-load 'debug
+    (evil-define-key 'normal debugger-mode-map
+      "j" 'evil-next-line
+      "J" 'debugger-jump
+      "h" 'evil-backward-char
+      "?" 'describe-mode
+      "l" 'evil-forward-char
+      "L" 'debugger-list-functions)))
 
 
 (provide 'init-evil)
