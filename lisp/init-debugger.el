@@ -37,9 +37,6 @@
     (dap-ui-mode 1))
   (advice-add 'lsp :after #'+dap/enable)
   :config
-  ;; TODO: find a proper way to load 'cl
-  (when (not (functionp 'first))
-    (require 'cl))
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
               (setq-local company-minimum-prefix-length 0))))
