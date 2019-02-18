@@ -49,7 +49,15 @@
   :after evil
   :ensure t
   :config
-  (with-eval-after-load 'ibuffer (evil-collection-init 'ibuffer))
+  (with-eval-after-load 'ibuffer
+    (evil-collection-init 'ibuffer)
+    (evil-define-key 'normal ibuffer-mode-map
+      "h" 'evil-backward-char
+      "j" 'evil-next-line
+      "k" 'evil-previous-line
+      "l" 'evil-forward-char
+      "gg" 'evil-goto-first-line
+      "G" 'evil-goto-line))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff)))
 
 ;; https://github.com/VanLaser/evil-nl-break-undo

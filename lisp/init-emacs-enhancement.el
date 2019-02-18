@@ -68,7 +68,9 @@
     (evil-define-key 'normal dired-mode-map
       (kbd "SPC") nil
       "," nil
-      "F" 'dired-create-empty-file))
+      "F" 'dired-create-empty-file
+      "gg" 'evil-goto-first-line
+      "G" 'evil-goto-line))
 
   (+funcs/set-leader-keys-for-major-mode
    'dired-mode-map
