@@ -14,7 +14,8 @@
 
 (use-package lsp-java
   :after lsp-mode
-  :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java")))
+  :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
+  :after (require 'cl))
 
 (add-hook 'java-mode-hook 'lsp)
 
