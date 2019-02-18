@@ -16,11 +16,18 @@
   (setq neo-show-hidden-files t)
   :commands neo-global--window-exists-p
   :config
+  (advice-add 'neo-open-file
+              :before (lambda (full-path &optional arg)
+                       (unless (neo-window--minimize-p)
+                         (neotree-stretch-toggle))))
+
   (with-eval-after-load 'evil-collection
     ;; Evil-Keybindings
     (evil-collection-init 'neotree)
     ;; Custom Keybindings
     (evil-define-key 'normal neotree-mode-map
+      "gg" 'evil-goto-first-line
+      "G" 'evil-goto-line
       "h" '+neotree/neotree-collapse-or-up
       "l" '+neotree/neotree-expand
       "K" 'neotree-select-up-node
@@ -28,6 +35,7 @@
       "R" 'neotree-change-root
       "\C-a" 'move-beginning-of-line
       "\C-e" 'move-end-of-line))
+
   (with-eval-after-load 'winum
     ;; window 0 is reserved for file trees
     (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func)))
