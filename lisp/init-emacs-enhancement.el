@@ -37,7 +37,11 @@
                    helpful-command))
       (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist)))
   (with-eval-after-load 'evil
-    (evil-define-key 'normal helpful-mode-map "q" 'quit-window))
+    (evil-define-key 'normal helpful-mode-map
+      "gd" 'evil-goto-definition
+      "gg" 'evil-goto-first-line
+      "h" 'evil-backward-char
+      "q" 'quit-window))
   (when (featurep 'elisp-demos)
     (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)))
 
