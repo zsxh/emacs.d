@@ -39,7 +39,11 @@
   :config
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
-              (setq-local company-minimum-prefix-length 0))))
+              (setq-local company-minimum-prefix-length 0)))
+  (require 'dap-lldb)
+  (require 'dap-java)
+  (advice-add 'dap-java-debug :after (lambda (debug-args) (dap-go-to-output-buffer)))
+  (require 'dap-python))
 
 ;; add minor mode(keybindings) for lsp debug
 (with-eval-after-load 'dap-mode
@@ -62,20 +66,12 @@
 
   (define-global-minor-mode +dap/global-debug-mode +dap/debug-mode
     (lambda ()
-      (when (memq major-mode '(java-mode python-mode))
+      (when (memq major-mode '(java-mode python-mode c-mode c++-mode))
         (+dap/debug-mode))))
 
   (with-eval-after-load 'evil
-    (defun +dap/evil-debug-key-settings ()
-      (evil-define-key 'normal +dap/debug-mode-map
-        "n" 'dap-next
-        "s" 'dap-step-in
-        "o" 'dap-step-out
-        "b" 'dap-breakpoint-toggle
-        "B" 'dap-breakpoint-condition
-        "c" 'dap-continue
-        "C" 'dap-disconnect))
-    (add-hook '+dap/debug-mode-hook #'+dap/evil-debug-key-settings))
+    (evil-set-initial-state '+dap/debug-mode 'normal)
+    (evil-make-overriding-map +dap/debug-mode-map))
 
   (defun +dap/debug-mode-disable (&optional args)
     (when +dap/global-debug-mode

@@ -53,10 +53,7 @@
     :after lsp-mode
     :quelpa ((lsp-python-ms :fetcher github :repo "andrew-christianson/lsp-python-ms")))
 
-  (add-hook 'python-mode-hook 'lsp)
-
-  (use-package dap-python
-    :after (lsp-mode dap-mode)))
+  (add-hook 'python-mode-hook 'lsp))
 
 (defun +python/set-leader-keys ()
   (+funcs/set-leader-keys-for-major-mode

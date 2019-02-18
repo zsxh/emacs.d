@@ -16,11 +16,6 @@
   :after lsp-mode
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java")))
 
-(use-package dap-java
-  :after (lsp-java dap-mode)
-  :config
-  (advice-add 'dap-java-debug :after (lambda (debug-args) (dap-go-to-output-buffer))))
-
 (add-hook 'java-mode-hook 'lsp)
 
 (with-eval-after-load 'cc-mode
