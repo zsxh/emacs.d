@@ -47,6 +47,10 @@
 
 ;; add minor mode(keybindings) for lsp debug
 (with-eval-after-load 'dap-mode
+
+  (defvar +dap/debug-mode-buffers nil
+    "active +dap/debug-mode buffer list")
+
   (defvar +dap/debug-mode-map
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "n") 'dap-next)
@@ -73,15 +77,10 @@
     (evil-set-initial-state '+dap/debug-mode 'normal)
     (evil-make-overriding-map +dap/debug-mode-map))
 
-  (defun +dap/debug-mode-disable (&optional args)
-    (when +dap/global-debug-mode
-      (+dap/global-debug-mode -1)
-      (let ((inhibit-message t))
-        (message "+dap/global-debug-mode disabled"))))
-
   (defun +dap/debug-mode-enable (&optional args)
-    (unless +dap/global-debug-mode
-      (+dap/global-debug-mode)
+    (unless +dap/debug-mode
+      (+dap/debug-mode)
+      (push (current-buffer) +dap/debug-mode-buffers)
       ;; `evil-define-key' for minor mode does not take effect until a state transition
       ;; Issue: https://github.com/emacs-evil/evil/issues/301
       (when (bound-and-true-p evil-mode)
@@ -92,9 +91,19 @@
           (progn
             (let ((cur-state evil-state))
               (evil-change-state 'normal)
-              (evil-change-state cur-state)))))
-      (let ((inhibit-message t))
-        (message "+dap/global-debug-mode enabled"))))
+              (evil-change-state cur-state)))))))
+
+  (defun +dap/debug-mode-disable (&optional args)
+    (when +dap/debug-mode
+      (+dap/debug-mode -1)))
+
+  (defun +dap/debug-mode-disable-all (&optional args)
+    (dolist (cur-buffer +dap/debug-mode-buffers)
+      (with-current-buffer cur-buffer
+        (+dap/debug-mode-disable)))
+    (setq +dap/debug-mode-buffers nil)
+    (let ((inhibit-message t))
+      (message "+dap/debug-mode disable all")))
 
   ;; Manual toggle
   (defun +dap/debug-key-settings--toggle ()
@@ -105,7 +114,9 @@
 
   ;; Auto toggle
   (add-hook 'dap-session-created-hook #'+dap/debug-mode-enable)
-  (add-hook 'dap-terminated-hook #'+dap/debug-mode-disable))
+  (advice-add 'dap--go-to-stack-frame :after (lambda (debug-session stack-frame)
+                                               (+dap/debug-mode-enable)))
+  (add-hook 'dap-terminated-hook #'+dap/debug-mode-disable-all))
 
 
 (provide 'init-debugger)
