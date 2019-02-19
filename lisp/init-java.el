@@ -13,9 +13,10 @@
 (require 'init-language-server)
 
 (use-package lsp-java
-  :after lsp-mode
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
-  :after (require 'cl))
+  :after lsp-mode
+  :preface
+  (require 'cl))
 
 (add-hook 'java-mode-hook 'lsp)
 
