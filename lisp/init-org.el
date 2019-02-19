@@ -29,8 +29,7 @@
   (setq org-default-notes-file (concat org-directory "/gtd/caputure.org"))
 
   ;; Org table font
-  (custom-set-faces
-   '(org-table ((t (:family "Ubuntu Mono derivative Powerline")))))
+  (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
 
   ;; Org block face
   (set-face-background 'org-block "#E0E0E0")
