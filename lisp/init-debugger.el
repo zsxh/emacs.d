@@ -18,13 +18,6 @@
   (with-eval-after-load 'edebug
     (evil-collection-init 'edebug)))
 
-;; Realgud Configs
-(use-package realgud
-  :ensure t
-  :commands (realgud:gdb realgud:ipdb realgud:jdb)
-  :config
-  (with-eval-after-load 'evil-collection
-    (evil-collection-init 'realgud)))
 
 ;;;;;;;;;;;;;; Debug Adapter Protocol for Emacs ;;;;;;;;;;;;;;
 
