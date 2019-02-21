@@ -21,7 +21,7 @@
 
 (defun +common-lisp/sly-config ()
   (+funcs/set-leader-keys-for-major-mode
-   'lisp-mode-map
+   lisp-mode-map
    "'" '(sly-mrepl :which-key "repl")
    "g" '(nil :which-key "goto")
    "gd" '(sly-edit-definition "" :which-key "goto-definition")

@@ -56,18 +56,17 @@ It returns a code string to define local leader keys."
     `(progn
        (general-define-key
         :states 'normal
-        :keymaps ,mode-map
+        :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
         :major-modes t
         :prefix "SPC"
         "m" '(nil :which-key "major")
         ,@m-args)
        (general-define-key
         :states 'normal
-        :keymaps ,mode-map
+        :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
         :major-modes t
         :prefix ","
         ,@args))))
-
 
 (defun +funcs/sudo-edit-current-file ()
   "Sudo edit current file."

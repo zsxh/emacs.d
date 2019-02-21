@@ -154,7 +154,7 @@
 
   ;; major mode keybindings
   (+funcs/set-leader-keys-for-major-mode
-   'org-mode-map
+   org-mode-map
    "a" '(org-agenda :which-key "agenda")
    "b" '(nil :which-key "block")
    "bf" '(+org/babel-result-hide-all :which-key "fold-all-results")

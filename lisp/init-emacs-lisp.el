@@ -23,7 +23,8 @@
   :hook (emacs-lisp-mode . (lambda ()
                              (setq-local company-backends '(company-capf company-files))))
   :config
-  (dolist (mode-map (list 'emacs-lisp-mode-map 'lisp-interaction-mode-map))
+  ;; Note: '(emacs-lisp-mode-map) or (list 'emacs-lisp-mode-map)
+  (dolist (mode-map '(emacs-lisp-mode-map lisp-interaction-mode-map))
     (+funcs/set-leader-keys-for-major-mode
      mode-map
      "'" '(ielm :which-key "ielm")

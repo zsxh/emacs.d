@@ -21,23 +21,26 @@
 (add-hook 'java-mode-hook 'lsp)
 
 (with-eval-after-load 'cc-mode
+
   (+funcs/set-leader-keys-for-major-mode
-   'java-mode-map
+   java-mode-map
    "c" '(+java/compile :which-key "compile")
-   "d" '(nil :which-key "debug")
-   "db" '(dap-breakpoint-toggle :which-key "breakpoint")
-   "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
-   "dr" '(dap-java-debug :which-key "debug")
-   "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
-   "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
-   "dk" '(+dap/debug-key-settings--toggle :which-key "toggle-debug-keybindings")
-   "i" '(nil :which-key "implement")
-   "ic" '(lsp-java-add-import :which-key "import-class")
-   "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
-   "j" '(+java/set-jdk :which-key "set-jdk")
-   "r" '(nil :which-key "run")
-   "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
-   "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
+   "j" '(+java/set-jdk :which-key "set-jdk"))
+
+  (+language-server/set-common-leader-keys java-mode-map)
+
+  (if (eq emacs-lsp-client 'lsp-mode)
+      (+funcs/set-leader-keys-for-major-mode
+       java-mode-map
+       "dr" '(dap-java-debug :which-key "debug")
+       "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
+       "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
+       "i" '(nil :which-key "implement")
+       "ic" '(lsp-java-add-import :which-key "import-class")
+       "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
+       "r" '(nil :which-key "run")
+       "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
+       "rT" '(dap-java-run-test-class :which-key "run-junit-class"))))
 
 (defvar jdks-installed-dir "/usr/local/"
   "JDKs intalled directory.")

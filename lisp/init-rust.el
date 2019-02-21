@@ -28,7 +28,7 @@
   :after rust-mode
   :config
   (+funcs/set-leader-keys-for-major-mode
-   'rust-mode-map
+   rust-mode-map
    "c" '(nil :which-key "cargo")
    "c." '(cargo-process-repeat :which-key "repeat-last-command")
    "cC" '(cargo-process-clean :which-key "clean")

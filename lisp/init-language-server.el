@@ -22,55 +22,55 @@
   :hook (go-mode . lsp))
 
 ;;;;;;;;;;;;;; Language Common Leader Keys ;;;;;;;;;;;;;;
-(with-eval-after-load 'eglot
-  (advice-add 'eglot-ensure :after '+language-server/set-leader-keys))
-(with-eval-after-load 'lsp-mode
-  (advice-add 'lsp :after '+language-server/set-leader-keys))
+(defvar-local emacs-lsp-client 'lsp-mode
+  "'lsp-mode or 'eglot")
 
-(defun +language-server/set-leader-keys (&rest args)
-  (let ((major-mode-map (intern (concat (symbol-name major-mode) "-map"))))
-    (+language-server/set-normal-leader-keys major-mode-map)
-    (+language-server/set-synax-check-leader-keys major-mode-map)))
+(defmacro +language-server/set-common-leader-keys (mode-map)
+  `(progn
+    (if (and (eq emacs-lsp-client 'lsp-mode)
+             (not lsp-prefer-flymake))
+        ;; flycheck
+        (+funcs/set-leader-keys-for-major-mode
+         ,mode-map
+         "e" '(nil :which-key "error")
+         "en" '(flycheck-next-error :which-key "next-error")
+         "ep" '(flycheck-previous-error :which-key "prev-error"))
+      ;; flymake
+      (+funcs/set-leader-keys-for-major-mode
+       ,mode-map
+       "e" '(nil :which-key "error")
+       "en" '(flymake-goto-next-error :which-key "next-error")
+       "ep" '(flymake-goto-prev-error :which-key "prev-error")))
 
-(defun +language-server/set-synax-check-leader-keys (major-mode-map)
-  (cond ((or
-          (bound-and-true-p flymake-mode)
-          (not (bound-and-true-p lsp-mode)))
-         (+funcs/set-leader-keys-for-major-mode
-          major-mode-map
-          "e" '(nil :which-key "error")
-          "en" '(flymake-goto-next-error :which-key "next-error")
-          "ep" '(flymake-goto-prev-error :which-key "prev-error")))
-        ((bound-and-true-p flycheck-mode)
-         (with-eval-after-load 'flycheck
-           (+funcs/set-leader-keys-for-major-mode
-            major-mode-map
-            "e" '(nil :which-key "error")
-            "en" '(flycheck-next-error :which-key "next-error")
-            "ep" '(flycheck-previous-error :which-key "prev-error"))))
-        (t (message "[error] language server requires 'flymake or 'flycheck."))))
-
-(defun +language-server/set-normal-leader-keys (major-mode-map)
-  (cond ((bound-and-true-p lsp-mode)
-         (+funcs/set-leader-keys-for-major-mode
-          major-mode-map
-          "A" '(lsp-execute-code-action :which-key "code-action")
-          "f" '(lsp-format-buffer :which-key "format")
-          "g" '(nil :which-key "go")
-          "gd" '(lsp-find-definition :which-key "find-definitions")
-          "gi" '(lsp-find-implementation :which-key "find-implementation")
-          "gr" '(lsp-find-references :which-key "find-references")
-          "R" '(lsp-rename :which-key "rename")))
-        ((featurep 'eglot)
-         (+funcs/set-leader-keys-for-major-mode
-          major-mode-map
-          "A" '(eglot-code-actions :which-key "code-action")
-          "f" '(eglot-format :which-key "format")
-          "g" '(nil :which-key "go")
-          "gd" '(xref-find-definitions :which-key "find-definitions")
-          "gr" '(xref-find-references :which-key "find-references")
-          "R" '(eglot-rename :which-key "rename")))
-        (t (message "[error] language server requires 'lsp-mode or 'eglot"))))
+    (if (eq emacs-lsp-client 'lsp-mode)
+        ;; lsp-mode
+        (+funcs/set-leader-keys-for-major-mode
+        ,mode-map
+         "A" '(lsp-execute-code-action :which-key "code-action")
+         "d" '(nil :which-key "debug")
+         "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
+         "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
+         "dk" '(+dap/debug-key-settings--toggle :which-key "toggle-debug-keybindings")
+         "dr" '(dap-debug :which-key "dap-debug")
+         "du" '(nil :which-key "ui")
+         "dul" '(dap-ui-locals :which-key "locals")
+         "dur" '(dap-ui-repl :which-key "repl")
+         "dus" '(dap-ui-sessions :which-key "sessions")
+         "f" '(lsp-format-buffer :which-key "format")
+         "g" '(nil :which-key "go")
+         "gd" '(lsp-find-definition :which-key "find-definitions")
+         "gi" '(lsp-find-implementation :which-key "find-implementation")
+         "gr" '(lsp-find-references :which-key "find-references")
+         "R" '(lsp-rename :which-key "rename"))
+      ;; eglot
+      (+funcs/set-leader-keys-for-major-mode
+       ,mode-map
+       "A" '(eglot-code-actions :which-key "code-action")
+       "f" '(eglot-format :which-key "format")
+       "g" '(nil :which-key "go")
+       "gd" '(xref-find-definitions :which-key "find-definitions")
+       "gr" '(xref-find-references :which-key "find-references")
+       "R" '(eglot-rename :which-key "rename")))))
 
 ;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
 
@@ -85,10 +85,12 @@
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
   :commands lsp
+  :init
+  (setq lsp-prefer-flymake nil)
   :config
   (require 'lsp-clients)
   (setq lsp-auto-guess-root t
-        lsp-prefer-flymake nil
+        ;; lsp-prefer-flymake nil
         lsp-inhibit-message t
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t)

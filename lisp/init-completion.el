@@ -56,7 +56,7 @@
     :ensure t)
   (with-eval-after-load 'snippet
     (+funcs/set-leader-keys-for-major-mode
-     'snippet-mode-map
+     snippet-mode-map
      "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet"))))
 
 ;; replace `company-quickhelp' with `company-box-doc'
