@@ -45,11 +45,11 @@
   (advice-add 'dap-java-debug :after (lambda (debug-args) (dap-go-to-output-buffer)))
   (require 'dap-python))
 
-;; add minor mode(keybindings) for lsp debug
+;; set up keybindings for dap-debugger
 (with-eval-after-load 'dap-mode
 
-  (defvar +dap/debug-mode-buffers nil
-    "active +dap/debug-mode buffer list")
+  (defvar +dap/debug-mode-session-buffers (make-hash-table :test 'equal)
+    "List of buffers that are associated with the session")
 
   (defvar +dap/debug-mode-map
     (let ((map (make-sparse-keymap)))
@@ -77,10 +77,9 @@
     (evil-set-initial-state '+dap/debug-mode 'normal)
     (evil-make-overriding-map +dap/debug-mode-map))
 
-  (defun +dap/debug-mode-enable (&optional args)
+  (defun +dap/debug-mode-enable ()
     (unless +dap/debug-mode
       (+dap/debug-mode)
-      (push (current-buffer) +dap/debug-mode-buffers)
       ;; `evil-define-key' for minor mode does not take effect until a state transition
       ;; Issue: https://github.com/emacs-evil/evil/issues/301
       (when (bound-and-true-p evil-mode)
@@ -93,17 +92,29 @@
               (evil-change-state 'normal)
               (evil-change-state cur-state)))))))
 
-  (defun +dap/debug-mode-disable (&optional args)
+  (defun +dap/debug-mode-disable ()
     (when +dap/debug-mode
       (+dap/debug-mode -1)))
 
-  (defun +dap/debug-mode-disable-all (&optional args)
-    (dolist (cur-buffer +dap/debug-mode-buffers)
-      (with-current-buffer cur-buffer
-        (+dap/debug-mode-disable)))
-    (setq +dap/debug-mode-buffers nil)
-    (let ((inhibit-message t))
-      (message "+dap/debug-mode disable all")))
+  (defun +dap/enable-and-mark (&optional debug-session)
+    (unless +dap/debug-mode
+      (+dap/debug-mode-enable)
+      (let* ((debug-session (if debug-session debug-session (dap--cur-session)))
+             (session-name (dap--debug-session-name debug-session))
+             (buffer-list (gethash session-name +dap/debug-mode-session-buffers)))
+        (push (current-buffer) buffer-list)
+        (puthash session-name buffer-list +dap/debug-mode-session-buffers))))
+
+  (defun +dap/disable-and-unmark (&optional debug-session)
+    (let* ((debug-session (if debug-session debug-session (dap--cur-session)))
+           (session-name (dap--debug-session-name debug-session))
+           (buffer-list (gethash session-name +dap/debug-mode-session-buffers))
+           (inhibit-message t))
+      (dolist (cur-buffer buffer-list)
+        (with-current-buffer cur-buffer
+          (+dap/debug-mode-disable)))
+      (remhash session-name +dap/debug-mode-session-buffers)
+      (message "+dap/debug-mode disabled :session %s" session-name)))
 
   ;; Manual toggle
   (defun +dap/debug-key-settings--toggle ()
@@ -113,10 +124,12 @@
       (+dap/debug-mode-enable)))
 
   ;; Auto toggle
-  (add-hook 'dap-session-created-hook #'+dap/debug-mode-enable)
-  (advice-add 'dap--go-to-stack-frame :after (lambda (debug-session stack-frame)
-                                               (+dap/debug-mode-enable)))
-  (add-hook 'dap-terminated-hook #'+dap/debug-mode-disable-all))
+  ;; somethings wrong with dap-session-create-hook's argument 'debug-session', mark buffer when dap--go-to-stack-frame instead
+  ;; (add-hook 'dap-session-created-hook #'+dap/debug-mode-enable)
+  (advice-add 'dap--go-to-stack-frame :after
+              (lambda (debug-session stack-frame)
+                (+dap/enable-and-mark debug-session)))
+  (add-hook 'dap-terminated-hook #'+dap/disable-and-unmark))
 
 
 (provide 'init-debugger)
