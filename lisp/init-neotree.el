@@ -18,8 +18,8 @@
   :config
   (advice-add 'neo-open-file
               :before (lambda (full-path &optional arg)
-                       (unless (neo-window--minimize-p)
-                         (neotree-stretch-toggle))))
+                        (unless (neo-window--minimize-p)
+                          (neotree-stretch-toggle))))
 
   (with-eval-after-load 'evil-collection
     ;; Evil-Keybindings

@@ -42,7 +42,7 @@
     (interactive)
     (eaf-open buffer-file-name))
   (+funcs/set-leader-keys-for-major-mode
-   'markdown-mode-map
+   markdown-mode-map
    "y" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
    "v" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
    "p" '(eaf-markdown-previewer :which-key "previewer")

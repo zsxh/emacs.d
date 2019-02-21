@@ -49,6 +49,7 @@
   :after evil
   :ensure t
   :config
+  ;; (evil-collection-init)
   (with-eval-after-load 'ibuffer
     (evil-collection-init 'ibuffer)
     (evil-define-key 'normal ibuffer-mode-map
@@ -58,7 +59,8 @@
       "l" 'evil-forward-char
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line))
-  (with-eval-after-load 'ediff (evil-collection-init 'ediff)))
+  (with-eval-after-load 'ediff (evil-collection-init 'ediff))
+  (with-eval-after-load 'edebug (evil-collection-init 'edebug)))
 
 ;; https://github.com/VanLaser/evil-nl-break-undo
 ;; It means that, for example, after you write an entire paragraph in insert state,
@@ -106,6 +108,7 @@
 
   (with-eval-after-load 'debug
     (evil-define-key 'normal debugger-mode-map
+      (kbd "<return>") 'backtrace-help-follow-symbol
       "j" 'evil-next-line
       "J" 'debugger-jump
       "h" 'evil-backward-char

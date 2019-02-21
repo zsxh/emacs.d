@@ -10,15 +10,6 @@
 
 ;;; Code:
 
-;; Debug/edebug evil keybindings
-(with-eval-after-load 'evil-collection
-  (with-eval-after-load 'debug
-    (evil-collection-init 'debug)
-    (evil-define-key 'normal debugger-mode-map (kbd "<return>") 'backtrace-help-follow-symbol))
-  (with-eval-after-load 'edebug
-    (evil-collection-init 'edebug)))
-
-
 ;;;;;;;;;;;;;; Debug Adapter Protocol for Emacs ;;;;;;;;;;;;;;
 
 (use-package dap-mode

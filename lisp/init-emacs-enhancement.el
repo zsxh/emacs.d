@@ -74,10 +74,12 @@
       "," nil
       "F" 'dired-create-empty-file
       "gg" 'evil-goto-first-line
-      "G" 'evil-goto-line))
+      "G" 'evil-goto-line
+      "h" 'evil-backward-char
+      "l" 'evil-forward-char))
 
   (+funcs/set-leader-keys-for-major-mode
-   'dired-mode-map
+   dired-mode-map
    "/" '(dired-narrow :which-key "dired-narrow")
    "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
 
@@ -88,7 +90,7 @@
 ;; Editable Dired mode configs
 (with-eval-after-load 'wdired
   (+funcs/set-leader-keys-for-major-mode
-   'wdired-mode-map
+   wdired-mode-map
    "c" '(wdired-finish-edit :which-key "finish edit")
    "k" '(wdired-abort-changes :which-key "abort changes")
    "q" '(wdired-exit :which-key "exit"))
@@ -166,7 +168,7 @@
   :defer t
   :preface
   (defun +eww/toggle-images-display ()
-  "Toggle whether images are loaded and reload the current page from cache."
+    "Toggle whether images are loaded and reload the current page from cache."
     (interactive)
     (setq-local shr-inhibit-images (not shr-inhibit-images))
     (eww-reload t)
@@ -180,8 +182,8 @@
                       (setq-local shr-inhibit-images t)))
   :config
   (when (featurep 'evil)
-    (require 'evil-collection)
-    (evil-collection-init 'eww)
+    (with-eval-after-load 'evil-collection
+      (evil-collection-init 'eww))
     (evil-define-key 'normal eww-mode-map "gv" #'+eww/toggle-images-display)
     (evil-define-key 'normal eww-link-keymap "gv" #'+eww/toggle-images-display)))
 
