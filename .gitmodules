@@ -4,9 +4,6 @@
 [submodule "submodules/emacs-application-framework"]
 	path = submodules/emacs-application-framework
 	url = https://github.com/manateelazycat/emacs-application-framework
-[submodule "submodules/emacs-libvterm"]
-	path = submodules/emacs-libvterm
-	url = https://github.com/akermu/emacs-libvterm.git
 [submodule "submodules/awesome-pair"]
 	path = submodules/awesome-pair
 	url = https://github.com/manateelazycat/awesome-pair

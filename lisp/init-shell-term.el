@@ -34,22 +34,31 @@
     (call-interactively 'shell-pop)))
 
 ;; HIGHLY RECOMMENDED
-;; require libvterm and emacs-livterm, build it yourself
 ;; https://github.com/akermu/emacs-libvterm
+;; On ArchLinux or Manjaro:
+;; sudo pacman -S libvterm
+;;
+;; Compile and Build emacs-libvterm module
+;; it take times because cmake will automatically download some requied libraries from the internet.
+;; M-x vterm-module-compile
+;; or
+;; You can compile and install the module yourself.
+;; cd ~/.emacs.d/elpa/vterm-<version>
+;; mkdir -p build
+;; cd build
+;; cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+;; make
 (use-package vterm
-  :if (file-executable-p (concat user-emacs-directory "submodules/emacs-libvterm/vterm-module.so"))
+  :quelpa (vterm :fetcher github :repo "akermu/emacs-libvterm"
+                 :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
+  :if (and (executable-find "vterm-ctrl")
+           (executable-find "make")
+           (executable-find "cmake")
+           (fboundp 'module-load))
   :commands (vterm vterm-other-window)
+  :preface (setq vterm-install t)
   :config
   (setf (elt ansi-color-names-vector 0) (doom-color 'bg))
-  ;; FIXME: Error during redisplay: (vterm--window-size-change #<window 8 on *vterm-1*>) signaled (error "Window is on a different frame")
-  (defun vterm--delayed-redraw(buffer)
-    (if (buffer-live-p buffer)
-        (with-current-buffer buffer
-          (let ((inhibit-redisplay t)
-                (inhibit-read-only t))
-            (when vterm--term
-              (vterm--redraw vterm--term)))
-          (setq vterm--redraw-timer nil))))
   (defun vterm-kill-buffer-after-exit (buf)
     (when (buffer-live-p buf)
       (kill-buffer buf)))
