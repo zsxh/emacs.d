@@ -25,12 +25,25 @@
   ;; use timer to improve the ivy-read performance,
   ;; see https://github.com/abo-abo/swiper/issues/1218
   (setq ivy-dynamic-exhibit-delay-ms 250)
+
+  ;; initial input ":" to match pinyin
+  (+ivy/pinyin-config)
+
   ;; ivy's fuzzy matcher
   (with-eval-after-load 'flx
+    (defun ivy--pinyin-regex (str)
+      (or (pinyin-to-utf8 str)
+          (ivy--regex-plus str)))
+
+    (defun ivy--pinyin-regex-fuzzy (str)
+      (or (pinyin-to-utf8 str)
+          (ivy--regex-fuzzy str)))
+
     (setq ivy-re-builders-alist
           '((ivy-switch-buffer . ivy--regex-plus)
-            (swiper . ivy--regex-plus)
-            (t . ivy--regex-fuzzy)))
+            (swiper . ivy--pinyin-regex)
+            (t . ivy--pinyin-regex-fuzzy)))
+
     ;; no need with initial "^", since using fuzzy
     (setq ivy-initial-inputs-alist nil)))
 
@@ -91,6 +104,39 @@
   :ensure t
   :commands ivy-xref-show-xrefs
   :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
+(defun +ivy/pinyin-config ()
+  ;; Contribute pengpengxp
+  ;; https://emacs-china.org/t/ivy-read/2432/3
+  (use-package pinyinlib
+    :ensure t
+    :commands pinyinlib-build-regexp-string)
+
+  (defun my-pinyinlib-build-regexp-string (str)
+    (progn
+      (cond ((equal str ".*")
+             ".*")
+            (t
+             (pinyinlib-build-regexp-string str t)))))
+
+  (defun my-pinyin-regexp-helper (str)
+    (cond ((equal str " ")
+           ".*")
+          ((equal str "")
+           nil)
+          (t
+           str)))
+
+  (defun pinyin-to-utf8 (str)
+    (cond ((equal 0 (length str))
+           nil)
+          ((equal (substring str 0 1) ":")
+           (mapconcat 'my-pinyinlib-build-regexp-string
+                      (remove nil (mapcar 'my-pinyin-regexp-helper (split-string
+                                                                    (replace-regexp-in-string ":" "" str) "")))
+                      ""))
+          nil)))
+
 
 (provide 'init-ivy)
 
