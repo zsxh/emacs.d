@@ -29,23 +29,29 @@
   ;; initial input ":" to match pinyin
   (+ivy/pinyin-config)
 
+  (defun ivy--pinyin-regex (str)
+    (or (pinyin-to-utf8 str)
+        (ivy--regex-plus str)))
+
+  (setq ivy-re-builders-alist
+        '((ivy-switch-buffer . ivy--regex-plus)
+          (swiper . ivy--pinyin-regex)
+          (t . ivy--pinyin-regex)))
+
   ;; ivy's fuzzy matcher
-  (with-eval-after-load 'flx
-    (defun ivy--pinyin-regex (str)
-      (or (pinyin-to-utf8 str)
-          (ivy--regex-plus str)))
+  ;; (with-eval-after-load 'flx
+  ;;   (defun ivy--pinyin-regex-fuzzy (str)
+  ;;     (or (pinyin-to-utf8 str)
+  ;;         (ivy--regex-fuzzy str)))
 
-    (defun ivy--pinyin-regex-fuzzy (str)
-      (or (pinyin-to-utf8 str)
-          (ivy--regex-fuzzy str)))
+  ;;   (setq ivy-re-builders-alist
+  ;;         '((ivy-switch-buffer . ivy--regex-plus)
+  ;;           (swiper . ivy--pinyin-regex)
+  ;;           (t . ivy--pinyin-regex-fuzzy)))
 
-    (setq ivy-re-builders-alist
-          '((ivy-switch-buffer . ivy--regex-plus)
-            (swiper . ivy--pinyin-regex)
-            (t . ivy--pinyin-regex-fuzzy)))
-
-    ;; no need with initial "^", since using fuzzy
-    (setq ivy-initial-inputs-alist nil)))
+  ;;   ;; no need with initial "^", since using fuzzy
+  ;;   (setq ivy-initial-inputs-alist nil))
+  )
 
 ;; swiper
 (use-package swiper
