@@ -17,6 +17,7 @@
 (use-package projectile
   :ensure t
   :hook (after-init . projectile-mode)
+  :bind ("C-<tab>" . projectile-next-project-buffer)
   :config
   ;; switch project to project root dir instead of project file
   (setq projectile-switch-project-action #'projectile-dired)
@@ -33,14 +34,12 @@
          (file-name-extension name))
         (equal (buffer-name (current-buffer)) name)))
 
-  (defun +project/projectile-switch-buffer ()
-    "Switch to a project buffer."
-    (interactive)
-    (switch-to-buffer
-     (projectile-completing-read
-      "Switch to buffer: "
-      (cl-remove-if #'+project/projectile-buffer-filter
-                    (projectile-project-buffer-names))))))
+  (defun +project/projectile-buffer-filter-function (buffers)
+    (cl-remove-if
+     (lambda (b) (+project/projectile-buffer-filter (buffer-name b)))
+     buffers))
+
+  (setq projectile-buffers-filter-function #'+project/projectile-buffer-filter-function))
 
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 
