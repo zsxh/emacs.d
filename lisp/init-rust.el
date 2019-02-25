@@ -25,8 +25,10 @@
 
 (use-package cargo
   :ensure t
-  :after rust-mode
-  :config
+  :after rust-mode)
+
+(with-eval-after-load 'rust-mode
+  (+language-server/set-common-leader-keys rust-mode-map)
   (+funcs/set-leader-keys-for-major-mode
    rust-mode-map
    "c" '(nil :which-key "cargo")
