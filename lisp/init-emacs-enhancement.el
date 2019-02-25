@@ -181,11 +181,19 @@
   :hook (eww-mode . (lambda ()
                       (setq-local shr-inhibit-images t)))
   :config
-  (when (featurep 'evil)
+  (with-eval-after-load 'evil
     (with-eval-after-load 'evil-collection
       (evil-collection-init 'eww))
-    (evil-define-key 'normal eww-mode-map "gv" #'+eww/toggle-images-display)
-    (evil-define-key 'normal eww-link-keymap "gv" #'+eww/toggle-images-display)))
+    (evil-define-key 'normal eww-mode-map
+      "b" 'evil-backward-word-begin
+      "w" 'evil-forward-word-begin
+      "gg" 'evil-goto-first-line
+      "gv" '+eww/toggle-images-display
+      "h" 'evil-backward-char
+      "l" 'evil-forward-char
+      "v" 'evil-visual-char
+      "0" 'evil-digit-argument-or-evil-beginning-of-line)
+    (evil-define-key 'normal eww-link-keymap "gv" '+eww/toggle-images-display)))
 
 
 (provide 'init-emacs-enhancement)
