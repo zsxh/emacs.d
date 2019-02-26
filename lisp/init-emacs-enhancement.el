@@ -189,10 +189,12 @@
       "w" 'evil-forward-word-begin
       "gg" 'evil-goto-first-line
       "gv" '+eww/toggle-images-display
+      "G" 'evil-goto-line
       "h" 'evil-backward-char
       "l" 'evil-forward-char
       "v" 'evil-visual-char
       "0" 'evil-digit-argument-or-evil-beginning-of-line)
+
     (evil-define-key 'normal eww-link-keymap "gv" '+eww/toggle-images-display)))
 
 
