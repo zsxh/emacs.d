@@ -31,7 +31,7 @@
     (or (string-prefix-p "*" name)
         (and
          (string-prefix-p "magit" name)
-         (file-name-extension name))
+         (not (file-name-extension name)))
         (equal (buffer-name (current-buffer)) name)))
 
   (defun +project/projectile-buffer-filter-function (buffers)
