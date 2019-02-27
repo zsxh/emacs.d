@@ -48,12 +48,21 @@
               (progn
                 (let ((key-desc (key-description (make-vector 1 last-command-event)))
                       (target-desc nil))
-                  (when (member key-desc '("j" "k"))
+                  (when (member key-desc '("j" "k" "T"))
                     (cond
                      ((string-equal key-desc "j")
                       (eaf-call "send_key" buffer-id "<down>"))
                      ((string-equal key-desc "k")
-                      (eaf-call "send_key"  buffer-id "<up>")))
+                      (eaf-call "send_key" buffer-id "<up>"))
+                     ((string-equal key-desc "T")
+                      (progn
+                        (let ((url buffer-url))
+                          (dolist (buffer (buffer-list))
+                            (with-current-buffer buffer
+                              (when (derived-mode-p 'eww-mode)
+                                (if (equal url (plist-get eww-data :url))
+                                    (switch-to-buffer buffer)
+                                  (eww url)))))))))
                     (setq last-command-event nil)))))
 
              ;; for pdfviewer
