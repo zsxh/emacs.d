@@ -61,7 +61,7 @@
                                (eww-buffer (car (-filter (lambda (buffer)
                                                            (with-current-buffer buffer
                                                              (and (derived-mode-p 'eww-mode)
-                                                                  (equal "https:" (plist-get eww-data :url)))))
+                                                                  (equal url (plist-get eww-data :url)))))
                                                          (buffer-list)))))
                           (if eww-buffer
                               (switch-to-buffer eww-buffer)
