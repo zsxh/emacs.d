@@ -23,11 +23,16 @@
   :config
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
-              (setq-local company-minimum-prefix-length 0)))
+              (setq-local company-minimum-prefix-length 1)))
   (require 'dap-lldb)
+  (require 'dap-python)
   (require 'dap-java)
-  (advice-add 'dap-java-debug :after (lambda (debug-args) (dap-go-to-output-buffer)))
-  (require 'dap-python))
+  (defun +dap/my-display-output-buffer (debug-args)
+    (if (hash-table-empty-p (dap--get-breakpoints))
+        (switch-to-buffer-other-window (dap--debug-session-output-buffer (dap--cur-session-or-die)))
+      ;; (dap-go-to-output-buffer)
+      ))
+  (advice-add 'dap-java-debug :after '+dap/my-display-output-buffer))
 
 ;; set up keybindings for dap-debugger
 (with-eval-after-load 'dap-mode
