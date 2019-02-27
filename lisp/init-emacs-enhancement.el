@@ -186,7 +186,16 @@
     "Browse the current URL with an eaf."
     (interactive)
     (eaf-open-url (or url (plist-get eww-data :url))))
+
+  (defun +eww/browse-at-point-with-external-browser ()
+    (interactive)
+    (let ((url (eww-suggested-uris)))
+      (if (null url)
+          (user-error "No link at point")
+        (funcall shr-external-browser (if (consp url) (car url) url)))))
+
   (define-key eww-mode-map (kbd "T") '+eww/browse-with-eaf)
+  (define-key eww-mode-map (kbd "&") '+eww/browse-at-point-with-external-browser)
 
   (with-eval-after-load 'evil
     (with-eval-after-load 'evil-collection
@@ -200,7 +209,8 @@
       "h" 'evil-backward-char
       "l" 'evil-forward-char
       "v" 'evil-visual-char
-      "0" 'evil-digit-argument-or-evil-beginning-of-line)
+      "0" 'evil-digit-argument-or-evil-beginning-of-line
+      "&" '+eww/browse-at-point-with-external-browser)
 
     (evil-define-key 'normal eww-link-keymap "gv" '+eww/toggle-images-display)))
 
