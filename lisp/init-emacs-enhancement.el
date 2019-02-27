@@ -30,12 +30,13 @@
          ("C-h v" . helpful-variable))
   :config
   (with-eval-after-load 'ivy
-    (dolist (cmd '(helpful-callable
-                   helpful-variable
-                   helpful-function
-                   helpful-macro
-                   helpful-command))
-      (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist)))
+    (unless (featurep 'flx)
+      (dolist (cmd '(helpful-callable
+                     helpful-variable
+                     helpful-function
+                     helpful-macro
+                     helpful-command))
+        (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist))))
   (with-eval-after-load 'evil
     (evil-define-key 'normal helpful-mode-map
       "gd" 'evil-goto-definition
