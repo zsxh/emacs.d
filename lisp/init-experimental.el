@@ -21,6 +21,7 @@
     (interactive)
     (eaf-open "eaf-qutebrowser"))
   :config
+  (require 'dash)
   (when personal-eaf-grip-token
     (setq eaf-grip-token personal-eaf-grip-token))
 
@@ -56,13 +57,15 @@
                       (eaf-call "send_key" buffer-id "<up>"))
                      ((string-equal key-desc "T")
                       (progn
-                        (let ((url buffer-url))
-                          (dolist (buffer (buffer-list))
-                            (with-current-buffer buffer
-                              (when (derived-mode-p 'eww-mode)
-                                (if (equal url (plist-get eww-data :url))
-                                    (switch-to-buffer buffer)
-                                  (eww url)))))))))
+                        (let* ((url buffer-url)
+                               (eww-buffer (car (-filter (lambda (buffer)
+                                                           (with-current-buffer buffer
+                                                             (and (derived-mode-p 'eww-mode)
+                                                                  (equal "https:" (plist-get eww-data :url)))))
+                                                         (buffer-list)))))
+                          (if eww-buffer
+                              (switch-to-buffer eww-buffer)
+                            (eww url))))))
                     (setq last-command-event nil)))))
 
              ;; for pdfviewer
