@@ -181,6 +181,12 @@
   :hook (eww-mode . (lambda ()
                       (setq-local shr-inhibit-images t)))
   :config
+  (defun +eww/browse-with-eaf (&optional url)
+    "Browse the current URL with an eaf."
+    (interactive)
+    (eaf-open-url (or url (plist-get eww-data :url))))
+  (define-key eww-mode-map (kbd "T") '+eww/browse-with-eaf)
+
   (with-eval-after-load 'evil
     (with-eval-after-load 'evil-collection
       (evil-collection-init 'eww))
