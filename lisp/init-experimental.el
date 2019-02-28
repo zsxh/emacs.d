@@ -49,24 +49,28 @@
               (progn
                 (let ((key-desc (key-description (make-vector 1 last-command-event)))
                       (target-desc nil))
-                  (when (member key-desc '("j" "k" "T"))
-                    (cond
-                     ((string-equal key-desc "j")
-                      (eaf-call "send_key" buffer-id "<down>"))
-                     ((string-equal key-desc "k")
-                      (eaf-call "send_key" buffer-id "<up>"))
-                     ((string-equal key-desc "T")
-                      (progn
-                        (let* ((url buffer-url)
-                               (eww-buffer (car (-filter (lambda (buffer)
-                                                           (with-current-buffer buffer
-                                                             (and (derived-mode-p 'eww-mode)
-                                                                  (equal url (plist-get eww-data :url)))))
-                                                         (buffer-list)))))
-                          (if eww-buffer
-                              (switch-to-buffer eww-buffer)
-                            (eww url))))))
-                    (setq last-command-event nil)))))
+                  ;; (message "press %s" key-desc)
+                  (cond
+                   ((string-equal key-desc "j")
+                    (eaf-call "send_key" buffer-id "<down>"))
+                   ((string-equal key-desc "k")
+                    (eaf-call "send_key" buffer-id "<up>"))
+                   ((string-equal key-desc "u")
+                    (eaf-call "send_key" buffer-id "<prior>"))
+                   ((string-equal key-desc "d")
+                    (eaf-call "send_key" buffer-id "<next>"))
+                   ((string-equal key-desc "T")
+                    (progn
+                      (let* ((url buffer-url)
+                             (eww-buffer (car (-filter (lambda (buffer)
+                                                         (with-current-buffer buffer
+                                                           (and (derived-mode-p 'eww-mode)
+                                                                (equal url (plist-get eww-data :url)))))
+                                                       (buffer-list)))))
+                        (if eww-buffer
+                            (switch-to-buffer eww-buffer)
+                          (eww url)))))))
+                (setq last-command-event nil)))
 
              ;; for pdfviewer
              ((and (eq major-mode 'eaf-mode)
@@ -77,13 +81,14 @@
                        (key (make-vector 1 event))
                        (key-command (format "%s" (key-binding key)))
                        (key-desc (key-description key)))
-                  (when (or
-                         (equal key-command "digit-argument")
-                         (member key-desc '("j" "k" "f" "b" "," "." "t" "-" "=" "0" "g" "p" "[" "]")))
-                    (if (string-equal key-desc "f")
-                        (eaf-call "send_key" buffer-id "SPC")
-                      (eaf-call "send_key" buffer-id key-desc))
-                    (setq last-command-event nil)))))
+                  (cond
+                   ((string-equal key-desc "f")
+                    (eaf-call "send-key" buffer-id "SPC"))
+                   ((or
+                     (equal key-command "digit-argument")
+                     (member key-desc '("j" "k" "b" "," "." "t" "-" "=" "0" "g" "p" "[" "]")))
+                    (eaf-call "send-key" buffer-id key-desc))))
+                (setq last-command-event nil)))
 
              ;; 其余根据evil mode state 再决定
              ((and (eq major-mode 'eaf-mode)
@@ -139,6 +144,7 @@
        (lambda ()
          (progn
            (add-hook 'pre-command-hook #'eaf-monitor-key-event)))))))
+
 
 ;; Pdf viewer settings
 (add-to-list 'auto-mode-alist
