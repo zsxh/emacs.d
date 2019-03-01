@@ -133,6 +133,7 @@
    "pd"  '(projectile-dired :which-key "project-root-dired")
    "pf"  '(project-find-file :which-key "project-find-file")
    "pg"  '(counsel-git :which-key "counsel-git")
+   "pk"  '(projectile-kill-buffers :which-key "project-kill-buffers")
    "pp"  '(projectile-switch-project :which-key "switch-project")
    "pt"  '(+neotree/find-project-root :which-key "neotree-find-project-root")
    ;; Text
