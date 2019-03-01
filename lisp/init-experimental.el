@@ -59,6 +59,10 @@
                     (eaf-call "send_key" buffer-id "<prior>"))
                    ((string-equal key-desc "d")
                     (eaf-call "send_key" buffer-id "<next>"))
+                   ((string-equal key-desc "H")
+                    (eaf-call "send_keystroke" buffer-id "M-b"))
+                   ((string-equal key-desc "F")
+                    (eaf-call "send_keystroke" buffer-id "M-f"))
                    ((string-equal key-desc "T")
                     (progn
                       (let* ((url buffer-url)
