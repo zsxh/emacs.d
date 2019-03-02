@@ -63,6 +63,8 @@
                     (eaf-call "send_keystroke" buffer-id "M-b"))
                    ((string-equal key-desc "F")
                     (eaf-call "send_keystroke" buffer-id "M-f"))
+                   ((member key-desc '("-" "=" "0"))
+                    (eaf-call "send_keystroke" buffer-id (format "C-%s" key-desc)))
                    ((string-equal key-desc "T")
                     (progn
                       (let* ((url buffer-url)
