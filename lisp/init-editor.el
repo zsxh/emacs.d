@@ -124,7 +124,8 @@
          ("C-c l" . avy-goto-line)
          ("C-c w" . avy-goto-word-1)
          ("C-c e" . avy-goto-word-0))
-  :config (setq avy-style 'pre))
+  ;; :config (setq avy-style 'pre)
+  )
 
 ;; inserting numeric ranges
 ;; https://oremacs.com/2014/12/26/the-little-package-that-could/
