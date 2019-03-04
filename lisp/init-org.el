@@ -178,6 +178,7 @@
 
 ;; Org for blog
 (use-package org-page
+  :ensure t
   :after org)
 
 ;; ob-async enables asynchronous execution of org-babel src blocks
