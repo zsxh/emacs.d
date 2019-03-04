@@ -28,7 +28,9 @@
          ("C-a" . move-beginning-of-line)
          ("C-e" . move-end-of-line)
          ("M-e" . evil-scroll-line-down)
-         ("M-y" . evil-scroll-line-up))
+         ("M-y" . evil-scroll-line-up)
+         :map evil-motion-state-map
+         ("C-e" . move-end-of-line))
   :config
   ;; don't move cursor back, otherwise it will cause problem with lispy/awesome-pair
   (setq evil-move-cursor-back nil)
