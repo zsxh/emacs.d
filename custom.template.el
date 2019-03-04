@@ -22,5 +22,9 @@
 ;; "Shell used in `term' and `ansi-term'."
 (setq personal-shell-executable "/usr/bin/zsh")
 
+;; Org page config
+(with-eval-after-load 'org-page
+  ;; put your configs here
+  (setq op/theme 'mdo))
 
 ;;; custom.el ends here

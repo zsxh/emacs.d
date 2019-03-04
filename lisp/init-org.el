@@ -178,22 +178,7 @@
 
 ;; Org for blog
 (use-package org-page
-  :after org
-  :config
-  (setq op/repository-directory "~/org/zsxh.github.io")
-  (setq op/site-domain "https://zsxh.github.io/")
-  (setq op/personal-disqus-shortname "zsxhspace")
-  (setq op/site-main-title "Hello World的一千种写法")
-
-  (setq op/repository-org-branch "source")  ;; default is "source"
-  (setq op/repository-html-branch "master") ;; default is "master"
-
-  (setq op/personal-github-link "https://github.com/zsxh")
-
-  (setq op/personal-google-analytics-id "UA-119871562-1")
-
-  ;; (setq op/highlight-render 'htmlize)
-  (setq op/theme 'mdo))
+  :after org)
 
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
