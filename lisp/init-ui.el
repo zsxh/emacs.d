@@ -31,6 +31,9 @@
     (toggle-frame-maximized)
   (toggle-frame-fullscreen))
 
+;; Fringe
+(fringe-mode '(12 . 12))
+
 ;; Installing Fonts
 ;; https://github.com/domtronn/all-the-icons.el#installing-fonts
 (use-package all-the-icons
