@@ -182,11 +182,6 @@
   :hook (eww-mode . (lambda ()
                       (setq-local shr-inhibit-images t)))
   :config
-  (defun +eww/browse-with-eaf (&optional url)
-    "Browse the current URL with an eaf."
-    (interactive)
-    (eaf-open-url (or url (plist-get eww-data :url))))
-
   (defun +eww/browse-at-point-with-external-browser ()
     (interactive)
     (let ((url (eww-suggested-uris)))
@@ -194,7 +189,14 @@
           (user-error "No link at point")
         (funcall shr-external-browser (if (consp url) (car url) url)))))
 
-  (define-key eww-mode-map (kbd "T") '+eww/browse-with-eaf)
+  (defun +eww/browse-at-point-with-eaf ()
+    (interactive)
+    (let ((url (eww-suggested-uris)))
+      (eaf-open-url (if (null url)
+                        (plist-get eww-data :url)
+                      (if (consp url) (car url) url)))))
+
+  (define-key eww-mode-map (kbd "T") '+eww/browse-at-point-with-eaf)
   (define-key eww-mode-map (kbd "&") '+eww/browse-at-point-with-external-browser)
 
   (with-eval-after-load 'evil
