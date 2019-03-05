@@ -21,20 +21,21 @@
     (dap-ui-mode 1))
   (advice-add 'lsp :after #'+dap/enable)
   :config
+
+  ;; you neead to install several debugger first: lldb, ptvsd, eclipse jdt server, etc. links below:
+  (require 'dap-gdb-lldb) ;https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb
+  (require 'dap-python)  ;https://github.com/emacs-lsp/dap-mode#python
+  (require 'dap-java)    ;https://github.com/emacs-lsp/dap-mode#java
+
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
               (setq-local company-minimum-prefix-length 1)))
-  (require 'dap-lldb)
-  (require 'dap-python)
-  (require 'dap-java)
   (defun +dap/my-display-output-buffer (debug-args)
     (if (hash-table-empty-p (dap--get-breakpoints))
-        (switch-to-buffer-other-window (dap--debug-session-output-buffer (dap--cur-session-or-die)))
-      ;; (dap-go-to-output-buffer)
-      ))
+        (switch-to-buffer-other-window (dap--debug-session-output-buffer (dap--cur-session-or-die)))))
   (advice-add 'dap-java-debug :after '+dap/my-display-output-buffer))
 
-;; set up keybindings for dap-debugger
+;; Set up keybindings for dap-debugger
 (with-eval-after-load 'dap-mode
 
   (defvar +dap/debug-mode-session-buffers (make-hash-table :test 'equal)
