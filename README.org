@@ -1,12 +1,10 @@
 Updated: <2019-03-05 二>
 
 * Enviroment Tested
-#+begin_quote
-  Emacs Version: 27.0.50
-  OS: Manjaro 18.0.3
-  Shell: zsh 5.7.1
-  DE: Deepin 15.9
-#+end_quote
+  - Emacs Version: 27.0.50
+  - OS: Manjaro 18.0.3
+  - Shell: zsh 5.7.1
+  - DE: Deepin 15.9
 
 * Features
   - =org=
