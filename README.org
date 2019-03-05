@@ -1,4 +1,4 @@
-Updated: <2019-01-28 一>
+Updated: <2019-03-05 二>
 
 * Features
   - =org=
@@ -82,22 +82,23 @@ Updated: <2019-01-28 一>
     - =insert-translated-name=
       Insert translated string, type chinese insertd english for short
 
-* Languages Support 
-  - [X] =C/C++= supported by [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
-  - [X] =Java= supported by [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
+* Languages Support
+** Features like auto complete, go to definitions, documentation on hover
+  - [X] =C/C++= install [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
+  - [X] =Java= install [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
   - [X] =Python= pip install 'python-language-server[all]' or install [[https://github.com/andrew-christianson/lsp-python-ms/][microsoft python lanuage server]]
   - [X] =Rust= rustup component add rls rust-analysis rust-src
-  - [X] =Go= supported by [[https://github.com/saibing/bingo][bingo]]
-  - [X] =Common-Lisp= [[https://github.com/joaotavora/sly][supported by sly]]
+  - [X] =Go= install [[https://github.com/saibing/bingo][bingo]]
+  - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
   - [X] =Julia= (v1.0) pkg> add LanguageServer#master StaticLint#master DocumentFormat#master SymbolServer#master
   - [X] =Javascript/Typescript= npm i -g typescript typescript-language-server
+** Debugger
+  - [X] =C/C++= install [[https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb]['dap-gdb-lldb]]
+  - [X] =Java= install [[https://github.com/emacs-lsp/dap-mode#java]['dap-java]]
+  - [X] =Python= install [[https://github.com/emacs-lsp/dap-mode#python]['dap-python]]
+  - [X] =Rust= install [[https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb]['dap-gdb-lldb]]
+  - [ ] =Go=
+  - [ ] =Julia=
+  - [ ] =Javascript/Typescript=
 
 * TODOs
-  * Debugger require lsp-mode and dap-mode now
-    - [ ] =C/C++= require [[https://github.com/yyoncho/dap-mode/#lldb][dap-lldb]], haven't test yet
-    - [X] =Java= require 'dap-java
-    - [X] =Python= require 'dap-python
-    - [ ] =Rust= waiting for rust-lldb
-    - [ ] =Go=
-    - [ ] =Julia=
-    - [ ] =Javascript/Typescript=
