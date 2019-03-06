@@ -87,13 +87,14 @@
                        (key (make-vector 1 event))
                        (key-command (format "%s" (key-binding key)))
                        (key-desc (key-description key)))
+                  ;; (message "press %s" key-desc)
                   (cond
                    ((string-equal key-desc "f")
-                    (eaf-call "send-key" buffer-id "SPC"))
+                    (eaf-call "send_key" buffer-id "SPC"))
                    ((or
                      (equal key-command "digit-argument")
                      (member key-desc '("j" "k" "b" "," "." "t" "-" "=" "0" "g" "p" "[" "]")))
-                    (eaf-call "send-key" buffer-id key-desc))))
+                    (eaf-call "send_key" buffer-id key-desc))))
                 (setq last-command-event nil)))
 
              ;; 其余根据evil mode state 再决定
