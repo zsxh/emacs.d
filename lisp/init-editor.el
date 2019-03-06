@@ -51,7 +51,9 @@
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
-  :hook (after-init . global-auto-revert-mode))
+  :hook (after-init . global-auto-revert-mode)
+  :config
+  (setq auto-revert-verbose nil))
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
