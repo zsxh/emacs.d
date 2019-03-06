@@ -176,20 +176,20 @@
 
 (defhydra hydra-text-scale (:hint nil)
   "zoom"
-  ("k" text-scale-increase "text-scale-increase" :color pink)
-  ("j" text-scale-decrease "text-scale-decrease" :color pink)
-  ("q" nil "quit" :color blue))
+  ("k" text-scale-increase "text-scale-increase")
+  ("j" text-scale-decrease "text-scale-decrease")
+  ("q" nil "quit"))
 
 (defhydra hydra-window-scale (:hint nil)
   "scale window"
-  ("h" shrink-window-horizontally "shrink-window-horizontally" :color pink)
-  ("l" enlarge-window-horizontally "enlarger-window-horizontally" :color pink)
-  ("j" shrink-window "shrink-window" :color pink)
-  ("k" enlarge-window "enlarge-window" :color pink)
-  ("b" balance-windows "balance" :color pink)
-  ("q" nil "quit" :color blue))
+  ("h" shrink-window-horizontally "shrink-window-horizontally")
+  ("l" enlarge-window-horizontally "enlarger-window-horizontally")
+  ("j" shrink-window "shrink-window")
+  ("k" enlarge-window "enlarge-window")
+  ("b" balance-windows "balance")
+  ("q" nil "quit"))
 
-(defhydra hydra-emacs-cheatsheet (:color pink :hint nil :exit t)
+(defhydra hydra-emacs-cheatsheet (:hint nil :exit t)
   "
     ^Emacs Cheatsheet^
     ^^^^^----------------------
@@ -201,8 +201,8 @@
 (defhydra hydra-string-inflection (:hint nil)
   "cycle text objects through camelCase, kebab-case, snake case and UPPER CASE.
 "
-  ("s" string-inflection-all-cycle "string-inflection-all-cycle" :color pink)
-  ("q" nil "quit" :color blue))
+  ("s" string-inflection-all-cycle "string-inflection-all-cycle")
+  ("q" nil "quit"))
 
 
 (provide 'init-keybinding)
