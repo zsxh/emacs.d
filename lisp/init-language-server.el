@@ -45,17 +45,12 @@
     (if (eq emacs-lsp-client 'lsp-mode)
         ;; lsp-mode
         (+funcs/set-leader-keys-for-major-mode
-        ,mode-map
+         ,mode-map
          "A" '(lsp-execute-code-action :which-key "code-action")
          "d" '(nil :which-key "debug")
          "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
-         "dB" '(dap-breakpoint-condition :which-key "breakpoint-condition")
-         "dk" '(+dap/debug-key-settings--toggle :which-key "toggle-debug-keybindings")
-         "dr" '(dap-debug :which-key "dap-debug")
-         "du" '(nil :which-key "ui")
-         "dul" '(dap-ui-locals :which-key "locals")
-         "dur" '(dap-ui-repl :which-key "repl")
-         "dus" '(dap-ui-sessions :which-key "sessions")
+         "dh" '(hydra-debugger-control/body :which-key "hydra-control")
+         "dr" '(dap-debug :which-key "run")
          "f" '(lsp-format-buffer :which-key "format")
          "g" '(nil :which-key "go")
          "gd" '(lsp-find-definition :which-key "find-definitions")

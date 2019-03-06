@@ -30,7 +30,7 @@
   (if (eq emacs-lsp-client 'lsp-mode)
       (+funcs/set-leader-keys-for-major-mode
        java-mode-map
-       "dr" '(dap-java-debug :which-key "debug")
+       "dr" '(dap-java-debug :which-key "run")
        "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
        "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
        "i" '(nil :which-key "implement")
