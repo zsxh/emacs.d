@@ -60,54 +60,24 @@
 
   (use-package ob-go
     :ensure t
-    :after org
     :init (cl-pushnew '(go . t) load-language-list))
 
   (use-package ob-rust
     :ensure t
-    :after org
     :init (cl-pushnew '(rust . t) load-language-list))
 
-  ;; https://github.com/gregsexton/ob-ipython
-  ;; enable ob-ipython and ob-python
-  (use-package ob-ipython
-    :ensure t
-    :after org
-    :if (executable-find "jupyter")     ; DO NOT remove
-    :init (cl-pushnew '(ipython . t) load-language-list)
+  ;; Emacs Jupyter integration with org-mode
+  (use-package ob-jupyter
+    :ensure nil
     :config
-    ;; fix: pandas dataframe output header is not aligned to column
-    ;; https://github.com/gregsexton/ob-ipython/issues/171
-    (defun ob-ipython--render (file-or-nil values)
-      (let ((org (lambda (value) value))
-            (png (lambda (value)
-                   (let ((file (or file-or-nil (ob-ipython--generate-file-name ".png"))))
-                     (ob-ipython--write-base64-string file value)
-                     (format "[[file:%s]]" file))))
-            (svg (lambda (value)
-                   (let ((file (or file-or-nil (ob-ipython--generate-file-name ".svg"))))
-                     (ob-ipython--write-string-to-file file value)
-                     (format "[[file:%s]]" file))))
-            (html (lambda (value)))
-            (txt (lambda (value)
-                   (let ((lines (s-lines value)))
-                     (if (cdr lines)
-                         (->> lines
-                              (-map 's-trim-right)
-                              (s-join "\n  ")
-                              (s-concat "  ")
-                              (format "#+BEGIN_EXAMPLE\n%s\n#+END_EXAMPLE"))
-                       (s-concat ": " (car lines)))))))
-        (or (-when-let (val (cdr (assoc 'text/org values))) (funcall org val))
-            (-when-let (val (cdr (assoc 'image/png values))) (funcall png val))
-            (-when-let (val (cdr (assoc 'image/svg+xml values))) (funcall svg val))
-            (-when-let (val (cdr (assoc 'text/plain values))) (funcall txt val))))))
+    (cl-pushnew '(jupyter . t) load-language-list)
+    ;; all python source blocks are effectively aliases of jupyter-python source blocks
+    (org-babel-jupyter-override-src-block "python"))
 
   ;; An extension to restclient.el for emacs that provides org-babel support
   (when (package-installed-p 'restclient)
     (use-package ob-restclient
       :ensure t
-      :after org
       :init (cl-pushnew '(restclient . t) load-language-list)))
 
   (org-babel-do-load-languages 'org-babel-load-languages
@@ -115,7 +85,8 @@
 
   ;; lsp support org code block editing
   (defvar org-babel-lang-list
-    '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java"))
+    '("go" "python" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
+      "jupyter-python" "jupyter-julia" "jupyter-javascript"))
 
   (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
 
@@ -189,8 +160,9 @@
   (add-hook 'ob-async-pre-execute-src-block-hook
             '(lambda ()
                (setq inferior-julia-program-name "julia")))
-  ;; ob-python define their own :async keyword that conflicts with ob-async
-  (setq ob-async-no-async-languages-alist '("ipython")))
+  ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
+  (setq ob-async-no-async-languages-alist
+        '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
 
 (with-eval-after-load 'org
   (defun +org/remove-all-result-blocks ()
@@ -204,13 +176,7 @@
   (defun +org/babel-result-show-all ()
     "Show all results in the current buffer."
     (interactive)
-    (org-babel-show-result-all)
-    (when (featurep 'ob-ipython)
-      (save-excursion
-        (goto-char (point-min))
-        (while (search-forward ":results:" nil t)
-          (forward-line)
-          (org-reveal)))))
+    (org-babel-show-result-all))
 
   (defun +org/babel-result-hide-all ()
     "Fold all results in the current buffer."
