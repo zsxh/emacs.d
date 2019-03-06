@@ -83,6 +83,7 @@
 (require 'init-julia)
 (require 'init-js)
 (require 'init-rust)
+(require 'init-jupyter)
 
 ;; Experimental
 (require 'init-experimental)
