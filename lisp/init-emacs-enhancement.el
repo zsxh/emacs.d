@@ -77,7 +77,9 @@
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line
       "h" 'evil-backward-char
-      "l" 'evil-forward-char))
+      "l" 'evil-forward-char
+      "v" 'evil-visual-char
+      "V" 'evil-visual-line))
 
   (+funcs/set-leader-keys-for-major-mode
    dired-mode-map
