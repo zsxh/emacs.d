@@ -89,11 +89,13 @@
                        (key-desc (key-description key)))
                   ;; (message "press %s" key-desc)
                   (cond
-                   ((string-equal key-desc "f")
+                   ((string-equal key-desc "d")
                     (eaf-call "send_key" buffer-id "SPC"))
+                   ((string-equal key-desc "u")
+                    (eaf-call "send_key" buffer-id "b"))
                    ((or
                      (equal key-command "digit-argument")
-                     (member key-desc '("j" "k" "b" "," "." "t" "-" "=" "0" "g" "p" "[" "]")))
+                     (member key-desc '("j" "k" "," "." "t" "-" "=" "0" "g" "p" "[" "]")))
                     (eaf-call "send_key" buffer-id key-desc))))
                 (setq last-command-event nil)))
 
