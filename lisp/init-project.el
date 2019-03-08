@@ -27,16 +27,15 @@
   (setq projectile-enable-caching t))
 
 (with-eval-after-load 'projectile
-  (defun +project/projectile-buffer-filter (name)
-    (or (string-prefix-p "*" name)
-        (and
-         (string-prefix-p "magit" name)
-         (not (file-name-extension name)))
-        (equal (buffer-name (current-buffer)) name)))
+  (defun +project/projectile-buffer-filter (buffer)
+    (let ((name (buffer-name buffer)))
+      (or (string-prefix-p "*" name)
+          (string-match-p "magit.*:" name)
+          (equal (buffer-name (current-buffer)) name))))
 
   (defun +project/projectile-buffer-filter-function (buffers)
     (cl-remove-if
-     (lambda (b) (+project/projectile-buffer-filter (buffer-name b)))
+     (lambda (buffer) (+project/projectile-buffer-filter buffer))
      buffers))
 
   (setq projectile-buffers-filter-function #'+project/projectile-buffer-filter-function)
