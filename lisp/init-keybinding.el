@@ -128,7 +128,7 @@
  "p" '(nil :which-key "project")
  "p/" '(color-rg-search-project :which-key "rg-search-project")
  "p'" '(+shell/projectile-shell-pop :which-key "project-root-shell-pop")
- "pb" '(projectile-switch-to-buffer :which-key "switch-to-project-buffer")
+ "pb" '(+projectile/ivy-switch-buffer :which-key "switch-to-project-buffer")
  "pB" '(projectile-ibuffer :which-key "project-ibuffer")
  "pd" '(projectile-dired :which-key "project-root-dired")
  "pf" '(project-find-file :which-key "project-find-file")

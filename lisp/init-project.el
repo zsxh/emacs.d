@@ -39,7 +39,16 @@
      (lambda (b) (+project/projectile-buffer-filter (buffer-name b)))
      buffers))
 
-  (setq projectile-buffers-filter-function #'+project/projectile-buffer-filter-function))
+  (setq projectile-buffers-filter-function #'+project/projectile-buffer-filter-function)
+
+  (defun +projectile/ivy-switch-buffer ()
+    (interactive)
+    (ivy-read "Switch to buffer: "
+              (delete (buffer-name (current-buffer))
+                      (projectile-project-buffer-names))
+              :initial-input nil
+              :action #'ivy--switch-buffer-action
+              :caller '+projectile/ivy-switch-buffer)))
 
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 

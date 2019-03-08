@@ -69,6 +69,8 @@
   :after ivy
   :config
   (setq ivy-format-function #'ivy-format-function-line)
+  (plist-put ivy-rich--display-transformers-list '+projectile/ivy-switch-buffer
+             (plist-get ivy-rich--display-transformers-list 'ivy-switch-buffer))
   (ivy-rich-mode 1))
 
 ;; ivy-posframe
