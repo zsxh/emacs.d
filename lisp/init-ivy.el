@@ -64,6 +64,13 @@
   :bind (("C-x C-f" . counsel-find-file)
          ("M-x" . counsel-M-x)))
 
+(use-package ivy-rich
+  :ensure t
+  :after ivy
+  :config
+  (setq ivy-format-function #'ivy-format-function-line)
+  (ivy-rich-mode 1))
+
 ;; ivy-posframe
 (use-package ivy-posframe
   ;; :after ivy
