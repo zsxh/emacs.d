@@ -26,6 +26,7 @@
     (evil-collection-init 'neotree)
     ;; Custom Keybindings
     (evil-define-key 'normal neotree-mode-map
+      "gd" '+neotree/jump-to-dired
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line
       "h" '+neotree/neotree-collapse-or-up
@@ -39,6 +40,13 @@
   (with-eval-after-load 'winum
     ;; window 0 is reserved for file trees
     (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func)))
+
+(defun +neotree/jump-to-dired (&optional arg)
+  "Jump to Dired buffer corresponding to current neotree node."
+  (interactive)
+  (let ((dir default-directory))
+    (neo-global--select-mru-window arg)
+    (find-file dir)))
 
 ;; Code from Spacemacs
 (defun +neotree/neotree-expand-or-open (&optional arg)
