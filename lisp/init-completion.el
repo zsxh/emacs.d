@@ -73,44 +73,61 @@
   :init (setq company-box-enable-icon (display-graphic-p))
   :config
   (with-eval-after-load 'all-the-icons
-    (setq company-box-backends-colors nil
+    (defun +company-box-icons--elisp (candidate)
+      (when (derived-mode-p 'emacs-lisp-mode)
+        (let ((sym (intern candidate)))
+          (cond ((fboundp sym) 'ElispFunction)
+                ((boundp sym) 'ElispVariable)
+                ((featurep sym) 'ElispFeature)
+                ((facep sym) 'ElispFace)))))
+
+    (defun my-company-box-icon (family icon face &rest args)
+      "Defines icons using `all-the-icons' for `company-box'."
+      (when icon
+        (pcase family
+          ('octicon (all-the-icons-octicon icon :v-adjust -0.05 :face face args))
+          ('faicon (all-the-icons-faicon icon :v-adjust -0.0575 :face face))
+          ('material (all-the-icons-material icon :v-adjust -0.225 :face face args))
+          ('alltheicon (all-the-icons-alltheicon icon :face face args)))))
+
+    (setq company-box-icons-alist 'company-box-icons-all-the-icons
+          company-box-backends-colors nil
           company-box-max-candidates 50
-          company-box-icons-unknown (all-the-icons-octicon "file-text" :v-adjust -0.05 :face 'all-the-icons-purple)
-          company-box-icons-yasnippet (all-the-icons-faicon "code" :v-adjust -0.0575 :face 'all-the-icons-green)
-          company-box-icons-elisp
-          (list
-           (all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'all-the-icons-purple) ; Function
-           (all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue) ; Variable
-           (all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'all-the-icons-orange) ; Feature
-           (all-the-icons-material "palette" :v-adjust -0.2 :face 'all-the-icons-pink) ; Face
-           )
-          company-box-icons-lsp
-          `((1 . ,(all-the-icons-faicon "file-text-o" :v-adjust -0.0575 :face 'all-the-icons-green)) ; text
-            (2 . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'all-the-icons-purple)) ; method
-            (3 . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'all-the-icons-purple)) ; function
-            (4 . ,(all-the-icons-faicon "cube" :v-adjust -0.0575 :face 'all-the-icons-purple)) ; constructor
-            (5 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; field
-            (6 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; variable
-            (7 . ,(all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'all-the-icons-orange)) ; class
-            (8 . ,(all-the-icons-faicon "cogs" :v-adjust -0.0575 :face 'all-the-icons-orange)) ; interface
-            (9 . ,(all-the-icons-alltheicon "less" :face 'all-the-icons-orange)) ; module
-            (10 . ,(all-the-icons-faicon "wrench" :v-adjust -0.0575 :face 'all-the-icons-dred)) ; property
-            (11 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; unit
-            (12 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; value
-            (13 . ,(all-the-icons-material "content_copy" :v-adjust -0.2 :face 'all-the-icons-blue-alt)) ; enum
-            (14 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; keyword
-            (15 . ,(all-the-icons-material "content_paste" :v-adjust -0.2 :face 'all-the-icons-blue-alt)) ; snippet
-            (16 . ,(all-the-icons-material "palette" :v-adjust -0.2 :face 'all-the-icons-pink)) ; color
-            (17 . ,(all-the-icons-faicon "file" :v-adjust -0.0575 :face 'all-the-icons-lcyan)) ; file
-            (18 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; reference
-            (19 . ,(all-the-icons-faicon "folder" :v-adjust -0.0575 :face 'all-the-icons-lcyan)) ; folder
-            (20 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; enumMember
-            (21 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; constant
-            (22 . ,(all-the-icons-faicon "cog" :v-adjust -0.0575 :face 'all-the-icons-orange)) ; struct
-            (23 . ,(all-the-icons-faicon "bolt" :v-adjust -0.0575 :face 'all-the-icons-yellow)) ; event
-            (24 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; operator
-            (25 . ,(all-the-icons-faicon "tag" :v-adjust -0.0575 :face 'all-the-icons-blue)) ; TypeParameter
-            ))))
+          company-box-icons-functions
+          '(company-box-icons--yasnippet company-box-icons--lsp +company-box-icons--elisp company-box-icons--acphp)
+          company-box-icons-all-the-icons
+          `((Unknown . ,(my-company-box-icon 'material "find_in_page" 'all-the-icons-purple))
+            (Text . ,(my-company-box-icon 'material "text_fields" 'all-the-icons-green))
+            (Method . ,(my-company-box-icon 'material "functions" 'all-the-icons-red-alt))
+            (Function . ,(my-company-box-icon 'material "functions" 'all-the-icons-red-alt))
+            (Constructor . ,(my-company-box-icon 'material "functions" 'all-the-icons-red-alt))
+            (Field . ,(my-company-box-icon 'material "check_circle" 'all-the-icons-blue))
+            (Variable . ,(my-company-box-icon 'material "check_circle" 'all-the-icons-blue))
+            (Class . ,(my-company-box-icon 'faicon "cog" 'all-the-icons-orange))
+            (Interface . ,(my-company-box-icon 'faicon "info" 'all-the-icons-orange))
+            (Module . ,(my-company-box-icon 'faicon "cogs" 'all-the-icons-orange))
+            (Property . ,(my-company-box-icon 'material "settings" 'all-the-icons-dyellow))
+            (Unit . ,(my-company-box-icon 'faicon "tag" 'all-the-icons-orange))
+            (Value . ,(my-company-box-icon 'material "filter_none" 'all-the-icons-blue))
+            (Enum . ,(my-company-box-icon 'faicon "list-ul" 'all-the-icons-lcyan))
+            (Keyword . ,(my-company-box-icon 'material "filter_center_focus" 'all-the-icons-red))
+            (Snippet . ,(my-company-box-icon 'faicon "code" 'all-the-icons-green))
+            (Color . ,(my-company-box-icon 'material "color_lens" 'all-the-icons-pink))
+            (File . ,(my-company-box-icon 'material "insert_drive_file" 'all-the-icons-dsilver))
+            (Reference . ,(my-company-box-icon 'material "collections_bookmark" 'all-the-icons-red))
+            (Folder . ,(my-company-box-icon 'material "folder_open" 'all-the-icons-dsilver))
+            (EnumMember . ,(my-company-box-icon 'material "people" 'all-the-icons-lcyan))
+            (Constant . ,(my-company-box-icon 'material "pause_circle_filled" 'all-the-icons-blue))
+            (Struct . ,(my-company-box-icon 'material "streetview" 'all-the-icons-red))
+            (Event . ,(my-company-box-icon 'material "event" 'all-the-icons-red))
+            (Operator . ,(my-company-box-icon 'material "control_point" 'all-the-icons-red))
+            (TypeParameter . ,(my-company-box-icon 'material "class" 'all-the-icons-red))
+            (Template   . ,(my-company-box-icon 'faicon "code" 'all-the-icons-green))
+            (Yasnippet . ,(my-company-box-icon 'faicon "code" 'all-the-icons-green))
+            (ElispFunction . ,(my-company-box-icon 'material "functions" 'all-the-icons-red))
+            (ElispVariable . ,(my-company-box-icon 'material "check_circle" 'all-the-icons-blue))
+            (ElispFeature . ,(my-company-box-icon 'material "stars" 'all-the-icons-orange))
+            (ElispFace . ,(my-company-box-icon 'material "format_paint" 'all-the-icons-pink))))))
 
 ;; Popup documentation for completion candidates
 (use-package company-quickhelp
