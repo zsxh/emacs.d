@@ -90,10 +90,11 @@
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t)
   ;; FIXME: enable company-yasnippet, but can be messy
-  (advice-add 'lsp :after
-              (lambda ()
-                (setq-local company-backends
-                            '((company-lsp :separate company-yasnippet))))))
+  ;; (advice-add 'lsp :after
+  ;;             (lambda ()
+  ;;               (setq-local company-backends
+  ;;                           '((company-lsp :separate company-yasnippet)))))
+  )
 
 ;; (use-package company-lsp
 ;;   :after (company lsp-mode)
