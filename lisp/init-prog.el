@@ -63,6 +63,76 @@
          ("M-p" . 'awesome-pair-jump-left)
          ("M-RET" . 'awesome-pair-jump-out-pair-and-newline))
   :config
+  (defun awesome-pair-in-string-p (&optional state)
+    (save-excursion
+      (or (nth 3 (or state (awesome-pair-current-parse-state)))
+          (and
+           (eq (get-text-property (point) 'face) 'font-lock-string-face)
+           (eq (get-text-property (- (point) 1) 'face) 'font-lock-string-face))
+          (and
+           (eq (get-text-property (point) 'face) 'font-lock-doc-face)
+           (eq (get-text-property (- (point) 1) 'face) 'font-lock-doc-face))
+          ;; fix single quote delete for c/c++/java-mode
+          (and
+           (eq ?\" (char-syntax (char-before)))
+           (eq ?\" (char-syntax (char-after (point))))))))
+
+  (require 'paren)
+
+  (defun +prog/backward-char-pair-p ()
+    (save-excursion
+      (backward-char)
+      (show-paren--default)))
+
+  (defun +prog/forward-char-pair-p ()
+    (save-excursion
+      (forward-char)
+      (show-paren--default)))
+
+  (defun awesome-pair-after-open-pair-p ()
+    (save-excursion
+      (let ((syn (char-syntax (char-before))))
+        (and
+         (or (eq syn ?\()
+             (and (eq syn ?_)
+                  (eq (char-before) ?\{)))
+         (+prog/backward-char-pair-p)))))
+
+  (defun awesome-pair-after-close-pair-p ()
+    (save-excursion
+      (let ((syn (char-syntax (char-before))))
+        (and
+         (or (eq syn ?\))
+             (eq syn ?\")
+             (and (eq syn ?_)
+                  (eq (char-before) ?\})))
+         (+prog/backward-char-pair-p)))))
+
+  (defun awesome-pair-before-open-pair-p ()
+    (save-excursion
+      (let ((syn (char-syntax (char-after))))
+        (and
+         (or (eq syn ?\( )
+             (eq syn ?\" )
+             (and (eq syn ?_)
+                  (eq (char-after) ?\{)))
+         (+prog/forward-char-pair-p)))))
+
+  (defun awesome-pair-before-close-pair-p ()
+    (save-excursion
+      (let ((syn (char-syntax (char-after))))
+        (and
+         (or (eq syn ?\) )
+             (and (eq syn ?_)
+                  (eq (char-after) ?\})))
+         (+prog/forward-char-pair-p)))))
+
+  ;; (with-eval-after-load 'cc-mode
+  ;;   (modify-syntax-entry ?< "(>" c++-mode-syntax-table)
+  ;;   (modify-syntax-entry ?> ")<" c++-mode-syntax-table)
+  ;;   (modify-syntax-entry ?< "(>" java-mode-syntax-table)
+  ;;   (modify-syntax-entry ?> ")<" java-mode-syntax-table))
+
   (with-eval-after-load 'lispy
     (define-key lispy-mode-map (kbd "M-o") 'awesome-pair-backward-delete)
     (define-key lispy-mode-map (kbd "M-n") 'awesome-pair-jump-right)
