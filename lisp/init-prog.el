@@ -89,6 +89,7 @@
       (forward-char)
       (show-paren--default)))
 
+  ;; For rust-mode Angle brackets
   (defun awesome-pair-after-open-pair-p ()
     (save-excursion
       (let ((syn (char-syntax (char-before))))
