@@ -68,6 +68,17 @@
   ;; Customize dired-directory foreground color
   (set-face-foreground 'dired-directory "#3B6EA8")
 
+  (defun +dired/get-size ()
+    (interactive)
+    (let ((files (dired-get-marked-files)))
+      (with-temp-buffer
+        (apply 'call-process "/usr/bin/du" nil t nil "-sch" files)
+        (message
+         "Size of all marked files: %s"
+         (progn
+           (re-search-backward "\\(^[ 0-9.,]+[A-Za-z]+\\).*total$")
+           (match-string 1))))))
+
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'dired)
     (evil-define-key 'normal dired-mode-map
@@ -84,7 +95,8 @@
   (+funcs/set-leader-keys-for-major-mode
    dired-mode-map
    "/" '(dired-narrow :which-key "dired-narrow")
-   "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")))
+   "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")
+   "s" '(+dired/get-size :which-key "get-size")))
 
 (with-eval-after-load 'find-dired
   (setq find-ls-option
