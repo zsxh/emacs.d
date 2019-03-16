@@ -32,7 +32,7 @@
  :states '(normal visual motion emacs)
  :keymaps '(override global)
  :prefix "SPC"
- :non-normal-prefix "C-SPC"
+ ;; :non-normal-prefix "C-SPC"
  "" nil
  "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
  "SPC" '(counsel-M-x :which-key "M-x")
