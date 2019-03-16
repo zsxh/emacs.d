@@ -16,16 +16,18 @@
   :bind (("M-/" . yas-expand)
          ("C-c C-y" . company-yasnippet)
          :map company-active-map
-         ("C-p" . company-select-previous)
-         ("C-n" . company-select-next)
+         ("M-n" . nil)
+         ("M-p" . nil)
          ("C-k" . company-select-previous)
          ("C-j" . company-select-next)
          ("TAB" . company-complete-common)
          ("<tab>" . company-complete-common)
          ("<backtab>" . company-select-previous)
          :map company-search-map
-         ("C-p" . company-select-previous)
-         ("C-n" . company-select-next))
+         ("M-n" . nil)
+         ("M-p" . nil)
+         ("C-k" . company-select-previous)
+         ("C-j" . company-select-next))
   :hook (after-init . global-company-mode)
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
