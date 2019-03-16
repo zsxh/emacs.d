@@ -85,10 +85,10 @@
       "Defines icons using `all-the-icons' for `company-box'."
       (when icon
         (pcase family
-          ('octicon (all-the-icons-octicon icon :v-adjust -0.05 :face face args))
-          ('faicon (all-the-icons-faicon icon :v-adjust -0.0575 :face face))
-          ('material (all-the-icons-material icon :v-adjust -0.225 :face face args))
-          ('alltheicon (all-the-icons-alltheicon icon :face face args)))))
+          ('octicon (all-the-icons-octicon icon :height 0.8 :v-adjust -0.05 :face face args))
+          ('faicon (all-the-icons-faicon icon :height 0.8 :v-adjust -0.0575 :face face))
+          ('material (all-the-icons-material icon :height 0.8 :v-adjust -0.225 :face face args))
+          ('alltheicon (all-the-icons-alltheicon icon :height 0.8 :face face args)))))
 
     (setq company-box-icons-alist 'company-box-icons-all-the-icons
           company-box-backends-colors nil
