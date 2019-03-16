@@ -170,6 +170,7 @@
   :after lispy
   :config
   (drag-stuff-global-mode 1)
+  ;; bind "M-<up/down/left/right>" to move texts up/down/left/right
   (drag-stuff-define-keys))
 
 
