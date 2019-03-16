@@ -163,12 +163,14 @@
     (evil-make-overriding-map color-rg-mode-edit-map 'normal)
     (add-hook 'color-rg-mode-hook #'evil-normalize-keymaps)))
 
-;; M-<up> move-line-up
-;; M-<down> move-line-down
-;; Dont try moving region in evil normal state, use V DD P instead
-(use-package move-dup
+;; https://github.com/rejeep/drag-stuff.el
+;; Work fine with evil-mode
+(use-package drag-stuff
   :ensure t
-  :hook (emacs-startup . global-move-dup-mode))
+  :after lispy
+  :config
+  (drag-stuff-global-mode 1)
+  (drag-stuff-define-keys))
 
 
 (provide 'init-editor)
