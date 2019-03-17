@@ -84,17 +84,21 @@
   (setq lsp-prefer-flymake nil)
   :config
   (require 'lsp-clients)
+
   (setq lsp-auto-guess-root t
         ;; lsp-prefer-flymake nil
         lsp-inhibit-message t
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t)
+
   ;; FIXME: enable company-yasnippet, but can be messy
   ;; (advice-add 'lsp :after
   ;;             (lambda ()
   ;;               (setq-local company-backends
   ;;                           '((company-lsp :separate company-yasnippet)))))
-  )
+
+  (when (package-installed-p 'focus)
+    (advice-add 'lsp :after (lambda () (focus-mode 1)))))
 
 ;; (use-package company-lsp
 ;;   :after (company lsp-mode)
