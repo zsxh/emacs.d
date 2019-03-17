@@ -10,6 +10,15 @@
 
 ;;; Code:
 
+;; Focus provides focus-mode that dims the text of surrounding sections
+;; https://github.com/larstvei/Focus
+(use-package focus
+  :ensure t
+  :commands (focus-mode focus-read-only-mode)
+  :config
+  (with-eval-after-load 'lsp-mode
+    (add-to-list 'focus-mode-to-thing '(lsp-mode . lsp-folding-range))))
+
 ;;;;;;;;;;;;;; DOC ;;;;;;;;;;;;;;
 
 ;; require `zeal' installation
@@ -251,5 +260,6 @@ current major mode."
 (setq-default evil-shift-width 2)
 
 (provide 'init-prog)
+
 
 ;;; init-prog.el ends here
