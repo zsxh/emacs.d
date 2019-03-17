@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;;;;;;;;;;;;;; VIEW ;;;;;;;;;;;;;;
+
 ;; Focus provides focus-mode that dims the text of surrounding sections
 ;; https://github.com/larstvei/Focus
 (use-package focus
