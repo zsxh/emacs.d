@@ -32,8 +32,8 @@
               (setq-local company-minimum-prefix-length 1)))
 
   (defun +dap/after-starting-debugging (debug-args)
-    (if (hash-table-empty-p (dap--get-breakpoints))
-        (switch-to-buffer-other-window (dap--debug-session-output-buffer (dap--cur-session-or-die)))
+    (unless (hash-table-empty-p (dap--get-breakpoints))
+        ;; (switch-to-buffer-other-window (dap--debug-session-output-buffer (dap--cur-session-or-die)))
       (hydra-debugger-control/body)))
 
   (advice-add 'dap-start-debugging :after '+dap/after-starting-debugging))
