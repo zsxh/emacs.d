@@ -69,13 +69,10 @@
     (evil-define-minor-mode-key 'normal 'macrostep-mode
       "q" 'macrostep-collapse)))
 
-;; Semantic code search for emacs lisp
-(use-package elisp-refs
-  :ensure t)
-
 ;; Set lisp-interaction-mode company-backends
 (add-hook 'lisp-interaction-mode-hook
           #'(lambda () (setq-local company-backends '(company-capf company-files))))
+
 
 (provide 'init-emacs-lisp)
 
