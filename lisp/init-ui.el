@@ -108,13 +108,10 @@
 ;; https://github.com/cyrus-and/zoom
 (use-package zoom
   ;; https://github.com/cyrus-and/zoom/issues/3
-  ;; FIXME: which-key becomes awkward looking with zoom-mode on
+  ;; set which-key-popup-type to 'minibuffer to avoid which-key awkward looking
   :ensure t
-  ;; :hook (after-init . zoom-mode)
-  :commands (zoom zoom-mode)
-  ;; :config
-  ;; (advice-add 'balance-windows :override (lambda () nil))
-  )
+  ;; :commands (zoom zoom-mode)
+  :hook (after-init . zoom-mode))
 
 
 (provide 'init-ui)
