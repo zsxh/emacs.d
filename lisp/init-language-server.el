@@ -89,7 +89,9 @@
         ;; lsp-prefer-flymake nil
         lsp-inhibit-message t
         lsp-eldoc-render-all nil
-        lsp-keep-workspace-alive t)
+        lsp-keep-workspace-alive t
+        ;; TODO: until native-json stable
+        lsp-use-native-json nil)
 
   ;; FIXME: enable company-yasnippet, but can be messy
   ;; (advice-add 'lsp :after
