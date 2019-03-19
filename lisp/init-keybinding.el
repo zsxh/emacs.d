@@ -162,6 +162,7 @@
  "wm" '(delete-other-windows :which-key "maximized")
  "ws" '(hydra-window-scale/body :which-key "scale")
  "ww" '(ace-swap-window :which-key "swap-window")
+ "wz" '(zoom-mode :which-key "toggle-zoom-mode")
  ;; Toggle
  "T" '(nil :which-key "toggle")
  "Td" '(toggle-debug-on-error :which-key "debug-on-error")
