@@ -40,6 +40,7 @@
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode))
+  :hook (web-mode . lsp)
   :config
   (defun my-web-mode-hook ()
     "Hooks for Web mode."
