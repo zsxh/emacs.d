@@ -104,8 +104,10 @@
   (setq find-ls-option
         (cons "-print0 | xargs -0 ls -alhdN" "")))
 
-;; A simple, fast and user-friendly alternative to 'find'
+;; install rust fd first: pacman -S fd
 ;; https://github.com/sharkdp/fd
+;; dired find files using 'fd' instead of 'find'
+;; https://github.com/yqrashawn/fd-dired
 (use-package fd-dired
   :if (executable-find "fd")
   :ensure t

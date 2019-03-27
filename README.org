@@ -1,4 +1,4 @@
-Updated: <2019-03-06 三>
+Updated: <2019-03-27 三>
 
 * Enviroment Tested
   - Emacs Version: 27.0.50
@@ -48,6 +48,8 @@ Updated: <2019-03-06 三>
       fantasy file manager
     - =eww=
       emacs web browser, not support js, but good for reading web doc
+    - =fd-dired=
+      Provide a dired-mode interface for [[https://github.com/sharkdp/fd][fd]]’s result. Same functionality as find-dired, using fd instead. 
   - =neotree=
       A tree plugin like NerdTree for Vim
   - =shell and terminal=
@@ -63,8 +65,9 @@ Updated: <2019-03-06 三>
       language server supoort: code completion, reformat, find definitions, etc.
     - =dap-mode=
       debuger (require lsp-mode)
-    - =projectile/project=
-      project management and navigation
+    - =projectile/project/find-file-in-project=
+      project management and navigation \\
+      find-file-in-project use [[https://github.com/sharkdp/fd][fd]] by default
     - =company-mode=
       code completion 
     - =yasnippets=
