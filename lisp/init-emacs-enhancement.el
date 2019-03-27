@@ -98,9 +98,21 @@
    "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")
    "s" '(+dired/get-size :which-key "get-size")))
 
+(defalias '+dired/find-program 'find-name-dired)
+
 (with-eval-after-load 'find-dired
   (setq find-ls-option
         (cons "-print0 | xargs -0 ls -alhdN" "")))
+
+;; A simple, fast and user-friendly alternative to 'find'
+;; https://github.com/sharkdp/fd
+(use-package fd-dired
+  :if (executable-find "fd")
+  :ensure t
+  :config
+  (defalias '+dired/find-program 'fd-dired)
+  (setq fd-dired-pre-fd-args "-0 -c never -I"
+        fd-dired-ls-option '("| xargs -0 ls -alhdN" . "-ld")))
 
 ;; Editable Dired mode configs
 (with-eval-after-load 'wdired

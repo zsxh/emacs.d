@@ -93,10 +93,11 @@
  "ci" '(symbol-overlay-put :which-key "highlight-input")
  ;; Files
  "f" '(nil :which-key "file")
+ "fd" '(+dired/find-program :which-key "find-files-in-dired")
  "ff" '(counsel-find-file :which-key "find-files")
+ "fF" '(find-file-in-current-directory :which-key "find-file-in-current-directory")
  "fe" '(+funcs/sudo-edit-current-file :which-key "sudo-edit-current-file")
  "fp" '(xah-copy-file-path :which-key "copy-file-path")
- "fs" '(find-name-dired :which-key "search-files")
  ;; Git
  "g" '(nil :which-key "git")
  "gb" '(magit-blame :which-key "magit-blame")
@@ -139,7 +140,8 @@
  "pb" '(+projectile/ivy-switch-buffer :which-key "switch-to-project-buffer")
  "pB" '(projectile-ibuffer :which-key "project-ibuffer")
  "pd" '(projectile-dired :which-key "project-root-dired")
- "pf" '(project-find-file :which-key "project-find-file")
+ "pf" '(find-file-in-project :which-key "project-find-file")
+ "pF" '(find-file-in-project-not-ignore :which-key "project-find-file-not-ignore")
  "pg" '(counsel-git :which-key "counsel-git")
  "pk" '(projectile-kill-buffers :which-key "project-kill-buffers")
  "pp" '(projectile-switch-project :which-key "switch-project")
