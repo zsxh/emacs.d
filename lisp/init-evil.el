@@ -111,12 +111,19 @@
   (with-eval-after-load 'debug
     (evil-define-key 'normal debugger-mode-map
       (kbd "<return>") 'backtrace-help-follow-symbol
+      "h" 'evil-backward-char
       "j" 'evil-next-line
       "J" 'debugger-jump
-      "h" 'evil-backward-char
       "?" 'describe-mode
       "l" 'evil-forward-char
-      "L" 'debugger-list-functions)))
+      "L" 'debugger-list-functions))
+  (with-eval-after-load 'profiler
+    (evil-define-key 'normal profiler-report-mode-map
+      "h" 'evil-backward-char
+      "j" 'evil-next-line
+      "k" 'evil-previous-line
+      "l" 'evil-forward-char
+      "?" 'describe-mode)))
 
 
 (provide 'init-evil)
