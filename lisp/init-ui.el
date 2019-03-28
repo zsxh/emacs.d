@@ -43,16 +43,10 @@
 ;; Theme
 (use-package doom-themes
   :ensure t
-  ;; :if (display-graphic-p)
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-
-  ;; Gui personal-doom-theme / terminal doom-nord theme
-  (if (display-graphic-p)
-      (load-theme (intern personal-doom-theme) t)
-    (load-theme 'doom-nord t))
 
   ;; Enable flashing mode-line on errors
   ;; (doom-themes-visual-bell-config)
@@ -89,26 +83,9 @@
 
 (add-hook 'window-configuration-change-hook '+ui/toggle-display-time-mode)
 
-;; Frame font
-;; english and others charsets SF Mono
-;; chinese and some other charsets Source Han Serirf
-;; download ans install default fonts:
-;; SF Mono: https://github.com/ZulwiyozaPutra/SF-Mono-Font
-;; Source Han Serief: https://github.com/adobe-fonts/source-han-serif
-(when (display-graphic-p)
-  (ignore-errors
-    (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)))
-
-;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;   (set-fontset-font (frame-parameter nil 'font)
-;;                     charset (font-spec :family "Source Han Serif"))
-;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
-
 ;; Line Number
-(use-package display-line-numbers
-  :defer t
-  ;; :hook (prog-mode . display-line-numbers-mode)
-  )
+;; (use-package display-line-numbers
+;;   :hook (prog-mode . display-line-numbers-mode))
 
 ;; Emacs startup *scratch* buffer
 (setq initial-buffer-choice t)
@@ -121,15 +98,35 @@
   ;; :commands (zoom zoom-mode)
   :hook (after-init . zoom-mode))
 
-;; UI for emacs --daemon/ emacsclient -c
-(unless (display-graphic-p)
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (when (display-graphic-p)
-                (load-theme (intern personal-doom-theme) t)
-                (set-face-foreground 'dired-directory "#3B6EA8")
-                (ignore-errors
-                  (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t))))))
+;; Fonts
+;; Source Han Serief: https://github.com/adobe-fonts/source-han-serif
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;;                     charset (font-spec :family "Source Han Serif"))
+;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
+
+(defun +ui/frame-config (frame)
+  "Custom behaviours for new frames."
+  (with-selected-frame frame
+    ;; GUI
+    (when (display-graphic-p)
+      (load-theme (intern personal-doom-theme) t)
+      ;; Download ans install SF Mono fonts:
+      ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
+      (ignore-errors
+        (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)))
+    ;; Terminal
+    (unless (display-graphic-p)
+      (load-theme 'doom-nord t))
+
+    (with-eval-after-load 'dired
+      (set-face-foreground 'dired-directory "#3B6EA8"))))
+
+;; Set config now
+(+ui/frame-config (selected-frame))
+
+;; Run later, for emacs daemon, emacsclients -c [-nw]
+(add-hook 'after-make-frame-functions '+ui/frame-config)
 
 
 (provide 'init-ui)
