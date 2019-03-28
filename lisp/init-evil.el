@@ -16,6 +16,7 @@
   :ensure t
   :init
   (setq evil-want-keybinding nil)
+  (setq evil-want-integration t)
   (setq evil-insert-state-cursor nil)
   :commands evil-mode
   :hook (after-init . evil-mode)
