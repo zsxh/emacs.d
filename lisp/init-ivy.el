@@ -71,8 +71,6 @@
   :ensure t
   :after ivy
   :config
-  ;; FIXME: fix void function destructuring-bind
-  (require 'cl)
   (setq ivy-format-function #'ivy-format-function-line)
   (plist-put ivy-rich--display-transformers-list '+projectile/ivy-switch-buffer
              (plist-get ivy-rich--display-transformers-list 'ivy-switch-buffer))
