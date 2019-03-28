@@ -37,12 +37,14 @@
                      helpful-macro
                      helpful-command))
         (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist))))
+
   (with-eval-after-load 'evil
     (evil-define-key 'normal helpful-mode-map
       "gd" 'evil-goto-definition
       "gg" 'evil-goto-first-line
       "h" 'evil-backward-char
       "q" 'quit-window))
+
   (when (featurep 'elisp-demos)
     (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)))
 
@@ -84,6 +86,7 @@
     (evil-define-key 'normal dired-mode-map
       (kbd "SPC") nil
       "," nil
+      ":" 'evil-ex
       "F" 'dired-create-empty-file
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line
