@@ -99,8 +99,9 @@
   ;;               (setq-local company-backends
   ;;                           '((company-lsp :separate company-yasnippet)))))
 
-  (when (package-installed-p 'focus)
-    (advice-add 'lsp :after (lambda () (focus-mode 1)))))
+  ;; (when (package-installed-p 'focus)
+  ;;   (advice-add 'lsp :after (lambda () (focus-mode 1))))
+  )
 
 ;; (use-package company-lsp
 ;;   :after (company lsp-mode)
