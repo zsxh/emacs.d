@@ -43,12 +43,16 @@
 ;; Theme
 (use-package doom-themes
   :ensure t
-  :if (display-graphic-p)
+  ;; :if (display-graphic-p)
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme (intern personal-doom-theme) t)
+
+  ;; Gui personal-doom-theme / terminal doom-nord theme
+  (if (display-graphic-p)
+      (load-theme (intern personal-doom-theme) t)
+    (load-theme 'doom-nord t))
 
   ;; Enable flashing mode-line on errors
   ;; (doom-themes-visual-bell-config)
@@ -73,7 +77,7 @@
   (setq doom-modeline-major-mode-icon nil)
   (setq doom-modeline-buffer-file-name-style 'buffer-name))
 
-;; Display time on modeline
+;; ;; Display time on modeline
 (setq display-time-format "%Y/%m/%d 周%a %H:%M")
 (setq display-time-default-load-average nil) ; don't show load avera
 (display-time-mode)
@@ -91,27 +95,41 @@
 ;; download ans install default fonts:
 ;; SF Mono: https://github.com/ZulwiyozaPutra/SF-Mono-Font
 ;; Source Han Serief: https://github.com/adobe-fonts/source-han-serif
-(set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)
+(when (display-graphic-p)
+  (ignore-errors
+    (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)))
+
 ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
 ;;   (set-fontset-font (frame-parameter nil 'font)
 ;;                     charset (font-spec :family "Source Han Serif"))
 ;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
 
 ;; Line Number
-;; (use-package display-line-numbers
-;;   :ensure nil
-;;   :hook (prog-mode . display-line-numbers-mode))
+(use-package display-line-numbers
+  :defer t
+  ;; :hook (prog-mode . display-line-numbers-mode)
+  )
 
 ;; Emacs startup *scratch* buffer
 (setq initial-buffer-choice t)
 
-;; https://github.com/cyrus-and/zoom
+;; ;; https://github.com/cyrus-and/zoom
 (use-package zoom
   ;; https://github.com/cyrus-and/zoom/issues/3
   ;; set which-key-popup-type to 'minibuffer to avoid which-key awkward looking
   :ensure t
   ;; :commands (zoom zoom-mode)
   :hook (after-init . zoom-mode))
+
+;; UI for emacs --daemon/ emacsclient -c
+(unless (display-graphic-p)
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (when (display-graphic-p)
+                (load-theme (intern personal-doom-theme) t)
+                (set-face-foreground 'dired-directory "#3B6EA8")
+                (ignore-errors
+                  (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t))))))
 
 
 (provide 'init-ui)
