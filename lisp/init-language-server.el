@@ -90,11 +90,9 @@
         lsp-inhibit-message t
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t
-        ;; TODO: until native-json stable
         ;; lsp-use-native-json nil
         )
 
-  ;; FIXME: enable company-yasnippet, but can be messy
   ;; (advice-add 'lsp :after
   ;;             (lambda ()
   ;;               (setq-local company-backends
@@ -104,9 +102,9 @@
   ;;   (advice-add 'lsp :after (lambda () (focus-mode 1))))
   )
 
-;; (use-package company-lsp
-;;   :after (company lsp-mode)
-;;   :ensure t)
+(use-package company-lsp
+  :after (company lsp-mode)
+  :ensure t)
 
 (use-package lsp-ui
   :after lsp-mode
