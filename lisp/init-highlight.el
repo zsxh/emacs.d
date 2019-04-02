@@ -49,7 +49,9 @@
       (symbol-overlay-jump-call 'symbol-overlay-basic-jump (- count 1))))
 
   (define-key symbol-overlay-map (kbd "<") 'symbol-overlay-goto-first)
-  (define-key symbol-overlay-map (kbd ">") 'symbol-overlay-goto-last))
+  (define-key symbol-overlay-map (kbd ">") 'symbol-overlay-goto-last)
+  (define-key symbol-overlay-map (kbd "h") 'nil)
+  (define-key symbol-overlay-map (kbd "?") 'symbol-overlay-map-help))
 
 ;; Color String
 (use-package rainbow-mode
