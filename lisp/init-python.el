@@ -56,6 +56,7 @@
   (add-hook 'python-mode-hook 'lsp))
 
 (defun +python/set-leader-keys ()
+  (+language-server/set-common-leader-keys python-mode-map)
   (+funcs/set-leader-keys-for-major-mode
    python-mode-map
    "'"  '(+python/repl :which-key "repl")
