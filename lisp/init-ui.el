@@ -114,7 +114,7 @@
       ;; Download ans install SF Mono fonts:
       ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
       (ignore-errors
-        (set-frame-font "SF Mono-13.5:weight=semi-bold" nil t)))
+        (set-frame-font "SF Mono-11.5:weight=semi-bold" nil t)))
     ;; Terminal
     (unless (display-graphic-p)
       (load-theme 'doom-nord t))
