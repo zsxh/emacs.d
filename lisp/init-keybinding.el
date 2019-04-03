@@ -62,6 +62,7 @@
  "9" 'winum-select-window-9
  ;; Application
  "a" '(nil :which-key "application")
+ "ad" '(docker :which-key "docker")
  "af" '(elfeed :which-key "elfeed")
  "ao" '(nil :which-key "org")
  "aoa" '(org-agenda :which-key "org-agenda")

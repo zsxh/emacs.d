@@ -59,6 +59,7 @@
 (require 'init-org)
 (require 'init-shell-term)
 (require 'init-editor)
+(require 'init-docker)
 
 ;; Completion in Emacs
 (require 'init-ivy)
