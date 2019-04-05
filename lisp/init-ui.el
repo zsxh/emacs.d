@@ -72,14 +72,31 @@
   (setq doom-modeline-buffer-file-name-style 'buffer-name))
 
 ;; ;; Display time on modeline
-(setq display-time-format "%Y/%m/%d 周%a %H:%M")
+(setq display-time-format "%Y/%m/%d %A %H:%M")
 (setq display-time-default-load-average nil) ; don't show load avera
 (display-time-mode)
 
+(defcustom +ui/display-time-format-style 'long
+  "Customize time format."
+  :type '(radio (const :tag "Display time format, Year/Month/Day Weekname Hour/Minute" long)
+                (const :tag "Display time format, Hour/Minute" short)))
+
 (defun +ui/toggle-display-time-mode ()
-  (if (<= (window-width) 110)
+  "Display time format depending on window-width."
+  (unless (active-minibuffer-window)
+    (cond
+     ((and (eq +ui/display-time-format-style 'long)
+           (<= (window-width) 110))
+      (setq +ui/display-time-format-style 'short)
+      (setq display-time-format "%H:%M")
       (display-time-mode -1)
-    (display-time-mode 1)))
+      (display-time-mode 1))
+     ((and (eq +ui/display-time-format-style 'short)
+           (> (window-width) 110))
+      (setq +ui/display-time-format-style 'long)
+      (setq display-time-format "%Y/%m/%d %A %H:%M")
+      (display-time-mode -1)
+      (display-time-mode 1)))))
 
 (add-hook 'window-configuration-change-hook '+ui/toggle-display-time-mode)
 
