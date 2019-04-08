@@ -21,22 +21,11 @@
     (dap-ui-mode 1))
   (advice-add 'lsp :after #'+dap/enable)
   :config
-
   ;; you neead to install several debugger first: lldb, ptvsd, eclipse jdt server, etc. links below:
   (require 'dap-gdb-lldb) ;https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb
   (require 'dap-python)  ;https://github.com/emacs-lsp/dap-mode#python
   (require 'dap-java)    ;https://github.com/emacs-lsp/dap-mode#java
-
-  (add-hook 'dap-ui-repl-mode-hook
-            (lambda ()
-              (setq-local company-minimum-prefix-length 1)))
-
-  (defun +dap/after-starting-debugging (debug-args)
-    (unless (hash-table-empty-p (dap--get-breakpoints))
-        ;; (switch-to-buffer-other-window (dap--debug-session-output-buffer (dap--cur-session-or-die)))
-      (hydra-debugger-control/body)))
-
-  (advice-add 'dap-start-debugging :after '+dap/after-starting-debugging))
+  )
 
 (with-eval-after-load 'dap-mode
 
@@ -82,7 +71,40 @@ _Q_: Disconnect    _sS_: List sessions    _bl_: Set log message _eis_: Inspect t
     ("eir" dap-ui-inspect-region)
     ("eis" dap-ui-inspect-thing-at-point)
 
-    ("q" nil "quit")))
+    ("q" nil "quit"))
+
+  (add-hook 'dap-ui-repl-mode-hook
+            (lambda ()
+              (setq-local company-minimum-prefix-length 1)))
+
+  (defun +dap/window-visible (b-name)
+    "Return whether B-NAME is visible."
+    (-> (-compose 'buffer-name 'window-buffer)
+        (-map (window-list))
+        (-contains? b-name)))
+
+  (defun +dap/show-debug-windows (session)
+    "Show debug windows."
+    (let ((lsp--cur-workspace (dap--debug-session-workspace session)))
+      (save-excursion
+        ;; display locals
+        (unless (+dap/window-visible dap-ui--locals-buffer)
+          (dap-ui-locals))
+        ;; display sessions
+        (unless (+dap/window-visible dap-ui--sessions-buffer)
+          (dap-ui-sessions)))))
+
+  (defun +dap/hide-debug-windows (session)
+    "Hide debug windows when all debug sessions are dead."
+    (unless (-filter 'dap--session-running (dap--get-sessions))
+      (and (get-buffer dap-ui--sessions-buffer)
+           (kill-buffer dap-ui--sessions-buffer))
+      (and (get-buffer dap-ui--locals-buffer)
+           (kill-buffer dap-ui--locals-buffer))))
+
+  ;; (add-hook 'dap-stopped-hook '+dap/show-debug-windows)
+  (add-hook 'dap-stopped-hook (lambda (debug-session) (hydra-debugger-control/body)))
+  (add-hook 'dap-terminated-hook '+dap/hide-debug-windows))
 
 
 ;; Set up keybindings for dap-debugger
