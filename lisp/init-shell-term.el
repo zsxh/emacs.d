@@ -58,6 +58,8 @@
   :commands (vterm vterm-other-window)
   :preface (setq vterm-install t)
   :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'vterm-mode 'insert))
   (with-eval-after-load 'doom-themes
     (setf (elt ansi-color-names-vector 0) (doom-color 'bg)))
   (defun vterm-kill-buffer-after-exit (buf)
