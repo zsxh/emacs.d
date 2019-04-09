@@ -114,8 +114,10 @@
 (use-package fd-dired
   :if (executable-find "fd")
   :ensure t
-  :config
+  :init
   (defalias '+dired/find-program 'fd-dired)
+  :commands fd-dired
+  :config
   (setq fd-dired-pre-fd-args "-0 -c never -I"
         fd-dired-ls-option '("| xargs -0 ls -alhdN" . "-ld")))
 
