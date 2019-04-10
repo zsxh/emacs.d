@@ -16,7 +16,7 @@
   :quelpa ((dap-mode :fetcher github :repo "yyoncho/dap-mode"))
   :commands dap-mode
   :init
-  (defun +dap/enable ()
+  (defun +dap/enable (&optional arg)
     (dap-mode 1)
     (dap-ui-mode 1))
   (advice-add 'lsp :after #'+dap/enable)
