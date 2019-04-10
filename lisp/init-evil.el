@@ -76,6 +76,7 @@
 
 (with-eval-after-load 'evil
   ;; evil key bindings for some emacs built-in packages
+  (define-key special-mode-map "h" nil)
 
   ;; package-menu-mode-map have higher priority than evil key bingdings
   (with-eval-after-load 'package
@@ -110,6 +111,7 @@
       "gr" 'imenu-list-refresh))
 
   (with-eval-after-load 'debug
+    (evil-set-initial-state 'debugger-mode 'normal)
     (evil-define-key 'normal debugger-mode-map
       (kbd "<return>") 'backtrace-help-follow-symbol
       "h" 'evil-backward-char
@@ -118,6 +120,7 @@
       "?" 'describe-mode
       "l" 'evil-forward-char
       "L" 'debugger-list-functions))
+
   (with-eval-after-load 'profiler
     (evil-define-key 'normal profiler-report-mode-map
       "h" 'evil-backward-char
