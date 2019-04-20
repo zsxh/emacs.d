@@ -61,7 +61,7 @@
 (use-package leetcode
   :commands leetcode
   :preface
-  (use-package furl :ensure t :defer t)
+  (use-package request-deferred :ensure t :defer t)
   (use-package graphql :ensure t :defer t)
   :quelpa ((leetcode :fetcher github :repo "kaiwk/leetcode.el")))
 
