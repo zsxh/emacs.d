@@ -21,6 +21,7 @@
     (dap-ui-mode 1))
   (advice-add 'lsp :after #'+dap/enable)
   :config
+  (require 'dap-utils)
   ;; you neead to install several debugger first: lldb, ptvsd, eclipse jdt server, etc. links below:
   (require 'dap-gdb-lldb) ;https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb
   (require 'dap-python)  ;https://github.com/emacs-lsp/dap-mode#python

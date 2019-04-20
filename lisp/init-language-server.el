@@ -90,7 +90,7 @@
         lsp-inhibit-message t
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t
-        ;; lsp-use-native-json nil
+        lsp-use-native-json nil
         lsp-enable-symbol-highlighting nil)
 
   ;; (advice-add 'lsp :after
