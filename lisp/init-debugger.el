@@ -74,6 +74,8 @@ _Q_: Disconnect    _sS_: List sessions    _bl_: Set log message _eis_: Inspect t
 
     ("q" nil "quit"))
 
+  ;; Display debug windows on session startup
+  ;; https://github.com/emacs-lsp/dap-mode/wiki/HowTo:-Display-debug-windows-on-session-startup
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
               (setq-local company-minimum-prefix-length 1)))
@@ -103,96 +105,52 @@ _Q_: Disconnect    _sS_: List sessions    _bl_: Set log message _eis_: Inspect t
       (and (get-buffer dap-ui--locals-buffer)
            (kill-buffer dap-ui--locals-buffer))))
 
-  ;; (add-hook 'dap-stopped-hook '+dap/show-debug-windows)
-  (add-hook 'dap-stopped-hook (lambda (debug-session) (hydra-debugger-control/body)))
-  (add-hook 'dap-terminated-hook '+dap/hide-debug-windows))
+  ;; (add-hook 'dap-stopped-hook (lambda (debug-session) (hydra-debugger-control/body)))
+  (add-hook 'dap-stopped-hook '+dap/show-debug-windows)
+  (add-hook 'dap-terminated-hook '+dap/hide-debug-windows)
 
+  (defvar +dap-running-session-mode-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "n") 'dap-next)
+      (define-key map (kbd "i") 'dap-step-in)
+      (define-key map (kbd "o") 'dap-step-out)
+      (define-key map (kbd "c") 'dap-continue)
+      (define-key map (kbd "r") 'dap-restart-frame)
+      (define-key map (kbd "Q") 'dap-disconnect)
+      (define-key map (kbd "b") 'dap-breakpoint-toggle)
+      (define-key map (kbd "B") 'dap-breakpoint-condition)
+      map)
+    "Keybindings for +dap-runnong-session-mode")
 
-;; Set up keybindings for dap-debugger
-;; (with-eval-after-load 'dap-mode
+  ;; activate minor modes when stepping through code
+  ;; https://github.com/emacs-lsp/dap-mode/wiki/How-to-activate-minor-modes-when-stepping-through-code
+  (define-minor-mode +dap-running-session-mode
+    "A mode for adding keybindings to running sessions"
+    nil
+    nil
+    +dap-running-session-mode-map
+    (with-eval-after-load 'evil
+      (evil-normalize-keymaps) ;; if you use evil, this is necessary to update the keymaps
+      (evil-make-overriding-map +dap-running-session-mode-map))
+    ;; The following code adds to the dap-terminated-hook
+    ;; so that this minor mode will be deactivated when the debugger finishes
+    (when +dap-running-session-mode
+      (let ((session-at-creation (dap--cur-active-session-or-die)))
+        (add-hook 'dap-terminated-hook
+                  (lambda (session)
+                    (when (eq session session-at-creation)
+                      (+dap-running-session-mode -1)))))))
 
-;;   (defvar +dap/debug-mode-session-buffers (make-hash-table :test 'equal)
-;;     "List of buffers that are associated with the session")
+  ;; Activate this minor mode when dap is initialized
+  (add-hook 'dap-session-created-hook '+dap-running-session-mode)
 
-;;   (defvar +dap/debug-mode-map
-;;     (let ((map (make-sparse-keymap)))
-;;       (define-key map (kbd "n") 'dap-next)
-;;       (define-key map (kbd "s") 'dap-step-in)
-;;       (define-key map (kbd "o") 'dap-step-out)
-;;       (define-key map (kbd "b") 'dap-breakpoint-toggle)
-;;       (define-key map (kbd "B") 'dap-breakpoint-condition)
-;;       (define-key map (kbd "c") 'dap-continue)
-;;       (define-key map (kbd "C") 'dap-disconnect)
-;;       map)
-;;     "my dap mode debug keybindings")
+  ;; Activate this minor mode when hitting a breakpoint in another file
+  (add-hook 'dap-stopped-hook '+dap-running-session-mode)
 
-;;   (define-minor-mode +dap/debug-mode
-;;     "A minor mode for dap debug key settings."
-;;     :init-value nil
-;;     :keymap +dap/debug-mode-map)
-
-;;   (define-global-minor-mode +dap/global-debug-mode +dap/debug-mode
-;;     (lambda ()
-;;       (when (memq major-mode '(java-mode python-mode c-mode c++-mode))
-;;         (+dap/debug-mode))))
-
-;;   (with-eval-after-load 'evil
-;;     (evil-set-initial-state '+dap/debug-mode 'normal)
-;;     (evil-make-overriding-map +dap/debug-mode-map))
-
-;;   (defun +dap/debug-mode-enable ()
-;;     (unless +dap/debug-mode
-;;       (+dap/debug-mode)
-;;       ;; `evil-define-key' for minor mode does not take effect until a state transition
-;;       ;; Issue: https://github.com/emacs-evil/evil/issues/301
-;;       (when (bound-and-true-p evil-mode)
-;;         (if (eq evil-state 'normal)
-;;             (progn
-;;               (evil-change-state 'emacs)
-;;               (evil-change-state 'normal))
-;;           (progn
-;;             (let ((cur-state evil-state))
-;;               (evil-change-state 'normal)
-;;               (evil-change-state cur-state)))))))
-
-;;   (defun +dap/debug-mode-disable ()
-;;     (when +dap/debug-mode
-;;       (+dap/debug-mode -1)))
-
-;;   (defun +dap/enable-and-mark (&optional debug-session)
-;;     (unless +dap/debug-mode
-;;       (+dap/debug-mode-enable)
-;;       (let* ((debug-session (if debug-session debug-session (dap--cur-session)))
-;;              (session-name (dap--debug-session-name debug-session))
-;;              (buffer-list (gethash session-name +dap/debug-mode-session-buffers)))
-;;         (push (current-buffer) buffer-list)
-;;         (puthash session-name buffer-list +dap/debug-mode-session-buffers))))
-
-;;   (defun +dap/disable-and-unmark (&optional debug-session)
-;;     (let* ((debug-session (if debug-session debug-session (dap--cur-session)))
-;;            (session-name (dap--debug-session-name debug-session))
-;;            (buffer-list (gethash session-name +dap/debug-mode-session-buffers))
-;;            (inhibit-message t))
-;;       (dolist (cur-buffer buffer-list)
-;;         (with-current-buffer cur-buffer
-;;           (+dap/debug-mode-disable)))
-;;       (remhash session-name +dap/debug-mode-session-buffers)
-;;       (message "+dap/debug-mode disabled :session %s" session-name)))
-
-;;   ;; Manual toggle
-;;   (defun +dap/debug-key-settings--toggle ()
-;;     (interactive)
-;;     (if +dap/debug-mode
-;;         (+dap/debug-mode-disable)
-;;       (+dap/debug-mode-enable)))
-
-;;   ;; Auto toggle
-;;   ;; somethings wrong with dap-session-create-hook's argument 'debug-session', mark buffer when dap--go-to-stack-frame instead
-;;   ;; (add-hook 'dap-session-created-hook #'+dap/debug-mode-enable)
-;;   (advice-add 'dap--go-to-stack-frame :after
-;;               (lambda (debug-session stack-frame)
-;;                 (+dap/enable-and-mark debug-session)))
-;;   (add-hook 'dap-terminated-hook #'+dap/disable-and-unmark))
+  ;; Activate this minor mode when stepping into code in another file
+  (add-hook 'dap-stack-frame-changed-hook (lambda (session)
+                                            (when (dap--session-running session)
+                                              (+dap-running-session-mode 1)))))
 
 
 (provide 'init-debugger)
