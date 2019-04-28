@@ -39,7 +39,8 @@
   ;; (setq helm-dash-browser-func 'eww)
   (setq helm-dash-browser-func 'eaf-open-url)
   :config
-  (setq helm-dash-common-docsets (helm-dash-installed-docsets)))
+  (setq helm-dash-common-docsets (helm-dash-installed-docsets))
+  (setq helm-dash-enable-debugging nil))
 
 ;;;;;;;;;;;;;; EDIT ;;;;;;;;;;;;;;
 
