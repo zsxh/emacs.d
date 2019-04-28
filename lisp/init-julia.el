@@ -20,8 +20,17 @@
 (use-package julia-mode
   :ensure t
   :defer t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.jl\\'" . julia-mode))
   :config
   (setq julia-indent-offset 2))
+
+;; for lsp
+(use-package lsp-julia
+  :after julia-mode
+  :quelpa ((lsp-julia :fetcher github :repo "non-Jedi/lsp-julia"))
+  :config
+  (setq lsp-julia-default-environment "~/.julia/environments/v1.1"))
 
 (add-hook 'julia-mode-hook 'lsp)
 
@@ -39,58 +48,7 @@
 ;;                                "--history-file=no"
 ;;                                "-e"
 ;;                                "using LanguageServer, Sockets, SymbolServer; server = LanguageServer.LanguageServerInstance(stdin, stdout, false, \"~./julia/enviroments/v1.0\", \"\", Dict()); run(server);"))))
-
 ;; (add-hook 'julia-mode-hook 'eglot-ensure)
-
-;; for lsp
-(with-eval-after-load 'lsp-mode
-  (defcustom lsp-julia-default-environment "~/.julia/environments/v1.0"
-    "The path to the default environment."
-    :type 'string
-    :group 'lsp-julia)
-
-  (defcustom lsp-julia-command "julia"
-    "Command to invoke julia with."
-    :type 'string
-    :group 'lsp-julia)
-
-  (defcustom lsp-julia-flags '("--startup-file=no" "--history-file=no")
-    "List of additional flags to call julia with."
-    :type '(repeat (string :tag "argument"))
-    :group 'lsp-julia)
-
-  (defcustom lsp-julia-timeout 30
-    "Time before lsp-mode should assume julia just ain't gonna start."
-    :type 'number
-    :group 'lsp-julia)
-
-  (defun lsp-julia--get-root ()
-    (let ((dir (locate-dominating-file default-directory "Project.toml")))
-      (if dir (expand-file-name dir)
-        (expand-file-name lsp-julia-default-environment))))
-
-  (defun lsp-julia--rls-command ()
-    `(,lsp-julia-command
-      ,@lsp-julia-flags
-      ,(concat "-e using LanguageServer, Sockets, SymbolServer;"
-               " server = LanguageServer.LanguageServerInstance("
-               " stdin, stdout, false,"
-               " \"" (lsp-julia--get-root) "\","
-               " \"\", Dict());"
-               " server.runlinter = true;"
-               " run(server);")))
-
-  (defconst lsp-julia--handlers
-    '(("window/setStatusBusy" .
-       (lambda (w _p)))
-      ("window/setStatusReady" .
-       (lambda(w _p)))))
-
-  (with-eval-after-load 'lsp-clients
-    (lsp-register-client
-     (make-lsp-client :new-connection (lsp-stdio-connection 'lsp-julia--rls-command)
-                      :major-modes '(julia-mode)
-                      :server-id 'julia-ls))))
 
 
 (provide 'init-julia)
