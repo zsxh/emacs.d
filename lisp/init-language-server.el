@@ -51,6 +51,7 @@
          "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
          "dh" '(hydra-debugger-control/body :which-key "hydra-control")
          "dr" '(dap-debug :which-key "run")
+         "D" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
          "f" '(lsp-format-buffer :which-key "format")
          "g" '(nil :which-key "go")
          "gd" '(lsp-find-definition :which-key "find-definitions")
