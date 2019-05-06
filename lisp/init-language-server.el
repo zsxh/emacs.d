@@ -92,7 +92,9 @@
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t
         lsp-use-native-json nil
-        lsp-enable-symbol-highlighting nil)
+        lsp-enable-symbol-highlighting nil
+        ;; FIXME: ui freezing when lsp-eldoc-enable-signature-help
+        lsp-eldoc-enable-signature-help nil)
 
   ;; (advice-add 'lsp :after
   ;;             (lambda ()
