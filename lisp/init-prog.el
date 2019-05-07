@@ -184,6 +184,7 @@
   :ensure t
   :commands string-inflection-all-cycle)
 
+;;;;;;;;;;;;;; Code Folding ;;;;;;;;;;;;;;
 ;; evil open/close/toggle folds rely on hideshow
 ;; "z a" evil-toggle-fold
 ;; "z m" evil-close-folds
@@ -191,9 +192,15 @@
 (use-package hideshow
   :commands hs-minor-mode
   :hook (prog-mode . hs-minor-mode)
+  :preface
   :config
   (with-eval-after-load 'evil
-    (define-key evil-normal-state-map (kbd "z f") 'hs-hide-level)))
+    (define-key evil-normal-state-map (kbd "z f") 'hs-hide-level))
+  (defun hs-level-2 ()
+    (hs-hide-level 2))
+  (add-hook 'java-mode-hook 'hs-level-2)
+  (add-hook 'rust-mode-hook 'hs-level-2)
+  (add-hook 'python-mode-hook 'hs-level-2))
 
 ;; https://gitlab.com/jgkamat/rmsbolt
 ;; RMSBolt tries to make it easy to see what your compiler is doing.
