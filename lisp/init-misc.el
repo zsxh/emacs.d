@@ -86,9 +86,11 @@
 (defun toggle-socks-proxy ()
   "Toggle socks proxy."
   (interactive)
+  (require 'socks)
   (if (equal url-gateway-method 'native)
       (proxy-mode-socks-enable)
     (proxy-mode-socks-disable)))
+
 
 (provide 'init-misc)
 
