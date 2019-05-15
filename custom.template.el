@@ -4,6 +4,8 @@
 ;;;       Put your own configurations in custom-post.el to override default configurations.
 ;;; Code:
 
+;; Emacs package archives
+;; (setq personal-package-archives 'melpa)
 
 ;; Github token string for eaf-markdown-previewer
 (setq personal-eaf-grip-token nil)

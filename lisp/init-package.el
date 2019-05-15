@@ -23,10 +23,37 @@
       (add-hook 'after-init-hook #'package--save-selected-packages))))
 
 ;; Set EPLA
-(setq package-archives
-      '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-        ("org-cn"   . "http://elpa.emacs-china.org/org/")
-        ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
+(defun set-package-archives (archives)
+  "Set specific package ARCHIVES repository."
+  (interactive
+   (list (intern (completing-read "Choose package archives: "
+                                  '(melpa melpa-mirror emacs-china netease tuna)))))
+
+  (setq package-archives
+        (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                            (not (gnutls-available-p))))
+               (proto (if no-ssl "http" "https")))
+          (pcase archives
+            ('melpa
+             `(,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))
+               ,(cons "melpa" (concat proto "://melpa.org/packages/"))
+               ,(cons "org" (concat proto "://orgmode.org/elpa/"))))
+            ('melpa-mirror
+             `(,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))
+               ,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/"))
+               ,(cons "org" (concat proto "://orgmode.org/elpa/"))))
+            ('emacs-china
+             `(,(cons "gnu-cn" (concat proto "://elpa.emacs-china.org/gnu/"))
+               ,(cons "melpa-cn" (concat proto "://elpa.emacs-china.org/melpa/"))
+               ,(cons "org-cn" (concat proto "://elpa.emacs-china.org/org/"))))
+            ('tuna
+             `(,(cons "gnu-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+               ,(cons "melpa-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))
+               ,(cons "org-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/org/"))))
+            (archives
+             (error "Unknown archives: `%s'" archives))))))
+
+(set-package-archives personal-package-archives)
 
 ;; Initialize packages
 (require 'package)

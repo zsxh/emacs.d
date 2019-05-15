@@ -14,6 +14,14 @@
   "Personal Emacs customizations."
   :group 'convenience)
 
+(defcustom personal-package-archives 'melpa
+  "Set package archives from which to fetch."
+  :type '(choice
+          (const :tag "Melpa" melpa)
+          (const :tag "Melpa Mirror" melpa-mirror)
+          (const :tag "Emacs-China" emacs-china)
+          (const :tag "Tuna" tuna)))
+
 (defcustom personal-eaf-grip-token nil
   "Github personal access token for eaf-markdown-previewer.
 https://github.com/manateelazycat/emacs-application-framework#markdown-previewer"
