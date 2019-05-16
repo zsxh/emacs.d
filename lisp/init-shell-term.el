@@ -49,14 +49,15 @@
 ;; cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
 ;; make
 (use-package vterm
-  :quelpa (vterm :fetcher github :repo "akermu/emacs-libvterm"
-                 :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
+  ;; :quelpa (vterm :fetcher github :repo "akermu/emacs-libvterm"
+  ;;                :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
+  :ensure t
+  :init (setq vterm-install t)
   :if (and (executable-find "vterm-ctrl")
            (executable-find "make")
            (executable-find "cmake")
            (fboundp 'module-load))
   :commands (vterm vterm-other-window)
-  :preface (setq vterm-install t)
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'vterm-mode 'insert))
