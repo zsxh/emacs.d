@@ -122,6 +122,9 @@ _Q_: Disconnect    _sS_: List sessions    _bl_: Set log message _eis_: Inspect t
       map)
     "Keybindings for +dap-runnong-session-mode")
 
+  (defvar +dap-running-session-buffers (make-hash-table :test 'equal)
+    "List of buffers that are associated with the session")
+
   ;; activate minor modes when stepping through code
   ;; https://github.com/emacs-lsp/dap-mode/wiki/How-to-activate-minor-modes-when-stepping-through-code
   (define-minor-mode +dap-running-session-mode
@@ -139,18 +142,33 @@ _Q_: Disconnect    _sS_: List sessions    _bl_: Set log message _eis_: Inspect t
         (add-hook 'dap-terminated-hook
                   (lambda (session)
                     (when (eq session session-at-creation)
-                      (+dap-running-session-mode -1)))))))
+                      (+dap-running-session-disable session)))))))
+
+  (defun +dap-running-session-enable (debug-session)
+    (+dap-running-session-mode 1)
+    (let* ((session-name (dap--debug-session-name debug-session))
+           (buffer-list (gethash session-name +dap-running-session-buffers)))
+      (push (current-buffer) buffer-list)
+      (puthash session-name buffer-list +dap-running-session-buffers)))
+
+  (defun +dap-running-session-disable (debug-session)
+    (let* ((session-name (dap--debug-session-name debug-session))
+           (buffer-list (gethash session-name +dap-running-session-buffers)))
+      (dolist (cur-buffer buffer-list)
+        (with-current-buffer cur-buffer
+          (+dap-running-session-mode -1)))
+      (remhash session-name +dap-running-session-buffers)))
 
   ;; Activate this minor mode when dap is initialized
-  (add-hook 'dap-session-created-hook '+dap-running-session-mode)
+  (add-hook 'dap-session-created-hook '+dap-running-session-enable)
 
   ;; Activate this minor mode when hitting a breakpoint in another file
-  (add-hook 'dap-stopped-hook '+dap-running-session-mode)
+  (add-hook 'dap-stopped-hook '+dap-running-session-enable)
 
   ;; Activate this minor mode when stepping into code in another file
   (add-hook 'dap-stack-frame-changed-hook (lambda (session)
                                             (when (dap--session-running session)
-                                              (+dap-running-session-mode 1)))))
+                                              (+dap-running-session-enable session)))))
 
 
 (provide 'init-debugger)
