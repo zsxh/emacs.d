@@ -10,6 +10,10 @@
 
 ;;; Code:
 
+;;;;;;;;;;;;;; Quick Scroll line ;;;;;;;;;;;;;;
+;; keymap ("C-l" 'recenter-top-bottom) cycling 25%,top,bottom line position
+(add-hook 'prog-mode-hook (lambda () (setq-local recenter-positions '(0.25 top bottom))))
+
 ;;;;;;;;;;;;;; VIEW ;;;;;;;;;;;;;;
 
 ;; Focus provides focus-mode that dims the text of surrounding sections
