@@ -22,10 +22,33 @@
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
 (let ((normal-gc-cons-threshold (* 20 1024 1024))
-      (init-gc-cons-threshold (* 128 1024 1024)))
-  (setq gc-cons-threshold init-gc-cons-threshold)
-  (add-hook 'emacs-startup-hook (lambda ()
-                                  (setq gc-cons-threshold normal-gc-cons-threshold))))
+      (larger-gc-cons-threshold (* 128 1024 1024)))
+  (setq gc-cons-threshold larger-gc-cons-threshold)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              "Restore defalut values after startup."
+              (setq gc-cons-threshold normal-gc-cons-threshold)
+
+              ;; GC automatically while unfocusing the frame
+              ;; `focus-out-hook' is obsolete since 27.1
+              (if (boundp 'after-focus-change-function)
+                  (add-function :after after-focus-change-function
+                                (lambda ()
+                                  (unless (frame-focus-state)
+                                    (garbage-collect))))
+                (add-hook 'focus-out-hook 'garbage-collect))
+
+              ;; Avoid GCs while using `ivy'/`counsel'/`swiper' and `helm', etc.
+              ;; @see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+              (defun my-minibuffer-setup-hook ()
+                (setq gc-cons-threshold larger-gc-cons-threshold))
+
+              (defun my-minibuffer-exit-hook ()
+                (garbage-collect)
+                (setq gc-cons-threshold normal-gc-cons-threshold))
+
+              (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+              (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook))))
 
 ;; Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
