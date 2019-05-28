@@ -20,6 +20,7 @@
   :commands org-open-at-point
   :config
   (setq org-confirm-babel-evaluate nil) ;don't prompt me to confirm everytime I want to evaluate a block
+  (setq org-time-stamp-formats '("<%Y-%m-%d %A>" . "<%Y-%m-%d %A %H:%M>"))
 
   ;; display/update images in the buffer after I evaluate
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
