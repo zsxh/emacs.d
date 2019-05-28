@@ -44,6 +44,10 @@ Origin repo: https://github.com/hlissner/emacs-doom-themes"
   "Shell used in `term' and `ansi-term'."
   :type 'string)
 
+(defcustom personal-http-proxy "127.0.0.1:18080"
+  "Set http(s) proxy."
+  :type 'string)
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (if (file-exists-p custom-file)

@@ -65,6 +65,33 @@
   (use-package graphql :ensure t :defer t)
   :quelpa ((leetcode :fetcher github :repo "kaiwk/leetcode.el")))
 
+;; Http(s) Proxy
+(defun proxy-http-show ()
+  "Show http/https proxy."
+  (interactive)
+  (if url-proxy-services
+      (message "Current HTTP proxy is \"%s\"" personal-http-proxy)
+    (message "No proxy")))
+
+(defun proxy-http-enable ()
+  "Enable http/https proxy."
+  (setq url-proxy-services `(("http" . ,personal-http-proxy)
+                             ("https" . ,personal-http-proxy)
+                             ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
+  (proxy-http-show))
+
+(defun proxy-http-disable ()
+  "Disable http/https proxy."
+  (setq url-proxy-services nil)
+  (proxy-http-show))
+
+(defun proxy-http-toggle ()
+  "Toggle http/https proxy."
+  (interactive)
+  (if url-proxy-services
+      (proxy-http-disable)
+    (proxy-http-enable)))
+
 ;; Socks Proxy
 (use-package socks
   :ensure nil
@@ -74,7 +101,7 @@
     "Enable Socks proxy."
     (setq url-gateway-method 'socks)
     (setq socks-noproxy '("localhost"))
-    (setq socks-server '("Default server" "socks" 1080 5))
+    (setq socks-server '("Default server" "localhost" 1080 5))
     (message "socks proxy %s enabled" socks-server))
 
   (defun proxy-mode-socks-disable ()
@@ -83,7 +110,7 @@
     (message "socks proxy diabled")))
 
 ;;;###autoload
-(defun toggle-socks-proxy ()
+(defun proxy-socks-toggle ()
   "Toggle socks proxy."
   (interactive)
   (require 'socks)
