@@ -60,8 +60,9 @@
   :commands restclient-mode
   :config
   (use-package company-restclient
-    :ensure t)
-  (add-to-list 'company-backends 'company-restclient)
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-restclient))
   (with-eval-after-load 'evil
     (evil-define-key 'normal restclient-mode-map
       (kbd "RET") 'org-open-at-point)))

@@ -31,7 +31,9 @@
   (setq org-default-notes-file (concat org-directory "/gtd/caputure.org"))
 
   ;; Org table font
-  (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
+  ;; (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
+  ;; Download font https://mplus-fonts.osdn.jp/about-en.html
+  (set-face-attribute 'org-table nil :family "M+ 1m")
 
   ;; Org block face
   (set-face-background 'org-block "#E0E0E0")
