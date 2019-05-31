@@ -163,6 +163,11 @@
     (evil-make-overriding-map color-rg-mode-edit-map 'normal)
     (add-hook 'color-rg-mode-hook #'evil-normalize-keymaps)))
 
+;;
+(use-package rg
+  :ensure t
+  :commands (rg rg-dwim rg-project rg-literal))
+
 ;; https://github.com/rejeep/drag-stuff.el
 ;; Work fine with evil-mode
 (use-package drag-stuff
