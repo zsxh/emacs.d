@@ -272,6 +272,12 @@ current major mode."
 
 (setq-default evil-shift-width 2)
 
+;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
+
+(use-package editorconfig
+  :ensure t
+  :hook (emacs-startup . editorconfig-mode))
+
 (provide 'init-prog)
 
 
