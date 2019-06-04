@@ -194,16 +194,12 @@
 ;; "z r" evil-open-folds
 (use-package hideshow
   :commands hs-minor-mode
-  :hook (prog-mode . hs-minor-mode)
-  :preface
+  ;; FIXME: https://github.com/millejoh/emacs-ipython-notebook/issues/464#issuecomment-460380151
+  ;; the bicycle extension was using hideshow and conflicted with ein, so don't enable hs-minor-mode for prog-mode
+  :hook ((java-mode rust-mode python-mode) . (lambda () (hs-minor-mode) (hs-hide-level 2)))
   :config
   (with-eval-after-load 'evil
-    (define-key evil-normal-state-map (kbd "z f") 'hs-hide-level))
-  (defun hs-level-2 ()
-    (hs-hide-level 2))
-  (add-hook 'java-mode-hook 'hs-level-2)
-  (add-hook 'rust-mode-hook 'hs-level-2)
-  (add-hook 'python-mode-hook 'hs-level-2))
+    (define-key evil-normal-state-map (kbd "z f") 'hs-hide-level)))
 
 ;; https://gitlab.com/jgkamat/rmsbolt
 ;; RMSBolt tries to make it easy to see what your compiler is doing.
