@@ -50,20 +50,19 @@ and write the 'initial-scratch-message into it."
 Need major-mode-map symbol MODE-MAP and keybidngs map ARGS.
 
 It returns a code string to define local leader keys."
-  (let ((m-args (mapcar #'prefix-m args)))
-    `(progn
-       (general-define-key
-        :states 'normal
-        :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
-        :major-modes t
-        :prefix "SPC m"
-        ,@args)
-       (general-define-key
-        :states 'normal
-        :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
-        :major-modes t
-        :prefix ","
-        ,@args))))
+  `(progn
+     (general-define-key
+      :states 'normal
+      :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
+      :major-modes t
+      :prefix "SPC m"
+      ,@args)
+     (general-define-key
+      :states 'normal
+      :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
+      :major-modes t
+      :prefix ","
+      ,@args)))
 
 (defun +funcs/sudo-edit-current-file ()
   "Sudo edit current file."
