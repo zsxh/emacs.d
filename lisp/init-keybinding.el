@@ -135,6 +135,8 @@
  "jj" '(avy-goto-char-in-line :which-key "avy-goto-char-in-line")
  "jl" '(avy-goto-line :which-key "avy-goto-line")
  "jw" '(avy-goto-word-1 :which-key "avy-goto-word-1")
+ ;; Major
+ "m" '(nil :which-key "major")
  ;; Project
  "p" '(nil :which-key "project")
  ;; "p/" '(color-rg-search-project :which-key "rg-search-project")

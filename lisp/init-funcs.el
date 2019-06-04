@@ -50,17 +50,14 @@ and write the 'initial-scratch-message into it."
 Need major-mode-map symbol MODE-MAP and keybidngs map ARGS.
 
 It returns a code string to define local leader keys."
-  (defun prefix-m (element)
-    (if (stringp element) (format "m%s" element) element))
   (let ((m-args (mapcar #'prefix-m args)))
     `(progn
        (general-define-key
         :states 'normal
         :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
         :major-modes t
-        :prefix "SPC"
-        "m" '(nil :which-key "major")
-        ,@m-args)
+        :prefix "SPC m"
+        ,@args)
        (general-define-key
         :states 'normal
         :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
