@@ -1,4 +1,4 @@
-Updated: <2019-03-27 三>
+Updated: <2019-06-04 星期二 11:56>
 
 * Enviroment Tested
   - Emacs Version: 27.0.50
@@ -14,8 +14,11 @@ Updated: <2019-03-27 三>
       gtd
     - =org-babel=
       code blocks, also work well with jupyter
-  - =emacs-jupyter=
-    an interface to communicate with Jupyter kernels, provide jupyter-repl, org-jupyter integration
+  - =jupyter=
+    - =emacs-jupyter=
+      an interface to communicate with Jupyter kernels, provide jupyter-repl, org-jupyter integration
+    - =emacs-ipython-notebook=
+      Emacs IPython Notebook (EIN) lets you run Jupyter (formerly IPython) notebooks within Emacs
   - =editor enhancement=
     automatic parenthesis pairing, highlight ...
   - =package management=
