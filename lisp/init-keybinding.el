@@ -65,6 +65,7 @@
  "a" '(nil :which-key "application")
  "ad" '(docker :which-key "docker")
  "af" '(elfeed :which-key "elfeed")
+ "aj" '(ein:notebooklist-open :which-key "open-juputer-notebook")
  "ao" '(nil :which-key "org")
  "aoa" '(org-agenda :which-key "org-agenda")
  "aoc" '(org-capture :which-key "org-capture")
