@@ -29,7 +29,7 @@
   ;; (require 'poly-ein)
   ;; (setq ein:polymode t)
 
-  (add-hook 'ein:notebook-mode (lambda () (setq-local company-backends '(ein:company-backend :separate company-files))))
+  (add-hook 'ein:notebook-mode-hook (lambda () (setq-local company-backends '(ein:company-backend :separate company-files))))
 
   (defun +ein/ein:worksheet-merge-cell-next ()
     (interactive)
@@ -110,7 +110,7 @@
   (define-key ein:notebook-multilang-mode-map (kbd "M-j") 'ein:worksheet-move-cell-down)
   (define-key ein:notebook-multilang-mode-map (kbd "M-k") 'ein:worksheet-move-cell-up)
 
-  (defhydra ipython-notebook-hydra (:color purple :hint nil)
+  (defhydra ipython-notebook-hydra (:hint nil)
     "
  Operations on Cells^^^^^^            On Worksheets^^^^              Other
  ----------------------------^^^^^^   ------------------------^^^^   ----------------------------------^^^^
@@ -118,10 +118,9 @@
  [_K_/_J_]^^     move up/down         [_H_/_L_]   move left/right    [_C-l_/_C-S-l_] clear/clear all output
  [_C-k_/_C-j_]^^ merge above/below    [_1_.._9_]  open [1st..last]   [_C-o_]^^       open console
  [_O_/_o_]^^     insert above/below   [_+_/_-_]   create/delete      [_C-s_/_C-r_]   save/rename notebook
- [_y_/_p_/_d_]   copy/paste/delete    ^^^^                           [_x_]^^         close notebook
+ [_y_/_p_/_d_]   copy/paste/delete    [_s_]^^     split cell         [_x_]^^         close notebook
  [_u_]^^^^       change type          ^^^^                           [_q_]^^         quit
  [_RET_]^^^^     execute"
-    ("q" nil :exit t)
     ("h" ein:notebook-worksheet-open-prev-or-last)
     ("j" ein:worksheet-goto-next-input)
     ("k" ein:worksheet-goto-prev-input)
@@ -162,7 +161,8 @@
     ("9" ein:notebook-worksheet-open-last)
     ("+" ein:notebook-worksheet-insert-next)
     ("-" ein:notebook-worksheet-delete)
-    ("x" ein:notebook-close)))
+    ("x" ein:notebook-close :exit t)
+    ("q" nil :exit t)))
 
 
 (provide 'init-jupyter)
