@@ -23,7 +23,7 @@
   :ensure t
   :commands (ein:notebooklist-open ein:notebooklist-login) ;; run jupter notebook first
   :config
-  (with-eval-after-load 'ein:cell
+  (with-eval-after-load 'ein-cell
     (set-face-background 'ein:cell-input-area "#E0E0E0"))
 
   ;; (require 'poly-ein)
