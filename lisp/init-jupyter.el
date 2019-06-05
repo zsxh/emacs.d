@@ -148,8 +148,8 @@
     ("C-j" +ein/ein:worksheet-merge-cell-next)
     ("s" ein:worksheet-split-cell-at-point)
     ;; Notebook
-    ("C-s" ein:notebook-save-notebook-command)
-    ("C-r" ein:notebook-rename-command)
+    ("C-s" ein:notebook-save-notebook-command :exit t)
+    ("C-r" ein:notebook-rename-command :exit t)
     ("1" ein:notebook-worksheet-open-1th)
     ("2" ein:notebook-worksheet-open-2th)
     ("3" ein:notebook-worksheet-open-3th)
