@@ -38,6 +38,16 @@
 
   ;; if this is not required then the following keygindings fail
   (require 'ein-multilang)
+
+  ;; TODO: temporarily setup julia kernel, waiting upstream supporting it officially
+  (defun ein:ml-lang-setup-julia ()
+    (when (featurep 'julia-mode)
+      (setq-local mode-name "EIN[Julia]")
+      (setq-local indent-line-function
+                  (apply-partially #'ein:ml-indent-line-function #'julia-indent-line))
+      (set-syntax-table julia-mode-syntax-table)
+      (set-keymap-parent ein:notebook-multilang-mode-map julia-mode-map)))
+
   (+funcs/set-leader-keys-for-major-mode ein:notebook-multilang-mode-map
                                          "." 'ipython-notebook-hydra/body
                                          "y" 'ein:worksheet-copy-cell
