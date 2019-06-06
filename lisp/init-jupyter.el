@@ -23,8 +23,15 @@
   :ensure t
   :commands (ein:notebooklist-open ein:notebooklist-login) ;; run jupter notebook first
   :config
-  (with-eval-after-load 'ein-cell
-    (set-face-background 'ein:cell-input-area "#E0E0E0"))
+  (require 'ein-cell)
+  (set-face-background 'ein:cell-input-area "#E0E0E0")
+
+  ;; you can use 'ansi-color-filter-apply instead of 'ansi-color-apply to escape ansi code
+  (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
+                                                            (let* ((json (apply orig-fun args))
+                                                                   (text (plist-get json :text)))
+                                                              (plist-put json :text (ansi-color-apply text))
+                                                              json)))
 
   ;; (require 'poly-ein)
   ;; (setq ein:polymode t)
