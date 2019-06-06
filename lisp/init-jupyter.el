@@ -29,7 +29,8 @@
   ;; (require 'poly-ein)
   ;; (setq ein:polymode t)
 
-  (add-hook 'ein:notebook-mode-hook (lambda () (setq-local company-backends '(ein:company-backend :separate company-files))))
+  (setq ein:completion-backend 'ein:use-company-backend)
+  (add-hook 'ein:notebook-mode-hook (lambda () (setq-local company-backends '(ein:company-backend company-files))))
 
   (defun +ein/ein:worksheet-merge-cell-next ()
     (interactive)
