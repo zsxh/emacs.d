@@ -127,11 +127,7 @@
   (with-selected-frame frame
     ;; GUI
     (when (display-graphic-p)
-      (load-theme (intern personal-doom-theme) t)
-      ;; Download ans install SF Mono fonts:
-      ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
-      (ignore-errors
-        (set-frame-font "SF Mono-11.5:weight=semi-bold" nil t)))
+      (load-theme (intern personal-doom-theme) t))
     ;; Terminal
     (unless (display-graphic-p)
       (load-theme 'doom-nord t))
@@ -144,6 +140,17 @@
 
 ;; Run later, for emacs daemon, emacsclients -c [-nw]
 (add-hook 'after-make-frame-functions '+ui/frame-config)
+
+;; Set Fonts
+(ignore-errors
+  (when (member "SF Mono" (font-family-list))
+    ;; Download ans install SF Mono fonts:
+    ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
+    (set-frame-font "SF Mono-11.5:weight=semi-bold" nil t))
+  (when (member "Symbola" (font-family-list))
+    ;; Download specify font for all unicode characters, emoji for example
+    ;; http://xahlee.info/comp/unicode_font_download.html
+    (set-fontset-font t 'unicode "Symbola" nil 'prepend)))
 
 
 (provide 'init-ui)

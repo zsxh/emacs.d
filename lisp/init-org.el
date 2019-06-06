@@ -32,8 +32,9 @@
 
   ;; Org table font
   ;; (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
-  ;; Download font https://mplus-fonts.osdn.jp/about-en.html
-  (set-face-attribute 'org-table nil :family "M+ 1m")
+  (when (member "M+ 1m" (font-family-list))
+    ;; Download font https://mplus-fonts.osdn.jp/about-en.html
+    (set-face-attribute 'org-table nil :family "M+ 1m"))
 
   ;; Org block face
   (set-face-background 'org-block "#E0E0E0")
