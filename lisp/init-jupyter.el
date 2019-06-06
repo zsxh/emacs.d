@@ -37,7 +37,11 @@
   ;; (setq ein:polymode t)
 
   (setq ein:completion-backend 'ein:use-company-backend)
-  (add-hook 'ein:notebook-mode-hook (lambda () (setq-local company-backends '(ein:company-backend company-files))))
+  (add-hook 'ein:notebook-mode-hook (lambda ()
+                                      (setq-local company-backends '(ein:company-backend company-files))
+                                      ;; disable company box to improve performance
+                                      (when (boundp 'company-box-mode)
+                                        (company-box-mode -1))))
 
   (defun +ein/ein:worksheet-merge-cell-next ()
     (interactive)
