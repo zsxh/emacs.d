@@ -72,6 +72,9 @@
                                          "L" 'ein:notebook-worksheet-move-next
                                          "t" 'ein:worksheet-toggle-output
                                          "R" 'ein:worksheet-rename-sheet
+                                         "o" 'ein:worksheet-insert-cell-below
+                                         "O" 'ein:worksheet-insert-cell-above
+                                         "u" 'ein:worksheet-change-cell-type
                                          "RET" 'ein:worksheet-execute-cell-and-goto-next
                                          ;; Output
                                          "C-l" 'ein:worksheet-clear-output
@@ -97,7 +100,6 @@
                                          "+" 'ein:notebook-worksheet-insert-next
                                          "-" 'ein:notebook-worksheet-delete
                                          "x" 'ein:notebook-close
-                                         "u" 'ein:worksheet-change-cell-type
                                          "fs" 'ein:notebook-save-notebook-command)
 
   ;; keybindings for ipython notebook traceback mode
