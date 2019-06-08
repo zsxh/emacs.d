@@ -21,9 +21,12 @@
 
 (use-package ein
   :ensure t
-  :commands (ein:notebooklist-open ein:notebooklist-login) ;; run jupter notebook first
+  :commands (ein:notebooklist-open ;; run jupter notebook first
+             ein:notebooklist-login
+             ein:jupyter-server-start)
   :config
   (require 'ein-cell)
+  (setq ein:cell-traceback-level nil)   ;; Show all traceback
   (set-face-background 'ein:cell-input-area "#E0E0E0")
 
   ;; you can use 'ansi-color-filter-apply instead of 'ansi-color-apply to escape ansi code
