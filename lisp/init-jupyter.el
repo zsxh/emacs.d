@@ -30,7 +30,8 @@
   (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
                                                             (let* ((json (apply orig-fun args))
                                                                    (text (plist-get json :text)))
-                                                              (plist-put json :text (ansi-color-apply text))
+                                                              (when (plist-member json :text)
+                                                                (plist-put json :text (ansi-color-apply text)))
                                                               json)))
 
   ;; (require 'poly-ein)
