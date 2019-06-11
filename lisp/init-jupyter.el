@@ -197,7 +197,12 @@
   :ensure t
   :defer t
   ;; enable magic-latex-buffer when ein:notebook-multilang-mode initialize successfully
-  :hook (ein:notebook-multilang-mode . (lambda () (run-with-timer 3 nil 'magic-latex-buffer))))
+  ;; :hook (ein:notebook-multilang-mode . (lambda () (run-with-timer 3 nil 'magic-latex-buffer)))
+  :init
+  (with-eval-after-load 'ein-multilang
+    (+funcs/set-leader-keys-for-major-mode
+     ein:notebook-multilang-mode-map
+     "m" '(magic-latex-buffer :which-key "toggle-latex-preview"))))
 
 
 (provide 'init-jupyter)
