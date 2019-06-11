@@ -10,6 +10,10 @@
 
 ;;; Code:
 
+
+
+(global-set-key (kbd "C-a") '+funcs/smart-beginning-of-line)
+
 ;; Vim edit style
 ;; tips: press "%" in normal mode to jump between code block, tags
 (use-package evil
@@ -26,7 +30,7 @@
          ("C-p" . previous-line)
          ("C-d" . evil-scroll-down)
          ("C-u" . evil-scroll-up)
-         ("C-a" . move-beginning-of-line)
+         ("C-a" . +funcs/smart-beginning-of-line)
          ("C-e" . move-end-of-line)
          ("M-e" . evil-scroll-line-down)
          ("M-y" . evil-scroll-line-up)
@@ -86,7 +90,9 @@
     )
 
   ;; message-buffer-mode evil key bindings
-  (evil-define-key 'normal messages-buffer-mode-map "q" 'quit-window)
+  (evil-define-key 'normal messages-buffer-mode-map
+    "0" 'evil-digit-argument-or-evil-beginning-of-line
+    "q" 'quit-window)
 
   ;; compilation-mode evil key bindings
   (with-eval-after-load 'compile
