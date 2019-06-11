@@ -55,6 +55,7 @@
   (require 'ein-multilang)
 
   ;; TODO: temporarily setup julia kernel, waiting upstream supporting it officially
+  ;; FIXME: ein:pytools-request-tooltip __ein_print_object_info_for not defined?
   (defun ein:ml-lang-setup-julia ()
     (when (featurep 'julia-mode)
       (setq-local mode-name "EIN[Julia]")
@@ -191,6 +192,12 @@
     ("-" ein:notebook-worksheet-delete)
     ("x" ein:notebook-close :exit t)
     ("q" nil :exit t)))
+
+(use-package magic-latex-buffer
+  :ensure t
+  :defer t
+  ;; enable magic-latex-buffer when ein:notebook-multilang-mode initialize successfully
+  :hook (ein:notebook-multilang-mode . (lambda () (run-with-timer 3 nil 'magic-latex-buffer))))
 
 
 (provide 'init-jupyter)
