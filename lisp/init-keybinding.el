@@ -171,8 +171,8 @@
  "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
  ;; View
  "v" '(nil :which-key "view")
- "vn" '(ivy-push-view :which-key "ivy-push-view")
- "vd" '(ivy-pop-view :which-key "ivy-pop-view")
+ "vp" '(ivy-push-view :which-key "ivy-push-view")
+ "vo" '(ivy-pop-view :which-key "ivy-pop-view")
  "vv" '(ivy-switch-view :which-key "ivy-switch-view")
  ;; Window
  "w" '(nil :which-key "window")

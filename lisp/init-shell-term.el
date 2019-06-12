@@ -58,6 +58,8 @@
            (executable-find "cmake")
            (fboundp 'module-load))
   :commands (vterm vterm-other-window)
+  :bind (:map vterm-mode-map
+              ("M-u" . ace-window))
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'vterm-mode 'insert))
