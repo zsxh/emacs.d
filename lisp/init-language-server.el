@@ -96,10 +96,10 @@
         ;; FIXME: ui freezing when lsp-eldoc-enable-signature-help
         lsp-eldoc-enable-signature-help nil)
 
-  ;; (advice-add 'lsp :after
-  ;;             (lambda ()
-  ;;               (setq-local company-backends
-  ;;                           '((company-lsp :separate company-yasnippet)))))
+  (advice-add 'lsp :after
+              (lambda ()
+                (setq-local company-backends
+                            '(company-lsp company-files company-dabbrev))))
 
   ;; (when (package-installed-p 'focus)
   ;;   (advice-add 'lsp :after (lambda () (focus-mode 1))))
