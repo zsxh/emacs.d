@@ -101,9 +101,10 @@
  ;; Files
  "f" '(nil :which-key "file")
  "fd" '(+dired/find-program :which-key "find-files-in-dired")
- "ff" '(counsel-find-file :which-key "find-files")
- "fF" '(find-file-in-current-directory :which-key "find-file-in-current-directory")
  "fe" '(+funcs/sudo-edit-current-file :which-key "sudo-edit-current-file")
+ "ff" '(counsel-find-file :which-key "find-files")
+ "fF" '(fasd-find-file :which-key "fasd-find-file")
+ "fi" '(find-file-in-current-directory :which-key "find-file-in-current-directory")
  "fp" '(xah-copy-file-path :which-key "copy-file-path")
  ;; Git
  "g" '(nil :which-key "git")

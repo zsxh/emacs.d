@@ -163,7 +163,7 @@
     (evil-make-overriding-map color-rg-mode-edit-map 'normal)
     (add-hook 'color-rg-mode-hook #'evil-normalize-keymaps)))
 
-;;
+;; rigrep
 (use-package rg
   :ensure t
   :commands (rg rg-dwim rg-project rg-literal))
@@ -177,6 +177,12 @@
   (drag-stuff-global-mode 1)
   ;; bind "M-<up/down/left/right>" to move texts up/down/left/right
   (drag-stuff-define-keys))
+
+;; Install fasd
+;; https://github.com/clvv/fasd
+(use-package fasd
+  :ensure t
+  :commands (fasd-find-file))
 
 
 (provide 'init-editor)
