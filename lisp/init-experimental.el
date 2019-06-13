@@ -45,7 +45,8 @@
              ;; 为了 helm-dash browser 为 eaf 时,设置j->down,k->up
              ((and (eq major-mode 'eaf-mode)
                    (not (evil-emacs-state-p))
-                   (string-equal buffer-app-name "browser"))
+                   (or (string-equal buffer-app-name "browser")
+                       (string-equal buffer-app-name "markdownpreviewer")))
               (progn
                 (let ((key-desc (key-description (make-vector 1 last-command-event)))
                       (target-desc nil))
