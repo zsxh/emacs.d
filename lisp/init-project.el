@@ -29,7 +29,8 @@
 (with-eval-after-load 'projectile
   (defun +project/projectile-buffer-filter (buffer)
     (let ((name (buffer-name buffer)))
-      (or (string-prefix-p "*" name)
+      (or (and (string-prefix-p "*" name)
+               (not (string-prefix-p "*eww*" name)))
           (string-match-p "magit.*:" name)
           (equal (buffer-name (current-buffer)) name))))
 

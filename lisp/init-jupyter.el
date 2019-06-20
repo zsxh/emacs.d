@@ -25,6 +25,10 @@
              ein:notebooklist-login
              ein:jupyter-server-start)
   :config
+  (require 'ein)
+  (require 'ein-notebook)
+  (require 'ein-subpackages)
+
   (require 'ein-cell)
   (setq ein:cell-traceback-level nil)   ;; Show all traceback
   (set-face-background 'ein:cell-input-area "#E0E0E0")
