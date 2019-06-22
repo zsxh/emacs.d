@@ -22,6 +22,10 @@
       "u" 'tablist-unmark-forward
       "t" 'tablist-toggle-marks)))
 
+(use-package docker-compose-mode
+  :ensure t
+  :commands docker-compose-mode)
+
 
 (provide 'init-docker)
 

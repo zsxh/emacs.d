@@ -20,8 +20,7 @@
 
 ;; YAML config
 (use-package yaml-mode
-  :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
-         ("Procfile\\'" . yaml-mode))
+  :commands yaml-mode
   :config (add-hook 'yaml-mode-hook
                     '(lambda ()
                        (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
