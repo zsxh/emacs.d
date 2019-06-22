@@ -27,7 +27,7 @@
 (blink-cursor-mode 0)
 
 ;; Startup frame size
-(if (string= personal-frame-startup-size "max")
+(if (eq personal-frame-startup-size 'max)
     (toggle-frame-maximized)
   (toggle-frame-fullscreen))
 

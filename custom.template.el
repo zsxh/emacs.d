@@ -18,8 +18,8 @@
       '(("https://emacs-china.org/latest.rss" emacs china)
         ("https://emacs-china.org/posts.rss" emacs china)))
 
-;; Frame startup size, "max" or "fullscreen"
-(setq personal-frame-startup-size "max")
+;; frame startup size, 'max or 'fullscreen
+(setq personal-frame-startup-size 'max)
 
 ;; "Shell used in `term' and `ansi-term'."
 (setq personal-shell-executable "/usr/bin/zsh")

@@ -36,9 +36,11 @@ Origin repo: https://github.com/hlissner/emacs-doom-themes"
   "RSS feeds, eg: ((\"https://oremacs.com/atom.xml\" oremacs))."
   :type 'cons)
 
-(defcustom personal-frame-startup-size "max"
-  "Startup frame size. `\"max\"' means maximized frame and `\"fullscreen\"' means fullscreen frame."
-  :type 'string)
+(defcustom personal-frame-startup-size 'max
+  "Startup frame size. `'max' means maximized frame and `'fullscreen' means fullscreen frame."
+  :type '(choice
+          (const :tag "Max" max)
+          (const :tag "Fullscreen" fullscreen)))
 
 (defcustom personal-shell-executable "/usr/bin/zsh"
   "Shell used in `term' and `ansi-term'."
