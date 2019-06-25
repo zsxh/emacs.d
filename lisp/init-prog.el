@@ -54,7 +54,7 @@
 
 (use-package awesome-pair
   :commands awesome-pair-mode
-  :hook (prog-mode . awesome-pair-mode)
+  :hook ((prog-mode conf-mode yaml-mode editorconfig-mode) . awesome-pair-mode)
   :bind (:map
          awesome-pair-mode-map
          ("(" . 'awesome-pair-open-round)

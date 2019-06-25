@@ -23,7 +23,7 @@
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
 (setq make-backup-files nil)               ; Forbide to make backup files
 (setq set-mark-command-repeat-pop t)       ; Repeating C-SPC after popping mark pops it again
-(setq-default kill-whole-line t)           ; Kill line including '\n'
+;; (setq-default kill-whole-line t)           ; Kill line including '\n'
 (fset 'yes-or-no-p 'y-or-n-p)
 ;; (setq auto-save-default nil)               ; Disable built in default auto save
 (setq read-file-name-completion-ignore-case t) ; file ignores case
