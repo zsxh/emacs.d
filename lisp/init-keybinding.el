@@ -48,7 +48,6 @@
      ":" '(eval-expression :which-key "eval-expression")
      ";" '(comment-dwim-2 :which-key "comment-line")
      "0" '(neotree-show :which-key "neotree")
-     ;; "/" '(color-rg-search-input :which-key "rg-current-dir")
      "/" '(rg :which-key "ripgrep")
      ;; winum-select-window
      "1" 'winum-select-window-1
@@ -144,7 +143,6 @@
      "m" '(nil :which-key "major")
      ;; Project
      "p" '(nil :which-key "project")
-     ;; "p/" '(color-rg-search-project :which-key "rg-search-project")
      "p/" '(rg-project :which-key "ripgrep-search-project")
      "p'" '(+shell/projectile-shell-pop :which-key "project-root-shell-pop")
      "pb" '(+projectile/ivy-switch-buffer :which-key "switch-to-project-buffer")
