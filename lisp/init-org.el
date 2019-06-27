@@ -71,13 +71,20 @@
     :ensure t
     :init (cl-pushnew '(rust . t) load-language-list))
 
+  (use-package ob-ipython
+    :ensure t
+    :config
+    (cl-pushnew '(ipython . t) load-language-list))
+
   ;; Emacs Jupyter integration with org-mode
-  (use-package ob-jupyter
+  (use-package jupyter
     :ensure nil
     :config
+    (require 'ob-jupyter)
     (cl-pushnew '(jupyter . t) load-language-list)
-    ;; all python source blocks are effectively aliases of jupyter-python source blocks
-    (org-babel-jupyter-override-src-block "python"))
+    ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
+    ;; (org-babel-jupyter-override-src-block "python")
+    )
 
   ;; An extension to restclient.el for emacs that provides org-babel support
   (when (package-installed-p 'restclient)
@@ -90,7 +97,7 @@
 
   ;; lsp support org code block editing
   (defvar org-babel-lang-list
-    '("go" "python" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
+    '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
       "jupyter-python" "jupyter-julia" "jupyter-javascript"))
 
   (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
