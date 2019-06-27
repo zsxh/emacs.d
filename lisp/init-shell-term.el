@@ -93,7 +93,7 @@
 
 ;; https://www.emacswiki.org/emacs/MultiTerm
 (use-package multi-term
-  :quelpa (multi-term :fetcher wiki)
+  :quelpa ((multi-term :fetcher github :repo "manateelazycat/multi-term"))
   :commands multi-term
   :config
   (setq multi-term-program personal-shell-executable))
