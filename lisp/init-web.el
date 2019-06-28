@@ -39,7 +39,7 @@
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode))
-  :hook (web-mode . lsp)
+  ;; :hook (web-mode . lsp)
   :config
   (defun my-web-mode-hook ()
     "Hooks for Web mode."
@@ -54,6 +54,12 @@
 (use-package instant-rename-tag
   :quelpa ((instant-rename-tag :fetcher github :repo "manateelazycat/instant-rename-tag"))
   :commands instant-rename-tag)
+
+;; https://github.com/manateelazycat/highlight-matching-tag
+(use-package highlight-matching-tag
+  :quelpa ((highlight-matching-tag :fetcher github :repo "manateelazycat/highlight-matching-tag"))
+  :commands highlight-matching-tag
+  :hook (web-mode . (lambda () (highlight-matching-tag 1))))
 
 ;; This is a tool to manually explore and test HTTP REST webservices.
 ;; Runs queries from a plain-text query sheet, displays results as a pretty-printed XML, JSON and even images.
