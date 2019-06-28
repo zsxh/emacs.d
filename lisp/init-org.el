@@ -78,7 +78,7 @@
 
   ;; Emacs Jupyter integration with org-mode
   (use-package jupyter
-    :ensure nil
+    :ensure t
     :config
     (require 'ob-jupyter)
     (cl-pushnew '(jupyter . t) load-language-list)
