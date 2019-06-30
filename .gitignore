@@ -74,3 +74,4 @@ games/*
 /eclipse.jdt.ls/
 /transient
 /.extension
+/mspyls

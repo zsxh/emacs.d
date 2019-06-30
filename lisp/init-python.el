@@ -12,6 +12,12 @@
 
 (require 'init-language-server)
 
+(use-package lsp-python-ms
+  :ensure t
+  :after lsp-mode)
+
+(add-hook 'python-mode-hook 'lsp) ; or lsp-deferred
+
 ;; Somehow pipenv cant really active virtulenv, but i found pyvenv do a good job for this
 (use-package pyvenv
   :ensure t
@@ -30,30 +36,6 @@
   :init
   (setq pipenv-projectile-after-switch-function
         #'pipenv-projectile-after-switch-extended))
-
-(progn
-  ;; Install https://github.com/andrew-christianson/lsp-python-ms/
-  ;; cd ~/.emacs.d
-  ;; git clone https://github.com/Microsoft/python-language-server.git --depth 1
-  ;; cd python-language-server/src/LanguageServer/Impl
-  ;; dotnet build -c Release -r linux-x64
-  (setq +python/ms-python-language-server-dir
-        (expand-file-name "python-language-server" user-emacs-directory))
-
-  ;; for dev build of language server
-  (setq lsp-python-ms-dir
-        (expand-file-name "output/bin/Release/" +python/ms-python-language-server-dir))
-
-  ;; for executable of language server, if it's not symlinked on your PATH
-  (setq lsp-python-ms-executable
-        (expand-file-name "Microsoft.Python.LanguageServer.LanguageServer" lsp-python-ms-dir))
-
-  (use-package lsp-python-ms
-    :if (file-executable-p lsp-python-ms-executable)
-    :after lsp-mode
-    :quelpa ((lsp-python-ms :fetcher github :repo "andrew-christianson/lsp-python-ms")))
-
-  (add-hook 'python-mode-hook 'lsp))
 
 (with-eval-after-load 'python
   (defun +python/set-leader-keys ()
