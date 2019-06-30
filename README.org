@@ -1,4 +1,4 @@
-Updated: <2019-06-04 星期二 11:56>
+Updated: <2019-06-30 星期日 17:26>
 
 * Enviroment Tested
   - Emacs Version: 27.0.50
@@ -100,7 +100,7 @@ Updated: <2019-06-04 星期二 11:56>
 ** Features like auto complete, go to definitions, documentation on hover
   - [X] =C/C++= install [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
   - [X] =Java= install [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
-  - [X] =Python= pip install 'python-language-server[all]' or install [[https://github.com/andrew-christianson/lsp-python-ms/][microsoft python lanuage server]]
+  - [X] =Python= install [[https://github.com/emacs-lsp/lsp-python-ms][lsp-python-ms]]
   - [X] =Rust= rustup component add rls rust-analysis rust-src
   - [X] =Go= install [[https://github.com/saibing/bingo][bingo]]
   - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
