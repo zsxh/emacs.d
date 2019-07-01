@@ -1,10 +1,10 @@
-Updated: <2019-06-30 星期日 17:26>
+Updated: <2019-07-01 星期一 17:34>
 
 * Enviroment Tested
-  - Emacs Version: 27.0.50
-  - OS: Manjaro 18.0.3
+  - Emacs Version: GNU Emacs 27.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.8) of 2019-06-26
+  - OS: Manjaro 18.0.4
   - Shell: zsh 5.7.1
-  - DE: Deepin 15.9
+  - DE: Deepin 15.10.1
 
 * Features
   - =org=
@@ -86,6 +86,8 @@ Updated: <2019-06-30 星期日 17:26>
       structure edit
     - =symbol-overlay=
       highlight symbol, nice package for reading code
+  - =docker=
+    [[https://github.com/Silex/docker.el][docker]] for docker command, [[https://github.com/spotify/dockerfile-mode][dockerfile-mode]] for editing Dockerfile, [[https://github.com/meqif/docker-compose-mode][docker-compose-mode]] for editing docker-compose.yml
   - =others=
     - =eaf=
       emacs-application-framework for browsering web, previewing markdown, pdf ...
