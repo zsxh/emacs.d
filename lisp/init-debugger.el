@@ -145,7 +145,7 @@ _Q_: Disconnect    _sS_: List sessions    _bl_: Set log message _eis_: Inspect t
                       (+dap-running-session-disable session)))))))
 
   (defun +dap-running-session-enable (debug-session)
-    (message (format "%s %s" (current-buffer) "enable +dap-...."))
+    ;; (message (format "%s %s" (current-buffer) "enable +dap-...."))
     (+dap-running-session-mode 1)
     (let* ((session-name (dap--debug-session-name debug-session))
            (buffer-list (gethash session-name +dap-running-session-buffers)))
@@ -157,7 +157,7 @@ _Q_: Disconnect    _sS_: List sessions    _bl_: Set log message _eis_: Inspect t
            (buffer-list (gethash session-name +dap-running-session-buffers)))
       (dolist (cur-buffer buffer-list)
         (with-current-buffer cur-buffer
-          (message (format "%s %s" (current-buffer) "disable enable +dap-...."))
+          ;; (message (format "%s %s" (current-buffer) "disable enable +dap-...."))
           (+dap-running-session-mode -1)))
       (remhash session-name +dap-running-session-buffers)))
 
