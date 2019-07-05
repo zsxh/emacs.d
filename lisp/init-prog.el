@@ -73,7 +73,7 @@
          ("M-[" . 'awesome-pair-wrap-bracket)
          ("M-{" . 'awesome-pair-wrap-curly)
          ("M-(" . 'awesome-pair-wrap-round)
-         ("M-)" . 'awesome-pair-unwrap)
+         ("M-]" . 'awesome-pair-unwrap)
          ("M-n" . 'awesome-pair-jump-right)
          ("M-p" . 'awesome-pair-jump-left)
          ("M-RET" . 'awesome-pair-jump-out-pair-and-newline))
