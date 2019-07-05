@@ -118,6 +118,11 @@
       (proxy-mode-socks-enable)
     (proxy-mode-socks-disable)))
 
+;; Music Player
+(use-package bongo
+  :ensure t
+  :commands bongo)
+
 
 (provide 'init-misc)
 
