@@ -5,7 +5,7 @@
 ;;; Code:
 
 ;; Emacs package archives
-;; (setq personal-package-archives 'melpa)
+;; (setq personal-package-archives 'tencent)
 
 ;; Github token string for eaf-markdown-previewer
 (setq personal-eaf-grip-token nil)

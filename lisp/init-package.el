@@ -46,6 +46,10 @@
              `(,(cons "gnu-cn" (concat proto "://elpa.emacs-china.org/gnu/"))
                ,(cons "melpa-cn" (concat proto "://elpa.emacs-china.org/melpa/"))
                ,(cons "org-cn" (concat proto "://elpa.emacs-china.org/org/"))))
+            ('tencent
+             `(,(cons "gnu-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/gnu/"))
+               ,(cons "melpa-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/melpa/"))
+               ,(cons "org-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/org/"))))
             ('tuna
              `(,(cons "gnu-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
                ,(cons "melpa-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))
