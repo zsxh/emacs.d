@@ -175,6 +175,16 @@
 ;;   :commands tldr)
 
 
+;; FIXME: wait until emacs xwdigets work well ...
+(use-package webkit-katex-render
+  :if (featurep 'xwidget-internal)
+  :quelpa ((webkit-katex-render
+            :fetcher github
+            :repo "fuxialexander/emacs-webkit-katex-render"
+            :files (:defaults "katex.html")))
+  :commands webkit-katex-render-mode)
+
+
 (provide 'init-experimental)
 
 ;;; init-experimental.el ends here
