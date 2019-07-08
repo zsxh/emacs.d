@@ -28,8 +28,8 @@
   :ensure t
   :commands docker-compose-mode)
 
-(with-eval-after-load 'evil
-  (with-eval-after-load 'tablist
+(with-eval-after-load 'tablist
+  (with-eval-after-load 'evil
     (evil-define-key 'normal tablist-minor-mode-map
       "m" 'tablist-mark-forward
       "u" 'tablist-unmark-forward
