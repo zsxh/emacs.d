@@ -13,11 +13,15 @@
 ;; ivy
 (use-package ivy
   :ensure t
-  :bind (:map ivy-minibuffer-map
-              ("C-k" . ivy-previous-line)
-              ("C-j" . ivy-next-line)
-              ("C-M-j" . ivy-immediate-done)
-              ("C-c C-o" . ivy-occur))
+  :bind (:map
+         ivy-minibuffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-j" . ivy-next-line)
+         ("C-M-j" . ivy-immediate-done)
+         ("C-c C-o" . ivy-occur)
+         :map
+         ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
