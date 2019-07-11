@@ -36,9 +36,9 @@
 ;; On ArchLinux or Manjaro install libvterm first
 ;; sudo pacman -S libvterm
 (use-package vterm
-  ;; :quelpa (vterm :fetcher github :repo "akermu/emacs-libvterm"
-  ;;                :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
-  :ensure t
+  :quelpa (vterm :fetcher github :repo "jixiuf/emacs-libvterm"
+                 :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
+  ;; :ensure t
   :if (and (executable-find "vterm-ctrl")
            (executable-find "make")
            (executable-find "cmake")
@@ -46,10 +46,10 @@
   :commands (vterm vterm-other-window)
   :bind (:map vterm-mode-map ("M-u" . ace-window))
   :config
+  ;; (with-eval-after-load 'doom-themes
+  ;;   (setf (elt ansi-color-names-vector 0) (doom-color 'bg)))
   (with-eval-after-load 'evil
-    (evil-set-initial-state 'vterm-mode 'insert))
-  (with-eval-after-load 'doom-themes
-    (setf (elt ansi-color-names-vector 0) (doom-color 'bg))))
+    (evil-set-initial-state 'vterm-mode 'insert)))
 
 (use-package term
   :ensure nil
