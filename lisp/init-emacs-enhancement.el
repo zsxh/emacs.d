@@ -250,6 +250,12 @@
     (evil-define-key 'normal eww-link-keymap "gv" '+eww/toggle-images-display)))
 
 
+;;;;;;;;;;;;;; Change priority of minor-mode keymaps ;;;;;;;;;;;;;;
+(use-package minor-mode-hack
+  :quelpa ((minor-mode-hack :fetcher wiki))
+  :defer t)
+
+
 (provide 'init-emacs-enhancement)
 
 ;;; init-emacs-enhancement.el ends here
