@@ -109,39 +109,6 @@ If point was already at that position, move point to beginning of line."
 ;; http://ergoemacs.org/misc/ergoemacs_vi_mode.html
 ;; https://github.com/xahlee/xah-fly-keys
 
-(defun xah-delete-current-text-block ()
-  "Delete the current text block or selection, and copy to `kill-ring'.
-A “block” is text between blank lines.
-URL `http://ergoemacs.org/emacs/emacs_delete_block.html'
-Version 2017-07-09"
-  (interactive)
-  (let ($p1 $p2)
-    (if (use-region-p)
-        (setq $p1 (region-beginning) $p2 (region-end))
-      (progn
-        (if (re-search-backward "\n[ \t]*\n+" nil "move")
-            (progn (re-search-forward "\n[ \t]*\n+")
-                   (setq $p1 (point)))
-          (setq $p1 (point)))
-        (re-search-forward "\n[ \t]*\n" nil "move")
-        (setq $p2 (point))))
-    (kill-region $p1 $p2)))
-
-(defun xah-select-block ()
-  "Select the current/next block of text between blank lines.
-If region is active, extend selection downward by block.
-URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
-Version 2017-11-01"
-  (interactive)
-  (if (region-active-p)
-      (re-search-forward "\n[ \t]*\n" nil "move")
-    (progn
-      (skip-chars-forward " \n\t")
-      (when (re-search-backward "\n[ \t]*\n" nil "move")
-        (re-search-forward "\n[ \t]*\n"))
-      (push-mark (point) t t)
-      (re-search-forward "\n[ \t]*\n" nil "move"))))
-
 (defun xah-delete-blank-lines ()
   "Delete all newline around cursor.
 URL `http://ergoemacs.org/emacs/emacs_shrink_whitespace.html'
@@ -237,6 +204,15 @@ Version 2018-06-18"
        (progn
          (message "File path copied: %s" $fpath)
          $fpath )))))
+
+(defun xah-display-minor-mode-key-priority  ()
+  "Print out minor mode's key priority.
+URL `http://ergoemacs.org/emacs/minor_mode_key_priority.html'
+Version 2017-01-27"
+  (interactive)
+  (mapc
+   (lambda (x) (prin1 (car x)) (terpri))
+   minor-mode-map-alist))
 
 
 (provide 'init-funcs)

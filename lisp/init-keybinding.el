@@ -156,9 +156,7 @@
      "pt" '(+neotree/find-project-root :which-key "neotree-find-project-root")
      ;; Text
      "t" '(nil :which-key "text")
-     "tb" '(xah-select-block :which-key "select-block")
      "tB" '(comment-box :which-key "comment-box")
-     "td" '(xah-delete-current-text-block :which-key "delete-block")
      "ti" '(nil :which-key "insert")
      "tit" '(insert-translated-name-insert :which-key "chinese->engish")
      "tm" '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
