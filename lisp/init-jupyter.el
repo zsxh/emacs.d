@@ -25,123 +25,127 @@
              ein:notebooklist-login
              ein:jupyter-server-start)
   :config
-  (require 'ein)
-  (require 'ein-notebook)
+  ;; FIXME: found out a proper way to solve keybindings problem
+  ;; (since ein:notebook-mode-map have higher priority, and poly-minor-mode-map prefix is pretty annoying)
+  (require 'poly-ein)
+  (setq ein:polymode nil)
+  (define-key poly-ein-mode-map (format "%s%s" (or polymode-prefix-key "\M-n") ".") 'ipython-notebook-hydra/body)
+
   (require 'ein-subpackages)
-
-  (require 'ein-cell)
-  (setq ein:cell-traceback-level nil)   ;; Show all traceback
-  (set-face-background 'ein:cell-input-area "#E0E0E0")
-
-  ;; you can use 'ansi-color-filter-apply instead of 'ansi-color-apply to escape ansi code
-  (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
-                                                            (let* ((json (apply orig-fun args))
-                                                                   (text (plist-get json :text)))
-                                                              (when (plist-member json :text)
-                                                                (plist-put json :text (ansi-color-apply text)))
-                                                              json)))
-
-  ;; (require 'poly-ein)
-  ;; (setq ein:polymode t)
-
   (setq ein:completion-backend 'ein:use-company-backend)
-  (add-hook 'ein:notebook-mode-hook (lambda ()
-                                      (setq-local company-backends '(ein:company-backend company-files))
-                                      ;; disable company box to improve performance
-                                      (when (boundp 'company-box-mode)
-                                        (company-box-mode -1))))
 
-  (defun +ein/ein:worksheet-merge-cell-next ()
-    (interactive)
-    (ein:worksheet-merge-cell (ein:worksheet--get-ws-or-error) (ein:worksheet-get-current-cell) t t))
+  (defun +ein/set-company-backend ()
+    (setq-local company-backends '(ein:company-backend company-files))
+    ;; disable company box to improve performance
+    (when (bound-and-true-p company-box-mode)
+      (company-box-mode -1)))
 
-  ;; if this is not required then the following keygindings fail
-  (require 'ein-multilang)
+  (add-hook 'poly-ein-mode-hook '+ein/set-company-backend)
 
-  ;; TODO: temporarily setup julia kernel, waiting upstream supporting it officially
-  ;; FIXME: ein:pytools-request-tooltip __ein_print_object_info_for not defined?
-  (defun ein:ml-lang-setup-julia ()
-    (when (featurep 'julia-mode)
+  (with-eval-after-load 'ein-cell
+    (setq ein:cell-traceback-level nil) ;; Show all traceback
+    (set-face-background 'ein:cell-input-area "#E0E0E0")
+
+    ;; you can use 'ansi-color-filter-apply instead of 'ansi-color-apply to escape ansi code
+    (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
+                                                              (let* ((json (apply orig-fun args))
+                                                                     (text (plist-get json :text)))
+                                                                (when (plist-member json :text)
+                                                                  (plist-put json :text (ansi-color-apply text)))
+                                                                json))))
+
+  (when (not (bound-and-true-p ein:polymode))
+    (with-eval-after-load 'ein-notebook
+      (add-hook 'ein:notebook-mode-hook #'+ein/set-company-backend))
+
+    (require 'ein-multilang)
+
+    (defun ein:ml-lang-setup-julia ()
+      ;; (when (featurep 'julia-mode))
+      (require 'julia-mode)
       (setq-local mode-name "EIN[Julia]")
       (setq-local indent-line-function
                   (apply-partially #'ein:ml-indent-line-function #'julia-indent-line))
       (set-syntax-table julia-mode-syntax-table)
-      (set-keymap-parent ein:notebook-multilang-mode-map julia-mode-map)))
+      (set-keymap-parent ein:notebook-multilang-mode-map julia-mode-map))
 
-  (+funcs/set-leader-keys-for-major-mode ein:notebook-multilang-mode-map
-                                         "." 'ipython-notebook-hydra/body
-                                         "y" 'ein:worksheet-copy-cell
-                                         "p" 'ein:worksheet-yank-cell
-                                         "d" 'ein:worksheet-kill-cell
-                                         "h" 'ein:notebook-worksheet-open-prev-or-last
-                                         "i" 'ein:worksheet-insert-cell-below
-                                         "I" 'ein:worksheet-insert-cell-above
-                                         "j" 'ein:worksheet-goto-next-input
-                                         "k" 'ein:worksheet-goto-prev-input
-                                         "l" 'ein:notebook-worksheet-open-next-or-first
-                                         "H" 'ein:notebook-worksheet-move-prev
-                                         "J" 'ein:worksheet-move-cell-down
-                                         "K" 'ein:worksheet-move-cell-up
-                                         "L" 'ein:notebook-worksheet-move-next
-                                         "t" 'ein:worksheet-toggle-output
-                                         "R" 'ein:worksheet-rename-sheet
-                                         "o" 'ein:worksheet-insert-cell-below
-                                         "O" 'ein:worksheet-insert-cell-above
-                                         "u" 'ein:worksheet-change-cell-type
-                                         "RET" 'ein:worksheet-execute-cell-and-goto-next
-                                         ;; Output
-                                         "C-l" 'ein:worksheet-clear-output
-                                         "C-S-l" 'ein:worksheet-clear-all-output
-                                         ;;Console
-                                         "C-o" 'ein:console-open
-                                         ;; Merge cells
-                                         "C-k" 'ein:worksheet-merge-cell
-                                         "C-j" '+ein/ein:worksheet-merge-cell-next
-                                         "s" 'ein:worksheet-split-cell-at-point
-                                         ;; Notebook
-                                         "C-s" 'ein:notebook-save-notebook-command
-                                         "C-r" 'ein:notebook-rename-command
-                                         "1" 'ein:notebook-worksheet-open-1th
-                                         "2" 'ein:notebook-worksheet-open-2th
-                                         "3" 'ein:notebook-worksheet-open-3th
-                                         "4" 'ein:notebook-worksheet-open-4th
-                                         "5" 'ein:notebook-worksheet-open-5th
-                                         "6" 'ein:notebook-worksheet-open-6th
-                                         "7" 'ein:notebook-worksheet-open-7th
-                                         "8" 'ein:notebook-worksheet-open-8th
-                                         "9" 'ein:notebook-worksheet-open-last
-                                         "+" 'ein:notebook-worksheet-insert-next
-                                         "-" 'ein:notebook-worksheet-delete
-                                         "x" 'ein:notebook-close
-                                         "fs" 'ein:notebook-save-notebook-command)
+    (+funcs/set-leader-keys-for-major-mode ein:notebook-multilang-mode-map
+                                           "." 'ipython-notebook-hydra/body
+                                           "y" 'ein:worksheet-copy-cell
+                                           "p" 'ein:worksheet-yank-cell
+                                           "d" 'ein:worksheet-kill-cell
+                                           "h" 'ein:notebook-worksheet-open-prev-or-last
+                                           "i" 'ein:worksheet-insert-cell-below
+                                           "I" 'ein:worksheet-insert-cell-above
+                                           "j" 'ein:worksheet-goto-next-input
+                                           "k" 'ein:worksheet-goto-prev-input
+                                           "l" 'ein:notebook-worksheet-open-next-or-first
+                                           "H" 'ein:notebook-worksheet-move-prev
+                                           "J" 'ein:worksheet-move-cell-down
+                                           "K" 'ein:worksheet-move-cell-up
+                                           "L" 'ein:notebook-worksheet-move-next
+                                           "t" 'ein:worksheet-toggle-output
+                                           "R" 'ein:worksheet-rename-sheet
+                                           "o" 'ein:worksheet-insert-cell-below
+                                           "O" 'ein:worksheet-insert-cell-above
+                                           "u" 'ein:worksheet-change-cell-type
+                                           "RET" 'ein:worksheet-execute-cell-and-goto-next
+                                           ;; Output
+                                           "C-l" 'ein:worksheet-clear-output
+                                           "C-S-l" 'ein:worksheet-clear-all-output
+                                           ;;Console
+                                           "C-o" 'ein:console-open
+                                           ;; Merge cells
+                                           "C-k" 'ein:worksheet-merge-cell
+                                           "C-j" '+ein/ein:worksheet-merge-cell-next
+                                           "s" 'ein:worksheet-split-cell-at-point
+                                           ;; Notebook
+                                           "C-s" 'ein:notebook-save-notebook-command
+                                           "C-r" 'ein:notebook-rename-command
+                                           "1" 'ein:notebook-worksheet-open-1th
+                                           "2" 'ein:notebook-worksheet-open-2th
+                                           "3" 'ein:notebook-worksheet-open-3th
+                                           "4" 'ein:notebook-worksheet-open-4th
+                                           "5" 'ein:notebook-worksheet-open-5th
+                                           "6" 'ein:notebook-worksheet-open-6th
+                                           "7" 'ein:notebook-worksheet-open-7th
+                                           "8" 'ein:notebook-worksheet-open-8th
+                                           "9" 'ein:notebook-worksheet-open-last
+                                           "+" 'ein:notebook-worksheet-insert-next
+                                           "-" 'ein:notebook-worksheet-delete
+                                           "x" 'ein:notebook-close
+                                           "fs" 'ein:notebook-save-notebook-command)
 
-  ;; keybindings for ipython notebook traceback mode
-  (require 'ein-traceback)
-  (+funcs/set-leader-keys-for-major-mode ein:traceback-mode-map
-                                         "RET" 'ein:tb-jump-to-source-at-point-command
-                                         "n" 'ein:tb-next-item
-                                         "p" 'ein:tb-prev-item
-                                         "q" 'bury-buffer)
-
-  ;; keybindings mirror ipython web interface behavior
-  (evil-define-key 'insert ein:notebook-multilang-mode-map
-    (kbd "<C-return>") 'ein:worksheet-execute-cell
-    (kbd "<S-return>") 'ein:worksheet-execute-cell-and-goto-next)
-
-  ;; keybindings mirror ipython web interface behavior
-  (evil-define-key 'hybrid ein:notebook-multilang-mode-map
-    (kbd "<C-return>") 'ein:worksheet-execute-cell
-    (kbd "<S-return>") 'ein:worksheet-execute-cell-and-goto-next)
-
-  (evil-define-key 'normal ein:notebook-multilang-mode-map
     ;; keybindings mirror ipython web interface behavior
-    (kbd "<C-return>") 'ein:worksheet-execute-cell
-    (kbd "<S-return>") 'ein:worksheet-execute-cell-and-goto-next
-    "gj" 'ein:worksheet-goto-next-input
-    "gk" 'ein:worksheet-goto-prev-input)
+    (evil-define-key 'insert ein:notebook-multilang-mode-map
+      (kbd "<C-return>") 'ein:worksheet-execute-cell
+      (kbd "<S-return>") 'ein:worksheet-execute-cell-and-goto-next)
 
-  (define-key ein:notebook-multilang-mode-map (kbd "M-j") 'ein:worksheet-move-cell-down)
-  (define-key ein:notebook-multilang-mode-map (kbd "M-k") 'ein:worksheet-move-cell-up)
+    ;; keybindings mirror ipython web interface behavior
+    (evil-define-key 'hybrid ein:notebook-multilang-mode-map
+      (kbd "<C-return>") 'ein:worksheet-execute-cell
+      (kbd "<S-return>") 'ein:worksheet-execute-cell-and-goto-next)
+
+    (evil-define-key 'normal ein:notebook-multilang-mode-map
+      ;; keybindings mirror ipython web interface behavior
+      (kbd "<C-return>") 'ein:worksheet-execute-cell
+      (kbd "<S-return>") 'ein:worksheet-execute-cell-and-goto-next
+      "gj" 'ein:worksheet-goto-next-input
+      "gk" 'ein:worksheet-goto-prev-input)
+
+    (define-key ein:notebook-multilang-mode-map (kbd "M-j") 'ein:worksheet-move-cell-down)
+    (define-key ein:notebook-multilang-mode-map (kbd "M-k") 'ein:worksheet-move-cell-up))
+
+  (with-eval-after-load 'ein-traceback
+    (+funcs/set-leader-keys-for-major-mode ein:traceback-mode-map
+                                           "RET" 'ein:tb-jump-to-source-at-point-command
+                                           "n" 'ein:tb-next-item
+                                           "p" 'ein:tb-prev-item
+                                           "q" 'bury-buffer))
+
+  (defun +ein/ein:worksheet-merge-cell-next ()
+    (interactive)
+    (ein:worksheet-merge-cell (ein:worksheet--get-ws-or-error) (ein:worksheet-get-current-cell) t t))
 
   (defhydra ipython-notebook-hydra (:hint nil)
     "
@@ -195,7 +199,23 @@
     ("+" ein:notebook-worksheet-insert-next)
     ("-" ein:notebook-worksheet-delete)
     ("x" ein:notebook-close :exit t)
-    ("q" nil :exit t)))
+    ("q" nil :exit t))
+
+  (when (version<= "27" emacs-version)
+    ;; (defalias 'json-encode 'json-serialize)
+
+    (defun ein:json-read-from-string (string)
+      (json-parse-string string :object-type 'plist :array-type 'list))
+
+    (defun ein:json-read ()
+      "Read json from `url-retrieve'-ed buffer.
+
+* `json-object-type' is `plist'. This is mainly for readability.
+* `json-array-type' is `list'.  Notebook data is edited locally thus
+  data type must be edit-friendly.  `vector' type is not."
+      (goto-char (point-max))
+      (backward-sexp)
+      (json-parse-buffer :object-type 'plist :array-type 'list))))
 
 (use-package magic-latex-buffer
   :ensure t
