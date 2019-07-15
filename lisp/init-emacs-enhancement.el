@@ -122,12 +122,19 @@
         fd-dired-ls-option '("| xargs -0 ls -alhdN" . "-ld")))
 
 ;; Editable Dired mode configs
-(with-eval-after-load 'wdired
+(use-package wdired
+  :defer t
+  :config
+  ;; allow editing file permissions
+  (setq wdired-allow-to-change-permissions t)
+
   (+funcs/set-leader-keys-for-major-mode
    wdired-mode-map
+   "/" '(dired-narrow :which-key "dired-narrow")
    "c" '(wdired-finish-edit :which-key "finish edit")
    "k" '(wdired-abort-changes :which-key "abort changes")
    "q" '(wdired-exit :which-key "exit"))
+
   (with-eval-after-load 'all-the-icons-dired
     (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
     (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode)))))
