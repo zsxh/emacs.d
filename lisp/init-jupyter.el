@@ -104,7 +104,7 @@
  [_K_/_J_]^     move up/down            ^^^[_H_/_L_]  move left/right   [_C-l_/_C-S-l_] clear/clear all output
  [_C-k_/_C-j_]^ merge above/below       ^^^[_1_.._9_] open [1st..last]  [_C-o_]^^       open console
  [_O_/_o_]^     insert above/below      ^^^[_+_/_-_]  create/delete     [_C-s_/_C-r_]   save/rename notebook
- [_y_/_p_/_d_/_s_] copy/paste/delete/split [_R_]^^ rename worksheet     [_x_/_C-R_]     close/restart notebook
+ [_y_/_p_/_d_/_s_] copy/paste/delete/split [_R_]^^ rename worksheet     [_x_/_C-S-r_]   close/restart notebook
  [_u_]^^^       change type             ^^^^^^^                         [_q_]^^         quit
  [_RET_/_M-RET_] execute/exec all"
     ("h" ein:notebook-worksheet-open-prev-or-last)
@@ -122,7 +122,7 @@
     ("p" ein:worksheet-yank-cell)
     ("o" ein:worksheet-insert-cell-below)
     ("O" ein:worksheet-insert-cell-above)
-    ("u" ein:worksheet-change-cell-type)
+    ("u" ein:worksheet-change-cell-type :exit t)
     ("RET" ein:worksheet-execute-cell-and-goto-next)
     ("M-RET" ein:worksheet-execute-all-cell)
     ;; Output
@@ -137,7 +137,7 @@
     ;; Notebook
     ("C-s" ein:notebook-save-notebook-command :exit t)
     ("C-r" ein:notebook-rename-command :exit t)
-    ("C-R" ein:notebook-restart-session-command :exit t)
+    ("C-S-r" ein:notebook-restart-session-command :exit t)
     ("1" ein:notebook-worksheet-open-1th)
     ("2" ein:notebook-worksheet-open-2th)
     ("3" ein:notebook-worksheet-open-3th)
