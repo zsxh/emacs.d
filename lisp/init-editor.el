@@ -156,6 +156,22 @@
   :ensure t
   :commands (rg rg-dwim rg-project rg-literal))
 
+;; wgrep allows you to edit a grep buffer and apply those changes to the file buffer
+(use-package wgrep
+  :ensure t
+  :defer t
+  :config
+  (advice-add 'wgrep-change-to-wgrep-mode :after (lambda () (evil-insert-state)))
+  (advice-add 'wgrep-finish-edit :after (lambda () (evil-normal-state)))
+  (advice-add 'wgrep-abort-changes :after (lambda () (evil-normal-state)))
+  (evil-define-key 'normal wgrep-mode-map
+    ",c" 'wgrep-finish-edit
+    ",d" 'wgrep-mark-deletion
+    ",r" 'wgrep-remove-change
+    ",u" 'wgrep-remove-all-change
+    ",k" 'wgrep-abort-changes
+    "q" 'wgrep-exit))
+
 ;; https://github.com/rejeep/drag-stuff.el
 ;; Work fine with evil-mode
 (use-package drag-stuff

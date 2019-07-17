@@ -72,7 +72,9 @@
               all-the-icons-octicon
               all-the-icons-alltheicon)
   :hook (company-mode . company-box-mode)
-  :init (setq company-box-enable-icon (display-graphic-p))
+  :init
+  (setq company-box-enable-icon (display-graphic-p)
+        company-box-doc-enable t)
   :config
   (with-eval-after-load 'all-the-icons
     (defun +company-box-icons--elisp (candidate)
