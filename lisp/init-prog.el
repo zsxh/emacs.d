@@ -38,6 +38,9 @@
 (use-package helm-dash
   :ensure t
   :commands (helm-dash helm-dash-at-point)
+  :bind (:map helm-map
+              ("C-j" . helm-next-line)
+              ("C-k" . helm-previous-line))
   :config
   ;; (setq helm-dash-browser-func 'eww)
   (setq helm-dash-browser-func 'eaf-open-url)
