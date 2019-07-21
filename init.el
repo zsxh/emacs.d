@@ -111,7 +111,6 @@
 
 ;; Experimental
 (require 'init-experimental)
-;; (require 'init-pyim)
 
 ;; Misc
 (require 'init-misc)
