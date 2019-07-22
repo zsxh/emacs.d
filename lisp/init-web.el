@@ -50,6 +50,12 @@
           web-mode-sql-indent-offset 2))
   (add-hook 'web-mode-hook 'my-web-mode-hook))
 
+(use-package css-mode
+  :ensure nil
+  :defer t
+  :config
+  (setq css-indent-offset 2))
+
 ;; https://github.com/manateelazycat/instant-rename-tag
 (use-package instant-rename-tag
   :quelpa ((instant-rename-tag :fetcher github :repo "manateelazycat/instant-rename-tag"))
