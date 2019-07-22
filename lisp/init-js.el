@@ -16,7 +16,19 @@
 ;; npm i -g typescript typescript-language-server
 (dolist (js-lang '(js typescript js3 rjsx))
   (let ((js-lang-hook (intern (format "%s-mode-hook" js-lang))))
-    (add-hook js-lang-hook 'lsp)))
+    (add-hook js-lang-hook '+js/config)))
+
+(use-package nvm
+  :ensure t
+  :defer t
+  :config
+  ;; Lazy load node/npm/nvm in my zsh enviroment configuration (cause nvm startup very slow),
+  ;; we need to explicitly set nvm enviroment in emacs, otherwise lsp will not able to find the client command.
+  (nvm-use (string-trim (shell-command-to-string "nvm current"))))
+
+(defun +js/config ()
+  (require 'nvm)
+  (lsp))
 
 
 (provide 'init-js)
