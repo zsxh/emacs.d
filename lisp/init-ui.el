@@ -112,8 +112,9 @@
   ;; https://github.com/cyrus-and/zoom/issues/3
   ;; set which-key-popup-type to 'minibuffer to avoid which-key awkward looking
   :ensure t
-  ;; :commands (zoom zoom-mode)
-  :hook (after-init . zoom-mode))
+  :commands (zoom zoom-mode)
+  ;; :hook (after-init . zoom-mode)
+  )
 
 ;; Fonts
 ;; Source Han Serief: https://github.com/adobe-fonts/source-han-serif
