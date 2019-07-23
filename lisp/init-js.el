@@ -26,6 +26,12 @@
   ;; we need to explicitly set nvm enviroment in emacs, otherwise lsp will not able to find the client command.
   (nvm-use (string-trim (shell-command-to-string "nvm current"))))
 
+(with-eval-after-load 'js
+  (setq js-indent-level 2))
+
+(with-eval-after-load 'js2-mode
+  (setq js2-basic-offset 2))
+
 (defun +js/config ()
   (require 'nvm)
   (lsp))
