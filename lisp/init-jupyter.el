@@ -25,8 +25,6 @@
              ein:notebooklist-login
              ein:jupyter-server-start)
   :config
-  ;; FIXME: found out a proper way to solve keybindings problem
-  ;; (since ein:notebook-mode-map have higher priority, and poly-minor-mode-map prefix is pretty annoying)
   (use-package poly-ein
     :defer t
     :config
@@ -62,7 +60,6 @@
     :defer t
     :config
     (setq ein:cell-traceback-level nil) ;; Show all traceback
-    (set-face-background 'ein:cell-input-area "#E0E0E0")
 
     ;; you can use 'ansi-color-filter-apply instead of 'ansi-color-apply to escape ansi code
     (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
