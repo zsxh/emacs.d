@@ -69,8 +69,8 @@
          ("%" . 'awesome-pair-match-paren)
          ("\"" . 'awesome-pair-double-quote)
          ("M-o" . 'awesome-pair-backward-delete)
-         ("DEL" . 'awesome-pair-backward-delete)
-         ("C-d" . 'awesome-pair-forward-delete)
+         ;; ("DEL" . 'awesome-pair-backward-delete)
+         ;; ("C-d" . 'awesome-pair-forward-delete)
          ("C-k" . 'awesome-pair-kill)
          ("M-\"" . 'awesome-pair-wrap-double-quote)
          ("M-[" . 'awesome-pair-wrap-bracket)
@@ -202,7 +202,7 @@
   :hook ((java-mode rust-mode python-mode) . (lambda () (hs-minor-mode) (hs-hide-level 2)))
   :config
   (with-eval-after-load 'evil
-    (define-key evil-normal-state-map (kbd "z f") 'hs-hide-level)))
+    (define-key evil-normal-state-map (kbd "zf") 'hs-hide-level)))
 
 ;; https://gitlab.com/jgkamat/rmsbolt
 ;; RMSBolt tries to make it easy to see what your compiler is doing.
@@ -277,7 +277,7 @@ current major mode."
   :ensure t
   :hook (emacs-startup . editorconfig-mode))
 
-(provide 'init-prog)
 
+(provide 'init-prog)
 
 ;;; init-prog.el ends here
