@@ -59,11 +59,8 @@
 ;; https://github.com/kaiwk/leetcode.el
 ;; Remember to set your account and password
 (use-package leetcode
-  :commands leetcode
-  :preface
-  (use-package request-deferred :ensure t :defer t)
-  (use-package graphql :ensure t :defer t)
-  :quelpa ((leetcode :fetcher github :repo "kaiwk/leetcode.el")))
+  :ensure t
+  :commands leetcode)
 
 ;; Http(s) Proxy
 (defun proxy-http-show ()
