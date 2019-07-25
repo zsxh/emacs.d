@@ -87,13 +87,11 @@
   (require 'lsp-clients)
 
   (setq lsp-auto-guess-root t
-        ;; lsp-prefer-flymake nil
-        lsp-inhibit-message t
+        lsp-prefer-flymake nil
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t
-        lsp-use-native-json nil
+        lsp-use-native-json t
         lsp-enable-symbol-highlighting nil
-        ;; FIXME: ui freezing when lsp-eldoc-enable-signature-help
         lsp-eldoc-enable-signature-help nil)
 
   (advice-add 'lsp :after
@@ -112,20 +110,74 @@
 (use-package lsp-ui
   :after lsp-mode
   :ensure t
-  ;; disable lsp-ui doc and sideline
-  :preface (setq lsp-ui-doc-enable nil
-                 lsp-ui-sideline-enable nil)
+  ;; :preface (setq lsp-ui-doc-enable (display-graphic-p)
+  ;;                lsp-ui-sideline-enable nil)
   :bind (:map lsp-ui-peek-mode-map
               ("j" . lsp-ui-peek--select-next)
               ("k" . lsp-ui-peek--select-prev)
               ("C-j" . lsp-ui-peek--select-next)
               ("C-k" . lsp-ui-peek--select-prev))
   :config
-  (setq lsp-ui-sideline-show-symbol t
+  (setq lsp-ui-doc-enable (display-graphic-p)
+        lsp-ui-doc-header nil
+        lsp-ui-doc-include-signature t
+        lsp-ui-doc-position 'at-point)
+
+  (setq-default lsp-ui-doc-frame-parameters
+                '((left . -1)
+                  (top . -1)
+                  (no-accept-focus . t)
+                  (min-width . 0)
+                  (width . 0)
+                  (min-height . 0)
+                  (height . 0)
+                  (internal-border-width . 0)
+                  (vertical-scroll-bars)
+                  (horizontal-scroll-bars)
+                  (left-fringe . 0)
+                  (right-fringe . 0)
+                  (menu-bar-lines . 0)
+                  (tool-bar-lines . 0)
+                  (line-spacing . 0.1)
+                  (unsplittable . t)
+                  (undecorated . t)
+                  (minibuffer . nil)
+                  (visibility . nil)
+                  (mouse-wheel-frame . nil)
+                  (no-other-frame . t)
+                  (cursor-type)
+                  (no-special-glyphs . t)))
+
+  (when (featurep 'doom-themes)
+    (set-face-background 'lsp-ui-doc-background (doom-color 'bg-alt)))
+
+  (when (featurep 'xwidget-internal)
+    (setq lsp-ui-doc-use-webkit t))
+
+  (defun +lsp/lsp-ui-doc--make-request-advice nil
+    "Request the documentation to the LS."
+    (when (and (not (bound-and-true-p lsp-ui-peek-mode))
+               (lsp--capability "hoverProvider"))
+      (-if-let (bounds (and (not (or (eq (char-after) ? )
+                                     (eq (char-after) ?\t)
+                                     (eq (char-after) ?\n)))
+                            (or (and (symbol-at-point) (bounds-of-thing-at-point 'symbol))
+                                (and (looking-at "[[:graph:]]") (cons (point) (1+ (point)))))))
+          (unless (equal lsp-ui-doc--bounds bounds)
+            (lsp--send-request-async
+             (lsp--make-request "textDocument/hover" (lsp--text-document-position-params))
+             (lambda (hover) (lsp-ui-doc--callback hover bounds (current-buffer)))))
+        (lsp-ui-doc--hide-frame))))
+
+  (advice-add 'lsp-ui-doc--make-request :override '+lsp/lsp-ui-doc--make-request-advice)
+
+  (setq lsp-ui-sideline-enable nil
+        lsp-ui-sideline-show-symbol t
         lsp-ui-sideline-show-hover t
         lsp-ui-sideline-show-code-actions t
         lsp-ui-sideline-update-mode 'point
         lsp-ui-sideline-ignore-duplicate t)
+
   (set-face-foreground 'lsp-ui-sideline-code-action "#FF8C00"))
 
 ;; Support LSP in org babel
