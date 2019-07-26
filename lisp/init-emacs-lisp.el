@@ -49,13 +49,7 @@
   :diminish eldoc-mode
   :hook ((emacs-lisp-mode . turn-on-eldoc-mode)
          (lisp-interaction-mode . turn-on-eldoc-mode)
-         (lisp-mode . turn-on-eldoc-mode))
-  ;; :config
-  ;; ;; Whenever the listed commands are used, ElDoc will automatically refresh the minibuffer.
-  ;; (eldoc-add-command
-  ;;  'paredit-backward-delete
-  ;;  'paredit-close-round)
-  )
+         (lisp-mode . turn-on-eldoc-mode)))
 
 ;; Interactive macro expander
 (use-package macrostep
