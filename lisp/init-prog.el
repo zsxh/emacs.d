@@ -56,8 +56,6 @@
   :hook (after-init . electric-pair-mode))
 
 (use-package awesome-pair
-  :commands awesome-pair-mode
-  :hook ((prog-mode conf-mode yaml-mode editorconfig-mode) . awesome-pair-mode)
   :bind (:map
          awesome-pair-mode-map
          ("(" . 'awesome-pair-open-round)
@@ -69,8 +67,8 @@
          ("%" . 'awesome-pair-match-paren)
          ("\"" . 'awesome-pair-double-quote)
          ("M-o" . 'awesome-pair-backward-delete)
-         ;; ("DEL" . 'awesome-pair-backward-delete)
-         ;; ("C-d" . 'awesome-pair-forward-delete)
+         ("DEL" . 'awesome-pair-backward-delete)
+         ("C-d" . 'awesome-pair-forward-delete)
          ("C-k" . 'awesome-pair-kill)
          ("M-\"" . 'awesome-pair-wrap-double-quote)
          ("M-[" . 'awesome-pair-wrap-bracket)
@@ -80,6 +78,9 @@
          ("M-n" . 'awesome-pair-jump-right)
          ("M-p" . 'awesome-pair-jump-left)
          ("M-RET" . 'awesome-pair-jump-out-pair-and-newline))
+  :hook (((prog-mode web-mode conf-mode yaml-mode editorconfig-mode) . awesome-pair-mode)
+         ((c++-mode java-mode rust-mode) . (lambda () (local-set-key (kbd "<") '+prog/insert-angle)))
+         (rust-mode . (lambda () (local-set-key (kbd "|") '+prog/insert-rust-closure))))
   :config
   (defun awesome-pair-in-string-p (&optional state)
     (save-excursion
@@ -90,67 +91,64 @@
           (and
            (eq (get-text-property (point) 'face) 'font-lock-doc-face)
            (eq (get-text-property (- (point) 1) 'face) 'font-lock-doc-face))
-          ;; fix single quote delete for c/c++/java-mode
+          ;; fix single quote pair delete for c/c++/java-mode
           (and
            (eq ?\" (char-syntax (char-before)))
            (eq ?\" (char-syntax (char-after (point))))))))
 
-  (require 'paren)
-
-  (defun +prog/backward-char-pair-p ()
+  (defun +prog/insert-angle ()
+    "Insert angle brackets like intellij idea."
+    (interactive)
     (save-excursion
-      (backward-char)
-      (show-paren--default)))
+      (let ((pos (point))
+            (bounds (bounds-of-thing-at-point 'symbol)))
+        (if bounds
+            (let ((letter (char-after (car bounds))))
+              (if (and (eq (upcase letter) letter)
+                       (not (eq (downcase letter) letter)))
+                  (insert "<>")
+                (insert "<")))
+          (insert "<"))))
+    (forward-char))
 
-  (defun +prog/forward-char-pair-p ()
+  (defun +prog/insert-rust-closure ()
+    (interactive)
     (save-excursion
-      (forward-char)
-      (show-paren--default)))
+      (if (and (equal major-mode 'rust-mode)
+               (eq ?\( (char-before)))
+          (insert "||")
+        (insert "|")))
+    (forward-char))
 
-  ;; For rust-mode Angle brackets
-  (defun awesome-pair-after-open-pair-p ()
-    (save-excursion
-      (let ((syn (char-syntax (char-before))))
-        (and
-         (or (eq syn ?\()
-             (and (eq syn ?_)
-                  (eq (char-before) ?\{)))
-         (+prog/backward-char-pair-p)))))
+  (defun +prog/in-empty-pair-p (awesome-in-empty-pair-fn &rest args)
+    (or (funcall awesome-in-empty-pair-fn)
+        (and (eq ?> (char-after))
+             (eq ?< (char-before)))
+        (and (equal major-mode 'rust-mode)
+             (eq ?| (char-after))
+             (eq ?| (char-before)))))
 
-  (defun awesome-pair-after-close-pair-p ()
-    (save-excursion
-      (let ((syn (char-syntax (char-before))))
-        (and
-         (or (eq syn ?\))
-             (eq syn ?\")
-             (and (eq syn ?_)
-                  (eq (char-before) ?\})))
-         (+prog/backward-char-pair-p)))))
+  (advice-add 'awesome-pair-in-empty-pair-p :around '+prog/in-empty-pair-p)
 
-  (defun awesome-pair-before-open-pair-p ()
-    (save-excursion
-      (let ((syn (char-syntax (char-after))))
-        (and
-         (or (eq syn ?\( )
-             (eq syn ?\" )
-             (and (eq syn ?_)
-                  (eq (char-after) ?\{)))
-         (+prog/forward-char-pair-p)))))
+  (with-eval-after-load 'rust-mode
+    ;; Reset angle brackets syntax
+    (modify-syntax-entry ?< "." rust-mode-syntax-table)
+    (modify-syntax-entry ?> "." rust-mode-syntax-table))
 
-  (defun awesome-pair-before-close-pair-p ()
-    (save-excursion
-      (let ((syn (char-syntax (char-after))))
-        (and
-         (or (eq syn ?\) )
-             (and (eq syn ?_)
-                  (eq (char-after) ?\})))
-         (+prog/forward-char-pair-p)))))
+  (defun +prog/fix-unbalanced-parentheses-or-forward-char ()
+    "Fix missing close pair or just move forward one character."
+    (interactive)
+    (let ((close (awesome-pair-missing-close)))
+      (if close
+          (cond ((eq ?\) (matching-paren close))
+                 (insert ")"))
+                ((eq ?\} (matching-paren close))
+                 (insert "}"))
+                ((eq ?\] (matching-paren close))
+                 (insert "]")))
+        (forward-char))))
 
-  ;; (with-eval-after-load 'cc-mode
-  ;;   (modify-syntax-entry ?< "(>" c++-mode-syntax-table)
-  ;;   (modify-syntax-entry ?> ")<" c++-mode-syntax-table)
-  ;;   (modify-syntax-entry ?< "(>" java-mode-syntax-table)
-  ;;   (modify-syntax-entry ?> ")<" java-mode-syntax-table))
+  (advice-add 'awesome-pair-fix-unbalanced-parentheses :override '+prog/fix-unbalanced-parentheses-or-forward-char)
 
   (with-eval-after-load 'lispy
     (define-key lispy-mode-map (kbd "M-o") 'awesome-pair-backward-delete)

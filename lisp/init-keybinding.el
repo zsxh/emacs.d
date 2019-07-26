@@ -124,6 +124,7 @@
      "hf" '(helpful-callable :which-key "helpful-callable")
      "hF" '(describe-face :which-key "describe-face")
      "hk" '(helpful-key :which-key "helpful-key")
+     "hs" '(describe-syntax :which-key "describe-syntax")
      "hS" '(hydra-emacs-cheatsheet/body :which-key "my-emacs-cheatsheet")
      "hv" '(helpful-variable :which-key "helpful-variable")
      "hp" '(helpful-at-point :which-key "helpful-at-point")
