@@ -74,7 +74,7 @@
   :hook (company-mode . company-box-mode)
   :init
   (setq company-box-enable-icon (display-graphic-p)
-        company-box-doc-enable t)
+        company-box-doc-enable nil)     ; eldoc performance issue
   :config
   (with-eval-after-load 'all-the-icons
     (defun +company-box-icons--elisp (candidate)
