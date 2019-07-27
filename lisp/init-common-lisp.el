@@ -20,7 +20,7 @@
   (evil-set-initial-state 'sly-db-mode 'emacs))
 
 (defun +common-lisp/sly-config ()
-  (+funcs/set-leader-keys-for-major-mode
+  (+funcs/major-mode-leader-keys
    lisp-mode-map
    "'" '(sly-mrepl :which-key "repl")
    "g" '(nil :which-key "goto")

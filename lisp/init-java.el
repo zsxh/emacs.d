@@ -20,7 +20,7 @@
 
 (with-eval-after-load 'cc-mode
 
-  (+funcs/set-leader-keys-for-major-mode
+  (+funcs/major-mode-leader-keys
    java-mode-map
    "c" '(+java/compile :which-key "compile")
    "j" '(+java/set-jdk :which-key "set-jdk"))
@@ -28,7 +28,7 @@
   (+language-server/set-common-leader-keys java-mode-map)
 
   (if (eq emacs-lsp-client 'lsp-mode)
-      (+funcs/set-leader-keys-for-major-mode
+      (+funcs/major-mode-leader-keys
        java-mode-map
        "dr" '(dap-java-debug :which-key "run")
        "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")

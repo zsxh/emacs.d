@@ -40,7 +40,7 @@
 (with-eval-after-load 'python
   (defun +python/set-leader-keys ()
     (+language-server/set-common-leader-keys python-mode-map)
-    (+funcs/set-leader-keys-for-major-mode
+    (+funcs/major-mode-leader-keys
      python-mode-map
      "'" '(+python/repl :which-key "repl")
      "c" '(nil :which-key "compile-exec")

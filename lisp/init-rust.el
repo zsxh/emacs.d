@@ -29,7 +29,7 @@
 
 (with-eval-after-load 'rust-mode
   (+language-server/set-common-leader-keys rust-mode-map)
-  (+funcs/set-leader-keys-for-major-mode
+  (+funcs/major-mode-leader-keys
    rust-mode-map
    "c" '(nil :which-key "cargo")
    "c." '(cargo-process-repeat :which-key "repeat-last-command")

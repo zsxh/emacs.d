@@ -57,7 +57,7 @@
   (use-package yasnippet-snippets
     :ensure t)
   (with-eval-after-load 'snippet
-    (+funcs/set-leader-keys-for-major-mode
+    (+funcs/major-mode-leader-keys
      snippet-mode-map
      "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet"))))
 

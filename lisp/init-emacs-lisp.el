@@ -25,7 +25,7 @@
   :config
   ;; Note: '(emacs-lisp-mode-map) or (list 'emacs-lisp-mode-map)
   (dolist (mode-map '(emacs-lisp-mode-map lisp-interaction-mode-map))
-    (+funcs/set-leader-keys-for-major-mode
+    (+funcs/major-mode-leader-keys
      mode-map
      "'" '(ielm :which-key "ielm")
      "e" '(nil :which-key "eval")

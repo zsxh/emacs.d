@@ -41,14 +41,14 @@
   (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode))
   ;; :hook (web-mode . lsp)
   :config
-  (defun my-web-mode-hook ()
-    "Hooks for Web mode."
-    (setq web-mode-markup-indent-offset 2
-          web-mode-css-indent-offset 2
-          web-mode-code-indent-offset 2
-          web-mode-attr-indent-offset 2
-          web-mode-sql-indent-offset 2))
-  (add-hook 'web-mode-hook 'my-web-mode-hook))
+  (setq web-mode-markup-indent-offset 2
+        web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2
+        web-mode-attr-indent-offset 2
+        web-mode-sql-indent-offset 2)
+  (+funcs/major-mode-leader-keys
+   web-mode-map
+   "r" 'instant-rename-tag))
 
 (use-package css-mode
   :ensure nil

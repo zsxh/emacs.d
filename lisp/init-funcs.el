@@ -45,7 +45,7 @@ and write the 'initial-scratch-message into it."
         (insert initial-scratch-message)))
     (switch-to-buffer target-buffer)))
 
-(defmacro +funcs/set-leader-keys-for-major-mode (mode-map &rest args)
+(defmacro +funcs/major-mode-leader-keys (mode-map &rest args)
   "Use general.el to define leader keys with both \"SPC m\" and \",\".
 Need major-mode-map symbol MODE-MAP and keybidngs map ARGS.
 

@@ -95,7 +95,7 @@
       "v" 'evil-visual-char
       "V" 'evil-visual-line))
 
-  (+funcs/set-leader-keys-for-major-mode
+  (+funcs/major-mode-leader-keys
    dired-mode-map
    "/" '(dired-narrow :which-key "dired-narrow")
    "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")
@@ -128,7 +128,7 @@
   ;; allow editing file permissions
   (setq wdired-allow-to-change-permissions t)
 
-  (+funcs/set-leader-keys-for-major-mode
+  (+funcs/major-mode-leader-keys
    wdired-mode-map
    "/" '(dired-narrow :which-key "dired-narrow")
    "c" '(wdired-finish-edit :which-key "finish edit")

@@ -19,7 +19,7 @@
   :ensure t
   :commands dockerfile-mode
   :config
-  (+funcs/set-leader-keys-for-major-mode
+  (+funcs/major-mode-leader-keys
    dockerfile-mode-map
    "b" '(dockerfile-build-buffer :which-key "build-buffer")
    "B" '(dockerfile-build-no-cache-buffer :which-key "build-no-cache-buffer")))

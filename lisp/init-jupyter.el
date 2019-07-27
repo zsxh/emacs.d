@@ -83,7 +83,7 @@
   (use-package ein-traceback
     :defer t
     :config
-    (+funcs/set-leader-keys-for-major-mode ein:traceback-mode-map
+    (+funcs/major-mode-leader-keys ein:traceback-mode-map
                                            "RET" 'ein:tb-jump-to-source-at-point-command
                                            "n" 'ein:tb-next-item
                                            "p" 'ein:tb-prev-item
@@ -172,7 +172,7 @@
   ;; :hook (ein:notebook-multilang-mode . (lambda () (run-with-timer 3 nil 'magic-latex-buffer)))
   :init
   (with-eval-after-load 'ein-multilang
-    (+funcs/set-leader-keys-for-major-mode
+    (+funcs/major-mode-leader-keys
      ein:notebook-multilang-mode-map
      "m" '(magic-latex-buffer :which-key "toggle-latex-preview"))))
 

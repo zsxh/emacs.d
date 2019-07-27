@@ -30,13 +30,13 @@
     (if (and (eq emacs-lsp-client 'lsp-mode)
              (not lsp-prefer-flymake))
         ;; flycheck
-        (+funcs/set-leader-keys-for-major-mode
+        (+funcs/major-mode-leader-keys
          ,mode-map
          "e" '(nil :which-key "error")
          "en" '(flycheck-next-error :which-key "next-error")
          "ep" '(flycheck-previous-error :which-key "prev-error"))
       ;; flymake
-      (+funcs/set-leader-keys-for-major-mode
+      (+funcs/major-mode-leader-keys
        ,mode-map
        "e" '(nil :which-key "error")
        "en" '(flymake-goto-next-error :which-key "next-error")
@@ -44,7 +44,7 @@
 
     (if (eq emacs-lsp-client 'lsp-mode)
         ;; lsp-mode
-        (+funcs/set-leader-keys-for-major-mode
+        (+funcs/major-mode-leader-keys
          ,mode-map
          "A" '(lsp-execute-code-action :which-key "code-action")
          "d" '(nil :which-key "debug")
@@ -59,7 +59,7 @@
          "gr" '(lsp-find-references :which-key "find-references")
          "R" '(lsp-rename :which-key "rename"))
       ;; eglot
-      (+funcs/set-leader-keys-for-major-mode
+      (+funcs/major-mode-leader-keys
        ,mode-map
        "A" '(eglot-code-actions :which-key "code-action")
        "f" '(eglot-format :which-key "format")

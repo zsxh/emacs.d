@@ -136,7 +136,7 @@
       ",w" 'org-capture-refile))
 
   ;; major mode keybindings
-  (+funcs/set-leader-keys-for-major-mode
+  (+funcs/major-mode-leader-keys
    org-mode-map
    "a" '(org-agenda :which-key "agenda")
    "b" '(nil :which-key "block")
