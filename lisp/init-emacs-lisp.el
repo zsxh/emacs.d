@@ -67,6 +67,14 @@
 (add-hook 'lisp-interaction-mode-hook
           #'(lambda () (setq-local company-backends '(company-capf company-files))))
 
+;; Evaluation Result OverlayS for Emacs Lisp.
+(use-package eros
+  :ensure t
+  :commands (eros-eval-last-sexp eros-eval-defun eros--make-result-overlay)
+  :init
+  (global-set-key [remap eval-last-sexp] #'eros-eval-last-sexp)
+  (global-set-key [remap eval-defun] #'eros-eval-defun))
+
 
 (provide 'init-emacs-lisp)
 
