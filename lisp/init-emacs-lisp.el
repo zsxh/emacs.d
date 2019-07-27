@@ -67,6 +67,42 @@
 (add-hook 'lisp-interaction-mode-hook
           #'(lambda () (setq-local company-backends '(company-capf company-files))))
 
+;; Short and sweet LISP editing
+(use-package lispy
+  :ensure t
+  :commands lispy-mode
+  :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
+         (lisp-interaction-mode . (lambda () (lispy-mode 1)))
+         (lisp-mode . (lambda () (lispy-mode 1))))
+  :config
+  ;; this requires CIDER or cider--display-interactive-eval-result function
+  (setq lispy-eval-display-style 'overlay)
+  (defun cider--display-interactive-eval-result (value point)
+    "Make overlay for VALUE at POINT."
+    (eros--make-result-overlay (format "%S" value)
+      :where point
+      :duration eros-eval-result-duration)
+    (message "%s" (propertize value 'invisible nil)))
+
+  (require 'le-lisp)
+  (setq lispy-use-sly t)
+
+  ;; Replace lispy--eavl-lisp function
+  (defun lispy--eval-lisp-advice (str)
+    "Eval STR as Common Lisp code."
+    (let* ((deactivate-mark nil)
+           (result (with-current-buffer (process-buffer (lispy--cl-process))
+                     (if lispy-use-sly
+                         (sly-interactive-eval str)
+                       (slime-eval `(swank:eval-and-grab-output ,str))))))
+      (if (equal (car result) "")
+          (cadr result)
+        (concat (propertize (car result)
+                            'face 'font-lock-string-face)
+                "\n\n"
+                (cadr result)))))
+  (advice-add #'lispy--eval-lisp :override #'lispy--eval-lisp-advice))
+
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros
   :ensure t
