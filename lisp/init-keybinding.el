@@ -15,15 +15,6 @@
 (use-package which-key
   :ensure t
   :config
-  ;; (which-key-setup-side-window-bottom)
-  ;; (which-key-setup-minibuffer)
-
-  ;; customize which-key setup
-  ;; FIXME: why keystrokes echo twice when ansi-term/vterm/.. window is active?
-  (which-key--setup-echo-keystrokes)
-  (setq which-key-popup-type 'minibuffer
-        which-key-show-prefix nil)
-
   ;; Rename the entry, for 1 to 1..9
   (push '(("\\(.*\\)1" . "winum-select-window-1") . ("\\11..9" . "window 1..9")) which-key-replacement-alist)
   ;; Hide other entries [2-9]
