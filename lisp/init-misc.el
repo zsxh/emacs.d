@@ -93,7 +93,7 @@
 (use-package socks
   :ensure nil
   :defer t
-  :init
+  :config
   (defun proxy-mode-socks-enable ()
     "Enable Socks proxy."
     (setq url-gateway-method 'socks)
@@ -106,11 +106,11 @@
     (setq url-gateway-method 'native)
     (message "socks proxy diabled")))
 
-;;;###autoload
 (defun proxy-socks-toggle ()
   "Toggle socks proxy."
   (interactive)
-  (require 'socks)
+  (unless (featurep 'socks)
+    (require 'socks))
   (if (equal url-gateway-method 'native)
       (proxy-mode-socks-enable)
     (proxy-mode-socks-disable)))
