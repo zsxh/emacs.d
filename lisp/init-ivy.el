@@ -123,8 +123,10 @@
 
 (use-package ivy-xref
   :ensure t
-  :commands ivy-xref-show-xrefs
-  :init (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+  :init (if (< emacs-major-version 27)
+            (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
+          (setq xref-show-definitions-function #'ivy-xref-show-defs))
+  :commands ivy-xref-show-xrefs)
 
 (defun +ivy/pinyin-config ()
   ;; Contribute pengpengxp
