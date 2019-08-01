@@ -39,13 +39,24 @@
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode))
-  ;; :hook (web-mode . lsp)
+  :hook ((web-mode . flycheck-mode))
   :config
+  ;; Install tidy to check html syntax, https://www.flycheck.org/en/latest/languages.html#html
+  (use-package flycheck
+    :config
+    (flycheck-add-mode 'html-tidy 'web-mode)
+    (+funcs/major-mode-leader-keys
+     web-mode-map
+     "e" '(nil :which-key "error")
+     "en" '(flycheck-next-error :which-key "next-error")
+     "ep" '(flycheck-previous-error :which-key "prev-error")))
+
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2
         web-mode-code-indent-offset 2
         web-mode-attr-indent-offset 2
         web-mode-sql-indent-offset 2)
+
   (+funcs/major-mode-leader-keys
    web-mode-map
    "r" 'instant-rename-tag))
