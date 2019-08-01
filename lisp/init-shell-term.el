@@ -46,8 +46,9 @@
   :commands (vterm vterm-other-window)
   :bind (:map vterm-mode-map ("M-u" . ace-window))
   :config
-  ;; (with-eval-after-load 'doom-themes
-  ;;   (setf (elt ansi-color-names-vector 0) (doom-color 'bg)))
+  ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
+  (with-eval-after-load 'doom-themes
+    (set-face-background 'vterm-color-black (doom-color 'base6)))
   (with-eval-after-load 'evil
     (evil-set-initial-state 'vterm-mode 'insert)))
 
