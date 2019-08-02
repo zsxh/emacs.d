@@ -54,8 +54,13 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
-(let ((default-directory (expand-file-name "submodules" user-emacs-directory)))
-  (normal-top-level-add-subdirs-to-load-path))
+(let ((base (expand-file-name "submodules" user-emacs-directory)))
+  (dolist (f (directory-files base))
+    (let ((name (concat base "/" f)))
+      (when (and (file-directory-p name)
+                 (not (equal f ".."))
+                 (not (equal f ".")))
+        (add-to-list 'load-path name)))))
 
 ;; Customization
 (require 'init-custom)
