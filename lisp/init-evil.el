@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-
-
 (global-set-key (kbd "C-a") '+funcs/smart-beginning-of-line)
 
 ;; Vim edit style
@@ -68,6 +66,12 @@
       "G" 'evil-goto-line))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'edebug (evil-collection-init 'edebug)))
+
+(use-package evil-surround
+  :ensure t
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
 
 ;; https://github.com/VanLaser/evil-nl-break-undo
 ;; It means that, for example, after you write an entire paragraph in insert state,
