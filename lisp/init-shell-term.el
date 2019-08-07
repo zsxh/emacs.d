@@ -46,6 +46,11 @@
   :commands (vterm vterm-other-window)
   :bind (:map vterm-mode-map ("M-u" . ace-window))
   :config
+  (defun +vterm/auto-exit (buf)
+    (when buf (kill-buffer buf)))
+
+  (add-hook 'vterm-exit-functions #'+vterm/auto-exit)
+
   ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
   (with-eval-after-load 'doom-themes
     (set-face-background 'vterm-color-black (doom-color 'base6)))
