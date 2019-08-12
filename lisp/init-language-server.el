@@ -158,9 +158,7 @@
     "Request the documentation to the LS."
     (when (and (not (bound-and-true-p lsp-ui-peek-mode))
                (lsp--capability "hoverProvider"))
-      (-if-let (bounds (and (not (or (eq (char-after) ? )
-                                     (eq (char-after) ?\t)
-                                     (eq (char-after) ?\n)))
+      (-if-let (bounds (and (not (memq (char-after) '(?  ?\t ?\n ?\) ?\] ?\})))
                             (or (and (symbol-at-point) (bounds-of-thing-at-point 'symbol))
                                 (and (looking-at "[[:graph:]]") (cons (point) (1+ (point)))))))
           (unless (equal lsp-ui-doc--bounds bounds)
