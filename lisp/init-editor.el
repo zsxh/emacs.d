@@ -147,10 +147,6 @@
   (setq browse-kill-ring-highlight-current-entry t)
   (setq browse-kill-ring-highlight-inserted-item t))
 
-;; fuzzy complete/search engine
-(use-package flx
-  :ensure t)
-
 ;; rigrep
 (use-package rg
   :ensure t
