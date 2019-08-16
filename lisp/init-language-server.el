@@ -151,8 +151,10 @@
   (when (featurep 'doom-themes)
     (set-face-background 'lsp-ui-doc-background (doom-color 'bg-alt)))
 
-  (when (featurep 'xwidget-internal)
-    (setq lsp-ui-doc-use-webkit t))
+  ;; FIXME: https://emacs-china.org/t/xwidget-async/10207/6
+  ;; async process won't be killed after enabling xwdiget
+  ;; (when (featurep 'xwidget-internal)
+  ;;   (setq lsp-ui-doc-use-webkit t))
 
   (defun +lsp/lsp-ui-doc--make-request-advice nil
     "Request the documentation to the LS."
