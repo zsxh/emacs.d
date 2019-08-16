@@ -161,6 +161,19 @@ the `quelpa' command has been run in the current Emacs session."
       (package-delete p-desc-to-delete)
       (format "package %s deleted" (package-desc-full-name p-desc-to-delete)))))
 
+(defun +package/quelpa-delete-cache (pkg-desc &optional force nosave)
+  (let ((name (package-desc-name pkg-desc)))
+    (unless (featurep 'quelpa)
+      (require 'quelpa))
+    (when (and (quelpa-setup-p) (cl-assoc name quelpa-cache))
+      (let ((build-dir (expand-file-name (symbol-name name) quelpa-build-dir)))
+        (when (file-exists-p build-dir)
+          (delete-directory build-dir t))
+        (setq quelpa-cache (cl-remove name quelpa-cache :key #'car))
+        (quelpa-save-cache)))))
+
+(advice-add 'package-delete :after '+package/quelpa-delete-cache)
+
 ;; Extensions
 (use-package package-utils
   :ensure t
