@@ -111,6 +111,13 @@
   (global-set-key [remap eval-last-sexp] #'eros-eval-last-sexp)
   (global-set-key [remap eval-defun] #'eros-eval-defun))
 
+;; Extra font lock for emacs lisp
+(use-package elispfl
+  :quelpa ((elispfl :fetcher github :repo "cireu/elispfl"))
+  :after elisp-mode
+  :config
+  (elispfl-mode))
+
 
 (provide 'init-emacs-lisp)
 
