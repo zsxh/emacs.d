@@ -99,7 +99,10 @@
    dired-mode-map
    "/" '(dired-narrow :which-key "dired-narrow")
    "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")
-   "s" '(+dired/get-size :which-key "get-size")))
+   "s" '(+dired/get-size :which-key "get-size")
+   "C" '(dired-ranger-copy :which-key "copy files")
+   "R" '(dired-ranger-move :which-key "move files")
+   "P" '(dired-ranger-paste :which-key "paste files")))
 
 (defalias '+dired/find-program 'find-name-dired)
 
@@ -179,6 +182,11 @@
   (with-eval-after-load 'all-the-icons-dired
     (setq dired-rainbow-date-regexp (format "%s%s" dired-rainbow-date-regexp "[ ]."))
     (dired-rainbow-define-chmod executable-unix "#4F894C" "-[rw-]+x.*")))
+
+(use-package dired-ranger
+  :ensure t
+  :after dired
+  :commands (dired-ranger-copy dired-ranger-move dired-ranger-paste))
 
 ;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 
