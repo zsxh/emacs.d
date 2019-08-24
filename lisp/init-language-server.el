@@ -94,6 +94,9 @@
         lsp-enable-symbol-highlighting nil
         lsp-eldoc-enable-signature-help nil)
 
+  (setq lsp-links-check-internal 0.5
+        lsp-lens-check-interval 0.2)
+
   (advice-add 'lsp :after
               (lambda ()
                 (setq-local company-backends
