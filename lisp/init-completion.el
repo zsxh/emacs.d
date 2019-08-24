@@ -74,8 +74,12 @@
   :hook (company-mode . company-box-mode)
   :init
   (setq company-box-enable-icon (display-graphic-p)
-        company-box-doc-enable nil)     ; eldoc performance issue
+        company-box-doc-enable t)     ; eldoc performance issue
   :config
+  (setq company-box-max-candidates 50
+        company-box-show-single-candidate t
+        company-box-doc-delay 0.7)
+
   (with-eval-after-load 'all-the-icons
     (defun +company-box-icons--elisp (candidate)
       (when (derived-mode-p 'emacs-lisp-mode)
@@ -96,7 +100,6 @@
 
     (setq company-box-icons-alist 'company-box-icons-all-the-icons
           company-box-backends-colors nil
-          company-box-max-candidates 50
           company-box-icons-functions
           '(company-box-icons--yasnippet company-box-icons--lsp +company-box-icons--elisp company-box-icons--acphp)
           company-box-icons-all-the-icons
