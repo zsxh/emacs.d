@@ -46,10 +46,7 @@
 ;; `global-eldoc-mode' is enabled by default.
 (use-package eldoc
   :ensure nil
-  :diminish eldoc-mode
-  :hook ((emacs-lisp-mode . turn-on-eldoc-mode)
-         (lisp-interaction-mode . turn-on-eldoc-mode)
-         (lisp-mode . turn-on-eldoc-mode)))
+  :diminish eldoc-mode)
 
 ;; Interactive macro expander
 (use-package macrostep
