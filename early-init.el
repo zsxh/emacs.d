@@ -29,6 +29,10 @@
 (tooltip-mode    -1)
 (menu-bar-mode   -1)
 
+;; Disable cursor blinking
+(setq no-blinking-cursor t)
+
+
 (provide 'early-init)
 
 ;;; early-init.el ends here
