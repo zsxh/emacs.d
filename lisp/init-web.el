@@ -114,6 +114,26 @@
 # {}\n")))
     (switch-to-buffer restclient-buffer)))
 
+;; editing with preview
+
+;; TODO: https://github.com/skeeto/skewer-mode
+
+
+;; https://github.com/skeeto/impatient-mode
+;; Enable the web server provided by simple-httpd:
+;; M-x httpd-start
+;; Publish buffers by enabling the minor mode impatient-mode.
+;; M-x impatient-mode
+;; And then point your browser to http://localhost:8080/imp/, select a buffer, and watch your changes appear as you type!
+(use-package impatient-mode
+  :ensure t
+  :commands impatient-mode
+  :config
+  (defun +web/open-impatient-mode ()
+    (interactive)
+    (impatient-mode)
+    (browse-url "http://localhost:8080/imp/")))
+
 
 (provide 'init-web)
 
