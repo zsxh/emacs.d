@@ -147,8 +147,7 @@
   :after dired
   :hook (dired-mode . all-the-icons-dired-mode)
   :config
-  (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8")
-  (use-package font-lock+ :quelpa (font-lock+ :fetcher wiki)))
+  (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))
 
 ;;;;;;;;;;;;;;;;;
 ;; Dired Tools ;;
@@ -267,8 +266,8 @@
 
 ;;;;;;;;;;;;;; Change priority of minor-mode keymaps ;;;;;;;;;;;;;;
 (use-package minor-mode-hack
-  :quelpa ((minor-mode-hack :fetcher wiki))
-  :defer t)
+  :ensure t
+  :commands show-minor-mode-map-priority)
 
 
 (provide 'init-emacs-enhancement)

@@ -127,7 +127,7 @@
 ;; And then point your browser to http://localhost:8080/imp/, select a buffer, and watch your changes appear as you type!
 (use-package impatient-mode
   :ensure t
-  :commands impatient-mode
+  :commands (impatient-mode +web/open-impatient-mode)
   :config
   (defun +web/open-impatient-mode ()
     (interactive)
