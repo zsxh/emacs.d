@@ -1,7 +1,7 @@
-Updated: <2019-07-01 星期一 17:34>
+Updated: <2019-08-28 星期三>
 
 * Enviroment Tested
-  - Emacs Version: GNU Emacs 27.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.8) of 2019-06-26
+  - Emacs Version: GNU Emacs 27.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.10) of 2019-08-23
   - OS: Manjaro 18.0.4
   - Shell: zsh 5.7.1
   - DE: Deepin 15.10.1
