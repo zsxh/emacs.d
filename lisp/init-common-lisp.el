@@ -17,7 +17,8 @@
          (sly-mode . +common-lisp/sly-config))
   :config
   (setq inferior-lisp-program "sbcl")
-  (evil-set-initial-state 'sly-db-mode 'emacs))
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'sly-db-mode 'emacs)))
 
 (defun +common-lisp/sly-config ()
   (+funcs/major-mode-leader-keys

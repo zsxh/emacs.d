@@ -114,7 +114,9 @@ If RETURN-P, return the message as a string instead of displaying it."
   ;; (setq use-package-ensure-function 'quelpa)
   (setq quelpa-self-upgrade-p nil)
   (setq quelpa-update-melpa-p nil)
-  (setq quelpa-checkout-melpa-p nil)
+  (setq quelpa-melpa-dir (expand-file-name "quelpa/melpa" user-emacs-directory))
+  (when (file-exists-p (expand-file-name ".git" quelpa-melpa-dir))
+    (setq quelpa-checkout-melpa-p nil))
   ;; Avoid loading quelpa unless necessary.
   ;; This improves performance, but can prevent packages from being updated automatically.
   (setq quelpa-use-package-inhibit-loading-quelpa t))

@@ -36,9 +36,9 @@
 ;; On ArchLinux or Manjaro install libvterm first
 ;; sudo pacman -S libvterm
 (use-package vterm
-  :quelpa (vterm :fetcher github :repo "jixiuf/emacs-libvterm"
-                 :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
-  ;; :ensure t
+  :ensure t
+  ;; :quelpa (vterm :fetcher github :repo "jixiuf/emacs-libvterm"
+  ;;                :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
   :if (and (executable-find "vterm-ctrl")
            (executable-find "make")
            (executable-find "cmake")

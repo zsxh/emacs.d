@@ -30,17 +30,18 @@
   ;; see https://github.com/abo-abo/swiper/issues/1218
   (setq ivy-dynamic-exhibit-delay-ms 250)
 
-  ;; initial input ":" to match pinyin
-  (+ivy/pinyin-config)
+  (when (fboundp '+ivy/pinyin-config)
+    ;; initial input ":" to match pinyin
+    (+ivy/pinyin-config)
 
-  (defun ivy--pinyin-regex (str)
-    (or (pinyin-to-utf8 str)
-        (ivy--regex-plus str)))
+    (defun ivy--pinyin-regex (str)
+      (or (pinyin-to-utf8 str)
+          (ivy--regex-plus str)))
 
-  (setq ivy-re-builders-alist
-        '((ivy-switch-buffer . ivy--regex-plus)
-          (swiper . ivy--pinyin-regex)
-          (t . ivy--pinyin-regex)))
+    (setq ivy-re-builders-alist
+          '((ivy-switch-buffer . ivy--regex-plus)
+            (swiper . ivy--pinyin-regex)
+            (t . ivy--pinyin-regex))))
 
   (setq ivy-initial-inputs-alist nil)
 

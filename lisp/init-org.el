@@ -77,9 +77,7 @@
     (cl-pushnew '(ipython . t) load-language-list))
 
   ;; Emacs Jupyter integration with org-mode
-  (use-package jupyter
-    :ensure t
-    :config
+  (when (featurep 'jupyter)
     (require 'ob-jupyter)
     (cl-pushnew '(jupyter . t) load-language-list)
     ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
@@ -95,15 +93,16 @@
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-list)
 
-  ;; lsp support org code block editing
-  (defvar org-babel-lang-list
-    '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
-      "jupyter-python" "jupyter-julia" "jupyter-javascript"))
+  (with-eval-after-load 'lsp-mode
+    ;; lsp support org code block editing
+    (defvar org-babel-lang-list
+      '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
+        "jupyter-python" "jupyter-julia" "jupyter-javascript"))
 
-  (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
+    (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
 
-  (dolist (lang org-babel-lang-list)
-    (eval `(lsp-org-babel-enbale ,lang))))
+    (dolist (lang org-babel-lang-list)
+      (eval `(lsp-org-babel-enbale ,lang)))))
 
 ;; Org-mode keybindings
 (use-package evil-org

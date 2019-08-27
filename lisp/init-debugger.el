@@ -25,8 +25,8 @@
   ;; you neead to install several debugger first: lldb, ptvsd, eclipse jdt server, etc. links below:
   (require 'dap-gdb-lldb) ;https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb
   (require 'dap-python)  ;https://github.com/emacs-lsp/dap-mode#python
-  (require 'dap-java)    ;https://github.com/emacs-lsp/dap-mode#java
-  )
+  (when (featurep 'lsp-java)
+    (require 'dap-java)))
 
 (with-eval-after-load 'dap-mode
 
