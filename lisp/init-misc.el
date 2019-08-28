@@ -120,6 +120,8 @@
   :ensure t
   :commands bongo)
 
+;; TODO: https://github.com/nicehiro/netease-music
+
 
 (provide 'init-misc)
 

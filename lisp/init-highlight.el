@@ -88,6 +88,7 @@
 ;;     (diff-hl-margin-mode))
 ;;   )
 
+;; TODO: try xterm-color?
 (use-package ansi-color
   :ensure nil
   :commands ansi-color-apply-on-region)
