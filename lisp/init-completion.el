@@ -67,10 +67,6 @@
   :if (and (>= emacs-major-version 26) (display-graphic-p))
   :ensure t
   :diminish
-  :functions (all-the-icons-faicon
-              all-the-icons-material
-              all-the-icons-octicon
-              all-the-icons-alltheicon)
   :hook (company-mode . company-box-mode)
   :init
   (setq company-box-enable-icon (display-graphic-p)
