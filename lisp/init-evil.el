@@ -30,6 +30,7 @@
          ("C-u" . evil-scroll-up)
          ("C-a" . +funcs/smart-beginning-of-line)
          ("C-e" . move-end-of-line)
+         ("C-y" . evil-paste-before)
          ("M-e" . evil-scroll-line-down)
          ("M-y" . evil-scroll-line-up)
          :map evil-motion-state-map

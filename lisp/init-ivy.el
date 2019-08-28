@@ -124,9 +124,9 @@
 
 (use-package ivy-xref
   :ensure t
-  :init (if (< emacs-major-version 27)
-            (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
-          (setq xref-show-definitions-function #'ivy-xref-show-defs))
+  :init
+  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs) ; Emacs< 27
+  (setq xref-show-definitions-function #'ivy-xref-show-defs) ; Emacs >= 27
   :commands ivy-xref-show-xrefs)
 
 (defun +ivy/pinyin-config ()
