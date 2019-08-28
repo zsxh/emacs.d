@@ -91,18 +91,7 @@
       :init (cl-pushnew '(restclient . t) load-language-list)))
 
   (org-babel-do-load-languages 'org-babel-load-languages
-                               load-language-list)
-
-  (with-eval-after-load 'lsp-mode
-    ;; lsp support org code block editing
-    (defvar org-babel-lang-list
-      '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
-        "jupyter-python" "jupyter-julia" "jupyter-javascript"))
-
-    (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
-
-    (dolist (lang org-babel-lang-list)
-      (eval `(lsp-org-babel-enbale ,lang)))))
+                               load-language-list))
 
 ;; Org-mode keybindings
 (use-package evil-org

@@ -99,10 +99,10 @@
 (require 'init-git)
 (require 'init-highlight)
 (require 'init-prog)
+(require 'init-language-server)
 (require 'init-debugger)
 
 ;; Language
-(require 'init-language-server)
 (require 'init-emacs-lisp)
 (require 'init-common-lisp)
 (require 'init-c)
@@ -112,6 +112,7 @@
 (require 'init-julia)
 (require 'init-js)
 (require 'init-rust)
+(require 'init-go)
 (require 'init-jupyter)
 
 ;; Experimental

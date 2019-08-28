@@ -10,17 +10,6 @@
 
 ;;; Code:
 
-;;;;;;;;;;;;;; LANGUAGE SUPPORT ;;;;;;;;;;;;;;
-
-;; require go language server `bingo'
-;; https://github.com/saibing/bingo/wiki/Install
-(use-package go-mode
-  :ensure t
-  :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-  :hook (go-mode . lsp))
-
 ;;;;;;;;;;;;;; Language Common Leader Keys ;;;;;;;;;;;;;;
 (defvar-local emacs-lsp-client 'lsp-mode
   "'lsp-mode or 'eglot")
@@ -122,6 +111,7 @@
               ("C-k" . lsp-ui-peek--select-prev))
   :config
   (setq lsp-ui-doc-enable (display-graphic-p)
+        lsp-ui-doc-delay 0.5
         lsp-ui-doc-header nil
         lsp-ui-doc-include-signature t
         lsp-ui-doc-position 'at-point)
@@ -183,28 +173,39 @@
 
   (set-face-foreground 'lsp-ui-sideline-code-action "#FF8C00"))
 
-;; Support LSP in org babel
-;; https://github.com/emacs-lsp/lsp-mode/issues/377
-(cl-defmacro lsp-org-babel-enbale (lang)
-  "Support LANG in org source code block."
-  ;; (cl-check-type lang symbolp)
-  (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
-         (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
-    `(progn
-       (defun ,intern-pre (info)
-         (let ((lsp-file (or (->> info caddr (alist-get :lspfile))
-                             buffer-file-name)))
-           (setq-local buffer-file-name lsp-file)
-           (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
-           (lsp)))
-       (if (fboundp ',edit-pre)
-           (advice-add ',edit-pre :after ',intern-pre)
-         (progn
-           (defun ,edit-pre (info)
-             (,intern-pre info))
-           (put ',edit-pre 'function-documentation
-                (format "Prepare local buffer environment for org source block (%s)."
-                        (upcase ,lang))))))))
+(when (featurep 'lsp-mode)
+  ;; Support LSP in org babel
+  ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+  (cl-defmacro lsp-org-babel-enbale (lang)
+    "Support LANG in org source code block."
+    ;; (cl-check-type lang symbolp)
+    (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+           (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
+      `(progn
+         (defun ,intern-pre (info)
+           (let ((lsp-file (or (->> info caddr (alist-get :lspfile))
+                               buffer-file-name)))
+             (setq-local buffer-file-name lsp-file)
+             (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
+             (lsp)))
+         (if (fboundp ',edit-pre)
+             (advice-add ',edit-pre :after ',intern-pre)
+           (progn
+             (defun ,edit-pre (info)
+               (,intern-pre info))
+             (put ',edit-pre 'function-documentation
+                  (format "Prepare local buffer environment for org source block (%s)."
+                          (upcase ,lang))))))))
+
+  ;; lsp support org code block editing
+  (defvar org-babel-lang-list
+    '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
+      "jupyter-python" "jupyter-julia" "jupyter-javascript"))
+
+  (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
+
+  (dolist (lang org-babel-lang-list)
+    (eval `(lsp-org-babel-enbale ,lang))))
 
 
 (provide 'init-language-server)
