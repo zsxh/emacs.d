@@ -26,9 +26,10 @@
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
 (defun +shell/projectile-shell-pop ()
-  "Open a term buffer at projectile project root."
+  "Open a term buffer at projectile project root,
+if no project root found, use current directory instead."
   (interactive)
-  (let ((default-directory (projectile-project-root)))
+  (let ((default-directory (or  (projectile-project-root) default-directory)))
     (call-interactively 'shell-pop)))
 
 ;; HIGHLY RECOMMENDED
