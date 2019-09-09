@@ -120,7 +120,11 @@
   :ensure t
   :commands bongo)
 
-;; TODO: https://github.com/nicehiro/netease-music
+(use-package powerthesaurus
+  :ensure t
+  :commands (powerthesaurus-lookup-word
+             powerthesaurus-lookup-word-at-point
+             powerthesaurus-lookup-word-dwim))
 
 
 (provide 'init-misc)
