@@ -108,10 +108,14 @@
 #
 # GET https://api.github.com
 # User-Agent: Emacs Restclient
-#
+# #
 # POST https://jira.atlassian.com/rest/api/2/search
 # Content-Type: application/json
-# {}\n")))
+# {}
+# #
+# POST https://somehost/api
+# Content-Type: application/x-www-form-urlencoded
+# param1=value1&param2=value2\n")))
     (switch-to-buffer restclient-buffer)))
 
 ;; editing with preview
