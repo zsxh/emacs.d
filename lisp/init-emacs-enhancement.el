@@ -101,8 +101,9 @@
    "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")
    "s" '(+dired/get-size :which-key "get-size")
    "C" '(dired-ranger-copy :which-key "copy files")
+   "P" '(dired-ranger-paste :which-key "paste files")
    "R" '(dired-ranger-move :which-key "move files")
-   "P" '(dired-ranger-paste :which-key "paste files")))
+   "T" '(dired-filter-mode :which-key "toggle-dired-filter-mode")))
 
 (defalias '+dired/find-program 'find-name-dired)
 
@@ -186,6 +187,11 @@
   :ensure t
   :after dired
   :commands (dired-ranger-copy dired-ranger-move dired-ranger-paste))
+
+(use-package dired-filter
+  :ensure t
+  :after dired
+  :commands (dired-filter-mode))
 
 ;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 
