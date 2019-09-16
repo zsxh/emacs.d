@@ -28,15 +28,6 @@
   :commands pyenv-mode
   :hook (python-mode . pyenv-mode))
 
-;; https://emacs-china.org/t/emacs-pipenv-el-make-process-color-code-0m/7614
-(use-package pipenv
-  :ensure t
-  :commands pipenv-mode
-  :hook (python-mode . pipenv-mode)
-  :init
-  (setq pipenv-projectile-after-switch-function
-        #'pipenv-projectile-after-switch-extended))
-
 (with-eval-after-load 'python
   (defun +python/set-leader-keys ()
     (+language-server/set-common-leader-keys python-mode-map)
