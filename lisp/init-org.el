@@ -21,7 +21,7 @@
   :config
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
   (setq org-time-stamp-formats '("<%Y-%m-%d %A>" . "<%Y-%m-%d %A %H:%M>"))
-  (setq org-export-use-babel nil)       ; do not evaluate again during export.
+  (setq org-export-use-babel nil) ; do not evaluate again during export.
 
   ;; display/update images in the buffer after I evaluate
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
@@ -90,6 +90,11 @@
     (use-package ob-restclient
       :ensure t
       :init (cl-pushnew '(restclient . t) load-language-list)))
+
+  (use-package ob-julia
+    :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia))
+    :config
+    (cl-pushnew '(julia . t) load-language-list))
 
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-list))

@@ -30,7 +30,7 @@
   :after julia-mode
   :quelpa ((lsp-julia :fetcher github :repo "non-Jedi/lsp-julia"))
   :config
-  (setq lsp-julia-default-environment "~/.julia/environments/v1.1"))
+  (setq lsp-julia-default-environment "~/.julia/environments/v1.2"))
 
 (add-hook 'julia-mode-hook 'lsp)
 
