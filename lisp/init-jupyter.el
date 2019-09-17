@@ -93,7 +93,7 @@
     (interactive)
     (ein:worksheet-merge-cell (ein:worksheet--get-ws-or-error) (ein:worksheet-get-current-cell) t t))
 
-  (defhydra ipython-notebook-hydra (:hint nil)
+  (defhydra ipython-notebook-hydra (:hint nil :idle 1.5)
     "
  Operations on Cells^^^^^^^^               On Worksheets^^^^            Other
  ----------------------------^^^^^^^^      ------------------------^^^^ ----------------------------------^^^^
@@ -113,7 +113,7 @@
     ("K" ein:worksheet-move-cell-up)
     ("L" ein:notebook-worksheet-move-next)
     ("t" ein:worksheet-toggle-output)
-    ("d" ein:worksheet-kill-cell)
+    ("d" ein:worksheet-kill-cell :exit t)
     ("R" ein:worksheet-rename-sheet)
     ("y" ein:worksheet-copy-cell)
     ("p" ein:worksheet-yank-cell)
