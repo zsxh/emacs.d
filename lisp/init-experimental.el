@@ -131,6 +131,7 @@
                      (equal key-desc "RET")
                      (equal key-desc "DEL")
                      (equal key-desc "TAB")
+                     (equal key-desc "SPC")
                      (equal key-desc "<backtab>")
                      (equal key-desc "<home>")
                      (equal key-desc "<end>")
