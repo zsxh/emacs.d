@@ -27,7 +27,7 @@
   :config
   (with-eval-after-load 'evil
     (general-define-key
-     :states '(normal visual motion emacs)
+     :states '(normal visual motion)
      :keymaps '(override global)
      :prefix "SPC"
      ;; :non-normal-prefix "C-SPC"
