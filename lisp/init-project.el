@@ -30,7 +30,9 @@
   (defun +project/projectile-buffer-filter (buffer)
     (let ((name (buffer-name buffer)))
       (or (and (string-prefix-p "*" name)
-               (not (string-prefix-p "*eww*" name)))
+               (not (string-prefix-p "*eww*" name))
+               (not (string-prefix-p "*ein: http" name))
+               (not (string-prefix-p "*ein:notebooklist" name)))
           (string-match-p "magit.*:" name)
           (equal (buffer-name (current-buffer)) name))))
 

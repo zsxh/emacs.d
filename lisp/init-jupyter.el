@@ -28,7 +28,7 @@
   (use-package poly-ein
     :defer t
     :config
-    (setq ein:polymode t))
+    (setq ein:polymode nil))
 
   (use-package ein-subpackages
     :defer t
@@ -75,6 +75,8 @@
     (defun ein:ml-lang-setup-julia ()
       (require 'julia-mode)
       (setq-local mode-name "EIN[Julia]")
+      (when company-mode
+        (setq-local company-minimum-prefix-length 3))
       (setq-local indent-line-function
                   (apply-partially #'ein:ml-indent-line-function #'julia-indent-line))
       (set-syntax-table julia-mode-syntax-table)
@@ -93,7 +95,7 @@
     (interactive)
     (ein:worksheet-merge-cell (ein:worksheet--get-ws-or-error) (ein:worksheet-get-current-cell) t t))
 
-  (defhydra ipython-notebook-hydra (:hint nil :idle 1.5)
+  (defhydra ipython-notebook-hydra (:hint nil :idle 1)
     "
  Operations on Cells^^^^^^^^               On Worksheets^^^^            Other
  ----------------------------^^^^^^^^      ------------------------^^^^ ----------------------------------^^^^
@@ -103,7 +105,7 @@
  [_O_/_o_]^     insert above/below      ^^^[_+_/_-_]  create/delete     [_C-s_/_C-r_]   save/rename notebook
  [_y_/_p_/_d_/_s_] copy/paste/delete/split [_R_]^^ rename worksheet     [_x_/_C-S-r_]   close/restart notebook
  [_u_]^^^       change type             ^^^^^^^                         [_q_]^^         quit
- [_RET_/_M-RET_] execute/exec all"
+ [_RET_/_M-RET_/_Z_] execute/exec all/interrupt"
     ("h" ein:notebook-worksheet-open-prev-or-last)
     ("j" ein:worksheet-goto-next-input)
     ("k" ein:worksheet-goto-prev-input)
@@ -117,11 +119,12 @@
     ("R" ein:worksheet-rename-sheet)
     ("y" ein:worksheet-copy-cell)
     ("p" ein:worksheet-yank-cell)
-    ("o" ein:worksheet-insert-cell-below)
-    ("O" ein:worksheet-insert-cell-above)
+    ("o" ein:worksheet-insert-cell-below :exit t)
+    ("O" ein:worksheet-insert-cell-above :exit t)
     ("u" ein:worksheet-change-cell-type :exit t)
     ("RET" ein:worksheet-execute-cell-and-goto-next)
-    ("M-RET" ein:worksheet-execute-all-cell)
+    ("M-RET" ein:worksheet-execute-all-cell :exit t)
+    ("Z" ein:notebook-kernel-interrupt-command)
     ;; Output
     ("C-l" ein:worksheet-clear-output)
     ("C-S-l" ein:worksheet-clear-all-output)
