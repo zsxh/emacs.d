@@ -1,10 +1,12 @@
-Updated: <2019-08-28 星期三>
+#+STARTUP: showall
+Updated: <2019-09-21 星期六>
 
 * Enviroment Tested
-  - Emacs Version: GNU Emacs 27.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.10) of 2019-08-23
-  - OS: Manjaro 18.0.4
+  - Emacs Version: GNU Emacs 27.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.10) of 2019-09-20
+  - OS: Manjaro 18.1.0 Juhraya
   - Shell: zsh 5.7.1
   - DE: Deepin 15.10.1
+  - Kernel: x86_64 Linux 5.2.11-1-MANJARO
 
 * Features
   - =org=
@@ -116,5 +118,15 @@ Updated: <2019-08-28 星期三>
   - [ ] =Go=
   - [ ] =Julia=
   - [ ] =Javascript/Typescript=
+
+* Install Emacs
+#+begin_src sh
+  git clone --depth 1 https://github.com/emacs-mirror/emacs.git
+  cd emacs
+  ./autogen.sh
+  ./configure --with-imagemagick --with-modules --enable-link-time-optimization --with-xwidgets
+  make -j4
+  sudo make install
+#+end_src
 
 * TODOs
