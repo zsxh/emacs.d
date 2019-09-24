@@ -115,6 +115,11 @@
       (proxy-mode-socks-enable)
     (proxy-mode-socks-disable)))
 
+;; https://github.com/twlz0ne/with-proxy.el/tree/master
+(use-package with-proxy
+  :ensure t
+  :commands with-proxy)
+
 ;; Music Player
 (use-package bongo
   :ensure t
