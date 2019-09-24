@@ -77,6 +77,7 @@
 
   (setq lsp-auto-guess-root t
         lsp-prefer-flymake nil
+        lsp-enable-file-watchers nil
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t
         lsp-use-native-json t

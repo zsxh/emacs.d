@@ -38,8 +38,7 @@
         ;; company-require-match nil
         ;; company-dabbrev-ignore-case nil
         ;; company-dabbrev-downcase nil
-        )
-  (setq-default company-candidates-length 50))
+        ))
 
 ;; Fuzzy complete
 (use-package flx
