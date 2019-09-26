@@ -114,6 +114,7 @@
 (require 'init-rust)
 (require 'init-go)
 (require 'init-jupyter)
+(require 'init-latex)
 
 ;; Experimental
 (require 'init-experimental)
