@@ -29,6 +29,8 @@
   ;; use timer to improve the ivy-read performance,
   ;; see https://github.com/abo-abo/swiper/issues/1218
   (setq ivy-dynamic-exhibit-delay-ms 250)
+  ;; https://github.com/abo-abo/swiper#frequently-asked-questions
+  (setq ivy-use-selectable-prompt t)
 
   (when (fboundp '+ivy/pinyin-config)
     ;; initial input ":" to match pinyin

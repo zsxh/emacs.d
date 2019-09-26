@@ -170,7 +170,7 @@
   :commands hs-minor-mode
   ;; FIXME: https://github.com/millejoh/emacs-ipython-notebook/issues/464#issuecomment-460380151
   ;; the bicycle extension was using hideshow and conflicted with ein, so don't enable hs-minor-mode for prog-mode
-  :hook ((java-mode rust-mode python-mode) . (lambda () (hs-minor-mode) (hs-hide-level 2)))
+  :hook ((java-mode rust-mode python-mode json-mode) . (lambda () (hs-minor-mode) (hs-hide-level 2)))
   :config
   (with-eval-after-load 'evil
     (define-key evil-normal-state-map (kbd "zf") 'hs-hide-level)))
