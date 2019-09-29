@@ -35,7 +35,7 @@
     :config
     (setq ein:completion-backend 'ein:use-company-backend)
     (defun +ein/set-company-backend ()
-      (setq-local company-backends '(ein:company-backend company-files))
+      (setq-local company-backends '(ein:company-backend company-files company-dabbrev))
       ;; disable company box to improve performance
       (when (bound-and-true-p company-box-mode)
         (company-box-mode -1)))
@@ -73,10 +73,10 @@
   (use-package ein-multilang
     :defer t
     :config
-    ;; FIXME: ein company backend freeze emacs when auto-completing after [. / \] characters (too many candidates)
-    ;; so invoke company-complete-common manually after [. / \] characters
+    ;; FIXME: ein company backend freeze emacs when auto-completing after [. / \ < > + - * ^] characters (too many candidates)
+    ;; so invoke company-complete-common manually after [. / \ < > + - * ^] characters
     (defun +ein/julia-complete-delay ()
-      (if (memq (char-before) '(?\\ ?/ ?.))
+      (if (memq (char-before) '(?\\ ?/ ?. ?< ?> ?+ ?- ?* ?^))
           nil
         0.01))
 
@@ -89,7 +89,7 @@
                                                           (when (and (eq ?. (char-before)) company-mode)
                                                             (company-complete-common)))))
       (when company-mode
-        ;; (setq-local company-minimum-prefix-length 3)
+        (setq-local company-minimum-prefix-length 2)
         (setq-local company-idle-delay '+ein/julia-complete-delay))
 
       (set-syntax-table julia-mode-syntax-table)
