@@ -73,13 +73,25 @@
   (use-package ein-multilang
     :defer t
     :config
+    ;; FIXME: ein company backend freeze emacs when auto-completing after [. / \] characters (too many candidates)
+    ;; so invoke company-complete-common manually after [. / \] characters
+    (defun +ein/julia-complete-delay ()
+      (if (memq (char-before) '(?\\ ?/ ?.))
+          nil
+        0.01))
+
     (defun ein:ml-lang-setup-julia ()
       (require 'julia-mode)
       (setq-local mode-name "EIN[Julia]")
+      (setq-local indent-line-function (apply-partially #'ein:ml-indent-line-function
+                                                        (lambda ()
+                                                          (julia-indent-line)
+                                                          (when (and (eq ?. (char-before)) company-mode)
+                                                            (company-complete-common)))))
       (when company-mode
-        (setq-local company-minimum-prefix-length 3))
-      (setq-local indent-line-function
-                  (apply-partially #'ein:ml-indent-line-function #'julia-indent-line))
+        ;; (setq-local company-minimum-prefix-length 3)
+        (setq-local company-idle-delay '+ein/julia-complete-delay))
+
       (set-syntax-table julia-mode-syntax-table)
       (set-keymap-parent ein:notebook-multilang-mode-map julia-mode-map)))
 
@@ -87,10 +99,10 @@
     :defer t
     :config
     (+funcs/major-mode-leader-keys ein:traceback-mode-map
-                                           "RET" 'ein:tb-jump-to-source-at-point-command
-                                           "n" 'ein:tb-next-item
-                                           "p" 'ein:tb-prev-item
-                                           "q" 'bury-buffer))
+                                   "RET" 'ein:tb-jump-to-source-at-point-command
+                                   "n" 'ein:tb-next-item
+                                   "p" 'ein:tb-prev-item
+                                   "q" 'bury-buffer))
 
   (defun +ein/ein:worksheet-merge-cell-next ()
     (interactive)
@@ -151,23 +163,7 @@
     ("+" ein:notebook-worksheet-insert-next)
     ("-" ein:notebook-worksheet-delete)
     ("x" ein:notebook-close :exit t)
-    ("q" nil :exit t))
-
-  (when (version<= "27" emacs-version)
-    ;; (defalias 'json-encode 'json-serialize)
-
-    (defun ein:json-read-from-string (string)
-      (json-parse-string string :object-type 'plist :array-type 'list))
-
-    (defun ein:json-read ()
-      "Read json from `url-retrieve'-ed buffer.
-
-* `json-object-type' is `plist'. This is mainly for readability.
-* `json-array-type' is `list'.  Notebook data is edited locally thus
-  data type must be edit-friendly.  `vector' type is not."
-      (goto-char (point-max))
-      (backward-sexp)
-      (json-parse-buffer :object-type 'plist :array-type 'list))))
+    ("q" nil :exit t)))
 
 (use-package magic-latex-buffer
   :ensure t
