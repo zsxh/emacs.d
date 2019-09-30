@@ -292,8 +292,8 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
               ("I" . +eww/toggle-images-display)
               :map eww-link-keymap
               ("I" . +eww/toggle-images-display))
-  :hook (eww-mode . (lambda ()
-                      (setq-local shr-inhibit-images t)))
+  ;; :hook (eww-mode . (lambda ()
+  ;;                     (setq-local shr-inhibit-images t)))
   :config
   (defun +eww/browse-at-point-with-external-browser ()
     (interactive)
