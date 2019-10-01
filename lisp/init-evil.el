@@ -38,6 +38,8 @@
   :config
   ;; don't move cursor back, otherwise it will cause problem with lispy/awesome-pair
   (setq evil-move-cursor-back nil)
+  ;; show-paren-mode + Evil config
+  (setq evil-highlight-closing-paren-at-point-states '(not emacs insert replace normal))
 
   ;; remove all keybindings from insert-state keymap,it is VERY VERY important
   (setcdr evil-insert-state-map nil)
