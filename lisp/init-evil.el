@@ -68,11 +68,13 @@
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'edebug (evil-collection-init 'edebug)))
 
-(use-package evil-surround
-  :ensure t
+;; https://github.com/redguardtoo/evil-matchit
+;; TODO: add tags for julia-mode
+(use-package evil-matchit
   :after evil
+  :ensure t
   :config
-  (global-evil-surround-mode 1))
+  (global-evil-matchit-mode 1))
 
 ;; https://github.com/VanLaser/evil-nl-break-undo
 ;; It means that, for example, after you write an entire paragraph in insert state,

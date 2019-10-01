@@ -105,10 +105,17 @@ If point was already at that position, move point to beginning of line."
     (goto-char $p1)
     (delete-region $p1 $p2)))
 
+(defun +funcs/narrow-or-widen-dwim ()
+  "If the buffer is narrowed, it widens. Otherwise, it narrows to region, or Org subtree."
+  (interactive)
+  (cond ((buffer-narrowed-p) (widen))
+	      ((region-active-p) (narrow-to-region (region-beginning) (region-end)))
+	      ((equal major-mode 'org-mode) (org-narrow-to-subtree))
+	      (t (error "Please select a region to narrow to"))))
+
 ;; Useful functions from xahlee's xah-fly-keys
 ;; http://ergoemacs.org/misc/ergoemacs_vi_mode.html
 ;; https://github.com/xahlee/xah-fly-keys
-
 (defun xah-delete-blank-lines ()
   "Delete all newline around cursor.
 URL `http://ergoemacs.org/emacs/emacs_shrink_whitespace.html'

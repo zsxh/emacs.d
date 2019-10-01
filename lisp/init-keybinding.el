@@ -152,6 +152,7 @@
      "tB" '(comment-box :which-key "comment-box")
      "ti" '(nil :which-key "insert")
      "tit" '(insert-translated-name-insert :which-key "chinese->engish")
+     "tn" '(+funcs/narrow-or-widen-dwim :which-key "narrow-to-region")
      "tm" '(evil-multiedit-toggle-marker-here :which-key "multiedit-marker")
      "ts" '(hydra-text-scale/body :which-key "scale")
      "tS" '(hydra-string-inflection/body :which-key "string-inflection-cycle")
