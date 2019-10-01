@@ -113,11 +113,6 @@
   (dolist (hook (list 'prog-mode-hook 'yaml-mode-hook))
     (add-hook hook (lambda () (setq-local auto-save-delete-trailing-whitespace t)))))
 
-;; It allows you to select and edit matches interactively
-(use-package evil-multiedit
-  :ensure t
-  :commands evil-multiedit-toggle-marker-here)
-
 ;; jumping to visible text using a char-based decision tree
 (use-package avy
   :ensure t

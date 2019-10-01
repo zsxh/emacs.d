@@ -71,6 +71,7 @@
   (with-eval-after-load 'edebug (evil-collection-init 'edebug)))
 
 ;; https://github.com/redguardtoo/evil-matchit
+;; Usage: '%' go to matching pair
 ;; TODO: add tags for julia-mode
 (use-package evil-matchit
   :after evil
