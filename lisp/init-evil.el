@@ -34,7 +34,15 @@
          ("M-e" . evil-scroll-line-down)
          ("M-y" . evil-scroll-line-up)
          :map evil-motion-state-map
-         ("C-e" . move-end-of-line))
+         ("C-n" . next-line)
+         ("C-p" . previous-line)
+         ("C-d" . evil-scroll-down)
+         ("C-u" . evil-scroll-up)
+         ("C-a" . +funcs/smart-beginning-of-line)
+         ("C-e" . move-end-of-line)
+         ("C-y" . evil-paste-before)
+         ("M-e" . evil-scroll-line-down)
+         ("M-y" . evil-scroll-line-up))
   :config
   ;; don't move cursor back, otherwise it will cause problem with lispy/awesome-pair
   (setq evil-move-cursor-back nil)
@@ -78,6 +86,14 @@
   :ensure t
   :config
   (global-evil-matchit-mode 1))
+
+;; https://github.com/emacs-evil/evil-surround#examples
+;; google "vim text object" to learn more
+(use-package evil-surround
+  :after evil
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
 
 ;; https://github.com/VanLaser/evil-nl-break-undo
 ;; It means that, for example, after you write an entire paragraph in insert state,

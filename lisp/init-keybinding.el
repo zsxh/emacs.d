@@ -157,6 +157,7 @@
      "tS" '(hydra-string-inflection/body :which-key "string-inflection-cycle")
      ;; "tt"  '(tiny-expand :which-key "tiny-expand")
      "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
+     "t=" '(er/expand-region :which-key "expand-region")
      ;; View
      "v" '(nil :which-key "view")
      "vp" '(ivy-push-view :which-key "ivy-push-view")

@@ -58,9 +58,7 @@
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :ensure t
-  :bind ("M-;" . comment-dwim-2)
-  :preface
-  (setq cd2/region-command 'cd2/comment-or-uncomment-region))
+  :bind ("M-;" . comment-dwim-2))
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
@@ -74,7 +72,7 @@
 ;; Increase selected region by semantic units
 (use-package expand-region
   :ensure t
-  :bind ("C-=" . er/expand-region))
+  :commands er/expand-region)
 
 (setq mouse-drag-copy-region t)
 
@@ -178,6 +176,13 @@
 (use-package fasd
   :ensure t
   :commands (fasd-find-file))
+
+;; This package allows Emacs to copy to and paste from the GUI clipboard
+;; when running in text terminal.
+(use-package xclip
+  :ensure t
+  :if (not (display-graphic-p))
+  :hook (after-init . xclip-mode))
 
 
 (provide 'init-editor)

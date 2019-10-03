@@ -119,7 +119,7 @@
       (load-theme (intern personal-doom-theme) t))
     ;; Terminal
     (unless (display-graphic-p)
-      (load-theme 'doom-nord t))
+      (load-theme 'doom-one t))
 
     (with-eval-after-load 'dired
       (set-face-foreground 'dired-directory "#3B6EA8"))))
