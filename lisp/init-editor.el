@@ -143,20 +143,21 @@
 ;; rigrep
 (use-package rg
   :ensure t
-  :commands (rg rg-dwim rg-project rg-literal))
+  :commands (rg rg-dwim rg-project rg-literal rg-dwim-current-file))
 
 ;; wgrep allows you to edit a grep buffer and apply those changes to the file buffer
 (use-package wgrep
   :ensure t
   :defer t
   :config
-  (advice-add 'wgrep-change-to-wgrep-mode :after (lambda () (evil-insert-state)))
+  (advice-add 'wgrep-change-to-wgrep-mode :after (lambda () (evil-normal-state) (wgrep-toggle-readonly-area)))
   (advice-add 'wgrep-finish-edit :after (lambda () (evil-normal-state)))
   (advice-add 'wgrep-abort-changes :after (lambda () (evil-normal-state)))
   (evil-define-key 'normal wgrep-mode-map
     ",c" 'wgrep-finish-edit
     ",d" 'wgrep-mark-deletion
     ",r" 'wgrep-remove-change
+    ",t" 'wgrep-toggle-readonly-area
     ",u" 'wgrep-remove-all-change
     ",k" 'wgrep-abort-changes
     "q" 'wgrep-exit))
@@ -183,6 +184,19 @@
   :ensure t
   :if (not (display-graphic-p))
   :hook (after-init . xclip-mode))
+
+;; https://github.com/ahungry/fast-scroll
+;; It works by temporarily disabling font-lock and switching to a barebones mode-line,
+;; until you stop scrolling (at which point it re-enables).
+(use-package fast-scroll
+  :ensure t
+  :hook (after-init . fast-scroll-mode)
+  :config
+  ;; If you would like to turn on/off other modes, like flycheck, add
+  ;; your own hooks.
+  (add-hook 'fast-scroll-start-hook (lambda () (flycheck-mode -1)))
+  (add-hook 'fast-scroll-end-hook (lambda () (flycheck-mode 1)))
+  (fast-scroll-config))
 
 
 (provide 'init-editor)

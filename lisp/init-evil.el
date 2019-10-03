@@ -84,8 +84,12 @@
 (use-package evil-matchit
   :after evil
   :ensure t
+  :init
+  (define-key evil-motion-state-map (kbd "%") 'evilmi-jump-items)
+  :commands (evilmi-jump-items)
   :config
   (global-evil-matchit-mode 1))
+
 
 ;; https://github.com/emacs-evil/evil-surround#examples
 ;; google "vim text object" to learn more
@@ -94,6 +98,14 @@
   :ensure t
   :config
   (global-evil-surround-mode 1))
+
+(use-package evil-mark-replace
+  :after evil
+  :ensure t
+  :commands (evilmr-replace-in-defun
+             evilmr-replace-in-buffer
+             evilmr-tag-selected-region
+             evilmr-replace-in-tagged-region))
 
 ;; https://github.com/VanLaser/evil-nl-break-undo
 ;; It means that, for example, after you write an entire paragraph in insert state,

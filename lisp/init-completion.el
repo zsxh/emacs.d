@@ -61,6 +61,12 @@
      snippet-mode-map
      "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet"))))
 
+;; Better sorting and filtering
+(use-package company-prescient
+  :ensure t
+  :after company
+  :config (company-prescient-mode 1))
+
 ;; replace `company-quickhelp' with `company-box-doc'
 ;; otherwise `company-box-doc' will have performance issue https://github.com/sebastiencs/company-box/issues/19
 (use-package company-box

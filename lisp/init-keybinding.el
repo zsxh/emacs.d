@@ -96,6 +96,7 @@
      "fF" '(find-file-in-current-directory :which-key "find-file-in-current-directory")
      "fj" '(fasd-find-file :which-key "fasd-find-file")
      "fp" '(xah-copy-file-path :which-key "copy-file-path")
+     "f/" '(rg-dwim-current-file :which-key "rg-dwim-current-file")
      ;; Git
      "g" '(nil :which-key "git")
      "gb" '(magit-blame :which-key "magit-blame")
@@ -153,6 +154,9 @@
      "ti" '(nil :which-key "insert")
      "tit" '(insert-translated-name-insert :which-key "chinese->engish")
      "tn" '(+funcs/narrow-or-widen-dwim :which-key "narrow-to-region")
+     "tr" '(nil :which-key "replace")
+     "trb" '(evilmr-replace-in-buffer :which-key "evil-replace-in-buffer")
+     "trf" '(evilmr-replace-in-defun :which-key "evil-replace-in-defun")
      "ts" '(hydra-text-scale/body :which-key "scale")
      "tS" '(hydra-string-inflection/body :which-key "string-inflection-cycle")
      ;; "tt"  '(tiny-expand :which-key "tiny-expand")
