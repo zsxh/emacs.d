@@ -134,7 +134,6 @@
     ;; Customize faces
     (+ui/customize-faces)))
 
-;; TODO: faces customization
 (defun +ui/customize-faces ()
   (pcase personal-doom-theme
     ("doom-nord-light"
