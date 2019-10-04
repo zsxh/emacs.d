@@ -37,12 +37,6 @@
     ;; Download font https://mplus-fonts.osdn.jp/about-en.html
     (set-face-attribute 'org-table nil :family "M+ 1m"))
 
-  ;; Org block face
-  (set-face-background 'org-block "#E0E0E0")
-  (set-face-background 'org-quote nil)
-  (set-face-background 'org-block-begin-line nil)
-  (set-face-background 'org-block-end-line nil)
-
   (defvar load-language-list '((emacs-lisp . t)
                                (perl . t)
                                (python . t)

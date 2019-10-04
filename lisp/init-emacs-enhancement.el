@@ -67,8 +67,6 @@
   :config
   ;; dired "human-readable" format
   (setq dired-listing-switches "-alh --time-style=long-iso --group-directories-first")
-  ;; Customize dired-directory foreground color
-  (set-face-foreground 'dired-directory "#3B6EA8")
 
   (defun +dired/get-size ()
     (interactive)
@@ -146,9 +144,7 @@
 (use-package all-the-icons-dired
   :ensure t
   :after dired
-  :hook (dired-mode . all-the-icons-dired-mode)
-  :config
-  (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))
+  :hook (dired-mode . all-the-icons-dired-mode))
 
 ;;;;;;;;;;;;;;;;;
 ;; Dired Tools ;;

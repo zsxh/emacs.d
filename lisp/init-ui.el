@@ -111,25 +111,6 @@
 ;;                     charset (font-spec :family "Source Han Serif"))
 ;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
 
-(defun +ui/frame-config (frame)
-  "Custom behaviours for new frames."
-  (with-selected-frame frame
-    ;; GUI
-    (when (display-graphic-p)
-      (load-theme (intern personal-doom-theme) t))
-    ;; Terminal
-    (unless (display-graphic-p)
-      (load-theme 'doom-one t))
-
-    (with-eval-after-load 'dired
-      (set-face-foreground 'dired-directory "#3B6EA8"))))
-
-;; Set config now
-(+ui/frame-config (selected-frame))
-
-;; Run later, for emacs daemon, emacsclients -c [-nw]
-(add-hook 'after-make-frame-functions '+ui/frame-config)
-
 ;; Set Fonts
 (ignore-errors
   (when (member "SF Mono" (font-family-list))
@@ -140,6 +121,42 @@
     ;; Download specify font for all unicode characters, emoji for example
     ;; http://xahlee.info/comp/unicode_font_download.html
     (set-fontset-font t 'unicode "Symbola" nil 'prepend)))
+
+(defun +ui/frame-config (frame)
+  "Custom behaviours for new frames."
+  (with-selected-frame frame
+    ;; GUI
+    (when (display-graphic-p)
+      (load-theme (intern personal-doom-theme) t))
+    ;; Terminal
+    (unless (display-graphic-p)
+      (load-theme 'doom-one t))
+    ;; Customize faces
+    (+ui/customize-faces)))
+
+;; TODO: faces customization
+(defun +ui/customize-faces ()
+  (pcase personal-doom-theme
+    ("doom-nord-light"
+     (progn
+       (with-eval-after-load 'dired
+         (set-face-foreground 'dired-directory "#3B6EA8"))
+       (with-eval-after-load 'all-the-icons-dired
+         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))
+       (with-eval-after-load 'markdown-mode
+         (set-face-background 'markdown-code-face "#E0E0E0"))
+       (with-eval-after-load 'org
+         ;; Org block face
+         (set-face-background 'org-block "#E0E0E0")
+         (set-face-background 'org-quote nil)
+         (set-face-background 'org-block-begin-line nil)
+         (set-face-background 'org-block-end-line nil))))))
+
+;; Set config now
+(+ui/frame-config (selected-frame))
+
+;; Run later, for emacs daemon, emacsclients -c [-nw]
+(add-hook 'after-make-frame-functions '+ui/frame-config)
 
 
 (provide 'init-ui)
