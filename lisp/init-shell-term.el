@@ -44,7 +44,7 @@ if no project root found, use current directory instead."
            (executable-find "make")
            (executable-find "cmake")
            (fboundp 'module-load))
-  :commands (vterm vterm-other-window)
+  :commands (vterm vterm-other-window +vterm/with-name +vterm/ivy-switch-buffer)
   :bind (:map vterm-mode-map
               ("M-u" . ace-window)
               ("C-s" . swiper))
