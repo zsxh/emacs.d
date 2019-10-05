@@ -76,7 +76,7 @@
   (setq lispy-eval-display-style 'overlay)
   (defun cider--display-interactive-eval-result (value point)
     "Make overlay for VALUE at POINT."
-    (eros--make-result-overlay (format "%S" value)
+    (eros--make-result-overlay value
       :where point
       :duration eros-eval-result-duration)
     (message "%s" (propertize value 'invisible nil)))
