@@ -11,7 +11,7 @@
 (setq personal-eaf-grip-token nil)
 
 ;; Emacs theme "doom-vibrant" "doom-nord-light"
-(setq personal-doom-theme "doom-nord-light")
+(setq personal-gui-theme 'doom-nord-light)
 
 ;; Rss feeds
 (setq personal-elfeed-feeds

@@ -28,10 +28,15 @@
 https://github.com/manateelazycat/emacs-application-framework#markdown-previewer"
   :type 'string)
 
-(defcustom personal-doom-theme "doom-nord-light"
-  "Customize doom-themes such as `\"doom-vibrant\"' `\"doom-nord-light\"'.
-Origin repo: https://github.com/hlissner/emacs-doom-themes"
-  :type 'string)
+(defcustom personal-gui-theme 'doom-nord-light
+  "Customize GUI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
+Check https://github.com/hlissner/emacs-doom-themes"
+  :type 'symbol)
+
+(defcustom personal-tui-theme personal-gui-theme
+  "Customize Terminal UI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
+Check https://github.com/hlissner/emacs-doom-themes"
+  :type 'symbol)
 
 (defcustom personal-elfeed-feeds nil
   "RSS feeds, eg: ((\"https://oremacs.com/atom.xml\" oremacs))."

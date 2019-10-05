@@ -13,6 +13,11 @@
 (eval-when-compile
   (require 'init-custom))
 
+(defvar current-theme (if (display-graphic-p)
+                          personal-gui-theme
+                        personal-tui-theme)
+  "Current using theme.")
+
 ;; Minimal UI in init.el when emacs-version < 27
 (when (version< emacs-version "27")
   (scroll-bar-mode -1)
@@ -125,18 +130,13 @@
 (defun +ui/frame-config (frame)
   "Custom behaviours for new frames."
   (with-selected-frame frame
-    ;; GUI
-    (when (display-graphic-p)
-      (load-theme (intern personal-doom-theme) t))
-    ;; Terminal
-    (unless (display-graphic-p)
-      (load-theme 'doom-one t))
+    (load-theme current-theme t)
     ;; Customize faces
     (+ui/customize-faces)))
 
 (defun +ui/customize-faces ()
-  (pcase personal-doom-theme
-    ("doom-nord-light"
+  (pcase current-theme
+    ('doom-nord-light
      (progn
        (with-eval-after-load 'dired
          (set-face-foreground 'dired-directory "#3B6EA8"))
