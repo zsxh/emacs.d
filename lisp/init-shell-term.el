@@ -45,12 +45,33 @@ if no project root found, use current directory instead."
            (executable-find "cmake")
            (fboundp 'module-load))
   :commands (vterm vterm-other-window)
-  :bind (:map vterm-mode-map ("M-u" . ace-window))
+  :bind (:map vterm-mode-map
+              ("M-u" . ace-window)
+              ("C-s" . swiper))
   :config
   (defun +vterm/auto-exit (buf)
     (when buf (kill-buffer buf)))
 
   (add-hook 'vterm-exit-functions #'+vterm/auto-exit)
+
+  (defun +vterm/with-name ()
+    "Create a new vterm with `default-directory' buffer name"
+    (interactive)
+    (vterm (format "*vterm: %s*" (file-name-nondirectory (directory-file-name default-directory)))))
+
+  (defun +vterm/ivy-switch-buffer ()
+    (interactive)
+    (ivy-read "Switch to vterm buffer: "
+              (delete (buffer-name (current-buffer))
+                      (mapcar #'buffer-name
+                              (cl-remove-if-not
+                               (lambda (buffer)
+                                 (let ((name (buffer-name buffer)))
+                                   (string-prefix-p "*vterm:" name)))
+                               (buffer-list))))
+              :initial-input nil
+              :action #'ivy--switch-buffer-action
+              :caller '+vterm/ivy-switch-buffer))
 
   ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
   (with-eval-after-load 'doom-themes

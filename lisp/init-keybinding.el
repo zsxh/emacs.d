@@ -34,7 +34,10 @@
      "" nil
      "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
      "SPC" '(counsel-M-x :which-key "M-x")
-     "'" '(shell-pop :which-key "shell-pop")
+     "'" '(nil :which-key "terminal")
+     "'c" '(+vterm/with-name :which-key "new-vterm")
+     "'b" '(+vterm/ivy-switch-buffer :which-key "switch-to-vterm-buffer")
+     "''" '(shell-pop :which-key "shell-pop")
      "!" '(shell-command :which-key "shell-command")
      ":" '(eval-expression :which-key "eval-expression")
      ";" '(comment-dwim-2 :which-key "comment-line")

@@ -32,7 +32,8 @@
       (or (and (string-prefix-p "*" name)
                (not (string-prefix-p "*eww*" name))
                (not (string-prefix-p "*ein: http" name))
-               (not (string-prefix-p "*ein:notebooklist" name)))
+               (not (string-prefix-p "*ein:notebooklist" name))
+               (not (string-prefix-p "*vterm:" name)))
           (string-match-p "magit.*:" name)
           (equal (buffer-name (current-buffer)) name))))
 
