@@ -100,11 +100,11 @@ if no project root found, use current directory instead."
     (evil-define-key 'normal term-raw-map "p" 'term-paste)
     (evil-define-key 'insert term-raw-map "\C-y" 'term-paste)))
 
-;; Better eshell
-;; https://github.com/manateelazycat/aweshell
-;; (use-package aweshell
-;;   :commands aweshell-new
-;;   :quelpa ((aweshell :fetcher github :repo "manateelazycat/aweshell")))
+;; TODO: lossless keyboard input in terminal
+;; https://github.com/CyberShadow/term-keys
+;; (use-package term-keys
+;;   :quelpa ((term-keys :fetcher github :repo "CyberShadow/term-keys"))
+;;   :hook (after-init . term-keys-mode))
 
 
 (provide 'init-shell-term)
