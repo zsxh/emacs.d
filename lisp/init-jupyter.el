@@ -80,20 +80,19 @@
           nil
         0.01))
 
-    (defun ein:ml-lang-setup-julia ()
-      (require 'julia-mode)
-      (setq-local mode-name "EIN[Julia]")
-      (setq-local indent-line-function (apply-partially #'ein:ml-indent-line-function
-                                                        (lambda ()
-                                                          (julia-indent-line)
-                                                          (when (and (eq ?. (char-before)) company-mode)
-                                                            (company-complete-common)))))
+    (defun +ein/julia-extra-setup ()
+      (setq-local
+       indent-line-function
+       (apply-partially #'ein:ml-indent-line-function
+                        (lambda ()
+                          (julia-indent-line)
+                          (when (and (eq ?. (char-before)) company-mode)
+                            (company-complete-common)))))
       (when company-mode
         (setq-local company-minimum-prefix-length 2)
-        (setq-local company-idle-delay '+ein/julia-complete-delay))
+        (setq-local company-idle-delay '+ein/julia-complete-delay)))
 
-      (set-syntax-table julia-mode-syntax-table)
-      (set-keymap-parent ein:notebook-multilang-mode-map julia-mode-map)))
+    (advice-add 'ein:ml-lang-setup-julia :after '+ein/julia-extra-setup))
 
   (use-package ein-traceback
     :defer t
