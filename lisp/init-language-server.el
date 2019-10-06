@@ -40,10 +40,11 @@
          "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
          "dh" '(hydra-debugger-control/body :which-key "hydra-control")
          "dr" '(dap-debug :which-key "run")
-         "D" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
+         "D" '(+lsp/toggle-doc-show :which-key "toggle-doc-hover")
          "f" '(lsp-format-buffer :which-key "format")
          "g" '(nil :which-key "go")
          "gd" '(lsp-find-definition :which-key "find-definitions")
+         "gD" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
          "gi" '(lsp-find-implementation :which-key "find-implementation")
          "gr" '(lsp-find-references :which-key "find-references")
          "R" '(lsp-rename :which-key "rename"))
@@ -103,16 +104,15 @@
 (use-package lsp-ui
   :after lsp-mode
   :ensure t
-  ;; :preface (setq lsp-ui-doc-enable (display-graphic-p)
-  ;;                lsp-ui-sideline-enable nil)
+  :preface (setq lsp-ui-doc-enable nil
+                 lsp-ui-sideline-enable nil)
   :bind (:map lsp-ui-peek-mode-map
               ("j" . lsp-ui-peek--select-next)
               ("k" . lsp-ui-peek--select-prev)
               ("C-j" . lsp-ui-peek--select-next)
               ("C-k" . lsp-ui-peek--select-prev))
   :config
-  (setq lsp-ui-doc-enable (display-graphic-p)
-        lsp-ui-doc-delay 0.5
+  (setq lsp-ui-doc-delay 0.5
         lsp-ui-doc-header nil
         lsp-ui-doc-include-signature t
         lsp-ui-doc-position 'at-point)
@@ -165,8 +165,19 @@
 
   (advice-add 'lsp-ui-doc--make-request :override '+lsp/lsp-ui-doc--make-request-advice)
 
-  (setq lsp-ui-sideline-enable nil
-        lsp-ui-sideline-show-symbol t
+  (defun +lsp/toggle-doc-show ()
+    "Popup/Hide hover information"
+    (interactive)
+    (if lsp-ui-doc-mode
+        (progn
+          (message "lsp-ui-doc disabled")
+          (lsp-ui-doc-hide)
+          (lsp-ui-doc-mode -1))
+      (message "lsp-ui-doc enabled")
+      (lsp-ui-doc-mode 1)
+      (lsp-ui-doc-show)))
+
+  (setq lsp-ui-sideline-show-symbol t
         lsp-ui-sideline-show-hover t
         lsp-ui-sideline-show-code-actions t
         lsp-ui-sideline-update-mode 'point
