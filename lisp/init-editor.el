@@ -58,7 +58,13 @@
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :ensure t
-  :bind ("M-;" . comment-dwim-2))
+  :bind ("M-;" . comment-dwim-2)
+  :config
+  ;; the reason to choose "region" not "lines" or "lines_or_region" is that
+  ;; when i select the whole line(s), the end cursor is always at the beginning of
+  ;; the line below the region, which make `line-end-position' return wrong value,
+  ;; and cause wrong comment lines.
+  (setq cd2/region-command 'cd2/comment-or-uncomment-region))
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
