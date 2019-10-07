@@ -30,7 +30,7 @@
 
 (with-eval-after-load 'python
   (defun +python/set-leader-keys ()
-    (+language-server/set-common-leader-keys python-mode-map)
+    (+language-server/set-common-leader-keys)
     (+funcs/major-mode-leader-keys
      python-mode-map
      "'" '(+python/repl :which-key "repl")

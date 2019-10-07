@@ -25,7 +25,7 @@
    "c" '(+java/compile :which-key "compile")
    "j" '(+java/set-jdk :which-key "set-jdk"))
 
-  (+language-server/set-common-leader-keys java-mode-map)
+  (+language-server/set-common-leader-keys)
 
   (if (eq emacs-lsp-client 'lsp-mode)
       (+funcs/major-mode-leader-keys

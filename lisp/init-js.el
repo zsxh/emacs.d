@@ -34,7 +34,8 @@
 
 (defun +js/config ()
   (require 'nvm)
-  (lsp))
+  (lsp)
+  (+language-server/set-common-leader-keys))
 
 
 (provide 'init-js)
