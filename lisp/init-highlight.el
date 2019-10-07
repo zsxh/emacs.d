@@ -17,13 +17,19 @@
   :config
   (setq show-paren-when-point-inside-paren t) ;; Dont know why this doesn't work
   (setq show-paren-when-point-in-periphery t)
+
   (defun show-paren-function-advice (fn)
     "Highlight enclosing parens."
     (cond ((looking-at-p "\\s(") (funcall fn))
           (t (save-excursion
                (ignore-errors (backward-up-list))
                (funcall fn)))))
-  (advice-add 'show-paren-function :around #'show-paren-function-advice))
+
+  (advice-add 'show-paren-function :around #'show-paren-function-advice)
+
+  (defun locally-disable-show-paren ()
+    (interactive)
+    (setq-local show-paren-mode nil)))
 
 ;; Highlight Symbol
 (use-package symbol-overlay

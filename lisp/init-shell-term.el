@@ -76,8 +76,12 @@ if no project root found, use current directory instead."
   ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
   (with-eval-after-load 'doom-themes
     (set-face-background 'vterm-color-black (doom-color 'base6)))
+
   (with-eval-after-load 'evil
-    (evil-set-initial-state 'vterm-mode 'insert)))
+    (evil-set-initial-state 'vterm-mode 'insert))
+
+  (with-eval-after-load 'paren
+    (add-hook 'vterm-mode-hook 'locally-disable-show-paren)))
 
 (use-package term
   :ensure nil
