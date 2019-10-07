@@ -122,6 +122,10 @@
 # param1=value1&param2=value2\n")))
     (switch-to-buffer restclient-buffer)))
 
+(use-package simple-httpd
+  :ensure t
+  :defer t)
+
 ;; editing with preview
 
 ;; TODO: https://github.com/skeeto/skewer-mode
@@ -140,12 +144,12 @@
   (require 'simple-httpd)
   (defun +web/add-buffer-to-preview ()
     (interactive)
-    (if (not (httpd-running-p))
-        (httpd-start))
     (impatient-mode 1))
   (defun +web/preview-in-browser ()
     (interactive)
     (when (and (eq major-mode 'web-mode))
+      (if (not (httpd-running-p))
+          (httpd-start))
       (when (not impatient-mode)
         (+web/add-buffer-to-preview))
       (browse-url "http://localhost:8080/imp/"))))
