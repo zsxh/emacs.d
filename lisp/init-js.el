@@ -14,9 +14,10 @@
 
 ;; Install js language server
 ;; npm i -g typescript typescript-language-server
-(dolist (js-lang '(js typescript js3 rjsx))
-  (let ((js-lang-hook (intern (format "%s-mode-hook" js-lang))))
-    (add-hook js-lang-hook '+js/config)))
+(dolist (mode '(js-mode js2-mode))
+  (let ((mode-hook (intern (format "%s-hook" mode)))
+        (mode-map (intern (format "%s-map" mode))))
+    (add-hook mode-hook (lambda () (+js/config mode-map)))))
 
 (use-package nvm
   :ensure t
@@ -32,10 +33,10 @@
 (with-eval-after-load 'js2-mode
   (setq js2-basic-offset 2))
 
-(defun +js/config ()
+(defun +js/config (mode-map)
   (require 'nvm)
   (lsp)
-  (+language-server/set-common-leader-keys))
+  (+language-server/set-common-leader-keys mode-map))
 
 
 (provide 'init-js)

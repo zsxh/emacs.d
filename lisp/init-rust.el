@@ -28,7 +28,7 @@
   :after rust-mode)
 
 (with-eval-after-load 'rust-mode
-  (+language-server/set-common-leader-keys)
+  (+language-server/set-common-leader-keys rust-mode-map)
   (+funcs/major-mode-leader-keys
    rust-mode-map
    "c" '(nil :which-key "cargo")

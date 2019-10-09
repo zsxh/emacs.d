@@ -14,19 +14,19 @@
 (defvar-local emacs-lsp-client 'lsp-mode
   "'lsp-mode or 'eglot")
 
-(defmacro +language-server/set-common-leader-keys ()
+(defmacro +language-server/set-common-leader-keys (mode-map)
   `(progn
      (if (and (eq emacs-lsp-client 'lsp-mode)
               (not lsp-prefer-flymake))
          ;; flycheck
          (+funcs/major-mode-leader-keys
-          ,(derived-mode-map-name major-mode)
+          ,mode-map
           "e" '(nil :which-key "error")
           "en" '(flycheck-next-error :which-key "next-error")
           "ep" '(flycheck-previous-error :which-key "prev-error"))
        ;; flymake
        (+funcs/major-mode-leader-keys
-        ,(derived-mode-map-name major-mode)
+        ,mode-map
         "e" '(nil :which-key "error")
         "en" '(flymake-goto-next-error :which-key "next-error")
         "ep" '(flymake-goto-prev-error :which-key "prev-error")))
@@ -34,7 +34,7 @@
      (if (eq emacs-lsp-client 'lsp-mode)
          ;; lsp-mode
          (+funcs/major-mode-leader-keys
-          ,(derived-mode-map-name major-mode)
+          ,mode-map
           "A" '(lsp-execute-code-action :which-key "code-action")
           "d" '(nil :which-key "debug")
           "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
@@ -50,7 +50,7 @@
           "R" '(lsp-rename :which-key "rename"))
        ;; eglot
        (+funcs/major-mode-leader-keys
-        ,(derived-mode-map-name major-mode)
+        ,mode-map
         "A" '(eglot-code-actions :which-key "code-action")
         "f" '(eglot-format :which-key "format")
         "g" '(nil :which-key "go")
