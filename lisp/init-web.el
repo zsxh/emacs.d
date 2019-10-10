@@ -129,7 +129,8 @@
 ;; editing with preview
 
 ;; TODO: https://github.com/skeeto/skewer-mode
-
+;; (use-package skewer-mode
+;;   :ensure t)
 
 ;; https://github.com/skeeto/impatient-mode
 ;; Enable the web server provided by simple-httpd:
