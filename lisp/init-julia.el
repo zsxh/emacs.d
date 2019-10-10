@@ -27,9 +27,10 @@
 
 ;; for lsp
 (use-package lsp-julia
+  :ensure t
   :after julia-mode
-  :quelpa ((lsp-julia :fetcher github :repo "non-Jedi/lsp-julia"))
   :config
+  (setq lsp-julia-package-dir nil)      ; use the globally installed version
   (setq lsp-julia-default-environment "~/.julia/environments/v1.2"))
 
 (add-hook 'julia-mode-hook 'lsp)
@@ -38,6 +39,9 @@
   :ensure t
   :commands julia-repl-mode
   :hook (julia-mode . julia-repl-mode))
+
+(with-eval-after-load 'lsp-julia
+  (+language-server/set-common-leader-keys julia-mode-map))
 
 ;; for eglot
 
