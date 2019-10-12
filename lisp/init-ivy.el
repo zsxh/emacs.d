@@ -83,7 +83,11 @@
 (use-package counsel
   :ensure t
   :bind (("C-x C-f" . counsel-find-file)
-         ("M-x" . counsel-M-x)))
+         ("M-x" . counsel-M-x))
+  :config
+  ;; TODO: counsel rg or swiper
+  ;; no need with initial "^"
+  (setq ivy-initial-inputs-alist nil))
 
 (use-package ivy-rich
   :ensure t
