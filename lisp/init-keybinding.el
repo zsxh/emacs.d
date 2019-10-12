@@ -91,6 +91,7 @@
      "cd" '(helm-dash-at-point :which-key "helm-dash-at-point")
      "ch" '(symbol-overlay-map-help :which-key "hightlight-help")
      "ci" '(symbol-overlay-put :which-key "highlight-input")
+     "cm" '(counsel-imenu :which-key "imenu")
      ;; Files
      "f" '(nil :which-key "file")
      "fd" '(+dired/find-program :which-key "find-files-in-dired")
