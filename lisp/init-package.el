@@ -179,22 +179,45 @@ the `quelpa' command has been run in the current Emacs session."
 
 (advice-add 'package-delete :after '+package/quelpa-clean-cache)
 
+(use-package async
+  :ensure t
+  :defer t
+  :commands (async-start))
+
 ;; Extensions
 (use-package package-utils
   :ensure t
-  :init
-  (defalias 'upgrade-packages 'package-utils-upgrade-all)
-  (defalias 'upgrade-packages-and-restart 'package-utils-upgrade-all-and-restart)
-  :commands package-utils-upgrade-all
+  :commands (upgrade-packages upgrade-packages-and-restart upgrade-packages-async)
   :config
-  (with-eval-after-load 'quelpa-use-package
-    (advice-add #'upgrade-packages :after #'+package/quelpa-upgrade)
-    (advice-add #'upgrade-packages-and-restart :override
-                (lambda ()
-                  (interactive)
-                  (upgrade-packages)
-                  (sleep-for 1)
-                  (restart-emacs)))))
+  (defun upgrade-packages ()
+    (interactive)
+    (package-utils-upgrade-all)
+    (+package/quelpa-upgrade))
+
+  (defun upgrade-packages-and-restart ()
+    (interactive)
+    (upgrade-packages)
+    (sleep-for 1)
+    (restart-emacs))
+
+  (defun upgrade-packages-async ()
+    (interactive)
+    (message "Updating Pakcages ...")
+    (async-start
+     `(lambda ()
+        ,(async-inject-variables "\\`\\(load-path\\)\\'")
+        (require 'init-custom)
+        (require 'init-package)
+        (upgrade-packages)
+        (with-current-buffer "*Messages*"
+          (buffer-string)))
+     (lambda (result)
+       (let* ((buf-name "*Async-Update*")
+              (async-update-buf (get-buffer-create buf-name)))
+         (with-current-buffer async-update-buf
+           (erase-buffer)
+           (insert result)))
+       (message "Async Update Done. Check #<buffer *Async-Update*> for details. Restart to complete process.")))))
 
 
 (provide 'init-package)
