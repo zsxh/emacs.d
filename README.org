@@ -1,12 +1,12 @@
 #+STARTUP: showall
-Updated: <2019-09-21 星期六>
+Updated: <2019-10-13 星期日>
 
 * Enviroment Tested
-  - Emacs Version: GNU Emacs 27.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.10) of 2019-09-20
+  - Emacs Version: GNU Emacs 27.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.12) of 2019-10-12
   - OS: Manjaro 18.1.0 Juhraya
   - Shell: zsh 5.7.1
   - DE: Deepin 15.10.1
-  - Kernel: x86_64 Linux 5.2.11-1-MANJARO
+  - Kernel: x86_64 Linux 5.3.5-1-MANJARO
 
 * Features
   - =org=
