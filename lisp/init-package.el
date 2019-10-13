@@ -212,12 +212,8 @@ the `quelpa' command has been run in the current Emacs session."
         (with-current-buffer "*Messages*"
           (buffer-string)))
      (lambda (result)
-       (let* ((buf-name "*Async-Update*")
-              (async-update-buf (get-buffer-create buf-name)))
-         (with-current-buffer async-update-buf
-           (erase-buffer)
-           (insert result)))
-       (message "Async Update Done. Check #<buffer *Async-Update*> for details. Restart to complete process.")))))
+       (message "%s" result)
+       (message "Async Update Done. Restart to complete process.")))))
 
 
 (provide 'init-package)
