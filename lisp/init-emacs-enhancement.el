@@ -308,24 +308,32 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   (define-key eww-mode-map (kbd "T") '+eww/browse-at-point-with-eaf)
   (define-key eww-mode-map (kbd "&") '+eww/browse-at-point-with-external-browser)
 
-  (setq +eww/scroll-line-jk t)
-
-  (defun +eww/toggle-scroll-line-shortcut ()
-    (interactive)
-    (if +eww/scroll-line-jk
-        (progn
-          (evil-define-key 'normal eww-mode-map
-            "j" 'evil-next-line
-            "k" 'evil-previous-line)
-          (setq +eww/scroll-line-jk nil))
-      (evil-define-key 'normal eww-mode-map
-        "j" 'evil-scroll-line-down
-        "k" 'evil-scroll-line-up)
-      (setq +eww/scroll-line-jk t)))
-
   (with-eval-after-load 'evil
     (with-eval-after-load 'evil-collection
       (evil-collection-init 'eww))
+
+    (setq +eww/scroll-line-jk nil)
+
+    (defun +eww/toggle-scroll-line-shortcut ()
+      (interactive)
+      (if +eww/scroll-line-jk
+          (progn
+            (message "Restore now. Press <j>/<k> to next/previous-line")
+            (evil-define-key 'normal eww-mode-map
+              "d" 'eww-download
+              "j" 'evil-next-line
+              "k" 'evil-previous-line
+              "u" 'eww-up-url)
+            (setq +eww/scroll-line-jk nil))
+        (message "Press <j>/<k> to scroll-line-down/up, <d>/<u> to scroll-down/up")
+        (evil-define-key 'normal eww-mode-map
+          "d" 'evil-scroll-down
+          "j" 'evil-scroll-line-down
+          "k" 'evil-scroll-line-up
+          "u" 'evil-scroll-up)
+        (setq +eww/scroll-line-jk t)))
+
+    (+eww/toggle-scroll-line-shortcut)
 
     (evil-define-key 'normal eww-mode-map
       "b" 'evil-backward-word-begin
