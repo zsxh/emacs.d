@@ -171,6 +171,7 @@
      "v" '(nil :which-key "view")
      "vp" '(ivy-push-view :which-key "ivy-push-view")
      "vo" '(ivy-pop-view :which-key "ivy-pop-view")
+     "vu" '((lambda () (interactive) (ivy-push-view 1)) :which-key "ivy-update-view")
      "vv" '(ivy-switch-view :which-key "ivy-switch-view")
      ;; Window
      "w" '(nil :which-key "window")
