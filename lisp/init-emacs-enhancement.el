@@ -314,11 +314,53 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 
     (setq +eww/scroll-line-jk nil)
 
+    (defun +eww/repeat-until-eww-buffer (orig-fun &rest args)
+      (let* ((other-eww-buffers (make-hash-table :test 'eq))
+             (eww-buffers (cl-remove-if
+                           (lambda (buffer)
+                             (not (string-prefix-p "*eww*" (buffer-name buffer))))
+                           (buffer-list)))
+             (max-iterations (length (buffer-list)))
+             (counter 0))
+        (dolist (buffer eww-buffers)
+          (unless (eq buffer (current-buffer))
+            (puthash buffer t other-eww-buffers)))
+        (when (cdr-safe eww-buffers)
+          (while (and (< counter max-iterations)
+                      (not (gethash (current-buffer) other-eww-buffers)))
+            (apply orig-fun args)
+            (cl-incf counter)))))
+
+    (defun +eww/next-buffer ()
+      (interactive)
+      (+eww/repeat-until-eww-buffer 'next-buffer))
+
+    (defun +eww/previous-buffer ()
+      (interactive)
+      (+eww/repeat-until-eww-buffer 'previous-buffer))
+
+    (evil-define-key 'normal eww-mode-map
+      "b" 'evil-backward-word-begin
+      "w" 'evil-forward-word-begin
+      "gg" 'evil-goto-first-line
+      "gv" '+eww/toggle-images-display
+      "G" 'evil-goto-line
+      "h" 'evil-backward-char
+      "H" 'eww-back-url
+      "J" '+eww/previous-buffer
+      "K" '+eww/next-buffer
+      "l" 'evil-forward-char
+      "L" 'eww-forward-url
+      "t" '+eww/toggle-scroll-line-shortcut
+      "v" 'evil-visual-char
+      "0" 'evil-digit-argument-or-evil-beginning-of-line
+      "&" '+eww/browse-at-point-with-external-browser)
+
     (defun +eww/toggle-scroll-line-shortcut ()
       (interactive)
       (if +eww/scroll-line-jk
           (progn
-            (message "Restore now. Press <j>/<k> to next/previous-line")
+            (message "Restore now. Press <j>/<k> to next/previous-line ...")
             (evil-define-key 'normal eww-mode-map
               "d" 'eww-download
               "j" 'evil-next-line
@@ -334,19 +376,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
         (setq +eww/scroll-line-jk t)))
 
     (+eww/toggle-scroll-line-shortcut)
-
-    (evil-define-key 'normal eww-mode-map
-      "b" 'evil-backward-word-begin
-      "w" 'evil-forward-word-begin
-      "gg" 'evil-goto-first-line
-      "gv" '+eww/toggle-images-display
-      "G" 'evil-goto-line
-      "h" 'evil-backward-char
-      "l" 'evil-forward-char
-      "t" '+eww/toggle-scroll-line-shortcut
-      "v" 'evil-visual-char
-      "0" 'evil-digit-argument-or-evil-beginning-of-line
-      "&" '+eww/browse-at-point-with-external-browser)
 
     (evil-define-key 'normal eww-link-keymap "gv" '+eww/toggle-images-display)))
 
