@@ -206,8 +206,8 @@
   :config
   ;; If you would like to turn on/off other modes, like flycheck, add
   ;; your own hooks.
-  (add-hook 'fast-scroll-start-hook (lambda () (flycheck-mode -1)))
-  (add-hook 'fast-scroll-end-hook (lambda () (flycheck-mode 1)))
+  ;; (add-hook 'fast-scroll-start-hook (lambda () (flycheck-mode -1)))
+  ;; (add-hook 'fast-scroll-end-hook (lambda () (flycheck-mode 1)))
   (fast-scroll-config))
 
 
