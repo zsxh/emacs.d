@@ -351,6 +351,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
       "K" '+eww/next-buffer
       "l" 'evil-forward-char
       "L" 'eww-forward-url
+      "s" 'eww-switch-to-buffer
       "t" '+eww/toggle-scroll-line-shortcut
       "v" 'evil-visual-char
       "0" 'evil-digit-argument-or-evil-beginning-of-line
