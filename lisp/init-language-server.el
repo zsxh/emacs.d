@@ -95,7 +95,9 @@
 
   ;; (when (package-installed-p 'focus)
   ;;   (advice-add 'lsp :after (lambda () (focus-mode 1))))
-  )
+
+  (with-eval-after-load 'evil
+    (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition)))
 
 (use-package company-lsp
   :after (company lsp-mode)
