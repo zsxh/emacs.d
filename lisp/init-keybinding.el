@@ -19,6 +19,8 @@
   (push '(("\\(.*\\)1" . "winum-select-window-1") . ("\\11..9" . "window 1..9")) which-key-replacement-alist)
   ;; Hide other entries [2-9]
   (push '((nil . "select-window-[2-9]") . t) which-key-replacement-alist)
+  ;; FIXME: when which-key side window height got fixed.
+  (setq which-key-popup-type 'minibuffer)
   (which-key-mode))
 
 ;; keybindings with which-key,evil well supported
@@ -85,13 +87,6 @@
      "bn" '((lambda () (interactive) (+funcs/switch-empty-buffer-or-create "untitled")) :which-key "empty-buffer")
      "bN" '(+funcs/new-empty-buffer :which-key "empty-buffer")
      "bs" '((lambda () (interactive) (+funcs/switch-buffer-or-create "*scratch*")) :which-key "*scratch*")
-     ;; Code/Doc
-     "c" '(nil :which-key "code/doc")
-     "cc" '(symbol-overlay-remove-all :which-key "highlight-remove-all")
-     "cd" '(helm-dash-at-point :which-key "helm-dash-at-point")
-     "ch" '(symbol-overlay-map-help :which-key "hightlight-help")
-     "ci" '(symbol-overlay-put :which-key "highlight-input")
-     "cm" '(counsel-imenu :which-key "imenu")
      ;; Files
      "f" '(nil :which-key "file")
      "fd" '(+dired/find-program :which-key "find-files-in-dired")
@@ -140,6 +135,14 @@
      "jw" '(avy-goto-word-1 :which-key "avy-goto-word-1")
      ;; Major
      "m" '(nil :which-key "major")
+     ;; Navigator
+     "n" '(nil :which-key "navigator")
+     "nd" '(helm-dash-at-point :which-key "helm-dash-at-point")
+     "nm" '(counsel-imenu :which-key "imenu")
+     "ns" '(nil :which-key "symbol-overlay")
+     "nsc" '(symbol-overlay-remove-all :which-key "symbol-overlay-remove-all")
+     "nsh" '(symbol-overlay-map-help :which-key "symbol-overlay-help")
+     "nsi" '(symbol-overlay-put :which-key "symbol-overlay-input")
      ;; Project
      "p" '(nil :which-key "project")
      "p/" '(rg-project :which-key "ripgrep-search-project")
