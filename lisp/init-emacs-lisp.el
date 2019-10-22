@@ -35,6 +35,7 @@
      "ej" '(eval-print-last-sexp :which-key "eval-print-last-sexp")
      "d" '(nil :which-key "debug")
      "df" '(edebug-defun :which-key "edebug-defun")
+     "D" '(lispy-describe-inline :which-key "lispy-describe-inline")
      "m" '(nil :which-key "macro")
      "mc" '(pp-macroexpand-last-sexp :which-key "macroexpand-last-sexp")
      "me" '(pp-macroexpand-expression :which-key "macroexpand-expression")
