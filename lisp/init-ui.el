@@ -43,7 +43,7 @@
   :defer t
   :config
   ;; If you experience a slow down in performace when rendering multiple icons simultaneously,
-  ;; you can try setting the following variable
+  ;; you can try setting the following variable. If non-nil, don't compact font caches during GC.
   (setq inhibit-compacting-font-caches t))
 
 ;; Theme
