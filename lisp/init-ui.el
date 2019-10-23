@@ -40,7 +40,11 @@
 ;; https://github.com/domtronn/all-the-icons.el#installing-fonts
 (use-package all-the-icons
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  ;; If you experience a slow down in performace when rendering multiple icons simultaneously,
+  ;; you can try setting the following variable
+  (setq inhibit-compacting-font-caches t))
 
 ;; Theme
 (use-package doom-themes
