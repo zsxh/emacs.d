@@ -41,8 +41,11 @@
     "Markdown Previewer."
     (interactive)
     (eaf-open buffer-file-name))
+
   (+funcs/major-mode-leader-keys
    markdown-mode-map
+   "b" '(nil :which-key "block")
+   "bb" '(play-code-block :which-key "play-code-with-online-playground")
    "y" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
    "v" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
    "p" '(eaf-markdown-previewer :which-key "previewer")
