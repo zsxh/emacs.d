@@ -74,7 +74,7 @@
       (doom-modeline-set-modeline 'main)))
   :hook (after-init . my-doomline-init)
   :config
-  (setq doom-modeline-major-mode-icon nil)
+  (setq doom-modeline-buffer-icon nil)
   (setq doom-modeline-buffer-file-name-style 'buffer-name))
 
 ;; ;; Display time on modeline
