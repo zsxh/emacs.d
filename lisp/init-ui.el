@@ -122,14 +122,16 @@
 
 ;; Set Fonts
 (ignore-errors
-  (when (member "SF Mono" (font-family-list))
-    ;; Download ans install SF Mono fonts:
-    ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
-    (set-frame-font "SF Mono-11.5:weight=semi-bold" nil t))
-  (when (member "Symbola" (font-family-list))
-    ;; Download specify font for all unicode characters, emoji for example
-    ;; http://xahlee.info/comp/unicode_font_download.html
-    (set-fontset-font t 'unicode "Symbola" nil 'prepend)))
+  ;; Download ans install SF Mono fonts:
+  ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
+  (if (member "SF Mono" (font-family-list))
+      (set-frame-font "SF Mono-11.5:weight=semi-bold" nil t)
+    (message "[WARN] font \"SF Mono\" not found"))
+  ;; Download specify font for all unicode characters, emoji for example
+  ;; http://xahlee.info/comp/unicode_font_download.html
+  (if (member "Symbola" (font-family-list))
+      (set-fontset-font t 'unicode "Symbola" nil 'prepend)
+    (message "[WARN] font \"Symbola\" not found")))
 
 (defun +ui/frame-config (frame)
   "Custom behaviours for new frames."
