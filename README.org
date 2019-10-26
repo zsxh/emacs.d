@@ -133,7 +133,7 @@ Updated: <2019-10-13 星期日>
 
 * Installation
 #+begin_src sh
-  git clone --recursive https://github.com/zsxh/emacs.d.git $HOME
+  git clone --recursive https://github.com/zsxh/emacs.d.git ~/.emacs.d
 #+end_src
 
 * Updating
