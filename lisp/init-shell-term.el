@@ -44,7 +44,7 @@ if no project root found, use current directory instead."
            (executable-find "make")
            (executable-find "cmake")
            (fboundp 'module-load))
-  :commands (vterm vterm-other-window +vterm/with-name +vterm/ivy-switch-buffer)
+  :commands (vterm vterm-other-window +vterm/new +vterm/ivy-switch-buffer)
   :bind (:map vterm-mode-map
               ("M-u" . ace-window)
               ("C-s" . swiper))
@@ -54,10 +54,27 @@ if no project root found, use current directory instead."
 
   (add-hook 'vterm-exit-functions #'+vterm/auto-exit)
 
-  (defun +vterm/with-name ()
-    "Create a new vterm with `default-directory' buffer name"
+  (defun +vterm/generate-buffer-name ()
+    (format "*vterm: %s*" (file-name-nondirectory (directory-file-name default-directory))))
+
+  (defun +vterm/new ()
+    "Create a new vterm with `default-directory' buffer name."
     (interactive)
-    (vterm (format "*vterm: %s*" (file-name-nondirectory (directory-file-name default-directory)))))
+    (vterm (+vterm/generate-buffer-name)))
+
+  (defun +vterm/new-other-window ()
+    "Create a new vterm with `default-directory' buffer name in other window."
+    (interactive)
+    (let ((buffer (generate-new-buffer (+vterm/generate-buffer-name))))
+      (with-current-buffer buffer
+        (vterm-mode))
+      (pop-to-buffer buffer)))
+
+  (defun +vterm/get-project-buf ()
+    (let* ((default-directory (or (projectile-project-root) default-directory))
+           (buf-name (+vterm/generate-buffer-name))
+           (buf (get-buffer buf-name)))
+      buf))
 
   (defun +vterm/ivy-switch-buffer ()
     (interactive)
@@ -66,8 +83,8 @@ if no project root found, use current directory instead."
                       (mapcar #'buffer-name
                               (cl-remove-if-not
                                (lambda (buffer)
-                                 (let ((name (buffer-name buffer)))
-                                   (string-prefix-p "*vterm:" name)))
+                                 (with-current-buffer buffer
+                                   (derived-mode-p 'vterm-mode)))
                                (buffer-list))))
               :initial-input nil
               :action #'ivy--switch-buffer-action
@@ -82,6 +99,50 @@ if no project root found, use current directory instead."
 
   (with-eval-after-load 'paren
     (add-hook 'vterm-mode-hook 'locally-disable-show-paren)))
+
+;; TODO: add `vterm-toggle' package
+;; https://github.com/jixiuf/vterm-toggle
+(use-package vterm-toggle
+  :ensure t
+  :commands (vterm-toggle vterm-toggle-cd)
+  :init
+  (global-set-key [f2] 'vterm-toggle)          ; recent or current dir
+  (global-set-key [C-f2] 'vterm-toggle-cd)     ; new current dir
+  (global-set-key [f3] '+vterm/toggle-project) ; project root(initial one)
+  :bind (:map vterm-mode-map
+              ("<f2>" . vterm-toggle)
+              ("<f3>" . +vterm/toggle-project))
+  :config
+  (setq vterm-toggle-fullscreen-p nil)
+
+  (defun +vterm/toggle-new ()
+    "New vterm buffer."
+    (if vterm-toggle-fullscreen-p
+        (+vterm/new)
+      (+vterm/new-other-window)))
+
+  (defun +vterm/toggle--get-buffer (&optional make-cd args)
+    "Get vterm buffer.
+Optional argument MAKE-CD make cd or not.
+Optional argument ARGS optional args."
+    (if vterm-toggle-use-dedicated-buffer
+        (vterm-toggle--get-dedicated-buffer)
+      ;; for now, args doesn't mean anything in vterm-toggle,
+      ;; so, i use it as project identification.
+      (or (and args (+vterm/get-project-buf))
+          (vterm-toggle--recent-vterm-buffer make-cd args))))
+
+  (advice-add 'vterm-toggle--new :override '+vterm/toggle-new)
+  (advice-add 'vterm-toggle--get-buffer :override '+vterm/toggle--get-buffer)
+
+  (defun +vterm/toggle-project ()
+    (interactive)
+    (let* ((default-directory (or (projectile-project-root) default-directory))
+           (buf-name (+vterm/generate-buffer-name))
+           (buf (get-buffer buf-name)))
+      (if buf
+          (vterm-toggle t)
+        (vterm-toggle-cd)))))
 
 (use-package term
   :ensure nil
