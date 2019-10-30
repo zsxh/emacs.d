@@ -121,7 +121,7 @@ if no project root found, use current directory instead."
         (+vterm/new)
       (+vterm/new-other-window)))
 
-  (defun +vterm/toggle--get-buffer (&optional make-cd args)
+  (defun +vterm/toggle--get-buffer (&optional make-cd ignore-prompt-p args)
     "Get vterm buffer.
 Optional argument MAKE-CD make cd or not.
 Optional argument ARGS optional args."
@@ -130,7 +130,7 @@ Optional argument ARGS optional args."
       ;; for now, args doesn't mean anything in vterm-toggle,
       ;; so, i use it as project identification.
       (or (and args (+vterm/get-project-buf))
-          (vterm-toggle--recent-vterm-buffer make-cd args))))
+          (vterm-toggle--recent-vterm-buffer make-cd ignore-prompt-p args))))
 
   (advice-add 'vterm-toggle--new :override '+vterm/toggle-new)
   (advice-add 'vterm-toggle--get-buffer :override '+vterm/toggle--get-buffer)
