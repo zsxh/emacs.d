@@ -163,8 +163,8 @@
 (use-package dired-open
   :ensure t
   :after dired
-  :bind (:map dired-mode-map
-              ("C-<return>" . dired-open-xdg)))
+  :bind ((:map dired-mode-map
+               ("C-<return>" . dired-open-xdg))))
 
 ;; customizable highlighting for files in dired listings
 (use-package dired-rainbow
@@ -284,10 +284,10 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
     (eww-reload t)
     (message "Images are now %s"
              (if shr-inhibit-images "off" "on")))
-  :bind (:map eww-mode-map
-              ("I" . +eww/toggle-images-display)
-              :map eww-link-keymap
-              ("I" . +eww/toggle-images-display))
+  :bind ((:map eww-mode-map
+               ("I" . +eww/toggle-images-display))
+         (:map eww-link-keymap
+               ("I" . +eww/toggle-images-display)))
   ;; :hook (eww-mode . (lambda ()
   ;;                     (setq-local shr-inhibit-images t)))
   :config

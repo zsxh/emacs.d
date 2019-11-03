@@ -38,9 +38,9 @@
 (use-package helm-dash
   :ensure t
   :commands (helm-dash helm-dash-at-point)
-  :bind (:map helm-map
-              ("C-j" . helm-next-line)
-              ("C-k" . helm-previous-line))
+  :bind ((:map helm-map
+               ("C-j" . helm-next-line)
+               ("C-k" . helm-previous-line)))
   :config
   ;; (setq helm-dash-browser-func 'eww)
   (setq helm-dash-browser-func 'eaf-open-url)
@@ -56,28 +56,27 @@
   :hook (after-init . electric-pair-mode))
 
 (use-package awesome-pair
-  :bind (:map
-         awesome-pair-mode-map
-         ("(" . 'awesome-pair-open-round)
-         ("[" . 'awesome-pair-open-bracket)
-         ("{" . 'awesome-pair-open-curly)
-         (")" . 'awesome-pair-close-round)
-         ("]" . 'awesome-pair-close-bracket)
-         ("}" . 'awesome-pair-close-curly)
-         ("%" . 'awesome-pair-match-paren)
-         ("\"" . 'awesome-pair-double-quote)
-         ("M-o" . 'awesome-pair-backward-delete)
-         ("DEL" . 'awesome-pair-backward-delete)
-         ("C-d" . 'awesome-pair-forward-delete)
-         ("C-k" . 'awesome-pair-kill)
-         ("M-\"" . 'awesome-pair-wrap-double-quote)
-         ("M-[" . 'awesome-pair-wrap-bracket)
-         ("M-{" . 'awesome-pair-wrap-curly)
-         ("M-(" . 'awesome-pair-wrap-round)
-         ("M-]" . 'awesome-pair-unwrap)
-         ("M-n" . 'awesome-pair-jump-right)
-         ("M-p" . 'awesome-pair-jump-left)
-         ("M-RET" . 'awesome-pair-jump-out-pair-and-newline))
+  :bind ((:map awesome-pair-mode-map
+               ("(" . 'awesome-pair-open-round)
+               ("[" . 'awesome-pair-open-bracket)
+               ("{" . 'awesome-pair-open-curly)
+               (")" . 'awesome-pair-close-round)
+               ("]" . 'awesome-pair-close-bracket)
+               ("}" . 'awesome-pair-close-curly)
+               ("%" . 'awesome-pair-match-paren)
+               ("\"" . 'awesome-pair-double-quote)
+               ("M-o" . 'awesome-pair-backward-delete)
+               ("DEL" . 'awesome-pair-backward-delete)
+               ("C-d" . 'awesome-pair-forward-delete)
+               ("C-k" . 'awesome-pair-kill)
+               ("M-\"" . 'awesome-pair-wrap-double-quote)
+               ("M-[" . 'awesome-pair-wrap-bracket)
+               ("M-{" . 'awesome-pair-wrap-curly)
+               ("M-(" . 'awesome-pair-wrap-round)
+               ("M-]" . 'awesome-pair-unwrap)
+               ("M-n" . 'awesome-pair-jump-right)
+               ("M-p" . 'awesome-pair-jump-left)
+               ("M-RET" . 'awesome-pair-jump-out-pair-and-newline)))
   :hook (((prog-mode web-mode conf-mode yaml-mode editorconfig-mode) . awesome-pair-mode)
          ((c++-mode java-mode rust-mode) . (lambda () (local-set-key (kbd "<") '+prog/insert-angle)))
          (rust-mode . (lambda () (local-set-key (kbd "|") '+prog/insert-rust-closure))))

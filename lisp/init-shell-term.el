@@ -45,10 +45,10 @@ if no project root found, use current directory instead."
            (executable-find "cmake")
            (fboundp 'module-load))
   :commands (vterm vterm-other-window +vterm/new +vterm/ivy-switch-buffer)
-  :bind (:map vterm-mode-map
-              ("M-u" . ace-window)
-              ("C-s" . swiper)
-              ("<f11>" . toggle-frame-fullscreen))
+  :bind ((:map vterm-mode-map
+               ("M-u" . ace-window)
+               ("C-s" . swiper)
+               ("<f11>" . toggle-frame-fullscreen)))
   :config
   (defun +vterm/auto-exit (buf)
     (when buf (kill-buffer buf)))
@@ -110,9 +110,9 @@ if no project root found, use current directory instead."
   ;; (global-set-key [f2] 'vterm-toggle)          ; recent or current dir
   (global-set-key [C-f10] 'vterm-toggle-cd)     ; new current dir
   (global-set-key [f10] '+vterm/toggle-project) ; project root(initial one)
-  :bind (:map vterm-mode-map
-              ;; ("<f2>" . vterm-toggle)
-              ("<f10>" . +vterm/toggle-project))
+  :bind ((:map vterm-mode-map
+               ;; ("<f2>" . vterm-toggle)
+               ("<f10>" . +vterm/toggle-project)))
   :config
   (setq vterm-toggle-fullscreen-p nil)
 

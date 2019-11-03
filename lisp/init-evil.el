@@ -22,27 +22,26 @@
   (setq evil-insert-state-cursor nil)
   :commands evil-mode
   :hook (after-init . evil-mode)
-  :bind (:map
-         evil-normal-state-map
-         ("C-n" . next-line)
-         ("C-p" . previous-line)
-         ("C-d" . evil-scroll-down)
-         ("C-u" . evil-scroll-up)
-         ("C-a" . +funcs/smart-beginning-of-line)
-         ("C-e" . move-end-of-line)
-         ("C-y" . evil-paste-before)
-         ("M-e" . evil-scroll-line-down)
-         ("M-y" . evil-scroll-line-up)
-         :map evil-motion-state-map
-         ("C-n" . next-line)
-         ("C-p" . previous-line)
-         ("C-d" . evil-scroll-down)
-         ("C-u" . evil-scroll-up)
-         ("C-a" . +funcs/smart-beginning-of-line)
-         ("C-e" . move-end-of-line)
-         ("C-y" . evil-paste-before)
-         ("M-e" . evil-scroll-line-down)
-         ("M-y" . evil-scroll-line-up))
+  :bind ((:map evil-normal-state-map
+               ("C-n" . next-line)
+               ("C-p" . previous-line)
+               ("C-d" . evil-scroll-down)
+               ("C-u" . evil-scroll-up)
+               ("C-a" . +funcs/smart-beginning-of-line)
+               ("C-e" . move-end-of-line)
+               ("C-y" . evil-paste-before)
+               ("M-e" . evil-scroll-line-down)
+               ("M-y" . evil-scroll-line-up))
+         (:map evil-motion-state-map
+               ("C-n" . next-line)
+               ("C-p" . previous-line)
+               ("C-d" . evil-scroll-down)
+               ("C-u" . evil-scroll-up)
+               ("C-a" . +funcs/smart-beginning-of-line)
+               ("C-e" . move-end-of-line)
+               ("C-y" . evil-paste-before)
+               ("M-e" . evil-scroll-line-down)
+               ("M-y" . evil-scroll-line-up)))
   :config
   ;; don't move cursor back, otherwise it will cause problem with lispy/awesome-pair
   (setq evil-move-cursor-back nil)

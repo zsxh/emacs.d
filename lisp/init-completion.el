@@ -15,19 +15,19 @@
   ;; :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :bind (("M-/" . yas-expand)
          ("C-c C-y" . company-yasnippet)
-         :map company-active-map
-         ("M-n" . nil)
-         ("M-p" . nil)
-         ("C-k" . company-select-previous)
-         ("C-j" . company-select-next)
-         ("TAB" . company-complete-common)
-         ("<tab>" . company-complete-common)
-         ("<backtab>" . company-select-previous)
-         :map company-search-map
-         ("M-n" . nil)
-         ("M-p" . nil)
-         ("C-k" . company-select-previous)
-         ("C-j" . company-select-next))
+         (:map company-active-map
+               ("M-n" . nil)
+               ("M-p" . nil)
+               ("C-k" . company-select-previous)
+               ("C-j" . company-select-next)
+               ("TAB" . company-complete-common)
+               ("<tab>" . company-complete-common)
+               ("<backtab>" . company-select-previous))
+         (:map company-search-map
+               ("M-n" . nil)
+               ("M-p" . nil)
+               ("C-k" . company-select-previous)
+               ("C-j" . company-select-next)))
   :hook (after-init . global-company-mode)
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
@@ -142,8 +142,8 @@
   :if (and (< emacs-major-version 26) (display-graphic-p))
   :after company
   :ensure t
-  :bind (:map company-active-map
-              ("M-h" . company-quickhelp-manual-begin))
+  :bind ((:map company-active-map
+               ("M-h" . company-quickhelp-manual-begin)))
   :hook (global-company-mode . company-quickhelp-mode)
   :config (setq company-quickhelp-delay 0.3))
 

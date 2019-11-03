@@ -38,8 +38,8 @@
 (use-package sly-macrostep
   :ensure t
   :commands macrostep-expand
-  :bind (:map lisp-mode-map
-              ("C-c e" . macrostep-expand)))
+  :bind ((:map lisp-mode-map
+               ("C-c e" . macrostep-expand))))
 
 (defun +common-lisp/init-sly ()
   "Attempt to auto-start sly when opening a Lisp buffer."

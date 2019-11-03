@@ -108,11 +108,11 @@
   :ensure t
   :preface (setq lsp-ui-doc-enable nil
                  lsp-ui-sideline-enable nil)
-  :bind (:map lsp-ui-peek-mode-map
-              ("j" . lsp-ui-peek--select-next)
-              ("k" . lsp-ui-peek--select-prev)
-              ("C-j" . lsp-ui-peek--select-next)
-              ("C-k" . lsp-ui-peek--select-prev))
+  :bind ((:map lsp-ui-peek-mode-map
+               ("j" . lsp-ui-peek--select-next)
+               ("k" . lsp-ui-peek--select-prev)
+               ("C-j" . lsp-ui-peek--select-next)
+               ("C-k" . lsp-ui-peek--select-prev)))
   :config
   (setq lsp-ui-doc-delay 0.5
         lsp-ui-doc-header nil

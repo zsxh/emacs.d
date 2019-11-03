@@ -139,9 +139,9 @@
 (use-package browse-kill-ring
   :ensure t
   :bind (("M-C-y" . browse-kill-ring)
-         :map browse-kill-ring-mode-map
-         ("j" . browse-kill-ring-forward)
-         ("k" . browse-kill-ring-previous))
+         (:map browse-kill-ring-mode-map
+               ("j" . browse-kill-ring-forward)
+               ("k" . browse-kill-ring-previous)))
   :config
   (setq browse-kill-ring-highlight-current-entry t)
   (setq browse-kill-ring-highlight-inserted-item t))
@@ -149,9 +149,9 @@
 ;; rigrep
 (use-package rg
   :ensure t
-  :bind (:map rg-mode-map
-              ("l" . nil)
-              ("L" . rg-list-searches))
+  :bind ((:map rg-mode-map
+               ("l" . nil)
+               ("L" . rg-list-searches)))
   :commands (rg rg-dwim rg-project rg-literal rg-dwim-current-file)
   :config
   (with-eval-after-load 'paren

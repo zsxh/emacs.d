@@ -13,26 +13,22 @@
 ;; ivy
 (use-package ivy
   :ensure t
-  :bind (:map
-         ivy-minibuffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-j" . ivy-next-line)
-         ("C-M-j" . ivy-immediate-done)
-         ("C-c C-o" . ivy-occur)
-         ([escape] . keyboard-escape-quit)
-         :map
-         ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         :map
-         ivy-occur-mode-map
-         ("e" . ivy-wgrep-change-to-wgrep-mode)
-         ("C-d" . ivy-occur-delete-candidate)
-         ("RET" . ivy-occur-press-and-switch)
-         :map
-         ivy-occur-grep-mode-map
-         ("e" . ivy-wgrep-change-to-wgrep-mode)
-         ("C-d" . ivy-occur-delete-candidate)
-         ("RET" . ivy-occur-press-and-switch))
+  :bind ((:map ivy-minibuffer-map
+               ("C-k" . ivy-previous-line)
+               ("C-j" . ivy-next-line)
+               ("C-M-j" . ivy-immediate-done)
+               ("C-c C-o" . ivy-occur)
+               ([escape] . keyboard-escape-quit))
+         (:map ivy-switch-buffer-map
+               ("C-k" . ivy-previous-line))
+         (:map ivy-occur-mode-map
+               ("e" . ivy-wgrep-change-to-wgrep-mode)
+               ("C-d" . ivy-occur-delete-candidate)
+               ("RET" . ivy-occur-press-and-switch))
+         (:map ivy-occur-grep-mode-map
+               ("e" . ivy-wgrep-change-to-wgrep-mode)
+               ("C-d" . ivy-occur-delete-candidate)
+               ("RET" . ivy-occur-press-and-switch)))
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)

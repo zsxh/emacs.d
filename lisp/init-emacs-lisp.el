@@ -14,12 +14,12 @@
 (use-package elisp-mode
   :ensure nil
   :defer t
-  :bind (:map emacs-lisp-mode-map
-              ("C-c C-z" . ielm)
-              ("C-c C-c" . eval-defun)
-              ("C-c C-b" . eval-buffer)
-              ("C-c C-:" . pp-eval-expression)
-              ("C-c C-d" . edebug-defun))
+  :bind ((:map emacs-lisp-mode-map
+               ("C-c C-z" . ielm)
+               ("C-c C-c" . eval-defun)
+               ("C-c C-b" . eval-buffer)
+               ("C-c C-:" . pp-eval-expression)
+               ("C-c C-d" . edebug-defun)))
   :hook (emacs-lisp-mode . (lambda ()
                              (setq-local company-backends '(company-capf company-files))))
   :config
@@ -52,10 +52,10 @@
 ;; Interactive macro expander
 (use-package macrostep
   :ensure t
-  :bind (:map emacs-lisp-mode-map
-              ("C-c e" . macrostep-expand)
-              :map lisp-interaction-mode-map
-              ("C-c e" . macrostep-expand))
+  :bind ((:map emacs-lisp-mode-map
+               ("C-c e" . macrostep-expand))
+         (:map lisp-interaction-mode-map
+               ("C-c e" . macrostep-expand)))
   :config
   (with-eval-after-load 'evil
     (evil-define-minor-mode-key 'normal 'macrostep-mode

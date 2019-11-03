@@ -14,9 +14,9 @@
 (use-package org
   :ensure org-plus-contrib
   :mode ("\\.org\\'" . org-mode)
-  :bind (:map org-mode-map
-              ("C-c C-," . org-insert-structure-template)
-              ("C-M-<return>" . org-table-insert-hline))
+  :bind ((:map org-mode-map
+               ("C-c C-," . org-insert-structure-template)
+               ("C-M-<return>" . org-table-insert-hline)))
   :commands org-open-at-point
   :config
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
