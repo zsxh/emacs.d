@@ -155,7 +155,9 @@
          (set-face-background 'org-block "#E0E0E0")
          (set-face-background 'org-quote nil)
          (set-face-background 'org-block-begin-line nil)
-         (set-face-background 'org-block-end-line nil))))))
+         (set-face-background 'org-block-end-line nil))
+       (with-eval-after-load 'mmm-vars
+         (set-face-background 'mmm-default-submode-face "#E5E5E5"))))))
 
 ;; Set config now
 (+ui/frame-config (selected-frame))

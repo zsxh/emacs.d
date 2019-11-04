@@ -14,7 +14,7 @@
 
 ;; Install js language server
 ;; npm i -g typescript typescript-language-server
-(dolist (mode '(js-mode js2-mode))
+(dolist (mode '(js-mode js2-mode vue-mode))
   (let ((mode-hook (intern (format "%s-hook" mode)))
         (mode-map (intern (format "%s-map" mode))))
     (add-hook mode-hook (lambda () (+js/config mode-map)))))
@@ -37,6 +37,10 @@
   (require 'nvm)
   (lsp)
   (+language-server/set-common-leader-keys mode-map))
+
+(use-package vue-mode
+  :ensure t
+  :commands vue-mode)
 
 
 (provide 'init-js)
