@@ -12,6 +12,11 @@
 
 (require 'init-language-server)
 
+;; npm install -g vue-language-server
+(use-package vue-mode
+  :ensure t
+  :commands vue-mode)
+
 ;; Install js language server
 ;; npm i -g typescript typescript-language-server
 (dolist (mode '(js-mode js2-mode vue-mode))
@@ -37,10 +42,6 @@
   (require 'nvm)
   (lsp)
   (+language-server/set-common-leader-keys mode-map))
-
-(use-package vue-mode
-  :ensure t
-  :commands vue-mode)
 
 
 (provide 'init-js)
