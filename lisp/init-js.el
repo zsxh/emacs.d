@@ -15,7 +15,13 @@
 ;; npm install -g vue-language-server
 (use-package vue-mode
   :ensure t
-  :commands vue-mode)
+  :commands vue-mode
+  :config
+  (with-eval-after-load 'mmm-mode
+    ;; the indentation in the <script> tag is broken, with new lines aligned on the left.
+    ;; https://github.com/AdamNiederer/vue-mode/issues/74
+    (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+    (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))))
 
 ;; Install js language server
 ;; npm i -g typescript typescript-language-server
