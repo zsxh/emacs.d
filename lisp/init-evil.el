@@ -44,7 +44,9 @@
                ("M-y" . evil-scroll-line-up)))
   :config
   ;; don't move cursor back, otherwise it will cause problem with lispy/awesome-pair
-  (setq evil-move-cursor-back nil)
+  (setq evil-move-cursor-back t)
+  ;; the cursor is allowed to move past the last character of a line
+  (setq evil-move-beyond-eol t)
   ;; show-paren-mode + Evil config
   (setq evil-highlight-closing-paren-at-point-states '(not emacs insert replace normal))
 
