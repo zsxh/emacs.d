@@ -77,7 +77,7 @@
                ("M-n" . 'awesome-pair-jump-right)
                ("M-p" . 'awesome-pair-jump-left)
                ("M-RET" . 'awesome-pair-jump-out-pair-and-newline)))
-  :hook (((prog-mode web-mode conf-mode yaml-mode editorconfig-mode) . awesome-pair-mode)
+  :hook (((prog-mode web-mode conf-mode yaml-mode editorconfig-mode vue-mode) . awesome-pair-mode)
          ((c++-mode java-mode rust-mode) . (lambda () (local-set-key (kbd "<") '+prog/insert-angle)))
          (rust-mode . (lambda () (local-set-key (kbd "|") '+prog/insert-rust-closure))))
   :config

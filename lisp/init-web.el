@@ -71,6 +71,38 @@
   :config
   (setq css-indent-offset 2))
 
+;; edit html
+(with-eval-after-load 'sgml-mode
+  ;; https://emacs.stackexchange.com/questions/33240/html-mode-that-closes-tags
+  ;; automatic insertion of the closing tag if you type </ or
+  ;; pressing C-c / or C-c C-e or C-c / inserts a closing tag (the whole </foo>).
+  (setq sgml-quick-keys 'close)
+
+  (defun +web/sgml-slash (arg)
+    "Insert ARG slash characters.
+Behaves electrically if `sgml-quick-keys' is non-nil."
+    (interactive "p")
+    (cond
+     ((not (and (eq (char-before) ?<) (= arg 1)))
+      (sgml-slash-matching arg))
+     ((eq sgml-quick-keys 'indent)
+      (insert-char ?/ 1)
+      (indent-according-to-mode))
+     ((eq sgml-quick-keys 'close)
+      (delete-char -1)
+      ;; also delete the last ?> char if `electric-pair-mode' is enabled
+      (when (and electric-pair-mode
+                 (eq ?> (char-after)))
+        (delete-char 1))
+      (if (eq ?> (char-before))
+          (save-excursion
+            (sgml-close-tag))
+        (sgml-close-tag)))
+     (t
+      (insert-char ?/ arg))))
+
+  (advice-add 'sgml-slash :override '+web/sgml-slash))
+
 ;; https://github.com/manateelazycat/instant-rename-tag
 (use-package instant-rename-tag
   :quelpa ((instant-rename-tag :fetcher github :repo "manateelazycat/instant-rename-tag"))
