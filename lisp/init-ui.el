@@ -74,8 +74,10 @@
       (doom-modeline-set-modeline 'main)))
   :hook (after-init . my-doomline-init)
   :config
-  (setq doom-modeline-major-mode-icon nil)
-  (setq doom-modeline-buffer-file-name-style 'buffer-name))
+  (setq doom-modeline-evil-state-icon nil
+        doom-modeline-unicode-fallback nil
+        doom-modeline-major-mode-icon nil
+        doom-modeline-buffer-file-name-style 'buffer-name))
 
 ;; ;; Display time on modeline
 (setq display-time-format "%Y/%m/%d %A %H:%M")
