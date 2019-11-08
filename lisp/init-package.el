@@ -24,7 +24,8 @@
 
 ;; Set EPLA
 (defun set-package-archives (archives)
-  "Set specific package ARCHIVES repository."
+  "Set specific package ARCHIVES repository like 'melpa,
+'melpa-mirror, 'emacs-china, 'tencent, 'tuna."
   (interactive
    (list (intern (completing-read "Choose package archives: "
                                   '(melpa melpa-mirror emacs-china netease tuna)))))
