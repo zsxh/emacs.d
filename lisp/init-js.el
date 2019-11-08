@@ -23,9 +23,14 @@
     (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
     (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))))
 
+(use-package rjsx-mode
+  :ensure t
+  :mode ("components\\/.*\\.js\\'" . rjsx-mode)
+  :commands rjsx-mode)
+
 ;; Install js language server
 ;; npm i -g typescript typescript-language-server
-(dolist (mode '(js-mode js2-mode vue-mode))
+(dolist (mode '(js-mode js2-mode vue-mode rjsx-mode))
   (let ((mode-hook (intern (format "%s-hook" mode)))
         (mode-map (intern (format "%s-map" mode))))
     (add-hook mode-hook (lambda () (+js/config mode-map)))))
