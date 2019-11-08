@@ -172,6 +172,10 @@ Optional argument ARGS optional args."
 ;;   :quelpa ((term-keys :fetcher github :repo "CyberShadow/term-keys"))
 ;;   :hook (after-init . term-keys-mode))
 
+;; Note: Fixing Emacs tramp mode when using zsh
+;; https://blog.karssen.org/2016/03/02/fixing-emacs-tramp-mode-when-using-zsh/
+;; https://www.emacswiki.org/emacs/TrampMode#toc8
+
 
 (provide 'init-shell-term)
 
