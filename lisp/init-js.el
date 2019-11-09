@@ -16,12 +16,48 @@
 (use-package vue-mode
   :ensure t
   :commands vue-mode
+  :bind ((:map vue-mode-map
+               ("C-c C-l" . vue-mode-reparse)))
   :config
+  ;; FIXME: lsp-vetur (lsp-format-buffer) just ignore .eslintrc.js file
+  ;; so we need to set .eslintrc.js configs to avoid eslint error, check https://eslint.org/ for details
+  ;; rules: {
+  ;;   'semi': ['error', 'always'],
+  ;;   'quotes': [2, 'double', { 'avoidEscape': true }]
+  ;; }
+  (with-eval-after-load 'lsp-vetur
+    (setq lsp-vetur-format-default-formatter-js "prettier-eslint"))
+
+  (defun eslint/binary ()
+    (or
+     ;; Try to find bin in node_modules (via 'npm install prettier-eslint-cli')
+     (let ((root (locate-dominating-file buffer-file-name "node_modules")))
+       (if root
+           (let ((prettier-binary (concat root "node_modules/.bin/eslint")))
+             (if (file-executable-p prettier-binary) prettier-binary))))
+     ;; Fall back to a globally installed binary
+     (executable-find "eslint")
+     ;; give up
+     (error "Couldn't find a eslint executable")))
+
+  (defun prettier-eslint ()
+    "Format the current file with ESLint."
+    (interactive)
+    (progn (call-process (eslint/binary)
+                         nil "*Prettier-ESLint Errors*" nil
+                         buffer-file-name "--fix")
+           (revert-buffer t t t)))
+
   (with-eval-after-load 'mmm-mode
     ;; the indentation in the <script> tag is broken, with new lines aligned on the left.
     ;; https://github.com/AdamNiederer/vue-mode/issues/74
     (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
-    (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))))
+    (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil))))
+
+  (with-eval-after-load 'js
+    (+funcs/major-mode-leader-keys
+     js-mode-map
+     "'" '(vue-mode-edit-indirect-at-point :which-key "vue-edit-block"))))
 
 (use-package rjsx-mode
   :ensure t
