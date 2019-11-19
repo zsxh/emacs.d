@@ -187,7 +187,9 @@
 (use-package dired-filter
   :ensure t
   :after dired
-  :commands (dired-filter-mode))
+  :commands (dired-filter-mode)
+  :config
+  (setq dired-filter-prefix "/"))
 
 ;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 
