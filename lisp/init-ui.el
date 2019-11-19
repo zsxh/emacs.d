@@ -155,6 +155,10 @@
        (with-eval-after-load 'org
          ;; Org block face
          (set-face-background 'org-block "#E0E0E0")
+         ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
+         ;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
+         (when (>= emacs-major-version 27)
+           (set-face-extend 'org-block t))
          (set-face-background 'org-quote nil)
          (set-face-background 'org-block-begin-line nil)
          (set-face-background 'org-block-end-line nil))

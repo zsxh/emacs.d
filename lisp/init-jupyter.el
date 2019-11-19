@@ -59,8 +59,11 @@
   (use-package ein-cell
     :defer t
     :config
-    (setq ein:cell-traceback-level nil     ;; Show all traceback
+    (setq ein:cell-traceback-level nil ;; Show all traceback
           ein:slice-image t)
+
+    (when (>= emacs-major-version 27)
+      (set-face-extend 'ein:cell-input-area t))
 
     ;; you can use 'ansi-color-filter-apply instead of 'ansi-color-apply to escape ansi code
     (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
