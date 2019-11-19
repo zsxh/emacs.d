@@ -55,6 +55,9 @@ if no project root found, use current directory instead."
 
   (add-hook 'vterm-exit-functions #'+vterm/auto-exit)
 
+  ;; TODO: check `vterm-set-title-functions', `vterm--set-directory', tracking title/directory
+  ;; and https://github.com/akermu/emacs-libvterm#directory-tracking
+  ;; https://github.com/akermu/emacs-libvterm/issues/55
   (defun +vterm/generate-buffer-name ()
     (format "*vterm: %s*" (file-name-nondirectory (directory-file-name default-directory))))
 
