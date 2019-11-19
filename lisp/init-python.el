@@ -33,7 +33,7 @@
     (+language-server/set-common-leader-keys python-mode-map)
     (+funcs/major-mode-leader-keys
      python-mode-map
-     "'" '(+python/repl :which-key "repl")
+     "'" '(+python/repl-vterm :which-key "repl")
      "c" '(nil :which-key "compile-exec")
      "cc" '(+python/python-execute-file :which-key "execute-file")
      "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")))
@@ -76,6 +76,19 @@
     ;; (process-buffer (run-python nil t t))
     (pop-to-buffer (process-buffer (python-shell-get-or-create-process)))
     (evil-insert-state))
+
+  (defun +python/repl-vterm ()
+    (interactive)
+    (with-current-buffer (vterm-other-window)
+      (when (file-exists-p (expand-file-name "venv" (projectile-project-root)))
+        (dolist (char (string-to-list "source venv/bin/activate"))
+          (vterm--update vterm--term (char-to-string char) nil nil nil))
+        (vterm-send-return))
+      (let ((py-interpreter (cond ((file-exists-p (expand-file-name "venv/bin/ipython" (projectile-project-root))) "ipython")
+                                  (t "python"))))
+        (dolist (char (string-to-list py-interpreter))
+          (vterm--update vterm--term (char-to-string char) nil nil nil))
+        (vterm-send-return))))
 
   (defun +python/python-execute-file (arg)
     "Execute a python script in a shell."
