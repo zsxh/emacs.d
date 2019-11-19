@@ -184,6 +184,7 @@
   :ensure t
   :commands rmsbolt-mode)
 
+;;;;;;;;;;;;;; Indent ;;;;;;;;;;;;;;
 ;; Evil shift indent
 (defvar prog--indent-variable-alist
   '(((awk-mode c-mode c++-mode java-mode groovy-mode
@@ -243,6 +244,38 @@ current major mode."
 (add-hook 'after-change-major-mode-hook '+prog/set-evil-shift-width)
 
 (setq-default evil-shift-width 2)
+
+(defun +prog/indent-region (numSpaces)
+  (let ((regionStart (cond ((use-region-p) (region-beginning))
+                           (t (line-beginning-position))))
+        (regionEnd (cond ((use-region-p) (region-end))
+                           (t (line-end-position)))))
+    (save-excursion                  ; restore the position afterwards
+      (goto-char regionStart)        ; go to the start of region
+      (setq start (line-beginning-position)) ; save the start of the line
+      (goto-char regionEnd)                  ; go to the end of region
+      (setq end (line-end-position))    ; save the end of the line
+
+      (indent-rigidly start end numSpaces) ; indent between start and end
+      (setq deactivate-mark nil)        ; restore the selected region
+      )))
+
+(defun +prog/tab-region ()
+  (interactive)
+  (if (use-region-p)
+      (+prog/indent-region 2) ; region was selected, call indent-region
+    (insert "  ")              ; else insert four spaces as expected
+    ))
+
+(defun +prog/untab-region ()
+  (interactive)
+  (+prog/indent-region -2))
+
+(defun +prog/hack-tab-key ()
+  (interactive)
+  ;; (local-set-key (kbd "<tab>") '+prog/tab-region)
+  (local-set-key (kbd "<backtab>") '+prog/untab-region))
+
 
 ;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
 

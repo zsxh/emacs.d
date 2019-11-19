@@ -44,6 +44,7 @@
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
+;; M-^ delete-indentation
 (setq-default c-basic-offset   2
               tab-width        2
               indent-tabs-mode nil)
