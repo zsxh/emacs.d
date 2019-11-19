@@ -37,17 +37,17 @@
         company-minimum-prefix-length 1
         ;; company-require-match nil
         ;; company-dabbrev-ignore-case nil
-        company-dabbrev-downcase nil))
+        company-dabbrev-downcase nil    ; No downcase when completion.
+        company-require-match nil ; Don't require match, so you can still move your cursor as expected.
+        company-eclim-auto-save nil     ; Stop eclim auto save.
+        ))
 
-;; Fuzzy complete
-(use-package flx
+(use-package company-fuzzy
   :ensure t
-  :defer t)
-
-(use-package company-flx
   :after company
-  :ensure t
-  :config (company-flx-mode 1))
+  (with-eval-after-load elisp-mode
+    (add-hook 'emacs-lisp-mode-hook 'company-fuzzy-mode)
+    (add-hook 'lisp-interaction-mode-hook 'company-fuzzy-mode)))
 
 (use-package yasnippet
   :ensure t
