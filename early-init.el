@@ -32,6 +32,10 @@
 ;; Disable cursor blinking
 (setq no-blinking-cursor t)
 
+;; Emacs startup *scratch* buffer
+(setq inhibit-startup-screen t
+      initial-buffer-choice  nil)
+
 
 (provide 'early-init)
 

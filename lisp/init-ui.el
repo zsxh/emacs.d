@@ -112,9 +112,6 @@
 ;; (use-package display-line-numbers
 ;;   :hook (prog-mode . display-line-numbers-mode))
 
-;; Emacs startup *scratch* buffer
-(setq initial-buffer-choice t)
-
 ;; Fonts
 ;; Source Han Serief: https://github.com/adobe-fonts/source-han-serif
 ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
