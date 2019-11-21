@@ -117,7 +117,11 @@
   (setq lsp-ui-doc-delay 0.5
         lsp-ui-doc-header nil
         lsp-ui-doc-include-signature t
-        lsp-ui-doc-position 'at-point)
+        lsp-ui-doc-position 'at-point
+        ;; FIXME: https://emacs-china.org/t/xwidget-async/10207/6
+        ;; async process won't be killed after enabling xwdiget
+        ;; lsp-ui-doc-use-webkit (featurep 'xwidget-internal)
+        )
 
   (setq-default lsp-ui-doc-frame-parameters
                 '((left . -1)
@@ -146,11 +150,6 @@
 
   (when (featurep 'doom-themes)
     (set-face-background 'lsp-ui-doc-background (doom-color 'bg-alt)))
-
-  ;; FIXME: https://emacs-china.org/t/xwidget-async/10207/6
-  ;; async process won't be killed after enabling xwdiget
-  ;; (when (featurep 'xwidget-internal)
-  ;;   (setq lsp-ui-doc-use-webkit t))
 
   (defun +lsp/lsp-ui-doc--make-request-advice nil
     "Request the documentation to the LS."
