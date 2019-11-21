@@ -160,7 +160,21 @@
          (set-face-background 'org-block-begin-line nil)
          (set-face-background 'org-block-end-line nil))
        (with-eval-after-load 'mmm-vars
-         (set-face-background 'mmm-default-submode-face "#E5E5E5"))))))
+         (set-face-background 'mmm-default-submode-face "#E5E5E5"))))
+    ('doom-one
+     (progn
+       (with-eval-after-load 'all-the-icons-dired
+         (set-face-foreground 'all-the-icons-dired-dir-face "#b478dd"))
+       (with-eval-after-load 'org
+         ;; Org block face
+         ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
+         ;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
+         (when (>= emacs-major-version 27)
+           (set-face-extend 'org-block t))
+         (set-face-background 'org-quote nil)
+         (set-face-background 'org-block-begin-line nil)
+         (set-face-background 'org-block-end-line nil))
+       ))))
 
 ;; Set config now
 (+ui/frame-config (selected-frame))
