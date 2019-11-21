@@ -19,7 +19,6 @@
 (with-eval-after-load 'cc-mode
 
   (add-hook 'java-mode-hook 'lsp)
-  (add-hook 'java-mode-hook '+prog/hack-tab-key)
 
   (+funcs/major-mode-leader-keys
    java-mode-map

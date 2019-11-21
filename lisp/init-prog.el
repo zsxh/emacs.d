@@ -276,6 +276,10 @@ current major mode."
   ;; (local-set-key (kbd "<tab>") '+prog/tab-region)
   (local-set-key (kbd "<backtab>") '+prog/untab-region))
 
+(dolist (mode '(java-mode))
+  (let ((mode-hook (intern (format "%s-hook" mode))))
+    (add-hook mode-hook '+prog/hack-tab-key)))
+
 
 ;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
 
