@@ -216,6 +216,13 @@ the `quelpa' command has been run in the current Emacs session."
        (message "%s" result)
        (message "Async Update Done. Restart to complete process.")))))
 
+;; Multi-file support for `eval-after-load'.
+;; Usage:
+;; (with-eval-after-load '(and a (or b c))
+;;   ...)
+(use-package meal
+  :quelpa ((meal :fetcher github :repo "twlz0ne/meal.el")))
+
 
 (provide 'init-package)
 
