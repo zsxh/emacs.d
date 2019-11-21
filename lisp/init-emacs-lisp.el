@@ -20,8 +20,6 @@
                ("C-c C-b" . eval-buffer)
                ("C-c C-:" . pp-eval-expression)
                ("C-c C-d" . edebug-defun)))
-  :hook (emacs-lisp-mode . (lambda ()
-                             (setq-local company-backends '(company-capf company-files))))
   :config
   ;; Note: '(emacs-lisp-mode-map) or (list 'emacs-lisp-mode-map)
   (dolist (mode-map '(emacs-lisp-mode-map lisp-interaction-mode-map))
@@ -60,10 +58,6 @@
   (with-eval-after-load 'evil
     (evil-define-minor-mode-key 'normal 'macrostep-mode
       "q" 'macrostep-collapse)))
-
-;; Set lisp-interaction-mode company-backends
-(add-hook 'lisp-interaction-mode-hook
-          #'(lambda () (setq-local company-backends '(company-capf company-files))))
 
 ;; Short and sweet LISP editing
 (use-package lispy

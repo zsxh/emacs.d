@@ -40,12 +40,13 @@
         company-dabbrev-downcase nil    ; No downcase when completion.
         company-require-match nil ; Don't require match, so you can still move your cursor as expected.
         company-eclim-auto-save nil     ; Stop eclim auto save.
-        ))
+        company-backends '(company-capf company-files company-dabbrev)))
 
 (use-package company-fuzzy
   :ensure t
   :after company
-  (with-eval-after-load elisp-mode
+  :config
+  (with-eval-after-load 'elisp-mode
     (add-hook 'emacs-lisp-mode-hook 'company-fuzzy-mode)
     (add-hook 'lisp-interaction-mode-hook 'company-fuzzy-mode)))
 
