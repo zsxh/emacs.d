@@ -45,6 +45,7 @@
 ;; `global-eldoc-mode' is enabled by default.
 (use-package eldoc
   :ensure nil
+  :defer t
   :diminish eldoc-mode)
 
 ;; Interactive macro expander

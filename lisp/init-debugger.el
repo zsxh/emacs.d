@@ -14,12 +14,8 @@
 
 (use-package dap-mode
   :quelpa ((dap-mode :fetcher github :repo "yyoncho/dap-mode"))
-  :commands dap-mode
-  :init
-  (defun +dap/enable (&optional arg)
-    (dap-mode 1)
-    (dap-ui-mode 1))
-  (advice-add 'lsp :after #'+dap/enable)
+  :hook ((lsp-mode . dap-mode)
+         (lsp-mode . dap-ui-mode))
   :config
   (require 'dap-utils)
   ;; you neead to install several debugger first: lldb, ptvsd, eclipse jdt server, etc. links below:

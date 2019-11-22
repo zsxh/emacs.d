@@ -29,9 +29,11 @@
 (setq frame-title-format "emacs@%b")
 
 ;; Startup frame size
-(if (eq personal-frame-startup-size 'max)
-    (toggle-frame-maximized)
-  (toggle-frame-fullscreen))
+
+(cond ((eq personal-frame-startup-size 'max)
+       (toggle-frame-maximized))
+      ((eq personal-frame-startup-size 'fullscreen)
+       (toggle-frame-fullscreen)))
 
 ;; Fringe
 (fringe-mode '(12 . 12))
