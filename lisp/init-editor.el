@@ -96,7 +96,10 @@
 (use-package ace-window
   :ensure t
   :bind (("M-u" . ace-window))
-  :commands (ace-window ace-swap-window))
+  :commands (ace-window ace-swap-window)
+  :config
+  (with-eval-after-load 'neotree
+    (add-to-list 'aw-ignored-buffers neo-buffer-name)))
 
 ;; Treat undo history as a tree
 (use-package undo-tree
