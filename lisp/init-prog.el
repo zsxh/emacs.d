@@ -43,7 +43,7 @@
                ("C-k" . helm-previous-line)))
   :config
   ;; (setq helm-dash-browser-func 'eww)
-  (setq helm-dash-browser-func 'eaf-open-url)
+  (setq helm-dash-browser-func 'eaf-open-dash)
   (setq helm-dash-docsets-path (expand-file-name "~/.local/share/Zeal/Zeal/docsets"))
   (setq helm-dash-common-docsets (dash-docs-installed-docsets))
   (setq helm-dash-enable-debugging nil))

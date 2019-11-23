@@ -15,7 +15,7 @@
 
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
-  :commands (eaf-open eaf-open-url)
+  :commands (eaf-open eaf-open-url eaf-open-dash)
   :preface
   (defun eaf-qutebrowser ()
     (interactive)
@@ -37,120 +37,114 @@
                             (58 . evil-ex)
                             (26 . evil-emacs-state)))))
 
+  (setq eaf-pdfviewer-keybinding
+        '(("j" . "scroll_up")
+          ("k" . "scroll_down")
+          ("d" . "scroll_up_page")
+          ("u" . "scroll_down_page")
+          ("t" . "switch_to_read_mode")
+          ("." . "scroll_to_home")
+          ("," . "scroll_to_end")
+          ("0" . "zoom_reset")
+          ("=" . "zoom_in")
+          ("-" . "zoom_out")
+          ("g" . "jump_to_page")
+          ("p" . "jump_to_percent")
+          ("[" . "remember_current_position")
+          ("]" . "remeber_jump")
+          ("i" . "toggle_inverted_mode")))
+
+  (setq eval-normal-state-eaf-browser-keybinding
+        '(("F" . "history_forward")
+          ("H" . "history_backward")
+          ("M-q" . "clean_all_cookie")
+          ("-" . "zoom_out")
+          ("=" . "zoom_in")
+          ("0" . "zoom_reset")
+          ("j" . "scroll_up")
+          ("k" . "scroll_down")
+          ("d" . "scroll_up_page")
+          ("u" . "scroll_down_page")
+          ("M-<" . "scroll_to_begin")
+          ("M->" . "scroll_to_bottom")))
+
+  (defun eaf-open-dash (url &optional args)
+    (interactive)
+    (eaf-open url "browser" nil))
+
   (defun eaf-monitor-key-event ()
     (unless
         (ignore-errors
           (with-current-buffer (buffer-name)
-            (cond
-             ;; 为了 helm-dash browser 为 eaf 时,设置j->down,k->up
-             ((and (eq major-mode 'eaf-mode)
-                   (not (evil-emacs-state-p))
-                   (or (string-equal buffer-app-name "browser")
-                       (string-equal buffer-app-name "markdownpreviewer")))
-              (progn
-                (let ((key-desc (key-description (make-vector 1 last-command-event)))
-                      (target-desc nil))
-                  ;; (message "press %s" key-desc)
-                  (cond
-                   ((string-equal key-desc "h")
-                    (eaf-call "send_key" buffer-id "<left>"))
-                   ((string-equal key-desc "j")
-                    (eaf-call "send_key" buffer-id "<down>"))
-                   ((string-equal key-desc "k")
-                    (eaf-call "send_key" buffer-id "<up>"))
-                   ((string-equal key-desc "l")
-                    (eaf-call "send_key" buffer-id "<right>"))
-                   ((string-equal key-desc "u")
-                    (eaf-call "send_key" buffer-id "<prior>"))
-                   ((string-equal key-desc "d")
-                    (eaf-call "send_key" buffer-id "<next>"))
-                   ((string-equal key-desc "H")
-                    (eaf-call "send_keystroke" buffer-id "M-b"))
-                   ((string-equal key-desc "F")
-                    (eaf-call "send_keystroke" buffer-id "M-f"))
-                   ((member key-desc '("-" "=" "0"))
-                    (eaf-call "send_keystroke" buffer-id (format "C-%s" key-desc)))
-                   ((string-equal key-desc "T")
-                    (progn
-                      (let* ((url buffer-url)
-                             (eww-buffer (car (-filter (lambda (buffer)
-                                                         (with-current-buffer buffer
-                                                           (and (derived-mode-p 'eww-mode)
-                                                                (equal url (plist-get eww-data :url)))))
-                                                       (buffer-list)))))
-                        (if eww-buffer
-                            (switch-to-buffer eww-buffer)
-                          (eww url)))))))
-                (setq last-command-event nil)))
+            (when (eq major-mode 'eaf-mode)
+              (let* ((event last-command-event)
+                     (key (make-vector 1 event))
+                     (key-command (format "%s" (key-binding key)))
+                     (key-desc (key-description key)))
 
-             ;; for pdfviewer
-             ((and (eq major-mode 'eaf-mode)
-                   (not (evil-emacs-state-p))
-                   (string-equal buffer-app-name "pdfviewer"))
-              (progn
-                (let* ((event last-command-event)
-                       (key (make-vector 1 event))
-                       (key-command (format "%s" (key-binding key)))
-                       (key-desc (key-description key)))
-                  ;; (message "press %s" key-desc)
-                  (cond
-                   ((string-equal key-desc "d")
-                    (eaf-call "send_key" buffer-id "SPC"))
-                   ((string-equal key-desc "u")
-                    (eaf-call "send_key" buffer-id "b"))
-                   ((or
-                     (equal key-command "digit-argument")
-                     (member key-desc '("j" "k" "," "." "t" "-" "=" "0" "g" "p" "[" "]")))
-                    (eaf-call "send_key" buffer-id key-desc))))
-                (setq last-command-event nil)))
+                ;; Uncomment for debug.
+                ;; (message (format "!!!!! %s %s %s %s %s" event key key-command key-desc buffer-app-name))
 
-             ;; 其余根据evil mode state 再决定
-             ((and (eq major-mode 'eaf-mode)
-                   (evil-emacs-state-p))
-              (progn
-                (let* ((event last-command-event)
-                       (key (make-vector 1 event))
-                       (key-command (format "%s" (key-binding key)))
-                       (key-desc (key-description key)))
-
-                  ;; Uncomment for debug.
-                  ;; (message (format "!!!!! %s %s %s %s" event key key-command key-desc))
-
-                  (cond
-                   ;; Just send event when user insert single character. ;; Don't send event 'M' if user press Ctrl + M.
-                   ((and
-                     (or
-                      (equal key-command "self-insert-command")
-                      (equal key-command "completion-select-if-within-overlay"))
-                     (equal 1 (string-width (this-command-keys))))
-                    (eaf-call "send_key" buffer-id key-desc))
-                   ((string-match "^[CMSs]-.*" key-desc)
-                    (eaf-call "send_keystroke" buffer-id key-desc))
-                   ((or
-                     (equal key-command "nil")
-                     (equal key-desc "RET")
-                     (equal key-desc "DEL")
-                     (equal key-desc "TAB")
-                     (equal key-desc "SPC")
-                     (equal key-desc "<backtab>")
-                     (equal key-desc "<home>")
-                     (equal key-desc "<end>")
-                     (equal key-desc "<left>")
-                     (equal key-desc "<right>")
-                     (equal key-desc "<up>")
-                     (equal key-desc "<down>")
-                     (equal key-desc "<prior>")
-                     (equal key-desc "<next>"))
-                    (eaf-call "send_key" buffer-id key-desc))
-                   (t
-                    (unless (or
-                             (equal key-command "keyboard-quit")
-                             (equal key-command "kill-this-buffer")
-                             (equal key-command "eaf-open"))
-                      (ignore-errors (call-interactively (key-binding key)))))))
-                ;; Set `last-command-event' with nil, emacs won't notify me buffer is ready-only,
-                ;; because i insert nothing in buffer.
-                (setq last-command-event nil))))))
+                (cond
+                 ;; Fix #51 , don't handle F11 to make emacs toggle frame fullscreen status successfully.
+                 ((equal key-desc "<f11>")
+                  t)
+                 ((and (equal buffer-app-name "browser")
+                       (not (evil-emacs-state-p)))
+                  (eaf-handle-app-key buffer-id key-desc eval-normal-state-eaf-browser-keybinding))
+                 ;; Just send event when user insert single character.
+                 ;; Don't send event 'M' if user press Ctrl + M.
+                 ((and (or
+                        (equal key-command "self-insert-command")
+                        (equal key-command "completion-select-if-within-overlay"))
+                       (equal 1 (string-width (this-command-keys))))
+                  (cond ((equal buffer-app-name "pdf-viewer")
+                         (eaf-handle-app-key buffer-id key-desc eaf-pdfviewer-keybinding))
+                        ((equal buffer-app-name "video-player")
+                         (eaf-handle-app-key buffer-id key-desc eaf-videoplayer-keybinding))
+                        ((equal buffer-app-name "image-viewer")
+                         (eaf-handle-app-key buffer-id key-desc eaf-imageviewer-keybinding))
+                        ((equal buffer-app-name "camera")
+                         (eaf-handle-app-key buffer-id key-desc eaf-camera-keybinding))
+                        (t
+                         (eaf-call "send_key" buffer-id key-desc))))
+                 ((string-match "^[CMSs]-.*" key-desc)
+                  (cond ((equal buffer-app-name "browser")
+                         (let ((function-name-value (assoc key-desc eaf-browser-keybinding)))
+                           (if function-name-value
+                               (eaf-call "execute_function" buffer-id (cdr function-name-value))
+                             (let ((key-alias-value (assoc key-desc eaf-browser-key-alias)))
+                               (if key-alias-value
+                                   (eaf-call "send_key" buffer-id (cdr key-alias-value)))))))
+                        ((equal buffer-app-name "terminal")
+                         (let ((function-name-value (assoc key-desc eaf-terminal-keybinding)))
+                           (when function-name-value
+                             (eaf-call "execute_function" buffer-id (cdr function-name-value)))))))
+                 ((or
+                   (equal key-command "nil")
+                   (equal key-desc "RET")
+                   (equal key-desc "DEL")
+                   (equal key-desc "TAB")
+                   (equal key-desc "SPC")
+                   (equal key-desc "<backtab>")
+                   (equal key-desc "<home>")
+                   (equal key-desc "<end>")
+                   (equal key-desc "<left>")
+                   (equal key-desc "<right>")
+                   (equal key-desc "<up>")
+                   (equal key-desc "<down>")
+                   (equal key-desc "<prior>")
+                   (equal key-desc "<next>"))
+                  (eaf-call "send_key" buffer-id key-desc))
+                 (t
+                  (unless (or
+                           (equal key-command "keyboard-quit")
+                           (equal key-command "kill-this-buffer")
+                           (equal key-command "eaf-open"))
+                    (ignore-errors (call-interactively (key-binding key)))))))
+              ;; Set `last-command-event' with nil, emacs won't notify me buffer is ready-only,
+              ;; because i insert nothing in buffer.
+              (setq last-command-event nil))))
       ;; If something wrong in `eaf-monitor-key-event', emacs will remove `eaf-monitor-key-event' from `pre-command-hook' hook list.
       ;; Then we add `eaf-monitor-key-event' in `pre-command-hook' list again, hahahaha.
       (run-with-timer
