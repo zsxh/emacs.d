@@ -29,6 +29,7 @@
   ;; send-key only in evil-emacs-state
   (add-hook 'eaf-mode-hook
             (lambda ()
+              (company-mode -1)
               (setq-local evil-motion-state-map nil)
               ;; "C-z" normal-state -> emacs-state
               ;; ":" evil-ex
