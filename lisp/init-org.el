@@ -190,6 +190,11 @@
         (save-excursion (goto-char (match-beginning 0))
                         (org-babel-hide-result-toggle-maybe))))))
 
+(use-package org-bullets
+  :ensure t
+  :after org
+  :hook (org-mode . org-bullets-mode))
+
 
 (provide 'init-org)
 
