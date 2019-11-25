@@ -64,6 +64,7 @@
      "ajr" '(jupyter-run-repl :which-key "jupter-run-repl")
      "ajs" '(ein:jupyter-server-start :which-key "ein:jupyter-server-start")
      "ajS" '(ein:jupyter-server-stop :which-key "ein:jupyter-server-stop")
+     "am" '(man :which-key "man-page")
      "ao" '(nil :which-key "org")
      "aoa" '(org-agenda :which-key "org-agenda")
      "aoc" '(org-capture :which-key "org-capture")
