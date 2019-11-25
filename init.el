@@ -116,13 +116,13 @@
 (require 'init-jupyter)
 (require 'init-latex)
 
-;; Experimental
+;; Misc
+(require 'init-eaf)
+(require 'init-misc)
 (require 'init-experimental)
 
-;; Misc
-(require 'init-misc)
-
 (add-hook 'emacs-startup-hook (lambda () (setq debug-on-error nil)))
+
 
 (provide 'init)
 
