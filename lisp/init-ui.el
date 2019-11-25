@@ -178,6 +178,9 @@
          (set-face-background 'org-quote nil)
          (set-face-background 'org-block-begin-line nil)
          (set-face-background 'org-block-end-line nil))
+       (with-eval-after-load 'ein-cell
+         (set-face-background 'ein:cell-input-prompt "#383838")
+         (set-face-background 'ein:cell-input-area "#23272e"))
        ))))
 
 ;; Set config now
