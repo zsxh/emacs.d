@@ -172,7 +172,18 @@
       "j" 'evil-next-line
       "k" 'evil-previous-line
       "l" 'evil-forward-char
-      "?" 'describe-mode)))
+      "?" 'describe-mode))
+
+  (with-eval-after-load 'man
+    (evil-set-initial-state 'Man-mode 'normal)
+    (evil-define-key 'normal Man-mode-map
+      "0" 'evil-digit-argument-or-evil-beginning-of-line
+      "RET" 'man-follow
+      "gg" 'evil-goto-first-line
+      "gj" 'Man-next-section
+      "gk" 'Man-previous-section
+      "k" 'evil-previous-line
+      "m" 'man)))
 
 
 (provide 'init-evil)
