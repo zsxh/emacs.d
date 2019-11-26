@@ -36,6 +36,10 @@
 (setq inhibit-startup-screen t
       initial-buffer-choice  nil)
 
+(when (>= emacs-major-version 27)
+  ;; Quickstart: precompute activation actions for faster start up
+  (setq package-quickstart t))
+
 
 (provide 'early-init)
 

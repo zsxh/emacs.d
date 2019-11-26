@@ -75,3 +75,4 @@ games/*
 /transient
 /.extension
 /mspyls
+/package-quickstart.el

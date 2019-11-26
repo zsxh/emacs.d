@@ -19,6 +19,16 @@
 (when (version< emacs-version "26.1")
   (message "Your Emacs is old, and some funcitonality in this config will be disabled. Please upgrade if possible."))
 
+;; Speedup boot time by unset file-name-handler-alist temporarily
+;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#unset-file-name-handler-alist-temporarily
+(defvar tmp--file-name-handler-alist file-name-handler-alist)
+
+(setq file-name-handler-alist nil)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq file-name-handler-alist tmp--file-name-handler-alist)))
+
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
 (let ((normal-gc-cons-threshold (* 20 1024 1024))
