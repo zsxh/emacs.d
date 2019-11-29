@@ -164,7 +164,13 @@
          (set-face-background 'org-block-begin-line nil)
          (set-face-background 'org-block-end-line nil))
        (with-eval-after-load 'mmm-vars
-         (set-face-background 'mmm-default-submode-face "#E5E5E5"))))
+         (set-face-background 'mmm-default-submode-face "#E5E5E5"))
+       (with-eval-after-load 'ein-cell
+         (when (>= emacs-major-version 27)
+           (set-face-extend 'ein:cell-input-area t)))
+       (with-eval-after-load 'jupyter-repl
+         (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
+         (set-face-background 'jupyter-repl-traceback "#FBF8EF"))))
     ('doom-one
      (progn
        (with-eval-after-load 'all-the-icons-dired
@@ -179,9 +185,16 @@
          (set-face-background 'org-block-begin-line nil)
          (set-face-background 'org-block-end-line nil))
        (with-eval-after-load 'ein-cell
-         (set-face-background 'ein:cell-input-prompt "#383838")
-         (set-face-background 'ein:cell-input-area "#23272e"))
-       ))))
+         (when (>= emacs-major-version 27)
+           (set-face-extend 'ein:cell-input-area t))
+         (set-face-attribute 'ein:cell-input-area nil :background "#22262e")
+         (set-face-attribute 'ein:cell-input-prompt nil :foreground "#4F894C" :background "#282c34")
+         (set-face-attribute 'ein:cell-output-prompt nil :foreground "darkred" :background "#282c34"))
+       (with-eval-after-load 'jupyter-repl
+         (when (>= emacs-major-version 27)
+           (set-face-extend 'jupyter-repl-traceback t))
+         (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
+         (set-face-background 'jupyter-repl-traceback "#4B483F"))))))
 
 ;; Set config now
 (+ui/frame-config (selected-frame))

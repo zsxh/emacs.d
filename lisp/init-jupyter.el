@@ -15,10 +15,6 @@
   :ensure t
   :commands (jupyter-run-repl jupyter-connect-repl))
 
-(with-eval-after-load 'jupyter-repl
-  (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
-  (set-face-background 'jupyter-repl-traceback "#FBF8EF"))
-
 (use-package ein
   :ensure t
   :commands (ein:notebooklist-open ;; run jupter notebook first
@@ -34,13 +30,16 @@
     :defer t
     :config
     (setq ein:completion-backend 'ein:use-company-backend)
-    (defun +ein/set-company-backend ()
+    (defun +ein/config ()
+      (when (bound-and-true-p rainbow-delimiters-mode)
+        (rainbow-delimiters-mode -1))
+
       (setq-local company-backends '(ein:company-backend company-files company-dabbrev))
       ;; disable company box to improve performance
       (when (bound-and-true-p company-box-mode)
         (company-box-mode -1)))
 
-    (add-hook 'ein:notebook-mode-hook #'+ein/set-company-backend))
+    (add-hook 'ein:notebook-mode-hook #'+ein/config))
 
   (use-package ein-notebook
     :defer t
@@ -61,9 +60,6 @@
     :config
     (setq ein:cell-traceback-level nil ;; Show all traceback
           ein:slice-image t)
-
-    (when (>= emacs-major-version 27)
-      (set-face-extend 'ein:cell-input-area t))
 
     ;; you can use 'ansi-color-filter-apply instead of 'ansi-color-apply to escape ansi code
     (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
