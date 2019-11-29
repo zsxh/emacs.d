@@ -40,7 +40,7 @@
         company-dabbrev-downcase nil    ; No downcase when completion.
         company-require-match nil ; Don't require match, so you can still move your cursor as expected.
         company-eclim-auto-save nil     ; Stop eclim auto save.
-        company-backends '(company-capf company-files company-dabbrev)))
+        company-backends '(company-capf company-files company-css company-dabbrev)))
 
 (use-package company-fuzzy
   :ensure t

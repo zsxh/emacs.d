@@ -122,6 +122,10 @@
      "hS" '(hydra-emacs-cheatsheet/body :which-key "my-emacs-cheatsheet")
      "hv" '(helpful-variable :which-key "helpful-variable")
      "hp" '(helpful-at-point :which-key "helpful-at-point")
+     "hP" '(nil :which-key "profiler")
+     "hPs" '(profiler-start :which-key "profiler-start")
+     "hPr" '(profiler-report :which-key "profiler-report")
+     "hPS" '(profiler-stop :which-key "profiler-Stop")
      "hw" '(nil :which-key "which-key")
      "hwk" '(which-key-show-top-level :which-key "show-top-level")
      ;; Jump
