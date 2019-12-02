@@ -39,8 +39,12 @@
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode))
-  :hook ((web-mode . flycheck-mode))
+  :hook ((web-mode . +web/config))
   :config
+  (defun +web/config ()
+    (unless (equal "xml" (file-name-extension (buffer-name)))
+      (flycheck-mode)))
+
   ;; Install tidy to check html syntax, https://www.flycheck.org/en/latest/languages.html#html
   (use-package flycheck
     :config
