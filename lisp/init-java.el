@@ -14,7 +14,12 @@
 
 (use-package lsp-java
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
-  :after lsp-mode)
+  :after lsp-mode
+  :config
+  (require 'lsp-java-boot)
+  ;; to enable the lenses
+  (add-hook 'lsp-mode-hook #'lsp-lens-mode)
+  (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode))
 
 (with-eval-after-load 'cc-mode
 
