@@ -31,7 +31,7 @@
   :after julia-mode
   :config
   (setq lsp-julia-package-dir nil)      ; use the globally installed version
-  (setq lsp-julia-default-environment "~/.julia/environments/v1.2"))
+  (setq lsp-julia-default-environment "~/.julia/environments/v1.3"))
 
 (add-hook 'julia-mode-hook 'lsp)
 
