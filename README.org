@@ -108,9 +108,9 @@ Updated: <2019-10-13 星期日>
   - [X] =Java= install [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
   - [X] =Python= install [[https://github.com/emacs-lsp/lsp-python-ms][lsp-python-ms]]
   - [X] =Rust= rustup component add rls rust-analysis rust-src
-  - [X] =Go= install [[https://github.com/saibing/bingo][bingo]]
+  - [X] =Go= install [[https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation][gopls]]
   - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
-  - [X] =Julia= (v1.0) pkg> add LanguageServer#master StaticLint#master DocumentFormat#master SymbolServer#master
+  - [X] =Julia= (v1.3) pkg> add LanguageServer#master StaticLint#master DocumentFormat#master SymbolServer#master
   - [X] =Javascript/Typescript= npm i -g typescript typescript-language-server
 ** Debugger
   - [X] =C/C++= install [[https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb]['dap-gdb-lldb]]
