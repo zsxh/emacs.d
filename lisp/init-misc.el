@@ -156,6 +156,10 @@
                            (format "nmcli device wifi connect %s"
                                    (shell-quote-argument network))))))))
 
+(use-package webkit-color-picker
+  :ensure t
+  :commands (webkit-color-picker-show))
+
 
 (provide 'init-misc)
 
