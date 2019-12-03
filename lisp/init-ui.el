@@ -173,8 +173,10 @@
          (set-face-background 'jupyter-repl-traceback "#FBF8EF"))))
     ('doom-one
      (progn
+       (with-eval-after-load 'dired
+         (set-face-foreground 'dired-directory "#51afef"))
        (with-eval-after-load 'all-the-icons-dired
-         (set-face-foreground 'all-the-icons-dired-dir-face "#b478dd"))
+         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))
        (with-eval-after-load 'org
          ;; Org block face
          ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
