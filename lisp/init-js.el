@@ -86,7 +86,7 @@
   (setq js2-basic-offset 2))
 
 (defun +js/config (mode-map)
-  (unless (eq major-mode 'json-mode)
+  (unless (member major-mode '(json-mode ein:ipynb-mode))
     (require 'nvm)
     (lsp)
     (+language-server/set-common-leader-keys mode-map)))
