@@ -42,7 +42,8 @@
   :hook ((web-mode . +web/config))
   :config
   (defun +web/config ()
-    (unless (equal "xml" (file-name-extension (buffer-name)))
+    (unless (and (buffer-file-name)
+                 (equal "xml" (file-name-extension (buffer-file-name))))
       (flycheck-mode)))
 
   ;; Install tidy to check html syntax, https://www.flycheck.org/en/latest/languages.html#html
