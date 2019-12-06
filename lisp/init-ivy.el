@@ -67,7 +67,11 @@
 
   ;;   ;; no need with initial "^", since using fuzzy
   ;;   (setq ivy-initial-inputs-alist nil))
-  )
+
+  (with-eval-after-load 'man
+    (cl-pushnew '(Man-completion-table . "^") ivy-initial-inputs-alist))
+  (with-eval-after-load 'woman
+    (cl-pushnew '(woman . "^") ivy-initial-inputs-alist)))
 
 ;; swiper
 (use-package swiper
