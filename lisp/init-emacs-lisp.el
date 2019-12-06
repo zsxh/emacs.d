@@ -64,6 +64,8 @@
 (use-package lispy
   :ensure t
   :commands lispy-mode
+  :bind ((:map lispy-mode-map
+              (":" . self-insert-command)))
   :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
          (lisp-interaction-mode . (lambda () (lispy-mode 1)))
          (lisp-mode . (lambda () (lispy-mode 1))))
