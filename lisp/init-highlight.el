@@ -64,11 +64,8 @@
   :ensure t
   :diminish rainbow-mode
   :hook ((web-mode
-          java-mode
           lisp-mode
           emacs-lisp-mode
-          python-mode
-          org-mode
           help-mode)
          . rainbow-mode))
 
