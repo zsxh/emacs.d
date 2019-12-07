@@ -77,13 +77,12 @@
   (require 'lsp-clients)
 
   (setq lsp-auto-guess-root t
+        lsp-keep-workspace-alive nil
         lsp-prefer-flymake nil
         lsp-enable-file-watchers nil
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive t
-        lsp-use-native-json t
-        lsp-enable-symbol-highlighting nil
-        lsp-eldoc-enable-signature-help nil)
+        lsp-enable-symbol-highlighting nil)
 
   (setq lsp-links-check-internal 0.5
         lsp-lens-check-interval 0.2)
