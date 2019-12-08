@@ -73,11 +73,7 @@
 
 (use-package nvm
   :ensure t
-  :defer t
-  :config
-  ;; Lazy load node/npm/nvm in my zsh enviroment configuration (cause nvm startup very slow),
-  ;; we need to explicitly set nvm enviroment in emacs, otherwise lsp will not able to find the client command.
-  (nvm-use (string-trim (shell-command-to-string "nvm current"))))
+  :defer t)
 
 (with-eval-after-load 'js
   (setq js-indent-level 2))
