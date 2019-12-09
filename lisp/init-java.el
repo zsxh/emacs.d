@@ -65,7 +65,7 @@ JDK-VERSION directory name prefix \"jdk-\" is required,
   (let ((files (directory-files jdks-installed-dir))
         (result nil))
     (dolist (file files)
-      (if (string-match "jdk-" file)
+      (if (string-match "\\(graalvm\\|jdk\\)-" file)
           (push file result)))
     result))
 
