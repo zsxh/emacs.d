@@ -82,18 +82,19 @@
          (rust-mode . (lambda () (local-set-key (kbd "|") '+prog/insert-rust-closure))))
   :config
   (defun awesome-pair-in-string-p (&optional state)
-    (save-excursion
-      (or (nth 3 (or state (awesome-pair-current-parse-state)))
-          (and
-           (eq (get-text-property (point) 'face) 'font-lock-string-face)
-           (eq (get-text-property (- (point) 1) 'face) 'font-lock-string-face))
-          (and
-           (eq (get-text-property (point) 'face) 'font-lock-doc-face)
-           (eq (get-text-property (- (point) 1) 'face) 'font-lock-doc-face))
-          ;; fix single quote pair delete for c/c++/java-mode
-          (and
-           (eq ?\" (char-syntax (char-before)))
-           (eq ?\" (char-syntax (char-after (point))))))))
+    (unless (or (bobp) (eobp))
+      (save-excursion
+        (or (nth 3 (or state (awesome-pair-current-parse-state)))
+            (and
+             (eq (get-text-property (point) 'face) 'font-lock-string-face)
+             (eq (get-text-property (- (point) 1) 'face) 'font-lock-string-face))
+            (and
+             (eq (get-text-property (point) 'face) 'font-lock-doc-face)
+             (eq (get-text-property (- (point) 1) 'face) 'font-lock-doc-face))
+            ;; fix single quote pair delete for c/c++/java-mode
+            (and
+             (eq ?\" (char-syntax (char-before)))
+             (eq ?\" (char-syntax (char-after (point)))))))))
 
   (defun +prog/insert-angle ()
     "Insert angle brackets like intellij idea."

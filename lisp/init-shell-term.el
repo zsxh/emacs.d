@@ -50,7 +50,7 @@ if no project root found, use current directory instead."
                ("C-s" . swiper)
                ("<f11>" . toggle-frame-fullscreen)))
   :config
-  (defun +vterm/auto-exit (buf)
+  (defun +vterm/auto-exit (buf event)
     (when buf (kill-buffer buf)))
 
   (add-hook 'vterm-exit-functions #'+vterm/auto-exit)
