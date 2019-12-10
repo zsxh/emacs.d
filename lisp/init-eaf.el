@@ -45,6 +45,17 @@
                             (58 . evil-ex)
                             (26 . evil-emacs-state)))))
 
+  (defun +eaf/switch-to-eww ()
+    (let* ((url buffer-url)
+           (eww-buffer (car (-filter (lambda (buffer)
+                                       (with-current-buffer buffer
+                                         (and (derived-mode-p 'eww-mode)
+                                              (equal url (plist-get eww-data :url)))))
+                                     (buffer-list)))))
+      (if eww-buffer
+          (switch-to-buffer eww-buffer)
+        (eww url))))
+
   (setq eaf-pdfviewer-keybinding
         '(("j" . "scroll_up")
           ("k" . "scroll_down")
@@ -104,6 +115,8 @@
                     (eaf-call "send_key" buffer-id "<left>"))
                    ((string-equal key-desc "l")
                     (eaf-call "send_key" buffer-id "<right>"))
+                   ((string-equal key-desc "T")
+                    (+eaf/switch-to-eww))
                    (t
                     (eaf-handle-app-key buffer-id key-desc eval-normal-state-eaf-browser-keybinding))))
                  ;; Just send event when user insert single character.
