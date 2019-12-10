@@ -160,6 +160,11 @@
   :ensure t
   :commands (webkit-color-picker-show))
 
+;; Major mode for crontab(5) files
+(use-package crontab-mode
+  :ensure t
+  :mode ("\\.?cron\\(tab\\)?\\'" . crontab-mode))
+
 
 (provide 'init-misc)
 
