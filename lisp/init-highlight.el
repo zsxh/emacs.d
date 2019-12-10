@@ -29,7 +29,8 @@
 
   (defun locally-disable-show-paren ()
     (interactive)
-    (setq-local show-paren-mode nil)))
+    (when (bound-and-true-p show-paren-mode)
+      (setq-local show-paren-mode nil))))
 
 ;; Highlight Symbol
 (use-package symbol-overlay
