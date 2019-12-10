@@ -25,19 +25,20 @@
 
 (setq file-name-handler-alist nil)
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq file-name-handler-alist tmp--file-name-handler-alist)))
-
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
 (let ((normal-gc-cons-threshold (* 20 1024 1024))
       (larger-gc-cons-threshold (* 128 1024 1024)))
+
   (setq gc-cons-threshold larger-gc-cons-threshold)
+
   (add-hook 'emacs-startup-hook
             (lambda ()
               "Restore defalut values after startup."
               (setq gc-cons-threshold normal-gc-cons-threshold)
+              (setq file-name-handler-alist tmp--file-name-handler-alist)
+
+              (run-with-idle-timer 10 t #'garbage-collect)
 
               ;; GC automatically while unfocusing the frame
               ;; `focus-out-hook' is obsolete since 27.1

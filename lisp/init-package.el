@@ -61,10 +61,9 @@
 (set-package-archives personal-package-archives)
 
 ;; Initialize packages
-(require 'package)
-(setq package-enable-at-startup nil)
-(unless package--initialized
-  (package-initialize t))
+(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
+  (setq package-enable-at-startup nil)          ; To prevent initializing twice
+  (package-initialize))
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
