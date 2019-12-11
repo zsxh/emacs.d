@@ -61,12 +61,6 @@
      snippet-mode-map
      "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet"))))
 
-;; Better sorting and filtering
-;; (use-package company-prescient
-;;   :ensure t
-;;   :after company
-;;   :config (company-prescient-mode 1))
-
 ;; replace `company-quickhelp' with `company-box-doc'
 ;; otherwise `company-box-doc' will have performance issue https://github.com/sebastiencs/company-box/issues/19
 (use-package company-box
@@ -147,6 +141,15 @@
                ("M-h" . company-quickhelp-manual-begin)))
   :hook (global-company-mode . company-quickhelp-mode)
   :config (setq company-quickhelp-delay 0.3))
+
+(use-package company-posframe
+  :if (and (not (featurep 'company-box))
+           (>= emacs-major-version 26)
+           (display-graphic-p))
+  :ensure t
+  :hook (global-company-mode . company-posframe-mode)
+  :config
+  (require 'company-posframe-quickhelp))
 
 
 (provide 'init-completion)
