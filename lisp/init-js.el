@@ -59,11 +59,6 @@
      js-mode-map
      "'" '(vue-mode-edit-indirect-at-point :which-key "vue-edit-block"))))
 
-;; (use-package rjsx-mode
-;;   :ensure t
-;;   :mode ("components\\/.*\\.js\\'" . rjsx-mode)
-;;   :commands rjsx-mode)
-
 ;; Install js language server
 ;; npm i -g typescript typescript-language-server
 (dolist (mode '(js-mode js2-mode vue-mode))
@@ -86,6 +81,9 @@
     (require 'nvm)
     (lsp)
     (+language-server/set-common-leader-keys mode-map)))
+
+;; This fix beginning-of-defun raise exception problem
+(add-hook 'js-mode-hook (lambda () (setq-local beginning-of-defun-function #'js-beginning-of-defun)))
 
 
 (provide 'init-js)

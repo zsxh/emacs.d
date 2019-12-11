@@ -14,17 +14,6 @@
 ;; keymap ("C-l" 'recenter-top-bottom) cycling 25%,top,bottom line position
 (add-hook 'prog-mode-hook (lambda () (setq-local recenter-positions '(0.25 top bottom))))
 
-;;;;;;;;;;;;;; VIEW ;;;;;;;;;;;;;;
-
-;; Focus provides focus-mode that dims the text of surrounding sections
-;; https://github.com/larstvei/Focus
-(use-package focus
-  :ensure t
-  :commands (focus-mode focus-read-only-mode)
-  :config
-  (with-eval-after-load 'lsp-mode
-    (add-to-list 'focus-mode-to-thing '(lsp-mode . lsp-folding-range))))
-
 ;;;;;;;;;;;;;; DOC ;;;;;;;;;;;;;;
 
 ;; require `zeal' installation
@@ -81,20 +70,25 @@
          ((c++-mode java-mode rust-mode) . (lambda () (local-set-key (kbd "<") '+prog/insert-angle)))
          (rust-mode . (lambda () (local-set-key (kbd "|") '+prog/insert-rust-closure))))
   :config
-  (defun awesome-pair-in-string-p (&optional state)
+  (defun awesome-pair-in-string-p-advice (&optional state)
     (unless (or (bobp) (eobp))
       (save-excursion
-        (or (nth 3 (or state (awesome-pair-current-parse-state)))
-            (and
-             (eq (get-text-property (point) 'face) 'font-lock-string-face)
-             (eq (get-text-property (- (point) 1) 'face) 'font-lock-string-face))
-            (and
-             (eq (get-text-property (point) 'face) 'font-lock-doc-face)
-             (eq (get-text-property (- (point) 1) 'face) 'font-lock-doc-face))
-            ;; fix single quote pair delete for c/c++/java-mode
-            (and
-             (eq ?\" (char-syntax (char-before)))
-             (eq ?\" (char-syntax (char-after (point)))))))))
+        (or
+         (and
+          (nth 3 (or state (awesome-pair-current-parse-state)))
+          (not (equal (point) (line-end-position))))
+         (and
+          (eq (get-text-property (point) 'face) 'font-lock-string-face)
+          (eq (get-text-property (- (point) 1) 'face) 'font-lock-string-face))
+         (and
+          (eq (get-text-property (point) 'face) 'font-lock-doc-face)
+          (eq (get-text-property (- (point) 1) 'face) 'font-lock-doc-face))
+         ;; fix single quote pair delete for c/c++/java-mode
+         (and
+          (eq ?\" (char-syntax (char-before)))
+          (eq ?\" (char-syntax (char-after (point)))))))))
+
+  (advice-add 'awesome-pair-in-string-p :override 'awesome-pair-in-string-p-advice)
 
   (defun +prog/insert-angle ()
     "Insert angle brackets like intellij idea."
