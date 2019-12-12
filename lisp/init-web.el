@@ -77,7 +77,10 @@
   (setq css-indent-offset 2))
 
 ;; edit html
-(with-eval-after-load 'sgml-mode
+(use-package sgml-mode
+  :ensure nil
+  :commands sgml-slash
+  :config
   ;; https://emacs.stackexchange.com/questions/33240/html-mode-that-closes-tags
   ;; automatic insertion of the closing tag if you type </ or
   ;; pressing C-c / or C-c C-e or C-c / inserts a closing tag (the whole </foo>).

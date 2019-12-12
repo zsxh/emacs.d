@@ -12,10 +12,32 @@
 
 (require 'init-language-server)
 
+(use-package nvm
+  :ensure t
+  :after js)
+
+;; Install js language server
+;; npm i -g typescript typescript-language-server
+(use-package js
+  :ensure nil
+  :preface
+  (defun +js/lsp ()
+    ;; This fix beginning-of-defun raise exception problem
+    (setq-local beginning-of-defun-function #'js-beginning-of-defun)
+    (unless (member major-mode '(json-mode ein:ipynb-mode))
+      (lsp)))
+  :hook (js-mode . +js/lsp)
+  :bind ((:map js-mode-map ("/" . sgml-slash)))
+  :config
+  (require 'sgml-mode)
+  (setq js-indent-level 2)
+  (+language-server/set-common-leader-keys js-mode-map))
+
 ;; npm install -g vue-language-server
 (use-package vue-mode
   :ensure t
   :commands vue-mode
+  :hook (vue-mode . lsp)
   :bind ((:map vue-mode-map
                ("C-c C-l" . vue-mode-reparse)))
   :config
@@ -52,38 +74,7 @@
     ;; the indentation in the <script> tag is broken, with new lines aligned on the left.
     ;; https://github.com/AdamNiederer/vue-mode/issues/74
     (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
-    (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil))))
-
-  (with-eval-after-load 'js
-    (+funcs/major-mode-leader-keys
-     js-mode-map
-     "'" '(vue-mode-edit-indirect-at-point :which-key "vue-edit-block"))))
-
-;; Install js language server
-;; npm i -g typescript typescript-language-server
-(dolist (mode '(js-mode js2-mode vue-mode))
-  (let ((mode-hook (intern (format "%s-hook" mode)))
-        (mode-map (intern (format "%s-map" mode))))
-    (add-hook mode-hook (lambda () (+js/config mode-map)))))
-
-(use-package nvm
-  :ensure t
-  :defer t)
-
-(with-eval-after-load 'js
-  (setq js-indent-level 2))
-
-(with-eval-after-load 'js2-mode
-  (setq js2-basic-offset 2))
-
-(defun +js/config (mode-map)
-  (unless (member major-mode '(json-mode ein:ipynb-mode))
-    (require 'nvm)
-    (lsp)
-    (+language-server/set-common-leader-keys mode-map)))
-
-;; This fix beginning-of-defun raise exception problem
-(add-hook 'js-mode-hook (lambda () (setq-local beginning-of-defun-function #'js-beginning-of-defun)))
+    (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))))
 
 
 (provide 'init-js)
