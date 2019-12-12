@@ -165,6 +165,12 @@
   :ensure t
   :mode ("\\.?cron\\(tab\\)?\\'" . crontab-mode))
 
+;; User can use curl when s/he has it, as curl is more reliable
+;; than url.el.
+(use-package request
+  :ensure t
+  :defer t)
+
 
 (provide 'init-misc)
 
