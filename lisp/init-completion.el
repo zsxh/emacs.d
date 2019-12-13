@@ -143,13 +143,12 @@
   :config (setq company-quickhelp-delay 0.3))
 
 (use-package company-posframe
-  :if (and (not (featurep 'company-box))
+  :if (and (not (package-installed-p 'company-box))
            (>= emacs-major-version 26)
            (display-graphic-p))
+  :after company
   :ensure t
-  :hook (global-company-mode . company-posframe-mode)
-  :config
-  (require 'company-posframe-quickhelp))
+  :hook (global-company-mode . company-posframe-mode))
 
 
 (provide 'init-completion)
