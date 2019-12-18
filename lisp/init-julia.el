@@ -16,7 +16,7 @@
 ;; Install Julia LanguageServer
 ;; $> julia
 ;; julia> ]
-;; (v1.0) pkg> add CSTParser#master StaticLint#master DocumentFormat#master SymbolServer#master LanguageServer#master
+;; (v1.3) pkg> add CSTParser#master StaticLint#master DocumentFormat#master SymbolServer#master LanguageServer#master
 (use-package julia-mode
   :ensure t
   :defer t
