@@ -16,7 +16,9 @@
   :ensure t
   :defer t
   :init (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-  :hook (go-mode . lsp))
+  :hook (go-mode . lsp)
+  :config
+  (+language-server/set-common-leader-keys go-mode-map))
 
 
 (provide 'init-go)

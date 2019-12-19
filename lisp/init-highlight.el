@@ -67,13 +67,30 @@
   :hook ((web-mode
           lisp-mode
           emacs-lisp-mode
-          help-mode)
+          help-mode
+          js-mode)
          . rainbow-mode))
 
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
 (use-package rainbow-delimiters
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package highlight-indent-guides
+  :ensure t
+  :hook ((python-mode) . highlight-indent-guides-mode)
+  :config
+  (defun my-highlighter (level responsive display)
+    (if (> 2 level)
+        nil
+      (highlight-indent-guides--highlighter-default level responsive display)))
+
+  (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-character ?\|
+        highlight-indent-guides-auto-character-face-perc 30
+        highlight-indent-guides-auto-top-character-face-perc 60
+        highlight-indent-guides-responsive 'top
+        highlight-indent-guides-highlighter-function 'my-highlighter))
 
 ;; Poor Performance
 ;; Highlight uncommitted changes

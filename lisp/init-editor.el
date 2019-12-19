@@ -214,22 +214,6 @@
   ;; (add-hook 'fast-scroll-end-hook (lambda () (flycheck-mode 1)))
   (fast-scroll-config))
 
-(use-package highlight-indent-guides
-  :ensure t
-  :hook ((python-mode) . highlight-indent-guides-mode)
-  :config
-  (defun my-highlighter (level responsive display)
-    (if (> 2 level)
-        nil
-      (highlight-indent-guides--highlighter-default level responsive display)))
-
-  (setq highlight-indent-guides-method 'character
-        highlight-indent-guides-character ?\|
-        highlight-indent-guides-auto-character-face-perc 30
-        highlight-indent-guides-auto-top-character-face-perc 60
-        highlight-indent-guides-responsive 'top
-        highlight-indent-guides-highlighter-function 'my-highlighter))
-
 
 (provide 'init-editor)
 

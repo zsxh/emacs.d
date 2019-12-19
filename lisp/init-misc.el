@@ -171,6 +171,9 @@
   :ensure t
   :defer t)
 
+;; TODO: deft-mode, notdeft, take notes
+;; https://emacs-china.org/t/v1/8218/53
+
 
 (provide 'init-misc)
 
