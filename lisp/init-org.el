@@ -195,6 +195,11 @@
   :after org
   :hook (org-mode . org-bullets-mode))
 
+;; Presentation
+(use-package org-tree-slide
+  :ensure t
+  :commands org-tree-slide-mode)
+
 
 (provide 'init-org)
 
