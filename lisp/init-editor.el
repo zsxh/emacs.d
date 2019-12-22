@@ -214,6 +214,28 @@
   ;; (add-hook 'fast-scroll-end-hook (lambda () (flycheck-mode 1)))
   (fast-scroll-config))
 
+(use-package darkroom
+  :ensure t
+  :commands (darkroom-mode darkroom-tentative-mode))
+
+;; keyboard macros
+;;           Normal                         While defining macro
+;;           ---------------------------    ------------------------------
+;;  f3       Define macro                   Insert current counter value
+;;           Prefix arg specifies initial   and increase counter by prefix
+;;           counter value (default 0)      (default increment: 1)
+;;
+;;  C-u f3   APPENDs to last macro
+;;
+;;  f4       Call last macro                End macro
+;;           Prefix arg specifies number
+;;           of times to execute macro.
+;;
+;;  C-u f4   Swap last and head of macro ring.
+;;
+;;  S-mouse-3  Set point at click and       End macro and execute macro at
+;;             execute last macro.          click.
+
 
 (provide 'init-editor)
 
