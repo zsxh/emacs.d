@@ -91,7 +91,16 @@
         (setq-local company-minimum-prefix-length 2)
         (setq-local company-idle-delay '+ein/julia-complete-delay)))
 
-    (advice-add 'ein:ml-lang-setup-julia :after '+ein/julia-extra-setup))
+    (advice-add 'ein:ml-lang-setup-julia :after '+ein/julia-extra-setup)
+
+    (defun ein:ml-lang-setup-rust ()
+      (when (featurep 'rust-mode)
+        (setq-local mode-name "EIN[rust]")
+        (setq-local comment-start "// ")
+        (setq-local indent-line-function
+                    (apply-partially #'ein:ml-indent-line-function #'rust-mode-indent-line))
+        (when (boundp 'rust-mode-syntax-table)
+          (set-syntax-table rust-mode-syntax-table)))))
 
   (use-package ein-traceback
     :defer t

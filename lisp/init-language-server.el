@@ -47,6 +47,7 @@
           "gD" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
           "gi" '(lsp-find-implementation :which-key "find-implementation")
           "gr" '(lsp-find-references :which-key "find-references")
+          "l" '(lsp-avy-lens :which-key "Click lens using avy")
           "R" '(lsp-rename :which-key "rename"))
        ;; eglot
        (+funcs/major-mode-leader-keys
