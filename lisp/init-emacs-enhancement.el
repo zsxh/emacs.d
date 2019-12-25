@@ -64,8 +64,11 @@
 (use-package dired
   :defer t
   :config
-  ;; dired "human-readable" format
-  (setq dired-listing-switches "-alh --time-style=long-iso --group-directories-first")
+  (setq dired-dwim-target t
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'always
+        ;; dired "human-readable" format
+        dired-listing-switches "-alh --time-style=long-iso --group-directories-first")
 
   (defun +dired/get-size ()
     (interactive)
@@ -380,6 +383,26 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
     (+eww/toggle-scroll-line-shortcut)
 
     (evil-define-key 'normal eww-link-keymap "gv" '+eww/toggle-images-display)))
+
+;;;;;;;;;;;;;; Setup a menu of recently opened files ;;;;;;;;;;;;;;
+(use-package recentf
+  :ensure nil
+  :defer t
+  :custom
+  (recentf-auto-cleanup "05:00am")
+  (recentf-max-saved-items 200)
+  (recentf-exclude '((expand-file-name package-user-dir)
+                     ".cache"
+                     ".cask"
+                     ".elfeed"
+                     "bookmarks"
+                     "cache"
+                     "ido.*"
+                     "persp-confs"
+                     "recentf"
+                     "undo-tree-hist"
+                     "url"
+                     "COMMIT_EDITMSG\\'")))
 
 
 ;;;;;;;;;;;;;; Change priority of minor-mode keymaps ;;;;;;;;;;;;;;

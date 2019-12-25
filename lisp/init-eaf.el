@@ -15,6 +15,7 @@
 
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
+  :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open eaf-open-url eaf-open-dash)
   :preface
   (defun eaf-qutebrowser ()

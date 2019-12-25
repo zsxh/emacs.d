@@ -42,6 +42,10 @@
 ;; (epa-file-enable)
 (add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
 
+(setq scroll-step 1)
+(setq compilation-always-kill t
+      compilation-scroll-output t)
+
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
 ;; M-^ delete-indentation
@@ -54,7 +58,8 @@
   :ensure nil
   :hook (after-init . global-auto-revert-mode)
   :config
-  (setq auto-revert-verbose nil))
+  (setq global-auto-revert-non-file-buffers t
+        auto-revert-verbose nil))
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
@@ -116,10 +121,9 @@
   :quelpa ((auto-save :fetcher github :repo "manateelazycat/auto-save"))
   :init (setq auto-save-default nil)
   :config
-  (auto-save-enable)
-  (setq auto-save-silent t)
-  (dolist (hook (list 'prog-mode-hook 'yaml-mode-hook))
-    (add-hook hook (lambda () (setq-local auto-save-delete-trailing-whitespace t)))))
+  (setq auto-save-silent t
+        auto-save-delete-trailing-whitespace t)
+  (auto-save-enable))
 
 ;; jumping to visible text using a char-based decision tree
 (use-package avy
@@ -235,6 +239,11 @@
 ;;
 ;;  S-mouse-3  Set point at click and       End macro and execute macro at
 ;;             execute last macro.          click.
+
+(use-package so-long
+  :ensure nil
+  :if (fboundp 'global-so-long-mode)
+  :hook (after-init . global-so-long-mode))
 
 
 (provide 'init-editor)

@@ -45,6 +45,7 @@
   :hook (after-init . electric-pair-mode))
 
 (use-package awesome-pair
+  :load-path "~/.emacs.d/submodules/awesome-pair"
   :bind ((:map awesome-pair-mode-map
                ("(" . 'awesome-pair-open-round)
                ("[" . 'awesome-pair-open-bracket)

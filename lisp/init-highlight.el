@@ -74,7 +74,7 @@
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
 (use-package rainbow-delimiters
   :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook ((lisp-mode emacs-lisp-mode) . rainbow-delimiters-mode))
 
 (use-package highlight-indent-guides
   :ensure t

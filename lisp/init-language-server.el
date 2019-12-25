@@ -77,7 +77,7 @@
   :config
   (require 'lsp-clients)
 
-  (setq lsp-auto-guess-root t
+  (setq lsp-auto-guess-root nil
         lsp-keep-workspace-alive nil
         lsp-prefer-flymake nil
         lsp-enable-file-watchers nil
