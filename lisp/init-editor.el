@@ -56,10 +56,17 @@
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
-  :hook (after-init . global-auto-revert-mode)
+  :hook ((prog-mode
+          org-mode
+          dired-mode
+          neotree-mode
+          magit-mode) . turn-on-auto-revert-mode)
   :config
   (setq global-auto-revert-non-file-buffers t
-        auto-revert-verbose nil))
+        auto-revert-verbose nil
+        ;; turn off `auto-revert-use-notify' or customize `auto-revert-notify-exclude-dir-regexp'
+        ;; to exclude I/O intensive directories from auto-reverting.
+        auto-revert-use-notify nil))
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
