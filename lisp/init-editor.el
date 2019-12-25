@@ -60,7 +60,8 @@
           org-mode
           dired-mode
           neotree-mode
-          magit-mode) . turn-on-auto-revert-mode)
+          magit-mode
+          conf-space-mode) . turn-on-auto-revert-mode)
   :config
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil
