@@ -27,7 +27,10 @@
 
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
-(let ((normal-gc-cons-threshold (* 20 1024 1024))
+;;
+;; stay default gc-cons-threshold
+;; https://www.reddit.com/r/emacs/comments/eewwyh/officially_introducing_memacs/fbzr8ms?utm_source=share&utm_medium=web2x
+(let ((normal-gc-cons-threshold gc-cons-threshold)
       (larger-gc-cons-threshold (* 128 1024 1024)))
 
   (setq gc-cons-threshold larger-gc-cons-threshold)
