@@ -99,10 +99,7 @@ if no project root found, use current directory instead."
     (set-face-background 'vterm-color-black (doom-color 'base6)))
 
   (with-eval-after-load 'evil
-    (evil-set-initial-state 'vterm-mode 'insert))
-
-  (with-eval-after-load 'paren
-    (add-hook 'vterm-mode-hook 'locally-disable-show-paren)))
+    (evil-set-initial-state 'vterm-mode 'insert)))
 
 ;; TODO: add `vterm-toggle' package
 ;; https://github.com/jixiuf/vterm-toggle

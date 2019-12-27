@@ -168,10 +168,7 @@
   :bind ((:map rg-mode-map
                ("l" . nil)
                ("L" . rg-list-searches)))
-  :commands (rg rg-dwim rg-project rg-literal rg-dwim-current-file)
-  :config
-  (with-eval-after-load 'paren
-    (add-hook 'rg-mode-hook 'locally-disable-show-paren)))
+  :commands (rg rg-dwim rg-project rg-literal rg-dwim-current-file))
 
 ;; wgrep allows you to edit a grep buffer and apply those changes to the file buffer
 (use-package wgrep

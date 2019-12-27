@@ -13,7 +13,8 @@
 ;; Highlight matching parenthesis
 (use-package paren
   :ensure nil
-  :hook (after-init . show-paren-mode)
+  :hook ((after-init . (lambda () (show-paren-mode -1)))
+         ((prog-mode org-mode markdown-mode) . show-paren-local-mode))
   :config
   (setq show-paren-when-point-inside-paren t) ;; Dont know why this doesn't work
   (setq show-paren-when-point-in-periphery t)
@@ -27,10 +28,9 @@
 
   (advice-add 'show-paren-function :around #'show-paren-function-advice)
 
-  (defun locally-disable-show-paren ()
+  (defun show-paren-local-mode ()
     (interactive)
-    (when (bound-and-true-p show-paren-mode)
-      (setq-local show-paren-mode nil))))
+    (setq-local show-paren-mode t)))
 
 ;; Highlight Symbol
 (use-package symbol-overlay
