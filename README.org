@@ -47,7 +47,7 @@ Updated: <2019-12-25 星期三>
       press "SPC" in vim normal state just like spacemacs
   - =emacs enhancement=
     - =helpful=
-      better *Help* buffer 
+      better *Help* buffer
     - =elisp-demos=
       display elisp examples in *Help* buffer
     - =ibuffer-vc=
@@ -57,7 +57,7 @@ Updated: <2019-12-25 星期三>
     - =eww=
       emacs web browser, not support js, but good for reading web doc
     - =fd-dired=
-      Provide a dired-mode interface for [[https://github.com/sharkdp/fd][fd]]’s result. Same functionality as find-dired, using fd instead. 
+      Provide a dired-mode interface for [[https://github.com/sharkdp/fd][fd]]’s result. Same functionality as find-dired, using fd instead.
   - =neotree=
       A tree plugin like NerdTree for Vim
   - =shell and terminal=
@@ -77,9 +77,9 @@ Updated: <2019-12-25 星期三>
       project management and navigation \\
       find-file-in-project use [[https://github.com/sharkdp/fd][fd]] by default
     - =company-mode=
-      code completion 
+      code completion
     - =yasnippets=
-      snippets 
+      snippets
     - =magit=
       damn good git support
     - =paren, rainbow-mode=
@@ -127,7 +127,7 @@ Updated: <2019-12-25 星期三>
   git clone --depth 1 https://github.com/emacs-mirror/emacs.git
   cd emacs
   ./autogen.sh
-  ./configure --with-imagemagick --with-modules --enable-link-time-optimization --with-xwidgets
+  ./configure --with-modules --enable-link-time-optimization --with-xwidgets
   make -j4
   sudo make install
 #+end_src
