@@ -55,7 +55,6 @@
                ("}" . 'awesome-pair-close-curly)
                ("%" . 'awesome-pair-match-paren)
                ("\"" . 'awesome-pair-double-quote)
-               ("M-o" . 'awesome-pair-backward-delete)
                ("DEL" . 'awesome-pair-backward-delete)
                ("C-d" . 'awesome-pair-forward-delete)
                ("C-k" . 'awesome-pair-kill)
@@ -146,7 +145,6 @@
   (advice-add 'awesome-pair-fix-unbalanced-parentheses :override '+prog/fix-unbalanced-parentheses-or-forward-char)
 
   (with-eval-after-load 'lispy
-    (define-key lispy-mode-map (kbd "M-o") 'awesome-pair-backward-delete)
     (define-key lispy-mode-map (kbd "M-n") 'awesome-pair-jump-right)
     (define-key lispy-mode-map (kbd "M-p") 'awesome-pair-jump-left)
     (define-key lispy-mode-map (kbd "M-RET") 'awesome-pair-jump-out-pair-and-newline)))

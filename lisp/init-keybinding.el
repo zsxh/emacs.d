@@ -29,10 +29,10 @@
   :config
   (with-eval-after-load 'evil
     (general-define-key
-     :states '(normal visual motion)
+     :states '(normal visual motion insert emacs)
      :keymaps '(override global)
-     :prefix "SPC"
-     ;; :non-normal-prefix "C-SPC"
+     :prefix "SPC"                      ; `:prefix' will only apply to evil states not listed in `general-non-normal-states'
+     :global-prefix "M-o"
      "" nil
      "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
      "SPC" '(counsel-M-x :which-key "M-x")
