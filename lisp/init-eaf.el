@@ -58,8 +58,8 @@
     (interactive)
     (eaf-open url "browser" nil))
 
-  (eaf-bind-key "scroll_up_page" "d" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key "scroll_down_page" "u" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
 
   ;; TODO: modify current local map
 

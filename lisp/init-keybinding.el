@@ -28,10 +28,11 @@
   :ensure t
   :config
   (with-eval-after-load 'evil
+    (define-key global-map "\M-o" nil) ; disable `facemenu-keymap' default keybindings first
     (general-define-key
      :states '(normal visual motion insert emacs)
      :keymaps '(override global)
-     :prefix "SPC"                      ; `:prefix' will only apply to evil states not listed in `general-non-normal-states'
+     :prefix "SPC" ;`:prefix' will only apply to evil states not listed in `general-non-normal-states'
      :global-prefix "M-o"
      "" nil
      "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
