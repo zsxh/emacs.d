@@ -221,10 +221,15 @@
                   (reftex-isearch-minor-mode)
                   (setq TeX-PDF-mode t)
                   (setq TeX-source-correlate-method 'synctex)
-                  (setq TeX-source-correlate-start-server t)))
-  :config
-  (when (version< emacs-version "26")
-    (add-hook LaTeX-mode-hook #'display-line-numbers-mode)))
+                  (setq TeX-source-correlate-start-server t))))
+
+(use-package company-auctex
+  :ensure t
+  :after tex
+  :hook (LaTeX-mode . (lambda ()
+                        (message "latex.......")
+                        (make-local-variable 'company-backends)
+                        (company-auctex-init))))
 
 (use-package org-edit-latex
   :defer t
