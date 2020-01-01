@@ -13,7 +13,11 @@
 (require 'init-language-server)
 
 ;; require `rls' https://github.com/rust-lang/rls
-;; >$ rustup component add rls-preview rust-analysis rust-src
+;; $ rustup component add rls-preview rust-analysis rust-src
+;; Or
+;; $ git clone git@github.com:rust-analyzer/rust-analyzer && cd rust-analyzer
+;; $ cargo xtask install --server
+;; $ rustup component add rust-src
 (use-package rust-mode
   :ensure t
   :defer t
@@ -22,6 +26,14 @@
   :hook (rust-mode . lsp)
   :config
   (setq rust-indent-offset 2))
+
+(use-package lsp-rust
+  :after lsp-mode
+  :defer t
+  :config
+  (when (executable-find "ra_lsp_server")
+    (setq lsp-rust-rls-server-command "rust-analyzer"
+          lsp-rust-analyzer-server-display-inlay-hints t)))
 
 (use-package cargo
   :ensure t
