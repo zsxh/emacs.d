@@ -156,18 +156,11 @@
        (with-eval-after-load 'org
          ;; Org block face
          (set-face-background 'org-block "#E0E0E0")
-         ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
-         ;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
-         (when (>= emacs-major-version 27)
-           (set-face-extend 'org-block t))
          (set-face-background 'org-quote nil)
          (set-face-background 'org-block-begin-line nil)
          (set-face-background 'org-block-end-line nil))
        (with-eval-after-load 'mmm-vars
          (set-face-background 'mmm-default-submode-face "#E5E5E5"))
-       (with-eval-after-load 'ein-cell
-         (when (>= emacs-major-version 27)
-           (set-face-extend 'ein:cell-input-area t)))
        (with-eval-after-load 'jupyter-repl
          (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
          (set-face-background 'jupyter-repl-traceback "#FBF8EF"))))
@@ -178,25 +171,32 @@
        (with-eval-after-load 'all-the-icons-dired
          (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))
        (with-eval-after-load 'org
-         ;; Org block face
-         ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
-         ;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
-         (when (>= emacs-major-version 27)
-           (set-face-extend 'org-block t))
          (set-face-background 'org-quote nil)
          (set-face-background 'org-block-begin-line nil)
          (set-face-background 'org-block-end-line nil))
        (with-eval-after-load 'ein-cell
-         (when (>= emacs-major-version 27)
-           (set-face-extend 'ein:cell-input-area t))
          (set-face-attribute 'ein:cell-input-area nil :background "#22262e")
          (set-face-attribute 'ein:cell-input-prompt nil :foreground "#4F894C" :background "#282c34")
          (set-face-attribute 'ein:cell-output-prompt nil :foreground "darkred" :background "#282c34"))
        (with-eval-after-load 'jupyter-repl
-         (when (>= emacs-major-version 27)
-           (set-face-extend 'jupyter-repl-traceback t))
          (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
-         (set-face-background 'jupyter-repl-traceback "#4B483F"))))))
+         (set-face-background 'jupyter-repl-traceback "#4B483F"))))
+    ('doom-solarized-light
+     (progn
+       (with-eval-after-load 'paren
+         (set-face-background 'show-paren-match "#E5E5E5"))))))
+
+;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
+;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
+(when (version<= "27" emacs-version)
+  (with-eval-after-load 'org
+    (set-face-extend 'org-block t)
+    (set-face-extend 'org-block-begin-line t)
+    (set-face-extend 'org-block-end-line t))
+  (with-eval-after-load 'ein-cell
+    (set-face-extend 'ein:cell-input-area t))
+  (with-eval-after-load 'jupyter-repl
+    (set-face-extend 'jupyter-repl-traceback t)))
 
 ;; Set config now
 (+ui/frame-config (selected-frame))
