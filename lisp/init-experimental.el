@@ -30,6 +30,10 @@
   (with-eval-after-load 'doom-themes
     (setq webkit-katex-render--background-color (doom-color 'bg))))
 
+(use-package esup
+  :ensure t
+  :defer t)
+
 
 (provide 'init-experimental)
 

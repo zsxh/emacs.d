@@ -10,17 +10,19 @@
 
 ;;; Code:
 
+;; Initialize packages
+(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
+  (setq package-enable-at-startup nil) ; To prevent initializing twice
+  (package-initialize))
+
+;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly.
 ;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
-(with-eval-after-load 'package
-  ;; Dont set custom package-user-dir, doesn't work well with (setq flycheck-emacs-lisp-load-path 'inherit)
-  ;; ;; Install into seperate package dirs for each Emacs version, to prevent bytecode incompatibility
-  ;; (setq package-user-dir (expand-file-name emacs-version package-user-dir))
-  (defun package--save-selected-packages (&optional value)
-    "Set and (don't!) save `package-selected-packages' to VALUE."
-    (when value
-      (setq package-selected-packages value))
-    (unless after-init-time
-      (add-hook 'after-init-hook #'package--save-selected-packages))))
+(defun my-save-selected-packages (&optional value)
+  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
+  (when value
+    (setq package-selected-packages value)))
+
+(advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
 
 ;; Set EPLA
 (defun set-package-archives (archives)
@@ -59,11 +61,6 @@
              (error "Unknown archives: `%s'" archives))))))
 
 (set-package-archives personal-package-archives)
-
-;; Initialize packages
-(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
-  (setq package-enable-at-startup nil)          ; To prevent initializing twice
-  (package-initialize))
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)

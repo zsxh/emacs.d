@@ -51,7 +51,6 @@
 
 (use-package ibuffer-vc
   :ensure t
-  :after ibuffer
   :bind (("C-x C-b" . ibuffer))
   :hook ((ibuffer . (lambda ()
                       (ibuffer-vc-set-filter-groups-by-vc-root)
@@ -145,7 +144,6 @@
 
 (use-package all-the-icons-dired
   :ensure t
-  :after dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
 ;;;;;;;;;;;;;;;;;
@@ -158,13 +156,11 @@
 ;; narrow dired to match filter
 (use-package dired-narrow
   :ensure t
-  :after dired
   :commands dired-narrow)
 
 ;; open files with external applications(just for linux now)
 (use-package dired-open
   :ensure t
-  :after dired
   :bind ((:map dired-mode-map
                ("C-<return>" . dired-open-xdg))))
 
@@ -183,12 +179,10 @@
 
 (use-package dired-ranger
   :ensure t
-  :after dired
   :commands (dired-ranger-copy dired-ranger-move dired-ranger-paste))
 
 (use-package dired-filter
   :ensure t
-  :after dired
   :commands (dired-filter-mode)
   :config
   (setq dired-filter-prefix "/"))
@@ -388,21 +382,21 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 (use-package recentf
   :ensure nil
   :defer t
-  :custom
-  (recentf-auto-cleanup "05:00am")
-  (recentf-max-saved-items 200)
-  (recentf-exclude '((expand-file-name package-user-dir)
-                     ".cache"
-                     ".cask"
-                     ".elfeed"
-                     "bookmarks"
-                     "cache"
-                     "ido.*"
-                     "persp-confs"
-                     "recentf"
-                     "undo-tree-hist"
-                     "url"
-                     "COMMIT_EDITMSG\\'")))
+  :config
+  (setq recentf-auto-cleanup "05:00am"
+        recentf-max-saved-items 200
+        recentf-exclude '((expand-file-name package-user-dir)
+                          ".cache"
+                          ".cask"
+                          ".elfeed"
+                          "bookmarks"
+                          "cache"
+                          "ido.*"
+                          "persp-confs"
+                          "recentf"
+                          "undo-tree-hist"
+                          "url"
+                          "COMMIT_EDITMSG\\'")))
 
 
 ;;;;;;;;;;;;;; Change priority of minor-mode keymaps ;;;;;;;;;;;;;;
