@@ -150,6 +150,12 @@
 ;; Dired Tools ;;
 ;;;;;;;;;;;;;;;;;
 
+(use-package dired
+  :ensure nil
+  :defer t
+  :bind ((:map dired-mode-map
+               ("C-<return>" . dired-open-xdg))))
+
 ;; https://github.com/Fuco1/dired-hacks
 ;; Collection of useful dired additions
 
@@ -161,8 +167,7 @@
 ;; open files with external applications(just for linux now)
 (use-package dired-open
   :ensure t
-  :bind ((:map dired-mode-map
-               ("C-<return>" . dired-open-xdg))))
+  :commands dired-open-xdg)
 
 ;; customizable highlighting for files in dired listings
 (use-package dired-rainbow

@@ -10,6 +10,7 @@ Updated: <2019-12-25 星期三>
   - WM: KWin
 
 * TODOs
+  - org toggle latex preview (real-time, auto scaling)
 
 * Features
   - =org=
@@ -128,7 +129,7 @@ Updated: <2019-12-25 星期三>
   cd emacs
   ./autogen.sh
   ./configure --with-modules --enable-link-time-optimization --with-xwidgets
-  make -j4
+  make -j6
   sudo make install
 #+end_src
 
