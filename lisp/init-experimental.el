@@ -19,17 +19,6 @@
 ;;   :ensure t
 ;;   :commands tldr)
 
-(use-package webkit-katex-render
-  :if (featurep 'xwidget-internal)
-  :quelpa ((webkit-katex-render
-            :fetcher github
-            :repo "fuxialexander/emacs-webkit-katex-render"
-            :files (:defaults "katex.html")))
-  :commands webkit-katex-render-mode
-  :config
-  (with-eval-after-load 'doom-themes
-    (setq webkit-katex-render--background-color (doom-color 'bg))))
-
 (use-package esup
   :ensure t
   :defer t)
