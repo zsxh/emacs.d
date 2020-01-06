@@ -186,7 +186,7 @@
     (webkit-katex-render-mode -1)
     (org-clear-latex-preview))
 
-  (add-hook 'org-mode-hook 'activate-org-latex-hooks))
+  (add-hook 'org-mode-hook 'activate-org-latex-preview))
 
 
 (provide 'init-latex)
