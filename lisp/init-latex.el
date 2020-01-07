@@ -63,6 +63,30 @@
   :config
   (with-eval-after-load 'doom-themes
     (setq webkit-katex-render--background-color (doom-color 'bg)))
+
+  (setq webkit-katex-render--math-at-point-function 'webkit-katex-render--org-math-at-point)
+
+  (defun webkit-katex-render--org-math-preprocess (math type)
+    (if (eq type 'latex-fragment)
+        ;; support tex inline math syntax
+        (if (and (string-prefix-p "$" math)
+                 (not (string-prefix-p "$$" math)))
+            (setq math (substring math 1 -1))
+          (setq math (substring math 2 -2)))
+      (if (eq type 'latex-environment)
+          (progn
+            (setq math
+                  (replace-regexp-in-string
+                   "begin{equation}\\|begin{align}\\|begin{align\\*}"
+                   "begin{aligned}"
+                   math))
+            (setq math
+                  (replace-regexp-in-string
+                   "end{equation}\\|end{align}\\|end{align\\*}"
+                   "end{aligned}"
+                   math)))))
+    math)
+
   (define-minor-mode webkit-katex-render-mode
     "Toggle Katex preview"
     nil nil nil
@@ -72,13 +96,13 @@
             (user-error "Your Emacs was not compiled with xwidgets support"))
           (unless (display-graphic-p)
             (user-error "webkit-katex-render only works in graphical displays"))
+          ;; buffer local hooks
           (add-hook 'post-self-insert-hook #'webkit-katex-render--resize nil t)
           (add-hook 'post-command-hook #'webkit-katex-render-update nil t))
       (remove-hook 'post-command-hook #'webkit-katex-render-update t)
       (remove-hook 'post-self-insert-hook #'webkit-katex-render--resize t)
       (webkit-katex-render-cleanup))))
 
-;; TODO: org latex fragment preview
 (with-eval-after-load 'org
   ;; https://ivanaf.com/automatic_latex_fragment_toggling_in_org-mode.html
   (defvar-local org-latex-fragment-last nil
@@ -177,9 +201,10 @@
     (interactive)
     (add-hook 'post-command-hook 'org-latex-fragment-toggle-auto nil t)
     (add-hook 'text-scale-mode-hook 'update-org-latex-fragments nil t)
-    (webkit-katex-render-mode))
+    (webkit-katex-render-mode)
+    (org-latex-preview '(16)))
 
-  (defun deactivte-org-latex-preview ()
+  (defun deactivate-org-latex-preview ()
     (interactive)
     (remove-hook 'post-command-hook 'org-latex-fragment-toggle-auto t)
     (remove-hook 'text-scale-mode-hook 'update-org-latex-fragments t)
