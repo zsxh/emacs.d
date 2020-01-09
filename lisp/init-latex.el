@@ -41,6 +41,39 @@
                         (make-local-variable 'company-backends)
                         (company-auctex-init))))
 
+;; realtime preview in Latex-mode, org-mode, ein
+(use-package webkit-katex-render
+  :if (featurep 'xwidget-internal)
+  :quelpa ((webkit-katex-render
+            :fetcher github
+            :repo "fuxialexander/emacs-webkit-katex-render"
+            :files (:defaults "katex.html")))
+  :commands webkit-katex-render-mode
+  :config
+  ;; (with-eval-after-load 'doom-themes
+  ;;   (setq webkit-katex-render--background-color (doom-color 'bg)))
+  (defun webkit-katex-render-show (math-at-point)
+  "Activate color picker."
+  (unless (and (bound-and-true-p company-mode)
+               company-candidates-length)
+    (let ((pos (- (car math-at-point) 1))
+          (math (nth 1 math-at-point)))
+      (if (not (buffer-live-p (webkit-katex-render--get-buffer)))
+          (webkit-katex-render--create pos))
+      (webkit-katex-render--render math)
+      (if webkit-katex-render--resize-flag
+          (progn
+            (webkit-katex-render--resize)
+            (setq webkit-katex-render--resize-flag nil)))
+      (webkit-katex-render--show pos))
+    (webkit-katex-render--set-background)
+    (webkit-katex-render--set-foreground)
+    (webkit-katex-render--ensure-emulation-alist)
+    (webkit-katex-render--enable-overriding-keymap webkit-katex-render--active-map)
+    (webkit-katex-render--install-map)
+    t))
+  (setq webkit-katex-render--math-at-point-function 'webkit-katex-render--org-math-at-point))
+
 ;; org-latex edit, preview, export ...
 
 (use-package org-edit-latex
@@ -53,17 +86,17 @@
   :config
   (org2ctex-mode))
 
-(use-package webkit-katex-render
-  :if (featurep 'xwidget-internal)
-  :quelpa ((webkit-katex-render
-            :fetcher github
-            :repo "fuxialexander/emacs-webkit-katex-render"
-            :files (:defaults "katex.html")))
-  :commands webkit-katex-render-mode
+(use-package company-math
+  :ensure t
+  :after org
+  :hook (org-mode . +company-math/setup)
   :config
-  ;; (with-eval-after-load 'doom-themes
-  ;;   (setq webkit-katex-render--background-color (doom-color 'bg)))
-  (setq webkit-katex-render--math-at-point-function 'webkit-katex-render--org-math-at-point))
+  (setq company-math-allow-latex-symbols-in-faces t)
+  ;; local configuration for TeX modes
+  (defun +company-math/setup ()
+    (setq-local company-backends
+                (append '((company-math-symbols-latex company-latex-commands))
+                        company-backends))))
 
 (with-eval-after-load 'org
   ;; https://ivanaf.com/automatic_latex_fragment_toggling_in_org-mode.html
