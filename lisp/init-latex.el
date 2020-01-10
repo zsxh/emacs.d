@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-;; require TeX Live installation
-;; pacman -S texlive-bin texlive-core texlive-latexextra texlive-langchinese
 (use-package tex
   :ensure auctex
   :defer t
@@ -80,10 +78,19 @@
   :defer t
   :after org)
 
+;; require TeX Live installation
+;; $sudo pacman -S texlive-bin texlive-core texlive-latexextra texlive-langchinese
+;; org svg export to pdf also require 'inkscape' and '#+latex_header_extra: \usepackage{svg}'
+;; $sudo pacman -S inkscape
 (use-package org2ctex
   :ensure t
   :after org
   :config
+  (setq org2ctex-latex-commands
+        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "bibtex %b"
+          "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
   (org2ctex-mode))
 
 (use-package company-math
