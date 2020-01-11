@@ -65,21 +65,28 @@
   :ensure t
   :commands lispy-mode
   :bind ((:map lispy-mode-map
-              (":" . self-insert-command)))
-  :hook ((emacs-lisp-mode . (lambda () (lispy-mode 1)))
-         (lisp-interaction-mode . (lambda () (lispy-mode 1)))
-         (lisp-mode . (lambda () (lispy-mode 1))))
+               (":" . self-insert-command)))
+  :hook ((lisp-mode
+          emacs-lisp-mode
+          lisp-interaction-mode
+          clojure-mode
+          clojurec-mode
+          clojurescript-mode) . lispy-mode)
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
   (setq lispy-eval-display-style 'overlay)
   (defun cider--display-interactive-eval-result (value point)
     "Make overlay for VALUE at POINT."
     (eros--make-result-overlay value
-      :where point
-      :duration eros-eval-result-duration)
+                               :where point
+                               :duration eros-eval-result-duration)
     (message "%s" (propertize value 'invisible nil)))
 
-  (require 'le-lisp)
+  (with-eval-after-load 'lisp-mode
+    (require 'le-lisp))
+  (with-eval-after-load 'clojure-mode
+    (require 'le-clojure))
+
   (setq lispy-use-sly t)
 
   ;; Replace lispy--eavl-lisp function
