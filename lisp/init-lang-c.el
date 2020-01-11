@@ -1,4 +1,4 @@
-;; init-c.el --- C/C++ Comfigurations	-*- lexical-binding: t -*-
+;; init-lang-c.el --- C/C++ Comfigurations	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -36,6 +36,6 @@
   (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode)))
 
 
-(provide 'init-c)
+(provide 'init-lang-c)
 
-;;; init-c.el ends here
+;;; init-lang-c.el ends here

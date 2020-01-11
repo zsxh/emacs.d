@@ -1,4 +1,4 @@
-;; init-common-lisp.el --- Common Lisp Configurations	-*- lexical-binding: t -*-
+;; init-lang-common-lisp.el --- Common Lisp Configurations	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -70,6 +70,6 @@
                  ("C-c e" . macrostep-expand)))))
 
 
-(provide 'init-common-lisp)
+(provide 'init-lang-common-lisp)
 
-;;; init-common-lisp.el ends here
+;;; init-lang-common-lisp.el ends here

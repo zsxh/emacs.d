@@ -1,4 +1,4 @@
-;; init-emacs-lisp.el --- Initialize Emacs Lisp Configurations	-*- lexical-binding: t -*-
+;; init-lang-emacs-lisp.el --- Initialize Emacs Lisp Configurations	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -119,6 +119,6 @@
   :hook (emacs-lisp . sly-el-indent-setup))
 
 
-(provide 'init-emacs-lisp)
+(provide 'init-lang-emacs-lisp)
 
-;;; init-emacs-lisp.el ends here
+;;; init-lang-emacs-lisp.el ends here

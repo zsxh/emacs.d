@@ -1,4 +1,4 @@
-;; init-js.el --- Summary	-*- lexical-binding: t -*-
+;; init-lang-js.el --- Summary	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -77,6 +77,6 @@
     (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))))
 
 
-(provide 'init-js)
+(provide 'init-lang-js)
 
-;;; init-js.el ends here
+;;; init-lang-js.el ends here

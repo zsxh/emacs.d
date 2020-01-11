@@ -197,7 +197,8 @@
     (plist-put org-format-latex-options :scale (+ text-scale-mode-amount 2))
     (org-latex-preview))
 
-  (plist-put org-format-latex-options :scale (+ text-scale-mode-amount 2))
+  (with-eval-after-load 'face-remap
+    (plist-put org-format-latex-options :scale (+ text-scale-mode-amount 2)))
 
   (defun activate-org-latex-preview ()
     (interactive)
@@ -213,7 +214,8 @@
     (webkit-katex-render-mode -1)
     (org-clear-latex-preview))
 
-  (add-hook 'org-mode-hook 'activate-org-latex-preview))
+  ;; (add-hook 'org-mode-hook 'activate-org-latex-preview)
+  )
 
 
 (provide 'init-latex)

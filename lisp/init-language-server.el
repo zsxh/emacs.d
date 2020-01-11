@@ -82,10 +82,9 @@
         lsp-prefer-flymake nil
         lsp-enable-file-watchers nil
         lsp-eldoc-render-all nil
-        lsp-keep-workspace-alive t
-        lsp-enable-symbol-highlighting nil)
-
-  (setq lsp-links-check-internal 0.5
+        lsp-keep-workspace-alive nil
+        lsp-enable-symbol-highlighting nil
+        lsp-links-check-internal 0.5
         lsp-lens-check-interval 0.2)
 
   (advice-add 'lsp :after

@@ -1,4 +1,4 @@
-;; init-python.el --- python configurations	-*- lexical-binding: t -*-
+;; init-lang-python.el --- python configurations	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -124,6 +124,6 @@
   (+python/set-leader-keys))
 
 
-(provide 'init-python)
+(provide 'init-lang-python)
 
-;;; init-python.el ends here
+;;; init-lang-python.el ends here

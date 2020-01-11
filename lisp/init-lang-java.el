@@ -1,4 +1,4 @@
-;; init-java.el --- Java Configurations	-*- lexical-binding: t -*-
+;; init-lang-java.el --- Java Configurations	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -79,6 +79,6 @@ JDK-VERSION directory name prefix \"jdk-\" is required,
     (end-of-buffer)))
 
 
-(provide 'init-java)
+(provide 'init-lang-java)
 
-;;; init-java.el ends here
+;;; init-lang-java.el ends here

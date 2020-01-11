@@ -153,8 +153,11 @@
 (use-package dired
   :ensure nil
   :defer t
-  :bind ((:map dired-mode-map
-               ("C-<return>" . dired-open-xdg))))
+  ;; FIXME: no idea why currently this doesn't work
+  ;; :bind (:map dired-mode-map
+  ;;             ("C-<return>" . dired-open-xdg))
+  :config
+  (define-key dired-mode-map (kbd "C-<return>") 'dired-open-xdg))
 
 ;; https://github.com/Fuco1/dired-hacks
 ;; Collection of useful dired additions

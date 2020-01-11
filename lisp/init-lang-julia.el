@@ -1,4 +1,4 @@
-;; init-julia.el --- Julia Lang Configurations	-*- lexical-binding: t -*-
+;; init-lang-julia.el --- Julia Lang Configurations	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -50,6 +50,6 @@
   (+language-server/set-common-leader-keys julia-mode-map))
 
 
-(provide 'init-julia)
+(provide 'init-lang-julia)
 
-;;; init-julia.el ends here
+;;; init-lang-julia.el ends here

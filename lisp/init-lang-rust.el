@@ -1,4 +1,4 @@
-;; init-rust.el --- Rust Configurations	-*- lexical-binding: t -*-
+;; init-lang-rust.el --- Rust Configurations	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -64,6 +64,6 @@
    "cT" '(cargo-process-test :which-key "all-unit-tests")))
 
 
-(provide 'init-rust)
+(provide 'init-lang-rust)
 
-;;; init-rust.el ends here
+;;; init-lang-rust.el ends here

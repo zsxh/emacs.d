@@ -128,7 +128,7 @@ Updated: <2019-12-25 星期三>
   git clone --depth 1 https://github.com/emacs-mirror/emacs.git
   cd emacs
   ./autogen.sh
-  ./configure --with-modules --with-xwidgets
+  ./configure --with-modules --with-xwidgets --with-x-toolkit=gtk3
   make -j6
   sudo make install
 #+end_src

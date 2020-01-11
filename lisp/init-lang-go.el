@@ -1,4 +1,4 @@
-;; init-go.el --- Go Lang Config	-*- lexical-binding: t -*-
+;; init-lang-go.el --- Go Lang Config	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -21,6 +21,6 @@
   (+language-server/set-common-leader-keys go-mode-map))
 
 
-(provide 'init-go)
+(provide 'init-lang-go)
 
-;;; init-go.el ends here
+;;; init-lang-go.el ends here

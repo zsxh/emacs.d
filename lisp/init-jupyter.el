@@ -61,13 +61,15 @@
     (setq ein:cell-traceback-level nil ;; Show all traceback
           ein:slice-image t)
 
+    ;; FIXME: fixed by https://github.com/millejoh/emacs-ipython-notebook/commit/c71075328cf3554e346632418c6efa05d836c413 ?
     ;; you can use 'ansi-color-filter-apply instead of 'ansi-color-apply to escape ansi code
-    (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
-                                                              (let* ((json (apply orig-fun args))
-                                                                     (text (plist-get json :text)))
-                                                                (when (plist-member json :text)
-                                                                  (plist-put json :text (ansi-color-apply text)))
-                                                                json))))
+    ;; (advice-add 'ein:output-area-convert-mime-types :around (lambda (orig-fun &rest args)
+    ;;                                                           (let* ((json (apply orig-fun args))
+    ;;                                                                  (text (plist-get json :text)))
+    ;;                                                             (when (plist-member json :text)
+    ;;                                                               (plist-put json :text (ansi-color-apply text)))
+    ;;                                                             json)))
+    )
 
   (use-package ein-multilang
     :defer t
