@@ -23,6 +23,11 @@
   :ensure t
   :defer t)
 
+(use-package ssh-deploy
+  :ensure t
+  :defer t
+  :commands (ssh-deploy-hydra))
+
 
 (provide 'init-experimental)
 

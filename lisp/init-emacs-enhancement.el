@@ -102,7 +102,9 @@
    "C" '(dired-ranger-copy :which-key "copy files")
    "P" '(dired-ranger-paste :which-key "paste files")
    "R" '(dired-ranger-move :which-key "move files")
-   "T" '(dired-filter-mode :which-key "toggle-dired-filter-mode")))
+   "T" '(dired-filter-mode :which-key "toggle-dired-filter-mode")
+   "a" '(nil :which-key "dired-async")
+   "ac" '(dired-async-do-copy :which-key "async-copy")))
 
 (defalias '+dired/find-program 'find-name-dired)
 

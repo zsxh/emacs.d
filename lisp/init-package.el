@@ -182,11 +182,6 @@ the `quelpa' command has been run in the current Emacs session."
 
 (advice-add 'package-delete :after '+package/quelpa-clean-cache)
 
-(use-package async
-  :ensure t
-  :defer t
-  :commands (async-start))
-
 ;; Extensions
 (use-package package-utils
   :ensure t
@@ -205,18 +200,21 @@ the `quelpa' command has been run in the current Emacs session."
 
   (defun upgrade-packages-async ()
     (interactive)
-    (message "Updating Pakcages ...")
-    (async-start
-     `(lambda ()
-        ,(async-inject-variables "\\`\\(load-path\\)\\'")
-        (require 'init-custom)
-        (require 'init-package)
-        (upgrade-packages)
-        (with-current-buffer "*Messages*"
-          (buffer-string)))
-     (lambda (result)
-       (message "%s" result)
-       (message "Async Update Done. Restart to complete process.")))))
+    (if (fboundp 'async-start)
+        (progn
+          (message "Updating Pakcages ...")
+          (async-start
+           `(lambda ()
+              ,(async-inject-variables "\\`\\(load-path\\)\\'")
+              (require 'init-custom)
+              (require 'init-package)
+              (upgrade-packages)
+              (with-current-buffer "*Messages*"
+                (buffer-string)))
+           (lambda (result)
+             (message "%s" result)
+             (message "Async Update Done. Restart to complete process."))))
+      (message "[Error] upgrade-package-async need async.el installation"))))
 
 ;; Multi-file support for `eval-after-load'.
 ;; Usage:

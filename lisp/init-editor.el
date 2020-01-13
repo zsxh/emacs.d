@@ -250,6 +250,11 @@
   :if (fboundp 'global-so-long-mode)
   :hook (after-init . global-so-long-mode))
 
+(use-package async
+  :ensure t
+  :defer t
+  :commands (async-start))
+
 
 (provide 'init-editor)
 
