@@ -91,7 +91,31 @@
     (cl-pushnew '(julia . t) load-language-list))
 
   (org-babel-do-load-languages 'org-babel-load-languages
-                               load-language-list))
+                               load-language-list)
+
+  (defun +org/remove-all-result-blocks ()
+    "Remove all results in the current buffer."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (while (search-forward "#+begin_src " nil t)
+        (org-babel-remove-result))))
+
+  (defun +org/babel-result-show-all ()
+    "Show all results in the current buffer."
+    (interactive)
+    (org-babel-show-result-all))
+
+  (defun +org/babel-result-hide-all ()
+    "Fold all results in the current buffer."
+    (interactive)
+    (org-babel-show-result-all)
+    (save-excursion
+      ;; org-babel-result-hide-all may not work without (goto-char (point-min))
+      (goto-char (point-min))
+      (while (re-search-forward org-babel-result-regexp nil t)
+        (save-excursion (goto-char (match-beginning 0))
+                        (org-babel-hide-result-toggle-maybe))))))
 
 ;; Org-mode keybindings
 (use-package evil-org
@@ -146,6 +170,7 @@
    "T" '(nil :which-key "toggle")
    "Ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
    "Tl" '(org-toggle-link-display :which-key "toggle-link-display")
+   "Tp" '(+latex/toggle-latex-preview :which-key "toggle-latex-preview")
    "'" '(org-edit-special :which-key "editor")))
 
 ;; Org for blog
@@ -165,31 +190,6 @@
   (setq ob-async-no-async-languages-alist
         '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
 
-(with-eval-after-load 'org
-  (defun +org/remove-all-result-blocks ()
-    "Remove all results in the current buffer."
-    (interactive)
-    (save-excursion
-      (goto-char (point-min))
-      (while (search-forward "#+begin_src " nil t)
-        (org-babel-remove-result))))
-
-  (defun +org/babel-result-show-all ()
-    "Show all results in the current buffer."
-    (interactive)
-    (org-babel-show-result-all))
-
-  (defun +org/babel-result-hide-all ()
-    "Fold all results in the current buffer."
-    (interactive)
-    (org-babel-show-result-all)
-    (save-excursion
-      ;; org-babel-result-hide-all may not work without (goto-char (point-min))
-      (goto-char (point-min))
-      (while (re-search-forward org-babel-result-regexp nil t)
-        (save-excursion (goto-char (match-beginning 0))
-                        (org-babel-hide-result-toggle-maybe))))))
-
 (use-package org-bullets
   :ensure t
   :after org
@@ -199,6 +199,15 @@
 (use-package org-tree-slide
   :ensure t
   :commands org-tree-slide-mode)
+
+;; convert org-file to ipynb
+;; https://github.com/jkitchin/ox-ipynb
+;; convert ipynb to org-file
+;; $pip install nbcorg
+(use-package ox-ipynb
+  :quelpa ((ox-ipynb :fetcher github :repo "jkitchin/ox-ipynb"))
+  :after org)
+
 
 
 (provide 'init-org)

@@ -215,7 +215,15 @@
     (org-clear-latex-preview))
 
   ;; (add-hook 'org-mode-hook 'activate-org-latex-preview)
-  )
+
+  (defvar-local +latex/org-latex-preview-p nil)
+
+  (defun +latex/toggle-latex-preview ()
+    (interactive)
+    (if +latex/org-latex-preview-p
+        (deactivate-org-latex-preview)
+      (activate-org-latex-preview))
+    (setq +latex/org-latex-preview-p (not +latex/org-latex-preview-p))))
 
 
 (provide 'init-latex)
