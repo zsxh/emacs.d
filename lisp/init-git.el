@@ -40,7 +40,10 @@
   :config
   (setq magit-todos-auto-group-items 'always)
   (with-eval-after-load 'evil-collection
-    (evil-collection-init 'magit-todos)))
+    (evil-collection-init 'magit-todos))
+  (with-eval-after-load 'evil
+    (evil-collection-define-key nil 'magit-todos-item-section-map
+      "j" nil)))
 
 ;; TODO: config forge and github, gitlab ...
 ;; (use-package forge

@@ -122,6 +122,11 @@
 
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
+;; highlight comment tags like TODO, BUG, FIXME, etc.
+(use-package hl-todo
+  :ensure t
+  :hook (prog-mode . hl-todo-mode))
+
 
 (provide 'init-highlight)
 

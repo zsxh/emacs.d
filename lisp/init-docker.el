@@ -35,6 +35,12 @@
       "u" 'tablist-unmark-forward
       "t" 'tablist-toggle-marks)))
 
+;; TODO: k8s configs
+(use-package kubernetes
+  :ensure t
+  :if (executable-find "kubectl")
+  :commands (kubernetes-overview))
+
 
 (provide 'init-docker)
 
