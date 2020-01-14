@@ -162,6 +162,11 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 # param1=value1&param2=value2\n")))
     (switch-to-buffer restclient-buffer)))
 
+;; `verb' is an attempt to improve upon the core idea of the `restclient' package
+(use-package verb
+  :ensure t
+  :defer t)
+
 (use-package simple-httpd
   :ensure t
   :defer t)

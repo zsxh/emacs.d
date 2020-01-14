@@ -73,6 +73,7 @@
 
   ;; Emacs Jupyter integration with org-mode
   (when (featurep 'jupyter)
+    ;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
     (require 'ob-jupyter)
     (cl-pushnew '(jupyter . t) load-language-list)
     ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
