@@ -80,6 +80,17 @@
   ;; and cause wrong comment lines.
   (setq cd2/region-command 'cd2/comment-or-uncomment-region))
 
+;; Edit comment or docstring in edit buffer
+;; https://github.com/twlz0ne/comment-edit.el
+(use-package comment-edit
+  :quelpa ((comment-edit :fetcher github :repo "twlz0ne/comment-edit.el"))
+  :commands (comment-edit)
+  :config
+  (with-eval-after-load '(and edit-indirect evil)
+    (evil-define-minor-mode-key 'normal 'edit-indirect--overlay
+      ",c" 'edit-indirect-commit
+      ",k" 'edit-indirect-abort)))
+
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
   :ensure nil

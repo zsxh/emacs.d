@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+;; The Org Manual: https://orgmode.org/org.html
 ;; https://orgmode.org/Changes.html
 (use-package org
   :ensure org-plus-contrib
@@ -20,7 +21,7 @@
   :commands org-open-at-point
   :config
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
-  (setq org-time-stamp-formats '("<%Y-%m-%d %A>" . "<%Y-%m-%d %A %H:%M>"))
+  (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
   (setq org-export-use-babel nil) ; do not evaluate again during export.
 
   ;; display/update images in the buffer after I evaluate
@@ -46,7 +47,8 @@
                                (sass . t)
                                (C . t)
                                (java . t)
-                               (plantuml . t)))
+                               (plantuml . t)
+                               (lilypond . t)))
 
   ;; enable ob-*lang* yourself
 
@@ -163,6 +165,7 @@
    "ci" '(org-clock-in :which-key "clock-in")
    "co" '(org-clock-out :which-key "clock-out")
    "cr" '(org-clock-report :which-key "clock-report")
+   "e" '(org-export-dispatch :which-key "export")
    "i" '(nil :which-key "insert")
    "is" '(org-insert-structure-template :which-key "structure-template")
    "it" '(org-time-stamp :which-key "time-stamp")
@@ -178,6 +181,14 @@
 (use-package org-page
   :ensure t
   :after org)
+
+;; TODO: Org export html css
+;; https://github.com/jessekelly881/Rethink
+;; https://github.com/jessekelly881/Imagine
+
+(use-package org-static-blog
+  :ensure t
+  :commands org-static-blog-mode)
 
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async

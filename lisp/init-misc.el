@@ -174,6 +174,16 @@
 ;; TODO: deft-mode, notdeft, take notes
 ;; https://emacs-china.org/t/v1/8218/53
 
+;; Install lilypond and add it to load-path
+;; $pacman -S lilypond
+(use-package lilypond-mode
+  :if (and (executable-find "lilypond")
+           (file-exists-p "/usr/share/emacs/site-lisp/lilypond-mode.el"))
+  :load-path "/usr/share/emacs/site-lisp"
+  :commands LilyPond-mode
+  :mode (("\\.ly$" . LilyPond-mode)
+         ("\\.ily$" . LilyPond-mode)))
+
 
 (provide 'init-misc)
 
