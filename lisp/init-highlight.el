@@ -34,7 +34,6 @@
 
 ;; Highlight Symbol
 (use-package symbol-overlay
-  :ensure t
   :defer t
   :config
   (defun symbol-overlay-goto-first ()
@@ -62,7 +61,6 @@
 
 ;; Color String
 (use-package rainbow-mode
-  :ensure t
   :diminish rainbow-mode
   :hook ((web-mode
           lisp-mode
@@ -73,11 +71,9 @@
 
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
 (use-package rainbow-delimiters
-  :ensure t
   :hook ((lisp-mode emacs-lisp-mode) . rainbow-delimiters-mode))
 
 (use-package highlight-indent-guides
-  :ensure t
   :hook ((python-mode) . highlight-indent-guides-mode)
   :config
   (defun my-highlighter (level responsive display)
@@ -95,7 +91,6 @@
 ;; Poor Performance
 ;; Highlight uncommitted changes
 ;; (use-package diff-hl
-;;   :ensure t
 ;;   :hook ((after-init . global-diff-hl-mode)
 ;;          (dired-mode . diff-hl-dired-mode))
 ;;   :config
@@ -124,7 +119,6 @@
 
 ;; highlight comment tags like TODO, BUG, FIXME, etc.
 (use-package hl-todo
-  :ensure t
   :hook (prog-mode . hl-todo-mode))
 
 

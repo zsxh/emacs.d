@@ -19,7 +19,6 @@
 ;; $ cargo xtask install --server
 ;; $ rustup component add rust-src
 (use-package rust-mode
-  :ensure t
   :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
@@ -28,15 +27,14 @@
   (setq rust-indent-offset 2))
 
 (use-package lsp-rust
+  :ensure nil
   :after lsp-mode
-  :defer t
   :config
   (when (executable-find "ra_lsp_server")
     (setq lsp-rust-rls-server-command "rust-analyzer"
           lsp-rust-analyzer-server-display-inlay-hints t)))
 
 (use-package cargo
-  :ensure t
   :after rust-mode)
 
 (with-eval-after-load 'rust-mode

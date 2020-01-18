@@ -41,7 +41,6 @@
 ;; Installing Fonts
 ;; https://github.com/domtronn/all-the-icons.el#installing-fonts
 (use-package all-the-icons
-  :ensure t
   :defer t
   :config
   ;; If you experience a slow down in performace when rendering multiple icons simultaneously,
@@ -50,7 +49,6 @@
 
 ;; Theme
 (use-package doom-themes
-  :ensure t
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
@@ -67,7 +65,6 @@
   (doom-themes-org-config))
 
 (use-package doom-modeline
-  :ensure t
   :defer t
   :preface
   (defun my-doomline-init ()

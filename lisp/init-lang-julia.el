@@ -18,7 +18,6 @@
 ;; julia> ]
 ;; (v1.3) pkg> add CSTParser#master StaticLint#master DocumentFormat#master SymbolServer#master LanguageServer#master
 (use-package julia-mode
-  :ensure t
   :defer t
   :init
   (add-to-list 'auto-mode-alist '("\\.jl\\'" . julia-mode))
@@ -27,7 +26,6 @@
 
 ;; for lsp
 (use-package lsp-julia
-  :ensure t
   :after julia-mode
   :config
   (setq lsp-julia-package-dir nil) ; use the globally installed version
@@ -42,7 +40,6 @@
 (add-hook 'julia-mode-hook 'lsp)
 
 (use-package julia-repl
-  :ensure t
   :commands julia-repl-mode
   :hook (julia-mode . julia-repl-mode))
 

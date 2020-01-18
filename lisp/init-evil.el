@@ -15,7 +15,6 @@
 ;; Vim edit style
 ;; tips: press "%" in normal mode to jump between code block, tags
 (use-package evil
-  :ensure t
   :init
   (setq evil-want-keybinding nil)
   (setq evil-want-integration t)
@@ -70,7 +69,6 @@
 ;; Evil keybinding collection
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   ;; (evil-collection-init)
   (with-eval-after-load 'ibuffer
@@ -90,7 +88,6 @@
 ;; TODO: add tags for julia-mode
 (use-package evil-matchit
   :after evil
-  :ensure t
   :init
   (define-key evil-motion-state-map (kbd "%") 'evilmi-jump-items)
   :commands (evilmi-jump-items)
@@ -102,13 +99,11 @@
 ;; google "vim text object" to learn more
 (use-package evil-surround
   :after evil
-  :ensure t
   :config
   (global-evil-surround-mode 1))
 
 (use-package evil-mark-replace
   :after evil
-  :ensure t
   :commands (evilmr-replace-in-defun
              evilmr-replace-in-buffer
              evilmr-tag-selected-region
@@ -120,7 +115,6 @@
 ;; instead of the whole paragraph disappearing with one swift stroke.
 (use-package evil-nl-break-undo
   :after evil
-  :ensure t
   :hook ((text-mode prog-mode) . evil-nl-break-undo-mode))
 
 (with-eval-after-load 'evil

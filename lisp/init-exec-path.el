@@ -15,7 +15,6 @@
 (use-package exec-path-from-shell
   :if (not (file-remote-p default-directory))
   :defer 1
-  :ensure t
   :config
   ;; Performance improvement: I already set environment variable in .zshenv,so no need to check .zshrc
   (setq exec-path-from-shell-check-startup-files nil)

@@ -33,7 +33,6 @@
         TeX-after-compilation-finished-functions #'TeX-revert-document-buffer))
 
 (use-package company-auctex
-  :ensure t
   :after tex
   :hook (LaTeX-mode . (lambda ()
                         (make-local-variable 'company-backends)
@@ -83,7 +82,6 @@
 ;; org svg export to pdf also require 'inkscape' and '#+latex_header_extra: \usepackage{svg}'
 ;; $sudo pacman -S inkscape
 (use-package org2ctex
-  :ensure t
   :after org
   :config
   (setq org2ctex-latex-commands
@@ -94,7 +92,6 @@
   (org2ctex-mode))
 
 (use-package company-math
-  :ensure t
   :after org
   :hook (org-mode . +company-math/setup)
   :config

@@ -71,7 +71,6 @@
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
-  :ensure t
   :bind ("M-;" . comment-dwim-2)
   :config
   ;; the reason to choose "region" not "lines" or "lines_or_region" is that
@@ -102,14 +101,12 @@
 
 ;; Increase selected region by semantic units
 (use-package expand-region
-  :ensure t
   :commands er/expand-region)
 
 (setq mouse-drag-copy-region t)
 
 ;; Framework for mode-specific buffer indexes
 (use-package imenu-list
-  :ensure t
   :commands imenu-list-smart-toggle
   :init
   (progn
@@ -118,7 +115,6 @@
 
 ;; Easy way to jump/swap window
 (use-package ace-window
-  :ensure t
   :bind (("M-u" . ace-window))
   :commands (ace-window ace-swap-window)
   :config
@@ -127,12 +123,10 @@
 
 ;; Treat undo history as a tree
 (use-package undo-tree
-  :ensure t
   :hook (after-init . global-undo-tree-mode))
 
 ;; Numbered window shortcuts
 (use-package winum
-  :ensure t
   :hook (after-init . winum-mode))
 
 ;; Use package auto-save instead of default auto save
@@ -146,7 +140,6 @@
 
 ;; jumping to visible text using a char-based decision tree
 (use-package avy
-  :ensure t
   :bind (("C-c c" . avy-goto-char)
          ("C-c j" . avy-goto-char-in-line)
          ("C-c l" . avy-goto-line)
@@ -158,13 +151,11 @@
 ;; inserting numeric ranges
 ;; https://oremacs.com/2014/12/26/the-little-package-that-could/
 (use-package tiny
-  :ensure t
   :commands tiny-expand
   :config (tiny-setup-default))
 
 ;; look through everything you've killed
 (use-package browse-kill-ring
-  :ensure t
   :bind (("M-C-y" . browse-kill-ring)
          (:map browse-kill-ring-mode-map
                ("j" . browse-kill-ring-forward)
@@ -175,7 +166,6 @@
 
 ;; rigrep
 (use-package rg
-  :ensure t
   :bind ((:map rg-mode-map
                ("l" . nil)
                ("L" . rg-list-searches)))
@@ -183,7 +173,6 @@
 
 ;; wgrep allows you to edit a grep buffer and apply those changes to the file buffer
 (use-package wgrep
-  :ensure t
   :defer t
   :config
   (advice-add 'wgrep-change-to-wgrep-mode :after (lambda () (evil-normal-state) (wgrep-toggle-readonly-area)))
@@ -201,7 +190,6 @@
 ;; https://github.com/rejeep/drag-stuff.el
 ;; Work fine with evil-mode
 (use-package drag-stuff
-  :ensure t
   :after lispy
   :config
   (drag-stuff-global-mode 1)
@@ -211,13 +199,11 @@
 ;; Install fasd
 ;; https://github.com/clvv/fasd
 (use-package fasd
-  :ensure t
   :commands (fasd-find-file))
 
 ;; This package allows Emacs to copy to and paste from the GUI clipboard
 ;; when running in text terminal.
 (use-package xclip
-  :ensure t
   :if (not (display-graphic-p))
   :hook (after-init . xclip-mode))
 
@@ -225,7 +211,6 @@
 ;; It works by temporarily disabling font-lock and switching to a barebones mode-line,
 ;; until you stop scrolling (at which point it re-enables).
 (use-package fast-scroll
-  :ensure t
   :hook (after-init . fast-scroll-mode)
   :config
   ;; If you would like to turn on/off other modes, like flycheck, add
@@ -235,7 +220,6 @@
   (fast-scroll-config))
 
 (use-package darkroom
-  :ensure t
   :commands (darkroom-mode darkroom-tentative-mode))
 
 ;; keyboard macros
@@ -262,7 +246,6 @@
   :hook (after-init . global-so-long-mode))
 
 (use-package async
-  :ensure t
   :defer t
   :commands (async-start))
 

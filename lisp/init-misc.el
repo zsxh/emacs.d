@@ -16,7 +16,6 @@
 ;; Rss reader
 ;; https://github.com/skeeto/elfeed
 (use-package elfeed
-  :ensure t
   :commands elfeed
   :config
   (when personal-elfeed-feeds
@@ -26,7 +25,6 @@
 
 ;; Youdao
 (use-package youdao-dictionary
-  :ensure t
   :commands (youdao-dictionary-search-at-point+
              youdao-dictionary-search-at-point-tooltip
              youdao-dictionary-play-voice-at-point)
@@ -62,7 +60,6 @@
 ;; https://github.com/kaiwk/leetcode.el
 ;; Remember to set your account and password
 (use-package leetcode
-  :ensure t
   :commands leetcode)
 
 ;; Http(s) Proxy
@@ -120,16 +117,13 @@
 
 ;; https://github.com/twlz0ne/with-proxy.el/tree/master
 (use-package with-proxy
-  :ensure t
   :commands with-proxy)
 
 ;; Music Player
 (use-package bongo
-  :ensure t
   :commands bongo)
 
 (use-package powerthesaurus
-  :ensure t
   :commands (powerthesaurus-lookup-word
              powerthesaurus-lookup-word-at-point
              powerthesaurus-lookup-word-dwim))
@@ -157,18 +151,15 @@
                                    (shell-quote-argument network))))))))
 
 (use-package webkit-color-picker
-  :ensure t
   :commands (webkit-color-picker-show))
 
 ;; Major mode for crontab(5) files
 (use-package crontab-mode
-  :ensure t
   :mode ("\\.?cron\\(tab\\)?\\'" . crontab-mode))
 
 ;; User can use curl when s/he has it, as curl is more reliable
 ;; than url.el.
 (use-package request
-  :ensure t
   :defer t)
 
 ;; TODO: deft-mode, notdeft, take notes

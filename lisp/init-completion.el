@@ -11,7 +11,6 @@
 ;;; Code:
 
 (use-package company
-  :ensure t
   ;; :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :bind (("M-/" . yas-expand)
          ("C-c C-y" . company-yasnippet)
@@ -46,7 +45,6 @@
     (setq company-eclim-auto-save nil)))
 
 (use-package company-fuzzy
-  :ensure t
   :after company
   :config
   (with-eval-after-load 'elisp-mode
@@ -54,11 +52,9 @@
     (add-hook 'lisp-interaction-mode-hook 'company-fuzzy-mode)))
 
 (use-package yasnippet
-  :ensure t
   :hook (after-init . yas-global-mode)
   :config
-  (use-package yasnippet-snippets
-    :ensure t)
+  (use-package yasnippet-snippets)
   (with-eval-after-load 'snippet
     (+funcs/major-mode-leader-keys
      snippet-mode-map
@@ -68,7 +64,6 @@
 ;; otherwise `company-box-doc' will have performance issue https://github.com/sebastiencs/company-box/issues/19
 (use-package company-box
   :if (and (>= emacs-major-version 26) (display-graphic-p))
-  :ensure t
   :diminish
   :hook (company-mode . company-box-mode)
   :init
@@ -139,7 +134,6 @@
 (use-package company-quickhelp
   :if (and (< emacs-major-version 26) (display-graphic-p))
   :after company
-  :ensure t
   :bind ((:map company-active-map
                ("M-h" . company-quickhelp-manual-begin)))
   :hook (global-company-mode . company-quickhelp-mode)
@@ -150,7 +144,6 @@
            (>= emacs-major-version 26)
            (display-graphic-p))
   :after company
-  :ensure t
   :hook (global-company-mode . company-posframe-mode))
 
 

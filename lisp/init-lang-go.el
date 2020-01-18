@@ -13,7 +13,6 @@
 ;; require go language server `bingo'
 ;; https://github.com/saibing/bingo/wiki/Install
 (use-package go-mode
-  :ensure t
   :defer t
   :init (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
   :hook (go-mode . lsp)

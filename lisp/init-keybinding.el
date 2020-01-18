@@ -13,7 +13,6 @@
 (require 'init-funcs)
 
 (use-package which-key
-  :ensure t
   :config
   ;; Rename the entry, for 1 to 1..9
   (push '(("\\(.*\\)1" . "winum-select-window-1") . ("\\11..9" . "window 1..9")) which-key-replacement-alist)
@@ -25,7 +24,6 @@
 
 ;; keybindings with which-key,evil well supported
 (use-package general
-  :ensure t
   :config
   (with-eval-after-load 'evil
     (define-key global-map "\M-o" nil) ; disable `facemenu-keymap' default keybindings first

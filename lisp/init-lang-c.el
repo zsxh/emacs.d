@@ -29,7 +29,6 @@
 (add-hook 'c++-mode-hook 'lsp)
 
 (use-package cmake-mode
-  :ensure t
   :defer t
   :init
   (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))

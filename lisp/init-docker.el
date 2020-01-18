@@ -12,11 +12,9 @@
 
 ;; https://github.com/Silex/docker.el
 (use-package docker
-  :ensure t
   :commands docker)
 
 (use-package dockerfile-mode
-  :ensure t
   :commands dockerfile-mode
   :config
   (+funcs/major-mode-leader-keys
@@ -25,7 +23,6 @@
    "B" '(dockerfile-build-no-cache-buffer :which-key "build-no-cache-buffer")))
 
 (use-package docker-compose-mode
-  :ensure t
   :commands docker-compose-mode)
 
 (with-eval-after-load 'tablist
@@ -37,7 +34,6 @@
 
 ;; TODO: k8s configs
 (use-package kubernetes
-  :ensure t
   :if (executable-find "kubectl")
   :commands (kubernetes-overview))
 

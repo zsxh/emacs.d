@@ -13,18 +13,15 @@
 ;;;;;;;;;;;;;; FLYMAKE ;;;;;;;;;;;;;;
 
 (use-package flymake-diagnostic-at-point
-  :ensure t
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
 ;;;;;;;;;;;;;; FLYCHECK ;;;;;;;;;;;;;;
 
 (use-package popwin
-  :ensure t
   :defer t)
 
 (use-package flycheck
-  :ensure t
   :defer t
   :config
   (require 'popwin)
@@ -92,11 +89,9 @@
   (if (display-graphic-p)
       (use-package flycheck-posframe
         :after flycheck
-        :ensure t
         :hook (flycheck-mode . flycheck-posframe-mode))
     (use-package flycheck-popup-tip
       :after flycheck
-      :ensure t
       :hook (flycheck-mode . flycheck-popup-tip-mode)))
 
   ;; toggle flycheck window

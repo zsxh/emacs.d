@@ -13,7 +13,6 @@
 (require 'init-language-server)
 
 (use-package nvm
-  :ensure t
   :after js)
 
 ;; Install js language server
@@ -35,7 +34,6 @@
 
 ;; npm install -g vue-language-server
 (use-package vue-mode
-  :ensure t
   :commands vue-mode
   :hook (vue-mode . lsp)
   :bind ((:map vue-mode-map

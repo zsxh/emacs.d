@@ -54,7 +54,6 @@
                        collect buf)))))
 
   (use-package sly
-    :ensure t
     :hook ((lisp-mode . sly-mode)
            (sly-mode . +common-lisp/init-sly)
            (sly-mode . +common-lisp/sly-config))
@@ -64,7 +63,6 @@
       (evil-set-initial-state 'sly-db-mode 'emacs)))
 
   (use-package sly-macrostep
-    :ensure t
     :commands macrostep-expand
     :bind ((:map lisp-mode-map
                  ("C-c e" . macrostep-expand)))))

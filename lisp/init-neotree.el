@@ -11,7 +11,6 @@
 ;;; Code:
 
 (use-package neotree
-  :ensure t
   :init
   (setq neo-show-hidden-files t)
   :commands neo-global--window-exists-p

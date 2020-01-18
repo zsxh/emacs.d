@@ -63,15 +63,12 @@
     (cl-pushnew '(sh . t) load-language-list))
 
   (use-package ob-go
-    :ensure t
     :init (cl-pushnew '(go . t) load-language-list))
 
   (use-package ob-rust
-    :ensure t
     :init (cl-pushnew '(rust . t) load-language-list))
 
   (use-package ob-ipython
-    :ensure t
     :config
     (cl-pushnew '(ipython . t) load-language-list))
 
@@ -87,7 +84,6 @@
   ;; An extension to restclient.el for emacs that provides org-babel support
   (when (package-installed-p 'restclient)
     (use-package ob-restclient
-      :ensure t
       :init (cl-pushnew '(restclient . t) load-language-list)))
 
   (use-package ob-julia
@@ -125,7 +121,6 @@
 ;; Org-mode keybindings
 (use-package evil-org
   :after (org evil)
-  :ensure t
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook
@@ -182,7 +177,6 @@
 ;; Org for blog
 ;; TODO: Deprecated
 (use-package org-page
-  :ensure t
   :after org)
 
 ;; TODO: Org export html css
@@ -190,7 +184,6 @@
 ;; https://github.com/jessekelly881/Imagine
 
 (use-package org-static-blog
-  :ensure t
   :commands (org-static-blog-mode
              org-static-blog-publish
              org-static-blog-publish-file
@@ -202,7 +195,6 @@
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
   :after org
-  :ensure t
   :config
   (add-hook 'ob-async-pre-execute-src-block-hook
             '(lambda ()
@@ -212,13 +204,11 @@
         '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
 
 (use-package org-bullets
-  :ensure t
   :after org
   :hook (org-mode . org-bullets-mode))
 
 ;; Presentation
 (use-package org-tree-slide
-  :ensure t
   :commands org-tree-slide-mode)
 
 ;; convert org-file to ipynb

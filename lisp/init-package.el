@@ -68,11 +68,13 @@
   (package-install 'use-package))
 
 (eval-when-compile
-  (require 'use-package))
+  (require 'use-package)
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
+  (setq use-package-verbose t))
 
 ;; Benchmark-init only measures time spent in `require' and `load'
 (use-package benchmark-init
-  :ensure t
   :commands (benchmark-init/activate)
   :hook (after-init . benchmark-init/deactivate)
   :init (benchmark-init/activate)
@@ -105,7 +107,6 @@ If RETURN-P, return the message as a string instead of displaying it."
 ;; Build and install your Emacs Lisp packages on-the-fly and directly from source
 (use-package quelpa-use-package
   :after (use-package)
-  :ensure t
   :init
   ;; Using quelpa with :ensure
   ;; (setq use-package-ensure-function 'quelpa)
@@ -119,7 +120,11 @@ If RETURN-P, return the message as a string instead of displaying it."
   (setq quelpa-use-package-inhibit-loading-quelpa t)
   (when (and (version<= "27.1" emacs-version)
              (bound-and-true-p package-quickstart))
-    (add-hook 'quelpa-after-hook 'package-quickstart-refresh)))
+    (add-hook 'quelpa-after-hook 'package-quickstart-refresh))
+  :config
+  ;; To install some packages with quelpa but use use-package-always-ensure to install all others
+  ;; from an ELPA repo :ensure needs to be disabled if the :quelpa keyword is found.
+  (quelpa-use-package-activate-advice))
 
 ;;;###autoload
 (defun +package/quelpa-upgrade ()
@@ -184,7 +189,6 @@ the `quelpa' command has been run in the current Emacs session."
 
 ;; Extensions
 (use-package package-utils
-  :ensure t
   :commands (upgrade-packages upgrade-packages-and-restart upgrade-packages-async)
   :config
   (defun upgrade-packages ()

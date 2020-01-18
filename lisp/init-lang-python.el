@@ -13,18 +13,15 @@
 (require 'init-language-server)
 
 (use-package lsp-python-ms
-  :ensure t
   :after lsp-mode)
 
 (add-hook 'python-mode-hook 'lsp) ; or lsp-deferred
 
 ;; Somehow pipenv cant really active virtulenv, but i found pyvenv do a good job for this
 (use-package pyvenv
-  :ensure t
   :commands pyvenv-activate)
 
 (use-package pyenv-mode
-  :ensure t
   :commands pyenv-mode
   :hook (python-mode . pyenv-mode))
 

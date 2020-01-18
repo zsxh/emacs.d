@@ -12,11 +12,9 @@
 
 ;; An interface ot communicate with Jupyter kernels in Emacs
 (use-package jupyter
-  :ensure t
   :commands (jupyter-run-repl jupyter-connect-repl))
 
 (use-package ein
-  :ensure t
   :commands (ein:notebooklist-open ;; run jupter notebook first
              ein:notebooklist-login
              ein:jupyter-server-start)
@@ -175,7 +173,6 @@
     ("q" nil :exit t)))
 
 (use-package magic-latex-buffer
-  :ensure t
   :commands magic-latex-buffer
   :config
   (with-eval-after-load 'ein-multilang

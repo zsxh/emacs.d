@@ -14,7 +14,6 @@
   (require 'init-custom))
 
 (use-package shell-pop
-  :ensure t
   :commands shell-pop
   :config
   (setq shell-pop-term-shell personal-shell-executable)
@@ -37,7 +36,6 @@ if no project root found, use current directory instead."
 ;; On ArchLinux or Manjaro install libvterm first
 ;; sudo pacman -S libvterm
 (use-package vterm
-  :ensure t
   ;; :quelpa (vterm :fetcher github :repo "jixiuf/emacs-libvterm"
   ;;                :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
   :if (and (executable-find "vterm-ctrl")
@@ -104,7 +102,6 @@ if no project root found, use current directory instead."
 ;; TODO: add `vterm-toggle' package
 ;; https://github.com/jixiuf/vterm-toggle
 (use-package vterm-toggle
-  :ensure t
   :commands (vterm-toggle vterm-toggle-cd)
   :init
   ;; (global-set-key [f2] 'vterm-toggle)          ; recent or current dir

@@ -12,7 +12,6 @@
 
 ;; ivy
 (use-package ivy
-  :ensure t
   :bind ((:map ivy-minibuffer-map
                ("C-k" . ivy-previous-line)
                ("C-j" . ivy-next-line)
@@ -75,13 +74,11 @@
 
 ;; swiper
 (use-package swiper
-  :ensure t
   :commands swiper
   :bind ("C-s" . swiper))
 
 ;; counsel
 (use-package counsel
-  :ensure t
   :bind (("C-x C-f" . counsel-find-file)
          ("M-x" . counsel-M-x))
   :config
@@ -90,7 +87,6 @@
   (setq ivy-initial-inputs-alist nil))
 
 (use-package ivy-rich
-  :ensure t
   :after ivy
   :config
   (setq ivy-format-function #'ivy-format-function-line)
@@ -140,7 +136,6 @@
   (advice-add #'ivy-posframe--display :override #'ivy-posframe--display-advice))
 
 (use-package ivy-xref
-  :ensure t
   :init
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs) ; Emacs< 27
   (setq xref-show-definitions-function #'ivy-xref-show-defs) ; Emacs >= 27
@@ -150,7 +145,6 @@
   ;; Contribute pengpengxp
   ;; https://emacs-china.org/t/ivy-read/2432/3
   (use-package pinyinlib
-    :ensure t
     :commands pinyinlib-build-regexp-string)
 
   (defun my-pinyinlib-build-regexp-string (str)

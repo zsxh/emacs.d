@@ -13,7 +13,6 @@
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
 
 (use-package elisp-demos
-  :ensure t
   :defer t
   :init
   (advice-add 'describe-function-1 :after #'elisp-demos-advice-describe-function-1)
@@ -21,7 +20,6 @@
 
 ;; A better *Help* buffer
 (use-package helpful
-  :ensure t
   :defer t
   :defines ivy-initial-inputs-alist
   :bind (("C-c C-d" . helpful-at-point)
@@ -50,7 +48,6 @@
 ;;;;;;;;;;;;;; *Buffer* ;;;;;;;;;;;;;;
 
 (use-package ibuffer-vc
-  :ensure t
   :bind (("C-x C-b" . ibuffer))
   :hook ((ibuffer . (lambda ()
                       (ibuffer-vc-set-filter-groups-by-vc-root)
@@ -61,6 +58,7 @@
 
 ;; Dired Configs
 (use-package dired
+  :ensure nil
   :defer t
   :config
   (setq dired-dwim-target t
@@ -118,7 +116,6 @@
 ;; https://github.com/yqrashawn/fd-dired
 (use-package fd-dired
   :if (executable-find "fd")
-  :ensure t
   :init
   (defalias '+dired/find-program 'fd-dired)
   :commands fd-dired
@@ -128,6 +125,7 @@
 
 ;; Editable Dired mode configs
 (use-package wdired
+  :ensure nil
   :defer t
   :config
   ;; allow editing file permissions
@@ -145,7 +143,6 @@
     (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode)))))
 
 (use-package all-the-icons-dired
-  :ensure t
   :hook (dired-mode . all-the-icons-dired-mode))
 
 ;;;;;;;;;;;;;;;;;
@@ -166,17 +163,14 @@
 
 ;; narrow dired to match filter
 (use-package dired-narrow
-  :ensure t
   :commands dired-narrow)
 
 ;; open files with external applications(just for linux now)
 (use-package dired-open
-  :ensure t
   :commands dired-open-xdg)
 
 ;; customizable highlighting for files in dired listings
 (use-package dired-rainbow
-  :ensure t
   :after dired
   :config
   (when (string-match "--time-style=long-iso" dired-listing-switches)
@@ -188,11 +182,9 @@
     (dired-rainbow-define-chmod executable-unix "#4F894C" "-[rw-]+x.*")))
 
 (use-package dired-ranger
-  :ensure t
   :commands (dired-ranger-copy dired-ranger-move dired-ranger-paste))
 
 (use-package dired-filter
-  :ensure t
   :commands (dired-filter-mode)
   :config
   (setq dired-filter-prefix "/"))
@@ -200,6 +192,7 @@
 ;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 
 (use-package shr
+  :ensure nil
   :defer t
   :config
   ;; (setq shr-inhibit-images t)
@@ -269,7 +262,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 ;; This package adds syntax highlighting support for code block in HTML, rendered by shr.el.
 ;; The probably most famous user of shr.el is EWW (the Emacs Web Wowser).
 (use-package shr-tag-pre-highlight
-  :ensure t
   :after shr
   :config
   (add-to-list 'shr-external-rendering-functions
@@ -283,6 +275,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 ;;;;;;;;;;;;;; Emacs Web Wowser ;;;;;;;;;;;;;;
 
 (use-package eww
+  :ensure nil
   :defer t
   :preface
   (defun +eww/toggle-images-display ()
@@ -411,7 +404,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 
 ;;;;;;;;;;;;;; Change priority of minor-mode keymaps ;;;;;;;;;;;;;;
 (use-package minor-mode-hack
-  :ensure t
   :commands show-minor-mode-map-priority)
 
 

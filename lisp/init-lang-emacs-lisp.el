@@ -50,7 +50,6 @@
 
 ;; Interactive macro expander
 (use-package macrostep
-  :ensure t
   :bind ((:map emacs-lisp-mode-map
                ("C-c e" . macrostep-expand))
          (:map lisp-interaction-mode-map
@@ -62,7 +61,6 @@
 
 ;; Short and sweet LISP editing
 (use-package lispy
-  :ensure t
   :commands lispy-mode
   :bind ((:map lispy-mode-map
                (":" . self-insert-command)))
@@ -107,7 +105,6 @@
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros
-  :ensure t
   :commands (eros-eval-last-sexp eros-eval-defun eros--make-result-overlay)
   :init
   (global-set-key [remap eval-last-sexp] #'eros-eval-last-sexp)

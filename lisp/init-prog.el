@@ -19,13 +19,11 @@
 ;; require `zeal' installation
 ;; zeal (dash for linux)
 (use-package zeal-at-point
-  :ensure t
   :commands zeal-at-point)
 
 ;; require `zeal' or `dash' docsets
 ;; helm-dash
 (use-package helm-dash
-  :ensure t
   :commands (helm-dash helm-dash-at-point)
   :bind ((:map helm-map
                ("C-j" . helm-next-line)
@@ -151,7 +149,6 @@
 
 ;; Change variable name style
 (use-package string-inflection
-  :ensure t
   :commands string-inflection-all-cycle)
 
 ;;;;;;;;;;;;;; Code Folding ;;;;;;;;;;;;;;
@@ -175,7 +172,6 @@
 ;; RMSBolt tries to make it easy to see what your compiler is doing.
 ;; It does this by showing you the assembly output of a given source code file.
 (use-package rmsbolt
-  :ensure t
   :commands rmsbolt-mode)
 
 ;;;;;;;;;;;;;; Indent ;;;;;;;;;;;;;;
@@ -278,7 +274,6 @@ current major mode."
 ;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
 
 (use-package editorconfig
-  :ensure t
   :hook (emacs-startup . editorconfig-mode))
 
 ;;;;;;;;;;;;;; Play Code With Online Playgrounds  ;;;;;;;;;;;;;;

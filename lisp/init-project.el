@@ -11,11 +11,9 @@
 ;;; Code:
 
 ;; (use-package counsel-projectile
-;;   :ensure t
 ;;   :hook (after-init . counsel-projectile-mode))
 
 (use-package projectile
-  :ensure t
   :hook (after-init . projectile-mode)
   :bind ("C-<tab>" . projectile-next-project-buffer)
   :config
@@ -55,7 +53,6 @@
 
 
 (use-package find-file-in-project
-  :ensure t
   :commands (find-file-in-project
              find-file-in-current-directory
              find-file-in-project-not-ignore)
@@ -83,7 +80,6 @@
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 
 (use-package persp-mode
-  :ensure t
   :defer t)
 
 

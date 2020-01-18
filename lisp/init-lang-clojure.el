@@ -12,7 +12,6 @@
 
 ;; https://github.com/snoe/clojure-lsp#installation
 (use-package clojure-mode
-  :ensure t
   :mode (("\\.\\(clj\\|dtm\\|edn\\)\\'" . clojure-mode)
          ("\\.cljc\\'" . clojurec-mode)
          ("\\.cljs\\'" . clojurescript-mode))
@@ -23,7 +22,6 @@
 
 ;; TODO: cider configs and learn some shadow-cljs
 (use-package cider
-  :ensure t
   :defer t)
 
 

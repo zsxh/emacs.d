@@ -13,7 +13,6 @@
 (use-package magit
   :commands (magit magit-blame magit-file-popup)
   :defer 10
-  :ensure t
   :config
   ;; https://github.com/magit/magit/issues/2371#issuecomment-152746346
   ;; value nil, vc mode-line update when buffer changed. t, update every auto-revert-interval seconds
@@ -21,7 +20,6 @@
   (setq magit-bury-buffer-function 'magit-mode-quit-window))
 
 (use-package evil-magit
-  :ensure t
   :after magit
   :config
   (with-eval-after-load 'with-editor
@@ -35,7 +33,6 @@
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
-  :ensure t
   :hook (magit-mode . magit-todos-mode)
   :config
   (setq magit-todos-auto-group-items 'always)
@@ -47,12 +44,10 @@
 
 ;; TODO: config forge and github, gitlab ...
 ;; (use-package forge
-;;   :ensure t
 ;;   :after magit)
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
-  :ensure t
   :defer t
   :config
   (evil-define-minor-mode-key 'normal 'git-timemachine-mode

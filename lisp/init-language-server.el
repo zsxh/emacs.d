@@ -62,7 +62,6 @@
 ;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
 
 (use-package eglot
-  :ensure t
   :commands eglot-ensure)
 
 ;;;;;;;;;;;;;; Lsp-mode ;;;;;;;;;;;;;;
@@ -96,12 +95,10 @@
     (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition)))
 
 (use-package company-lsp
-  :after (company lsp-mode)
-  :ensure t)
+  :after (company lsp-mode))
 
 (use-package lsp-ui
   :after lsp-mode
-  :ensure t
   :preface (setq lsp-ui-doc-enable nil
                  lsp-ui-sideline-enable nil)
   :bind ((:map lsp-ui-peek-mode-map

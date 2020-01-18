@@ -12,7 +12,6 @@
 
 ;; Json config
 (use-package json-mode
-  :ensure t
   :mode ("\\.json\\'" . json-mode)
   :hook (json-mode . (lambda ()
                        (make-local-variable 'js-indent-level)
@@ -27,7 +26,6 @@
 
 ;; Web mode for html,xml...
 (use-package web-mode
-  :ensure t
   :commands web-mode
   :init
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -126,11 +124,9 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 ;; Runs queries from a plain-text query sheet, displays results as a pretty-printed XML, JSON and even images.
 ;; https://github.com/pashky/restclient.el
 (use-package restclient
-  :ensure t
   :commands restclient-mode
   :config
   (use-package company-restclient
-    :ensure t
     :config
     (add-to-list 'company-backends 'company-restclient))
   (with-eval-after-load 'evil
@@ -164,18 +160,15 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 
 ;; `verb' is an attempt to improve upon the core idea of the `restclient' package
 (use-package verb
-  :ensure t
   :defer t)
 
 (use-package simple-httpd
-  :ensure t
   :defer t)
 
 ;; editing with preview
 
 ;; TODO: https://github.com/skeeto/skewer-mode
-;; (use-package skewer-mode
-;;   :ensure t)
+;; (use-package skewer-mode)
 
 ;; https://github.com/skeeto/impatient-mode
 ;; Enable the web server provided by simple-httpd:
@@ -184,7 +177,6 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 ;; M-x impatient-mode
 ;; And then point your browser to http://localhost:8080/imp/, select a buffer, and watch your changes appear as you type!
 (use-package impatient-mode
-  :ensure t
   :commands (impatient-mode +web/add-buffer-to-preview +web/preview-in-browser)
   :config
   (require 'simple-httpd)
@@ -203,11 +195,9 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 ;; install formatter
 ;; npm install --global prettier @prettier/plugin-php
 (use-package format-all
-  :ensure t
   :commands (format-all-buffer))
 
 (use-package know-your-http-well
-  :ensure t
   :defer t)
 
 
