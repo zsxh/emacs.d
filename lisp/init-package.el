@@ -227,6 +227,10 @@ the `quelpa' command has been run in the current Emacs session."
 (use-package meal
   :quelpa ((meal :fetcher github :repo "twlz0ne/meal.el")))
 
+(use-package async
+  :defer t
+  :commands (async-start))
+
 
 (provide 'init-package)
 
