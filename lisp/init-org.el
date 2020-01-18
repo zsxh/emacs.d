@@ -22,7 +22,9 @@
   :config
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
   (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
-  (setq org-export-use-babel nil) ; do not evaluate again during export.
+  (setq org-export-use-babel nil ; do not evaluate again during export.
+        org-export-with-toc nil
+        org-export-with-section-numbers nil)
 
   ;; display/update images in the buffer after I evaluate
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
@@ -178,6 +180,7 @@
    "'" '(org-edit-special :which-key "editor")))
 
 ;; Org for blog
+;; TODO: Deprecated
 (use-package org-page
   :ensure t
   :after org)
@@ -188,7 +191,13 @@
 
 (use-package org-static-blog
   :ensure t
-  :commands org-static-blog-mode)
+  :commands (org-static-blog-mode
+             org-static-blog-publish
+             org-static-blog-publish-file
+             org-static-blog-create-new-post)
+  :config
+  (defun org-static-blog-generate-post-path (post-filename post-datetime)
+    (concat "html/" (file-name-nondirectory post-filename))))
 
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
