@@ -27,7 +27,7 @@
   (setq rust-indent-offset 2))
 
 (use-package lsp-rust
-  :ensure nil
+  :ensure lsp-mode
   :after lsp-mode
   :config
   (when (executable-find "ra_lsp_server")

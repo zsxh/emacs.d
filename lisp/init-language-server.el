@@ -92,7 +92,11 @@
                             '(company-lsp company-files company-dabbrev))))
 
   (with-eval-after-load 'evil
-    (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition)))
+    (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition))
+
+  (defun +lsp/update-server ()
+    (interactive)
+    (lsp-install-server t)))
 
 (use-package company-lsp
   :after (company lsp-mode))

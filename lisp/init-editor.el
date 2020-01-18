@@ -245,6 +245,12 @@
   :if (fboundp 'global-so-long-mode)
   :hook (after-init . global-so-long-mode))
 
+;; TODO: Better TRAMP autologin
+;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
+(use-package tramp
+  :ensure nil
+  :defer t)
+
 
 (provide 'init-editor)
 

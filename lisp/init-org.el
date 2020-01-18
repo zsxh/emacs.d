@@ -40,6 +40,21 @@
     ;; Download font https://mplus-fonts.osdn.jp/about-en.html
     (set-face-attribute 'org-table nil :family "M+ 1m"))
 
+  (use-package ob-go)
+  (use-package ob-rust)
+  (use-package ob-ipython)
+  ;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
+  (use-package ob-jupyter
+    :ensure jupyter
+    ;; :config
+    ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
+    ;; (org-babel-jupyter-override-src-block "python")
+    )
+  (use-package ob-restclient
+    :ensure restclient)
+  (use-package ob-julia
+    :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia)))
+
   (defvar load-language-list '((emacs-lisp . t)
                                (perl . t)
                                (python . t)
@@ -49,47 +64,19 @@
                                (sass . t)
                                (C . t)
                                (java . t)
+                               (go . t)
+                               (rust . t)
+                               (ipython . t)
+                               (jupyter . t)
+                               (restclient . t)
+                               (julia . t)
                                (plantuml . t)
                                (lilypond . t)))
 
-  ;; enable ob-*lang* yourself
-
   ;; ob-sh renamed to ob-shell since 26.1.
-  (when (>= emacs-major-version 26)
-    (require 'ob-shell))
-
   (if (>= emacs-major-version 26)
       (cl-pushnew '(shell . t) load-language-list)
     (cl-pushnew '(sh . t) load-language-list))
-
-  (use-package ob-go
-    :init (cl-pushnew '(go . t) load-language-list))
-
-  (use-package ob-rust
-    :init (cl-pushnew '(rust . t) load-language-list))
-
-  (use-package ob-ipython
-    :config
-    (cl-pushnew '(ipython . t) load-language-list))
-
-  ;; Emacs Jupyter integration with org-mode
-  (when (featurep 'jupyter)
-    ;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
-    (require 'ob-jupyter)
-    (cl-pushnew '(jupyter . t) load-language-list)
-    ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
-    ;; (org-babel-jupyter-override-src-block "python")
-    )
-
-  ;; An extension to restclient.el for emacs that provides org-babel support
-  (when (package-installed-p 'restclient)
-    (use-package ob-restclient
-      :init (cl-pushnew '(restclient . t) load-language-list)))
-
-  (use-package ob-julia
-    :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia))
-    :config
-    (cl-pushnew '(julia . t) load-language-list))
 
   (org-babel-do-load-languages 'org-babel-load-languages
                                load-language-list)
