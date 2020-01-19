@@ -16,7 +16,7 @@
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
-  :commands (eaf-open eaf-open-url eaf-open-dash)
+  :commands (eaf-open eaf-open-browser eaf-open-dash)
   :config
   (require 'dash)
   (when personal-eaf-grip-token
@@ -26,8 +26,9 @@
     (let* ((host-port (split-string personal-http-proxy ":"))
            (host (nth 0 host-port))
            (port (nth 1 host-port)))
-      (setq eaf-http-proxy-host host
-            eaf-http-proxy-port port)))
+      (setq eaf-proxy-host host
+            eaf-proxy-port port
+            eaf-proxy-type "http")))
 
   ;; hack eaf for evil-mode
   ;; send-key only in evil-emacs-state
