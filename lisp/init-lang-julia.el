@@ -43,7 +43,7 @@
   :commands julia-repl-mode
   :hook (julia-mode . julia-repl-mode))
 
-(with-eval-after-load 'lsp-julia
+(with-eval-after-load 'julia-mode
   (+language-server/set-common-leader-keys julia-mode-map))
 
 

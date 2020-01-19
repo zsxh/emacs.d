@@ -75,7 +75,6 @@
 
 ;; Benchmark-init only measures time spent in `require' and `load'
 (use-package benchmark-init
-  :commands (benchmark-init/activate)
   :hook (after-init . benchmark-init/deactivate)
   :init (benchmark-init/activate)
   :config

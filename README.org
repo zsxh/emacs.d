@@ -10,7 +10,6 @@ Updated: <2019-12-25 星期三>
   - WM: KWin
 
 * TODOs
-  - org toggle latex preview (real-time, auto scaling)
 
 * Features
   - =org=
@@ -20,6 +19,11 @@ Updated: <2019-12-25 星期三>
       gtd
     - =org-babel=
       code blocks, also work well with jupyter
+  - =latex=
+    - =company-auctex=, =company-math=
+      auto completion
+    - =webkit-katex-render=
+      real time latex preview at point
   - =jupyter=
     - =emacs-jupyter=
       an interface to communicate with Jupyter kernels, provide jupyter-repl, org-jupyter integration
@@ -103,6 +107,7 @@ Updated: <2019-12-25 星期三>
       translate english to chinese at point
     - =insert-translated-name=
       Insert translated string, type chinese insertd english for short
+  - =portable dumper=
 
 * Languages Support
 ** Features like auto complete, go to definitions, documentation on hover

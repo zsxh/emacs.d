@@ -68,6 +68,12 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
+;; Pdumper configs
+(when (bound-and-true-p personal-dumped-p)
+  (setq load-path personal-dumped-load-path)
+  (global-font-lock-mode)
+  (transient-mark-mode))
+
 ;; Customization
 (require 'init-custom)
 

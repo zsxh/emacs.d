@@ -23,6 +23,17 @@
           (const :tag "Tencent" tencent)
           (const :tag "Tuna" tuna)))
 
+(defcustom personal-dump-file "~/.emacs.d/emacs.pdump"
+  "Dump file path."
+  :type 'string)
+
+(defvar personal-dumped-p nil
+  "non-nil if dump file is loaded.")
+
+(defvar personal-dumped-load-path nil
+  "By default dump files doesn’t save ‘load-path’.
+We need to manually save and restore it.")
+
 (defcustom personal-eaf-grip-token nil
   "Github personal access token for eaf-markdown-previewer.
 https://github.com/manateelazycat/emacs-application-framework#markdown-previewer"

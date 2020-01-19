@@ -76,3 +76,4 @@ games/*
 /.extension
 /mspyls
 /package-quickstart.el
+/emacs.pdump

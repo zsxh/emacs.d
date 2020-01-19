@@ -263,6 +263,17 @@ Version 2017-01-27"
    (lambda (x) (prin1 (car x)) (terpri))
    minor-mode-map-alist))
 
+(defun dump-emacs ()
+  "Dump Emacs"
+  (interactive)
+  (let ((buf "*dump process*"))
+    (make-process
+     :name "dump"
+     :buffer buf
+     :command (list "emacs" "--batch" "-q"
+                    "-l" (expand-file-name "dump.el" user-emacs-directory)))
+    (display-buffer buf)))
+
 
 (provide 'init-funcs)
 
