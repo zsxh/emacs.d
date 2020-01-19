@@ -216,7 +216,7 @@ the `quelpa' command has been run in the current Emacs session."
                 (buffer-string)))
            (lambda (result)
              (message "%s" result)
-             (message "Async Update Done. Restart to complete process."))))
+             (message "Async Update Done. Restart to complete process. \(Optional: M-x dump-emacs\)"))))
       (message "[Error] upgrade-package-async need async.el installation"))))
 
 ;; Multi-file support for `eval-after-load'.

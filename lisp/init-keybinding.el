@@ -108,6 +108,7 @@
      "hdn" '((lambda () (interactive) (describe-variable 'minor-mode-list)) :which-key "minor-mode-list")
      "he" '(nil :which-key "emacs")
      "hek" '(kill-emacs :which-key "kill-emacs")
+     "hep" '(dump-emacs :which-key "portable-dump-emacs")
      "her" '(restart-emacs :which-key "restart-emacs")
      "heu" '(upgrade-packages-async :which-key "upgrade-emacs-packages-async")
      "heU" '(upgrade-packages :which-key "upgrade-emacs-packages-sync")
