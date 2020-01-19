@@ -73,6 +73,15 @@
   (setq load-path personal-dumped-load-path)
   (global-font-lock-mode)
   (transient-mark-mode)
+
+  ;; FIXME: magit-section fringe not working
+  (setq magit-section-visibility-indicator
+        (if (window-system)
+            '(magit-fringe-bitmap> . magit-fringe-bitmapv)
+          '("…" . t)))
+
+  (setq doom-modeline-icon (display-graphic-p))
+
   ;; Some packages did not load correctly
   (add-hook 'after-init-hook
             (lambda ()

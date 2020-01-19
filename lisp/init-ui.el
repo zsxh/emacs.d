@@ -75,7 +75,7 @@
   :config
   (setq doom-modeline-modal-icon nil
         doom-modeline-unicode-fallback nil
-        doom-modeline-major-mode-icon nil
+        doom-modeline-major-mode-icon t
         doom-modeline-buffer-file-name-style 'buffer-name))
 
 ;; ;; Display time on modeline
