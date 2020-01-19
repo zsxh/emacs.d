@@ -10,6 +10,7 @@ Updated: <2019-12-25 星期三>
   - WM: KWin
 
 * TODOs
+  - reduce org-mode first boot time
 
 * Features
   - =org=

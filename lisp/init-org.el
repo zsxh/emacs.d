@@ -40,47 +40,6 @@
     ;; Download font https://mplus-fonts.osdn.jp/about-en.html
     (set-face-attribute 'org-table nil :family "M+ 1m"))
 
-  (use-package ob-go)
-  (use-package ob-rust)
-  (use-package ob-ipython)
-  ;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
-  (use-package ob-jupyter
-    :ensure jupyter
-    ;; :config
-    ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
-    ;; (org-babel-jupyter-override-src-block "python")
-    )
-  (use-package ob-restclient
-    :ensure restclient)
-  (use-package ob-julia
-    :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia)))
-
-  (defvar load-language-list '((emacs-lisp . t)
-                               (perl . t)
-                               (python . t)
-                               (ruby . t)
-                               (js . t)
-                               (css . t)
-                               (sass . t)
-                               (C . t)
-                               (java . t)
-                               (go . t)
-                               (rust . t)
-                               (ipython . t)
-                               (jupyter . t)
-                               (restclient . t)
-                               (julia . t)
-                               (plantuml . t)
-                               (lilypond . t)))
-
-  ;; ob-sh renamed to ob-shell since 26.1.
-  (if (>= emacs-major-version 26)
-      (cl-pushnew '(shell . t) load-language-list)
-    (cl-pushnew '(sh . t) load-language-list))
-
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               load-language-list)
-
   (defun +org/remove-all-result-blocks ()
     "Remove all results in the current buffer."
     (interactive)
@@ -161,10 +120,41 @@
    "Tp" '(+latex/toggle-latex-preview :which-key "toggle-latex-preview")
    "'" '(org-edit-special :which-key "editor")))
 
+;; Org Bable
+(use-package ob-go :defer t)
+(use-package ob-rust :defer t)
+(use-package ob-ipython :defer t)
+;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
+(use-package ob-jupyter
+  :defer t
+  :ensure jupyter
+  ;; :config
+  ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
+  ;; (org-babel-jupyter-override-src-block "python")
+  )
+(use-package ob-julia
+  :defer t
+  :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia)))
+(use-package ob-restclient
+  :defer t
+  :ensure restclient)
+
+;; ob-async enables asynchronous execution of org-babel src blocks
+(use-package ob-async
+  :defer t
+  :config
+  (add-hook 'ob-async-pre-execute-src-block-hook
+            '(lambda ()
+               (setq inferior-julia-program-name "julia")))
+  ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
+  (setq ob-async-no-async-languages-alist
+        '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
+
 ;; Org for blog
 ;; TODO: Deprecated
 (use-package org-page
-  :after org)
+  :after org
+  :commands (op/new-post op/do-publication))
 
 ;; TODO: Org export html css
 ;; https://github.com/jessekelly881/Rethink
@@ -179,19 +169,7 @@
   (defun org-static-blog-generate-post-path (post-filename post-datetime)
     (concat "html/" (file-name-nondirectory post-filename))))
 
-;; ob-async enables asynchronous execution of org-babel src blocks
-(use-package ob-async
-  :after org
-  :config
-  (add-hook 'ob-async-pre-execute-src-block-hook
-            '(lambda ()
-               (setq inferior-julia-program-name "julia")))
-  ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
-  (setq ob-async-no-async-languages-alist
-        '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
-
 (use-package org-bullets
-  :after org
   :hook (org-mode . org-bullets-mode))
 
 ;; Presentation
@@ -204,8 +182,43 @@
 ;; $pip install nbcorg
 (use-package ox-ipynb
   :quelpa ((ox-ipynb :fetcher github :repo "jkitchin/ox-ipynb"))
-  :after org)
+  :defer t)
 
+(defun +org/run-once ()
+  (require 'ob-go)
+  (require 'ob-rust)
+  (require 'ob-ipython)
+  (require 'ob-jupyter)
+  (require 'ob-julia)
+  (require 'ob-restclient)
+  (require 'ob-async)
+  (defvar load-language-list '((emacs-lisp . t)
+                               (perl . t)
+                               (python . t)
+                               (ruby . t)
+                               (js . t)
+                               (css . t)
+                               (sass . t)
+                               (C . t)
+                               (java . t)
+                               (go . t)
+                               (rust . t)
+                               (ipython . t)
+                               (jupyter . t)
+                               (restclient . t)
+                               (julia . t)
+                               (plantuml . t)
+                               (lilypond . t)))
+  ;; ob-sh renamed to ob-shell since 26.1.
+  (if (>= emacs-major-version 26)
+      (cl-pushnew '(shell . t) load-language-list)
+    (cl-pushnew '(sh . t) load-language-list))
+
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               load-language-list)
+  (require 'ox-ipynb))
+
+(add-hook-run-once 'org-mode-hook '+org/run-once)
 
 
 (provide 'init-org)

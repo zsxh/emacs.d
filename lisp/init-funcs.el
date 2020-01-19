@@ -274,6 +274,15 @@ Version 2017-01-27"
                     "-l" (expand-file-name "dump.el" user-emacs-directory)))
     (display-buffer buf)))
 
+(defmacro add-hook-run-once (hook function &optional append local)
+  "Like add-hook, but remove the hook after it is called"
+  (let ((sym (gensym)))
+    `(progn
+       (defun ,sym ()
+         (remove-hook ,hook ',sym ,local)
+         (funcall ,function))
+       (add-hook ,hook ',sym ,append ,local))))
+
 
 (provide 'init-funcs)
 

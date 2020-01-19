@@ -83,13 +83,13 @@
 ;; $sudo pacman -S inkscape
 (use-package org2ctex
   :after org
+  :hook (org-mode . org2ctex-mode)
   :config
   (setq org2ctex-latex-commands
         '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "bibtex %b"
           "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-  (org2ctex-mode))
+          "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f")))
 
 (use-package company-math
   :after org
@@ -101,8 +101,8 @@
     (setq-local company-backends
                 (append '((company-math-symbols-latex company-latex-commands))
                         company-backends))))
-
-(with-eval-after-load 'org
+;;;###autoload
+(defun +latex/org-setup ()
   ;; https://ivanaf.com/automatic_latex_fragment_toggling_in_org-mode.html
   (defvar-local org-latex-fragment-last nil
     "Holds last fragment/environment you were on.")
@@ -221,6 +221,8 @@
         (deactivate-org-latex-preview)
       (activate-org-latex-preview))
     (setq +latex/org-latex-preview-p (not +latex/org-latex-preview-p))))
+
+(add-hook-run-once 'org-mode-hook '+latex/org-setup)
 
 
 (provide 'init-latex)
