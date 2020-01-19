@@ -150,24 +150,12 @@
   (setq ob-async-no-async-languages-alist
         '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
 
-;; Org for blog
-;; TODO: Deprecated
-(use-package org-page
-  :after org
-  :commands (op/new-post op/do-publication))
-
-;; TODO: Org export html css
-;; https://github.com/jessekelly881/Rethink
-;; https://github.com/jessekelly881/Imagine
-
+;; Org Static Blog
 (use-package org-static-blog
   :commands (org-static-blog-mode
              org-static-blog-publish
              org-static-blog-publish-file
-             org-static-blog-create-new-post)
-  :config
-  (defun org-static-blog-generate-post-path (post-filename post-datetime)
-    (concat "html/" (file-name-nondirectory post-filename))))
+             org-static-blog-create-new-post))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
