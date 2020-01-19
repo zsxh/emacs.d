@@ -81,7 +81,8 @@
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line))
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
-  (with-eval-after-load 'edebug (evil-collection-init 'edebug)))
+  (with-eval-after-load 'edebug (evil-collection-init 'edebug))
+  (with-eval-after-load 'popup (evil-collection-init 'popup)))
 
 ;; https://github.com/redguardtoo/evil-matchit
 ;; Usage: '%' go to matching pair

@@ -284,6 +284,14 @@ current major mode."
   :quelpa ((play-code :fetcher github :repo "twlz0ne/play-code.el"))
   :commands (play-code-region play-code-buffer play-code-block))
 
+(use-package dumb-jump
+  :bind (:map dumb-jump-mode-map
+              ("C-M-g" . dumb-jump-go)
+              ("C-M-p" . dumb-jump-back)
+              ("C-M-q" . dumb-jump-quick-look))
+  :hook (prog-mode . dumb-jump-mode)
+  :custom (dump-jump-prefer-searcher 'rg))
+
 
 (provide 'init-prog)
 
