@@ -72,7 +72,13 @@
 (when (bound-and-true-p personal-dumped-p)
   (setq load-path personal-dumped-load-path)
   (global-font-lock-mode)
-  (transient-mark-mode))
+  (transient-mark-mode)
+  ;; Some packages did not load correctly
+  (add-hook 'after-init-hook
+            (lambda ()
+              (save-excursion
+                (switch-to-buffer "*scratch*")
+                (lisp-interaction-mode)))))
 
 ;; Customization
 (require 'init-custom)

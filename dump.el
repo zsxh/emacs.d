@@ -11,7 +11,7 @@
 (setq-local pdump-list '(use-package company org all-the-icons hydra
                           magit magit-todos ivy counsel swiper ibuffer
                           which-key general doom-themes doom-modeline
-                          evil evil-collection evil-magit evil-org))
+                          evil evil-collection evil-magit evil-org init-keybinding))
 
 ;; evil-collection need it
 (setq evil-want-keybinding nil)
