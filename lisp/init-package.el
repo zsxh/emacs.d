@@ -68,6 +68,8 @@
   (package-install 'use-package))
 
 (eval-when-compile
+  ;; FIXME: `:hook' does not defer if on expansion it contains a lambda
+  ;; https://github.com/jwiegley/use-package/issues/665
   (require 'use-package)
   (require 'use-package-ensure)
   (setq use-package-always-ensure t)

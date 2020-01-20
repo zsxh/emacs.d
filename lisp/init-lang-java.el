@@ -14,16 +14,19 @@
 
 (use-package lsp-java
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
-  :after lsp-mode
+  :defer t
   :config
   (require 'lsp-java-boot)
-  ;; to enable the lenses
-  (add-hook 'lsp-mode-hook #'lsp-lens-mode)
-  (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode))
+  (defun +java/lsp ()
+    (lsp-java-boot-lens-mode)
+    (lsp)))
 
-(with-eval-after-load 'cc-mode
+(add-hook 'java-mode-hook '+java/lsp)
 
-  (add-hook 'java-mode-hook 'lsp)
+(add-hook-run-once 'java-mode-hook '+java/setup)
+
+(defun +java/setup ()
+  (require 'lsp-java)
 
   (+funcs/major-mode-leader-keys
    java-mode-map
@@ -44,39 +47,36 @@
        "ig" '(lsp-java-generate-getters-and-setters :which-key "generate-getters-and-setters")
        "r" '(nil :which-key "run")
        "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
-       "rT" '(dap-java-run-test-class :which-key "run-junit-class"))))
+       "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
 
-(defvar jdks-installed-dir "/usr/local/"
-  "JDKs intalled directory.")
+  (defvar jdks-installed-dir "/usr/local/"
+    "JDKs intalled directory.")
 
-;;;###autoload
-(defun +java/set-jdk (jdk-version)
-  "Select JDK-VERSION in `jdks-installed-dir' as global version,
+  (defun +java/set-jdk (jdk-version)
+    "Select JDK-VERSION in `jdks-installed-dir' as global version,
 JDK-VERSION directory name prefix \"jdk-\" is required,
 `jdks-installed-dir'/jdk/bin in $PATH is required."
-  (interactive (list (completing-read "JDK-version: " (+java/list-jdk-version))))
-  (let ((target (expand-file-name jdk-version jdks-installed-dir))
-        (link-name (expand-file-name "jdk" jdks-installed-dir)))
-    (+funcs/sudo-shell-command (concat "ln -nsf " target " " link-name))))
+    (interactive (list (completing-read "JDK-version: " (+java/list-jdk-version))))
+    (let ((target (expand-file-name jdk-version jdks-installed-dir))
+          (link-name (expand-file-name "jdk" jdks-installed-dir)))
+      (+funcs/sudo-shell-command (concat "ln -nsf " target " " link-name))))
 
-;;;###autoload
-(defun +java/list-jdk-version ()
-  "Find all jdks which start with \"jdk-\" in `jdks-installed-dir'"
-  (let ((files (directory-files jdks-installed-dir))
-        (result nil))
-    (dolist (file files)
-      (if (string-match "\\(graalvm\\|jdk\\)-" file)
-          (push file result)))
-    result))
+  (defun +java/list-jdk-version ()
+    "Find all jdks which start with \"jdk-\" in `jdks-installed-dir'"
+    (let ((files (directory-files jdks-installed-dir))
+          (result nil))
+      (dolist (file files)
+        (if (string-match "\\(graalvm\\|jdk\\)-" file)
+            (push file result)))
+      result))
 
-;;;###autoload
-(defun +java/compile ()
-  (interactive)
-  (let ((default-directory (projectile-project-root))
-        (compile-command "mvn clean compile test-compile"))
-    (compile compile-command)
-    (switch-to-buffer-other-window "*compilation*")
-    (end-of-buffer)))
+  (defun +java/compile ()
+    (interactive)
+    (let ((default-directory (projectile-project-root))
+          (compile-command "mvn clean compile test-compile"))
+      (compile compile-command)
+      (switch-to-buffer-other-window "*compilation*")
+      (end-of-buffer))))
 
 
 (provide 'init-lang-java)

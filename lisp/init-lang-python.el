@@ -13,7 +13,7 @@
 (require 'init-language-server)
 
 (use-package lsp-python-ms
-  :after lsp-mode)
+  :after python)
 
 (add-hook 'python-mode-hook 'lsp) ; or lsp-deferred
 

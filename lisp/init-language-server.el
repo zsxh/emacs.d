@@ -73,10 +73,10 @@
   :commands lsp
   :init
   (setq lsp-prefer-flymake nil)
+  :hook (lsp-mode . lsp-lens-mode)
   :config
-  (require 'lsp-clients)
-
   (setq lsp-auto-guess-root nil
+        lsp-auto-require-clients nil
         lsp-keep-workspace-alive nil
         lsp-prefer-flymake nil
         lsp-enable-file-watchers nil
