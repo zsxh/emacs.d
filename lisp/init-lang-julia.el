@@ -16,7 +16,7 @@
 ;; Install Julia LanguageServer
 ;; $ julia
 ;; julia> ]
-;; (v1.3) pkg> add CSTParser#master StaticLint#master DocumentFormat#master SymbolServer#master LanguageServer#master
+;; (v1.3) pkg> add CSTParser StaticLint DocumentFormat SymbolServer LanguageServer
 (use-package julia-mode
   :mode ("\\.jl\\'" . julia-mode)
   :hook ((julia-mode . lsp)
@@ -24,8 +24,10 @@
   :custom (julia-indent-offset 2)
   :config (+language-server/set-common-leader-keys julia-mode-map))
 
-;; for lsp
-;; FIXME: now this is broken
+;; FIXME: SymbolServer.jl takes a very long time to process project dependencies
+;; https://github.com/julia-vscode/SymbolServer.jl/issues/56
+;; This is a one-time process that shouldn’t cause issues once the dependencies are cached,
+;; however it can take over a minute to process each dependency.
 (use-package lsp-julia
   :after julia-mode
   :custom
@@ -49,7 +51,6 @@
                " \"" (lsp-julia--get-depot-path) "\""
                ");"
                " run(server);"))))
-
 
 (use-package julia-repl
   :commands julia-repl-mode)
