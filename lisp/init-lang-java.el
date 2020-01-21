@@ -35,19 +35,18 @@
 
   (+language-server/set-common-leader-keys java-mode-map)
 
-  (if (eq emacs-lsp-client 'lsp-mode)
-      (+funcs/major-mode-leader-keys
-       java-mode-map
-       "dr" '(dap-java-debug :which-key "run")
-       "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
-       "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
-       "i" '(nil :which-key "implement")
-       "ic" '(lsp-java-add-import :which-key "import-class")
-       "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
-       "ig" '(lsp-java-generate-getters-and-setters :which-key "generate-getters-and-setters")
-       "r" '(nil :which-key "run")
-       "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
-       "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
+  (+funcs/major-mode-leader-keys
+    java-mode-map
+   "dr" '(dap-java-debug :which-key "run")
+   "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
+   "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
+   "i" '(nil :which-key "implement")
+   "ic" '(lsp-java-add-import :which-key "import-class")
+   "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
+   "ig" '(lsp-java-generate-getters-and-setters :which-key "generate-getters-and-setters")
+   "r" '(nil :which-key "run")
+   "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
+   "rT" '(dap-java-run-test-class :which-key "run-junit-class"))
 
   (defvar jdks-installed-dir "/usr/local/"
     "JDKs intalled directory.")

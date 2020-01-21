@@ -47,8 +47,7 @@ and write the 'initial-scratch-message into it."
 
 (defmacro +funcs/major-mode-leader-keys (mode-map &rest args)
   "Use general.el to define leader keys with both \"SPC m\" and \",\".
-Need major-mode-map symbol MODE-MAP and keybidngs map ARGS.
-
+MODE-MAP is keymap symbol or literal keymap name, ARGS is the keybindings.
 It returns a code string to define local leader keys."
   `(progn
      (general-define-key
