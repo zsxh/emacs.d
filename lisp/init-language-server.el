@@ -22,8 +22,6 @@
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
   :commands lsp
-  :init
-  (setq lsp-prefer-flymake nil)
   :hook (lsp-mode . lsp-lens-mode)
   :config
   (setq lsp-auto-guess-root nil
@@ -31,11 +29,16 @@
         lsp-keep-workspace-alive nil
         lsp-prefer-flymake nil
         lsp-enable-file-watchers nil
+        lsp-enable-folding nil
+        lsp-enable-symbol-highlighting nil ;turn off for better performance
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil
-        lsp-enable-symbol-highlighting nil
         lsp-links-check-internal 0.5
         lsp-lens-check-interval 0.2)
+
+  ;; don't scan 3rd party javascript libraries
+  (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
+  (push "[/\\\\]\\node_modules$" lsp-file-watch-ignored)
 
   (advice-add 'lsp :after
               (lambda ()
