@@ -21,8 +21,7 @@
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
   :hook (rust-mode . lsp)
-  :config
-  (setq rust-indent-offset 2))
+  :custom (rust-indent-offset 2))
 
 (use-package lsp-rust
   :ensure lsp-mode

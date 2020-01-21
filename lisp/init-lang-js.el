@@ -19,18 +19,18 @@
 ;; npm i -g typescript typescript-language-server
 (use-package js
   :ensure nil
-  :preface
+  :bind ((:map js-mode-map
+               ("/" . sgml-slash)))
+  :hook (js-mode . +js/lsp)
+  :config
+  (require 'sgml-mode)
+  (setq js-indent-level 2)
+  (+language-server/set-common-leader-keys js-mode-map)
   (defun +js/lsp ()
     ;; This fix beginning-of-defun raise exception problem
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)
     (unless (member major-mode '(json-mode ein:ipynb-mode))
-      (lsp)))
-  :hook (js-mode . +js/lsp)
-  :bind ((:map js-mode-map ("/" . sgml-slash)))
-  :config
-  (require 'sgml-mode)
-  (setq js-indent-level 2)
-  (+language-server/set-common-leader-keys js-mode-map))
+      (lsp))))
 
 ;; npm install -g vue-language-server
 (use-package vue-mode

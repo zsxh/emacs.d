@@ -21,12 +21,12 @@
     (lsp-java-boot-lens-mode)
     (lsp)))
 
-(add-hook 'java-mode-hook '+java/lsp)
-
 (add-hook-run-once 'java-mode-hook '+java/setup)
 
 (defun +java/setup ()
   (require 'lsp-java)
+  (+java/lsp)
+  (add-hook 'java-mode-hook '+java/lsp)
 
   (+funcs/major-mode-leader-keys
    java-mode-map

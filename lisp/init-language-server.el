@@ -76,7 +76,7 @@
   :hook (lsp-mode . lsp-lens-mode)
   :config
   (setq lsp-auto-guess-root nil
-        lsp-auto-require-clients nil
+        lsp-auto-require-clients t
         lsp-keep-workspace-alive nil
         lsp-prefer-flymake nil
         lsp-enable-file-watchers nil

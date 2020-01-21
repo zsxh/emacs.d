@@ -12,8 +12,11 @@
 
 (require 'init-language-server)
 
-;; By default files ending in .h are treated as c files rather than c++ files.
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(use-package cc-mode
+  :mode ("\\.h\\'" . c++-mode) ;; By default files ending in .h are treated as c files rather than c++ files.
+  :config
+  (add-hook-run-once 'c-mode-hook '+c/setup)
+  (add-hook-run-once 'c++-mode-hook '+c/setup))
 
 (use-package ccls
   :quelpa ((ccls :fetcher github :repo "MaskRay/emacs-ccls"))
@@ -23,20 +26,20 @@
     (evil-set-initial-state 'ccls-tree-mode 'emacs))
   (setq ccls-executable "/usr/bin/ccls")
   (setq ccls-initialization-options
-        '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t)))
-  (+language-server/set-common-leader-keys c-mode-map)
-  (+language-server/set-common-leader-keys c++-mode-map)
-  (add-hook 'c-mode-hook 'lsp)
-  (add-hook 'c++-mode-hook 'lsp))
+        '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
 
-(add-hook-run-once 'c-mode-hook (lambda () (require 'ccls) (lsp)))
-(add-hook-run-once 'c++-mode-hook (lambda () (require 'ccls) (lsp)))
+(defun +c/setup ()
+  (require 'ccls)
+  (let ((mode-map (symbol-value (intern (format "%s-map" major-mode))))
+        (mode-hook (intern (format "%s-hook" major-mode))))
+    (+language-server/set-common-leader-keys mode-map)
+    (add-hook mode-hook 'lsp))
+  (lsp))
 
 (use-package cmake-mode
   :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
-  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode)))
+  :mode (("CMakeLists\\.txt\\'" . cmake-mode)
+         ("\\.cmake\\'" . cmake-mode)))
 
 
 (provide 'init-lang-c)

@@ -67,6 +67,10 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; TIPS:
+;; https://stackoverflow.com/questions/46386362/execution-order-of-eval-after-load-vs-hooks-for-a-given-major-mode-in-emacs
+;; https://stackoverflow.com/questions/2736087/eval-after-load-vs-mode-hook
+
 (eval-when-compile
   ;; FIXME: `:hook' does not defer if on expansion it contains a lambda
   ;; https://github.com/jwiegley/use-package/issues/665

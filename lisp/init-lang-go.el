@@ -18,10 +18,6 @@
   :config
   (+language-server/set-common-leader-keys go-mode-map))
 
-(use-package lsp-go
-  :ensure lsp-mode
-  :after go-mode)
-
 
 (provide 'init-lang-go)
 
