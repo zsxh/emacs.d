@@ -28,15 +28,11 @@
   (+java/lsp)
   (add-hook 'java-mode-hook '+java/lsp)
 
-  (+funcs/major-mode-leader-keys
-   java-mode-map
-   "c" '(+java/compile :which-key "compile")
-   "j" '(+java/set-jdk :which-key "set-jdk"))
-
   (+language-server/set-common-leader-keys java-mode-map)
 
   (+funcs/major-mode-leader-keys
-    java-mode-map
+   java-mode-map
+   "c" '(+java/compile :which-key "compile")
    "dr" '(dap-java-debug :which-key "run")
    "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
    "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
@@ -44,6 +40,7 @@
    "ic" '(lsp-java-add-import :which-key "import-class")
    "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
    "ig" '(lsp-java-generate-getters-and-setters :which-key "generate-getters-and-setters")
+   "j" '(+java/set-jdk :which-key "set-jdk")
    "r" '(nil :which-key "run")
    "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
    "rT" '(dap-java-run-test-class :which-key "run-junit-class"))

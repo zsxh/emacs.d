@@ -52,13 +52,19 @@ It returns a code string to define local leader keys."
   `(progn
      (general-define-key
       :states 'normal
-      :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
+      :keymaps (if (and (symbolp ,mode-map)
+                        (keymapp (symbol-value ,mode-map)))
+                   ,mode-map
+                 (keymap-symbol ,mode-map))
       :major-modes t
       :prefix "SPC m"
       ,@args)
      (general-define-key
       :states 'normal
-      :keymaps (if (keymapp ,mode-map) ',mode-map ,mode-map)
+      :keymaps (if (and (symbolp ,mode-map)
+                        (keymapp (symbol-value ,mode-map)))
+                   ,mode-map
+                 (keymap-symbol ,mode-map))
       :major-modes t
       :prefix ","
       ,@args)))
@@ -281,6 +287,15 @@ Version 2017-01-27"
          (remove-hook ,hook ',sym ,local)
          (funcall ,function))
        (add-hook ,hook ',sym ,append ,local))))
+
+(defun keymap-symbol (keymap)
+  "Return the symbol to which KEYMAP is bound, or nil if no such symbol exists."
+  (catch 'gotit
+    (mapatoms (lambda (symbol)
+                (and (boundp symbol)
+                     (eq (symbol-value symbol) keymap)
+                     ;; (not (eq symbol 'keymap))
+                     (throw 'gotit symbol))))))
 
 
 (provide 'init-funcs)
