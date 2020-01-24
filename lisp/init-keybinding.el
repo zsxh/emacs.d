@@ -20,6 +20,7 @@
   (push '((nil . "select-window-[2-9]") . t) which-key-replacement-alist)
   ;; FIXME: when which-key side window height got fixed.
   (setq which-key-popup-type 'minibuffer)
+  (setq resize-mini-windows t)
   (which-key-mode))
 
 ;; keybindings with which-key,evil well supported
