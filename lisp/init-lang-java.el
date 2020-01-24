@@ -21,13 +21,8 @@
     (lsp-java-boot-lens-mode)
     (lsp)))
 
-(add-hook-run-once 'java-mode-hook '+java/setup)
-
-(defun +java/setup ()
-  (require 'lsp-java)
-  (+java/lsp)
-  (add-hook 'java-mode-hook '+java/lsp)
-
+(with-eval-after-load 'cc-mode
+  ;; FIXME: when i put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode
   (+language-server/set-common-leader-keys java-mode-map)
 
   (+funcs/major-mode-leader-keys
@@ -43,7 +38,14 @@
    "j" '(+java/set-jdk :which-key "set-jdk")
    "r" '(nil :which-key "run")
    "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
-   "rT" '(dap-java-run-test-class :which-key "run-junit-class"))
+   "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
+
+(add-hook-run-once 'java-mode-hook '+java/setup)
+
+(defun +java/setup ()
+  (require 'lsp-java)
+  (+java/lsp)
+  (add-hook 'java-mode-hook '+java/lsp)
 
   (defvar jdks-installed-dir "/usr/local/"
     "JDKs intalled directory.")
