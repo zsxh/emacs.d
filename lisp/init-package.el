@@ -131,12 +131,10 @@ If RETURN-P, return the message as a string instead of displaying it."
   ;; from an ELPA repo :ensure needs to be disabled if the :quelpa keyword is found.
   (quelpa-use-package-activate-advice))
 
-;;;###autoload
 (defun +package/quelpa-upgrade ()
   "Upgrade all packages found in `quelpa-cache'.
 This provides an easy way to upgrade all the packages for which
 the `quelpa' command has been run in the current Emacs session."
-  (interactive)
   (unless (featurep 'quelpa)
     (require 'quelpa))
   (when (quelpa-setup-p)

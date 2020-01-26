@@ -122,8 +122,16 @@
     (add-to-list 'aw-ignored-buffers neo-buffer-name)))
 
 ;; Treat undo history as a tree
-(use-package undo-tree
-  :hook (after-init . global-undo-tree-mode))
+;; (use-package undo-tree
+;;   :hook (after-init . global-undo-tree-mode))
+
+(use-package undo-fu
+  :config
+  (global-set-key (kbd "C-/") 'undo-fu-only-undo)
+  (global-set-key (kbd "C-?") 'undo-fu-only-redo)
+  (with-eval-after-load 'evil
+    (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+    (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)))
 
 ;; Numbered window shortcuts
 (use-package winum
