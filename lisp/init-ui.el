@@ -65,13 +65,7 @@
   (doom-themes-org-config))
 
 (use-package doom-modeline
-  :defer t
-  :preface
-  (defun my-doomline-init ()
-    (doom-modeline-init)
-    (with-current-buffer "*Messages*"
-      (doom-modeline-set-modeline 'main)))
-  :hook (after-init . my-doomline-init)
+  :hook (after-init . doom-modeline-init)
   :config
   (setq doom-modeline-modal-icon nil
         doom-modeline-unicode-fallback nil

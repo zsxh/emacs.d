@@ -20,11 +20,13 @@
              ein:jupyter-server-start)
   :config
   (use-package poly-ein
+    :ensure ein
     :defer t
     :config
     (setq ein:polymode nil))
 
   (use-package ein-subpackages
+    :ensure ein
     :defer t
     :config
     (setq ein:completion-backend 'ein:use-company-backend)
@@ -40,6 +42,7 @@
     (add-hook 'ein:notebook-mode-hook #'+ein/config))
 
   (use-package ein-notebook
+    :ensure ein
     :defer t
     :bind (("C-<return>" . ein:worksheet-execute-cell)
            ("S-<return>" . ein:worksheet-execute-cell-and-goto-next)
@@ -54,6 +57,7 @@
       "," 'ipython-notebook-hydra/body))
 
   (use-package ein-cell
+    :ensure ein
     :defer t
     :config
     (setq ein:cell-traceback-level nil ;; Show all traceback
@@ -70,6 +74,7 @@
     )
 
   (use-package ein-multilang
+    :ensure ein
     :defer t
     :config
     ;; FIXME: ein company backend freeze emacs when auto-completing after [. / \ < > + - * ^] characters (too many candidates)
@@ -103,6 +108,7 @@
           (set-syntax-table rust-mode-syntax-table)))))
 
   (use-package ein-traceback
+    :ensure ein
     :defer t
     :config
     (+funcs/major-mode-leader-keys ein:traceback-mode-map
