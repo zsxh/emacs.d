@@ -12,8 +12,7 @@
 
 (use-package tex
   :ensure auctex
-  :defer t
-  :hook (LaTeX-mode . +latex/config)
+  :hook (tex-mode . +latex/config)
   :config
   (defun +latex/config ()
     (turn-on-reftex)
@@ -74,7 +73,6 @@
 ;; org-latex edit, preview, export ...
 
 (use-package org-edit-latex
-  :defer t
   :after org)
 
 ;; require TeX Live installation
