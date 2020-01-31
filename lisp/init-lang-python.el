@@ -13,15 +13,22 @@
 (require 'init-language-server)
 
 (use-package python
-  :hook (python-mode . lsp))
+  :hook (python-mode . lsp)
+  :custom (python-indent-offset 2))
 
+;; something you might interested:
+;; Using lsp-python-ms with anaconda
+;; https://github.com/emacs-lsp/lsp-python-ms/issues/53
 (use-package lsp-python-ms
   :after python)
 
-;; Somehow pipenv cant really active virtulenv, but i found pyvenv do a good job for this
+;; The main entry points are `pyvenv-activate', which queries the user for a virtual environment directory
+;; to activate, and `pyvenv-workon', which queries for a virtual environment in $WORKON_HOME (from virtualenvwrapper.sh).
 (use-package pyvenv
   :commands pyvenv-activate)
 
+;; Setup PYENV_VERSION environment variable and
+;; `python-shell-virtualenv-root' custom variable based on user input
 (use-package pyenv-mode
   :commands pyenv-mode
   :hook (python-mode . pyenv-mode))
@@ -115,8 +122,6 @@
     (switch-to-buffer-other-window "*compilation*")
     (end-of-buffer)
     (evil-normal-state))
-
-  (setq python-indent-offset 2)
 
   (+python/python-setup-shell)
   (+python/set-leader-keys))

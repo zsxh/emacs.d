@@ -140,7 +140,11 @@
 ;; Use package auto-save instead of default auto save
 (use-package auto-save
   :quelpa ((auto-save :fetcher github :repo "manateelazycat/auto-save"))
-  :init (setq auto-save-default nil)
+  :preface
+  ;; note: it's risky to disable lockfiles
+  ;; https://emacs-china.org/t/filename/163/17
+  (setq auto-save-default nil
+        create-lockfiles nil)
   :config
   (setq auto-save-silent t
         auto-save-delete-trailing-whitespace t)
