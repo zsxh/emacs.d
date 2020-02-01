@@ -22,6 +22,15 @@
   (defun show-paren-function-advice (fn)
     "Highlight enclosing parens."
     (cond ((looking-at-p "\\s(") (funcall fn))
+          ((derived-mode-p 'python-mode)
+           (save-excursion
+             (ignore-errors
+               (let* ((cur-pos (point))
+                      (paren-open-pos (search-backward-regexp "\\s(" (point-min) t))
+                      (paren-close-pos (and paren-open-pos (search-forward-regexp "\\s)" cur-pos t))))
+                 (when (and paren-open-pos (not paren-close-pos))
+                   (goto-char (1+ paren-open-pos))
+                   (funcall fn))))))
           (t (save-excursion
                (ignore-errors (backward-up-list))
                (funcall fn)))))
