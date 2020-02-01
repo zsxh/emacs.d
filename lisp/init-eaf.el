@@ -17,7 +17,20 @@
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open eaf-open-browser eaf-open-dash)
+  :hook (eaf-mode . (lambda () (setq left-fringe-width 0
+                                     right-fringe-width 0)))
   :config
+  (setq eaf-browser-default-search-engine 'duckduckgo)
+
+  (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
+  (eaf-setq eaf-browser-default-zoom "1.2")
+  (eaf-setq eaf-browser-remember-history "false")
+
+  (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key scroll_up_page "d" eaf-browser-keybinding)
+  (eaf-bind-key scroll_down_page "u" eaf-browser-keybinding)
+
   (require 'dash)
   (when personal-eaf-grip-token
     (setq eaf-grip-token personal-eaf-grip-token))
@@ -59,55 +72,25 @@
     (interactive)
     (eaf-open url "browser" nil))
 
-  (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
+  (defun eaf-buffer-names ()
+    (mapcar #'buffer-name (eaf-buffers)))
 
-  ;; TODO: modify current local map
+  (defun eaf-buffers ()
+    (let* ((all-buffers (cl-remove-if-not
+                         (lambda (buffer)
+                           (with-current-buffer buffer
+                             (derived-mode-p 'eaf-mode)))
+                         (buffer-list))))
+      all-buffers))
 
-  ;; (eaf-bind-key eaf-browser-toggle-keybinding "C-t" eaf-browser-keybinding)
-
-  ;; (setq eaf-browser-last-keybinding eaf-browser-keybinding)
-
-  ;; (setq eaf-browser-keybinding
-  ;;       '(("-" . "zoom_out")
-  ;;         ("=" . "zoom_in")
-  ;;         ("0" . "zoom_reset")
-  ;;         ("C-s" . "search_text_forward")
-  ;;         ("C-r" . "search_text_backward")
-  ;;         ("j" . "scroll_up")
-  ;;         ("k" . "scroll_down")
-  ;;         ("C-v" . "scroll_up_page")
-  ;;         ("C-y" . "yank_text")
-  ;;         ("C-w" . "kill_text")
-  ;;         ("f" . "open_link")
-  ;;         ("F" . "open_link_new_tab")
-  ;;         ("C-/" . "undo_action")
-  ;;         ("M-_" . "redo_action")
-  ;;         ("M-w" . "copy_text")
-  ;;         ("M-f" . "history_forward")
-  ;;         ("M-b" . "history_backward")
-  ;;         ("M-q" . "clean_all_cookie")
-  ;;         ("M-v" . "scroll_down_page")
-  ;;         ("M-<" . "scroll_to_begin")
-  ;;         ("M->" . "scroll_to_bottom")
-  ;;         ("<f5>" . "refresh_page")
-  ;;         ("T" . eaf-switch-to-eww)
-  ;;         ("C-t" . eaf-browser-toggle-keybinding)))
-
-  ;; (defun eaf-browser-toggle-keybinding ()
-  ;;   (interactive)
-  ;;   (let* ((temp eaf-browser-keybinding))
-  ;;     (setq eaf-browser-keybinding eaf-browser-last-keybinding
-  ;;           eaf-browser-last-keybinding temp)
-  ;;     (eaf--gen-keybinding-map (symbol-value 'eaf-browser-keybinding))
-  ;;     (print eaf-browser-keybinding)
-  ;;     (with-current-buffer (current-buffer)
-  ;;       (setq-local emulation-mode-map-alists
-  ;;                   (default-value 'emulation-mode-map-alists))
-  ;;       (push (list (cons t eaf-mode-map))
-  ;;             emulation-mode-map-alists)
-  ;;       (push 'evil-mode-map-alist emulation-mode-map-alists))))
-  )
+  (defun +eaf/ivy-switch-buffer ()
+    (interactive)
+    (ivy-read "Switch to buffer: "
+              (delete (buffer-name (current-buffer))
+                      (eaf-buffer-names))
+              :initial-input nil
+              :action #'ivy--switch-buffer-action
+              :caller '+eaf/ivy-switch-buffer)))
 
 
 ;; Pdf viewer settings

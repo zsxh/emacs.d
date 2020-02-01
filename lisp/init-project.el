@@ -46,11 +46,11 @@
     (interactive)
     (ivy-read "Switch to buffer: "
               (delete (buffer-name (current-buffer))
-                      (projectile-project-buffer-names))
+                      (when (projectile-project-root)
+                        (projectile-project-buffer-names)))
               :initial-input nil
               :action #'ivy--switch-buffer-action
               :caller '+projectile/ivy-switch-buffer)))
-
 
 (use-package find-file-in-project
   :commands (find-file-in-project

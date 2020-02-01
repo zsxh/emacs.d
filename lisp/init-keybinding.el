@@ -77,7 +77,8 @@
      "awb" '(eww-list-bookmarks :which-key "list-bookmarks")
      ;; Buffers
      "b" '(nil :which-key "buffer")
-     "bb" '(switch-to-buffer :which-key "switch-to-buffer")
+     "bb" '(+funcs/switch-to-buffer-dwim :which-key "switch-to-buffer-dwim")
+     "bB" '(switch-to-buffer :which-key "switch-to-buffer")
      "bd" '(kill-current-buffer :which-key "kill-current-buffer")
      "bi" '(imenu-list-smart-toggle :which-key "imenu")
      "bI" '(ibuffer :which-key "buffers list")

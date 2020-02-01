@@ -297,6 +297,15 @@ Version 2017-01-27"
                      ;; (not (eq symbol 'keymap))
                      (throw 'gotit symbol))))))
 
+(defun +funcs/switch-to-buffer-dwim ()
+  (interactive)
+  (cond ((projectile-project-root)
+         (+projectile/ivy-switch-buffer))
+        ((eq 'eaf-mode major-mode)
+         (+eaf/ivy-switch-buffer))
+        (t
+         (ivy-switch-buffer))))
+
 
 (provide 'init-funcs)
 
