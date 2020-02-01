@@ -16,7 +16,10 @@
 ;; https://github.com/manateelazycat/emacs-application-framework
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
-  :commands (eaf-open eaf-open-browser eaf-open-dash)
+  :commands (eaf-open
+             eaf-open-browser
+             eaf-open-dash
+             eaf-open-bookmark)
   :hook (eaf-mode . (lambda () (setq left-fringe-width 0
                                      right-fringe-width 0)))
   :config
@@ -28,8 +31,7 @@
 
   (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_up_page "d" eaf-browser-keybinding)
-  (eaf-bind-key scroll_down_page "u" eaf-browser-keybinding)
+  (eaf-bind-key eaf-switch-to-eww "C-t" eaf-browser-keybinding)
 
   (require 'dash)
   (when personal-eaf-grip-token
