@@ -70,12 +70,25 @@
   (setq doom-modeline-modal-icon nil
         doom-modeline-unicode-fallback nil
         doom-modeline-major-mode-icon t
-        doom-modeline-buffer-file-name-style 'buffer-name))
+        doom-modeline-buffer-file-name-style 'buffer-name)
 
-;; ;; Display time on modeline
+  (defun display-battery-if-discharging (fn)
+    (let* ((data (and (bound-and-true-p display-battery-mode)
+                      (funcall battery-status-function)))
+           (charging? (string-equal "AC" (cdr (assoc ?L data)))))
+      (if charging?
+          (setq doom-modeline--battery-status nil)
+        (funcall fn))))
+
+  (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-discharging))
+
+;; Display time on modeline
 (setq display-time-format "%Y/%m/%d %A %H:%M")
 (setq display-time-default-load-average nil) ; don't show load avera
-(display-time-mode)
+(add-hook 'after-init-hook 'display-time-mode)
+
+;; Display battery status
+(add-hook 'after-init-hook 'display-battery-mode)
 
 (defcustom +ui/display-time-format-style 'long
   "Customize time format."
