@@ -72,15 +72,18 @@
         doom-modeline-major-mode-icon t
         doom-modeline-buffer-file-name-style 'buffer-name)
 
-  (defun display-battery-if-discharging (fn)
+  (defun display-battery-if-offline (fn)
     (let* ((data (and (bound-and-true-p display-battery-mode)
                       (funcall battery-status-function)))
-           (charging? (string-equal "AC" (cdr (assoc ?L data)))))
-      (if charging?
+           (status (cdr (assoc ?L data)))
+           (online-p (if (version< emacs-version "28")
+                         (string-equal "AC" status)
+                       (string-equal "on-line" status))))
+      (if online-p
           (setq doom-modeline--battery-status nil)
         (funcall fn))))
 
-  (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-discharging))
+  (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-offline))
 
 ;; Display time on modeline
 (setq display-time-format "%Y/%m/%d %A %H:%M")
