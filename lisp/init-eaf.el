@@ -13,7 +13,8 @@
 (eval-when-compile
   (require 'init-custom))
 
-;; https://github.com/manateelazycat/emacs-application-framework
+;; Install EAF
+;; https://github.com/manateelazycat/emacs-application-framework#install-eaf
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
