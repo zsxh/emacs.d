@@ -123,8 +123,7 @@ If RETURN-P, return the message as a string instead of displaying it."
   ;; Avoid loading quelpa unless necessary.
   ;; This improves performance, but can prevent packages from being updated automatically.
   (setq quelpa-use-package-inhibit-loading-quelpa t)
-  (when (and (version<= "27.1" emacs-version)
-             (bound-and-true-p package-quickstart))
+  (when (bound-and-true-p package-quickstart)
     (add-hook 'quelpa-after-hook 'package-quickstart-refresh))
   :config
   ;; To install some packages with quelpa but use use-package-always-ensure to install all others

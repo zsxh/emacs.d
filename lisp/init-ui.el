@@ -195,7 +195,7 @@
 
 ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
 ;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
-(when (version<= "27" emacs-version)
+(when (fboundp 'set-face-extend)
   (with-eval-after-load 'org
     (set-face-extend 'org-block t)
     (set-face-extend 'org-block-begin-line t)
