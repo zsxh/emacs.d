@@ -22,7 +22,7 @@
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
   :commands lsp
-  :hook (lsp-mode . lsp-lens-mode)
+  ;; :hook (lsp-mode . lsp-lens-mode)
   :config
   (setq lsp-auto-guess-root nil
         lsp-auto-require-clients t

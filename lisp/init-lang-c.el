@@ -30,6 +30,10 @@
 
 (defun +c/setup ()
   (require 'ccls)
+  (add-hook 'lsp-after-initialize-hook
+            (lambda ()
+              (when (member major-mode '(c-mode c++-mode))
+                (ccls-code-lens-mode))))
   (let ((mode-map-symbol (intern (format "%s-map" major-mode)))
         (mode-hook (intern (format "%s-hook" major-mode))))
     (+language-server/set-common-leader-keys mode-map-symbol)
