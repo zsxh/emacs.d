@@ -22,7 +22,6 @@
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
   :commands lsp
-  ;; :hook (lsp-mode . lsp-lens-mode)
   :config
   (setq lsp-auto-guess-root nil
         lsp-auto-require-clients t
@@ -34,16 +33,18 @@
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil
         lsp-links-check-internal 0.5
-        lsp-lens-check-interval 0.2)
+        lsp-lens-check-interval 0.3)
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
   (push "[/\\\\]\\node_modules$" lsp-file-watch-ignored)
 
-  (advice-add 'lsp :after
-              (lambda ()
-                (setq-local company-backends
-                            '(company-lsp company-files company-dabbrev))))
+  (defun +lsp/setup ()
+    (setq-local company-backends
+                '(company-lsp company-files company-dabbrev))
+    (unless (member major-mode '(c-mode c++-mode))
+      (lsp-lens-mode)))
+  (add-hook 'lsp-after-initialize-hook '+lsp/setup)
 
   (with-eval-after-load 'evil
     (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition))

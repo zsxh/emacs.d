@@ -16,11 +16,7 @@
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
   :defer t
   :config
-  (require 'lsp-java-boot)
-  (defun +java/lsp ()
-    (lsp)
-    (lsp-lens-mode)
-    (lsp-java-boot-lens-mode)))
+  (require 'lsp-java-boot))
 
 (with-eval-after-load 'cc-mode
   ;; FIXME: when i put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode
@@ -45,8 +41,13 @@
 
 (defun +java/setup ()
   (require 'lsp-java)
-  (+java/lsp)
-  (add-hook 'java-mode-hook '+java/lsp)
+  (add-hook 'java-mode-hook 'lsp)
+  (add-hook 'lsp-after-initialize-hook
+            (lambda ()
+              (when (eq major-mode 'java-mode)
+                (lsp-java-lens-mode)
+                (lsp-java-boot-lens-mode))))
+  (lsp)
 
   (defvar jdks-installed-dir "/usr/local/"
     "JDKs intalled directory.")
