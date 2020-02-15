@@ -18,8 +18,9 @@
   :config
   (require 'lsp-java-boot)
   (defun +java/lsp ()
-    (lsp-java-boot-lens-mode)
-    (lsp)))
+    (lsp)
+    (lsp-lens-mode)
+    (lsp-java-boot-lens-mode)))
 
 (with-eval-after-load 'cc-mode
   ;; FIXME: when i put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode

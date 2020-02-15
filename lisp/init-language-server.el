@@ -27,7 +27,7 @@
   (setq lsp-auto-guess-root nil
         lsp-auto-require-clients t
         lsp-keep-workspace-alive nil
-        lsp-prefer-flymake nil
+        lsp-diagnostic-package :flycheck
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
         lsp-enable-symbol-highlighting nil ;turn off for better performance
@@ -59,7 +59,12 @@
   :after lsp-mode
   :preface (setq lsp-ui-doc-enable nil
                  lsp-ui-sideline-enable nil)
-  :bind ((:map lsp-ui-peek-mode-map
+  :bind ((:map lsp-ui-mode-map
+               ("C-M-g" . lsp-ui-peek-find-definitions)
+               ("C-M-r" . lsp-ui-peek-find-references)
+               ("C-M-q" . lsp-ui-peek-jump-backward)
+               ("C-M-n" . lsp-ui-peek-jump-forward))
+         (:map lsp-ui-peek-mode-map
                ("j" . lsp-ui-peek--select-next)
                ("k" . lsp-ui-peek--select-prev)
                ("C-j" . lsp-ui-peek--select-next)
@@ -217,10 +222,10 @@
         "D" '(+lsp/toggle-doc-show :which-key "toggle-doc-hover")
         "f" '(lsp-format-buffer :which-key "format")
         "g" '(nil :which-key "go")
-        "gd" '(lsp-find-definition :which-key "find-definitions")
+        "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
         "gD" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
-        "gi" '(lsp-find-implementation :which-key "find-implementation")
-        "gr" '(lsp-find-references :which-key "find-references")
+        "gi" '(lsp-ui-peek-find-implementation :which-key "find-implementation")
+        "gr" '(lsp-ui-peek-find-references :which-key "find-references")
         "l" '(lsp-avy-lens :which-key "Click lens using avy")
         "R" '(lsp-rename :which-key "rename"))))))
 

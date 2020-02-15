@@ -45,6 +45,13 @@
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)))
 
+(with-eval-after-load 'make-mode
+  ;; Makefile don't ask me 'Suspicious line XXX. Save anyway'
+  (add-hook 'makefile-mode-hook
+            (function
+             (lambda ()
+               (fset 'makefile-warn-suspicious-lines 'ignore)))))
+
 
 (provide 'init-lang-c)
 
