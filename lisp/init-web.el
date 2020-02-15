@@ -42,7 +42,9 @@
   (defun +web/config ()
     (unless (and (buffer-file-name)
                  (equal "xml" (file-name-extension (buffer-file-name))))
-      (flycheck-mode)))
+      (flycheck-mode))
+    (setq-local company-backends
+                '(company-capf company-files company-css company-dabbrev)))
 
   ;; Install tidy to check html syntax, https://www.flycheck.org/en/latest/languages.html#html
   (use-package flycheck
@@ -71,6 +73,9 @@
 (use-package css-mode
   :ensure nil
   :defer t
+  :hook (css-mode . (lambda ()
+                      (setq-local company-backends
+                                  '(company-capf company-files company-css company-dabbrev))))
   :config
   (setq css-indent-offset 2))
 

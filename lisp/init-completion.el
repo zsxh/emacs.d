@@ -38,7 +38,7 @@
         ;; company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil    ; No downcase when completion.
         company-require-match nil ; Don't require match, so you can still move your cursor as expected.
-        company-backends '(company-capf company-files company-css company-dabbrev)
+        company-backends '(company-capf company-files company-dabbrev)
         company-global-modes '(not shell-mode eshell-mode eaf-mode))
   (with-eval-after-load 'company-eclim
     ;;  Stop eclim auto save.
@@ -72,7 +72,7 @@
   :config
   (setq company-box-max-candidates 50
         company-box-show-single-candidate t
-        company-box-doc-delay 0.7)
+        company-box-doc-delay 0.3)
 
   (with-eval-after-load 'all-the-icons
     (defun +company-box-icons--elisp (candidate)

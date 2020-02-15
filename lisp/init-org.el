@@ -121,6 +121,9 @@
    "'" '(org-edit-special :which-key "editor")))
 
 ;; Org Bable
+;; TODO: optimize org bable runtime
+;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/contrib/jupyter.el
+;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/config.el
 (use-package ob-go :defer t)
 (use-package ob-rust :defer t)
 (use-package ob-ipython :defer t)
