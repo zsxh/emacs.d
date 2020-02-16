@@ -32,9 +32,12 @@
 
   (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
+
   (eaf-bind-key eaf-switch-to-eww "C-t" eaf-browser-keybinding)
   (eaf-bind-key nil "M-u" eaf-browser-keybinding)
   (eaf-bind-key clear_focus "M-p" eaf-browser-keybinding)
+  (eaf-bind-key nil "T" eaf-browser-keybinding)
+  (eaf-bind-key recover_prev_close_page "X" eaf-browser-keybinding)
 
   (require 'dash)
   (when personal-eaf-grip-token

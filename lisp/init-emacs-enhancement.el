@@ -54,6 +54,11 @@
                       (unless (eq ibuffer-sorting-mode 'alphabetic)
                         (ibuffer-do-sort-by-alphabetic))))))
 
+(use-package all-the-icons-ibuffer
+  :defer t
+  :init
+  (add-hook-run-once 'ibuffer-hook (lambda () (all-the-icons-ibuffer-mode))))
+
 ;;;;;;;;;;;;;; Dired ;;;;;;;;;;;;;;
 
 ;; Dired Configs

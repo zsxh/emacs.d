@@ -1,16 +1,15 @@
 #+STARTUP: showall
-Updated: <2020-01-23>
+Updated: <2020-02-16>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.13, cairo version 1.17.3) of 2020-01-23
-  - OS: Manjaro 18.1.5 Juhraya
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.13, cairo version 1.17.3) of 2020-02-16
+  - OS: Manjaro 19.0.0 Kyria
   - Shell: zsh 5.7.1
-  - Kernel: x86_64 Linux 5.5.0-1-MANJARO
-  - DE: GNOME
-  - WM: KWin
+  - Kernel: x86_64 Linux 5.5.2-1-MANJARO
+  - DE: DDE
 
 * TODOs
-  - reduce org-mode first boot time
+  - lazy load org-src lang modes
 
 * Features
   - =org=
