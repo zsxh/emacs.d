@@ -86,6 +86,7 @@
   ;; no need with initial "^"
   (setq ivy-initial-inputs-alist nil))
 
+;; TODO: https://github.com/seagle0128/all-the-icons-ivy-rich
 (use-package ivy-rich
   :after ivy
   :config
@@ -98,6 +99,21 @@
         (if (symbolp icon)
             (all-the-icons-icon-for-mode 'fundamental-mode)
           icon))))
+
+  (defun ivy-rich-file-icon (candidate)
+    "Display file icon from CANDIDATE in `ivy-rich'."
+    (let* ((path (concat ivy--directory candidate))
+           (file (file-name-nondirectory path))
+           (icon (cond
+                  ((file-directory-p path)
+                   (all-the-icons-icon-for-dir path nil ""))
+                  ((string-match "^/.*:$" path)
+                   (all-the-icons-octicon "radio-tower" :height 1.0 :v-adjust 0.01))
+                  ((not (string-empty-p file))
+                   (all-the-icons-icon-for-file file :v-adjust -0.05)))))
+      (if (symbolp icon)
+          (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0)
+        icon)))
 
   (plist-put ivy-rich--display-transformers-list 'ivy-switch-buffer
              '(:columns
@@ -113,6 +129,16 @@
 
   (plist-put ivy-rich--display-transformers-list '+projectile/ivy-switch-buffer
              (plist-get ivy-rich--display-transformers-list 'ivy-switch-buffer))
+
+
+  (plist-put ivy-rich--display-transformers-list 'counsel-find-file
+             '(:columns
+               ((ivy-rich-file-icon)
+                (ivy-read-file-transformer))
+               :delimiter "\t"))
+
+  (plist-put ivy-rich--display-transformers-list 'find-file-in-project
+             (plist-get ivy-rich--display-transformers-list 'counsel-find-file))
 
   (ivy-rich-mode 1))
 
