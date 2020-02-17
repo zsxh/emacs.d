@@ -13,14 +13,18 @@
 (require 'init-language-server)
 
 (use-package python
+  :ensure nil
+  :defer t
   :hook (python-mode . lsp)
-  :custom (python-indent-offset 2))
+  :custom (python-indent-offset 2)
+  :config
+  (require 'lsp-python-ms))
 
 ;; something you might interested:
 ;; Using lsp-python-ms with anaconda
 ;; https://github.com/emacs-lsp/lsp-python-ms/issues/53
 (use-package lsp-python-ms
-  :after python)
+  :defer t)
 
 ;; The main entry points are `pyvenv-activate', which queries the user for a virtual environment directory
 ;; to activate, and `pyvenv-workon', which queries for a virtual environment in $WORKON_HOME (from virtualenvwrapper.sh).

@@ -26,6 +26,8 @@
   (require 'sgml-mode)
   (setq js-indent-level 2)
   (+language-server/set-common-leader-keys js-mode-map)
+
+  (require 'lsp-clients)
   (defun +js/lsp ()
     ;; This fix beginning-of-defun raise exception problem
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)

@@ -17,6 +17,7 @@
          ("\\.cljs\\'" . clojurescript-mode))
   :hook ((clojure-mode clojurec-mode clojurescript-mode) . lsp)
   :config
+  (require 'lsp-clojure)
   (dolist (mode-map '(clojure-mode-map clojurec-mode-map clojurescript-mode-map))
     (+language-server/set-common-leader-keys (symbol-value mode-map))))
 

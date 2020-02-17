@@ -24,7 +24,7 @@
   :commands lsp
   :config
   (setq lsp-auto-guess-root nil
-        lsp-auto-require-clients t
+        lsp-client-packages '()
         lsp-keep-workspace-alive nil
         lsp-diagnostic-package :flycheck
         lsp-enable-file-watchers nil

@@ -21,12 +21,10 @@
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
   :hook (rust-mode . lsp)
-  :custom (rust-indent-offset 2))
-
-(use-package lsp-rust
-  :ensure lsp-mode
-  :after rust-mode
+  :custom (rust-indent-offset 2)
   :config
+  (use-package lsp-rust
+    :ensure lsp-mode)
   (when (executable-find "ra_lsp_server")
     (setq lsp-rust-rls-server-command "rust-analyzer"
           lsp-rust-analyzer-server-display-inlay-hints t)))

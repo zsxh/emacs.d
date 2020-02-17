@@ -16,6 +16,7 @@
   :mode ("\\.go\\'" . go-mode)
   :hook (go-mode . lsp)
   :config
+  (require 'lsp-go)
   (+language-server/set-common-leader-keys go-mode-map))
 
 
