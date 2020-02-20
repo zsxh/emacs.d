@@ -143,6 +143,7 @@
 
   (set-face-foreground 'lsp-ui-sideline-code-action "#FF8C00"))
 
+;; FIXME: not working now
 (when (featurep 'lsp-mode)
   ;; Support LSP in org babel
   ;; https://github.com/emacs-lsp/lsp-mode/issues/377

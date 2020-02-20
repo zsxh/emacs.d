@@ -175,6 +175,10 @@
   :mode (("\\.ly$" . LilyPond-mode)
          ("\\.ily$" . LilyPond-mode)))
 
+;; https://github.com/benma/visual-regexp.el
+(use-package visual-regexp
+  :defer t)
+
 
 (provide 'init-misc)
 

@@ -23,12 +23,22 @@
              eaf-open-bookmark)
   :hook (eaf-mode . (lambda () (setq left-fringe-width 0
                                      right-fringe-width 0)))
+  :init
+  (progn
+    ;; Pdf viewer settings
+    (add-to-list 'auto-mode-alist
+                 '("\\.pdf\\'" . (lambda ()
+                                   (let ((filename buffer-file-name))
+                                     (eaf-open filename)
+                                     (kill-buffer (file-name-nondirectory filename))))))
+    (with-eval-after-load 'org
+      (setq browse-url-browser-function 'eaf-open-browser)))
   :config
   (setq eaf-browser-default-search-engine "duckduckgo")
 
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")
-  (eaf-setq eaf-browser-remember-history "false")
+  (eaf-setq eaf-browser-remember-history "true")
 
   (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
@@ -100,13 +110,6 @@
               :action #'ivy--switch-buffer-action
               :caller '+eaf/ivy-switch-buffer)))
 
-
-;; Pdf viewer settings
-(add-to-list 'auto-mode-alist
-             '("\\.pdf\\'" . (lambda ()
-                               (let ((filename buffer-file-name))
-                                 (eaf-open filename)
-                                 (kill-buffer (file-name-nondirectory filename))))))
 
 
 (provide 'init-eaf)

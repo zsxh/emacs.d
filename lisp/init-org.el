@@ -120,39 +120,6 @@
    "Tp" '(+latex/toggle-latex-preview :which-key "toggle-latex-preview")
    "'" '(org-edit-special :which-key "editor")))
 
-;; Org Bable
-;; TODO: optimize org bable runtime
-;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/contrib/jupyter.el
-;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/config.el
-(use-package ob-go :defer t)
-(use-package ob-rust :defer t)
-(use-package ob-ipython :defer t)
-;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
-(use-package ob-jupyter
-  :defer t
-  :ensure jupyter
-  ;; :config
-  ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
-  ;; (org-babel-jupyter-override-src-block "python")
-  )
-(use-package ob-julia
-  :defer t
-  :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia)))
-(use-package ob-restclient
-  :defer t
-  :ensure restclient)
-
-;; ob-async enables asynchronous execution of org-babel src blocks
-(use-package ob-async
-  :defer t
-  :config
-  (add-hook 'ob-async-pre-execute-src-block-hook
-            '(lambda ()
-               (setq inferior-julia-program-name "julia")))
-  ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
-  (setq ob-async-no-async-languages-alist
-        '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
-
 ;; Org Static Blog
 (use-package org-static-blog
   :commands (org-static-blog-mode
@@ -173,43 +140,118 @@
 ;; $pip install nbcorg
 (use-package ox-ipynb
   :quelpa ((ox-ipynb :fetcher github :repo "jkitchin/ox-ipynb"))
-  :defer t)
+  :defer t
+  :init
+  (add-hook 'org-load-hook (lambda () (require 'ox-ipynb))))
 
-(defun +org/run-once ()
-  (require 'ob-go)
-  (require 'ob-rust)
-  (require 'ob-ipython)
-  (require 'ob-jupyter)
-  (require 'ob-julia)
-  (require 'ob-restclient)
-  (require 'ob-async)
-  (defvar load-language-list '((emacs-lisp . t)
-                               (perl . t)
-                               (python . t)
-                               (ruby . t)
-                               (js . t)
-                               (css . t)
-                               (sass . t)
-                               (C . t)
-                               (java . t)
-                               (go . t)
-                               (rust . t)
-                               (ipython . t)
-                               (jupyter . t)
-                               (restclient . t)
-                               (julia . t)
-                               (plantuml . t)
-                               (lilypond . t)))
-  ;; ob-sh renamed to ob-shell since 26.1.
-  (if (>= emacs-major-version 26)
-      (cl-pushnew '(shell . t) load-language-list)
-    (cl-pushnew '(sh . t) load-language-list))
+;; Org Bable
+;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/contrib/jupyter.el
+;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/config.el
+(defvar +org/babel-mode-alist
+  '((cpp . C)
+    (C++ . C)
+    (D . C)
+    (sh . shell)
+    (bash . shell)
+    (matlab . octave)
+    (amm . ammonite))
+  "An alist mapping languages to babel libraries. This is necessary for babel
+libraries (ob-*.el) that don't match the name of the language.
+For example, with (fish . shell) will cause #+BEGIN_SRC fish to load ob-shell.el
+when executed.")
 
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               load-language-list)
-  (require 'ox-ipynb))
+(defvar +org/babel-load-functions ()
+  "A list of functions executed to load the current executing src block. They
+take one argument (the language specified in the src block, as a string). Stops
+at the first function to return non-nil.")
 
-(add-hook-run-once 'org-mode-hook '+org/run-once)
+(defun +org/init-label-lazy-loader-h ()
+  "Load label libraries lazily when babel blocks are executed."
+  (defun +org/babel-lazy-load (lang)
+    (cl-check-type lang symbol)
+    (or (run-hook-with-args-until-success '+org/babel-load-functions lang)
+        (require (intern (format "ob-%s" lang)) nil t)
+        (require lang nil t)))
+
+  (defun +org/src-lazy-load-library-a (lang)
+    "Lazy load a babel package to ensure syntax highlighting."
+    (or (cdr (assoc lang org-src-lang-modes))
+        (+org/babel-lazy-load (intern lang))))
+
+  (advice-add #'org-src-get-lang-mode :before #'+org/src-lazy-load-library-a)
+
+  ;; This also works for tangling and exporting
+  (defun +org/babel-lazy-load-library-a (info)
+    "Load babel libraries lazily when babel blocks are executed."
+    (let* ((lang (nth 0 info))
+           (lang (cond ((symbolp lang) lang)
+                       ((stringp lang) (intern lang))))
+           (lang (or (cdr (assq lang +org/babel-mode-alist))
+                     lang)))
+      (when (and lang
+                 (not (cdr (assq lang org-babel-load-languages)))
+                 (+org/babel-lazy-load lang))
+        (when (assq :async (nth 2 info))
+          ;; ob-async has its own agenda for lazy loading packages (in the
+          ;; child process), so we only need to make sure it's loaded.
+          (require 'ob-async nil t))
+        (add-to-list 'org-babel-load-languages (cons lang t)))
+      t))
+
+  (advice-add #'org-babel-confirm-evaluate :after-while #'+org/babel-lazy-load-library-a)
+
+  (defun +org/noop-org-babel-do-load-languages-a (&rest _)
+    (message
+     (concat "`org-babel-do-load-languages' is redundant with lazy loading mechanism for babel "
+             "packages. There is no need to use it, so it has been disabled")))
+
+  (advice-add #'org-babel-do-load-languages :override #'+org/noop-org-babel-do-load-languages-a))
+
+(add-hook 'org-load-hook #'+org/init-label-lazy-loader-h)
+
+(use-package ob-go :defer t)
+(use-package ob-rust :defer t)
+(use-package ob-ipython :defer t)
+
+;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
+(use-package ob-jupyter
+  :defer t
+  :ensure jupyter
+  ;; :config
+  ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
+  ;; (org-babel-jupyter-override-src-block "python")
+  :init
+  (defun +org/babel-load-jupyter-h (lang)
+    (when (string-prefix-p "jupyter-" (symbol-name lang))
+      (require 'jupyter)
+      (let* ((lang-name (symbol-name lang))
+             (lang-tail (string-remove-prefix "jupyter-" lang-name)))
+        (and (not (assoc lang-tail org-src-lang-modes))
+             (require (intern (format "ob-%s" lang-tail)) nil t)
+             (add-to-list 'org-src-lang-modes (cons lang-name (intern lang-tail)))))
+      (with-demoted-errors "Jupyter: %s"
+        (require lang nil t)
+        (require 'ob-jupyter nil t))))
+  (add-hook '+org/babel-load-functions #'+org/babel-load-jupyter-h))
+
+(use-package ob-julia
+  :defer t
+  :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia)))
+
+(use-package ob-restclient
+  :defer t
+  :ensure restclient)
+
+;; ob-async enables asynchronous execution of org-babel src blocks
+(use-package ob-async
+  :defer t
+  :config
+  (add-hook 'ob-async-pre-execute-src-block-hook
+            '(lambda ()
+               (setq inferior-julia-program-name "julia")))
+  ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
+  (setq ob-async-no-async-languages-alist
+        '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
 
 
 (provide 'init-org)
