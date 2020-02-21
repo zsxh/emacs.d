@@ -73,16 +73,15 @@
 
 ;; org-latex edit, preview, export ...
 
-(use-package org-edit-latex
-  :after org)
-
 ;; require TeX Live installation
 ;; $sudo pacman -S texlive-bin texlive-core texlive-latexextra texlive-langchinese
 ;; org svg export to pdf also require 'inkscape' and '#+latex_header_extra: \usepackage{svg}'
 ;; $sudo pacman -S inkscape
 (use-package org2ctex
   :after org
-  :hook (org-mode . org2ctex-mode)
+  :commands (org2ctex-mode)
+  :init
+  (add-hook 'org-load-hook (lambda () (org2ctex-mode)))
   :config
   (setq org2ctex-latex-commands
         '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
@@ -100,7 +99,7 @@
     (setq-local company-backends
                 (append '((company-math-symbols-latex company-latex-commands))
                         company-backends))))
-;;;###autoload
+
 (defun +latex/org-setup ()
   ;; https://ivanaf.com/automatic_latex_fragment_toggling_in_org-mode.html
   (defvar-local org-latex-fragment-last nil
@@ -188,6 +187,8 @@
   (setq org-latex-fragment-toggle-helper (byte-compile 'org-latex-fragment-toggle-helper))
   (setq org-latex-fragment-toggle-auto (byte-compile 'org-latex-fragment-toggle-auto))
 
+  (require 'face-remap)
+
   (defun update-org-latex-fragments ()
     (org-clear-latex-preview)
     (plist-put org-format-latex-options :scale (+ text-scale-mode-amount 1.5))
@@ -222,7 +223,7 @@
       (activate-org-latex-preview))
     (setq +latex/org-latex-preview-p (not +latex/org-latex-preview-p))))
 
-(add-hook-run-once 'org-mode-hook '+latex/org-setup)
+(add-hook 'org-load-hook '+latex/org-setup)
 
 
 (provide 'init-latex)

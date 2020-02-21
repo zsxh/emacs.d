@@ -176,7 +176,7 @@ at the first function to return non-nil.")
   (defun +org/src-lazy-load-library-a (lang)
     "Lazy load a babel package to ensure syntax highlighting."
     (or (cdr (assoc lang org-src-lang-modes))
-        (+org/babel-lazy-load (intern lang))))
+        (and lang (+org/babel-lazy-load (intern lang)))))
 
   (advice-add #'org-src-get-lang-mode :before #'+org/src-lazy-load-library-a)
 
