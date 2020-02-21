@@ -215,11 +215,8 @@ at the first function to return non-nil.")
 
 ;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
 (use-package ob-jupyter
-  :defer t
   :ensure jupyter
-  ;; :config
-  ;; TODO: all python source blocks are effectively aliases of jupyter-python source blocks
-  ;; (org-babel-jupyter-override-src-block "python")
+  :defer t
   :init
   (defun +org/babel-load-jupyter-h (lang)
     (when (string-prefix-p "jupyter-" (symbol-name lang))

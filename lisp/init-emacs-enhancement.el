@@ -157,9 +157,6 @@
 (use-package dired
   :ensure nil
   :defer t
-  ;; FIXME: no idea why currently this doesn't work
-  ;; :bind (:map dired-mode-map
-  ;;             ("C-<return>" . dired-open-xdg))
   :config
   (define-key dired-mode-map (kbd "C-<return>") 'dired-open-xdg))
 
