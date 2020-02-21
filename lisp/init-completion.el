@@ -44,6 +44,9 @@
     ;;  Stop eclim auto save.
     (setq company-eclim-auto-save nil)))
 
+(use-package flx
+  :defer t)
+
 (use-package company-fuzzy
   :after company
   :config

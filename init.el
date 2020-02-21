@@ -28,10 +28,10 @@
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
 ;;
-;; stay default gc-cons-threshold
+;; stay default gc-cons-threshold, but fuzzy lib sucks
 ;; https://www.reddit.com/r/emacs/comments/eewwyh/officially_introducing_memacs/fbzr8ms?utm_source=share&utm_medium=web2x
-(let ((normal-gc-cons-threshold gc-cons-threshold)
-      (larger-gc-cons-threshold (* 128 1024 1024)))
+(let ((normal-gc-cons-threshold (if (display-graphic-p) 20000000 gc-cons-threshold))
+      (larger-gc-cons-threshold (if (display-graphic-p) 400000000 100000000)))
 
   (setq gc-cons-threshold larger-gc-cons-threshold)
 
