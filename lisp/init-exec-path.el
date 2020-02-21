@@ -11,6 +11,7 @@
 ;;; Code:
 
 (defvar exec-path-from-shell-initialize-p nil)
+(defvar nodejs-version "v12.13.0")
 
 (use-package exec-path-from-shell
   :if (not (file-remote-p default-directory))
@@ -31,7 +32,10 @@
          (exec-path-from-shell--maybe-warn-about-startup-files pairs))
        (mapc (lambda (pair)
                (exec-path-from-shell-setenv (car pair) (cdr pair)))
-             pairs))))
+             pairs)
+       ;; zsh-defer load_nvm no matter if it's in emacs process, so i put node path manually
+       (let ((nvm-execute-path (file-truename (format "~/.nvm/versions/node/%s/bin" nodejs-version))))
+         (setq exec-path (cons nvm-execute-path exec-path))))))
 
   (defun +env/load-shell-env ()
     (when (memq window-system '(mac ns x))
