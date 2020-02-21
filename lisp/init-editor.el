@@ -46,10 +46,6 @@
 (setq compilation-always-kill t
       compilation-scroll-output t)
 
-;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
-(when (bound-and-true-p read-process-output-max)
-  (setq read-process-output-max (* 1024 1024)))
-
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
 ;; M-^ delete-indentation

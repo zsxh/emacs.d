@@ -28,9 +28,14 @@
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
 ;;
-;; stay default gc-cons-threshold, but fuzzy lib sucks
-;; https://www.reddit.com/r/emacs/comments/eewwyh/officially_introducing_memacs/fbzr8ms?utm_source=share&utm_medium=web2x
-(let ((normal-gc-cons-threshold (if (display-graphic-p) 20000000 gc-cons-threshold))
+;; Follow the method recommended by Gnu Emacs Maintainer Eli Zaretskii: “My suggestion is
+;; to repeatedly multiply gc-cons-threshold by 2 until you stop seeing significant improvements
+;; in responsiveness, and in any case not to increase by a factor larger than 100 or somesuch.
+;; If even a 100-fold increase doesn’t help, there’s some deeper problem with the Lisp code
+;; which produces so much garbage, or maybe GC is not the reason for slowdown.”
+;; Source: https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
+;;
+(let ((normal-gc-cons-threshold (if (display-graphic-p) (* 64 gc-cons-threshold) gc-cons-threshold))
       (larger-gc-cons-threshold (if (display-graphic-p) 400000000 100000000)))
 
   (setq gc-cons-threshold larger-gc-cons-threshold)

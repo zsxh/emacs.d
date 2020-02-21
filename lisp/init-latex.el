@@ -48,27 +48,6 @@
   :config
   ;; (with-eval-after-load 'doom-themes
   ;;   (setq webkit-katex-render--background-color (doom-color 'bg)))
-  (defun webkit-katex-render-show (math-at-point)
-    "Activate color picker."
-    (unless (and (bound-and-true-p company-mode)
-                 company-candidates-length)
-      (let ((pos (- (car math-at-point) 1))
-            (math (nth 1 math-at-point)))
-        (if (not (buffer-live-p (webkit-katex-render--get-buffer)))
-            (webkit-katex-render--create pos))
-        (webkit-katex-render--render math)
-        (if webkit-katex-render--resize-flag
-            (progn
-              (webkit-katex-render--resize)
-              (setq webkit-katex-render--resize-flag nil)))
-        (webkit-katex-render--show pos))
-      (webkit-katex-render--set-background)
-      (webkit-katex-render--set-foreground)
-      (webkit-katex-render--ensure-emulation-alist)
-      (webkit-katex-render--enable-overriding-keymap webkit-katex-render--active-map)
-      (webkit-katex-render--install-map)
-      t))
-
   (setq webkit-katex-render--math-at-point-function 'webkit-katex-render--org-math-at-point))
 
 ;; org-latex edit, preview, export ...

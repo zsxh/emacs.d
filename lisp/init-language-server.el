@@ -10,6 +10,15 @@
 
 ;;; Code:
 
+;; Increase the amount of data which Emacs reads from the process.
+;; Again the emacs default is too low 4k considering that the some
+;; of the language server responses are in 800k - 3M range.
+;;
+;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
+;;
+(when (bound-and-true-p read-process-output-max)
+  (setq read-process-output-max (* 1024 1024)))
+
 ;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
 
 (use-package eglot
@@ -17,8 +26,12 @@
 
 ;;;;;;;;;;;;;; Lsp-mode ;;;;;;;;;;;;;;
 
-;; Lsp do not support temporary buffer yet
+;; Performance problem
+;; https://github.com/emacs-lsp/lsp-mode#performance
+;;
+;; Support temporary buffer
 ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+;;
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
   :commands lsp
@@ -33,7 +46,8 @@
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil
         lsp-links-check-internal 0.5
-        lsp-lens-check-interval 0.3)
+        lsp-lens-check-interval 0.3
+        lsp-idle-delay 0.5)
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
@@ -54,7 +68,9 @@
     (lsp-install-server t)))
 
 (use-package company-lsp
-  :after (company lsp-mode))
+  :after (company lsp-mode)
+  :custom
+  (company-lsp-cache-candidates 'auto))
 
 (use-package lsp-ui
   :after lsp-mode
