@@ -70,7 +70,8 @@
   (setq doom-modeline-modal-icon nil
         doom-modeline-unicode-fallback nil
         doom-modeline-major-mode-icon t
-        doom-modeline-buffer-file-name-style 'buffer-name)
+        doom-modeline-window-width-limit 110
+        doom-modeline-buffer-file-name-style 'auto)
 
   (defun display-battery-if-offline (fn)
     (let* ((data (and (bound-and-true-p display-battery-mode)

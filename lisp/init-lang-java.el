@@ -15,6 +15,8 @@
 (use-package lsp-java
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
   :defer t
+  :custom
+  (lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/")))
   :config
   (require 'lsp-java-boot))
 

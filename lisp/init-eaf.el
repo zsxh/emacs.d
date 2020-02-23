@@ -34,7 +34,8 @@
     (with-eval-after-load 'org
       (setq browse-url-browser-function 'eaf-open-browser)))
   :config
-  (setq eaf-browser-default-search-engine "duckduckgo")
+  (setq eaf-browser-default-search-engine "duckduckgo"
+        eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf")))
 
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")

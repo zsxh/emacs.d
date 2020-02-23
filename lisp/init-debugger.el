@@ -16,6 +16,8 @@
   :quelpa ((dap-mode :fetcher github :repo "yyoncho/dap-mode"))
   :hook ((lsp-mode . dap-mode)
          (lsp-mode . dap-ui-mode))
+  :custom
+  (dap-utils-extension-path (expand-file-name ".cache/dap-extension" user-emacs-directory))
   :config
   (require 'dap-utils)
   ;; you neead to install several debugger first: lldb, ptvsd, eclipse jdt server, etc. links below:
