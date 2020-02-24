@@ -212,6 +212,7 @@ at the first function to return non-nil.")
 (use-package ob-go :defer t)
 (use-package ob-rust :defer t)
 (use-package ob-ipython :defer t)
+(use-package ob-restclient :defer t)
 
 ;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
 (use-package ob-jupyter
@@ -234,10 +235,6 @@ at the first function to return non-nil.")
 (use-package ob-julia
   :defer t
   :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia)))
-
-(use-package ob-restclient
-  :defer t
-  :ensure restclient)
 
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
