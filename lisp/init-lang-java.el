@@ -18,7 +18,16 @@
   :custom
   (lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/")))
   :config
-  (require 'lsp-java-boot))
+  (require 'lsp-java-boot)
+  (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.10/lombok-1.18.10.jar")))
+    (when (file-exists-p lombok-jar))
+    (setq lsp-java-vmargs
+          `("-noverify"
+            "-Xmx1G"
+            "-XX:+UseG1GC"
+            "-XX:+UseStringDeduplication"
+            ,(concat "-javaagent:" lombok-jar)
+            ,(concat "-Xbootclasspath/a:" lombok-jar)))))
 
 (with-eval-after-load 'cc-mode
   ;; FIXME: when i put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode

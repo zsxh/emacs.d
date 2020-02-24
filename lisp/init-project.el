@@ -13,6 +13,12 @@
 ;; (use-package counsel-projectile
 ;;   :hook (after-init . counsel-projectile-mode))
 
+(defun +project/lsp-project-root (&optional dir)
+  (let* ((cur-dir (or dir (expand-file-name default-directory)))
+         (lsp-folders (lsp-session-folders (lsp-session)))
+         (r (find-if (lambda (path) (string-prefix-p path cur-dir)) lsp-folders)))
+    r))
+
 (use-package projectile
   :hook (after-init . projectile-mode)
   :bind ("C-<tab>" . projectile-next-project-buffer)
@@ -25,6 +31,8 @@
   (setq projectile-enable-caching t))
 
 (with-eval-after-load 'projectile
+  (add-to-list 'projectile-project-root-files-functions #'+project/lsp-project-root)
+
   (defun +project/projectile-buffer-filter (buffer)
     (let ((name (buffer-name buffer)))
       (or (and (string-prefix-p "*" name)
@@ -57,6 +65,8 @@
              find-file-in-current-directory
              find-file-in-project-not-ignore)
   :config
+  (setq ffip-project-root-function #'+project/lsp-project-root)
+
   ;; A simple, fast and user-friendly alternative to 'find'
   ;; https://github.com/sharkdp/fd
   (when (executable-find "fd")

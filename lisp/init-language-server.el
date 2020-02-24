@@ -34,7 +34,7 @@
 ;;
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
-  :commands lsp
+  :commands (lsp lsp-session lsp-session-folders)
   :config
   (setq lsp-auto-guess-root nil
         lsp-client-packages '()
