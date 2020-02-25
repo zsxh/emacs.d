@@ -13,11 +13,19 @@
 ;; (use-package counsel-projectile
 ;;   :hook (after-init . counsel-projectile-mode))
 
+(defvar +project/lsp-project-root-cache (make-hash-table :test 'equal)
+  "Cached value of function `+project/lsp-project-root`.")
+
 (defun +project/lsp-project-root (&optional dir)
-  (let* ((cur-dir (or dir (expand-file-name default-directory)))
-         (lsp-folders (lsp-session-folders (lsp-session)))
-         (r (find-if (lambda (path) (string-prefix-p path cur-dir)) lsp-folders)))
-    r))
+  (let* ((dir (or dir (expand-file-name default-directory)))
+         (cache-key (format "%s" dir))
+         (cache-value (gethash cache-key +project/lsp-project-root-cache)))
+    (if (and cache-value (file-exists-p cache-value))
+        cache-value
+      (let* ((lsp-folders (lsp-session-folders (lsp-session)))
+             (value (find-if (lambda (path) (string-prefix-p path dir)) lsp-folders)))
+        (puthash cache-key value +project/lsp-project-root-cache)
+        value))))
 
 (use-package projectile
   :hook (after-init . projectile-mode)
@@ -65,7 +73,9 @@
              find-file-in-current-directory
              find-file-in-project-not-ignore)
   :config
-  (setq ffip-project-root-function #'+project/lsp-project-root)
+  (advice-add #'ffip-project-root :around (lambda (orig-fn)
+                                            (or (+project/lsp-project-root)
+                                                (funcall orig-fn))))
 
   ;; A simple, fast and user-friendly alternative to 'find'
   ;; https://github.com/sharkdp/fd
