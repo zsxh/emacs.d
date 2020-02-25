@@ -17,13 +17,13 @@
   "Cached value of function `+project/lsp-project-root`.")
 
 (defun +project/lsp-project-root (&optional dir)
-  (let* ((dir (or dir (expand-file-name default-directory)))
-         (cache-key (format "%s" dir))
+  (let* ((dir (or dir default-directory))
+         (cache-key dir)
          (cache-value (gethash cache-key +project/lsp-project-root-cache)))
     (if (and cache-value (file-exists-p cache-value))
         cache-value
       (let* ((lsp-folders (lsp-session-folders (lsp-session)))
-             (value (find-if (lambda (path) (string-prefix-p path dir)) lsp-folders)))
+             (value (find-if (lambda (path) (string-prefix-p path (expand-file-name dir))) lsp-folders)))
         (puthash cache-key value +project/lsp-project-root-cache)
         value))))
 
