@@ -56,7 +56,7 @@
   (defun +lsp/setup ()
     (setq-local company-backends
                 '(company-lsp company-files company-dabbrev))
-    (unless (member major-mode '(c-mode c++-mode))
+    (unless (member major-mode '(c-mode c++-mode java-mode))
       (lsp-lens-mode)))
   (add-hook 'lsp-after-initialize-hook '+lsp/setup)
 
