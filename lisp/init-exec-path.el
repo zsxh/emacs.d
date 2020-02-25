@@ -25,6 +25,10 @@
         ,(async-inject-variables "\\`\\(load-path\\)\\'")
         (require 'exec-path-from-shell)
         (setq exec-path-from-shell-check-startup-files nil)
+        ;; Each exec-path-from-shell-copy-env starts a shell.
+        ;; Just set exec-path-from-shell-variables to the full list
+        ;; and call exec-path-from-shell-initialize.
+        (setq exec-path-from-shell-variables '("PATH" "MANPATH" "LANG" "LD_LIBRARY_PATH"))
         (exec-path-from-shell-getenvs exec-path-from-shell-variables))
      (lambda (pairs)
        (when exec-path-from-shell-check-startup-files
@@ -36,7 +40,6 @@
   (defun +env/load-shell-env ()
     (when (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize-async)
-      (exec-path-from-shell-copy-envs '("LANG" "LD_LIBRARY_PATH"))
       (setq exec-path-from-shell-initialize-p t)))
 
   ;; Initialize
