@@ -80,10 +80,10 @@
   (setq cd2/region-command 'cd2/comment-or-uncomment-region))
 
 ;; Edit comment or docstring in edit buffer
-;; https://github.com/twlz0ne/comment-edit.el
-(use-package comment-edit
-  :quelpa ((comment-edit :fetcher github :repo "twlz0ne/comment-edit.el"))
-  :commands (comment-edit)
+;; https://github.com/twlz0ne/separedit.el
+(use-package separedit
+  :quelpa ((separedit :fetcher github :repo "twlz0ne/separedit.el"))
+  :commands (separedit)
   :config
   (with-eval-after-load '(and edit-indirect evil)
     (evil-define-minor-mode-key 'normal 'edit-indirect--overlay

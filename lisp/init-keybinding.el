@@ -36,7 +36,7 @@
      "" nil
      "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
      "SPC" '(counsel-M-x :which-key "M-x")
-     "'" '(comment-edit :which-key "comment-edit")
+     "'" '(separedit :which-key "edit-comment")
      "!" '(shell-command :which-key "shell-command")
      ":" '(eval-expression :which-key "eval-expression")
      ";" '(comment-dwim-2 :which-key "comment-line")
