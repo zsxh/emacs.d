@@ -58,7 +58,7 @@
                 '(company-lsp company-files company-dabbrev))
     (unless (member major-mode '(c-mode c++-mode java-mode))
       (lsp-lens-mode)))
-  (add-hook 'lsp-after-initialize-hook '+lsp/setup)
+  (add-hook 'lsp-mode-hook '+lsp/setup)
 
   (with-eval-after-load 'evil
     (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition))

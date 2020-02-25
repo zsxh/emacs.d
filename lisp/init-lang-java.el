@@ -53,7 +53,7 @@
 (defun +java/setup ()
   (require 'lsp-java)
   (add-hook 'java-mode-hook 'lsp)
-  (add-hook 'lsp-after-initialize-hook
+  (add-hook 'lsp-mode-hook
             (lambda ()
               (when (eq major-mode 'java-mode)
                 (lsp-lens-mode)
