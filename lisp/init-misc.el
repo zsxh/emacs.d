@@ -43,7 +43,7 @@
   (+funcs/major-mode-leader-keys
    markdown-mode-map
    "b" '(nil :which-key "block")
-   "bb" '(play-code-block :which-key "play-code-with-online-playground")
+   "bb" '(playonline :which-key "play-code-with-online-playground")
    "y" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
    "v" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
    "p" '(eaf-markdown-previewer :which-key "previewer")
@@ -178,6 +178,12 @@
 ;; https://github.com/benma/visual-regexp.el
 (use-package visual-regexp
   :defer t)
+
+;; https://github.com/twlz0ne/playonline.el
+;; `playonline-block' (require org-mode / markdown)
+(use-package playonline
+  :quelpa ((playonline :fetcher github :repo "twlz0ne/playonline.el"))
+  :commands (playonline))
 
 
 (provide 'init-misc)

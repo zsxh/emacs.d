@@ -276,14 +276,6 @@ current major mode."
 (use-package editorconfig
   :hook (emacs-startup . editorconfig-mode))
 
-;;;;;;;;;;;;;; Play Code With Online Playgrounds  ;;;;;;;;;;;;;;
-
-;; https://github.com/twlz0ne/play-code.el
-;; `play-code-block' (require org-mode / markdown)
-(use-package play-code
-  :quelpa ((play-code :fetcher github :repo "twlz0ne/play-code.el"))
-  :commands (play-code-region play-code-buffer play-code-block))
-
 (use-package dumb-jump
   :bind (:map dumb-jump-mode-map
               ("C-M-g" . dumb-jump-go)
