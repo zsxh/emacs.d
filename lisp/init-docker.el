@@ -12,7 +12,24 @@
 
 ;; https://github.com/Silex/docker.el
 (use-package docker
-  :commands docker)
+  :commands docker
+  :config
+  ;; https://www.gnu.org/software/emacs/manual/html_node/tramp/Remote-processes.html
+  ;; On remote hosts, the local `shell-file-name' might be useless, use `explicit-shell-file-name' instead instead
+  ;; fixed /usr/bin/zsh not found error
+  (defun docker-container-shell (container &optional read-shell)
+    "Open `shell' in CONTAINER.  When READ-SHELL is not nil, ask the user for it."
+    (interactive (list
+                  (docker-container-read-name)
+                  current-prefix-arg))
+    (let* ((explicit-shell-file-name (docker-container--read-shell read-shell))
+           (container-address (format "docker:%s:/" container))
+           (file-prefix (let ((prefix (file-remote-p default-directory)))
+                          (if prefix
+                              (format "%s|" (s-chop-suffix ":" prefix))
+                            "/")))
+           (default-directory (format "%s%s" file-prefix container-address)))
+      (shell (docker-utils-generate-new-buffer "shell" default-directory)))))
 
 (use-package dockerfile-mode
   :commands dockerfile-mode
