@@ -50,6 +50,7 @@
 ;; Permanently indent with spaces, never with TABs
 ;; M-^ delete-indentation
 (setq-default c-basic-offset   2
+              c-offsets-alist '((case-label . +))
               tab-width        2
               indent-tabs-mode nil)
 
