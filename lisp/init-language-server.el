@@ -34,7 +34,7 @@
 ;;
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
-  :commands (lsp lsp-session lsp-session-folders)
+  :commands (lsp lsp-deferred lsp-session lsp-session-folders)
   :config
   (setq lsp-auto-guess-root nil
         lsp-client-packages '()
@@ -58,7 +58,8 @@
                 '(company-lsp company-files company-dabbrev))
     (unless (member major-mode '(c-mode c++-mode java-mode))
       (lsp-lens-mode)))
-  (add-hook 'lsp-mode-hook '+lsp/setup)
+
+  (add-hook 'lsp-after-open-hook '+lsp/setup)
 
   (with-eval-after-load 'evil
     (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition))

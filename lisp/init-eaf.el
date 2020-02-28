@@ -37,6 +37,9 @@
   (setq eaf-browser-default-search-engine "duckduckgo"
         eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf")))
 
+  ;; (setq eaf-enable-debug t
+  ;;       eaf-python-command "/home/zsxh/.pyenv/versions/miniconda3-latest/bin/python3")
+
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")
   (eaf-setq eaf-browser-remember-history "true")
