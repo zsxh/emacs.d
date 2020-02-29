@@ -20,17 +20,29 @@
   :commands (eaf-open
              eaf-open-browser
              eaf-open-dash
-             eaf-open-bookmark)
+             eaf-open-bookmark
+             eaf-open-this-from-dired
+             eaf-open-office
+             eaf-open-mindmap
+             eaf-create-mindmap)
   :hook (eaf-mode . (lambda () (setq left-fringe-width 0
                                      right-fringe-width 0)))
   :init
   (progn
-    ;; Pdf viewer settings
-    (add-to-list 'auto-mode-alist
-                 '("\\.pdf\\'" . (lambda ()
-                                   (let ((filename buffer-file-name))
-                                     (eaf-open filename)
-                                     (kill-buffer (file-name-nondirectory filename))))))
+    (defun eaf-find-file (orig-fn &rest args)
+      (let* ((file (car args))
+             (file-extension (file-name-extension file))
+             (ext (if file-extension (downcase file-extension) nil)))
+        (cond
+         ((not ext) (apply orig-fn args))
+         ((member ext '("docx" "doc" "pptx" "ppt" "xlsx"))
+          (eaf-open-office file))
+         ((member ext '("pdf" "emm" "jpg" "jpeg" "png" "bmp" "gif" "svg" "webp"))
+          (eaf-open file))
+         (t (apply orig-fn args)))))
+
+    (advice-add #'find-file :around #'eaf-find-file)
+
     (with-eval-after-load 'org
       (setq browse-url-browser-function 'eaf-open-browser)))
   :config
