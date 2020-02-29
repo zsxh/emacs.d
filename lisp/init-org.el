@@ -120,13 +120,6 @@
    "Tp" '(+latex/toggle-latex-preview :which-key "toggle-latex-preview")
    "'" '(org-edit-special :which-key "editor")))
 
-;; Org Static Blog
-(use-package org-static-blog
-  :commands (org-static-blog-mode
-             org-static-blog-publish
-             org-static-blog-publish-file
-             org-static-blog-create-new-post))
-
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
 
@@ -246,6 +239,95 @@ at the first function to return non-nil.")
   ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
   (setq ob-async-no-async-languages-alist
         '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
+
+;; Ory Static Blog
+(use-package org-static-blog
+  :commands (org-static-blog-mode
+             org-static-blog-publish
+             org-static-blog-publish-file
+             org-static-blog-create-new-post))
+
+(with-eval-after-load 'org-static-blog
+  ;; https://github.com/bastibe/.emacs.d/blob/master/init.el#L729
+  (setq org-static-blog-publish-url "https://zsxh.github.io/"
+        org-static-blog-publish-title "Zsxh Blog"
+        org-static-blog-publish-directory "~/org/blog/"
+        org-static-blog-posts-directory "~/org/blog/posts/"
+        org-static-blog-drafts-directory "~/org/blog/drafts/"
+        org-static-blog-use-preview t
+        org-static-blog-enable-tags t)
+
+  (defun org-static-blog-generate-post-path (post-filename post-datetime)
+    (concat "html/" (file-name-nondirectory post-filename)))
+
+  (setcdr (assoc "en"
+                 (assoc 'date-format
+                        org-static-blog-texts))
+          "%Y-%m-%d")
+
+  (defun org-static-blog-get-post-summary (post-filename)
+    "Assemble post summary for an archive page.
+This function is called for every post on the archive and
+tags-archive page. Modify this function if you want to change an
+archive headline."
+    (concat
+     "<h2 class=\"post-title\">"
+     (format-time-string (org-static-blog-gettext 'date-format) (org-static-blog-get-date post-filename))
+     "&ensp;"
+     "<a href=\"" (org-static-blog-get-post-url post-filename) "\">" (org-static-blog-get-title post-filename) "</a>"
+     "</h2>"))
+
+  (defun org-static-blog-post-preamble (post-filename)
+    "Returns the formatted date and headline of the post.
+This function is called for every post and prepended to the post body.
+Modify this function if you want to change a posts headline."
+    (let ((created-date (format-time-string (org-static-blog-gettext 'date-format)
+                                            (org-static-blog-get-date post-filename)))
+          (updated-date (format-time-string (org-static-blog-gettext 'date-format)
+                                            (nth 5 (file-attributes post-filename)))))
+      (concat
+       "<h1 class=\"post-title\">"
+       "<a href=\"" (org-static-blog-get-post-url post-filename) "\">" (org-static-blog-get-title post-filename) "</a>"
+       "</h1>\n"
+       "<div class=\"post-date\"> Posted: " created-date
+       (if (string-equal created-date updated-date)
+           ""
+         (format "&ensp;Updated: %s" updated-date))
+       "</div>")))
+
+  (setq org-static-blog-page-header
+        "<meta name=\"author\" content=\"ZSXH\">
+<meta name=\"referrer\" content=\"no-referrer\">
+<link href= \"/static/style.css\" rel=\"stylesheet\" type=\"text/css\" />
+<script src=\"/static/katex.min.js\"></script>
+<script src=\"/static/auto-render.min.js\"></script>
+<link rel=\"stylesheet\" href=\"/static/katex.min.css\">
+<script>document.addEventListener(\"DOMContentLoaded\", function() { renderMathInElement(document.body); });</script>
+<meta http-equiv=\"content-type\" content=\"application/xhtml+xml; charset=UTF-8\">
+<meta name=\"viewport\" content=\"initial-scale=1,width=device-width,minimum-scale=1\">")
+
+  (setq org-static-blog-page-preamble
+        "<div class=\"header\">
+  <a href=\"index.html\">Home</a> | <a href=\"archive.html\">Archive</a> | <a href=\"https://github.com/zsxh\">Github</a> | <a href=\"about.html\">About</a> | <a href=\"rss.xml\">RSS</a>
+</div>")
+
+  (setq org-static-blog-page-postamble
+        "<div id=\"archive\">
+  <a href=\"https://zsxh.github.io/archive.html\">Other posts</a>
+</div>
+<center><button id=\"disqus_button\" onclick=\"load_disqus()\">Load Disqus Comments</button></center>
+<div id=\"disqus_thread\"></div>
+<script type=\"text/javascript\">
+    function load_disqus() {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'https://bastibe.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        document.getElementById('disqus_button').style.visibility = 'hidden';
+    };
+</script>
+<center><a rel=\"license\" href=\"https://creativecommons.org/licenses/by-sa/3.0/\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://i.creativecommons.org/l/by-sa/3.0/88x31.png\" /></a><br /><span xmlns:dct=\"https://purl.org/dc/terms/\" href=\"https://purl.org/dc/dcmitype/Text\" property=\"dct:title\" rel=\"dct:type\">zsxh.github.io</span> by <a xmlns:cc=\"https://creativecommons.org/ns#\" href=\"https://zsxh.github.io\" property=\"cc:attributionName\" rel=\"cc:attributionURL\">ZSXH</a> is licensed under a <a rel=\"license\" href=\"https://creativecommons.org/licenses/by-sa/3.0/\">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</center>"))
 
 
 (provide 'init-org)
