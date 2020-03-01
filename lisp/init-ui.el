@@ -192,19 +192,19 @@
     ('doom-solarized-light
      (progn
        (with-eval-after-load 'paren
-         (set-face-background 'show-paren-match "#E5E5E5"))))))
+         (set-face-background 'show-paren-match "#E5E5E5")))))
 
-;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
-;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
-(when (fboundp 'set-face-extend)
-  (with-eval-after-load 'org
-    (set-face-extend 'org-block t)
-    (set-face-extend 'org-block-begin-line t)
-    (set-face-extend 'org-block-end-line t))
-  (with-eval-after-load 'ein-cell
-    (set-face-extend 'ein:cell-input-area t))
-  (with-eval-after-load 'jupyter-repl
-    (set-face-extend 'jupyter-repl-traceback t)))
+  ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
+  ;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
+  (when (fboundp 'set-face-extend)
+    (with-eval-after-load 'org
+      (set-face-extend 'org-block t)
+      (set-face-extend 'org-block-begin-line t)
+      (set-face-extend 'org-block-end-line t))
+    (with-eval-after-load 'ein-cell
+      (set-face-extend 'ein:cell-input-area t))
+    (with-eval-after-load 'jupyter-repl
+      (set-face-extend 'jupyter-repl-traceback t))))
 
 ;; Set config now
 (+ui/frame-config (selected-frame))
