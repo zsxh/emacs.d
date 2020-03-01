@@ -35,7 +35,7 @@
              (ext (if file-extension (downcase file-extension) nil)))
         (cond
          ((not ext) (apply orig-fn args))
-         ((member ext '("docx" "doc" "pptx" "ppt" "xlsx"))
+         ((member ext '("docx" "doc" "pptx" "ppt" "xlsx" "xls"))
           (eaf-open-office file))
          ((member ext '("pdf" "emm" "jpg" "jpeg" "png" "bmp" "gif" "svg" "webp"))
           (eaf-open file))
