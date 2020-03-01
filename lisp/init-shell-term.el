@@ -47,12 +47,10 @@ if no project root found, use current directory instead."
                ("M-u" . ace-window)
                ("C-s" . swiper)
                ("<f11>" . toggle-frame-fullscreen)))
+  :custom
+  (vterm-kill-buffer-on-exit t)
+  (vterm-term-environment-variable "xterm-24bit")
   :config
-  (defun +vterm/auto-exit (buf event)
-    (when buf (kill-buffer buf)))
-
-  (add-hook 'vterm-exit-functions #'+vterm/auto-exit)
-
   ;; TODO: check `vterm-set-title-functions', `vterm--set-directory', tracking title/directory
   ;; and https://github.com/akermu/emacs-libvterm#directory-tracking
   ;; https://github.com/akermu/emacs-libvterm/issues/55
