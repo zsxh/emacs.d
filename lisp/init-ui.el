@@ -191,6 +191,8 @@
          (set-face-background 'jupyter-repl-traceback "#4B483F"))))
     ('doom-solarized-light
      (progn
+       (with-eval-after-load 'dired
+         (set-face-foreground 'dired-directory "#268bd2"))
        (with-eval-after-load 'paren
          (set-face-background 'show-paren-match "#E5E5E5")))))
 

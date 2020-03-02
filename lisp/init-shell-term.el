@@ -42,53 +42,50 @@ if no project root found, use current directory instead."
            (executable-find "make")
            (executable-find "cmake")
            (fboundp 'module-load))
-  :commands (vterm vterm-other-window +vterm/new +vterm/ivy-switch-buffer)
+  :commands (vterm vterm-other-window)
   :bind ((:map vterm-mode-map
                ("M-u" . ace-window)
                ("C-s" . swiper)
+               ("<f10>" . +vterm/toggle)
                ("<f11>" . toggle-frame-fullscreen)))
   :custom
   (vterm-kill-buffer-on-exit t)
   (vterm-term-environment-variable "xterm-24bit")
+  :init
+  (global-set-key [f10] '+vterm/toggle)
   :config
-  ;; TODO: check `vterm-set-title-functions', `vterm--set-directory', tracking title/directory
-  ;; and https://github.com/akermu/emacs-libvterm#directory-tracking
-  ;; https://github.com/akermu/emacs-libvterm/issues/55
-  (defun +vterm/generate-buffer-name ()
-    (format "*vterm: %s*" (file-name-nondirectory (directory-file-name default-directory))))
-
-  (defun +vterm/new ()
-    "Create a new vterm with `default-directory' buffer name."
-    (interactive)
-    (vterm (+vterm/generate-buffer-name)))
-
-  (defun +vterm/new-other-window ()
-    "Create a new vterm with `default-directory' buffer name in other window."
-    (interactive)
-    (let ((buffer (generate-new-buffer (+vterm/generate-buffer-name))))
-      (with-current-buffer buffer
-        (vterm-mode))
-      (pop-to-buffer buffer)))
-
-  (defun +vterm/get-project-buf ()
-    (let* ((default-directory (or (projectile-project-root) default-directory))
-           (buf-name (+vterm/generate-buffer-name))
-           (buf (get-buffer buf-name)))
-      buf))
-
-  (defun +vterm/ivy-switch-buffer ()
-    (interactive)
-    (ivy-read "Switch to vterm buffer: "
-              (delete (buffer-name (current-buffer))
-                      (mapcar #'buffer-name
-                              (cl-remove-if-not
-                               (lambda (buffer)
-                                 (with-current-buffer buffer
-                                   (derived-mode-p 'vterm-mode)))
-                               (buffer-list))))
-              :initial-input nil
-              :action #'ivy--switch-buffer-action
-              :caller '+vterm/ivy-switch-buffer))
+  (defvar +vterm/toggle--window-configration nil)
+  (defun +vterm/toggle (arg)
+    "Toggles a terminal popup window at project root.
+  If prefix ARG is non-nil, cd into `default-directory' instead of project root."
+    (interactive "P")
+    (unless (fboundp 'module-load)
+      (user-error "Your build of Emacs lacks dynamic modules support and cannot load vterm"))
+    (let* ((default-directory
+             (if arg
+                 default-directory
+               (or (projectile-project-root) default-directory)))
+           (buffer-name
+            (format "*vterm:<%s>*"
+                    (file-name-nondirectory
+                     (directory-file-name
+                      (expand-file-name default-directory))))))
+      (if-let (win (get-buffer-window buffer-name))
+          (if (eq (selected-window) win)
+              (progn
+                (with-current-buffer (get-buffer buffer-name)
+                  (bury-buffer))
+                (when +vterm/toggle--window-configration
+                  (set-window-configuration +vterm/toggle--window-configration)))
+            (select-window win)
+            (when (bound-and-true-p evil-local-mode)
+              (evil-change-to-initial-state)))
+        (let ((buffer (get-buffer-create buffer-name)))
+          (with-current-buffer buffer
+            (unless (eq major-mode 'vterm-mode)
+              (vterm-mode))
+            (setq +vterm/toggle--window-configration (current-window-configuration))
+            (pop-to-buffer buffer))))))
 
   ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
   (with-eval-after-load 'doom-themes
@@ -99,46 +96,46 @@ if no project root found, use current directory instead."
 
 ;; TODO: add `vterm-toggle' package
 ;; https://github.com/jixiuf/vterm-toggle
-(use-package vterm-toggle
-  :commands (vterm-toggle vterm-toggle-cd)
-  :init
-  ;; (global-set-key [f2] 'vterm-toggle)          ; recent or current dir
-  (global-set-key [C-f10] 'vterm-toggle-cd)     ; new current dir
-  (global-set-key [f10] '+vterm/toggle-project) ; project root(initial one)
-  :bind ((:map vterm-mode-map
-               ;; ("<f2>" . vterm-toggle)
-               ("<f10>" . +vterm/toggle-project)))
-  :config
-  (setq vterm-toggle-fullscreen-p nil)
+;; (use-package vterm-toggle
+;;   :commands (vterm-toggle vterm-toggle-cd)
+;;   :init
+;;   ;; (global-set-key [f2] 'vterm-toggle)          ; recent or current dir
+;;   (global-set-key [C-f10] 'vterm-toggle-cd)     ; new current dir
+;;   (global-set-key [f10] '+vterm/toggle-project) ; project root(initial one)
+;;   :bind ((:map vterm-mode-map
+;;                ;; ("<f2>" . vterm-toggle)
+;;                ("<f10>" . +vterm/toggle-project)))
+;;   :config
+;;   (setq vterm-toggle-fullscreen-p nil)
 
-  (defun +vterm/toggle-new ()
-    "New vterm buffer."
-    (if vterm-toggle-fullscreen-p
-        (+vterm/new)
-      (+vterm/new-other-window)))
+;;   (defun +vterm/toggle-new ()
+;;     "New vterm buffer."
+;;     (if vterm-toggle-fullscreen-p
+;;         (+vterm/new)
+;;       (+vterm/new-other-window)))
 
-  (defun +vterm/toggle--get-buffer (&optional make-cd ignore-prompt-p args)
-    "Get vterm buffer.
-Optional argument MAKE-CD make cd or not.
-Optional argument ARGS optional args."
-    (if vterm-toggle-use-dedicated-buffer
-        (vterm-toggle--get-dedicated-buffer)
-      ;; for now, args doesn't mean anything in vterm-toggle,
-      ;; so, i use it as project identification.
-      (or (and args (+vterm/get-project-buf))
-          (vterm-toggle--recent-vterm-buffer make-cd ignore-prompt-p args))))
+;;   (defun +vterm/toggle--get-buffer (&optional make-cd ignore-prompt-p args)
+;;     "Get vterm buffer.
+;; Optional argument MAKE-CD make cd or not.
+;; Optional argument ARGS optional args."
+;;     (if vterm-toggle-use-dedicated-buffer
+;;         (vterm-toggle--get-dedicated-buffer)
+;;       ;; for now, args doesn't mean anything in vterm-toggle,
+;;       ;; so, i use it as project identification.
+;;       (or (and args (+vterm/get-project-buf))
+;;           (vterm-toggle--recent-vterm-buffer make-cd ignore-prompt-p args))))
 
-  (advice-add 'vterm-toggle--new :override '+vterm/toggle-new)
-  (advice-add 'vterm-toggle--get-buffer :override '+vterm/toggle--get-buffer)
+;;   (advice-add 'vterm-toggle--new :override '+vterm/toggle-new)
+;;   (advice-add 'vterm-toggle--get-buffer :override '+vterm/toggle--get-buffer)
 
-  (defun +vterm/toggle-project ()
-    (interactive)
-    (let* ((default-directory (or (projectile-project-root) default-directory))
-           (buf-name (+vterm/generate-buffer-name))
-           (buf (get-buffer buf-name)))
-      (if buf
-          (vterm-toggle t)
-        (vterm-toggle-cd)))))
+;;   (defun +vterm/toggle-project ()
+;;     (interactive)
+;;     (let* ((default-directory (or (projectile-project-root) default-directory))
+;;            (buf-name (+vterm/generate-buffer-name))
+;;            (buf (get-buffer buf-name)))
+;;       (if buf
+;;           (vterm-toggle t)
+;;         (vterm-toggle-cd)))))
 
 (use-package term
   :ensure nil
