@@ -181,8 +181,13 @@
 (use-package rg
   :bind ((:map rg-mode-map
                ("l" . nil)
-               ("L" . rg-list-searches)))
-  :commands (rg rg-dwim rg-project rg-literal rg-dwim-current-file))
+               ("L" . rg-list-searches)
+               ("g" . nil)
+               ("gr" . rg-recompile)))
+  :commands (rg rg-dwim rg-project rg-literal rg-dwim-current-file)
+  :config
+  (evil-define-key 'normal rg-mode-map
+    "gg" 'evil-goto-first-line))
 
 ;; wgrep allows you to edit a grep buffer and apply those changes to the file buffer
 (use-package wgrep
