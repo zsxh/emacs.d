@@ -46,19 +46,29 @@ if no project root found, use current directory instead."
   :bind ((:map vterm-mode-map
                ("M-u" . ace-window)
                ("C-s" . swiper)
-               ("<f10>" . +vterm/toggle)
+               ("<f9>" . +vterm/toggle-here)
+               ("<f10>" . +vterm/toggle-other-window)
                ("<f11>" . toggle-frame-fullscreen)))
   :custom
   (vterm-kill-buffer-on-exit t)
   (vterm-term-environment-variable "xterm-24bit")
   :init
-  (global-set-key [f10] '+vterm/toggle)
+  (global-set-key [f9] '+vterm/toggle-here)
+  (global-set-key [f10] '+vterm/toggle-other-window)
   :config
+  ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
+  (with-eval-after-load 'doom-themes
+    (set-face-background 'vterm-color-black (doom-color 'base6)))
+
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'vterm-mode 'insert))
+
   (defvar +vterm/toggle--window-configration nil)
-  (defun +vterm/toggle (arg)
-    "Toggles a terminal popup window at project root.
-  If prefix ARG is non-nil, cd into `default-directory' instead of project root."
-    (interactive "P")
+
+  (defun +vterm/toggle (arg &optional this-window-p)
+    "Toggles a window at project root.
+
+If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (unless (fboundp 'module-load)
       (user-error "Your build of Emacs lacks dynamic modules support and cannot load vterm"))
     (let* ((default-directory
@@ -83,59 +93,25 @@ if no project root found, use current directory instead."
         (let ((buffer (get-buffer-create buffer-name)))
           (with-current-buffer buffer
             (unless (eq major-mode 'vterm-mode)
-              (vterm-mode))
-            (setq +vterm/toggle--window-configration (current-window-configuration))
+              (vterm-mode)))
+          (setq +vterm/toggle--window-configration (current-window-configuration))
+          (if this-window-p
+              (switch-to-buffer buffer)
             (pop-to-buffer buffer))))))
 
-  ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
-  (with-eval-after-load 'doom-themes
-    (set-face-background 'vterm-color-black (doom-color 'base6)))
+  (defun +vterm/toggle-other-window (arg)
+    "Toggles a terminal popup window at project root.
 
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'vterm-mode 'insert)))
+If prefix ARG is non-nil, cd into `default-directory' instead of project root."
+    (interactive "P")
+    (+vterm/toggle arg nil))
 
-;; TODO: add `vterm-toggle' package
-;; https://github.com/jixiuf/vterm-toggle
-;; (use-package vterm-toggle
-;;   :commands (vterm-toggle vterm-toggle-cd)
-;;   :init
-;;   ;; (global-set-key [f2] 'vterm-toggle)          ; recent or current dir
-;;   (global-set-key [C-f10] 'vterm-toggle-cd)     ; new current dir
-;;   (global-set-key [f10] '+vterm/toggle-project) ; project root(initial one)
-;;   :bind ((:map vterm-mode-map
-;;                ;; ("<f2>" . vterm-toggle)
-;;                ("<f10>" . +vterm/toggle-project)))
-;;   :config
-;;   (setq vterm-toggle-fullscreen-p nil)
+  (defun +vterm/toggle-here (arg)
+    "Open a terminal buffer in the current window at project root.
 
-;;   (defun +vterm/toggle-new ()
-;;     "New vterm buffer."
-;;     (if vterm-toggle-fullscreen-p
-;;         (+vterm/new)
-;;       (+vterm/new-other-window)))
-
-;;   (defun +vterm/toggle--get-buffer (&optional make-cd ignore-prompt-p args)
-;;     "Get vterm buffer.
-;; Optional argument MAKE-CD make cd or not.
-;; Optional argument ARGS optional args."
-;;     (if vterm-toggle-use-dedicated-buffer
-;;         (vterm-toggle--get-dedicated-buffer)
-;;       ;; for now, args doesn't mean anything in vterm-toggle,
-;;       ;; so, i use it as project identification.
-;;       (or (and args (+vterm/get-project-buf))
-;;           (vterm-toggle--recent-vterm-buffer make-cd ignore-prompt-p args))))
-
-;;   (advice-add 'vterm-toggle--new :override '+vterm/toggle-new)
-;;   (advice-add 'vterm-toggle--get-buffer :override '+vterm/toggle--get-buffer)
-
-;;   (defun +vterm/toggle-project ()
-;;     (interactive)
-;;     (let* ((default-directory (or (projectile-project-root) default-directory))
-;;            (buf-name (+vterm/generate-buffer-name))
-;;            (buf (get-buffer buf-name)))
-;;       (if buf
-;;           (vterm-toggle t)
-;;         (vterm-toggle-cd)))))
+If prefix ARG is non-nil, cd into `default-directory' instead of project root."
+    (interactive "P")
+    (+vterm/toggle arg t)))
 
 (use-package term
   :ensure nil
