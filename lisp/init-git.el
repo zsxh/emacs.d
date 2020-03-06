@@ -34,6 +34,8 @@
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
   :hook (magit-mode . magit-todos-mode)
+  :custom
+  (magit-todos-exclude-globs '("node_modules" "*.json"))
   :config
   (setq magit-todos-auto-group-items 'always)
   (with-eval-after-load 'evil-collection

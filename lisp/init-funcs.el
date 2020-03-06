@@ -300,9 +300,9 @@ Version 2017-01-27"
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
   (cond ((and
-          ;; FIXME: very slow finding project root in remote(tramp...)
-          (and (bound-and-true-p tramp-tramp-file-p)
-               (not (tramp-tramp-file-p default-directory)))
+          ;; TODO: very slow finding project root in remote(tramp...), find other methods
+          (or (not (bound-and-true-p tramp-tramp-file-p))
+              (not (tramp-tramp-file-p default-directory)))
           (projectile-project-root))
          (+projectile/ivy-switch-buffer))
         ((eq 'eaf-mode major-mode)
