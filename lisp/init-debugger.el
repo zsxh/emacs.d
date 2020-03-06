@@ -23,8 +23,12 @@
   ;; you neead to install several debugger first: lldb, ptvsd, eclipse jdt server, etc. links below:
   (require 'dap-gdb-lldb) ;https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb
   (require 'dap-python)  ;https://github.com/emacs-lsp/dap-mode#python
-  (when (featurep 'lsp-java)
-    (require 'dap-java)))
+  (with-eval-after-load 'lsp-java
+    (require 'dap-java)
+    (setq dap-java-test-runner
+          (expand-file-name
+           (concat lsp-java-server-install-dir
+                   "test-runner/junit-platform-console-standalone.jar")))))
 
 (with-eval-after-load 'dap-mode
 

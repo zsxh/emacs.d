@@ -65,6 +65,8 @@
 (use-package dired
   :ensure nil
   :defer t
+  :bind (:map dired-mode-map
+              ("C-<return>" . 'dired-open-xdg))
   :config
   (setq dired-dwim-target t
         dired-recursive-copies 'always
@@ -154,12 +156,6 @@
 ;; Dired Tools ;;
 ;;;;;;;;;;;;;;;;;
 
-(use-package dired
-  :ensure nil
-  :defer t
-  :config
-  (define-key dired-mode-map (kbd "C-<return>") 'dired-open-xdg))
-
 ;; https://github.com/Fuco1/dired-hacks
 ;; Collection of useful dired additions
 
@@ -190,6 +186,11 @@
   :commands (dired-filter-mode)
   :config
   (setq dired-filter-prefix "/"))
+
+;; https://github.com/stsquad/dired-rsync
+;; TODO: customisation `dired-rsync'
+(use-package dired-rsync
+  :defer t)
 
 ;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 

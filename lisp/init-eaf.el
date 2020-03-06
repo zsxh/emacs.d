@@ -14,7 +14,7 @@
   (require 'init-custom))
 
 ;; Install EAF
-;; https://github.com/manateelazycat/emacs-application-framework#install-eaf
+;; https://github.com/manateelazycat/emacs-application-framework#install
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
