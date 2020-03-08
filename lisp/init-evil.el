@@ -95,7 +95,6 @@
   :config
   (global-evil-matchit-mode 1))
 
-
 ;; https://github.com/emacs-evil/evil-surround#examples
 ;; google "vim text object" to learn more
 (use-package evil-surround

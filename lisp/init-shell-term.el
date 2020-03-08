@@ -65,6 +65,7 @@ if no project root found, use current directory instead."
 
   (defvar +vterm/toggle--window-configration nil)
 
+  ;; TODO: support tramp
   (defun +vterm/toggle (arg &optional this-window-p)
     "Toggles a window at project root.
 

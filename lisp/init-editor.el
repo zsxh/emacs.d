@@ -263,8 +263,9 @@
   :if (fboundp 'global-so-long-mode)
   :hook (after-init . global-so-long-mode))
 
-;; TODO: Better TRAMP autologin
+;; TODO: Enhance Tramp
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
+;; https://willschenk.com/articles/2020/tramp_tricks/
 (use-package tramp
   :ensure nil
   :defer t)

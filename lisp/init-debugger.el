@@ -25,10 +25,10 @@
   (require 'dap-python)  ;https://github.com/emacs-lsp/dap-mode#python
   (with-eval-after-load 'lsp-java
     (require 'dap-java)
-    (setq dap-java-test-runner
-          (expand-file-name
-           (concat lsp-java-server-install-dir
-                   "test-runner/junit-platform-console-standalone.jar")))))
+    (setq dap-java-test-runner (expand-file-name
+                                (concat lsp-java-server-install-dir
+                                        "test-runner/junit-platform-console-standalone.jar"))
+          dap-java-default-debug-port 5005)))
 
 (with-eval-after-load 'dap-mode
 

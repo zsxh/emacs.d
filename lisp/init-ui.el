@@ -87,17 +87,22 @@
   (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-offline))
 
 ;; Display time on modeline
-(setq display-time-format "%Y/%m/%d %A %H:%M")
-(setq display-time-default-load-average nil) ; don't show load avera
-(add-hook 'after-init-hook 'display-time-mode)
+(defvar +ui/time-format-short "%H:%M"
+  "Short display time format.")
 
-;; Display battery status
-(add-hook 'after-init-hook 'display-battery-mode)
+(defvar +ui/time-format-long "%Y/%m/%d/%a/%H:%M"
+  "Long display time format.")
 
 (defcustom +ui/display-time-format-style 'long
   "Customize time format."
-  :type '(radio (const :tag "Display time format, Year/Month/Day Weekname Hour/Minute" long)
+  :type '(radio (const :tag "Display time format, Year/Month/Day/Weekname/Hour:Minute" long)
                 (const :tag "Display time format, Hour/Minute" short)))
+
+(setq display-time-format (if (eq 'long +ui/display-time-format-style)
+                              +ui/time-format-long
+                            +ui/time-format-short))
+(setq display-time-default-load-average nil) ; don't show load avera
+(add-hook 'after-init-hook 'display-time-mode)
 
 (defun +ui/toggle-display-time-mode ()
   "Display time format depending on window-width."
@@ -106,17 +111,20 @@
      ((and (eq +ui/display-time-format-style 'long)
            (<= (window-width) 110))
       (setq +ui/display-time-format-style 'short)
-      (setq display-time-format "%H:%M")
+      (setq display-time-format +ui/time-format-short)
       (display-time-mode -1)
       (display-time-mode 1))
      ((and (eq +ui/display-time-format-style 'short)
            (> (window-width) 110))
       (setq +ui/display-time-format-style 'long)
-      (setq display-time-format "%Y/%m/%d %A %H:%M")
+      (setq display-time-format +ui/time-format-long)
       (display-time-mode -1)
       (display-time-mode 1)))))
 
 (add-hook 'window-configuration-change-hook '+ui/toggle-display-time-mode)
+
+;; Display battery status
+(add-hook 'after-init-hook 'display-battery-mode)
 
 ;; Line Number
 (use-package display-line-numbers

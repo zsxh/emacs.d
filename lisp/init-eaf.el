@@ -24,10 +24,16 @@
              eaf-open-this-from-dired
              eaf-open-office
              eaf-open-mindmap
-             eaf-create-mindmap)
+             eaf-create-mindmap
+             eaf-get-file-name-extension)
   :hook (eaf-mode . (lambda () (setq left-fringe-width 0
                                      right-fringe-width 0)))
   :init
+  (setq eaf-app-extensions-alist
+        '(("pdf-viewer" . eaf-pdf-extension-list)
+          ("image-viewer" . eaf-image-extension-list)
+          ("video-player" . eaf-video-extension-list)
+          ("mindmap" . eaf-mindmap-extension-list)))
   (progn
     (defun eaf-find-file (orig-fn &rest args)
       (let* ((file (car args))
@@ -35,9 +41,10 @@
              (ext (if file-extension (downcase file-extension) nil)))
         (cond
          ((not ext) (apply orig-fn args))
-         ((member ext '("docx" "doc" "pptx" "ppt" "xlsx" "xls"))
+         ((member (eaf-get-file-name-extension file) eaf-office-extension-list)
           (eaf-open-office file))
-         ((member ext '("pdf" "emm" "jpg" "jpeg" "png" "bmp" "gif" "svg" "webp"))
+         ((eaf--get-app-for-extension
+           (eaf-get-file-name-extension file))
           (eaf-open file))
          (t (apply orig-fn args)))))
 
@@ -46,11 +53,10 @@
     (with-eval-after-load 'org
       (setq browse-url-browser-function 'eaf-open-browser)))
   :config
-  (setq eaf-browser-default-search-engine "duckduckgo"
+  (setq eaf-python-command "/usr/bin/python" ; Install dependencies from arch repo
+        eaf-enable-debug nil
+        eaf-browser-default-search-engine "duckduckgo"
         eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf")))
-
-  ;; (setq eaf-enable-debug t
-  ;;       eaf-python-command "/home/zsxh/.pyenv/versions/miniconda3-latest/bin/python3")
 
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")

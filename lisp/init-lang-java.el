@@ -30,13 +30,14 @@
             ,(concat "-javaagent:" lombok-jar)))))
 
 (with-eval-after-load 'cc-mode
-  ;; FIXME: when i put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode
+  ;; FIXME: when I put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode
   (+language-server/set-common-leader-keys java-mode-map)
 
   (+funcs/major-mode-leader-keys
    java-mode-map
    "c" '(+java/compile :which-key "compile")
    "dr" '(dap-java-debug :which-key "run")
+   "dR" '(dap-debug :which-key "run-attach")
    "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
    "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
    "i" '(nil :which-key "implement")
