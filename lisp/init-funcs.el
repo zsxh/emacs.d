@@ -45,6 +45,15 @@ and write the 'initial-scratch-message into it."
         (insert initial-scratch-message)))
     (switch-to-buffer target-buffer)))
 
+(defun keymap-symbol (keymap)
+  "Return the symbol to which KEYMAP is bound, or nil if no such symbol exists."
+  (catch 'gotit
+    (mapatoms (lambda (symbol)
+                (and (boundp symbol)
+                     (eq (symbol-value symbol) keymap)
+                     ;; (not (eq symbol 'keymap))
+                     (throw 'gotit symbol))))))
+
 (defmacro +funcs/major-mode-leader-keys (mode-map &rest args)
   "Use general.el to define leader keys with both \"SPC m\" and \",\".
 MODE-MAP is keymap symbol or literal keymap name, ARGS is the keybindings.
@@ -259,7 +268,7 @@ Version 2018-06-18"
          (message "File path copied: %s" $fpath)
          $fpath )))))
 
-(defun xah-display-minor-mode-key-priority  ()
+(defun xah-display-minor-mode-key-priority ()
   "Print out minor mode's key priority.
 URL `http://ergoemacs.org/emacs/minor_mode_key_priority.html'
 Version 2017-01-27"
@@ -288,15 +297,6 @@ Version 2017-01-27"
          (funcall ,function))
        (add-hook ,hook ',sym ,append ,local))))
 
-(defun keymap-symbol (keymap)
-  "Return the symbol to which KEYMAP is bound, or nil if no such symbol exists."
-  (catch 'gotit
-    (mapatoms (lambda (symbol)
-                (and (boundp symbol)
-                     (eq (symbol-value symbol) keymap)
-                     ;; (not (eq symbol 'keymap))
-                     (throw 'gotit symbol))))))
-
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
   (cond ((and
@@ -309,6 +309,42 @@ Version 2017-01-27"
          (+eaf/ivy-switch-buffer))
         (t
          (ivy-switch-buffer))))
+
+;; https://with-emacs.com/posts/tips/quit-current-context/
+;; Quit the minibuffer from any other window
+(defun keyboard-quit-context+ ()
+  "Quit current context.
+
+This function is a combination of `keyboard-quit' and
+`keyboard-escape-quit' with some parts omitted and some custom
+behavior added."
+  (interactive)
+  (cond ((region-active-p)
+         ;; Avoid adding the region to the window selection.
+         (setq saved-region-selection nil)
+         (let (select-active-regions)
+           (deactivate-mark)))
+        ((eq last-command 'mode-exited) nil)
+        (current-prefix-arg
+         nil)
+        (defining-kbd-macro
+          (message
+           (substitute-command-keys
+            "Quit is ignored during macro defintion, use \\[kmacro-end-macro] if you want to stop macro definition"))
+          (cancel-kbd-macro-events))
+        ((active-minibuffer-window)
+         (when (get-buffer-window "*Completions*")
+           ;; hide completions first so point stays in active window when
+           ;; outside the minibuffer
+           (minibuffer-hide-completions))
+         (abort-recursive-edit))
+        (t
+         (when completion-in-region-mode
+           (completion-in-region-mode -1))
+         (let ((debug-on-quit nil))
+           (signal 'quit nil)))))
+
+(global-set-key [remap keyboard-quit] #'keyboard-quit-context+)
 
 
 (provide 'init-funcs)
