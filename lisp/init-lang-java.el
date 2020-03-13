@@ -18,7 +18,9 @@
   :custom
   (lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/")))
   :config
+  (require 'helm nil t)
   (require 'lsp-java-boot)
+  (setq lsp-java-boot-enabled nil)
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
   (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.10/lombok-1.18.10.jar")))
     (when (file-exists-p lombok-jar))
@@ -59,7 +61,8 @@
               (when (eq major-mode 'java-mode)
                 (lsp-lens-mode)
                 (lsp-java-lens-mode)
-                (lsp-java-boot-lens-mode))))
+                (lsp-java-boot-lens-mode)
+                )))
   (lsp)
 
   (defvar jdks-installed-dir "/usr/local/"

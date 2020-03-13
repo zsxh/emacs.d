@@ -181,7 +181,7 @@
     (add-hook 'post-command-hook 'org-latex-fragment-toggle-auto nil t)
     (add-hook 'text-scale-mode-hook 'update-org-latex-fragments nil t)
     (webkit-katex-render-mode)
-    (plist-put org-format-latex-options :scale (+ text-scale-mode-amount 1.5))
+    (plist-put org-format-latex-options :scale (+ text-scale-mode-amount 2))
     (org-latex-preview '(16)))
 
   (defun deactivate-org-latex-preview ()

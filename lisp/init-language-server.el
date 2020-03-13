@@ -51,7 +51,6 @@
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
-  (push "[/\\\\]\\node_modules$" lsp-file-watch-ignored)
 
   (defun +lsp/setup ()
     (setq-local company-backends
