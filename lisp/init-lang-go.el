@@ -14,7 +14,7 @@
 ;; https://github.com/saibing/bingo/wiki/Install
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
-  :hook (go-mode . lsp)
+  :hook (go-mode . lsp-deferred)
   :config
   (require 'lsp-go)
   (+language-server/set-common-leader-keys go-mode-map))

@@ -15,7 +15,7 @@
 (use-package python
   :ensure nil
   :defer t
-  :hook (python-mode . lsp)
+  :hook (python-mode . lsp-deferred)
   :custom (python-indent-offset 2)
   :config
   (require 'lsp-python-ms))

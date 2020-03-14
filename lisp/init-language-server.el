@@ -174,7 +174,7 @@
                                buffer-file-name)))
              (setq-local buffer-file-name lsp-file)
              (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
-             (lsp)))
+             (lsp-deferred)))
          (if (fboundp ',edit-pre)
              (advice-add ',edit-pre :after ',intern-pre)
            (progn

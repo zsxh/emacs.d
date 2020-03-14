@@ -19,7 +19,7 @@
 ;; (v1.3) pkg> add CSTParser StaticLint DocumentFormat SymbolServer LanguageServer
 (use-package julia-mode
   :mode ("\\.jl\\'" . julia-mode)
-  :hook ((julia-mode . lsp)
+  :hook ((julia-mode . lsp-deferred)
          (julia-mode . julia-repl-mode))
   :custom (julia-indent-offset 2)
   :config (+language-server/set-common-leader-keys julia-mode-map))

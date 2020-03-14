@@ -32,7 +32,7 @@
     ;; This fix beginning-of-defun raise exception problem
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)
     (unless (member major-mode '(json-mode ein:ipynb-mode))
-      (lsp))))
+      (lsp-deferred))))
 
 ;; npm install -g vue-language-server
 (use-package vue-mode

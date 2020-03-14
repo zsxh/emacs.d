@@ -20,7 +20,7 @@
 ;; $ rustup component add rust-src
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
-  :hook (rust-mode . lsp)
+  :hook (rust-mode . lsp-deferred)
   :custom (rust-indent-offset 2)
   :config
   (use-package lsp-rust

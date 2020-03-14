@@ -55,7 +55,7 @@
 
 (defun +java/setup ()
   (require 'lsp-java)
-  (add-hook 'java-mode-hook 'lsp)
+  (add-hook 'java-mode-hook 'lsp-deferred)
   (add-hook 'lsp-after-open-hook
             (lambda ()
               (when (eq major-mode 'java-mode)
@@ -63,7 +63,7 @@
                 (lsp-java-lens-mode)
                 (lsp-java-boot-lens-mode)
                 )))
-  (lsp)
+  (lsp-deferred)
 
   (defvar jdks-installed-dir "/usr/local/"
     "JDKs intalled directory.")

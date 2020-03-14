@@ -15,7 +15,7 @@
   :mode (("\\.\\(clj\\|dtm\\|edn\\)\\'" . clojure-mode)
          ("\\.cljc\\'" . clojurec-mode)
          ("\\.cljs\\'" . clojurescript-mode))
-  :hook ((clojure-mode clojurec-mode clojurescript-mode) . lsp)
+  :hook ((clojure-mode clojurec-mode clojurescript-mode) . lsp-deferred)
   :config
   (require 'lsp-clojure)
   (dolist (mode-map '(clojure-mode-map clojurec-mode-map clojurescript-mode-map))

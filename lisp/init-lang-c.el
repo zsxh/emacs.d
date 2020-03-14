@@ -41,8 +41,8 @@
   (let ((mode-map-symbol (intern (format "%s-map" major-mode)))
         (mode-hook (intern (format "%s-hook" major-mode))))
     (+language-server/set-common-leader-keys mode-map-symbol)
-    (add-hook mode-hook 'lsp))
-  (lsp))
+    (add-hook mode-hook 'lsp-deferred))
+  (lsp-deferred))
 
 (use-package cmake-mode
   :defer t
