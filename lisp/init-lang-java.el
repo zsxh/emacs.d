@@ -17,19 +17,24 @@
   :defer t
   :custom
   (lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/")))
+  (lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+  (lsp-java-format-settings-profile "GoogleStyle")
   :config
   (require 'helm nil t)
   (require 'lsp-java-boot)
   (setq lsp-java-boot-enabled nil)
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
   (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.10/lombok-1.18.10.jar")))
-    (when (file-exists-p lombok-jar))
-    (setq lsp-java-vmargs
-          `("-noverify"
-            "-Xmx1G"
-            "-XX:+UseG1GC"
-            "-XX:+UseStringDeduplication"
-            ,(concat "-javaagent:" lombok-jar)))))
+    (when (file-exists-p lombok-jar)
+      (setq lsp-java-vmargs
+            `("-noverify"
+              "-Xmx1G"
+              "-XX:+UseG1GC"
+              "-XX:+UseStringDeduplication"
+              ,(concat "-javaagent:" lombok-jar)
+              "-DproxySet=true"
+              "-DproxyHost=127.0.0.1"
+              "-DproxyPort=1081")))))
 
 (with-eval-after-load 'cc-mode
   ;; FIXME: when I put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode

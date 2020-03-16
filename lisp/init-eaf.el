@@ -75,13 +75,9 @@
   (when personal-eaf-grip-token
     (setq eaf-grip-token personal-eaf-grip-token))
 
-  (when personal-http-proxy
-    (let* ((host-port (split-string personal-http-proxy ":"))
-           (host (nth 0 host-port))
-           (port (nth 1 host-port)))
-      (setq eaf-proxy-host host
-            eaf-proxy-port port
-            eaf-proxy-type "http")))
+  (setq eaf-proxy-host personal-proxy-http-host
+        eaf-proxy-port personal-proxy-http-port
+        eaf-proxy-type "http")
 
   ;; hack eaf for evil-mode
   ;; send-key only in evil-emacs-state

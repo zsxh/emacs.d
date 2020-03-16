@@ -217,6 +217,7 @@
 ;; Install fasd
 ;; https://github.com/clvv/fasd
 (use-package fasd
+  :hook (after-init . global-fasd-mode)
   :commands (fasd-find-file))
 
 ;; This package allows Emacs to copy to and paste from the GUI clipboard

@@ -63,9 +63,17 @@ Check https://github.com/hlissner/emacs-doom-themes"
   "Shell used in `term' and `ansi-term'."
   :type 'string)
 
-(defcustom personal-http-proxy "127.0.0.1:1081"
-  "Set http(s) proxy."
+(defcustom personal-proxy-http-host "127.0.0.1"
+  "Set http(s) proxy host."
   :type 'string)
+
+(defcustom personal-proxy-http-port 1081
+  "Set http(s) proxy port."
+  :type 'integer)
+
+(defcustom personal-proxy-socks5-port 1080
+  "Set socks5 proxy port."
+  :type 'integer)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 

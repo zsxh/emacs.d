@@ -67,13 +67,13 @@
   "Show http/https proxy."
   (interactive)
   (if url-proxy-services
-      (message "Current HTTP proxy is \"%s\"" personal-http-proxy)
+      (message "Current HTTP proxy is '%s:%s'" personal-proxy-http-host personal-proxy-http-port)
     (message "No proxy")))
 
 (defun proxy-http-enable ()
   "Enable http/https proxy."
-  (setq url-proxy-services `(("http" . ,personal-http-proxy)
-                             ("https" . ,personal-http-proxy)
+  (setq url-proxy-services `(("http" . ,(format "%s:%s" personal-proxy-http-host personal-proxy-http-port))
+                             ("https" . ,(format "%s:%s" personal-proxy-http-host personal-proxy-http-port))
                              ("no_proxy" . "^\\(localhost\\|192.168.*\\|10.*\\)")))
   (proxy-http-show))
 
@@ -98,7 +98,7 @@
     "Enable Socks proxy."
     (setq url-gateway-method 'socks)
     (setq socks-noproxy '("localhost"))
-    (setq socks-server '("Default server" "localhost" 1080 5))
+    (setq socks-server '("Default server" "localhost" ,personal-proxy-socks5-port 5))
     (message "socks proxy %s enabled" socks-server))
 
   (defun proxy-mode-socks-disable ()
