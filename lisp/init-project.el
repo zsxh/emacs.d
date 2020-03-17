@@ -66,7 +66,17 @@
                         (projectile-project-buffer-names)))
               :initial-input nil
               :action #'ivy--switch-buffer-action
-              :caller '+projectile/ivy-switch-buffer)))
+              :caller '+projectile/ivy-switch-buffer))
+
+  ;; FIXME: projectile-project-root is very slow in remote, so I disable it in remote buffer
+  ;; (advice-add 'projectile-project-root :before-while
+  ;;             (lambda (&optional dir)
+  ;;               (let ((dir (or dir default-directory)))
+  ;;                 (when (and (fboundp 'tramp-archive-file-name-archive)
+  ;;                            (tramp-archive-file-name-p dir))
+  ;;                   (setq dir (file-name-directory (tramp-archive-file-name-archive dir))))
+  ;;                 (not (file-remote-p dir nil t)))))
+  )
 
 (use-package find-file-in-project
   :commands (find-file-in-project

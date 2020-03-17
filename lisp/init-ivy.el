@@ -90,6 +90,15 @@
 (use-package ivy-rich
   :after ivy
   :config
+  ;; FIXME: Finding project root at remote is very slow
+  (advice-add 'ivy-rich-switch-buffer-root :before-until
+              (lambda (&optional candidate)
+                (let ((dir (ivy-rich--switch-buffer-directory candidate)))
+                  (when (and (fboundp 'tramp-archive-file-name-archive)
+                             (tramp-archive-file-name-p dir))
+                    (setq dir (file-name-directory (tramp-archive-file-name-archive dir))))
+                  (and (file-remote-p dir nil t) dir))))
+
   (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
 
   (defun ivy-rich-switch-buffer-icon (candidate)

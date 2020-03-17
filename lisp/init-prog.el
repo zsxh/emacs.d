@@ -40,7 +40,8 @@
 ;; automatic parenthesis pairing for non prog mode
 (use-package elec-pair
   :ensure nil
-  :hook (after-init . electric-pair-mode))
+  :hook (after-init . electric-pair-mode)
+  :bind ("C-j" . newline-and-indent))
 
 (use-package awesome-pair
   :load-path "~/.emacs.d/submodules/awesome-pair"
