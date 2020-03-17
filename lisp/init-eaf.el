@@ -76,7 +76,7 @@
     (setq eaf-grip-token personal-eaf-grip-token))
 
   (setq eaf-proxy-host personal-proxy-http-host
-        eaf-proxy-port personal-proxy-http-port
+        eaf-proxy-port (format "%s" personal-proxy-http-port)
         eaf-proxy-type "http")
 
   ;; hack eaf for evil-mode
