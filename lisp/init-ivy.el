@@ -124,7 +124,7 @@
           (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0)
         icon)))
 
-  (plist-put ivy-rich--display-transformers-list 'ivy-switch-buffer
+  (plist-put ivy-rich-display-transformers-list 'ivy-switch-buffer
              '(:columns
                ((ivy-rich-switch-buffer-icon (:width 2))
                 (ivy-rich-candidate (:width 30))
@@ -136,18 +136,20 @@
                :predicate
                (lambda (cand) (get-buffer cand))))
 
-  (plist-put ivy-rich--display-transformers-list '+projectile/ivy-switch-buffer
-             (plist-get ivy-rich--display-transformers-list 'ivy-switch-buffer))
+  (plist-put ivy-rich-display-transformers-list '+projectile/ivy-switch-buffer
+             (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer))
 
-
-  (plist-put ivy-rich--display-transformers-list 'counsel-find-file
+  (plist-put ivy-rich-display-transformers-list 'counsel-find-file
              '(:columns
                ((ivy-rich-file-icon)
                 (ivy-read-file-transformer))
                :delimiter "\t"))
 
-  (plist-put ivy-rich--display-transformers-list 'find-file-in-project
-             (plist-get ivy-rich--display-transformers-list 'counsel-find-file))
+  (plist-put ivy-rich-display-transformers-list 'find-file-in-project
+             (plist-get ivy-rich-display-transformers-list 'counsel-find-file))
+  ;; FIXME: doesn't work
+  ;; (plist-put ivy-rich-display-transformers-list 'find-file-in-project-by-selected
+  ;;            (plist-get ivy-rich-display-transformers-list 'counsel-find-file))
 
   (ivy-rich-mode 1))
 

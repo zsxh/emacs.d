@@ -119,7 +119,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
   :defer t
   :config
   ;; https://oremacs.com/2015/01/01/three-ansi-term-tips/
-  (setq explicit-shell-file-name personal-shell-executable)
+  (setq shell-file-name personal-shell-executable)
 
   (defun +term/term-exec-hook ()
     (let* ((buff (current-buffer))

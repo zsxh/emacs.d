@@ -259,11 +259,6 @@
 ;;  S-mouse-3  Set point at click and       End macro and execute macro at
 ;;             execute last macro.          click.
 
-(use-package so-long
-  :ensure nil
-  :if (fboundp 'global-so-long-mode)
-  :hook (after-init . global-so-long-mode))
-
 ;; TODO: Enhance Tramp
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
 ;; https://willschenk.com/articles/2020/tramp_tricks/

@@ -86,6 +86,24 @@
 
   (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-offline))
 
+(use-package mini-frame
+  :if (display-graphic-p)
+  ;; :hook (after-init . mini-frame-mode)
+  :defer t
+  :config
+  (setq mini-frame-ignore-commands '(evil-ex
+                                     swiper
+                                     dired-narrow
+                                     eval-expression
+                                     eaf-proxy-insert_or_open_link
+                                     eaf-proxy-insert_or_open_link_new_buffer))
+  (setq mini-frame-color-shift-step 15)
+  (setq mini-frame-show-parameters
+        '((top . 0.3)
+          (width . 0.7)
+          (left . 0.5)
+          (min-height . 2))))
+
 ;; Display time on modeline
 (defvar +ui/time-format-short "%H:%M"
   "Short display time format.")
@@ -196,7 +214,24 @@
          (set-face-attribute 'ein:cell-output-prompt nil :foreground "darkred" :background "#282c34"))
        (with-eval-after-load 'jupyter-repl
          (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
-         (set-face-background 'jupyter-repl-traceback "#4B483F"))))
+         (set-face-background 'jupyter-repl-traceback "#4B483F"))
+       (with-eval-after-load 'ivy
+         (let ((base3 (doom-color 'base3))
+               (blue (doom-color 'blue))
+               (magenta (doom-color 'magenta))
+               (green (doom-color 'green))
+               (yellow (doom-color 'yellow))
+               (violet (doom-color 'violet)))
+           (set-face-attribute 'ivy-minibuffer-match-face-1 nil :foreground yellow :background base3 :weight 'bold)
+           (set-face-attribute 'ivy-minibuffer-match-face-2 nil :foreground magenta :background base3 :weight 'bold)
+           (set-face-attribute 'ivy-minibuffer-match-face-3 nil :foreground green :background base3 :weight 'bold)
+           (set-face-attribute 'ivy-minibuffer-match-face-4 nil :foreground blue :background base3 :weight 'bold)
+           (set-face-attribute 'ivy-minibuffer-match-highlight nil :foreground violet :weight 'bold)
+           (with-eval-after-load 'swiper
+             (set-face-attribute 'swiper-match-face-1 nil :inherit 'ivy-minibuffer-match-face-1)
+             (set-face-attribute 'swiper-match-face-2 nil :inherit 'ivy-minibuffer-match-face-2)
+             (set-face-attribute 'swiper-match-face-3 nil :inherit 'ivy-minibuffer-match-face-3)
+             (set-face-attribute 'swiper-match-face-4 nil :inherit 'ivy-minibuffer-match-face-4))))))
     ('doom-solarized-light
      (progn
        (with-eval-after-load 'dired

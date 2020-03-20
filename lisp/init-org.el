@@ -29,6 +29,7 @@
   ;; https://www.reddit.com/r/orgmode/comments/f9qy5h/in_orgmode_when_editing_a_source_block_with/
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2019-12/msg00263.html
   (setq org-src-window-setup 'other-window)
+  (setq org-startup-with-inline-images t)
 
   ;; display/update images in the buffer after I evaluate
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
@@ -66,7 +67,19 @@
       (goto-char (point-min))
       (while (re-search-forward org-babel-result-regexp nil t)
         (save-excursion (goto-char (match-beginning 0))
-                        (org-babel-hide-result-toggle-maybe))))))
+                        (org-babel-hide-result-toggle-maybe)))))
+
+  (with-eval-after-load 'eaf
+    (defun +org/eaf-open-file (file-path link-without-schema)
+      (eaf-open file-path))
+
+    (setq org-file-apps '((auto-mode . emacs)
+                          ("\\.mm\\'" . default)
+                          ("\\.x?html?\\'" . default)
+                          ("\\.gif\\'" . +org/eaf-open-file)
+                          ("\\.png\\'" . +org/eaf-open-file)
+                          ("\\.jpe?g\\'" . +org/eaf-open-file)
+                          ("\\.pdf\\'" . +org/eaf-open-file)))))
 
 ;; Org-mode keybindings
 (use-package evil-org

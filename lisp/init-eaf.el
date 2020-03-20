@@ -47,9 +47,7 @@
            (eaf-get-file-name-extension file))
           (eaf-open file))
          (t (apply orig-fn args)))))
-
     (advice-add #'find-file :around #'eaf-find-file)
-
     (with-eval-after-load 'org
       (setq browse-url-browser-function 'eaf-open-browser)))
   :config
@@ -61,6 +59,10 @@
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")
   (eaf-setq eaf-browser-remember-history "true")
+  (eaf-setq eaf-browser-dark-mode "true")
+  (eaf-setq eaf-camera-save-path "~/Download")
+  (eaf-setq eaf-browser-download-path "~/Download")
+  (eaf-setq eaf-mindmap-save-path "~/Download")
 
   (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)

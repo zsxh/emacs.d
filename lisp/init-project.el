@@ -95,17 +95,7 @@
   (defun find-file-in-project-not-ignore ()
     (interactive)
     (let ((ffip-rust-fd-respect-ignore-files nil))
-      (find-file-in-project)))
-
-  ;; Temporarily fix 'find-file-in-current-directory level is nil problem
-  (defun ffip-parent-directory (level directory)
-    "Return LEVEL up parent directory of DIRECTORY."
-    (let* ((rlt directory))
-      (while (and level (> level 0) (not (string= "" rlt)))
-        (setq rlt (file-name-directory (directory-file-name rlt)))
-        (setq level (1- level)))
-      (if (string= "" rlt) (setq rlt nil))
-      rlt)))
+      (find-file-in-project))))
 
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 
