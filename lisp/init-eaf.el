@@ -59,7 +59,6 @@
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")
   (eaf-setq eaf-browser-remember-history "true")
-  (eaf-setq eaf-browser-dark-mode "true")
   (eaf-setq eaf-camera-save-path "~/Download")
   (eaf-setq eaf-browser-download-path "~/Download")
   (eaf-setq eaf-mindmap-save-path "~/Download")

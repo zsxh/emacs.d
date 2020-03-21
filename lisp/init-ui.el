@@ -237,7 +237,10 @@
        (with-eval-after-load 'dired
          (set-face-foreground 'dired-directory "#268bd2"))
        (with-eval-after-load 'paren
-         (set-face-background 'show-paren-match "#E5E5E5")))))
+         (set-face-background 'show-paren-match "#E5E5E5"))))
+    ('doom-dark+
+     (progn
+       (set-face-background 'fringe (doom-color 'bg)))))
 
   ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
   ;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
