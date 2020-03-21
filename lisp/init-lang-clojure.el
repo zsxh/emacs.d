@@ -10,7 +10,12 @@
 
 ;;; Code:
 
-;; https://github.com/snoe/clojure-lsp#installation
+;; Install Leiningen: https://github.com/technomancy/leiningen#installation
+;; Install cider-nrepl: https://docs.cider.mx/cider-nrepl/usage.html#_via_leiningen
+;; Install shadow-cljs: https://shadow-cljs.org/
+;; Install clojure lsp server: https://github.com/snoe/clojure-lsp#installation
+;; clojurescript: https://clojurescript.org/
+
 (use-package clojure-mode
   :mode (("\\.\\(clj\\|dtm\\|edn\\)\\'" . clojure-mode)
          ("\\.cljc\\'" . clojurec-mode)
@@ -18,10 +23,11 @@
   :hook ((clojure-mode clojurec-mode clojurescript-mode) . lsp-deferred)
   :config
   (require 'lsp-clojure)
+  (setq lsp-clojure-server-command  `("bash" "-c" ,(f-join lsp-server-install-dir "clojure-lsp/clojure-lsp")))
   (dolist (mode-map '(clojure-mode-map clojurec-mode-map clojurescript-mode-map))
     (+language-server/set-common-leader-keys (symbol-value mode-map))))
 
-;; TODO: cider configs and learn some shadow-cljs
+;; https://cider.mx/
 (use-package cider
   :defer t)
 
