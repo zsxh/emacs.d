@@ -23,7 +23,7 @@
     (if (and cache-value (file-exists-p cache-value))
         cache-value
       (let* ((lsp-folders (lsp-session-folders (lsp-session)))
-             (value (find-if (lambda (path) (string-prefix-p path (expand-file-name dir))) lsp-folders)))
+             (value (cl-find-if (lambda (path) (string-prefix-p path (expand-file-name dir))) lsp-folders)))
         (puthash cache-key value +project/lsp-project-root-cache)
         value))))
 

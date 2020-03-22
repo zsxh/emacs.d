@@ -33,8 +33,8 @@
               "-XX:+UseStringDeduplication"
               ,(concat "-javaagent:" lombok-jar)
               "-DproxySet=true"
-              "-DproxyHost=127.0.0.1"
-              "-DproxyPort=1081")))))
+              ,(concat "-DproxyHost=" personal-proxy-http-host)
+              ,(format "-DproxyPort=%s" personal-proxy-http-port))))))
 
 (with-eval-after-load 'cc-mode
   ;; FIXME: when I put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode

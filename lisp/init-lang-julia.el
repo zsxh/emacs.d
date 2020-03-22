@@ -32,7 +32,7 @@
   :after julia-mode
   :custom
   (lsp-julia-package-dir nil)     ; use the globally installed version
-  (lsp-julia-default-environment "~/.julia/environments/v1.3")
+  (lsp-julia-default-environment "~/.julia/environments/v1.4")
   :config
   (defun lsp-julia--get-root (dir)
     "Get the (Julia) project root directory of the current file."
