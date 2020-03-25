@@ -1,5 +1,5 @@
 #+STARTUP: showall
-Updated: <2020-03-21>
+Updated: <2020-03-25>
 
 * Enviroment
   - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.14, cairo version 1.17.3) of 2020-03-21
@@ -9,7 +9,6 @@ Updated: <2020-03-21>
   - DE: DDE
 
 * TODOs
-  - lazy load org-src lang modes
 
 * Features
   - =org=
@@ -114,10 +113,10 @@ Updated: <2020-03-21>
   - [X] =C/C++= install [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
   - [X] =Java= install [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
   - [X] =Python= install [[https://github.com/emacs-lsp/lsp-python-ms][lsp-python-ms]]
-  - [X] =Rust= rustup component add rls rust-analysis rust-src
+  - [X] =Rust= install [[https://rust-analyzer.github.io/manual.html#building-from-source][rust-analyzer]]
   - [X] =Go= install [[https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation][gopls]]
   - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
-  - [X] =Julia= (v1.3) pkg> add CSTParser#master StaticLint#master DocumentFormat#master SymbolServer#master LanguageServer#master
+  - [X] =Julia= (v1.4) pkg> add LanguageServer
   - [X] =Javascript/Typescript= npm i -g typescript typescript-language-server
 ** Debugger
   - [X] =C/C++= install [[https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb]['dap-gdb-lldb]]
