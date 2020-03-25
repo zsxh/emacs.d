@@ -12,7 +12,7 @@
 
 ;; `doom-themes'
 (setq personal-gui-theme 'doom-solarized-light)
-(setq personal-tui-theme 'doom-solarized-light)
+(setq personal-tui-theme 'doom-dark+)
 
 ;; Rss feeds
 (setq personal-elfeed-feeds
@@ -20,14 +20,10 @@
         ("https://emacs-china.org/posts.rss" emacs china)))
 
 ;; frame startup size, 'max or 'fullscreen
-(setq personal-frame-startup-size 'max)
+(setq personal-frame-startup-size 'fullscreen)
 
 ;; "Shell used in `term' and `ansi-term'."
 (setq personal-shell-executable "/usr/bin/zsh")
 
-;; Org page config
-(with-eval-after-load 'org-page
-  ;; put your configs here
-  (setq op/theme 'mdo))
 
 ;;; custom.el ends here

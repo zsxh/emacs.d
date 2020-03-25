@@ -13,7 +13,7 @@
 ;;;;;;;;;;;;;; Debug Adapter Protocol for Emacs ;;;;;;;;;;;;;;
 
 (use-package dap-mode
-  :quelpa ((dap-mode :fetcher github :repo "yyoncho/dap-mode"))
+  :quelpa ((dap-mode :fetcher github :repo "emacs-lsp/dap-mode"))
   :hook ((lsp-mode . dap-mode)
          (lsp-mode . dap-ui-mode))
   :custom

@@ -19,7 +19,6 @@
   (add-hook-run-once 'c++-mode-hook '+c/setup))
 
 (use-package ccls
-  :quelpa ((ccls :fetcher github :repo "MaskRay/emacs-ccls"))
   :defer t
   :config
   (when (featurep 'evil)

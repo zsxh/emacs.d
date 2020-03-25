@@ -182,7 +182,6 @@
 ;; https://github.com/twlz0ne/playonline.el
 ;; `playonline-block' (require org-mode / markdown)
 (use-package playonline
-  :quelpa ((playonline :fetcher github :repo "twlz0ne/playonline.el"))
   :commands (playonline))
 
 
