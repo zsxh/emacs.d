@@ -73,35 +73,7 @@
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
   (setq lispy-eval-display-style 'overlay)
-  (defun cider--display-interactive-eval-result (value point)
-    "Make overlay for VALUE at POINT."
-    (eros--make-result-overlay value
-                               :where point
-                               :duration eros-eval-result-duration)
-    (message "%s" (propertize value 'invisible nil)))
-
-  (with-eval-after-load 'lisp-mode
-    (require 'le-lisp))
-  (with-eval-after-load 'clojure-mode
-    (require 'le-clojure))
-
-  (setq lispy-use-sly t)
-
-  ;; Replace lispy--eavl-lisp function
-  (defun lispy--eval-lisp-advice (str)
-    "Eval STR as Common Lisp code."
-    (let* ((deactivate-mark nil)
-           (result (with-current-buffer (process-buffer (lispy--cl-process))
-                     (if lispy-use-sly
-                         (sly-interactive-eval str)
-                       (slime-eval `(swank:eval-and-grab-output ,str))))))
-      (if (equal (car result) "")
-          (cadr result)
-        (concat (propertize (car result)
-                            'face 'font-lock-string-face)
-                "\n\n"
-                (cadr result)))))
-  (advice-add #'lispy--eval-lisp :override #'lispy--eval-lisp-advice))
+  (setq lispy-use-sly t))
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros

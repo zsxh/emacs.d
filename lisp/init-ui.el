@@ -252,7 +252,9 @@
     (with-eval-after-load 'ein-cell
       (set-face-extend 'ein:cell-input-area t))
     (with-eval-after-load 'jupyter-repl
-      (set-face-extend 'jupyter-repl-traceback t))))
+      (set-face-extend 'jupyter-repl-traceback t))
+    (with-eval-after-load 'company-box
+      (set-face-extend 'company-box-selection t))))
 
 ;; Set config now
 (+ui/frame-config (selected-frame))

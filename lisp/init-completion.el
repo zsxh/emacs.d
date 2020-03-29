@@ -153,7 +153,9 @@
            (>= emacs-major-version 26)
            (display-graphic-p))
   :after company
-  :hook (global-company-mode . company-posframe-mode))
+  :hook (global-company-mode . company-posframe-mode)
+  :config
+  (setq company-posframe-quickhelp-delay 0.3))
 
 
 (provide 'init-completion)
