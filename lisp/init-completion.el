@@ -82,12 +82,18 @@
 
 ;; Popup documentation for completion candidates
 (use-package company-quickhelp
-  :if (and (< emacs-major-version 26) (display-graphic-p))
+  :if (or (< emacs-major-version 26)
+          (not (display-graphic-p)))
   :after company
   :bind ((:map company-active-map
                ("M-h" . company-quickhelp-manual-begin)))
   :hook (global-company-mode . company-quickhelp-mode)
   :config (setq company-quickhelp-delay 0.3))
+
+(use-package company-quickhelp-terminal
+  :if (not (display-graphic-p))
+  :after company
+  :hook (global-company-mode . company-quickhelp-terminal-mode))
 
 
 (provide 'init-completion)
