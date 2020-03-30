@@ -28,9 +28,10 @@
 ;; (setq auto-save-default nil)               ; Disable built in default auto save
 (setq read-file-name-completion-ignore-case t) ; file ignores case
 (setq-default truncate-lines t)
-;; (setq use-dialog-box nil)                  ; no gui dialog box popups
+(setq use-dialog-box nil)                  ; no gui dialog box popups
 (setq confirm-kill-processes nil)          ; just kill the process on exit
 (setq column-number-mode t)                ; enable column number
+(setq x-wait-for-event-timeout 0)          ; no wait for X events
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
