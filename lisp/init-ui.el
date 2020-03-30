@@ -240,7 +240,10 @@
          (set-face-background 'show-paren-match "#E5E5E5"))))
     ('doom-dark+
      (progn
-       (set-face-background 'fringe (doom-color 'bg)))))
+       (set-face-background 'fringe (doom-color 'bg))
+       (with-eval-after-load 'company-posframe
+         (set-face-background 'company-posframe-active-backend-name (doom-color 'modeline-bg))
+         (set-face-background 'company-posframe-inactive-backend-name (doom-color 'modeline-bg-alt))))))
 
   ;; https://www.reddit.com/r/emacs/comments/diahh1/emacs_27_update_changed_how_highlighted_lines/
   ;; The new face attribute ':extend' controls whether to use the face for displaying the empty space beyond end of line (EOL) till the edge of the window.
