@@ -80,6 +80,13 @@
         eaf-proxy-port (format "%s" personal-proxy-http-port)
         eaf-proxy-type "http")
 
+  ;; override
+  (defun eaf-open-dev-tool-page ()
+    ;; (delete-other-windows)
+    (split-window (selected-window) (/ (* (nth 3 (eaf-get-window-allocation (selected-window))) 2) 3) nil t)
+    (other-window 1)
+    (eaf-open "about:blank" "browser" "dev_tools"))
+
   ;; hack eaf for evil-mode
   ;; send-key only in evil-emacs-state
   (add-hook 'eaf-mode-hook

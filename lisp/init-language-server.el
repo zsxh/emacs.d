@@ -40,21 +40,21 @@
         lsp-client-packages '()
         lsp-keep-workspace-alive nil
         lsp-diagnostic-package :flycheck
+        lsp-prefer-capf nil
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
-        lsp-enable-symbol-highlighting nil ;turn off for better performance
+        lsp-enable-symbol-highlighting nil ; turn off for better performance
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil
-        lsp-links-check-internal 0.5
-        lsp-lens-check-interval 0.3
-        lsp-idle-delay 0.5)
+        lsp-links-check-internal 1
+        lsp-lens-check-interval 1
+        lsp-lens-debounce-interval 1.5
+        lsp-idle-delay 1)
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
 
   (defun +lsp/setup ()
-    (setq-local company-backends
-                '(company-lsp company-files company-dabbrev))
     (unless (member major-mode '(c-mode c++-mode java-mode))
       (lsp-lens-mode)))
 

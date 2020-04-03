@@ -31,6 +31,7 @@
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
+        company-tooltip-maximum-width (/ (frame-width) 2)
         company-idle-delay 0 ; decrease delay before autocompletion popup shows
         company-echo-delay (if (display-graphic-p) nil 0) ; remove annoying blinking
         company-minimum-prefix-length 1
