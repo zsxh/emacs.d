@@ -188,7 +188,7 @@
    "w-" '(split-window-below :which-key "split-bottom")
    "wb" '(balance-windows :which-key "balance-windows")
    "wd" '(delete-window :which-key "delete-window")
-   "wm" '(delete-other-windows :which-key "maximized")
+   "wm" '(+funcs/toggle-maximize-buffer :which-key "maximized")
    "ws" '(hydra-window-scale/body :which-key "scale")
    "ww" '(ace-swap-window :which-key "swap-window")
    "wz" '(zoom-mode :which-key "toggle-zoom-mode")

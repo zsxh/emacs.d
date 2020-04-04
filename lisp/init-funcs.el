@@ -310,6 +310,20 @@ Version 2017-01-27"
         (t
          (ivy-switch-buffer))))
 
+(defun +funcs/toggle-maximize-buffer ()
+  "Toggle Maximize buffer"
+  (interactive)
+  (save-excursion
+    (if (and (= 1 (length (cl-remove-if
+                           (lambda (window)
+                             (window-parameter window 'no-delete-other-windows))
+                           (window-list))))
+             (assoc ?_ register-alist))
+        (jump-to-register ?_)
+      (progn
+        (window-configuration-to-register ?_)
+        (delete-other-windows)))))
+
 ;; https://with-emacs.com/posts/tips/quit-current-context/
 ;; Quit the minibuffer from any other window
 (defun keyboard-quit-context+ ()
