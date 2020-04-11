@@ -49,6 +49,7 @@
     (setq ivy-re-builders-alist
           '((ivy-switch-buffer . ivy--regex-plus)
             (swiper . ivy--pinyin-regex)
+            (counsel-find-file . ivy--pinyin-regex)
             (t . ivy--pinyin-regex))))
 
   (setq ivy-initial-inputs-alist nil)
