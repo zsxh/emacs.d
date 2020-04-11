@@ -259,7 +259,11 @@
     (with-eval-after-load 'jupyter-repl
       (set-face-extend 'jupyter-repl-traceback t))
     (with-eval-after-load 'company-box
-      (set-face-extend 'company-box-selection t))))
+      (set-face-extend 'company-box-selection t)))
+
+  ;; global settings
+  (with-eval-after-load 'magit-diff
+    (set-face-attribute 'magit-diff-revision-summary nil :inherit 'magit-diff-hunk-heading-highlight)))
 
 ;; Set config now
 (+ui/frame-config (selected-frame))
