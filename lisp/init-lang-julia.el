@@ -12,11 +12,12 @@
 
 (require 'init-language-server)
 
+;; FIXME: LanguageServer V2.0 broken now
 ;; https://github.com/JuliaEditorSupport/LanguageServer.jl/issues/300
 ;; Install Julia LanguageServer
 ;; $ julia
 ;; julia> ]
-;; (v1.3) pkg> add CSTParser StaticLint DocumentFormat SymbolServer LanguageServer
+;; pkg> add CSTParser StaticLint DocumentFormat SymbolServer LanguageServer
 (use-package julia-mode
   :mode ("\\.jl\\'" . julia-mode)
   :hook ((julia-mode . lsp-deferred)
@@ -34,23 +35,16 @@
   (lsp-julia-package-dir nil)     ; use the globally installed version
   (lsp-julia-default-environment "~/.julia/environments/v1.4")
   :config
-  (defun lsp-julia--get-root (dir)
+  (defun +julia/lsp-get-root (dir)
     "Get the (Julia) project root directory of the current file."
     (expand-file-name (if dir (or (locate-dominating-file dir "JuliaProject.toml")
                                   (locate-dominating-file dir "Project.toml")
                                   lsp-julia-default-environment)
                         lsp-julia-default-environment)))
-  (defun lsp-julia--rls-command ()
-    "The command to lauch the Julia Language Server."
-    `(,lsp-julia-command
-      ,@lsp-julia-flags
-      ,(concat "-e using LanguageServer, Sockets, SymbolServer;"
-               " server = LanguageServerInstance("
-               " stdin, stdout, false,"
-               " \"" (lsp-julia--get-root (buffer-file-name)) "\","
-               " \"" (lsp-julia--get-depot-path) "\""
-               ");"
-               " run(server);"))))
+
+  (advice-add 'lsp-julia--get-root :override
+              (lambda ()
+                (+julia/lsp-get-root (buffer-file-name)))))
 
 (use-package julia-repl
   :commands julia-repl-mode)

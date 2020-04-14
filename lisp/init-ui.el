@@ -105,10 +105,10 @@
           (min-height . 2))))
 
 ;; Display time on modeline
-(defvar +ui/time-format-short "%H:%M"
+(defvar +ui/time-format-short "[%H:%M]"
   "Short display time format.")
 
-(defvar +ui/time-format-long "%Y/%m/%d/%a/%H:%M"
+(defvar +ui/time-format-long "[%Y-%m-%d %a %H:%M]"
   "Long display time format.")
 
 (defcustom +ui/display-time-format-style 'long

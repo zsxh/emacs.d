@@ -51,17 +51,22 @@
         lsp-lens-debounce-interval 1.5
         lsp-idle-delay 1)
 
+  ;; lsp flycheck faces
+  (setq lsp-diagnostics-attributes '((deprecated :strike-through t)))
+
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
 
   ;; don't ping LSP lanaguage server too frequently
-  (defvar lsp-on-touch-time 0)
-  (defadvice lsp-on-change (around lsp-on-change-hack activate)
-    ;; don't run `lsp-on-change' too frequently
-    (when (> (- (float-time (current-time))
-                lsp-on-touch-time) 30) ;; 30 seconds
-      (setq lsp-on-touch-time (float-time (current-time)))
-      ad-do-it))
+  ;; FIXME: increase interval broke autocomplete
+  ;; (defvar lsp-on-touch-time 0)
+  ;; (defun +lsp/on-change-hack (orig-fn &rest args)
+  ;;   ;; don't run `lsp-on-change' too frequently
+  ;;   (when (> (- (float-time (current-time))
+  ;;               lsp-on-touch-time) 30) ;; 30 seconds
+  ;;     (setq lsp-on-touch-time (float-time (current-time)))
+  ;;     (apply orig-fn args)))
+  ;; (advice-add 'lsp-on-change :around #'+lsp/on-change-hack)
 
   (defun +lsp/setup ()
     (unless (member major-mode '(c-mode c++-mode java-mode))
