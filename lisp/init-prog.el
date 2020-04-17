@@ -144,8 +144,22 @@
   (advice-add 'awesome-pair-fix-unbalanced-parentheses :override '+prog/fix-unbalanced-parentheses-or-forward-char)
 
   (with-eval-after-load 'lispy
-    (define-key lispy-mode-map (kbd "M-n") 'awesome-pair-jump-right)
-    (define-key lispy-mode-map (kbd "M-p") 'awesome-pair-jump-left)
+    (defun lispy-or-awesome-pair-forward ()
+      (interactive)
+      (if lispy-mode
+          (lispy-forward 1)
+        (awesome-pair-jump-right)))
+
+    (defun lispy-or-awesome-pair-backward ()
+      (interactive)
+      (if lispy-mode
+          (lispy-backward 1)
+        (awesome-pair-jump-left)))
+
+    (define-key lispy-mode-map (kbd "[") 'awesome-pair-open-bracket)
+    (define-key lispy-mode-map (kbd "]") 'awesome-pair-close-bracket)
+    (define-key lispy-mode-map (kbd "M-n") 'lispy-or-awesome-pair-forward)
+    (define-key lispy-mode-map (kbd "M-p") 'lispy-or-awesome-pair-backward)
     (define-key lispy-mode-map (kbd "M-RET") 'awesome-pair-jump-out-pair-and-newline)))
 
 ;; Change variable name style

@@ -2,10 +2,10 @@
 Updated: <2020-03-25>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.14, cairo version 1.17.3) of 2020-03-21
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.17, cairo version 1.17.3) of 2020-04-16
   - OS: Manjaro 19.0.2 Kyria
   - Shell: zsh 5.8
-  - Kernel: x86_64 Linux 5.6.0-2-MANJARO
+  - Kernel: x86_64 Linux 5.6.3-2-MANJARO
   - DE: DDE
 
 * TODOs
@@ -118,6 +118,7 @@ Updated: <2020-03-25>
   - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
   - [X] =Julia= (v1.4) pkg> add LanguageServer
   - [X] =Javascript/Typescript= npm i -g typescript typescript-language-server
+  - [X] =Clojure/ClojureScript= [[https://github.com/snoe/clojure-lsp#installation][clojure-lsp]]
 ** Debugger
   - [X] =C/C++= install [[https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb]['dap-gdb-lldb]]
   - [X] =Java= install [[https://github.com/emacs-lsp/dap-mode#java]['dap-java]]

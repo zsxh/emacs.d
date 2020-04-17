@@ -72,6 +72,8 @@
   (eaf-bind-key nil "T" eaf-browser-keybinding)
   (eaf-bind-key recover_prev_close_page "X" eaf-browser-keybinding)
 
+  (evil-define-key 'normal eaf-pdf-outline-mode-map (kbd "RET") 'eaf-pdf-outline-jump)
+
   (require 'dash)
   (when personal-eaf-grip-token
     (setq eaf-grip-token personal-eaf-grip-token))
