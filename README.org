@@ -1,5 +1,5 @@
 #+STARTUP: showall
-Updated: <2020-03-25>
+Updated: <2020-04-17>
 
 * Enviroment
   - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.17, cairo version 1.17.3) of 2020-04-16
