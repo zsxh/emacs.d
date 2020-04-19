@@ -74,7 +74,7 @@ Updated: <2020-04-17>
       completion for emacs command
   - =programming=
     - =eglot/lsp-mode=
-      language server supoort: code completion, reformat, find definitions, etc.
+      language server support: code completion, reformat, find definitions, etc.
     - =dap-mode=
       debuger (require lsp-mode)
     - =projectile/project/find-file-in-project=
