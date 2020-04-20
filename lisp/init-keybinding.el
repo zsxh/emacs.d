@@ -166,6 +166,7 @@
    "tB" '(comment-box :which-key "comment-box")
    "ti" '(nil :which-key "insert")
    "tit" '(insert-translated-name-insert :which-key "chinese->engish")
+   "tm" '(hydra-multi-cursors/body :which-key "mutli-cursors")
    "tn" '(+funcs/narrow-or-widen-dwim :which-key "narrow-to-region")
    "tr" '(nil :which-key "replace")
    "trb" '(evilmr-replace-in-buffer :which-key "evil-replace-in-buffer")
