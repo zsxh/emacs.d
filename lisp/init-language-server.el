@@ -40,6 +40,7 @@
         lsp-client-packages '()
         lsp-keep-workspace-alive nil
         lsp-diagnostic-package :flycheck
+        lsp-flycheck-live-reporting nil ; reported according to `flycheck-check-syntax-automatically'
         lsp-prefer-capf nil
         lsp-enable-file-watchers nil
         lsp-enable-folding nil

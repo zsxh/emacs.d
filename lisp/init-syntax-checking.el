@@ -26,10 +26,10 @@
   :config
   (require 'popwin)
 
-  (setq flycheck-indication-mode 'right-fringe)
-  (setq flycheck-emacs-lisp-load-path 'inherit)
-  ;; Only check while saving and opening files
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq flycheck-indication-mode 'right-fringe
+        flycheck-emacs-lisp-load-path 'inherit
+        flycheck-idle-change-delay 2
+        flycheck-check-syntax-automatically '(save mode-enabled))
 
   ;; Custom flycheck fringe icons
   (define-fringe-bitmap 'my-flycheck-fringe-indicator
