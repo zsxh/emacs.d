@@ -41,7 +41,7 @@
         lsp-keep-workspace-alive nil
         lsp-diagnostic-package :flycheck
         lsp-flycheck-live-reporting nil ; reported according to `flycheck-check-syntax-automatically'
-        lsp-prefer-capf nil
+        lsp-prefer-capf t
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
         lsp-enable-symbol-highlighting nil ; turn off for better performance
@@ -51,6 +51,10 @@
         lsp-lens-check-interval 1
         lsp-lens-debounce-interval 1.5
         lsp-idle-delay 1)
+
+  ;; TODO: wait childframe
+  (setq lsp-signature-render-documentation nil
+        lsp-signature-auto-activate t)
 
   ;; lsp flycheck faces
   (setq lsp-diagnostics-attributes '((deprecated :strike-through t)))
@@ -81,11 +85,6 @@
   (defun +lsp/update-server ()
     (interactive)
     (lsp-install-server t)))
-
-(use-package company-lsp
-  :after (company lsp-mode)
-  :custom
-  (company-lsp-cache-candidates 'auto))
 
 (use-package lsp-ui
   :after lsp-mode

@@ -65,6 +65,7 @@
 
   (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key nil "M-u" eaf-pdf-viewer-keybinding)
 
   (eaf-bind-key eaf-switch-to-eww "C-t" eaf-browser-keybinding)
   (eaf-bind-key nil "M-u" eaf-browser-keybinding)

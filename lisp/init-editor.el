@@ -51,9 +51,11 @@
 ;; Permanently indent with spaces, never with TABs
 ;; M-^ delete-indentation
 (setq-default c-basic-offset   2
-              c-offsets-alist '((case-label . +))
               tab-width        2
               indent-tabs-mode nil)
+
+(with-eval-after-load 'cc-vars
+  (add-to-list 'c-offsets-alist '(case-label . +)))
 
 ;; Automatically reload files was modified by external program
 (use-package autorevert
