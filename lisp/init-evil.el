@@ -121,10 +121,14 @@
 
 ;; TODO: new keybinding for 'evil-mc-undo-all-cursors, "grq" is hard to remember
 (use-package evil-mc
-  :hook (after-init . global-evil-mc-mode)
+  :hook ((prog-mode conf-mode yaml-mode editorconfig-mode vue-mode) . evil-mc-mode)
   :config
+  (add-hook 'eaf-mode-hook (lambda () (evil-mc-mode -1)))
   ;; "grq" 'evil-mc-undo-all-cursors
   (evil-define-key* '(normal visual) evil-mc-key-map
+                    ;; (kbd "gr") evil-mc-cursors-map
+                    (kbd "gr") nil
+                    (kbd "grq") 'evil-mc-undo-all-cursors
                     (kbd "M-n") nil
                     (kbd "M-p") nil
                     (kbd "C-n") nil
