@@ -17,7 +17,9 @@
   :defer t
   :custom
   (lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/")))
-  (lsp-java-format-settings-url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml")
+  ;; https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
+  ;; I prefer {join_wrapped_lines : false}
+  (lsp-java-format-settings-url (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml")))
   (lsp-java-format-settings-profile "GoogleStyle")
   :config
   (require 'helm nil t)
@@ -31,10 +33,10 @@
               "-Xmx1G"
               "-XX:+UseG1GC"
               "-XX:+UseStringDeduplication"
-              ,(concat "-javaagent:" lombok-jar)
-              "-DproxySet=true"
-              ,(concat "-DproxyHost=" personal-proxy-http-host)
-              ,(format "-DproxyPort=%s" personal-proxy-http-port))))))
+              ;; "-DproxySet=true"
+              ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
+              ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
+              ,(concat "-javaagent:" lombok-jar))))))
 
 (with-eval-after-load 'cc-mode
   ;; FIXME: when I put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode

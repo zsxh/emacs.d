@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+(setq completion-ignore-case t)
+
 (use-package company
   ;; :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :bind (("M-/" . yas-expand)
