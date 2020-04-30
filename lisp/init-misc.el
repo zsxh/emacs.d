@@ -184,6 +184,11 @@
 (use-package playonline
   :commands (playonline))
 
+;; Usage:
+;; emacs -batch -l ${package-elpa-dir}/elisp-benchmarks.el -f elisp-benchmarks-run
+(use-package elisp-benchmarks
+  :defer t)
+
 
 (provide 'init-misc)
 
