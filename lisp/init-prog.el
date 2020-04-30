@@ -289,7 +289,10 @@ current major mode."
 ;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
 
 (use-package editorconfig
-  :hook (emacs-startup . editorconfig-mode))
+  :hook (emacs-startup . editorconfig-mode)
+  :config
+  ;; use `auto-save' package to deal with trailing whitespace
+  (setq editorconfig-trim-whitespaces-mode (lambda (arg) nil)))
 
 (use-package dumb-jump
   :bind (:map dumb-jump-mode-map
