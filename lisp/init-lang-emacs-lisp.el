@@ -28,7 +28,7 @@
      "'" '(ielm :which-key "ielm")
      "e" '(nil :which-key "eval")
      "ed" '(eval-defun :which-key "eval-defun")
-     "ep" '(pp-eval-expression :which-key "eval-expression")
+     "ep" '(lispy-eval-and-comment :which-key "lispy-eval-and-comment")
      "ee" '(pp-eval-last-sexp :which-key "eval-last-sexp")
      "ej" '(eval-print-last-sexp :which-key "eval-print-last-sexp")
      "d" '(nil :which-key "debug")
