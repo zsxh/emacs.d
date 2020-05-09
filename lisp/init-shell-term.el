@@ -123,15 +123,19 @@ method to prepare vterm at the corresponding remote directory."
       (with-parsed-tramp-file-name default-directory path
         (let ((method (cadr (assoc `tramp-login-program
                                    (assoc path-method tramp-methods)))))
-          (vterm-send-string
-           (concat method " "
-                   (when path-user (concat path-user "@"))
-                   path-host
-                   " -p " path-port))
-          (vterm-send-return)
-          (vterm-send-string
-           (concat "cd " path-localname))
-          (vterm-send-return))))))
+          (cond
+           ((string-equal method "ssh")
+            (progn
+              (vterm-send-string
+               (concat method " "
+                       (when path-user (concat path-user "@"))
+                       path-host
+                       (when path-port (concat " -p " path-port))))
+              (vterm-send-return)
+              (vterm-send-string
+               (concat "cd " path-localname))
+              (vterm-send-return)))
+           (t nil)))))))
 
 (use-package term
   :ensure nil
