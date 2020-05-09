@@ -65,7 +65,6 @@ if no project root found, use current directory instead."
 
   (defvar +vterm/toggle--window-configration nil)
 
-  ;; TODO: support tramp
   (defun +vterm/toggle (arg &optional this-window-p)
     "Toggles a window at project root.
 
@@ -94,7 +93,8 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
         (let ((buffer (get-buffer-create buffer-name)))
           (with-current-buffer buffer
             (unless (eq major-mode 'vterm-mode)
-              (vterm-mode)))
+              (vterm-mode))
+            (+vterm--change-directory-if-remote))
           (setq +vterm/toggle--window-configration (current-window-configuration))
           (if this-window-p
               (switch-to-buffer buffer)
@@ -112,7 +112,26 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 
 If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (interactive "P")
-    (+vterm/toggle arg t)))
+    (+vterm/toggle arg t))
+
+  (defun +vterm--change-directory-if-remote ()
+    "When `default-directory` is remote, use the corresponding
+method to prepare vterm at the corresponding remote directory."
+    (when (and (featurep 'tramp)
+               (tramp-tramp-file-p default-directory))
+      (message "default-directory is %s" default-directory)
+      (with-parsed-tramp-file-name default-directory path
+        (let ((method (cadr (assoc `tramp-login-program
+                                   (assoc path-method tramp-methods)))))
+          (vterm-send-string
+           (concat method " "
+                   (when path-user (concat path-user "@"))
+                   path-host
+                   " -p " path-port))
+          (vterm-send-return)
+          (vterm-send-string
+           (concat "cd " path-localname))
+          (vterm-send-return))))))
 
 (use-package term
   :ensure nil

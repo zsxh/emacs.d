@@ -15,7 +15,7 @@
 ;; Install Julia LanguageServer
 ;; $ julia
 ;; julia> ]
-;; pkg> add CSTParser StaticLint DocumentFormat SymbolServer LanguageServer
+;; pkg> add LanguageServer
 (use-package julia-mode
   :mode ("\\.jl\\'" . julia-mode)
   :hook ((julia-mode . (lambda ()
