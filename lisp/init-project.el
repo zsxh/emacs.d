@@ -23,7 +23,14 @@
     (if (and cache-value (file-exists-p cache-value))
         cache-value
       (let* ((lsp-folders (lsp-session-folders (lsp-session)))
-             (value (cl-find-if (lambda (path) (file-in-directory-p dir path)) lsp-folders)))
+             (value (cl-find-if
+                     (lambda (path)
+                       (and
+                        ;; fast filter to improve `ivy-rich-switch-buffer-root' performance, but not accurate
+                        (string-prefix-p path (expand-file-name dir))
+                        ;; double check if current dir in the lsp-project roots
+                        (file-in-directory-p dir path)))
+                     lsp-folders)))
         (puthash cache-key value +project/lsp-project-root-cache)
         value))))
 
