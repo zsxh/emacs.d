@@ -43,6 +43,8 @@
 (defun +neotree/jump-to-dired (&optional arg)
   "Jump to Dired buffer corresponding to current neotree node."
   (interactive)
+  (unless (neo-window--minimize-p)
+    (neotree-stretch-toggle))
   (let ((dir default-directory))
     (neo-global--select-mru-window arg)
     (find-file dir)))

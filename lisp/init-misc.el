@@ -189,6 +189,9 @@
 (use-package elisp-benchmarks
   :defer t)
 
+(use-package memory-usage
+  :commands memory-usage)
+
 
 (provide 'init-misc)
 

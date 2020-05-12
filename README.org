@@ -10,6 +10,7 @@ Updated: <2020-04-30>
   - WM: KWin
 
 * TODOs
+  - [ ] fix emacs-ipython-notebook configurations
 
 * Features
   - =org=
@@ -168,3 +169,6 @@ put it in =early-init.el=
 #+begin_src elisp
   (setq comp-deferred-compilation t)
 #+end_src
+
+* Display emacs build settings?
+  =M-x describe-variable= =system-configuration-options=

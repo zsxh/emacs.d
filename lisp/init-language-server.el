@@ -48,7 +48,6 @@
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil
         lsp-links-check-internal 1
-        lsp-lens-check-interval 1
         lsp-lens-debounce-interval 1.5
         lsp-idle-delay 1)
 
