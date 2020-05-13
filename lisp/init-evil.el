@@ -19,6 +19,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-want-integration t)
   (setq evil-insert-state-cursor nil)
+  (setq evil-esc-delay 0.001)
   :commands evil-mode
   :hook (after-init . evil-mode)
   :bind ((:map evil-normal-state-map

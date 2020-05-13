@@ -5,7 +5,7 @@
 
 ;;; Commentary:
 ;;
-;;  intel.el
+;;  init.el
 ;;
 
 ;;; Code:
@@ -13,61 +13,24 @@
 (setq debug-on-error t)
 
 ;; Emacs Version
-(let ((minver "25.1"))
+(let ((minver "26.1"))
   (when (version< emacs-version minver)
-    (error "Your Emacs is too old. This config requires v%s or higher" minver)))
-(when (version< emacs-version "26.1")
-  (message "Your Emacs is old, and some funcitonality in this config will be disabled. Please upgrade if possible."))
+    (error "Detected Emacs %s. This config requires v%s or higher" emacs-version minver)))
 
 ;; Speedup boot time by unset file-name-handler-alist temporarily
 ;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#unset-file-name-handler-alist-temporarily
 (defvar tmp--file-name-handler-alist file-name-handler-alist)
-
 (setq file-name-handler-alist nil)
 
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
-;;
-;; Follow the method recommended by Gnu Emacs Maintainer Eli Zaretskii: “My suggestion is
-;; to repeatedly multiply gc-cons-threshold by 2 until you stop seeing significant improvements
-;; in responsiveness, and in any case not to increase by a factor larger than 100 or somesuch.
-;; If even a 100-fold increase doesn’t help, there’s some deeper problem with the Lisp code
-;; which produces so much garbage, or maybe GC is not the reason for slowdown.”
-;; Source: https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
-;;
-(let ((normal-gc-cons-threshold (if (display-graphic-p) (* 64 gc-cons-threshold) gc-cons-threshold))
-      (larger-gc-cons-threshold (if (display-graphic-p) 400000000 100000000)))
+(defvar tmp--gc-cons-threshold gc-cons-threshold)
+(setq gc-cons-threshold 104857600)
 
-  (setq gc-cons-threshold larger-gc-cons-threshold)
-
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              "Restore defalut values after startup."
-              (setq gc-cons-threshold normal-gc-cons-threshold)
-              (setq file-name-handler-alist tmp--file-name-handler-alist)
-
-              (run-with-idle-timer 10 t #'garbage-collect)
-
-              ;; GC automatically while unfocusing the frame
-              ;; `focus-out-hook' is obsolete since 27.1
-              (if (boundp 'after-focus-change-function)
-                  (add-function :after after-focus-change-function
-                                (lambda ()
-                                  (unless (frame-focus-state)
-                                    (garbage-collect))))
-                (add-hook 'focus-out-hook 'garbage-collect))
-
-              ;; Avoid GCs while using `ivy'/`counsel'/`swiper' and `helm', etc.
-              ;; @see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
-              (defun my-minibuffer-setup-hook ()
-                (setq gc-cons-threshold larger-gc-cons-threshold))
-
-              (defun my-minibuffer-exit-hook ()
-                (garbage-collect)
-                (setq gc-cons-threshold normal-gc-cons-threshold))
-
-              (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
-              (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook))))
+(add-hook 'emacs-startup-hook (lambda ()
+                                "Restore defalut values after startup."
+                                (setq gc-cons-threshold tmp--gc-cons-threshold)
+                                (setq file-name-handler-alist tmp--file-name-handler-alist)))
 
 ;; Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -93,6 +56,51 @@
               (save-excursion
                 (switch-to-buffer "*scratch*")
                 (lisp-interaction-mode)))))
+
+(defconst IS-MAC     (eq system-type 'darwin))
+(defconst IS-LINUX   (eq system-type 'gnu/linux))
+(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
+(defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
+
+;; Emacs startup *scratch* buffer
+(setq inhibit-startup-screen t
+      initial-buffer-choice  nil)
+
+;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
+;; in non-focused windows.
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
+
+;; More performant rapid scrolling over unfontified regions. May cause brief
+;; spells of inaccurate syntax highlighting right after scrolling, which should
+;; quickly self-correct.
+(setq fast-but-imprecise-scrolling t)
+
+;; Resizing the Emacs frame can be a terribly expensive part of changing the
+;; font. By inhibiting this, we easily halve startup times with fonts that are
+;; larger than the system default.
+(setq frame-inhibit-implied-resize t)
+
+;; Font compacting can be terribly expensive, especially for rendering icon
+;; fonts on Windows. Whether it has a notable affect on Linux and Mac hasn't
+;; been determined, but we inhibit it there anyway.
+(setq inhibit-compacting-font-caches t)
+
+;; Performance on Windows is considerably worse than elsewhere, especially if
+;; WSL is involved. We'll need everything we can get.
+(when IS-WINDOWS
+  (setq w32-get-true-file-attributes nil   ; slightly faster IO
+        w32-pipe-read-delay 0              ; faster ipc
+        w32-pipe-buffer-size (* 64 1024))) ; read more at a time (was 4K)
+
+;; Remove command line options that aren't relevant to our current OS; means
+;; slightly less to process at startup.
+(unless IS-MAC   (setq command-line-ns-option-alist nil))
+(unless IS-LINUX (setq command-line-x-option-alist nil))
+
+;; Delete files to trash on macOS, as an extra layer of precaution against
+;; accidentally deleting wanted files.
+(setq delete-by-moving-to-trash IS-MAC)
 
 ;; Customization
 (require 'init-custom)

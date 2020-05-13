@@ -10,20 +10,6 @@
 
 ;;; Code:
 
-;; Increase the amount of data which Emacs reads from the process.
-;; Again the emacs default is too low 4k considering that the some
-;; of the language server responses are in 800k - 3M range.
-;;
-;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
-;;
-(when (bound-and-true-p read-process-output-max)
-  (setq read-process-output-max (* 1024 1024)))
-
-;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
-
-(use-package eglot
-  :commands eglot-ensure)
-
 ;;;;;;;;;;;;;; Lsp-mode ;;;;;;;;;;;;;;
 
 ;; Performance problem
@@ -74,7 +60,14 @@
 
   (defun +lsp/setup ()
     (unless (member major-mode '(c-mode c++-mode java-mode))
-      (lsp-lens-mode)))
+      (lsp-lens-mode))
+    ;; Increase the amount of data which Emacs reads from the process.
+    ;; Again the emacs default is too low 4k considering that the some
+    ;; of the language server responses are in 800k - 3M range.
+    ;;
+    ;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
+    (when (bound-and-true-p read-process-output-max)
+      (setq-local read-process-output-max (* 1024 1024))))
 
   (add-hook 'lsp-after-open-hook '+lsp/setup)
 
@@ -259,6 +252,15 @@
         "gr" '(lsp-ui-peek-find-references :which-key "find-references")
         "l" '(lsp-avy-lens :which-key "Click lens using avy")
         "R" '(lsp-rename :which-key "rename"))))))
+
+;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
+
+(use-package eglot
+  :commands eglot-ensure
+  :config
+  (add-hook 'eglot--managed-mode-hook (lambda ()
+                                        (when (bound-and-true-p read-process-output-max)
+                                          (setq-local read-process-output-max (* 1024 1024))))))
 
 
 (provide 'init-language-server)

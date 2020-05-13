@@ -269,6 +269,50 @@
   :ensure nil
   :defer t)
 
+;; Adopt a sneaky garbage collection strategy of waiting until idle time to
+;; collect; staving off the collector while the user is working.
+;;
+;; https://gitlab.com/koral/gcmh
+;; https://github.com/hlissner/doom-emacs/commit/717d53c6665229a731c55b23f9786c86111b3474
+;; https://www.reddit.com/r/emacs/comments/bg85qm/garbage_collector_magic_hack/elniyfv?utm_source=share&utm_medium=web2x
+;;
+;; Follow the method recommended by Gnu Emacs Maintainer Eli Zaretskii: “My suggestion is
+;; to repeatedly multiply gc-cons-threshold by 2 until you stop seeing significant improvements
+;; in responsiveness, and in any case not to increase by a factor larger than 100 or somesuch.
+;; If even a 100-fold increase doesn’t help, there’s some deeper problem with the Lisp code
+;; which produces so much garbage, or maybe GC is not the reason for slowdown.”
+;;  https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
+(use-package gcmh
+  :init
+  (setq gcmh-idle-delay 5
+        gcmh-high-cons-threshold 16777216 ; 16mb
+        gcmh-verbose t)
+  :hook (after-init . gcmh-mode)
+  :config
+  ;; GC automatically while unfocusing the frame
+  ;; `focus-out-hook' is obsolete since 27.1
+  (if (boundp 'after-focus-change-function)
+      (add-function :after after-focus-change-function
+                    (lambda ()
+                      (unless (frame-focus-state)
+                        (gcmh-idle-garbage-collect))))
+    (add-hook 'focus-out-hook 'gcmh-idle-garbage-collect))
+
+  ;; HACK minibuffer-setup/exit?
+
+  ;; HACK Org is known to use a lot of unicode symbols (and large org files tend
+  ;;      to be especially memory hungry). Compounded with
+  ;;      `inhibit-compacting-font-caches' being non-nil, org needs more memory
+  ;;      to be performant.
+  (with-eval-after-load 'org
+    (add-hook 'org-mode-hook (lambda () (setq-local gcmh-high-cons-threshold (* 2 gcmh-high-cons-threshold)))))
+
+  ;; REVIEW LSP causes a lot of allocations, with or without Emacs 27+'s
+  ;;        native JSON library, so we up the GC threshold to stave off
+  ;;        GC-induced slowdowns/freezes.
+  (with-eval-after-load 'lsp-mode
+    (add-hook 'lsp-mode-hook (lambda () (setq-local gcmh-high-cons-threshold (* 2 gcmh-high-cons-threshold))))))
+
 
 (provide 'init-editor)
 
