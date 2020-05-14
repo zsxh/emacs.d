@@ -39,12 +39,25 @@ We need to manually save and restore it.")
 https://github.com/manateelazycat/emacs-application-framework#markdown-previewer"
   :type 'string)
 
-(defcustom personal-gui-theme 'doom-nord-light
+(defcustom personal-gui-theme-day 'doom-solarized-light
   "Customize GUI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
 Check https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)
 
-(defcustom personal-tui-theme personal-gui-theme
+(defcustom personal-gui-theme-night 'doom-solarized-dark
+  "Customize GUI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
+Check https://github.com/hlissner/emacs-doom-themes"
+  :type 'symbol)
+
+(defcustom personal-gui-theme (let* ((hour (nth 2 (decode-time (current-time)))))
+                                (if (member hour (number-sequence 7 19))
+                                    personal-gui-theme-day
+                                  personal-gui-theme-night))
+  "Customize GUI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
+Check https://github.com/hlissner/emacs-doom-themes"
+  :type 'symbol)
+
+(defcustom personal-tui-theme personal-gui-theme-night
   "Customize Terminal UI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
 Check https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)

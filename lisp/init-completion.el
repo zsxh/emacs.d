@@ -74,6 +74,7 @@
      "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet"))))
 
 (use-package company-posframe
+  :quelpa ((company-posframe :fetcher github :repo "tumashu/company-posframe"))
   :if (and (>= emacs-major-version 26)
            (display-graphic-p))
   :after company
