@@ -286,7 +286,7 @@
   :init
   (setq gcmh-idle-delay 5
         gcmh-high-cons-threshold 16777216 ; 16mb
-        gcmh-verbose t)
+        gcmh-verbose nil)
   :hook (after-init . gcmh-mode)
   :config
   ;; GC automatically while unfocusing the frame
