@@ -85,16 +85,15 @@
 
   ;; override
   (defun eaf-open-dev-tool-page ()
-    ;; (delete-other-windows)
-    (split-window (selected-window) (/ (* (nth 3 (eaf-get-window-allocation (selected-window))) 2) 3) nil t)
+    (split-window (selected-window)
+                  (/ (* (nth 3 (eaf-get-window-allocation (selected-window))) 2) 3)
+                  nil t)
     (other-window 1)
     (eaf-open "about:blank" "browser" "dev_tools"))
 
   ;; hack eaf for evil-mode
-  ;; send-key only in evil-emacs-state
   (add-hook 'eaf-mode-hook
             (lambda ()
-              (company-mode -1)
               (setq-local evil-motion-state-map nil)
               ;; "C-z" normal-state -> emacs-state
               ;; ":" evil-ex
@@ -103,6 +102,30 @@
                             (58 . evil-ex)
                             (26 . evil-emacs-state)))))
 
+  (add-hook 'eaf-browser-hook
+            (lambda ()
+              ;; browser toggle insert/normal state except in devtool
+              ;; devtool buffer will first open about:blank page and then redirect to devltools:// path
+              (unless (string-equal "about:blank" eaf--buffer-url)
+                (evil-local-set-key 'insert (kbd "<escape>") 'eaf-proxy-clear_focus)
+                (add-hook 'post-command-hook 'eaf-is-focus-toggle nil t))))
+
+  (defun eaf-is-focus-toggle ()
+    "Toggle is-focus behavior in eaf-mode buffers."
+    (if (eaf-call "call_function" eaf--buffer-id "is_focus")
+        (unless (evil-insert-state-p)
+          (evil-insert-state))
+      (when (evil-insert-state-p)
+        (evil-normal-state))))
+
+  (defun eaf-devtool-insert-toggle ()
+    (when (and (string-prefix-p "devtools://" eaf--buffer-url)
+               (not (evil-insert-state-p)))
+      (evil-insert-state)))
+
+  (advice-add 'eaf-proxy-insert_or_focus_input :after 'eaf-devtool-insert-toggle)
+
+  ;; utils
   (defun eaf-switch-to-eww ()
     (interactive)
     (let* ((url (eaf-get-path-or-url))
