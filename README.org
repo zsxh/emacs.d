@@ -2,10 +2,11 @@
 Updated: <2020-04-30>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.17, cairo version 1.17.3) of 2020-04-30
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.20, cairo version 1.17.3) of 2020-05-14
+  - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp~
   - OS: Manjaro 20.0 Lysia
   - Shell: zsh 5.8
-  - Kernel: x86_64 Linux 5.6.7-1-MANJARO
+  - Kernel: x86_64 Linux 5.6.10-3-MANJARO
   - DE: Deepin
   - WM: KWin
 
@@ -130,15 +131,32 @@ Updated: <2020-04-30>
   - [ ] =Julia=
   - [ ] =Javascript/Typescript=
 
-* Build Emacs 28
-#+begin_src shell
-  git clone --depth 1 https://github.com/emacs-mirror/emacs.git
-  cd emacs
-  ./autogen.sh
-  ./configure --with-xwidgets --with-x-toolkit=gtk3
-  make -j8
-  sudo make install
-#+end_src
+* Build Emacs
+
+** Build Emacs 28
+   #+begin_src shell
+     git clone --depth 1 https://github.com/emacs-mirror/emacs.git
+     cd emacs
+     ./autogen.sh
+     ./configure --with-xwidgets --with-x-toolkit=gtk3
+     make -j8
+     sudo make install
+   #+end_src
+
+** Or Install gccemacs, Bringing GNU Emacs to Native Code
+
+   Install libgccjit first https://aur.archlinux.org/packages/libgccjit/
+
+   #+begin_src shell
+     git clone --depth 1 --branch feature/native-comp https://github.com/emacs-mirror/emacs.git emacs-native-comp
+     cd emacs-native-comp
+     ./autogen.sh
+     ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp
+     make -j8 NATIVE_FAST_BOOT=1
+     sudo make install
+   #+end_src
+
+ put ~(setq comp-deferred-compilation t)~ in =early-init.el=
 
 * Installation
 #+begin_src shell
@@ -150,24 +168,6 @@ Updated: <2020-04-30>
   cd ~/.emacs.d/
   git pull
   git submodule update --init --recursive
-#+end_src
-
-* Bringing GNU Emacs to Native Code
-
-Install libgccjit first https://aur.archlinux.org/packages/libgccjit/
-
-#+begin_src shell
-  git clone --depth 1 --branch feature/native-comp https://github.com/emacs-mirror/emacs.git emacs-native-comp
-  cd emacs-native-comp
-  ./autogen.sh
-  ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp
-  make -j8 NATIVE_FAST_BOOT=1
-  sudo make install
-#+end_src
-
-put it in =early-init.el=
-#+begin_src elisp
-  (setq comp-deferred-compilation t)
 #+end_src
 
 * Display emacs build settings?
