@@ -49,14 +49,6 @@ Check https://github.com/hlissner/emacs-doom-themes"
 Check https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)
 
-(defcustom personal-gui-theme (let* ((hour (nth 2 (decode-time (current-time)))))
-                                (if (member hour (number-sequence 7 19))
-                                    personal-gui-theme-day
-                                  personal-gui-theme-night))
-  "Customize GUI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
-Check https://github.com/hlissner/emacs-doom-themes"
-  :type 'symbol)
-
 (defcustom personal-tui-theme personal-gui-theme-night
   "Customize Terminal UI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
 Check https://github.com/hlissner/emacs-doom-themes"
