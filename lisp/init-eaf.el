@@ -118,12 +118,12 @@
       (when (evil-insert-state-p)
         (evil-normal-state))))
 
-  (defun eaf-devtool-insert-toggle ()
+  (defun eaf-devtool-insert-advice ()
     (when (and (string-prefix-p "devtools://" eaf--buffer-url)
                (not (evil-insert-state-p)))
       (evil-insert-state)))
 
-  (advice-add 'eaf-proxy-insert_or_focus_input :after 'eaf-devtool-insert-toggle)
+  (advice-add 'eaf-proxy-insert_or_focus_input :after 'eaf-devtool-insert-advice)
 
   ;; utils
   (defun eaf-switch-to-eww ()
