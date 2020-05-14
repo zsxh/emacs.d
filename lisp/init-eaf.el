@@ -123,6 +123,7 @@
                (not (evil-insert-state-p)))
       (evil-insert-state)))
 
+  ;; FIXME: should around/override eaf-proxy-insert_or_focus_input
   (advice-add 'eaf-proxy-insert_or_focus_input :after 'eaf-devtool-insert-advice)
 
   ;; utils
