@@ -106,7 +106,7 @@
             (lambda ()
               ;; browser toggle insert/normal state except in devtool
               ;; devtool buffer will first open about:blank page and then redirect to devltools:// path
-              (unless (string-equal "about:blank" eaf--buffer-url)
+              (unless (string-prefix-p "about:blank" eaf--buffer-url)
                 (evil-local-set-key 'insert (kbd "<escape>") 'eaf-proxy-clear_focus)
                 (add-hook 'post-command-hook 'eaf-is-focus-toggle nil t))))
 
