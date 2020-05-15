@@ -118,13 +118,13 @@
       (when (evil-insert-state-p)
         (evil-normal-state))))
 
-  (defun eaf-devtool-insert-advice ()
-    (when (and (string-prefix-p "devtools://" eaf--buffer-url)
-               (not (evil-insert-state-p)))
-      (evil-insert-state)))
+  (defun eaf-devtool-insert-advice (orig-fn &rest args)
+    (if (and (string-prefix-p "devtools://" eaf--buffer-url)
+             (not (evil-insert-state-p)))
+        (evil-insert-state)
+      (apply orig-fn args)))
 
-  ;; FIXME: should around/override eaf-proxy-insert_or_focus_input
-  (advice-add 'eaf-proxy-insert_or_focus_input :after 'eaf-devtool-insert-advice)
+  (advice-add 'eaf-proxy-insert_or_focus_input :around 'eaf-devtool-insert-advice)
 
   ;; utils
   (defun eaf-switch-to-eww ()
