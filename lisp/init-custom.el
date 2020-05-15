@@ -14,6 +14,11 @@
   "Personal Emacs customizations."
   :group 'convenience)
 
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+(if (file-exists-p custom-file)
+    (load custom-file))
+
 (defcustom personal-package-archives 'melpa
   "Set package archives from which to fetch."
   :type '(choice
@@ -49,6 +54,13 @@ Check https://github.com/hlissner/emacs-doom-themes"
 Check https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)
 
+(defcustom personal-gui-theme (let* ((hour (nth 2 (decode-time (current-time)))))
+                                (if (member hour (number-sequence 7 18))
+                                    personal-gui-theme-day
+                                  personal-gui-theme-night))
+  "Customize Terminal UI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
+Check https://github.com/hlissner/emacs-doom-themes")
+
 (defcustom personal-tui-theme personal-gui-theme-night
   "Customize Terminal UI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
 Check https://github.com/hlissner/emacs-doom-themes"
@@ -79,12 +91,6 @@ Check https://github.com/hlissner/emacs-doom-themes"
 (defcustom personal-proxy-socks5-port 1080
   "Set socks5 proxy port."
   :type 'integer)
-
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
-(if (file-exists-p custom-file)
-    (load custom-file))
-
 
 (provide 'init-custom)
 

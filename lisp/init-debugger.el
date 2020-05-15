@@ -13,9 +13,10 @@
 ;;;;;;;;;;;;;; Debug Adapter Protocol for Emacs ;;;;;;;;;;;;;;
 
 (use-package dap-mode
-  :quelpa ((dap-mode :fetcher github :repo "emacs-lsp/dap-mode"))
-  :hook ((lsp-mode . dap-mode)
-         (lsp-mode . dap-ui-mode))
+  :quelpa ((dap-mode :fetcher github :repo "emacs-lsp/dap-mode"
+                     :files (:defaults "icons")))
+  :hook ((dap-mode . dap-ui-mode)
+         (dap-mode . dap-ui-controls-mode))
   :custom
   (dap-utils-extension-path (expand-file-name ".cache/dap-extension" user-emacs-directory))
   :config

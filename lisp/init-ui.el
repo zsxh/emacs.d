@@ -13,11 +13,6 @@
 (eval-when-compile
   (require 'init-custom))
 
-(defvar personal-gui-theme (let* ((hour (nth 2 (decode-time (current-time)))))
-                             (if (member hour (number-sequence 7 18))
-                                 personal-gui-theme-day
-                               personal-gui-theme-night)))
-
 (defvar current-theme (if (display-graphic-p)
                           personal-gui-theme
                         personal-tui-theme)

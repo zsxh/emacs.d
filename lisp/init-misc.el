@@ -192,6 +192,10 @@
 (use-package memory-usage
   :commands memory-usage)
 
+;; TODO: View Large Files
+;; https://github.com/m00natic/vlfi
+(use-package vlf
+  :defer t)
 
 (provide 'init-misc)
 

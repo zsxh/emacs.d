@@ -21,6 +21,7 @@
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
   :commands (lsp lsp-deferred lsp-session lsp-session-folders)
+  :hook (lsp-mode . dap-mode)
   :config
   (setq lsp-auto-guess-root nil
         lsp-client-packages '()
