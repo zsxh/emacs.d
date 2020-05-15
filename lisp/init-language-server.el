@@ -37,7 +37,7 @@
         lsp-lens-debounce-interval 1.5
         lsp-idle-delay 1)
 
-  ;; TODO: wait childframe
+  ;; TODO: wait childframe rendering
   (setq lsp-signature-render-documentation nil
         lsp-signature-auto-activate t)
 
@@ -46,17 +46,6 @@
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
-
-  ;; don't ping LSP lanaguage server too frequently
-  ;; FIXME: increase interval broke autocomplete
-  ;; (defvar lsp-on-touch-time 0)
-  ;; (defun +lsp/on-change-hack (orig-fn &rest args)
-  ;;   ;; don't run `lsp-on-change' too frequently
-  ;;   (when (> (- (float-time (current-time))
-  ;;               lsp-on-touch-time) 30) ;; 30 seconds
-  ;;     (setq lsp-on-touch-time (float-time (current-time)))
-  ;;     (apply orig-fn args)))
-  ;; (advice-add 'lsp-on-change :around #'+lsp/on-change-hack)
 
   (defun +lsp/setup ()
     (unless (member major-mode '(c-mode c++-mode java-mode))
@@ -166,39 +155,39 @@
   (set-face-foreground 'lsp-ui-sideline-code-action "#FF8C00"))
 
 ;; FIXME: not working now
-(when (featurep 'lsp-mode)
-  ;; Support LSP in org babel
-  ;; https://github.com/emacs-lsp/lsp-mode/issues/377
-  (cl-defmacro lsp-org-babel-enbale (lang)
-    "Support LANG in org source code block."
-    ;; (cl-check-type lang symbolp)
-    (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
-           (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
-      `(progn
-         (defun ,intern-pre (info)
-           (let ((lsp-file (or (->> info caddr (alist-get :lspfile))
-                               buffer-file-name)))
-             (setq-local buffer-file-name lsp-file)
-             (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
-             (lsp-deferred)))
-         (if (fboundp ',edit-pre)
-             (advice-add ',edit-pre :after ',intern-pre)
-           (progn
-             (defun ,edit-pre (info)
-               (,intern-pre info))
-             (put ',edit-pre 'function-documentation
-                  (format "Prepare local buffer environment for org source block (%s)."
-                          (upcase ,lang))))))))
+;; (when (featurep 'lsp-mode)
+;;   ;; Support LSP in org babel
+;;   ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+;;   (cl-defmacro lsp-org-babel-enbale (lang)
+;;     "Support LANG in org source code block."
+;;     ;; (cl-check-type lang symbolp)
+;;     (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+;;            (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
+;;       `(progn
+;;          (defun ,intern-pre (info)
+;;            (let ((lsp-file (or (->> info caddr (alist-get :lspfile))
+;;                                buffer-file-name)))
+;;              (setq-local buffer-file-name lsp-file)
+;;              (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
+;;              (lsp-deferred)))
+;;          (if (fboundp ',edit-pre)
+;;              (advice-add ',edit-pre :after ',intern-pre)
+;;            (progn
+;;              (defun ,edit-pre (info)
+;;                (,intern-pre info))
+;;              (put ',edit-pre 'function-documentation
+;;                   (format "Prepare local buffer environment for org source block (%s)."
+;;                           (upcase ,lang))))))))
 
-  ;; lsp support org code block editing
-  (defvar org-babel-lang-list
-    '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
-      "jupyter-python" "jupyter-julia" "jupyter-javascript"))
+;;   ;; lsp support org code block editing
+;;   (defvar org-babel-lang-list
+;;     '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
+;;       "jupyter-python" "jupyter-julia" "jupyter-javascript"))
 
-  (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
+;;   (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
 
-  (dolist (lang org-babel-lang-list)
-    (eval `(lsp-org-babel-enbale ,lang))))
+;;   (dolist (lang org-babel-lang-list)
+;;     (eval `(lsp-org-babel-enbale ,lang))))
 
 ;;;;;;;;;;;;;; Language Common Leader Keys ;;;;;;;;;;;;;;
 (defun +language-server/set-common-leader-keys (mode-map &optional eglot-p flymake-p)

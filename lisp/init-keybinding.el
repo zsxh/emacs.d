@@ -18,8 +18,7 @@
   (push '(("\\(.*\\)1" . "winum-select-window-1") . ("\\11..9" . "window 1..9")) which-key-replacement-alist)
   ;; Hide other entries [2-9]
   (push '((nil . "select-window-[2-9]") . t) which-key-replacement-alist)
-  ;; FIXME: when which-key side window height got fixed.
-  (setq which-key-popup-type 'minibuffer)
+  (setq which-key-popup-type 'side-window)
   (setq resize-mini-windows t)
   (which-key-mode))
 

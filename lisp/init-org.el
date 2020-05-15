@@ -25,7 +25,7 @@
   (setq org-export-use-babel nil ; do not evaluate again during export.
         org-export-with-toc nil
         org-export-with-section-numbers nil)
-  ;; FIXME: org restore window configuration after org-edit-src-exit
+  ;; org restore window configuration after org-edit-src-exit
   ;; https://www.reddit.com/r/orgmode/comments/f9qy5h/in_orgmode_when_editing_a_source_block_with/
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2019-12/msg00263.html
   (setq org-src-window-setup 'other-window)

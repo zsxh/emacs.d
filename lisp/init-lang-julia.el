@@ -28,7 +28,7 @@
   (require 'lsp-julia)
   (+language-server/set-common-leader-keys julia-mode-map))
 
-;; FIXME: SymbolServer.jl takes a very long time to process project dependencies
+;; SymbolServer.jl takes a very long time to process project dependencies
 ;; https://github.com/julia-vscode/SymbolServer.jl/issues/56
 ;; This is a one-time process that shouldn’t cause issues once the dependencies are cached,
 ;; however it can take over a minute to process each dependency.

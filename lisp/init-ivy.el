@@ -85,11 +85,10 @@
   :bind (("C-x C-f" . counsel-find-file)
          ("M-x" . counsel-M-x))
   :config
-  ;; TODO: counsel rg or swiper
   ;; no need with initial "^"
   (setq ivy-initial-inputs-alist nil))
 
-;; TODO: https://github.com/seagle0128/all-the-icons-ivy-rich
+;; https://github.com/seagle0128/all-the-icons-ivy-rich
 (use-package ivy-rich
   :after ivy
   :config

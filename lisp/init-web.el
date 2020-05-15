@@ -47,18 +47,15 @@
                 '(company-capf company-files company-css company-dabbrev)))
 
   ;; Install tidy to check html syntax, https://www.flycheck.org/en/latest/languages.html#html
-  (use-package flycheck
-    :config
-    (flycheck-add-mode 'html-tidy 'web-mode)
-    (+funcs/major-mode-leader-keys
-     web-mode-map
-     "e" '(nil :which-key "error")
-     "en" '(flycheck-next-error :which-key "next-error")
-     "ep" '(flycheck-previous-error :which-key "prev-error")
-     "f" '(format-all-buffer :which-key "format-html")
-     "p" '(nil :which-key "preview")
-     "pa" '(+web/add-buffer-to-preview :which-key "add-buffer-to-preview")
-     "pp" '(+web/preview-in-browser :which-key "preivew-in-browser")))
+  (require 'flycheck)
+  (flycheck-add-mode 'html-tidy 'web-mode)
+  (+funcs/major-mode-leader-keys
+   web-mode-map
+   "e" '(nil :which-key "error")
+   "en" '(flycheck-next-error :which-key "next-error")
+   "ep" '(flycheck-previous-error :which-key "prev-error")
+   "f" '(format-all-buffer :which-key "format-html")
+   "p" '(nil :which-key "preview"))
 
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2
@@ -166,36 +163,6 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 ;; `verb' is an attempt to improve upon the core idea of the `restclient' package
 (use-package verb
   :defer t)
-
-(use-package simple-httpd
-  :defer t)
-
-;; editing with preview
-
-;; TODO: https://github.com/skeeto/skewer-mode
-;; (use-package skewer-mode)
-
-;; https://github.com/skeeto/impatient-mode
-;; Enable the web server provided by simple-httpd:
-;; M-x httpd-start
-;; Publish buffers by enabling the minor mode impatient-mode.
-;; M-x impatient-mode
-;; And then point your browser to http://localhost:8080/imp/, select a buffer, and watch your changes appear as you type!
-(use-package impatient-mode
-  :commands (impatient-mode +web/add-buffer-to-preview +web/preview-in-browser)
-  :config
-  (require 'simple-httpd)
-  (defun +web/add-buffer-to-preview ()
-    (interactive)
-    (impatient-mode 1))
-  (defun +web/preview-in-browser ()
-    (interactive)
-    (when (and (eq major-mode 'web-mode))
-      (if (not (httpd-running-p))
-          (httpd-start))
-      (when (not impatient-mode)
-        (+web/add-buffer-to-preview))
-      (browse-url "http://localhost:8080/imp/"))))
 
 ;; install formatter
 ;; npm install --global prettier @prettier/plugin-php
