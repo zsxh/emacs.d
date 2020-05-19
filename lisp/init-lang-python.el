@@ -86,6 +86,7 @@
     (pop-to-buffer (process-buffer (python-shell-get-or-create-process)))
     (evil-insert-state))
 
+  ;; FIXME: venv path
   (defun +python/repl-vterm ()
     (interactive)
     (with-current-buffer (vterm-other-window)

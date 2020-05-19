@@ -50,6 +50,7 @@
 (use-package flx
   :defer t)
 
+;; FIXME: unknown backend information
 (use-package company-fuzzy
   :defer t
   :config
@@ -59,7 +60,9 @@
 
 (use-package prescient :defer t)
 
+;; FIXME: https://github.com/raxod502/prescient.el/issues/60
 (use-package ivy-prescient
+  :defer t
   :after counsel
   :config
   (ivy-prescient-mode))

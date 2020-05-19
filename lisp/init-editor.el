@@ -281,7 +281,7 @@
 ;; in responsiveness, and in any case not to increase by a factor larger than 100 or somesuch.
 ;; If even a 100-fold increase doesn’t help, there’s some deeper problem with the Lisp code
 ;; which produces so much garbage, or maybe GC is not the reason for slowdown.”
-;;  https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
+;; https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
 (use-package gcmh
   :init
   (setq gcmh-idle-delay 5

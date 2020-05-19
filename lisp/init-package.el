@@ -194,6 +194,7 @@ the `quelpa' command has been run in the current Emacs session."
   (defun upgrade-packages ()
     (interactive)
     (package-utils-upgrade-all)
+    (message "\n-------------------- upgrading quelpa build packages --------------------\n")
     (+package/quelpa-upgrade))
 
   (defun upgrade-packages-and-restart ()

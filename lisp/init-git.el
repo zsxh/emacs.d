@@ -44,9 +44,10 @@
     (evil-collection-define-key nil 'magit-todos-item-section-map
       "j" nil)))
 
-;; TODO: config forge and github, gitlab ...
-;; (use-package forge
-;;   :after magit)
+;; FIXME: gitlab instances via http
+;; https://github.com/magit/forge/issues/9
+(use-package forge
+  :after magit)
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
