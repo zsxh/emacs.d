@@ -99,7 +99,7 @@
    "g" '(nil :which-key "git")
    "gb" '(magit-blame :which-key "magit-blame")
    "gc" '(magit-blame-cycle-style :which-key "magit-blame-cycle-style")
-   "gf" '(magit-file-popup :which-key "magit-file-popup")
+   "gf" '(magit-file-checkout :which-key "magit-file-checkout")
    "gs" '(magit :which-key "magit-status")
    "gt" '(git-timemachine :which-key "git-timemachine")
    ;; Help
