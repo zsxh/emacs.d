@@ -80,8 +80,8 @@
 ;; Benchmark-init only measures time spent in `require' and `load'
 (use-package benchmark-init
   :hook (after-init . benchmark-init/deactivate)
-  :init (benchmark-init/activate)
   :config
+  (benchmark-init/activate)
   (with-eval-after-load 'evil
     (evil-define-key 'normal benchmark-init/tree-mode-map
       "h" 'evil-backward-char
