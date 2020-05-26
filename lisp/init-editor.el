@@ -233,7 +233,8 @@
 ;; It works by temporarily disabling font-lock and switching to a barebones mode-line,
 ;; until you stop scrolling (at which point it re-enables).
 (use-package fast-scroll
-  :hook (after-init . fast-scroll-mode)
+  ;; :hook (after-init . fast-scroll-mode)
+  :defer t
   :config
   ;; If you would like to turn on/off other modes, like flycheck, add
   ;; your own hooks.

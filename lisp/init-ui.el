@@ -240,7 +240,7 @@
          (set-face-background 'show-paren-match "#E5E5E5"))))
     ('doom-dark+
      (progn
-       (set-face-background 'fringe (doom-color 'bg))
+       (set-face-background 'fringe (face-attribute 'default :background))
        (with-eval-after-load 'company-posframe
          (set-face-background 'company-posframe-active-backend-name (doom-color 'modeline-bg))
          (set-face-background 'company-posframe-inactive-backend-name (doom-color 'modeline-bg-alt)))
@@ -270,6 +270,16 @@
 
 ;; Run later, for emacs daemon, emacsclients -c [-nw]
 (add-hook 'after-make-frame-functions '+ui/frame-config)
+
+(defun load-theme-a (orig-fn &rest args)
+  ;; TODO: reset faces in `+ui/customize-faces'
+  ;; get rid of all loaded themes
+  (mapcar #'disable-theme custom-enabled-themes)
+  (setq current-theme (first args))
+  (apply orig-fn args)
+  (+ui/customize-faces))
+
+(advice-add 'load-theme :around 'load-theme-a)
 
 
 (provide 'init-ui)
