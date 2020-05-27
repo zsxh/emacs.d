@@ -53,6 +53,9 @@
    "9" 'winum-select-window-9
    ;; Application
    "a" '(nil :which-key "application")
+   "ac" '(nil :which-key "client")
+   "acr" '(+web/restclient-new-buffer :which-key "restclient")
+   "acw" '(websocket-client-open :which-key "websocket-client")
    "ad" '(docker :which-key "docker")
    "af" '(elfeed :which-key "elfeed")
    "aj" '(nil :which-key "jupyter")
@@ -65,7 +68,6 @@
    "aoa" '(org-agenda :which-key "org-agenda")
    "aoc" '(org-capture :which-key "org-capture")
    "ap" '(list-processes :which-key "list-processes")
-   "ar" '(+web/restclient-new-buffer :which-key "restclient")
    "ay" '(nil :which-key "dictionary")
    "ays" '(youdao-dictionary-search-from-input :which-key "search-from-input")
    "ayt" '(powerthesaurus-lookup-word-dwim :which-key "powerthesaurus-lookup-word-dwim")

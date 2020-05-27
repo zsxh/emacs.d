@@ -26,6 +26,11 @@ Updated: <2020-04-30>
       auto completion
     - =webkit-katex-render=
       real time latex preview at point
+  - =client=
+    - =restclient=
+      client like postman
+    - =websocket-client=
+      client work with websocket protocol
   - =jupyter=
     - =emacs-jupyter=
       an interface to communicate with Jupyter kernels, provide jupyter-repl, org-jupyter integration
