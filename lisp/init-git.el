@@ -63,6 +63,13 @@
     "gty" 'git-timemachine-kill-abbreviated-revision
     "gtY" 'git-timemachine-kill-revision))
 
+;; https://github.com/dandavison/magit-delta
+(use-package magit-delta
+  :after magit
+  :config
+  (setq magit-delta-hide-plus-minus-markers nil)
+  (magit-delta-mode))
+
 
 (provide 'init-git)
 

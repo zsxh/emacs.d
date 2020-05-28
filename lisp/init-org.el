@@ -41,9 +41,9 @@
 
   ;; Org table font
   ;; (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
-  (when (member "M+ 1m" (font-family-list))
-    ;; Download font https://mplus-fonts.osdn.jp/about-en.html
-    (set-face-attribute 'org-table nil :family "M+ 1m"))
+  ;; (when (member "M+ 1m" (font-family-list))
+  ;;   ;; Download font https://mplus-fonts.osdn.jp/about-en.html
+  ;;   (set-face-attribute 'org-table nil :family "M+ 1m"))
 
   (defun +org/remove-all-result-blocks ()
     "Remove all results in the current buffer."
@@ -143,6 +143,13 @@
 ;; Presentation
 (use-package org-tree-slide
   :commands org-tree-slide-mode)
+
+;; This package provides visual alignment for Org tables on GUI Emacs.
+(use-package valign
+  :quelpa ((valign :fetcher github :repo "casouri/valign"))
+  :after org
+  :config
+  (valign-setup))
 
 ;; convert org-file to ipynb
 ;; https://github.com/jkitchin/ox-ipynb
