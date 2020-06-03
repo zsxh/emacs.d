@@ -19,6 +19,13 @@
                ("C-c C-," . org-insert-structure-template)
                ("C-M-<return>" . org-table-insert-hline)))
   :commands org-open-at-point
+  :preface
+  ;; customize before (require 'org)
+  (setq org-emphasis-regexp-components '("-[:space:][:nonascii:]('\"{"
+                                         "-[:space:][:nonascii:].,:!?;'\")}\\["
+                                         "[:space:]"
+                                         "."
+                                         1))
   :config
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
   (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
@@ -279,7 +286,7 @@ at the first function to return non-nil.")
         org-static-blog-publish-directory "~/org/blog/"
         org-static-blog-posts-directory "~/org/blog/posts/"
         org-static-blog-drafts-directory "~/org/blog/drafts/"
-        org-static-blog-use-preview t
+        org-static-blog-use-preview nil
         org-static-blog-enable-tags t)
 
   (defun org-static-blog-generate-post-path (post-filename post-datetime)
@@ -333,7 +340,12 @@ Modify this function if you want to change a posts headline."
 
   (setq org-static-blog-page-preamble
         "<div class=\"header\">
-  <a href=\"index.html\">Home</a> | <a href=\"archive.html\">Archive</a> | <a href=\"https://github.com/zsxh\">Github</a> | <a href=\"about.html\">About</a> | <a href=\"rss.xml\">RSS</a>
+<a href=\"/index.html\">Home</a> |
+<a href=\"/archive.html\">Archive</a> |
+<a href=\"/html/resource.html\">Resources</a> |
+<a href=\"https://github.com/zsxh\">Github</a> |
+<a href=\"/about.html\">About</a> |
+<a href=\"/rss.xml\">RSS</a>
 </div>")
 
   (setq org-static-blog-page-postamble

@@ -59,7 +59,7 @@
     (when (bound-and-true-p read-process-output-max)
       (setq-local read-process-output-max (* 1024 1024))))
 
-  (add-hook 'lsp-after-open-hook '+lsp/setup)
+  (add-hook 'lsp-managed-mode-hook '+lsp/setup)
 
   (with-eval-after-load 'evil
     (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition))
