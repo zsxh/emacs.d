@@ -31,7 +31,8 @@
   (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
   (setq org-export-use-babel nil ; do not evaluate again during export.
         org-export-with-toc nil
-        org-export-with-section-numbers nil)
+        org-export-with-section-numbers nil
+        org-hide-emphasis-markers nil)
   ;; org restore window configuration after org-edit-src-exit
   ;; https://www.reddit.com/r/orgmode/comments/f9qy5h/in_orgmode_when_editing_a_source_block_with/
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2019-12/msg00263.html
@@ -48,9 +49,10 @@
 
   ;; Org table font
   ;; (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
-  ;; (when (member "M+ 1m" (font-family-list))
-  ;;   ;; Download font https://mplus-fonts.osdn.jp/about-en.html
-  ;;   (set-face-attribute 'org-table nil :family "M+ 1m"))
+  (when (and (not (display-graphic-p))
+             (member "M+ 1m" (font-family-list)))
+    ;; Download font https://mplus-fonts.osdn.jp/about-en.html
+    (set-face-attribute 'org-table nil :family "M+ 1m"))
 
   (defun +org/remove-all-result-blocks ()
     "Remove all results in the current buffer."
@@ -157,7 +159,19 @@
   :quelpa ((valign :fetcher github :repo "casouri/valign"))
   :after org
   :config
-  (valign-mode))
+  (valign-mode)
+  (advice-add 'text-scale-increase
+              :after (lambda (inc)
+                       (when (or (bound-and-true-p valign-mode)
+                                 (derived-mode-p 'org-mode)
+                                 (derived-mode-p 'markdown-mode))
+                         (valign--force-align-buffer))))
+  (advice-add 'text-scale-decrease
+              :after (lambda (dec)
+                       (when (or (bound-and-true-p valign-mode)
+                                 (derived-mode-p 'org-mode)
+                                 (derived-mode-p 'markdown-mode))
+                         (valign--force-align-buffer)))))
 
 ;; convert org-file to ipynb
 ;; https://github.com/jkitchin/ox-ipynb
@@ -349,9 +363,7 @@ Modify this function if you want to change a posts headline."
 </div>")
 
   (setq org-static-blog-page-postamble
-        "<div id=\"archive\">
-  <a href=\"https://zsxh.github.io/archive.html\">Other posts</a>
-</div>
+        "
 <center><button id=\"disqus_button\" onclick=\"load_disqus()\">Load Disqus Comments</button></center>
 <div id=\"disqus_thread\"></div>
 <script type=\"text/javascript\">
@@ -359,7 +371,7 @@ Modify this function if you want to change a posts headline."
         var dsq = document.createElement('script');
         dsq.type = 'text/javascript';
         dsq.async = true;
-        dsq.src = 'https://bastibe.disqus.com/embed.js';
+        dsq.src = 'https://zsxhbnbvb.disqus.com/embed.js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         document.getElementById('disqus_button').style.visibility = 'hidden';
     };
