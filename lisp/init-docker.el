@@ -29,7 +29,7 @@
                               (format "%s|" (s-chop-suffix ":" prefix))
                             "/")))
            (default-directory (format "%s%s" file-prefix container-address)))
-      (shell (docker-utils-generate-new-buffer "shell" default-directory)))))
+      (shell (docker-generate-new-buffer "shell" default-directory)))))
 
 (use-package dockerfile-mode
   :commands dockerfile-mode
