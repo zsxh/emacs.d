@@ -208,14 +208,17 @@ at the first function to return non-nil.")
   "Load label libraries lazily when babel blocks are executed."
   (defun +org/babel-lazy-load (lang)
     (cl-check-type lang symbol)
-    (or (run-hook-with-args-until-success '+org/babel-load-functions lang)
-        (require (intern (format "ob-%s" lang)) nil t)
-        (require lang nil t)))
+    (unless (cdr (assq lang org-babel-load-languages))
+      (prog1
+       (or (run-hook-with-args-until-success '+org/babel-load-functions lang)
+           (require (intern (format "ob-%s" lang)) nil t)
+           (require lang nil t))
+       (add-to-list 'org-babel-load-languages (cons lang t)))))
 
   (defun +org/src-lazy-load-library-a (lang)
     "Lazy load a babel package to ensure syntax highlighting."
     (or (cdr (assoc lang org-src-lang-modes))
-        (and lang (+org/babel-lazy-load (intern lang)))))
+        (+org/babel-lazy-load (intern lang))))
 
   (advice-add #'org-src-get-lang-mode :before #'+org/src-lazy-load-library-a)
 
