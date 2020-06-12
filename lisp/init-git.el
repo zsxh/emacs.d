@@ -47,7 +47,7 @@
 ;; FIXME: gitlab instances via http
 ;; https://github.com/magit/forge/issues/9
 (use-package forge
-  :after magit)
+  :defer t)
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine

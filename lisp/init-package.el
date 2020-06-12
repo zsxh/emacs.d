@@ -63,6 +63,8 @@
 (set-package-archives personal-package-archives)
 
 ;; Setup `use-package'
+;; https://github.com/quelpa/quelpa-use-package/issues/8
+;; https://github.com/melpa/melpa#recipe-format
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))

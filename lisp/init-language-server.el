@@ -27,7 +27,6 @@
         lsp-client-packages '()
         lsp-keep-workspace-alive nil
         lsp-diagnostic-package :flycheck
-        lsp-flycheck-live-reporting nil ; reported according to `flycheck-check-syntax-automatically'
         lsp-prefer-capf t
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
@@ -36,7 +35,8 @@
         lsp-keep-workspace-alive nil
         lsp-links-check-internal 1
         lsp-lens-debounce-interval 1.5
-        lsp-idle-delay 1)
+        lsp-idle-delay 1
+        lsp-log-io nil)
 
   ;; TODO: wait childframe rendering
   (setq lsp-signature-render-documentation nil

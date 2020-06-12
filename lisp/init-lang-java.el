@@ -15,12 +15,13 @@
 (use-package lsp-java
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
   :defer t
-  :custom
-  (lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/")))
-  ;; https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
-  ;; I prefer {join_wrapped_lines : false}
-  (lsp-java-format-settings-url (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml")))
-  (lsp-java-format-settings-profile "GoogleStyle")
+  :preface
+  (setq lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/"))
+        ;; https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
+        ;; I prefer {join_wrapped_lines : false}
+        lsp-java-format-settings-url (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml"))
+        lsp-java-format-settings-profile "GoogleStyle"
+        lsp-java-inhibit-message t)
   :config
   (require 'helm nil t)
   (require 'lsp-java-boot)

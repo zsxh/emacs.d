@@ -49,10 +49,22 @@
       "u" 'tablist-unmark-forward
       "t" 'tablist-toggle-marks)))
 
-;; TODO: k8s configs
+(use-package kubel
+  :commands (kubel))
+
+(use-package kubel-evil
+  :after kubel
+  :config
+  (evil-define-key '(normal motion) kubel-evil-mode-map
+    "?" 'kubel-evil-help-popup))
+
 (use-package kubernetes
   :if (executable-find "kubectl")
   :commands (kubernetes-overview))
+
+;; If you want to pull in the Evil compatibility package.
+(use-package kubernetes-evil
+  :after kubernetes)
 
 
 (provide 'init-docker)

@@ -406,6 +406,21 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 (use-package minor-mode-hack
   :commands show-minor-mode-map-priority)
 
+;;;;;;;;;;;;;; Tree-Sitter ;;;;;;;;;;;;;;
+;; https://github.com/ubolonton/emacs-tree-sitter
+;; (use-package tree-sitter
+;;   :quelpa ((tree-sitter
+;;             :fetcher github
+;;             :repo "ubolonton/emacs-tree-sitter"
+;;             :files ("lisp/*.el" "src" "Cargo.toml" "Cargo.lock")))
+;;   :defer t)
+
+;; (use-package tree-sitter-langs
+;;   :quelpa ((tree-sitter-langs
+;;             :fetcher github
+;;             :repo "ubolonton/emacs-tree-sitter"
+;;             :files ("lisp/*.el" "langs/queries"))))
+
 
 (provide 'init-emacs-enhancement)
 
