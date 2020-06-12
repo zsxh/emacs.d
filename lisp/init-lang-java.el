@@ -34,7 +34,6 @@
               "-Xmx1G"
               "-XX:+UseG1GC"
               "-XX:+UseStringDeduplication"
-              ;; "-DproxySet=true"
               ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
               ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
               ,(concat "-javaagent:" lombok-jar))))))
@@ -101,6 +100,49 @@ JDK-VERSION directory name prefix \"jdk-\" is required,
       (compile compile-command)
       (switch-to-buffer-other-window "*compilation*")
       (end-of-buffer))))
+
+(with-eval-after-load 'lsp-java
+  ;; install lsp java server via http proxy
+  (when (and personal-proxy-http-host personal-proxy-http-port)
+    (defun lsp-java--ensure-server-a (_client callback error-callback _update?)
+      "Ensure that JDT server and the other configuration."
+      (let* ((default-directory (make-temp-file "lsp-java-install" t))
+             (installed-mvn (let ((mvn-executable (executable-find "mvn")))
+                              ;; Quote path to maven executable if it has spaces.
+                              (if (and mvn-executable
+                                       (string-match "\s" mvn-executable))
+                                  (format "\"%s\"" mvn-executable)
+                                mvn-executable)))
+             (mvn-command-and-options (if installed-mvn
+                                          (list installed-mvn)
+                                        (lsp-java--prepare-mvnw)))
+             (other-options
+              (list (format "-Djdt.js.server.root=%s"
+                            (expand-file-name lsp-java-server-install-dir))
+                    (format "-Djunit.runner.root=%s"
+                            (expand-file-name
+                             (if (boundp 'dap-java-test-runner)
+                                 (file-name-directory dap-java-test-runner)
+                               (concat (file-name-directory lsp-java-server-install-dir)
+                                       "test-runner"))))
+                    (format "-Djunit.runner.fileName=%s"
+                            (if (boundp 'dap-java-test-runner)
+                                (file-name-nondirectory (directory-file-name dap-java-test-runner))
+                              "junit-platform-console-standalone.jar"))
+                    (format "-Djava.debug.root=%s"
+                            (expand-file-name (lsp-java--bundles-dir)))
+                    "clean"
+                    "package"
+                    (format "-Djdt.download.url=%s" lsp-java-jdt-download-url)
+                    (format "-DproxyHost=%s" personal-proxy-http-host)
+                    (format "-DproxyPort=%s" personal-proxy-http-port))))
+        (url-copy-file (concat lsp-java--download-root "pom.xml") "pom.xml" t)
+        (apply #'lsp-async-start-process
+               callback
+               error-callback
+               (append mvn-command-and-options other-options))))
+
+    (advice-add 'lsp-java--ensure-server :override 'lsp-java--ensure-server-a)))
 
 
 (provide 'init-lang-java)
