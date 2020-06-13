@@ -84,19 +84,21 @@
     (pop-to-buffer (process-buffer (python-shell-get-or-create-process)))
     (evil-insert-state))
 
-  ;; FIXME: venv path
   (defun +python/repl-vterm ()
+    "Executing ipython/python in project virtual environment,
+virtual environment path should be 'venv' in project root."
     (interactive)
-    (with-current-buffer (vterm-other-window)
-      (when (file-exists-p (expand-file-name "venv" (projectile-project-root)))
-        (dolist (char (string-to-list "source venv/bin/activate"))
-          (vterm--update vterm--term (char-to-string char) nil nil nil))
-        (vterm-send-return))
-      (let ((py-interpreter (cond ((file-exists-p (expand-file-name "venv/bin/ipython" (projectile-project-root))) "ipython")
-                                  (t "python"))))
-        (dolist (char (string-to-list py-interpreter))
-          (vterm--update vterm--term (char-to-string char) nil nil nil))
-        (vterm-send-return))))
+    (let ((default-directory (projectile-project-root)))
+      (with-current-buffer (vterm-other-window)
+        (when (file-exists-p (expand-file-name "venv" (projectile-project-root)))
+          (dolist (char (string-to-list "source venv/bin/activate"))
+            (vterm--update vterm--term (char-to-string char) nil nil nil))
+          (vterm-send-return))
+        (let ((py-interpreter (cond ((file-exists-p (expand-file-name "venv/bin/ipython" (projectile-project-root))) "ipython")
+                                    (t "python"))))
+          (dolist (char (string-to-list py-interpreter))
+            (vterm--update vterm--term (char-to-string char) nil nil nil))
+          (vterm-send-return)))))
 
   (defun +python/python-execute-file (arg)
     "Execute a python script in a shell."
