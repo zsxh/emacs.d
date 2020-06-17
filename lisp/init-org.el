@@ -47,6 +47,15 @@
   (setq org-agenda-files '("~/org/gtd"))
   (setq org-default-notes-file (concat org-directory "/gtd/caputure.org"))
 
+  ;; org todo keyword
+  (setq org-todo-keywords
+        '((type "TODO" "DOING" "MAYBE" "|" "DONE" "DROP")))
+
+  (setq org-todo-keyword-faces
+        '(("DOING" . (:foreground "#dc322f" :weight bold :underline t))
+          ("MAYBE" . (:foreground "#ECBE7B" :weight bold))
+          ("DROP" . (:foreground "#96A7A9" :weight bold :strike-through t))))
+
   ;; Org table font
   ;; (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
   (when (and (not (display-graphic-p))

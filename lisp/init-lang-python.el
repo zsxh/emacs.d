@@ -21,6 +21,7 @@
 ;; something you might interested:
 ;; Using lsp-python-ms with anaconda
 ;; https://github.com/emacs-lsp/lsp-python-ms/issues/53
+;; https://github.com/microsoft/python-language-server/blob/master/TROUBLESHOOTING.md#unresolved-import-warnings
 (use-package lsp-python-ms
   :after python)
 

@@ -62,7 +62,7 @@
   (add-hook 'lsp-managed-mode-hook '+lsp/setup)
 
   (with-eval-after-load 'evil
-    (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-find-definition))
+    (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-ui-peek-find-definitions))
 
   (defun +lsp/update-server ()
     (interactive)
@@ -75,7 +75,7 @@
   :bind ((:map lsp-ui-mode-map
                ("C-M-g" . lsp-ui-peek-find-definitions)
                ("C-M-r" . lsp-ui-peek-find-references)
-               ("C-M-q" . lsp-ui-peek-jump-backward)
+               ("C-M-p" . lsp-ui-peek-jump-backward)
                ("C-M-n" . lsp-ui-peek-jump-forward))
          (:map lsp-ui-peek-mode-map
                ("j" . lsp-ui-peek--select-next)
