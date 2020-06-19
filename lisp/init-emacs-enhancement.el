@@ -146,8 +146,9 @@
    "q" '(wdired-exit :which-key "exit"))
 
   (with-eval-after-load 'all-the-icons-dired
-    (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
-    (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode)))))
+    ;; (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
+    ;; (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode)))
+    (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired--refresh)))))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
