@@ -201,6 +201,7 @@ the `quelpa' command has been run in the current Emacs session."
 
   (defun upgrade-packages-and-restart ()
     (interactive)
+    (message "Updating Pakcages...")
     (upgrade-packages)
     (sleep-for 1)
     (restart-emacs))
@@ -209,7 +210,7 @@ the `quelpa' command has been run in the current Emacs session."
     (interactive)
     (if (fboundp 'async-start)
         (progn
-          (message "Updating Pakcages ...")
+          (message "Async Updating Pakcages...")
           (async-start
            `(lambda ()
               ,(async-inject-variables "\\`\\(load-path\\)\\'")
