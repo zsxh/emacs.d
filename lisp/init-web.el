@@ -49,13 +49,30 @@
   ;; Install tidy to check html syntax, https://www.flycheck.org/en/latest/languages.html#html
   (require 'flycheck)
   (flycheck-add-mode 'html-tidy 'web-mode)
-  (+funcs/major-mode-leader-keys
-   web-mode-map
-   "e" '(nil :which-key "error")
-   "en" '(flycheck-next-error :which-key "next-error")
-   "ep" '(flycheck-previous-error :which-key "prev-error")
-   "f" '(format-all-buffer :which-key "format-html")
-   "p" '(nil :which-key "preview"))
+
+  (defun +web/sortpom-formatter ()
+    (let ((cmd (s-join " " '("mvn"
+                             "com.github.ekryd.sortpom:sortpom-maven-plugin:sort"
+                             "-Dsort.keepBlankLines"
+                             "-Dsort.predefinedSortOrder=custom_1"))))
+      ;; (call-process-shell-command cmd nil 0)
+      (async-shell-command cmd)))
+
+  (defun +web/formatter ()
+    (interactive)
+    (let ((file (and buffer-file-name (file-name-nondirectory buffer-file-name))))
+      (if (and file (string= file "pom.xml"))
+          ;; for maven pom.xml
+          (+web/sortpom-formatter)
+        ;; other html/xml files
+        (format-all-buffer))))
+
+  (+funcs/major-mode-leader-keys web-mode-map
+                                 "e" '(nil :which-key "error")
+                                 "en" '(flycheck-next-error :which-key "next-error")
+                                 "ep" '(flycheck-previous-error :which-key "prev-error")
+                                 "f" '(+web/formatter :which-key "format-html")
+                                 "p" '(nil :which-key "preview"))
 
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2
