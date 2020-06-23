@@ -164,6 +164,10 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 (use-package verb
   :defer t)
 
+(use-package websocket-client
+  :ensure nil
+  :commands websocket-client-open)
+
 ;; install formatter
 ;; npm install --global prettier @prettier/plugin-php
 (use-package format-all
