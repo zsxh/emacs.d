@@ -23,7 +23,7 @@
   :commands (lsp lsp-deferred lsp-session lsp-session-folders)
   :hook (lsp-mode . dap-mode)
   :config
-  (setq lsp-auto-guess-root nil
+  (setq lsp-auto-guess-root t
         lsp-client-packages '()
         lsp-keep-workspace-alive nil
         lsp-diagnostic-package :flycheck
@@ -36,6 +36,7 @@
         lsp-links-check-internal 1
         lsp-lens-debounce-interval 1.5
         lsp-idle-delay 1
+        lsp-modeline-code-actions-enable nil
         lsp-log-io nil)
 
   ;; TODO: wait childframe rendering

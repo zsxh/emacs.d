@@ -84,7 +84,10 @@
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'edebug (evil-collection-init 'edebug))
   (with-eval-after-load 'popup (evil-collection-init 'popup))
-  (with-eval-after-load 'arc-mode (evil-collection-init 'arc-mode)))
+  (with-eval-after-load 'arc-mode
+    (evil-collection-init 'arc-mode)
+    (evil-define-key 'normal archive-mode-map
+      (kbd "C-d")'evil-scroll-down)))
 
 ;; https://github.com/redguardtoo/evil-matchit
 ;; Usage: '%' go to matching pair
