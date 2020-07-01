@@ -63,6 +63,7 @@
 (set-package-archives personal-package-archives)
 
 ;; Setup `use-package'
+;; how do I specify a specific branch for a git repo?
 ;; https://github.com/quelpa/quelpa-use-package/issues/8
 ;; https://github.com/melpa/melpa#recipe-format
 (unless (package-installed-p 'use-package)

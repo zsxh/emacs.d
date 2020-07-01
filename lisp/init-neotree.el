@@ -123,37 +123,6 @@
       (neotree-find (projectile-project-root))
       (neotree-find origin-buffer-file-name))))
 
-;; FIXME: electric-indent-local-mode arg issue
-(with-eval-after-load 'neotree
-  (define-derived-mode neotree-mode special-mode "NeoTree"
-    "A major mode for displaying the directory tree in text mode."
-    (setq indent-tabs-mode nil          ; only spaces
-          buffer-read-only t            ; read only
-          truncate-lines -1
-          neo-buffer--show-hidden-file-p neo-show-hidden-files)
-    (when neo-hide-cursor
-      (progn
-        (setq cursor-type nil)
-        (hl-line-mode +1)))
-    (pcase neo-mode-line-type
-      (`neotree
-       (setq-local mode-line-format neo-mode-line-format)
-       (add-hook 'post-command-hook 'force-mode-line-update nil t))
-      (`none (setq-local mode-line-format nil))
-      (`custom
-       (setq-local mode-line-format neo-mode-line-custom-format)
-       (add-hook 'post-command-hook 'force-mode-line-update nil t))
-      (_ nil))
-    ;; fix for electric-indent-mode
-    ;; for emacs 24.4
-    ;; (if (fboundp 'electric-indent-local-mode)
-    ;;     (electric-indent-local-mode -1)
-    ;;   ;; for emacs 24.3 or less
-    ;;   (add-hook 'electric-indent-functions
-    ;;             (lambda (arg) 'no-indent) nil 'local))
-    (when neo-auto-indent-point
-      (add-hook 'post-command-hook 'neo-hook--node-first-letter nil t))))
-
 
 (provide 'init-neotree)
 
