@@ -92,6 +92,8 @@
 (use-package ivy-rich
   :after ivy
   :config
+  (setq ivy-rich-parse-remote-buffer nil)
+
   ;; FIXME: Finding project root at remote is very slow
   (advice-add 'ivy-rich-switch-buffer-root :before-until
               (lambda (&optional candidate)
