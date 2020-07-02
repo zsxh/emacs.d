@@ -93,7 +93,8 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
         (let ((buffer (get-buffer-create buffer-name)))
           (with-current-buffer buffer
             (unless (eq major-mode 'vterm-mode)
-              (vterm-mode))
+              (vterm-mode)
+              (+vterm/activate-python-venv default-directory))
             (+vterm--change-directory-if-remote))
           (setq +vterm/toggle--window-configration (current-window-configuration))
           (if this-window-p
@@ -135,7 +136,14 @@ method to prepare vterm at the corresponding remote directory."
               (vterm-send-string
                (concat "cd " path-localname))
               (vterm-send-return)))
-           (t nil)))))))
+           (t nil))))))
+
+  (defun +vterm/activate-python-venv (directory)
+    (let ((default-directory (or directory default-directory)))
+      (when (file-exists-p (expand-file-name "venv" (projectile-project-root)))
+        (dolist (char (string-to-list "source venv/bin/activate"))
+          (vterm--update vterm--term (char-to-string char) nil nil nil))
+        (vterm-send-return)))))
 
 (use-package term
   :ensure nil

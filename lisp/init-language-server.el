@@ -18,9 +18,11 @@
 ;; Support temporary buffer
 ;; https://github.com/emacs-lsp/lsp-mode/issues/377
 ;;
+;; lsp-org command
+;; https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/lsp-org.md
 (use-package lsp-mode
   :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
-  :commands (lsp lsp-deferred lsp-session lsp-session-folders)
+  :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
   :hook (lsp-mode . dap-mode)
   :config
   (setq lsp-auto-guess-root t
@@ -156,40 +158,6 @@
 
   (set-face-foreground 'lsp-ui-sideline-code-action "#FF8C00"))
 
-;; FIXME: not working now
-;; (when (featurep 'lsp-mode)
-;;   ;; Support LSP in org babel
-;;   ;; https://github.com/emacs-lsp/lsp-mode/issues/377
-;;   (cl-defmacro lsp-org-babel-enbale (lang)
-;;     "Support LANG in org source code block."
-;;     ;; (cl-check-type lang symbolp)
-;;     (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
-;;            (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
-;;       `(progn
-;;          (defun ,intern-pre (info)
-;;            (let ((lsp-file (or (->> info caddr (alist-get :lspfile))
-;;                                buffer-file-name)))
-;;              (setq-local buffer-file-name lsp-file)
-;;              (setq-local lsp-buffer-uri (lsp--path-to-uri lsp-file))
-;;              (lsp-deferred)))
-;;          (if (fboundp ',edit-pre)
-;;              (advice-add ',edit-pre :after ',intern-pre)
-;;            (progn
-;;              (defun ,edit-pre (info)
-;;                (,intern-pre info))
-;;              (put ',edit-pre 'function-documentation
-;;                   (format "Prepare local buffer environment for org source block (%s)."
-;;                           (upcase ,lang))))))))
-
-;;   ;; lsp support org code block editing
-;;   (defvar org-babel-lang-list
-;;     '("go" "python" "ipython" "ruby" "js" "css" "sass" "C" "rust" "java" "julia"
-;;       "jupyter-python" "jupyter-julia" "jupyter-javascript"))
-
-;;   (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
-
-;;   (dolist (lang org-babel-lang-list)
-;;     (eval `(lsp-org-babel-enbale ,lang))))
 
 ;;;;;;;;;;;;;; Language Common Leader Keys ;;;;;;;;;;;;;;
 (defun +language-server/set-common-leader-keys (mode-map &optional eglot-p flymake-p)
@@ -198,51 +166,51 @@
   (let ((mode-map (if (symbolp mode-map)
                       mode-map
                     (keymap-symbol mode-map))))
-     (cond
-      (flymake-p
-       ;; flymake
-       (+funcs/major-mode-leader-keys
-        mode-map
-        "e" '(nil :which-key "error")
-        "en" '(flymake-goto-next-error :which-key "next-error")
-        "ep" '(flymake-goto-prev-error :which-key "prev-error")))
-      (t
-       ;; flycheck
-       (+funcs/major-mode-leader-keys
-        mode-map
-        "e" '(nil :which-key "error")
-        "en" '(flycheck-next-error :which-key "next-error")
-        "ep" '(flycheck-previous-error :which-key "prev-error"))))
+    (cond
+     (flymake-p
+      ;; flymake
+      (+funcs/major-mode-leader-keys
+       mode-map
+       "e" '(nil :which-key "error")
+       "en" '(flymake-goto-next-error :which-key "next-error")
+       "ep" '(flymake-goto-prev-error :which-key "prev-error")))
+     (t
+      ;; flycheck
+      (+funcs/major-mode-leader-keys
+       mode-map
+       "e" '(nil :which-key "error")
+       "en" '(flycheck-next-error :which-key "next-error")
+       "ep" '(flycheck-previous-error :which-key "prev-error"))))
 
-     (cond
-      (eglot-p
-       ;; eglot
-       (+funcs/major-mode-leader-keys
-        mode-map
-        "A" '(eglot-code-actions :which-key "code-action")
-        "f" '(eglot-format :which-key "format")
-        "g" '(nil :which-key "go")
-        "gd" '(xref-find-definitions :which-key "find-definitions")
-        "gr" '(xref-find-references :which-key "find-references")
-        "R" '(eglot-rename :which-key "rename")))
-      (t
-       ;; lsp-mode
-       (+funcs/major-mode-leader-keys
-        mode-map
-        "A" '(lsp-execute-code-action :which-key "code-action")
-        "d" '(nil :which-key "debug")
-        "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
-        "dh" '(hydra-debugger-control/body :which-key "hydra-control")
-        "dr" '(dap-debug :which-key "run")
-        "D" '(+lsp/toggle-doc-show :which-key "toggle-doc-hover")
-        "f" '(lsp-format-buffer :which-key "format")
-        "g" '(nil :which-key "go")
-        "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
-        "gD" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
-        "gi" '(lsp-ui-peek-find-implementation :which-key "find-implementation")
-        "gr" '(lsp-ui-peek-find-references :which-key "find-references")
-        "l" '(lsp-avy-lens :which-key "Click lens using avy")
-        "R" '(lsp-rename :which-key "rename"))))))
+    (cond
+     (eglot-p
+      ;; eglot
+      (+funcs/major-mode-leader-keys
+       mode-map
+       "A" '(eglot-code-actions :which-key "code-action")
+       "f" '(eglot-format :which-key "format")
+       "g" '(nil :which-key "go")
+       "gd" '(xref-find-definitions :which-key "find-definitions")
+       "gr" '(xref-find-references :which-key "find-references")
+       "R" '(eglot-rename :which-key "rename")))
+     (t
+      ;; lsp-mode
+      (+funcs/major-mode-leader-keys
+       mode-map
+       "A" '(lsp-execute-code-action :which-key "code-action")
+       "d" '(nil :which-key "debug")
+       "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
+       "dh" '(hydra-debugger-control/body :which-key "hydra-control")
+       "dr" '(dap-debug :which-key "run")
+       "D" '(+lsp/toggle-doc-show :which-key "toggle-doc-hover")
+       "f" '(lsp-format-buffer :which-key "format")
+       "g" '(nil :which-key "go")
+       "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+       "gD" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
+       "gi" '(lsp-ui-peek-find-implementation :which-key "find-implementation")
+       "gr" '(lsp-ui-peek-find-references :which-key "find-references")
+       "l" '(lsp-avy-lens :which-key "Click lens using avy")
+       "R" '(lsp-rename :which-key "rename"))))))
 
 ;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
 

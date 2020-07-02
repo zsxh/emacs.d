@@ -12,6 +12,7 @@
 
 ;; The Org Manual: https://orgmode.org/org.html
 ;; https://orgmode.org/Changes.html
+;; https://org-babel.readthedocs.io/en/latest/header-args/
 (use-package org
   :ensure org-plus-contrib
   :mode ("\\.org\\'" . org-mode)
@@ -147,6 +148,9 @@
    "i" '(nil :which-key "insert")
    "is" '(org-insert-structure-template :which-key "structure-template")
    "it" '(org-time-stamp :which-key "time-stamp")
+   "l" '(nil :which-key "lsp-org")
+   "lc" '(lsp-org :which-key "lsp-org")
+   "ls" '(lsp-virtual-buffer-disconnect :which-key "lsp-virtual-buffer-disconnect")
    "n" '(org-babel-next-src-block :which-key "next-src-block")
    "p" '(org-babel-previous-src-block :which-key "previous-src-block")
    "T" '(nil :which-key "toggle")
