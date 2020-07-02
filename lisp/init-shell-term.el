@@ -90,12 +90,16 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
             (select-window win)
             (when (bound-and-true-p evil-local-mode)
               (evil-change-to-initial-state)))
-        (let ((buffer (get-buffer-create buffer-name)))
+        (let ((buffer (get-buffer-create buffer-name))
+              (dir-remote-p (and (featurep 'tramp)
+                                 (tramp-tramp-file-p default-directory))))
           (with-current-buffer buffer
             (unless (eq major-mode 'vterm-mode)
               (vterm-mode)
-              (+vterm/activate-python-venv default-directory))
-            (+vterm--change-directory-if-remote))
+              (unless dir-remote-p
+                (+vterm/activate-python-venv-if-local)))
+            (when dir-remote-p
+              (+vterm/change-directory-if-remote)))
           (setq +vterm/toggle--window-configration (current-window-configuration))
           (if this-window-p
               (switch-to-buffer buffer)
@@ -115,11 +119,10 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (interactive "P")
     (+vterm/toggle arg t))
 
-  (defun +vterm--change-directory-if-remote ()
+  (defun +vterm/change-directory-if-remote ()
     "When `default-directory` is remote, use the corresponding
 method to prepare vterm at the corresponding remote directory."
-    (when (and (featurep 'tramp)
-               (tramp-tramp-file-p default-directory))
+    (when (featurep 'tramp)
       (message "default-directory is %s" default-directory)
       (with-parsed-tramp-file-name default-directory path
         (let ((method (cadr (assoc `tramp-login-program
@@ -138,12 +141,11 @@ method to prepare vterm at the corresponding remote directory."
               (vterm-send-return)))
            (t nil))))))
 
-  (defun +vterm/activate-python-venv (directory)
-    (let ((default-directory (or directory default-directory)))
-      (when (file-exists-p (expand-file-name "venv" (projectile-project-root)))
-        (dolist (char (string-to-list "source venv/bin/activate"))
-          (vterm--update vterm--term (char-to-string char) nil nil nil))
-        (vterm-send-return)))))
+  (defun +vterm/activate-python-venv-if-local ()
+    (when (file-exists-p (expand-file-name "venv" default-directory))
+      (dolist (char (string-to-list "source venv/bin/activate"))
+        (vterm--update vterm--term (char-to-string char) nil nil nil))
+      (vterm-send-return))))
 
 (use-package term
   :ensure nil
