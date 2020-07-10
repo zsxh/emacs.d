@@ -170,21 +170,7 @@
 ;; https://github.com/casouri/valign
 (use-package valign
   :quelpa ((valign :fetcher github :repo "casouri/valign"))
-  :after org
-  :config
-  (valign-mode)
-  (advice-add 'text-scale-increase
-              :after (lambda (inc)
-                       (when (or (bound-and-true-p valign-mode)
-                                 (derived-mode-p 'org-mode)
-                                 (derived-mode-p 'markdown-mode))
-                         (valign--force-align-buffer))))
-  (advice-add 'text-scale-decrease
-              :after (lambda (dec)
-                       (when (or (bound-and-true-p valign-mode)
-                                 (derived-mode-p 'org-mode)
-                                 (derived-mode-p 'markdown-mode))
-                         (valign--force-align-buffer)))))
+  :hook ((org-mode markdown-mode) . valign-mode))
 
 ;; convert org-file to ipynb
 ;; https://github.com/jkitchin/ox-ipynb

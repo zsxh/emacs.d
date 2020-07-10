@@ -25,7 +25,7 @@
   :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
   :hook (lsp-mode . dap-mode)
   :config
-  (setq lsp-auto-guess-root t
+  (setq lsp-auto-guess-root nil
         lsp-client-packages '()
         lsp-keep-workspace-alive nil
         lsp-diagnostic-package :flycheck
