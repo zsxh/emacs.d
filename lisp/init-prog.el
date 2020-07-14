@@ -40,7 +40,7 @@
 ;; automatic parenthesis pairing for non prog mode
 (use-package elec-pair
   :ensure nil
-  :hook (prog-mode . electric-pair-local-mode)
+  :hook ((prog-mode web-mode conf-mode yaml-mode editorconfig-mode vue-mode) . electric-pair-local-mode)
   :bind ("C-j" . newline-and-indent))
 
 (use-package awesome-pair

@@ -28,6 +28,7 @@
                                          "."
                                          1))
   :config
+  ;; https://orgmode.org/manual/Structure-Templates.html
   (require 'org-tempo)
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
   (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
@@ -288,6 +289,14 @@ at the first function to return non-nil.")
   ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
   (setq ob-async-no-async-languages-alist
         '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
+
+;; https://github.com/alphapapa/org-sidebar
+(use-package org-sidebar
+  :after org
+  :commands (org-sidebar-tree
+             org-sidebar-tree-toggle
+             org-sidebar
+             org-sidebar-toggle))
 
 ;; Ory Static Blog
 (use-package org-static-blog
