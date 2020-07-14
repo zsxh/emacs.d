@@ -28,6 +28,7 @@
                                          "."
                                          1))
   :config
+  (require 'org-tempo)
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
   (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
   (setq org-export-use-babel nil ; do not evaluate again during export.
