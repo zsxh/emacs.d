@@ -35,9 +35,9 @@
         lsp-enable-symbol-highlighting nil ; turn off for better performance
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil
-        lsp-links-check-internal 1
         lsp-lens-debounce-interval 1.5
         lsp-idle-delay 1
+        lsp-debounce-full-sync-notifications-interval 1.0
         lsp-modeline-code-actions-enable nil
         lsp-log-io nil)
 
