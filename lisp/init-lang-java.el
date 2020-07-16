@@ -95,7 +95,7 @@ JDK-VERSION directory name prefix \"jdk-\" is required,
 
   (defun +java/compile ()
     (interactive)
-    (let ((default-directory (projectile-project-root))
+    (let ((default-directory (+project/root))
           (compile-command "mvn clean compile test-compile"))
       (compile compile-command)
       (switch-to-buffer-other-window "*compilation*")

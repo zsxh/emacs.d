@@ -34,12 +34,25 @@
         (puthash cache-key value +project/lsp-project-root-cache)
         value))))
 
+(defalias '+project/root 'projectile-project-root)
+
+(defun +project/ivy-switch-buffer ()
+  (interactive)
+  (ivy-read "Switch to buffer: "
+            (delete (buffer-name (current-buffer))
+                    (when (+project/root)
+                      (projectile-project-buffer-names)))
+            :initial-input nil
+            :action #'ivy--switch-buffer-action
+            :caller '+project/ivy-switch-buffer))
+
 (use-package projectile
   :hook (after-init . projectile-mode)
   :bind ("C-<tab>" . projectile-next-project-buffer)
   :config
   ;; switch project to project root dir instead of project file
   (setq projectile-switch-project-action #'projectile-dired)
+  (add-to-list 'projectile-project-root-files-bottom-up "pom.xml")
   (with-eval-after-load 'ivy
     (setq projectile-completion-system 'ivy))
   ;; cache file in ~/.emacs.d/projectile.cache
@@ -66,16 +79,6 @@
 
   (setq projectile-buffers-filter-function #'+project/projectile-buffer-filter-function)
 
-  (defun +projectile/ivy-switch-buffer ()
-    (interactive)
-    (ivy-read "Switch to buffer: "
-              (delete (buffer-name (current-buffer))
-                      (when (projectile-project-root)
-                        (projectile-project-buffer-names)))
-              :initial-input nil
-              :action #'ivy--switch-buffer-action
-              :caller '+projectile/ivy-switch-buffer))
-
   ;; FIXME: projectile-project-root is very slow in remote, so I disable it in remote buffer
   ;; (advice-add 'projectile-project-root :before-while
   ;;             (lambda (&optional dir)
@@ -94,6 +97,7 @@
   (advice-add #'ffip-project-root :around (lambda (orig-fn)
                                             (or (+project/lsp-project-root)
                                                 (funcall orig-fn))))
+  (add-to-list 'ffip-project-file "pom.xml")
 
   ;; A simple, fast and user-friendly alternative to 'find'
   ;; https://github.com/sharkdp/fd

@@ -153,7 +153,7 @@
    "p" '(nil :which-key "project")
    "p/" '(rg-project :which-key "ripgrep-search-project")
    "p'" '(+shell/projectile-shell-pop :which-key "project-root-shell-pop")
-   "pb" '(+projectile/ivy-switch-buffer :which-key "switch-to-project-buffer")
+   "pb" '(+project/ivy-switch-buffer :which-key "switch-to-project-buffer")
    "pB" '(projectile-ibuffer :which-key "project-ibuffer")
    "pd" '(projectile-dired :which-key "project-root-dired")
    "pf" '(find-file-in-project :which-key "project-find-file")

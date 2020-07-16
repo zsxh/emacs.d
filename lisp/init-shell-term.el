@@ -28,7 +28,7 @@
   "Open a term buffer at projectile project root,
 if no project root found, use current directory instead."
   (interactive)
-  (let ((default-directory (or  (projectile-project-root) default-directory)))
+  (let ((default-directory (or (+project/root) default-directory)))
     (call-interactively 'shell-pop)))
 
 ;; HIGHLY RECOMMENDED

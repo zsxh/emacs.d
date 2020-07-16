@@ -120,7 +120,7 @@
   (if (neo-global--window-exists-p)
       (neotree-hide)
     (let ((origin-buffer-file-name (buffer-file-name)))
-      (neotree-find (projectile-project-root))
+      (neotree-find (+project/root))
       (neotree-find origin-buffer-file-name))))
 
 
