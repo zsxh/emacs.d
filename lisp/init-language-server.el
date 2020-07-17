@@ -54,10 +54,8 @@
   ;; https://emacs-lsp.github.io/lsp-mode/page/faq/
   ;; How do I force lsp-mode to forget the workspace folders for multi root servers
   ;; so the workspace folders are added on demand?
-  (advice-add 'lsp
-              :before
-              (lambda (&rest _args)
-                (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
+  ;; FIXME: first buffer in another project need to manually call lsp
+  (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
   (defun +lsp/setup ()
     (unless (member major-mode '(c-mode c++-mode java-mode))
