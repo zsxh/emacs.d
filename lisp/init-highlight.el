@@ -75,7 +75,8 @@
           lisp-mode
           emacs-lisp-mode
           help-mode
-          js-mode)
+          js-mode
+          css-mode)
          . rainbow-mode))
 
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth

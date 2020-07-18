@@ -17,11 +17,13 @@
   :defer t
   :preface
   (setq lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/"))
-        ;; https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
-        ;; I prefer {join_wrapped_lines : false}
-        lsp-java-format-settings-url (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml"))
-        lsp-java-format-settings-profile "GoogleStyle"
         lsp-java-inhibit-message t)
+  (let ((java-format-style-file (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml"))))
+    (when (file-exists-p java-format-style-file)
+      ;; https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
+      ;; I prefer {join_wrapped_lines : false}
+      (setq lsp-java-format-settings-url java-format-style-file
+            lsp-java-format-settings-profile "GoogleStyle")))
   :config
   (require 'helm nil t)
   (require 'lsp-java-boot)
