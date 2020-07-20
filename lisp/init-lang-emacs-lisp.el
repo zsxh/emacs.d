@@ -69,7 +69,8 @@
           lisp-interaction-mode
           clojure-mode
           clojurec-mode
-          clojurescript-mode) . lispy-mode)
+          clojurescript-mode
+          cider-repl-mode) . lispy-mode)
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
   (setq lispy-eval-display-style 'overlay)
