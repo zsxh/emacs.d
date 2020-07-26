@@ -25,7 +25,7 @@
   :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
   :hook (lsp-mode . dap-mode)
   :config
-  (setq lsp-auto-guess-root nil
+  (setq lsp-auto-guess-root t
         lsp-client-packages '()
         lsp-keep-workspace-alive nil
         lsp-diagnostic-package :flycheck
@@ -35,18 +35,15 @@
         lsp-enable-symbol-highlighting nil ; turn off for better performance
         lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil
-        lsp-lens-debounce-interval 1.5
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
         lsp-modeline-code-actions-enable nil
-        lsp-log-io nil)
-
-  ;; TODO: wait childframe rendering
-  (setq lsp-signature-render-documentation nil
-        lsp-signature-auto-activate t)
-
-  ;; lsp flycheck faces
-  (setq lsp-diagnostics-attributes '((deprecated :strike-through t)))
+        lsp-log-io nil
+        ;; TODO: wait childframe rendering
+        lsp-signature-render-documentation nil
+        lsp-signature-auto-activate t
+        ;; lsp flycheck faces
+        lsp-diagnostics-attributes '((deprecated :strike-through t)))
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
@@ -55,33 +52,39 @@
   ;; How do I force lsp-mode to forget the workspace folders for multi root servers
   ;; so the workspace folders are added on demand?
   ;; FIXME: first buffer in another project need to manually call lsp
-  (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
+  (advice-add 'lsp :before (lambda (&rest _args)
+                             (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
+  ;; Increase the amount of data which Emacs reads from the process.
+  ;; Again the emacs default is too low 4k considering that the some
+  ;; of the language server responses are in 800k - 3M range.
+  ;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
   (defun +lsp/setup ()
     (unless (member major-mode '(c-mode c++-mode java-mode))
       (lsp-lens-mode))
-    ;; Increase the amount of data which Emacs reads from the process.
-    ;; Again the emacs default is too low 4k considering that the some
-    ;; of the language server responses are in 800k - 3M range.
-    ;;
-    ;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
     (when (bound-and-true-p read-process-output-max)
       (setq-local read-process-output-max (* 1024 1024))))
 
   (add-hook 'lsp-managed-mode-hook '+lsp/setup)
 
-  (with-eval-after-load 'evil
-    (define-key lsp-mode-map [remap evil-goto-definition] 'lsp-ui-peek-find-definitions))
-
   (defun +lsp/update-server ()
     (interactive)
     (lsp-install-server t)))
+
+(use-package lsp-lens
+  :ensure nil
+  :after lsp-mode
+  :config
+  (setq lsp-lens-debounce-interval 1.5))
 
 (use-package lsp-ui
   :after lsp-mode
   :preface (setq lsp-ui-doc-enable nil
                  lsp-ui-sideline-enable nil)
   :bind ((:map lsp-ui-mode-map
+               ([remap evil-goto-definition] . lsp-ui-peek-find-definitions)
+               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+               ([remap xref-find-references] . lsp-ui-peek-find-references)
                ("C-M-g" . lsp-ui-peek-find-definitions)
                ("C-M-r" . lsp-ui-peek-find-references)
                ("C-M-p" . lsp-ui-peek-jump-backward)
