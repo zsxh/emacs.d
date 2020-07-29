@@ -38,6 +38,7 @@
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
         lsp-modeline-code-actions-enable nil
+        lsp-modeline-diagnostics-enable nil
         lsp-log-io nil
         ;; TODO: wait childframe rendering
         lsp-signature-render-documentation nil
