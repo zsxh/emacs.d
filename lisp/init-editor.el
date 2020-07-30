@@ -152,6 +152,10 @@
   :config
   (setq auto-save-silent t
         auto-save-delete-trailing-whitespace t)
+  (setq auto-save-disable-predicates
+        '((lambda ()
+            (and (featurep 'tramp)
+                 (tramp-tramp-file-p (buffer-file-name))))))
   (auto-save-enable))
 
 ;; jumping to visible text using a char-based decision tree

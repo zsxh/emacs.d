@@ -46,7 +46,9 @@
           yaml-mode
           editorconfig-mode
           vue-mode
-          cider-repl-mode) . electric-pair-local-mode)
+          cider-repl-mode
+          minibuffer-setup
+          ) . electric-pair-local-mode)
   :bind ("C-j" . newline-and-indent))
 
 (use-package awesome-pair
