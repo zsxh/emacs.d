@@ -15,9 +15,6 @@
 ;; Performance problem
 ;; https://github.com/emacs-lsp/lsp-mode#performance
 ;;
-;; Support temporary buffer
-;; https://github.com/emacs-lsp/lsp-mode/issues/377
-;;
 ;; lsp-org command
 ;; https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/lsp-org.md
 (use-package lsp-mode
@@ -33,7 +30,6 @@
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
         lsp-enable-symbol-highlighting nil ; turn off for better performance
-        lsp-eldoc-render-all nil
         lsp-keep-workspace-alive nil
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
@@ -41,6 +37,7 @@
         lsp-modeline-diagnostics-enable nil
         lsp-log-io nil
         ;; TODO: wait childframe rendering
+        lsp-eldoc-render-all nil
         lsp-signature-render-documentation nil
         lsp-signature-auto-activate t
         ;; lsp flycheck faces
@@ -48,6 +45,16 @@
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
+
+  (use-package lsp-lens
+    :ensure nil
+    :config
+    (setq lsp-lens-debounce-interval 1.5))
+
+  (use-package lsp-completion
+    :ensure nil
+    :config
+    (setq lsp-completion-provider :capf))
 
   ;; https://emacs-lsp.github.io/lsp-mode/page/faq/
   ;; How do I force lsp-mode to forget the workspace folders for multi root servers
@@ -71,12 +78,6 @@
   (defun +lsp/update-server ()
     (interactive)
     (lsp-install-server t)))
-
-(use-package lsp-lens
-  :ensure nil
-  :after lsp-mode
-  :config
-  (setq lsp-lens-debounce-interval 1.5))
 
 (use-package lsp-ui
   :after lsp-mode
@@ -231,6 +232,11 @@
                                         (when (bound-and-true-p read-process-output-max)
                                           (setq-local read-process-output-max (* 1024 1024))))))
 
+(use-package eldoc-box
+  :defer t
+  ;; :hook (lsp-mode . eldoc-box-hover-at-point-mode)
+  :config
+  (setq lsp-signature-function 'eldoc-message))
 
 (provide 'init-language-server)
 

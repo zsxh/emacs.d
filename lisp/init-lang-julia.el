@@ -12,6 +12,7 @@
 
 (require 'init-language-server)
 
+;; Julia PkgServer/Mirrors https://discourse.juliacn.com/t/topic/2969
 ;; Install Julia LanguageServer
 ;; $ julia
 ;; julia> ]
@@ -36,7 +37,7 @@
   :defer t
   :custom
   (lsp-julia-package-dir nil)     ; use the globally installed version
-  (lsp-julia-default-environment "~/.julia/environments/v1.4")
+  (lsp-julia-default-environment "~/.julia/environments/v1.5")
   :config
   (defun +julia/lsp-get-root (dir)
     "Get the (Julia) project root directory of the current file."

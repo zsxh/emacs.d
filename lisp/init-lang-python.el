@@ -18,6 +18,10 @@
   :hook (python-mode . lsp-deferred)
   :custom (python-indent-offset 2))
 
+;; TODO: change to lsp-pyright https://github.com/emacs-lsp/lsp-pyright
+;; (use-package lsp-pyright
+;;   :after python)
+
 ;; something you might interested:
 ;; Using lsp-python-ms with anaconda
 ;; https://github.com/emacs-lsp/lsp-python-ms/issues/53

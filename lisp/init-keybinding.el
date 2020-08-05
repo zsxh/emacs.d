@@ -206,7 +206,9 @@
    "Tx" '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
    "Tz" '(evil-toggle-fold :which-key "evil-toggle-fold")))
 
-(use-package hydra :ensure t)
+(use-package hydra)
+(use-package lv
+  :hook (lv-window . visual-line-mode))
 
 (defhydra hydra-text-scale (:hint nil)
   "zoom"
