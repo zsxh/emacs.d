@@ -18,15 +18,9 @@
   :hook (python-mode . lsp-deferred)
   :custom (python-indent-offset 2))
 
-;; TODO: change to lsp-pyright https://github.com/emacs-lsp/lsp-pyright
-;; (use-package lsp-pyright
-;;   :after python)
-
-;; something you might interested:
-;; Using lsp-python-ms with anaconda
-;; https://github.com/emacs-lsp/lsp-python-ms/issues/53
-;; https://github.com/microsoft/python-language-server/blob/master/TROUBLESHOOTING.md#unresolved-import-warnings
-(use-package lsp-python-ms
+;; https://github.com/emacs-lsp/lsp-pyright
+;; > npm install -g pyright
+(use-package lsp-pyright
   :after python)
 
 ;; The main entry points are `pyvenv-activate', which queries the user for a virtual environment directory
