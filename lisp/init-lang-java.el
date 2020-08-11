@@ -70,8 +70,7 @@
               (when (eq major-mode 'java-mode)
                 (lsp-lens-mode)
                 (lsp-java-lens-mode)
-                (lsp-java-boot-lens-mode)
-                )))
+                (lsp-java-boot-lens-mode))))
   (lsp-deferred)
 
   (defvar jdks-installed-dir "/usr/local/"
