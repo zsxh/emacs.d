@@ -70,6 +70,24 @@
   (setq magit-delta-hide-plus-minus-markers nil)
   (magit-delta-mode))
 
+;; Show Version Control Software (VCS) commit message of current line.
+;; https://github.com/redguardtoo/vc-msg
+(use-package vc-msg
+  :commands vc-msg-show
+  :config
+  (with-eval-after-load 'vc-msg-git
+    ;; show code of commit
+    (setq vc-msg-git-show-commit-function 'magit-show-commit)
+    ;; open file of certain revision
+    (push '("m"
+            "[m]agit-find-file"
+            (lambda ()
+              (let* ((info vc-msg-previous-commit-info)
+                     (git-dir (locate-dominating-file default-directory ".git")))
+                (magit-find-file (plist-get info :id )
+                                 (concat git-dir (plist-get info :filename))))))
+          vc-msg-git-extra)))
+
 
 (provide 'init-git)
 

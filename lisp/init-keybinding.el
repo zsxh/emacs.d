@@ -102,6 +102,7 @@
    "gb" '(magit-blame :which-key "magit-blame")
    "gc" '(magit-blame-cycle-style :which-key "magit-blame-cycle-style")
    "gf" '(magit-file-checkout :which-key "magit-file-checkout")
+   "gm" '(vc-msg-show :which-key "vc-msg-show")
    "gs" '(magit :which-key "magit-status")
    "gt" '(git-timemachine :which-key "git-timemachine")
    ;; Help
