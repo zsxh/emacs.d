@@ -35,6 +35,11 @@
 (use-package cider
   :defer t)
 
+;; TODO: clojure debugger
+;; https://github.com/clojure-emacs/sayid
+(use-package sayid
+  :hook (clojure-mode . sayid-setup-package))
+
 
 (provide 'init-lang-clojure)
 
