@@ -2,12 +2,12 @@
 Updated: <2020-08-05>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.21, cairo version 1.17.3) of 2020-08-05
-  - build branch: feature/native-comp commit 80d7f71
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.21, cairo version 1.17.3) of 2020-08-18
+  - build branch: feature/native-comp commit 76faab2
   - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp~
   - OS: Manjaro 20.0.3 Lysia
   - Shell: zsh 5.8
-  - Kernel: 5.7.9-1-MANJARO
+  - Kernel: 5.8.0-1-MANJARO
   - DE: Deepin
   - WM: KWin
 
@@ -163,8 +163,6 @@ Updated: <2020-08-05>
      make -j8
      sudo make install
    #+end_src
-
- put ~(setq comp-deferred-compilation t)~ in =early-init.el=
 
 * Installation
 #+begin_src shell

@@ -31,10 +31,6 @@
 (tooltip-mode    -1)
 (menu-bar-mode   -1)
 
-;; make NATIVE_FAST_BOOT=1
-;; http://akrl.sdf.org/gccemacs.html#orgac0595f
-(setq comp-deferred-compilation t)
-
 ;; In Emacs 27+, package initialization occurs before `user-init-file' is
 ;; loaded, but after `early-init-file'. We handles package initialization, so
 ;; we must prevent Emacs from doing it early!

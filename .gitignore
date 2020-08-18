@@ -77,3 +77,4 @@ games/*
 /mspyls
 /package-quickstart.el
 /emacs.pdump
+/eln-cache/
