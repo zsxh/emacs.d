@@ -68,7 +68,6 @@
   (add-hook 'lsp-after-open-hook
             (lambda ()
               (when (eq major-mode 'java-mode)
-                (lsp-lens-mode)
                 (lsp-java-lens-mode)
                 (lsp-java-boot-lens-mode))))
   (lsp-deferred)

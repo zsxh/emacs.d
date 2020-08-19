@@ -23,11 +23,15 @@
                ("/" . sgml-slash)))
   :hook (js-mode . +js/lsp)
   :config
+  ;; https://www.emacswiki.org/emacs/RegularExpression
+  ;; use `rx' to generate emacs regular expression
+  (append '(("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode)) auto-mode-alist)
+
   (require 'sgml-mode)
   (setq js-indent-level 2)
   (+language-server/set-common-leader-keys js-mode-map)
 
-  (require 'lsp-clients)
+  (require 'lsp-javascript)
   (defun +js/lsp ()
     ;; This fix beginning-of-defun raise exception problem
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)

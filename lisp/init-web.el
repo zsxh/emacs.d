@@ -91,7 +91,9 @@
                       (setq-local company-backends
                                   '(company-capf company-files company-css company-dabbrev))))
   :config
-  (setq css-indent-offset 2))
+  (setq css-indent-offset 2)
+  (+funcs/major-mode-leader-keys css-mode-map
+                                 "c" '(css-cycle-color-format :which-key "css-cycle-color-format")))
 
 ;; edit html
 (use-package sgml-mode

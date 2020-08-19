@@ -25,7 +25,6 @@
   (setq lsp-auto-guess-root t
         lsp-client-packages '()
         lsp-keep-workspace-alive nil
-        lsp-diagnostic-package :flycheck
         lsp-prefer-capf t
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
@@ -33,6 +32,7 @@
         lsp-keep-workspace-alive nil
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
+        lsp-diagnostics-provider :flycheck
         lsp-modeline-code-actions-enable nil
         lsp-modeline-diagnostics-enable nil
         lsp-log-io nil
@@ -40,8 +40,7 @@
         lsp-eldoc-render-all nil
         lsp-signature-render-documentation nil
         lsp-signature-auto-activate t
-        ;; lsp flycheck faces
-        lsp-diagnostics-attributes '((deprecated :strike-through t)))
+        lsp-lens-enable t)
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
@@ -56,6 +55,12 @@
     :config
     (setq lsp-completion-provider :capf))
 
+  (use-package lsp-diagnostics
+    :ensure nil
+    :config
+    ;; lsp flycheck faces
+    (setq lsp-diagnostics-attributes '((deprecated :strike-through t))))
+
   ;; https://emacs-lsp.github.io/lsp-mode/page/faq/
   ;; How do I force lsp-mode to forget the workspace folders for multi root servers
   ;; so the workspace folders are added on demand?
@@ -68,8 +73,8 @@
   ;; of the language server responses are in 800k - 3M range.
   ;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
   (defun +lsp/setup ()
-    (unless (member major-mode '(c-mode c++-mode java-mode))
-      (lsp-lens-mode))
+    ;; (unless (member major-mode '(c-mode c++-mode java-mode))
+    ;;   (lsp-lens-mode))
     (when (bound-and-true-p read-process-output-max)
       (setq-local read-process-output-max (* 1024 1024))))
 
