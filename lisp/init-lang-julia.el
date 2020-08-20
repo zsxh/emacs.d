@@ -24,10 +24,46 @@
                                      lsp-folding-range-limit 100)
                          (lsp-deferred)))
          (julia-mode . julia-repl-mode))
-  :custom (julia-indent-offset 2)
   :config
+  (setq julia-indent-offset 2)
+
   (require 'lsp-julia)
-  (+language-server/set-common-leader-keys julia-mode-map))
+  (+language-server/set-common-leader-keys julia-mode-map)
+
+  ;; Code from https://github.com/ronisbr/doom-emacs/blob/develop/modules/lang/julia/config.el
+  ;; Borrow matlab.el's fontification of math operators. From
+  ;; <https://ogbe.net/emacsconfig.html>
+  (dolist (mode '(julia-mode ess-julia-mode))
+    (font-lock-add-keywords
+     mode
+     `((,(let ((OR "\\|"))
+           (concat "\\("          ; stolen `matlab.el' operators first
+                   ;; `:` defines a symbol in Julia and must not be highlighted
+                   ;; as an operator. The only operators that start with `:` are
+                   ;; `:<` and `::`. This must be defined before `<`.
+                   "[:<]:" OR
+                   "[<>]=?" OR
+                   "\\.[/*^']" OR
+                   "===" OR
+                   "==" OR
+                   "=>" OR
+                   "\\<xor\\>" OR
+                   "[-+*\\/^&|$]=?" OR ; this has to come before next (updating operators)
+                   "[-^&|*+\\/~]" OR
+                   ;; Julia variables and names can have `!`. Thus, `!` must be
+                   ;; highlighted as a single operator only in some
+                   ;; circumstances. However, full support can only be
+                   ;; implemented by a full parser. Thus, here, we will handle
+                   ;; only the simple cases.
+                   "[[:space:]]!=?=?" OR "^!=?=?" OR
+                   ;; The other math operators that starts with `!`.
+                   ;; more extra julia operators follow
+                   "[%$]" OR
+                   ;; bitwise operators
+                   ">>>" OR ">>" OR "<<" OR
+                   ">>>=" OR ">>" OR "<<" OR
+                   "\\)"))
+        1 font-lock-type-face)))))
 
 ;; SymbolServer.jl takes a very long time to process project dependencies
 ;; https://github.com/julia-vscode/SymbolServer.jl/issues/56
