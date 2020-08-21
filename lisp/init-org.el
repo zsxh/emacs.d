@@ -256,6 +256,13 @@ at the first function to return non-nil.")
 (use-package ob-rust :defer t)
 (use-package ob-ipython :defer t)
 (use-package ob-restclient :defer t)
+(use-package ob-mermaid
+  ;; https://github.com/mermaid-js/mermaid-cl
+  ;; > npm install -g @mermaid-js/mermaid-cli
+  ;; https://github.com/arnm/ob-mermaid
+  :defer t
+  :config
+  (setq ob-mermaid-cli-path (executable-find "mmdc")))
 
 ;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
 (use-package ob-jupyter

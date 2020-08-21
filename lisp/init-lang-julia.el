@@ -65,6 +65,7 @@
                    "\\)"))
         1 font-lock-type-face)))))
 
+;; TODO: port https://github.com/non-Jedi/eglot-jl to lsp julia
 ;; SymbolServer.jl takes a very long time to process project dependencies
 ;; https://github.com/julia-vscode/SymbolServer.jl/issues/56
 ;; This is a one-time process that shouldn’t cause issues once the dependencies are cached,
