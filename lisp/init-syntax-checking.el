@@ -24,6 +24,7 @@
 (use-package flycheck
   :defer t
   :config
+
   (require 'popwin)
 
   (setq flycheck-indication-mode 'right-fringe
@@ -50,21 +51,25 @@
             #b00111111
             #b00111111
             #b00111111))
+
   (let ((bitmap 'my-flycheck-fringe-indicator))
     (flycheck-define-error-level 'error
-      :severity 2
+      :severity (get 'error 'flycheck-error-severity)
+      :compilation-level (get 'error 'flycheck-compilation-level)
       :overlay-category 'flycheck-error-overlay
       :fringe-bitmap bitmap
       :error-list-face 'flycheck-error-list-error
       :fringe-face 'flycheck-fringe-error)
     (flycheck-define-error-level 'warning
-      :severity 1
+      :severity (get 'warning 'flycheck-error-severity)
+      :compilation-level (get 'warning 'flycheck-compilation-level)
       :overlay-category 'flycheck-warning-overlay
       :fringe-bitmap bitmap
       :error-list-face 'flycheck-error-list-warning
       :fringe-face 'flycheck-fringe-warning)
     (flycheck-define-error-level 'info
-      :severity 0
+      :severity (get 'info 'flycheck-error-severity)
+      :compilation-level (get 'info 'flycheck-compilation-level)
       :overlay-category 'flycheck-info-overlay
       :fringe-bitmap bitmap
       :error-list-face 'flycheck-error-list-info
