@@ -28,6 +28,14 @@
 (use-package pyvenv
   :commands pyvenv-activate)
 
+;; https://github.com/necaris/conda.el
+(use-package conda
+  :commands (conda-env-activate conda-env-deactivate)
+  :config
+  (setq conda-anaconda-home (expand-file-name "~/.pyenv/versions/miniconda3-latest")
+        conda-env-home-directory conda-anaconda-home
+        conda-env-subdirectory "envs"))
+
 ;; Setup PYENV_VERSION environment variable and
 ;; `python-shell-virtualenv-root' custom variable based on user input
 (use-package pyenv-mode
