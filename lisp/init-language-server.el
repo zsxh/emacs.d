@@ -18,7 +18,9 @@
 ;; lsp-org command
 ;; https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/lsp-org.md
 (use-package lsp-mode
-  :quelpa ((lsp-mode :fetcher github :repo "emacs-lsp/lsp-mode"))
+  :quelpa ((lsp-mode :fetcher github
+                     :repo "emacs-lsp/lsp-mode"
+                     :files (:defaults "clients/*.el")))
   :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
   :hook (lsp-mode . dap-mode)
   :config
