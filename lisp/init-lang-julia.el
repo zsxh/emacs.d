@@ -29,6 +29,8 @@
 
   (require 'lsp-julia)
   (+language-server/set-common-leader-keys julia-mode-map)
+  (+funcs/major-mode-leader-keys julia-mode-map
+                                 "'" '(+julia/repl-vterm :which-key "repl"))
 
   ;; Code from https://github.com/ronisbr/doom-emacs/blob/develop/modules/lang/julia/config.el
   ;; Borrow matlab.el's fontification of math operators. From
@@ -71,6 +73,20 @@
 
 (use-package julia-repl
   :commands julia-repl-mode)
+
+(with-eval-after-load 'julia-mode
+  (defun +julia/repl-vterm ()
+    (interactive)
+    (let ((default-directory (+project/root)))
+      (with-current-buffer (vterm-other-window)
+        (when (file-exists-p (expand-file-name "Project.toml" default-directory))
+          (dolist (char (string-to-list "julia"))
+            (vterm--update vterm--term (char-to-string char) nil nil nil))
+          (vterm-send-return)
+          (dolist (char (string-to-list "]activate ."))
+            (vterm--update vterm--term (char-to-string char) nil nil nil))
+          (vterm-send-return)
+          (vterm-send-backspace))))))
 
 
 (provide 'init-lang-julia)

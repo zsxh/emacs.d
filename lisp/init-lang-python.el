@@ -97,7 +97,7 @@ virtual environment path should be 'venv' in project root."
     (interactive)
     (let ((default-directory (+project/root)))
       (with-current-buffer (vterm-other-window)
-        (when (file-exists-p (expand-file-name "venv" (projectile-project-root)))
+        (when (file-exists-p (expand-file-name "venv" default-directory))
           (dolist (char (string-to-list "source venv/bin/activate"))
             (vterm--update vterm--term (char-to-string char) nil nil nil))
           (vterm-send-return))

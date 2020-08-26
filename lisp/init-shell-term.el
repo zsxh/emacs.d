@@ -97,8 +97,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
             (unless (eq major-mode 'vterm-mode)
               (vterm-mode)
               (unless dir-remote-p
-                (+vterm/activate-local-python-venv)
-                (+vterm/activate-local-julia-venv)))
+                (+vterm/activate-local-python-venv)))
             (when dir-remote-p
               (+vterm/change-remote-directory)))
           (setq +vterm/toggle--window-configration (current-window-configuration))
@@ -143,18 +142,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (when (file-exists-p (expand-file-name "venv" default-directory))
       (dolist (char (string-to-list "source venv/bin/activate"))
         (vterm--update vterm--term (char-to-string char) nil nil nil))
-      (vterm-send-return)))
-
-  (defun +vterm/activate-local-julia-venv ()
-    (let ((project-toml (expand-file-name "Project.toml" default-directory)))
-      (when (file-exists-p project-toml)
-        (dolist (char (string-to-list "julia"))
-          (vterm--update vterm--term (char-to-string char) nil nil nil))
-        (vterm-send-return)
-        (dolist (char (string-to-list "]activate ."))
-          (vterm--update vterm--term (char-to-string char) nil nil nil))
-        (vterm-send-return)
-        (vterm-send-backspace)))))
+      (vterm-send-return))))
 
 (use-package term
   :ensure nil
