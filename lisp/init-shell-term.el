@@ -97,9 +97,10 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
             (unless (eq major-mode 'vterm-mode)
               (vterm-mode)
               (unless dir-remote-p
-                (+vterm/activate-python-venv-if-local)))
+                (+vterm/activate-local-python-venv)
+                (+vterm/activate-local-julia-venv)))
             (when dir-remote-p
-              (+vterm/change-directory-if-remote)))
+              (+vterm/change-remote-directory)))
           (setq +vterm/toggle--window-configration (current-window-configuration))
           (if this-window-p
               (switch-to-buffer buffer)
@@ -107,21 +108,18 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 
   (defun +vterm/toggle-other-window (arg)
     "Toggles a terminal popup window at project root.
-
 If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (interactive "P")
     (+vterm/toggle arg nil))
 
   (defun +vterm/toggle-here (arg)
     "Open a terminal buffer in the current window at project root.
-
 If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (interactive "P")
     (+vterm/toggle arg t))
 
-  (defun +vterm/change-directory-if-remote ()
-    "When `default-directory` is remote, use the corresponding
-method to prepare vterm at the corresponding remote directory."
+  (defun +vterm/change-remote-directory ()
+    "Use the corresponding method to prepare vterm at the corresponding remote directory."
     (when (featurep 'tramp)
       (message "default-directory is %s" default-directory)
       (with-parsed-tramp-file-name default-directory path
@@ -141,11 +139,22 @@ method to prepare vterm at the corresponding remote directory."
               (vterm-send-return)))
            (t nil))))))
 
-  (defun +vterm/activate-python-venv-if-local ()
+  (defun +vterm/activate-local-python-venv ()
     (when (file-exists-p (expand-file-name "venv" default-directory))
       (dolist (char (string-to-list "source venv/bin/activate"))
         (vterm--update vterm--term (char-to-string char) nil nil nil))
-      (vterm-send-return))))
+      (vterm-send-return)))
+
+  (defun +vterm/activate-local-julia-venv ()
+    (let ((project-toml (expand-file-name "Project.toml" default-directory)))
+      (when (file-exists-p project-toml)
+        (dolist (char (string-to-list "julia"))
+          (vterm--update vterm--term (char-to-string char) nil nil nil))
+        (vterm-send-return)
+        (dolist (char (string-to-list "]activate ."))
+          (vterm--update vterm--term (char-to-string char) nil nil nil))
+        (vterm-send-return)
+        (vterm-send-backspace)))))
 
 (use-package term
   :ensure nil
