@@ -69,7 +69,9 @@
 
 (use-package lsp-julia
   :load-path (lambda () (expand-file-name "submodules/lsp-julia" user-emacs-directory))
-  :defer t)
+  :defer t
+  :config
+  (setq lsp-julia-format-indent julia-indent-offset))
 
 (use-package julia-repl
   :commands julia-repl-mode)
