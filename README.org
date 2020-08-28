@@ -1,15 +1,16 @@
 #+STARTUP: showall
-Updated: <2020-08-27>
+Updated: <2020-08-29>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.21, cairo version 1.17.3) of 2020-08-18
-  - build branch: feature/native-comp commit 76faab2
-  - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp~
-  - OS: Manjaro 20.0.3 Lysia
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.22, cairo version 1.17.3) of 2020-08-29
+  - build branch: feature/native-comp commit aa526c9
+  - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick~
+  - OS: Manjaro 20.1 Mikah
   - Shell: zsh 5.8
-  - Kernel: 5.8.0-1-MANJARO
+  - Kernel: 5.8.3-2-MANJARO
   - DE: Deepin
   - WM: KWin
+  - GCC version: 10.2.0 with libgccjit
 
 * TODOs
   - [ ] fix emacs-ipython-notebook configurations
@@ -146,7 +147,7 @@ Updated: <2020-08-27>
      git clone --depth 1 https://github.com/emacs-mirror/emacs.git
      cd emacs
      ./autogen.sh
-     ./configure --with-xwidgets --with-x-toolkit=gtk3
+     ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-imagemagick
      make -j8
      sudo make install
    #+end_src
@@ -159,7 +160,7 @@ Updated: <2020-08-27>
      git clone --depth 1 --branch feature/native-comp https://github.com/emacs-mirror/emacs.git emacs-native-comp
      cd emacs-native-comp
      ./autogen.sh
-     ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp
+     ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick
      make -j8
      sudo make install
    #+end_src
