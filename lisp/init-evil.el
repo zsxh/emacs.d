@@ -47,7 +47,10 @@
                ("C-f" . 'evil-scroll-page-down)
                ("C-y" . evil-paste-before)
                ("M-e" . evil-scroll-line-down)
-               ("M-y" . evil-scroll-line-up)))
+               ("M-y" . evil-scroll-line-up)
+               (";" . evil-repeat-find-char)
+               ;; We already use "," as major mode leader key, so use "C-;" here
+               ("C-;" . evil-repeat-find-char-reverse)))
   :config
   ;; don't move cursor back, otherwise it will cause problem with lispy/awesome-pair
   (setq evil-move-cursor-back t)
