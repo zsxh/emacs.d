@@ -10,8 +10,8 @@
 
 ;;; Code:
 
-;; require go language server `bingo'
-;; https://github.com/saibing/bingo/wiki/Install
+;; Install gopls
+;; https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
   :hook (go-mode . lsp-deferred)

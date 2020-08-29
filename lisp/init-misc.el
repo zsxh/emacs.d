@@ -197,6 +197,12 @@
 (use-package vlf
   :defer t)
 
+(use-package netease-cloud-music
+  :if (executable-find "mplayer")
+  :load-path (lambda () (expand-file-name "submodules/netease-cloud-music" user-emacs-directory))
+  :commands (netease-cloud-music))
+
+
 (provide 'init-misc)
 
 ;;; init-misc.el ends here

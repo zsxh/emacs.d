@@ -7,3 +7,6 @@
 [submodule "submodules/lsp-julia"]
 	path = submodules/lsp-julia
 	url = https://github.com/zsxh/lsp-julia.git
+[submodule "submodules/netease-cloud-music"]
+	path = submodules/netease-cloud-music
+	url = https://github.com/SpringHan/netease-cloud-music.el.git
