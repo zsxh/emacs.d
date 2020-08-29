@@ -98,28 +98,11 @@
         highlight-indent-guides-responsive 'top
         highlight-indent-guides-highlighter-function 'my-highlighter))
 
-;; Poor Performance
-;; Highlight uncommitted changes
-;; (use-package diff-hl
-;;   :hook ((after-init . global-diff-hl-mode)
-;;          (dired-mode . diff-hl-dired-mode))
-;;   :config
-;;   (diff-hl-flydiff-mode)
-;;   (with-eval-after-load 'magit
-;;     (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))
-;;   ;; There's no fringe when Emacs is running in the console,
-;;   ;; but the navigation and revert commands still work.
-;;   ;; Consider turning diff-hl-margin-mode on, to show the indicators in the margin instead.
-;;   (unless (display-graphic-p)
-;;     (diff-hl-margin-mode))
-;;   )
-
 ;; TODO: try xterm-color?
 (use-package ansi-color
   :ensure nil
   :commands ansi-color-apply-on-region)
 
-;;;###autoload
 (defun colorize-compilation-buffer ()
   (toggle-read-only)
   (ansi-color-apply-on-region (point-min) (point-max))

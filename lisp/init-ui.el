@@ -86,24 +86,6 @@
 
   (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-offline))
 
-(use-package mini-frame
-  :if (display-graphic-p)
-  ;; :hook (after-init . mini-frame-mode)
-  :defer t
-  :config
-  (setq mini-frame-ignore-commands '(evil-ex
-                                     swiper
-                                     dired-narrow
-                                     eval-expression
-                                     eaf-proxy-insert_or_open_link
-                                     eaf-proxy-insert_or_open_link_new_buffer))
-  (setq mini-frame-color-shift-step 15)
-  (setq mini-frame-show-parameters
-        '((top . 0.3)
-          (width . 0.7)
-          (left . 0.5)
-          (min-height . 2))))
-
 ;; Display time on modeline
 (defvar +ui/time-format-short "[%H:%M]"
   "Short display time format.")

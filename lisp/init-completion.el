@@ -106,10 +106,9 @@
            (display-graphic-p))
   :after company
   :hook (company-mode . company-box-mode)
-  :init (setq company-box-backends-colors nil
-              company-box-show-single-candidate 'always
-              company-box-max-candidates 50
-              company-box-highlight-prefix t
+  :init (setq company-box-show-single-candidate 'always
+              ;; company-box-backends-colors nil
+              ;; company-box-highlight-prefix t
               company-box-doc-delay 0.2
               company-box-tooltip-maximum-width 90)
   :config
