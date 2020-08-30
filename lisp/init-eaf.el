@@ -67,7 +67,7 @@
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
   (eaf-bind-key nil "M-u" eaf-pdf-viewer-keybinding)
 
-  (eaf-bind-key eaf-switch-to-eww "C-t" eaf-browser-keybinding)
+  (eaf-bind-key +eaf/switch-to-eww "C-t" eaf-browser-keybinding)
   (eaf-bind-key nil "M-u" eaf-browser-keybinding)
   (eaf-bind-key clear_focus "M-p" eaf-browser-keybinding)
   (eaf-bind-key nil "T" eaf-browser-keybinding)
@@ -127,7 +127,7 @@
   (advice-add 'eaf-proxy-insert_or_focus_input :around 'eaf-devtool-insert-advice)
 
   ;; utils
-  (defun eaf-switch-to-eww ()
+  (defun +eaf/switch-to-eww ()
     (interactive)
     (let* ((url (eaf-get-path-or-url))
            (eww-buffer (car (-filter (lambda (buffer)
@@ -143,10 +143,10 @@
     (interactive)
     (eaf-open url "browser" nil))
 
-  (defun eaf-buffer-names ()
-    (mapcar #'buffer-name (eaf-buffers)))
+  (defun +eaf/buffer-names ()
+    (mapcar #'buffer-name (+eaf/buffers)))
 
-  (defun eaf-buffers ()
+  (defun +eaf/buffers ()
     (let* ((all-buffers (cl-remove-if-not
                          (lambda (buffer)
                            (with-current-buffer buffer
@@ -154,15 +154,29 @@
                          (buffer-list))))
       all-buffers))
 
+  (defvar +eaf/browser-current-theme (cdr (assoc 'eaf-browser-dark-mode eaf-var-list)))
+
+  (defun +eaf/cycle-browser-theme ()
+    (interactive)
+    (if (derived-mode-p 'eaf-mode)
+        (let ((next-theme (cond
+                           ((string= +eaf/browser-current-theme "follow") "false")
+                           ((string= +eaf/browser-current-theme "false") "true")
+                           ((string= +eaf/browser-current-theme "true") "follow"))))
+          (message "switch to dark-mode=%s" next-theme)
+          (setq +eaf/browser-current-theme next-theme)
+          (eaf-setq eaf-browser-dark-mode +eaf/browser-current-theme)
+          (eaf-proxy-refresh_page))
+      (message "+eaf/cycle-browser-theme can only be called in an EAF buffer")))
+
   (defun +eaf/ivy-switch-buffer ()
     (interactive)
     (ivy-read "Switch to buffer: "
               (delete (buffer-name (current-buffer))
-                      (eaf-buffer-names))
+                      (+eaf/buffer-names))
               :initial-input nil
               :action #'ivy--switch-buffer-action
               :caller '+eaf/ivy-switch-buffer)))
-
 
 
 (provide 'init-eaf)
