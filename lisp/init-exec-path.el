@@ -28,8 +28,7 @@
         ;; Each exec-path-from-shell-copy-env starts a shell.
         ;; Just set exec-path-from-shell-variables to the full list
         ;; and call exec-path-from-shell-initialize.
-        (setq exec-path-from-shell-variables
-              '("PATH" "MANPATH" "LANG" "LD_LIBRARY_PATH" "GOPATH" "GO111MODULE" "GOPROXY"))
+        (setq exec-path-from-shell-variables '("PATH" "MANPATH" "LANG" "LD_LIBRARY_PATH"))
         (exec-path-from-shell-getenvs exec-path-from-shell-variables))
      (lambda (pairs)
        (when exec-path-from-shell-check-startup-files
