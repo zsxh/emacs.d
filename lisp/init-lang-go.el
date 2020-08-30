@@ -19,6 +19,14 @@
   (require 'lsp-go)
   (+language-server/set-common-leader-keys go-mode-map))
 
+(use-package lsp-go
+  :defer t
+  :ensure lsp-mode
+  :config
+  (dolist (go-env-name '("GO111MODULE" "GOPROXY" "GOPATH"))
+    (if-let ((value (getenv go-env-name)))
+        (puthash go-env-name value lsp-go-env))))
+
 
 (provide 'init-lang-go)
 
