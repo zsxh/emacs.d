@@ -78,3 +78,4 @@ games/*
 /package-quickstart.el
 /emacs.pdump
 /eln-cache/
+/netease-cloud-music/
