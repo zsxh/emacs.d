@@ -23,6 +23,10 @@
 (use-package lsp-pyright
   :after python)
 
+(use-package dap-python
+  :after lsp-pyright
+  :ensure dap-mode)
+
 ;; The main entry points are `pyvenv-activate', which queries the user for a virtual environment directory
 ;; to activate, and `pyvenv-workon', which queries for a virtual environment in $WORKON_HOME (from virtualenvwrapper.sh).
 (use-package pyvenv

@@ -27,6 +27,10 @@
   (setq ccls-initialization-options
         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
 
+(use-package dap-gdb-lldb
+  :after ccls
+  :ensure dap-mode)
+
 (defun +c/setup ()
   (require 'ccls)
   ;; (add-hook 'lsp-after-initialize-hook

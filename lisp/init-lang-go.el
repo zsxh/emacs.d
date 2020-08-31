@@ -23,6 +23,14 @@
   (require 'lsp-go)
   (+language-server/set-common-leader-keys go-mode-map))
 
+(use-package lsp-go
+  :defer t
+  :ensure lsp-mode)
+
+(use-package dap-go
+  :after lsp-go
+  :ensure dap-mode)
+
 
 (provide 'init-lang-go)
 

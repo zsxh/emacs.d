@@ -156,6 +156,7 @@
 
   (defvar +eaf/browser-current-theme (cdr (assoc 'eaf-browser-dark-mode eaf-var-list)))
 
+  ;; TODO: keybindings for eaf-mode
   (defun +eaf/cycle-browser-theme ()
     (interactive)
     (if (derived-mode-p 'eaf-mode)

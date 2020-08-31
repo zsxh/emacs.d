@@ -21,13 +21,20 @@
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
   :hook (rust-mode . lsp-deferred)
-  :custom (rust-indent-offset 2)
   :config
-  (use-package lsp-rust
-    :ensure lsp-mode
-    :custom
-    (lsp-rust-server (if (executable-find "rust-analyzer") 'rust-analyzer 'rls))
-    (lsp-rust-analyzer-server-display-inlay-hints t)))
+  (setq rust-indent-offset 2)
+  (require 'lsp-rust))
+
+(use-package lsp-rust
+  :defer t
+  :ensure lsp-mode
+  :custom
+  (lsp-rust-server (if (executable-find "rust-analyzer") 'rust-analyzer 'rls))
+  (lsp-rust-analyzer-server-display-inlay-hints t))
+
+(use-package dap-gdb-lldb
+  :after lsp-rust
+  :ensure dap-mode)
 
 (use-package cargo
   :after rust-mode)

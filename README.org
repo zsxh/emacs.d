@@ -14,6 +14,7 @@ Updated: <2020-08-29>
 
 * TODOs
   - [ ] fix emacs-ipython-notebook configurations
+  - [ ] dwim evil + vterm + tmux + project (+ leader key for vterm?)
 
 * Features
   - =org=
@@ -128,15 +129,15 @@ Updated: <2020-08-29>
   - [X] =Rust= install [[https://rust-analyzer.github.io/manual.html#building-from-source][rust-analyzer]]
   - [X] =Go= install [[https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation][gopls]]
   - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
-  - [X] =Julia= v1.5, using submodules/lsp-julia
+  - [X] =Julia= v1.5.1, using submodules/lsp-julia
   - [X] =Javascript/Typescript= npm i -g typescript typescript-language-server
   - [X] =Clojure/ClojureScript= [[https://github.com/snoe/clojure-lsp#installation][clojure-lsp]]
 ** Debugger
-  - [X] =C/C++= install [[https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb]['dap-gdb-lldb]]
-  - [X] =Java= install [[https://github.com/emacs-lsp/dap-mode#java]['dap-java]]
-  - [X] =Python= install [[https://github.com/emacs-lsp/dap-mode#python]['dap-python]]
-  - [X] =Rust= install [[https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb]['dap-gdb-lldb]]
-  - [ ] =Go=
+  - [X] =C/C++= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb][dap-gdb-lldb]]
+  - [X] =Java= install [[https://github.com/emacs-lsp/dap-mode#java][dap-java]]
+  - [X] =Python= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#python][dap-python]]
+  - [X] =Rust= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb][dap-gdb-lldb]]
+  - [X] =Go= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#go][dap-go]]
   - [ ] =Julia=
   - [ ] =Javascript/Typescript=
 

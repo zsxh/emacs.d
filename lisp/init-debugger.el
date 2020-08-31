@@ -15,21 +15,13 @@
 (use-package dap-mode
   :quelpa ((dap-mode :fetcher github :repo "emacs-lsp/dap-mode"
                      :files (:defaults "icons")))
-  :hook ((dap-mode . dap-ui-mode)
+  :hook ((lsp-mode . dap-mode)
+         (dap-mode . dap-ui-mode)
          (dap-mode . dap-ui-controls-mode))
   :custom
   (dap-utils-extension-path (expand-file-name ".cache/dap-extension" user-emacs-directory))
   :config
-  (require 'dap-utils)
-  ;; you neead to install several debugger first: lldb, ptvsd, eclipse jdt server, etc. links below:
-  (require 'dap-gdb-lldb) ;https://github.com/emacs-lsp/dap-mode#native-debug-gdblldb
-  (require 'dap-python)  ;https://github.com/emacs-lsp/dap-mode#python
-  (with-eval-after-load 'lsp-java
-    (require 'dap-java)
-    (setq dap-java-test-runner (expand-file-name
-                                (concat lsp-java-server-install-dir
-                                        "test-runner/junit-platform-console-standalone.jar"))
-          dap-java-default-debug-port 5005)))
+  (require 'dap-utils))
 
 (with-eval-after-load 'dap-mode
 

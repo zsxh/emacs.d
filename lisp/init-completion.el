@@ -107,9 +107,9 @@
   :after company
   :hook (company-mode . company-box-mode)
   :init (setq company-box-show-single-candidate 'always
-              ;; company-box-backends-colors nil
-              ;; company-box-highlight-prefix t
-              company-box-doc-delay 0.2
+              company-box-backends-colors nil
+              company-box-highlight-prefix nil
+              company-box-doc-delay 0.5
               company-box-tooltip-maximum-width 90)
   :config
   (with-no-warnings

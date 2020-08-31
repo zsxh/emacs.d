@@ -22,7 +22,6 @@
                      :repo "emacs-lsp/lsp-mode"
                      :files (:defaults "clients/*.el")))
   :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
-  :hook (lsp-mode . dap-mode)
   :config
   (setq lsp-auto-guess-root t
         lsp-client-packages '()

@@ -40,6 +40,16 @@
               ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
               ,(concat "-javaagent:" lombok-jar))))))
 
+(use-package dap-java
+  :after lsp-java
+  :ensure lsp-java
+  :config
+  (require 'dap-java)
+  (setq dap-java-test-runner (expand-file-name
+                              (concat lsp-java-server-install-dir
+                                      "test-runner/junit-platform-console-standalone.jar"))
+        dap-java-default-debug-port 5005))
+
 (with-eval-after-load 'cc-mode
   ;; FIXME: when I put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode
   (+language-server/set-common-leader-keys java-mode-map)
