@@ -57,6 +57,8 @@
 (with-eval-after-load 'cc-vars
   (add-to-list 'c-offsets-alist '(case-label . +)))
 
+(setq tramp-default-method "ssh")
+
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
