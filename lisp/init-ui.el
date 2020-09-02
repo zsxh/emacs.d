@@ -189,7 +189,11 @@
        (with-eval-after-load 'org
          (set-face-background 'org-quote nil)
          (set-face-background 'org-block-begin-line nil)
-         (set-face-background 'org-block-end-line nil))
+         (set-face-background 'org-block-end-line nil)
+         (set-face-attribute 'org-verbatim nil
+                    :foreground "#98be65"
+                    :background "#2e332d"
+                    :inherit 'fixed-pitch))
        (with-eval-after-load 'ein-cell
          (set-face-attribute 'ein:cell-input-area nil :background "#22262e")
          (set-face-attribute 'ein:cell-input-prompt nil :foreground "#4F894C" :background "#282c34")
