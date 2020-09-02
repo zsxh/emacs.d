@@ -45,6 +45,7 @@ if no project root found, use current directory instead."
   :commands (vterm vterm-other-window)
   :bind ((:map vterm-mode-map
                ("M-u" . ace-window)
+               ("M-`" . +vterm/send-tmux-prefix-key)
                ("C-s" . swiper)
                ("<f9>" . +vterm/toggle-here)
                ("<f10>" . +vterm/toggle-other-window)
@@ -142,7 +143,15 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (when (file-exists-p (expand-file-name "venv" default-directory))
       (dolist (char (string-to-list "source venv/bin/activate"))
         (vterm--update vterm--term (char-to-string char) nil nil nil))
-      (vterm-send-return))))
+      (vterm-send-return)))
+
+  (defun +vterm/send-tmux-prefix-key ()
+    "Send `M-`' to the libvterm."
+    (interactive)
+    (when (and (featurep 'evil)
+               (not (evil-insert-state-p)))
+      (evil-insert-state))
+    (vterm-send-key "`" nil t)))
 
 (use-package term
   :ensure nil
