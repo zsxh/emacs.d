@@ -28,15 +28,19 @@
 (use-package web-mode
   :commands web-mode
   :init
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode))
+  (define-derived-mode pom-xml-mode web-mode "POM-XML"
+    "A major mode derived from web-mode, for editing pom.xml files.")
+  :mode (("\\.phtml\\'" . web-mode)
+         ("\\.phtml\\'" . web-mode)
+         ("\\.tpl\\.php\\'" . web-mode)
+         ("\\.[agj]sp\\'" . web-mode)
+         ("\\.as[cp]x\\'" . web-mode)
+         ("\\.erb\\'" . web-mode)
+         ("\\.mustache\\'" . web-mode)
+         ("\\.djhtml\\'" . web-mode)
+         ("\\.html?\\'" . web-mode)
+         ("\\.xml?\\'" . web-mode)
+         ("pom.xml?\\'" . pom-xml-mode))
   :hook ((web-mode . +web/config))
   :config
   (defun +web/config ()
@@ -50,26 +54,9 @@
   (require 'flycheck)
   (flycheck-add-mode 'html-tidy 'web-mode)
 
-  (setq +web/pom-formatter-buffer-name "*format pom xml*")
-  (add-to-list 'display-buffer-alist
-               `(,+web/pom-formatter-buffer-name . (display-buffer-no-window . nil)))
-  (defun +web/sortpom-formatter ()
-    (let ((output-buffer (get-buffer-create +web/pom-formatter-buffer-name))
-          (cmd (s-join " " '("mvn"
-                             "com.github.ekryd.sortpom:sortpom-maven-plugin:sort"
-                             "-Dsort.keepBlankLines"
-                             "-Dsort.predefinedSortOrder=custom_1"
-                             "-Dsort.createBackupFile=false"))))
-      (async-shell-command cmd output-buffer)))
-
   (defun +web/formatter ()
     (interactive)
-    (let ((file (and buffer-file-name (file-name-nondirectory buffer-file-name))))
-      (if (and file (string= file "pom.xml"))
-          ;; for maven pom.xml
-          (+web/sortpom-formatter)
-        ;; other html/xml files
-        (format-all-buffer))))
+    (format-all-buffer))
 
   (+funcs/major-mode-leader-keys web-mode-map
                                  "e" '(nil :which-key "error")
