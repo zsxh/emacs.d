@@ -50,13 +50,17 @@
   (require 'flycheck)
   (flycheck-add-mode 'html-tidy 'web-mode)
 
+  (setq +web/pom-formatter-buffer-name "*format pom xml*")
+  (add-to-list 'display-buffer-alist
+               `(,+web/pom-formatter-buffer-name . (display-buffer-no-window . nil)))
   (defun +web/sortpom-formatter ()
-    (let ((cmd (s-join " " '("mvn"
+    (let ((output-buffer (get-buffer-create +web/pom-formatter-buffer-name))
+          (cmd (s-join " " '("mvn"
                              "com.github.ekryd.sortpom:sortpom-maven-plugin:sort"
                              "-Dsort.keepBlankLines"
-                             "-Dsort.predefinedSortOrder=custom_1"))))
-      ;; (call-process-shell-command cmd nil 0)
-      (async-shell-command cmd)))
+                             "-Dsort.predefinedSortOrder=custom_1"
+                             "-Dsort.createBackupFile=false"))))
+      (async-shell-command cmd output-buffer)))
 
   (defun +web/formatter ()
     (interactive)
