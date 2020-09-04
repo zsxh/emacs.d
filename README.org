@@ -14,7 +14,7 @@ Updated: <2020-08-29>
 
 * TODOs
   - [ ] fix emacs-ipython-notebook configurations
-  - [ ] dwim evil + vterm + tmux + project (+ leader key for vterm?)
+  - [ ] treemacs, lsp-treemacs
 
 * Features
   - =org=

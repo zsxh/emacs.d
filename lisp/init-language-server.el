@@ -76,6 +76,7 @@
   (defun +lsp/setup ()
     ;; (unless (member major-mode '(c-mode c++-mode java-mode))
     ;;   (lsp-lens-mode))
+    (lsp-lens-mode)
     (when (bound-and-true-p read-process-output-max)
       (setq-local read-process-output-max (* 1024 1024))))
 

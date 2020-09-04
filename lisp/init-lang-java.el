@@ -26,8 +26,9 @@
             lsp-java-format-settings-profile "GoogleStyle")))
   :config
   (require 'helm nil t)
-  (require 'lsp-java-boot)
-  (setq lsp-java-boot-enabled nil)
+  ;; (require 'lsp-java-boot)
+  ;; (setq lsp-java-boot-enabled nil)
+
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
   (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.10/lombok-1.18.10.jar")))
     (when (file-exists-p lombok-jar)
@@ -56,7 +57,6 @@
 
   (+funcs/major-mode-leader-keys
    java-mode-map
-   "c" '(+java/compile :which-key "compile")
    "dr" '(dap-java-debug :which-key "run")
    "dR" '(dap-debug :which-key "run-attach")
    "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
@@ -75,11 +75,11 @@
 (defun +java/setup ()
   (require 'lsp-java)
   (add-hook 'java-mode-hook 'lsp-deferred)
-  (add-hook 'lsp-after-open-hook
-            (lambda ()
-              (when (eq major-mode 'java-mode)
-                (lsp-java-lens-mode)
-                (lsp-java-boot-lens-mode))))
+  ;; (add-hook 'lsp-after-open-hook
+  ;;           (lambda ()
+  ;;             (when (eq major-mode 'java-mode)
+  ;;               (lsp-java-lens-mode)
+  ;;               (lsp-java-boot-lens-mode))))
   (lsp-deferred)
 
   (defvar jdks-installed-dir "/usr/local/"
