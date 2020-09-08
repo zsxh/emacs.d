@@ -90,7 +90,6 @@
   :hook (global-company-mode . company-quickhelp-terminal-mode))
 
 ;; (use-package company-posframe
-;;   :quelpa ((company-posframe :fetcher github :repo "tumashu/company-posframe"))
 ;;   :if (and (>= emacs-major-version 26)
 ;;            (display-graphic-p))
 ;;   :after company

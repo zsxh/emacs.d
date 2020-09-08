@@ -16,6 +16,7 @@
 (use-package org
   :ensure org-plus-contrib
   :mode ("\\.org\\'" . org-mode)
+  :defer 3
   :bind ((:map org-mode-map
                ("C-c C-," . org-insert-structure-template)
                ("C-M-<return>" . org-table-insert-hline)))
