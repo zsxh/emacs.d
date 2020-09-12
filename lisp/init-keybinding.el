@@ -19,7 +19,7 @@
         which-key-sort-uppercase-first nil
         which-key-add-column-padding 1
         which-key-max-display-columns nil
-        which-key-min-display-lines 6
+        which-key-min-display-lines 4
         which-key-side-window-slot -10)
   :config
   ;; Rename the entry, for 1 to 1..9

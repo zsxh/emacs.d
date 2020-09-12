@@ -109,7 +109,7 @@
               company-box-backends-colors nil
               company-box-highlight-prefix nil
               company-box-doc-delay 0.5
-              company-box-tooltip-maximum-width 90)
+              company-box-tooltip-maximum-width company-tooltip-maximum-width)
   :config
   (with-no-warnings
     ;; Prettify icons
