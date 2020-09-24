@@ -43,7 +43,9 @@
         lsp-eldoc-render-all nil
         lsp-signature-render-documentation nil
         lsp-signature-auto-activate t
-        lsp-lens-enable t)
+        lsp-lens-enable t
+        lsp-completion-sort-initial-results nil ; do not resort the result
+        )
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
