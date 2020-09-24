@@ -10,7 +10,7 @@
 
 ;;; Code:
 
-(require 'init-language-server)
+(require 'init-lsp)
 
 (use-package cc-mode
   :mode ("\\.h\\'" . c++-mode) ;; By default files ending in .h are treated as c files rather than c++ files.

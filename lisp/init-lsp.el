@@ -1,4 +1,4 @@
-;; init-language-server.el --- language-server Configurations	-*- lexical-binding: t -*-
+;; init-lsp.el --- language-server Configurations	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -22,6 +22,8 @@
                      :repo "emacs-lsp/lsp-mode"
                      :files (:defaults "clients/*.el")))
   :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
+  ;; :init
+  ;; (setq lsp-use-plists t)
   :config
   (setq lsp-auto-guess-root t
         lsp-client-packages '()
@@ -239,12 +241,7 @@
                                         (when (bound-and-true-p read-process-output-max)
                                           (setq-local read-process-output-max (* 1024 1024))))))
 
-(use-package eldoc-box
-  :defer t
-  ;; :hook (lsp-mode . eldoc-box-hover-at-point-mode)
-  :config
-  (setq lsp-signature-function 'eldoc-message))
 
-(provide 'init-language-server)
+(provide 'init-lsp)
 
-;;; init-language-server.el ends here
+;;; init-lsp.el ends here

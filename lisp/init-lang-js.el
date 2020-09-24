@@ -10,7 +10,7 @@
 
 ;;; Code:
 
-(require 'init-language-server)
+(require 'init-lsp)
 
 (use-package nvm
   :after js)

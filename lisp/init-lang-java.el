@@ -10,7 +10,7 @@
 
 ;;; Code:
 
-(require 'init-language-server)
+(require 'init-lsp)
 
 (use-package lsp-java
   :quelpa ((lsp-java :fetcher github :repo "emacs-lsp/lsp-java"))
@@ -80,6 +80,7 @@
   ;;             (when (eq major-mode 'java-mode)
   ;;               (lsp-java-lens-mode)
   ;;               (lsp-java-boot-lens-mode))))
+  (setq-local lsp-completion-show-detail nil)
   (lsp-deferred)
 
   (defvar jdks-installed-dir "/usr/local/"

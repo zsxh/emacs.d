@@ -10,7 +10,7 @@
 
 ;;; Code:
 
-(require 'init-language-server)
+(require 'init-lsp)
 
 ;; Julia PkgServer/Mirrors https://discourse.juliacn.com/t/topic/2969
 ;; Install Julia LanguageServer

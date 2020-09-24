@@ -10,7 +10,7 @@
 
 ;;; Code:
 
-(require 'init-language-server)
+(require 'init-lsp)
 
 ;; require `rls' https://github.com/rust-lang/rls
 ;; $ rustup component add rls-preview rust-analysis rust-src

@@ -139,7 +139,7 @@
 (require 'init-git)
 (require 'init-highlight)
 (require 'init-prog)
-(require 'init-language-server)
+(require 'init-lsp)
 (require 'init-debugger)
 
 ;; Language

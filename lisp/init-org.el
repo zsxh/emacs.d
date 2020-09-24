@@ -20,7 +20,7 @@
   :bind ((:map org-mode-map
                ("C-c C-," . org-insert-structure-template)
                ("C-M-<return>" . org-table-insert-hline)))
-  :commands org-open-at-point
+  ;; :commands org-open-at-point
   :preface
   ;; customize before (require 'org)
   (setq org-emphasis-regexp-components '("-[:space:][:nonascii:]('\"{"
