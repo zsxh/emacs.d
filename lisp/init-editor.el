@@ -32,6 +32,10 @@
 (setq confirm-kill-processes nil)          ; just kill the process on exit
 (setq column-number-mode t)                ; enable column number
 (setq x-wait-for-event-timeout 0)          ; no wait for X events
+;; Line numbers do not appear for very large buffers and buffers
+;; with very long lines; see variables line-number-display-limit
+;; check `line-number-mode'
+(setq line-number-display-limit-width 1000)
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
