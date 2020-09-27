@@ -22,11 +22,10 @@
   :bind ((:map js-mode-map
                ("/" . sgml-slash)))
   :hook (js-mode . +js/lsp)
-  :config
   ;; https://www.emacswiki.org/emacs/RegularExpression
   ;; use `rx' to generate emacs regular expression
-  (append '(("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode)) auto-mode-alist)
-
+  :mode ("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode)
+  :config
   (require 'sgml-mode)
   (setq js-indent-level 2)
   (+language-server/set-common-leader-keys js-mode-map)
