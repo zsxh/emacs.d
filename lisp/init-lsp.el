@@ -50,6 +50,9 @@
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
 
+  (when (bound-and-true-p read-process-output-max)
+      (setq read-process-output-max (* 1024 1024)))
+
   (use-package lsp-lens
     :ensure nil
     :config
@@ -80,9 +83,7 @@
   (defun +lsp/setup ()
     ;; (unless (member major-mode '(c-mode c++-mode java-mode))
     ;;   (lsp-lens-mode))
-    (lsp-lens-mode)
-    (when (bound-and-true-p read-process-output-max)
-      (setq-local read-process-output-max (* 1024 1024))))
+    (lsp-lens-mode))
 
   (add-hook 'lsp-managed-mode-hook '+lsp/setup)
 
