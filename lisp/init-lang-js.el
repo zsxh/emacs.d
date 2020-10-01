@@ -24,7 +24,7 @@
   :hook (js-mode . +js/lsp)
   ;; https://www.emacswiki.org/emacs/RegularExpression
   ;; use `rx' to generate emacs regular expression
-  :mode ("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode)
+  ;; :mode ("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode) ; enable gloabl-so-long-mode, that's all
   :config
   (require 'sgml-mode)
   (setq js-indent-level 2)
