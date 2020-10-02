@@ -51,10 +51,12 @@
     (with-eval-after-load 'org
       (setq browse-url-browser-function 'eaf-open-browser)))
   :config
-  (setq eaf-python-command "/usr/bin/python" ; Install dependencies from arch repo
-        eaf-enable-debug nil
-        eaf-browser-default-search-engine "duckduckgo"
-        eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf")))
+  (setq
+   ;; eaf-python-command "/usr/bin/python" ; Install dependencies from arch repo
+   eaf-python-command "/home/zsxh/.pyenv/versions/3.8.6/bin/python"
+   eaf-enable-debug t
+   eaf-browser-default-search-engine "duckduckgo"
+   eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf")))
 
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")
