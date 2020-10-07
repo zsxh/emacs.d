@@ -64,8 +64,10 @@
     "gtY" 'git-timemachine-kill-revision))
 
 ;; https://github.com/dandavison/magit-delta
+;; poor performance when diffing too many lines
 (use-package magit-delta
-  :after magit
+  :defer t
+  ;; :after magit
   :config
   (setq magit-delta-hide-plus-minus-markers nil)
   (magit-delta-mode))
