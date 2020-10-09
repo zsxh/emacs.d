@@ -20,6 +20,8 @@
   (setq evil-want-integration t)
   (setq evil-insert-state-cursor nil)
   (setq evil-esc-delay 0.001)
+  (when (functionp 'undo-redo)
+    (setq evil-undo-system 'undo-redo))
   :commands evil-mode
   :hook (after-init . evil-mode)
   :bind ((:map evil-normal-state-map
@@ -64,11 +66,7 @@
   ;; 把emacs模式下的按键绑定到Insert模式下
   (define-key evil-insert-state-map (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
   ;; but [escape] should switch back to normal state
-  (define-key evil-insert-state-map [escape] 'evil-normal-state)
-
-  ;; https://emacs.stackexchange.com/questions/31438/possible-not-to-use-undo-tree-in-evil-mode/34214#34214
-  ;; https://github.com/emacs-evil/evil/issues/1074
-  (setq undo-tree-enable-undo-in-region nil))
+  (define-key evil-insert-state-map [escape] 'evil-normal-state))
 
 ;; Evil keybinding collection
 (use-package evil-collection

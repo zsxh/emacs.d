@@ -45,6 +45,7 @@
         lsp-signature-auto-activate t
         lsp-lens-enable t
         lsp-completion-sort-initial-results nil ; do not resort the result
+        ;; lsp-completion--no-reordering t ; do not resort the result
         lsp-restart 'ignore)
 
   ;; don't scan 3rd party javascript libraries

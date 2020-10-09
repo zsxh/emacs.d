@@ -133,7 +133,12 @@
 
 ;; Treat undo history as a tree
 (use-package undo-tree
-  :hook (after-init . global-undo-tree-mode))
+  :if (lambda nil (not (functionp 'undo-redo)))
+  :config
+  ;; https://emacs.stackexchange.com/questions/31438/possible-not-to-use-undo-tree-in-evil-mode/34214#34214
+  ;; https://github.com/emacs-evil/evil/issues/1074
+  (setq undo-tree-enable-undo-in-region nil)
+  (add-hook 'after-init-hook 'global-undo-tree-mode))
 
 ;; Numbered window shortcuts
 (use-package winum
