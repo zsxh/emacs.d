@@ -56,7 +56,7 @@
    eaf-python-command "/home/zsxh/.pyenv/versions/3.8.6/bin/python"
    eaf-enable-debug t
    eaf-browser-default-search-engine "duckduckgo"
-   eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf")))
+   eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf/")))
 
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")

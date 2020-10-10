@@ -67,6 +67,7 @@
 ;; poor performance when diffing too many lines
 (use-package magit-delta
   :defer t
+  ;; :if (lambda nil (executable-find "delta"))
   ;; :after magit
   :config
   (setq magit-delta-hide-plus-minus-markers nil)
