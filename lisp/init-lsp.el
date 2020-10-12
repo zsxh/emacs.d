@@ -25,7 +25,7 @@
   ;; :init
   ;; (setq lsp-use-plists t)
   :config
-  (setq lsp-auto-guess-root t
+  (setq lsp-auto-guess-root nil
         lsp-client-packages '()
         lsp-keep-workspace-alive nil
         lsp-prefer-capf t
