@@ -91,6 +91,7 @@
                                  (concat git-dir (plist-get info :filename))))))
           vc-msg-git-extra)))
 
+;; https://github.com/dgutov/diff-hl
 (use-package diff-hl
   :after magit
   :config
