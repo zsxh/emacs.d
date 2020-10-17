@@ -91,6 +91,13 @@
                                  (concat git-dir (plist-get info :filename))))))
           vc-msg-git-extra)))
 
+(use-package diff-hl
+  :after magit
+  :config
+  (global-diff-hl-mode)
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
 
 (provide 'init-git)
 
