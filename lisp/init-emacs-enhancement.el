@@ -67,8 +67,7 @@
   :ensure nil
   :defer t
   :bind (:map dired-mode-map
-              ("C-<return>" . 'dired-open-xdg)
-              ("RET" . 'dired-find-alternate-file))
+              ("C-<return>" . 'dired-open-xdg))
   :config
   (setq dired-dwim-target t
         dired-recursive-copies 'always
@@ -96,11 +95,19 @@
 
   (advice-add 'dired-jump :around '+dired/dired-jump-a)
 
+(defun +dired/dired-find-file-a (orig-fn &rest args)
+  (let ((buf (current-buffer)))
+    (apply orig-fn args)
+    (when (and (not (eq buf (current-buffer)))
+               (eq major-mode 'dired-mode))
+      (kill-buffer buf))))
+
+  (advice-add 'dired-find-file :around '+dired/dired-find-file-a)
+
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'dired)
     (evil-define-key 'normal dired-mode-map
       (kbd "SPC") nil
-      (kbd "RET") 'dired-find-alternate-file
       "," nil
       ":" 'evil-ex
       "F" 'dired-create-empty-file
