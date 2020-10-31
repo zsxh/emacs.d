@@ -139,6 +139,12 @@
 ;;                     charset (font-spec :family "Source Han Serif"))
 ;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
 
+;; Text Scale
+(use-package default-text-scale
+  :commands (default-text-scale-increase default-text-scale-descrease default-text-scale-reset)
+  :config
+  (default-text-scale-mode 1))
+
 ;; Set Fonts
 (ignore-errors
   ;; Download ans install SF Mono fonts:
@@ -180,6 +186,12 @@
        (with-eval-after-load 'jupyter-repl
          (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
          (set-face-background 'jupyter-repl-traceback "#FBF8EF"))))
+    ('doom-one-light
+     (progn
+       (with-eval-after-load 'dired
+         (set-face-foreground 'dired-directory "#3B6EA8"))
+       (with-eval-after-load 'all-the-icons-dired
+         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))))
     ('doom-one
      (progn
        (with-eval-after-load 'dired
@@ -243,9 +255,7 @@
     (with-eval-after-load 'ein-cell
       (set-face-extend 'ein:cell-input-area t))
     (with-eval-after-load 'jupyter-repl
-      (set-face-extend 'jupyter-repl-traceback t))
-    (with-eval-after-load 'company-box
-      (set-face-extend 'company-box-selection t)))
+      (set-face-extend 'jupyter-repl-traceback t)))
 
   ;; global settings
   (with-eval-after-load 'magit-diff
