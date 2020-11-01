@@ -220,8 +220,8 @@
 
 (defhydra hydra-text-scale (:hint nil)
   "zoom"
-  ("j" default-text-scale-increase "default-text-scale-increase")
-  ("k" default-text-scale-decrease "default-text-scale-decrease")
+  ("k" default-text-scale-increase "default-text-scale-increase")
+  ("j" default-text-scale-decrease "default-text-scale-decrease")
   ("0" default-text-scale-reset "default-text-scale-reset")
   ("K" text-scale-increase "text-scale-increase")
   ("J" text-scale-decrease "text-scale-decrease")

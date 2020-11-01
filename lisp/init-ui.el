@@ -36,7 +36,7 @@
        (toggle-frame-fullscreen)))
 
 ;; Fringe
-(fringe-mode '(9 . 9))
+(fringe-mode '(10 . 10))
 
 ;; Installing Fonts
 ;; https://github.com/domtronn/all-the-icons.el#installing-fonts
@@ -140,6 +140,7 @@
 ;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
 
 ;; Text Scale
+;; FIXME: company-box-background is not extended after text scale resizing
 (use-package default-text-scale
   :commands (default-text-scale-increase default-text-scale-descrease default-text-scale-reset)
   :config
@@ -150,7 +151,7 @@
   ;; Download ans install SF Mono fonts:
   ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
   (if (member "SF Mono" (font-family-list))
-      (set-frame-font "SF Mono-11.5:weight=semi-bold" nil t)
+      (set-frame-font "SF Mono-12:weight=semi-bold" nil t)
     (message "[WARN] font \"SF Mono\" not found"))
   ;; Download specify font for all unicode characters, emoji for example
   ;; http://xahlee.info/comp/unicode_font_download.html
