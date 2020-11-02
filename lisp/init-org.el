@@ -287,6 +287,12 @@ at the first function to return non-nil.")
   :defer t
   :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia)))
 
+(use-package ess
+  :defer t
+  :config
+  (with-eval-after-load 'ess-julia
+    (setq auto-mode-alist (delete '("\\.jl\\'" . ess-julia-mode) auto-mode-alist))))
+
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
   :defer t

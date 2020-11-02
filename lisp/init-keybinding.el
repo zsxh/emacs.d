@@ -19,7 +19,7 @@
         which-key-sort-uppercase-first nil
         which-key-add-column-padding 1
         which-key-max-display-columns nil
-        which-key-min-display-lines 4
+        which-key-min-display-lines 1
         which-key-side-window-slot -10)
   :config
   ;; Rename the entry, for 1 to 1..9
@@ -211,6 +211,7 @@
    "Tp" '(nil :which-key "proxy")
    "Tph" '(proxy-http-toggle :which-key "http(s)-proxy")
    "Tps" '(proxy-socks-toggle :which-key "socks-proxy")
+   "Tw" '(whitespace-mode :which-key "whitespace-mode")
    "Tx" '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
    "Tz" '(evil-toggle-fold :which-key "evil-toggle-fold")))
 
