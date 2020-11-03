@@ -102,7 +102,8 @@
    "fF" '(find-file-in-current-directory :which-key "find-file-in-current-directory")
    "fj" '(fasd-find-file :which-key "fasd-find-file")
    "fp" '(xah-copy-file-path :which-key "copy-file-path")
-   "fr" '(counsel-recentf :which-key "recentf")
+   "fr" '(counsel-recentf :which-key "counsel-recentf")
+   "ft" '(counsel-tramp :which-key "counsel-tramp")
    "f/" '(rg-dwim-current-file :which-key "rg-dwim-current-file")
    ;; Git
    "g" '(nil :which-key "git")

@@ -88,6 +88,12 @@
   ;; no need with initial "^"
   (setq ivy-initial-inputs-alist nil))
 
+;; TODO: counsel-tramp configs, ssh, docker, ...
+;; https://github.com/masasam/emacs-counsel-tramp
+;; Tramp ivy interface for ssh server and docker and vagrant
+(use-package counsel-tramp
+  :commands counsel-tramp)
+
 ;; https://github.com/seagle0128/all-the-icons-ivy-rich
 (use-package ivy-rich
   :after ivy
