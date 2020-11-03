@@ -36,8 +36,6 @@
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
         lsp-diagnostics-provider :flycheck
-        lsp-modeline-code-actions-enable nil
-        lsp-modeline-diagnostics-enable nil
         lsp-log-io nil
         ;; TODO: wait childframe rendering
         lsp-eldoc-render-all nil
@@ -46,7 +44,9 @@
         lsp-lens-enable t
         lsp-completion-sort-initial-results nil ; do not resort the result
         ;; lsp-completion--no-reordering t ; do not resort the result
+        lsp-modeline-code-actions-enable nil
         lsp-modeline-workspace-status-enable nil
+        lsp-modeline-diagnostics-enable nil
         lsp-restart 'ignore)
 
   ;; don't scan 3rd party javascript libraries
@@ -148,33 +148,6 @@
   (when (featurep 'doom-themes)
     (set-face-background 'lsp-ui-doc-background (doom-color 'bg-alt)))
 
-  (defun +lsp/lsp-ui-doc--make-request-advice nil
-    "Request the documentation to the LS."
-    (when (and (not (bound-and-true-p lsp-ui-peek-mode))
-               (lsp--capability "hoverProvider"))
-      (-if-let (bounds (and (not (memq (char-after) '(?  ?\t ?\n ?\) ?\] ?\})))
-                            (or (and (symbol-at-point) (bounds-of-thing-at-point 'symbol))
-                                (and (looking-at "[[:graph:]]") (cons (point) (1+ (point)))))))
-          (unless (equal lsp-ui-doc--bounds bounds)
-            (lsp--send-request-async
-             (lsp--make-request "textDocument/hover" (lsp--text-document-position-params))
-             (lambda (hover) (lsp-ui-doc--callback hover bounds (current-buffer)))))
-        (lsp-ui-doc--hide-frame))))
-
-  (advice-add 'lsp-ui-doc--make-request :override '+lsp/lsp-ui-doc--make-request-advice)
-
-  (defun +lsp/toggle-doc-show ()
-    "Popup/Hide hover information"
-    (interactive)
-    (if lsp-ui-doc-mode
-        (progn
-          (message "lsp-ui-doc disabled")
-          (lsp-ui-doc-hide)
-          (lsp-ui-doc-mode -1))
-      (message "lsp-ui-doc enabled")
-      (lsp-ui-doc-mode 1)
-      (lsp-ui-doc-show)))
-
   (setq lsp-ui-sideline-show-symbol t
         lsp-ui-sideline-show-hover t
         lsp-ui-sideline-show-code-actions t
@@ -227,7 +200,7 @@
        "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
        "dh" '(hydra-debugger-control/body :which-key "hydra-control")
        "dr" '(dap-debug :which-key "run")
-       "D" '(+lsp/toggle-doc-show :which-key "toggle-doc-hover")
+       "D" '(lsp-ui-doc-glance :which-key "lsp-ui-doc-glance")
        "f" '(lsp-format-buffer :which-key "format")
        "g" '(nil :which-key "go")
        "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
