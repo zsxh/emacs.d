@@ -70,7 +70,7 @@
   (setq doom-modeline-modal-icon nil
         doom-modeline-unicode-fallback nil
         doom-modeline-major-mode-icon t
-        doom-modeline-window-width-limit 110
+        doom-modeline-window-width-limit 100
         doom-modeline-buffer-file-name-style 'auto)
 
   (defun display-battery-if-offline (fn)
@@ -84,7 +84,15 @@
           (setq doom-modeline--battery-status nil)
         (funcall fn))))
 
-  (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-offline))
+  (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-offline)
+
+  ;; customize display time window width,
+  (doom-modeline-def-segment misc-info
+    "Mode line construct for miscellaneous information.
+By default, this shows the information specified by `global-mode-string'."
+    (when (and (doom-modeline--active)
+               (>= (window-width) 90))
+      '("" mode-line-misc-info))))
 
 ;; Display time on modeline
 (defvar +ui/time-format-short "[%H:%M]"
