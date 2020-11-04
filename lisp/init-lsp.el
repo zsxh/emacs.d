@@ -112,7 +112,7 @@
                ("C-k" . lsp-ui-peek--select-prev)))
   :config
   (setq lsp-ui-doc-delay 0.5
-        lsp-ui-doc-header nil
+        lsp-ui-doc-header t
         lsp-ui-doc-include-signature t
         lsp-ui-doc-position 'at-point
         ;; FIXME: https://emacs-china.org/t/xwidget-async/10207/6
@@ -147,6 +147,18 @@
 
   (when (featurep 'doom-themes)
     (set-face-background 'lsp-ui-doc-background (doom-color 'bg-alt)))
+
+  (defun +lsp/toggle-doc-show ()
+    "Popup/Hide hover information"
+    (interactive)
+    (if lsp-ui-doc-mode
+        (progn
+          (message "lsp-ui-doc disabled")
+          (lsp-ui-doc-hide)
+          (lsp-ui-doc-mode -1))
+      (message "lsp-ui-doc enabled")
+      (lsp-ui-doc-mode 1)
+      (lsp-ui-doc-show)))
 
   (setq lsp-ui-sideline-show-symbol t
         lsp-ui-sideline-show-hover t
@@ -200,7 +212,9 @@
        "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
        "dh" '(hydra-debugger-control/body :which-key "hydra-control")
        "dr" '(dap-debug :which-key "run")
-       "D" '(lsp-ui-doc-glance :which-key "lsp-ui-doc-glance")
+       ;; FIXME: lsp-ui-doc-glance scoll down doc will freeze emacs
+       ;; "D" '(lsp-ui-doc-glance :which-key "lsp-ui-doc-glance")
+       "D" '(+lsp/toggle-doc-show :which-key "toggle-doc-hover")
        "f" '(lsp-format-buffer :which-key "format")
        "g" '(nil :which-key "go")
        "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
