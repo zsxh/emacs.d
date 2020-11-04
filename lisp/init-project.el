@@ -77,17 +77,7 @@
      (lambda (buffer) (+project/projectile-buffer-filter buffer))
      buffers))
 
-  (setq projectile-buffers-filter-function #'+project/projectile-buffer-filter-function)
-
-  ;; FIXME: projectile-project-root is very slow in remote, so I disable it in remote buffer
-  ;; (advice-add 'projectile-project-root :before-while
-  ;;             (lambda (&optional dir)
-  ;;               (let ((dir (or dir default-directory)))
-  ;;                 (when (and (fboundp 'tramp-archive-file-name-archive)
-  ;;                            (tramp-archive-file-name-p dir))
-  ;;                   (setq dir (file-name-directory (tramp-archive-file-name-archive dir))))
-  ;;                 (not (file-remote-p dir nil t)))))
-  )
+  (setq projectile-buffers-filter-function #'+project/projectile-buffer-filter-function))
 
 (use-package find-file-in-project
   :commands (find-file-in-project

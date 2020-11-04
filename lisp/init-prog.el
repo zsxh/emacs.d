@@ -284,17 +284,7 @@ current major mode."
   (interactive)
   (+prog/indent-region -2))
 
-;; TODO: untab indentation offset
 (global-set-key (kbd "<backtab>") '+prog/untab-region)
-
-;; (defun +prog/hack-tab-key ()
-;;   (interactive)
-;;   ;; (local-set-key (kbd "<tab>") '+prog/tab-region)
-;;   (local-set-key (kbd "<backtab>") '+prog/untab-region))
-
-;; (dolist (mode '(java-mode))
-;;   (let ((mode-hook (intern (format "%s-hook" mode))))
-;;     (add-hook mode-hook '+prog/hack-tab-key)))
 
 ;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
 
