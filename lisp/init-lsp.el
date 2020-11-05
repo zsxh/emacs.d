@@ -189,6 +189,7 @@
       (+funcs/major-mode-leader-keys
        mode-map
        "e" '(nil :which-key "error")
+       "el" '(+flycheck/popup-errors :which-key "popup-errors")
        "en" '(flycheck-next-error :which-key "next-error")
        "ep" '(flycheck-previous-error :which-key "prev-error"))))
 
