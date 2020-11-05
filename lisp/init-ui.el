@@ -57,9 +57,12 @@
   ;; Enable flashing mode-line on errors
   ;; (doom-themes-visual-bell-config)
 
-  ;; Enable custom neotree theme
+  ;; Enable neotree theme
   (setq doom-themes-neotree-file-icons t)
   (doom-themes-neotree-config) ; all-the-icons fonts must be installed!
+  ;; Enable treemacs theme
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config)
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
