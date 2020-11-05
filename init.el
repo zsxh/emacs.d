@@ -24,12 +24,14 @@
 
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
-(defvar tmp--gc-cons-threshold gc-cons-threshold)
-(setq gc-cons-threshold 104857600)
+;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#avoid-garbage-collection-at-startup
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
 
 (add-hook 'emacs-startup-hook (lambda ()
                                 "Restore defalut values after startup."
-                                (setq gc-cons-threshold tmp--gc-cons-threshold)
+                                (setq gc-cons-threshold 16777216 ; 16mb
+                                      gc-cons-percentage 0.1)
                                 (setq file-name-handler-alist tmp--file-name-handler-alist)))
 
 ;; Load Path

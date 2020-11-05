@@ -25,6 +25,9 @@
 
 ;;; Code:
 
+;; Defer garbage collection further back in the startup process
+(setq gc-cons-threshold most-positive-fixnum)
+
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (scroll-bar-mode -1)
 (tool-bar-mode   -1)
@@ -37,7 +40,7 @@
 (setq package-enable-at-startup nil)
 
 ;; Quickstart: precompute activation actions for faster start up
-(setq package-quickstart t)
+;; (setq package-quickstart t)
 
 ;; Disable cursor blinking
 (setq no-blinking-cursor t)
@@ -46,6 +49,11 @@
 ;; spells of inaccurate syntax highlighting right after scrolling, which should
 ;; quickly self-correct.
 (setq fast-but-imprecise-scrolling t)
+
+;; Resizing the Emacs frame can be a terribly expensive part of changing the
+;; font. By inhibiting this, we easily halve startup times with fonts that are
+;; larger than the system default.
+(setq frame-inhibit-implied-resize t)
 
 ;; Ignore X resources; its settings would be redundant with the other settings
 ;; in this file and can conflict with later config (particularly where the
