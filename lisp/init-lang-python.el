@@ -56,11 +56,17 @@
      "cc" '(+python/python-execute-file :which-key "execute-file")
      "cC" '(+python/python-execute-file-focus :which-key "execute-file-focus")))
 
-  (defun +python/pyenv-executable-find (command)
-    (executable-find command))
+  (defun +python/executable-find (command)
+    (if (executable-find "pyenv")
+        (let ((version (first (split-string (shell-command-to-string "pyenv version"))))
+              (command-env (string-trim (shell-command-to-string (concat "pyenv whence " command)))))
+          (if (string-equal version command-env)
+              (shell-command-to-string (string-trim (concat "pyenv which " command)))
+            nil))
+      (executable-find command)))
 
   (defun +python/python-setup-shell (&rest args)
-    (if (+python/pyenv-executable-find "ipython")
+    (if (+python/executable-find "ipython")
         (progn (setq python-shell-interpreter "ipython")
                (if (version< (replace-regexp-in-string "[\r\n|\n]$" "" (shell-command-to-string "ipython --version")) "5")
                    (setq python-shell-interpreter-args "-i")
@@ -72,12 +78,12 @@
   (defun +python/python-toggle-breakpoint ()
     "Add a break point, highlight it."
     (interactive)
-    (let ((trace (cond ((+python/pyenv-executable-find "trepan3k") "import trepan.api; trepan.api.debug()")
-                       ((+python/pyenv-executable-find "wdb") "import wdb; wdb.set_trace()")
-                       ((+python/pyenv-executable-find "ipdb") "import ipdb; ipdb.set_trace()")
-                       ((+python/pyenv-executable-find "pudb") "import pudb; pudb.set_trace()")
-                       ((+python/pyenv-executable-find "ipdb3") "import ipdb; ipdb.set_trace()")
-                       ((+python/pyenv-executable-find "pudb3") "import pudb; pudb.set_trace()")
+    (let ((trace (cond ((+python/executable-find "trepan3k") "import trepan.api; trepan.api.debug()")
+                       ((+python/executable-find "wdb") "import wdb; wdb.set_trace()")
+                       ((+python/executable-find "ipdb") "import ipdb; ipdb.set_trace()")
+                       ((+python/executable-find "pudb") "import pudb; pudb.set_trace()")
+                       ((+python/executable-find "ipdb3") "import ipdb; ipdb.set_trace()")
+                       ((+python/executable-find "pudb3") "import pudb; pudb.set_trace()")
                        (t "import pdb; pdb.set_trace()")))
           (line (thing-at-point 'line)))
       (if (and line (string-match trace line))
@@ -118,7 +124,7 @@ virtual environment path should be 'venv' in project root."
     ;; universal argument put compile buffer in comint mode
     (let ((universal-argument t)
           (compile-command (format "%s %s"
-                                   (+python/pyenv-executable-find python-shell-interpreter)
+                                   (+python/executable-find python-shell-interpreter)
                                    (file-name-nondirectory buffer-file-name))))
       (if arg
           (call-interactively 'compile)
