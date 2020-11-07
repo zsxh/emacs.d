@@ -24,6 +24,7 @@
              eaf-open-this-from-dired
              eaf-open-office
              eaf-open-mindmap
+             eaf-open-jupyter
              eaf-create-mindmap
              eaf-get-file-name-extension)
   :hook (eaf-mode . (lambda () (setq left-fringe-width 0
@@ -180,7 +181,21 @@
                       (+eaf/buffer-names))
               :initial-input nil
               :action #'ivy--switch-buffer-action
-              :caller '+eaf/ivy-switch-buffer)))
+              :caller '+eaf/ivy-switch-buffer))
+
+  ;; TODO: remove jupyter-cmd, use eaf-python-command instead
+  (setq jupyter-cmd "/home/zsxh/.pyenv/versions/3.8.6/bin/jupyter")
+
+  (defun eaf-open-jupyter ()
+    "Open jupyter."
+    (interactive)
+    (if (executable-find "jupyter-qtconsole")
+        (let* ((data (json-read-from-string (shell-command-to-string (concat jupyter-cmd " kernelspec list --json"))))
+               (kernel (completing-read "Jupyter Kernels: " (mapcar #'car (alist-get 'kernelspecs data))))
+               (args (make-hash-table :test 'equal)))
+          (puthash "kernel" kernel args)
+          (eaf-open (format "eaf-jupyter-%s" kernel) "jupyter" (json-encode-hash-table args) t))
+      (message "[EAF/jupyter] Please install qtconsole first."))))
 
 
 (provide 'init-eaf)
