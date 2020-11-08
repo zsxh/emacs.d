@@ -47,6 +47,12 @@
   ;; you can try setting the following variable. If non-nil, don't compact font caches during GC.
   (setq inhibit-compacting-font-caches t))
 
+;; https://github.com/seagle0128/icons-in-terminal.el
+;; M-x: icons-in-terminal-install-font
+(use-package icons-in-terminal
+  :defer t
+  :load-path "~/.emacs.d/submodules/icons-int-terminal")
+
 ;; Theme
 (use-package doom-themes
   :config

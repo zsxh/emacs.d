@@ -105,28 +105,13 @@
            (display-graphic-p))
   :after company
   :hook (company-mode . company-box-mode)
-  :init (setq company-box-show-single-candidate 'always
-              company-box-backends-colors nil
+  :config
+  (setq company-box-show-single-candidate 'always
+              ;; company-box-backends-colors nil
               company-box-highlight-prefix nil
               company-box-doc-delay 0.5
-              company-box-tooltip-maximum-width company-tooltip-maximum-width)
-  :config
-  (with-no-warnings
-    ;; Prettify icons
-    (defun my-company-box-icons--elisp (candidate)
-      (when (derived-mode-p 'emacs-lisp-mode)
-        (let ((sym (intern candidate)))
-          (cond ((fboundp sym) 'Function)
-                ((featurep sym) 'Module)
-                ((facep sym) 'Color)
-                ((boundp sym) 'Variable)
-                ((symbolp sym) 'Text)
-                (t . nil)))))
-    (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp))
-
-  (declare-function all-the-icons-faicon 'all-the-icons)
-  (declare-function all-the-icons-material 'all-the-icons)
-  (declare-function all-the-icons-octicon 'all-the-icons)
+              company-box-tooltip-maximum-width company-tooltip-maximum-width
+              company-box-icons-alist 'company-box-icons-all-the-icons)
   (setq company-box-icons-all-the-icons
         `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.8 :v-adjust -0.15))
           (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.02))

@@ -10,3 +10,6 @@
 [submodule "submodules/netease-cloud-music"]
 	path = submodules/netease-cloud-music
 	url = https://github.com/SpringHan/netease-cloud-music.el.git
+[submodule "submodules/icons-int-terminal"]
+	path = submodules/icons-int-terminal
+	url = https://github.com/seagle0128/icons-in-terminal.el.git
