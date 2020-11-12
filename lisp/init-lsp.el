@@ -211,7 +211,9 @@
        "A" '(lsp-execute-code-action :which-key "code-action")
        "d" '(nil :which-key "debug")
        "db" '(dap-breakpoint-toggle :which-key "breakpoint-toggle")
+       "dc" '(dap-breakpoint-condition :which-key "breakpoint-condition")
        "dh" '(hydra-debugger-control/body :which-key "hydra-control")
+       "dl" '(dap-breakpoint-log-message :which-key "breakpoint-log-message")
        "dr" '(dap-debug :which-key "run")
        ;; FIXME: lsp-ui-doc-glance scoll down doc will freeze emacs
        ;; "D" '(lsp-ui-doc-glance :which-key "lsp-ui-doc-glance")
