@@ -13,7 +13,9 @@
 ;; Install Leiningen: https://github.com/technomancy/leiningen#installation
 ;; Install cider-nrepl: https://docs.cider.mx/cider-nrepl/usage.html#_via_leiningen
 ;; Install shadow-cljs: https://shadow-cljs.org/
-;; Install clojure lsp server: https://github.com/snoe/clojure-lsp#installation
+;; Install clojure lsp server:
+;; 1) `lsp-install-server' lsp-mode auto install server
+;; 2) https://github.com/snoe/clojure-lsp#installation and set `lsp-clojure-server-store-path'
 ;; clojurescript: https://clojurescript.org/
 
 (use-package clojure-mode
@@ -23,7 +25,6 @@
   :hook ((clojure-mode clojurec-mode clojurescript-mode) . +clojure/lsp)
   :config
   (require 'lsp-clojure)
-  (setq lsp-clojure-server-command `("bash" "-c" ,(f-join lsp-server-install-dir "clojure-lsp/clojure-lsp")))
   (dolist (mode-map '(clojure-mode-map clojurec-mode-map clojurescript-mode-map))
     (+language-server/set-common-leader-keys (symbol-value mode-map)))
   (defun +clojure/lsp ()

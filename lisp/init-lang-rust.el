@@ -12,12 +12,6 @@
 
 (require 'init-lsp)
 
-;; require `rls' https://github.com/rust-lang/rls
-;; $ rustup component add rls-preview rust-analysis rust-src
-;; Or
-;; $ git clone git@github.com:rust-analyzer/rust-analyzer && cd rust-analyzer
-;; $ cargo xtask install --server
-;; $ rustup component add rust-src
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
   :hook (rust-mode . lsp-deferred)
@@ -25,11 +19,18 @@
   (setq rust-indent-offset 2)
   (require 'lsp-rust))
 
+;; Install rust-analyzer:
+;;    1) use `lsp-install-server' auto install server
+;; OR 2) download binary executable file from https://github.com/rust-analyzer/rust-analyzer/releases and set `lsp-rust-analyzer-store-path'
+;; OR 3) build from source code
+;; $ git clone git@github.com:rust-analyzer/rust-analyzer && cd rust-analyzer
+;; $ cargo xtask install --server
+;; $ rustup component add rust-src
 (use-package lsp-rust
   :defer t
   :ensure lsp-mode
   :custom
-  (lsp-rust-server (if (executable-find "rust-analyzer") 'rust-analyzer 'rls))
+  (lsp-rust-analyzer-download-url "https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-linux")
   (lsp-rust-analyzer-server-display-inlay-hints t))
 
 (use-package dap-gdb-lldb
