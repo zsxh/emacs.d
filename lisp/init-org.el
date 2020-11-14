@@ -172,7 +172,7 @@
 ;; This package provides visual alignment for Org tables on GUI Emacs.
 ;; https://github.com/casouri/valign
 (use-package valign
-  :quelpa ((valign :fetcher github :repo "casouri/valign"))
+  :quelpa (valign :fetcher github :repo "casouri/valign")
   :hook ((org-mode markdown-mode) . valign-mode))
 
 ;; convert org-file to ipynb
@@ -180,7 +180,7 @@
 ;; convert ipynb to org-file
 ;; $pip install nbcorg
 (use-package ox-ipynb
-  :quelpa ((ox-ipynb :fetcher github :repo "jkitchin/ox-ipynb"))
+  :quelpa (ox-ipynb :fetcher github :repo "jkitchin/ox-ipynb")
   :defer t
   :init
   (add-hook 'org-load-hook (lambda () (require 'ox-ipynb))))
@@ -192,9 +192,12 @@
   '((cpp . C)
     (C++ . C)
     (D . C)
+    (elisp . emacs-lisp)
     (sh . shell)
     (bash . shell)
     (matlab . octave)
+    ;; I'm not using rustic-mode now
+    ;; (rust . rustic-babel)
     (amm . ammonite))
   "An alist mapping languages to babel libraries. This is necessary for babel
 libraries (ob-*.el) that don't match the name of the language.
@@ -208,21 +211,30 @@ at the first function to return non-nil.")
 
 (defun +org/init-label-lazy-loader-h ()
   "Load label libraries lazily when babel blocks are executed."
-  (defun +org/babel-lazy-load (lang)
+  (defun +org/babel-lazy-load (lang &optional async)
+    ;; (cl-check-type lang (or symbol null))
     (cl-check-type lang symbol)
     (unless (cdr (assq lang org-babel-load-languages))
+      (when async
+        ;; ob-async has its own agenda for lazy loading packages (in the
+        ;; child process), so we only need to make sure it's loaded.
+        (require 'ob-async nil t))
       (prog1
-       (or (run-hook-with-args-until-success '+org/babel-load-functions lang)
-           (require (intern (format "ob-%s" lang)) nil t)
-           (require lang nil t))
-       (add-to-list 'org-babel-load-languages (cons lang t)))))
+          (or (run-hook-with-args-until-success '+org/babel-load-functions lang)
+              (require (intern (format "ob-%s" lang)) nil t)
+              (require lang nil t))
+        (add-to-list 'org-babel-load-languages (cons lang t)))))
+
+  (defun +org/export-lazy-load-library-h ()
+    (+org/babel-lazy-load-library-a (org-babel-get-src-block-info)))
+
+  (advice-add 'org-babel-exp-src-block :before '+org/export-lazy-load-library-h)
 
   (defun +org/src-lazy-load-library-a (lang)
     "Lazy load a babel package to ensure syntax highlighting."
-    ;; make sure lang is not nil
     (when lang
       (or (cdr (assoc lang org-src-lang-modes))
-          (+org/babel-lazy-load (intern lang)))))
+          (+org/babel-lazy-load lang))))
 
   (advice-add #'org-src-get-lang-mode :before #'+org/src-lazy-load-library-a)
 
@@ -234,24 +246,12 @@ at the first function to return non-nil.")
                        ((stringp lang) (intern lang))))
            (lang (or (cdr (assq lang +org/babel-mode-alist))
                      lang)))
-      (when (and lang
-                 (not (cdr (assq lang org-babel-load-languages)))
-                 (+org/babel-lazy-load lang))
-        (when (assq :async (nth 2 info))
-          ;; ob-async has its own agenda for lazy loading packages (in the
-          ;; child process), so we only need to make sure it's loaded.
-          (require 'ob-async nil t))
-        (add-to-list 'org-babel-load-languages (cons lang t)))
+      (+org/babel-lazy-load lang (assq :async (nth 2 info)))
       t))
 
   (advice-add #'org-babel-confirm-evaluate :after-while #'+org/babel-lazy-load-library-a)
 
-  (defun +org/noop-org-babel-do-load-languages-a (&rest _)
-    (message
-     (concat "`org-babel-do-load-languages' is redundant with lazy loading mechanism for babel "
-             "packages. There is no need to use it, so it has been disabled")))
-
-  (advice-add #'org-babel-do-load-languages :override #'+org/noop-org-babel-do-load-languages-a))
+  (advice-add #'org-babel-do-load-languages :override #'ignore))
 
 (add-hook 'org-load-hook #'+org/init-label-lazy-loader-h)
 
@@ -287,7 +287,7 @@ at the first function to return non-nil.")
 
 (use-package ob-julia
   :defer t
-  :quelpa ((ob-julia :fetcher github :repo phrb/ob-julia)))
+  :quelpa (ob-julia :fetcher github :repo phrb/ob-julia))
 
 (use-package ess
   :defer t
@@ -304,7 +304,7 @@ at the first function to return non-nil.")
                (setq inferior-julia-program-name "julia")))
   ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
   (setq ob-async-no-async-languages-alist
-        '("jupyter-python" "jupyter-julia" "jupyter-javascript")))
+        '("ipython" "jupyter-python" "jupyter-julia" "jupyter-javascript")))
 
 ;; https://github.com/alphapapa/org-sidebar
 (use-package org-sidebar

@@ -123,12 +123,12 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 
 ;; https://github.com/manateelazycat/instant-rename-tag
 (use-package instant-rename-tag
-  :quelpa ((instant-rename-tag :fetcher github :repo "manateelazycat/instant-rename-tag"))
+  :quelpa (instant-rename-tag :fetcher github :repo "manateelazycat/instant-rename-tag")
   :commands instant-rename-tag)
 
 ;; https://github.com/manateelazycat/highlight-matching-tag
 (use-package highlight-matching-tag
-  :quelpa ((highlight-matching-tag :fetcher github :repo "manateelazycat/highlight-matching-tag"))
+  :quelpa (highlight-matching-tag :fetcher github :repo "manateelazycat/highlight-matching-tag")
   :commands highlight-matching-tag
   :hook (web-mode . (lambda () (highlight-matching-tag 1))))
 

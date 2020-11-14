@@ -84,13 +84,13 @@
 
 ;; Extra font lock for emacs lisp
 (use-package elispfl
-  :quelpa ((elispfl :fetcher github :repo "cireu/elispfl"))
+  :quelpa (elispfl :fetcher github :repo "cireu/elispfl")
   :after elisp-mode
   :config
   (elispfl-mode))
 
 (use-package sly-el-indent
-  :quelpa ((sly-el-indent :fetcher github :repo "cireu/sly-el-indent"))
+  :quelpa (sly-el-indent :fetcher github :repo "cireu/sly-el-indent")
   :after elisp-mode
   :hook (emacs-lisp . sly-el-indent-setup))
 

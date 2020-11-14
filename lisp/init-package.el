@@ -230,7 +230,7 @@ the `quelpa' command has been run in the current Emacs session."
 ;; (with-eval-after-load '(and a (or b c))
 ;;   ...)
 (use-package meal
-  :quelpa ((meal :fetcher github :repo "twlz0ne/meal.el")))
+  :quelpa (meal :fetcher github :repo "twlz0ne/meal.el"))
 
 (use-package async
   :defer t

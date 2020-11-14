@@ -177,7 +177,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 ;; TODO: lossless keyboard input in terminal
 ;; https://github.com/CyberShadow/term-keys
 ;; (use-package term-keys
-;;   :quelpa ((term-keys :fetcher github :repo "CyberShadow/term-keys"))
+;;   :quelpa (term-keys :fetcher github :repo "CyberShadow/term-keys")
 ;;   :hook (after-init . term-keys-mode))
 
 ;; Note: Fixing Emacs tramp mode when using zsh

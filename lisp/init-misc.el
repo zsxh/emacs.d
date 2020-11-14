@@ -54,7 +54,7 @@
 ;; https://github.com/manateelazycat/insert-translated-name
 (use-package insert-translated-name
   :commands insert-translated-name-insert
-  :quelpa ((insert-translated-name :fetcher github :repo "manateelazycat/insert-translated-name")))
+  :quelpa (insert-translated-name :fetcher github :repo "manateelazycat/insert-translated-name"))
 
 ;; Leetcode
 ;; https://github.com/kaiwk/leetcode.el

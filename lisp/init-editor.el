@@ -92,7 +92,6 @@
 ;; Edit comment or docstring in edit buffer
 ;; https://github.com/twlz0ne/separedit.el
 (use-package separedit
-  :quelpa ((separedit :fetcher github :repo "twlz0ne/separedit.el"))
   :commands (separedit)
   :config
   (with-eval-after-load '(and edit-indirect evil)
@@ -146,7 +145,7 @@
 
 ;; Use package auto-save instead of default auto save
 (use-package auto-save
-  :quelpa ((auto-save :fetcher github :repo "manateelazycat/auto-save"))
+  :quelpa (auto-save :fetcher github :repo "manateelazycat/auto-save")
   :preface
   ;; note: it's risky to disable lockfiles
   ;; https://emacs-china.org/t/filename/163/17

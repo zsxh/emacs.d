@@ -43,10 +43,10 @@
 ;; realtime preview in Latex-mode, org-mode, ein
 (use-package webkit-katex-render
   :if (featurep 'xwidget-internal)
-  :quelpa ((webkit-katex-render
-            :fetcher github
-            :repo "fuxialexander/emacs-webkit-katex-render"
-            :files (:defaults "katex.html")))
+  :quelpa (webkit-katex-render
+           :fetcher github
+           :repo "fuxialexander/emacs-webkit-katex-render"
+           :files (:defaults "katex.html"))
   :commands webkit-katex-render-mode
   :config
   ;; (with-eval-after-load 'doom-themes
