@@ -1,5 +1,5 @@
 #+STARTUP: showall
-Updated: <2020-11-05>
+Updated: <2020-11-15>
 
 * Enviroment
   - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.23, cairo version 1.17.3) of 2020-10-17
@@ -129,12 +129,12 @@ Updated: <2020-11-05>
   - [X] =C/C++= install [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
   - [X] =Java= install [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
   - [X] =Python= install [[https://github.com/emacs-lsp/lsp-pyright][lsp-pyright]] and `npm install -g pyright`
-  - [X] =Rust= install [[https://rust-analyzer.github.io/manual.html#building-from-source][rust-analyzer]]
+  - [X] =Rust= lsp-mode download server out-of-box or install [[https://rust-analyzer.github.io/manual.html#building-from-source][rust-analyzer]]
   - [X] =Go= install [[https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation][gopls]]
   - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
   - [X] =Julia= v1.5.1, using submodules/lsp-julia
-  - [X] =Javascript/Typescript= npm i -g typescript typescript-language-server
-  - [X] =Clojure/ClojureScript= [[https://github.com/snoe/clojure-lsp#installation][clojure-lsp]]
+  - [X] =Javascript/Typescript= lsp-mode download server out-of-box or npm i -g typescript typescript-language-server
+  - [X] =Clojure/ClojureScript= lsp-mode download server out-of-box or install [[https://github.com/snoe/clojure-lsp#installation][clojure-lsp]] manually
 ** Debugger
   - [X] =C/C++= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb][dap-gdb-lldb]]
   - [X] =Java= install [[https://github.com/emacs-lsp/dap-mode#java][dap-java]]

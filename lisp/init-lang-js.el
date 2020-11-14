@@ -15,8 +15,7 @@
 (use-package nvm
   :after js)
 
-;; Install js language server
-;; npm i -g typescript typescript-language-server
+;; lsp-mode download server out-of-box
 (use-package js
   :ensure nil
   :bind ((:map js-mode-map
@@ -36,6 +35,13 @@
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)
     (unless (member major-mode '(json-mode ein:ipynb-mode))
       (lsp-deferred))))
+
+;; lsp-mode download server out-of-box
+(use-package typescript-mode
+  :defer t
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (+language-server/set-common-leader-keys typescript-mode-map))
 
 ;; npm install -g vue-language-server
 (use-package vue-mode
