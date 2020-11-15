@@ -15,7 +15,9 @@
 (use-package nvm
   :after js)
 
-;; lsp-mode download server out-of-box
+;;    1) lsp-mode auto install out-of-box(`lsp-package-ensure')
+;; OR 2) use `lsp-install-server' install server
+;; OR 3) npm install -g javascript-typescript-langserver
 (use-package js
   :ensure nil
   :bind ((:map js-mode-map
@@ -36,7 +38,9 @@
     (unless (member major-mode '(json-mode ein:ipynb-mode))
       (lsp-deferred))))
 
-;; lsp-mode download server out-of-box
+;;    1) lsp-mode auto install out-of-box(`lsp-package-ensure')
+;; OR 2) use `lsp-install-server' install server
+;; OR 3) npm install -g javascript-typescript-langserver
 (use-package typescript-mode
   :defer t
   :hook (typescript-mode . lsp-deferred)

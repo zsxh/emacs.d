@@ -19,7 +19,10 @@
   :custom (python-indent-offset 2))
 
 ;; https://github.com/emacs-lsp/lsp-pyright
-;; > npm install -g pyright
+;; Install server:
+;;    1) lsp-mode auto install out-of-box(`lsp-package-ensure')
+;;    2) use `lsp-install-server' install server
+;; OR 3) > npm install -g pyright
 (use-package lsp-pyright
   :after python)
 

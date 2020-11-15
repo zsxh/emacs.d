@@ -20,9 +20,10 @@
   (require 'lsp-rust))
 
 ;; Install rust-analyzer:
-;;    1) use `lsp-install-server' auto install server
-;; OR 2) download binary executable file from https://github.com/rust-analyzer/rust-analyzer/releases and set `lsp-rust-analyzer-store-path'
-;; OR 3) build from source code
+;;    1) lsp-mode auto install out-of-box(`lsp-package-ensure')
+;; OR 2) use `lsp-install-server' install server
+;; OR 3) download binary executable file from https://github.com/rust-analyzer/rust-analyzer/releases and set `lsp-rust-analyzer-store-path'
+;; OR 4) build from source code
 ;; $ git clone git@github.com:rust-analyzer/rust-analyzer && cd rust-analyzer
 ;; $ cargo xtask install --server
 ;; $ rustup component add rust-src
