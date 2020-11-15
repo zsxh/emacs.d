@@ -128,7 +128,7 @@ Updated: <2020-11-15>
 ** Features like auto complete, go to definitions, documentation on hover
   - [X] =C/C++= install [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
   - [X] =Java= install [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
-  - [X] =Python= install [[https://github.com/emacs-lsp/lsp-pyright][lsp-pyright]] and `npm install -g pyright`
+  - [X] =Python= install [[https://github.com/emacs-lsp/lsp-pyright][lsp-pyright]], lsp-mode download server out-of-box or `npm install -g pyright`
   - [X] =Rust= lsp-mode download server out-of-box or install [[https://rust-analyzer.github.io/manual.html#building-from-source][rust-analyzer]]
   - [X] =Go= install [[https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation][gopls]]
   - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
