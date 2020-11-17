@@ -211,14 +211,15 @@ at the first function to return non-nil.")
 
 (defun +org/init-label-lazy-loader-h ()
   "Load label libraries lazily when babel blocks are executed."
+
+  ;; It doesn't matter what +org/babel-lazy-load return
   (defun +org/babel-lazy-load (lang &optional async)
-    ;; (cl-check-type lang (or symbol null))
     (cl-check-type lang symbol)
+    (when (and async (not (featurep 'ob-async))
+               ;; ob-async has its own agenda for lazy loading packages (in the
+               ;; child process), so we only need to make sure it's loaded.
+               (require 'ob-async nil t)))
     (unless (cdr (assq lang org-babel-load-languages))
-      (when async
-        ;; ob-async has its own agenda for lazy loading packages (in the
-        ;; child process), so we only need to make sure it's loaded.
-        (require 'ob-async nil t))
       (prog1
           (or (run-hook-with-args-until-success '+org/babel-load-functions lang)
               (require (intern (format "ob-%s" lang)) nil t)
@@ -234,7 +235,8 @@ at the first function to return non-nil.")
     "Lazy load a babel package to ensure syntax highlighting."
     (when lang
       (or (cdr (assoc lang org-src-lang-modes))
-          (+org/babel-lazy-load lang))))
+          (+org/babel-lazy-load (cond ((symbolp lang) lang)
+                                      ((stringp lang) (intern lang)))))))
 
   (advice-add #'org-src-get-lang-mode :before #'+org/src-lazy-load-library-a)
 
@@ -257,7 +259,11 @@ at the first function to return non-nil.")
 
 (use-package ob-go :defer t)
 (use-package ob-rust :defer t)
-(use-package ob-ipython :defer t)
+;; TODO: Deprecated ob-julia/ob-ipython, use ob-jupyter
+;; (use-package ob-ipython :defer t) ;https://github.com/nnicandro/emacs-jupyter#issues-with-ob-ipython
+;; (use-package ob-julia
+;;   :defer t
+;;   :quelpa (ob-julia :fetcher github :repo phrb/ob-julia))
 (use-package ob-restclient :defer t)
 (use-package ob-mermaid
   ;; https://github.com/mermaid-js/mermaid-cl
@@ -267,7 +273,20 @@ at the first function to return non-nil.")
   :config
   (setq ob-mermaid-cli-path (executable-find "mmdc")))
 
-;; FIXME: don't know how to restart/stop kernel, don't know why emacs not delete subprocess after deleting process
+;; FIXME: ob-jupyter, ob-async wierd conflict
+;; Incase you don't know, ob-jupyter need to read kernel info to config org-mode babel
+;; so, you need to set the correct enviroment first.
+;;
+;; For example, I use virtual/project enviroment for jupyter/ijulia
+;; #+begin_src elisp
+;;   (conda-env-activate VIRTUAL_ENV)
+;;   (setenv "JULIA_LOAD_PATH" JULIA_PROJECT_ENV)
+;; #+end_src
+;;
+;; Q: How do i resolve "No org-babel-execute function for jupyter-LANG"?
+;; A: Set correct enviroment and eval (org-babel-jupyter-aliases-from-kernelspecs t)
+;; Q: What header-args are needed?
+;; A: :session must be included, :async is optional
 (use-package ob-jupyter
   :ensure jupyter
   :defer t
@@ -283,17 +302,12 @@ at the first function to return non-nil.")
       (with-demoted-errors "Jupyter: %s"
         (require lang nil t)
         (require 'ob-jupyter nil t))))
-  (add-hook '+org/babel-load-functions #'+org/babel-load-jupyter-h))
 
-(use-package ob-julia
-  :defer t
-  :quelpa (ob-julia :fetcher github :repo phrb/ob-julia))
-
-(use-package ess
-  :defer t
+  (add-hook '+org/babel-load-functions #'+org/babel-load-jupyter-h)
   :config
-  (with-eval-after-load 'ess-julia
-    (setq auto-mode-alist (delete '("\\.jl\\'" . ess-julia-mode) auto-mode-alist))))
+  (defun +org/babel-jupyter-initiate-session-a (&rest _)
+    (unless (bound-and-true-p jupyter-org-interaction-mode)
+      (jupyter-org-interaction-mode))))
 
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
@@ -304,7 +318,11 @@ at the first function to return non-nil.")
                (setq inferior-julia-program-name "julia")))
   ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
   (setq ob-async-no-async-languages-alist
-        '("ipython" "jupyter-python" "jupyter-julia" "jupyter-javascript")))
+        '("ipython"
+          "jupyter-python"
+          "jupyter-julia"
+          "jupyter-R"
+          "jupyter-javascript")))
 
 ;; https://github.com/alphapapa/org-sidebar
 (use-package org-sidebar

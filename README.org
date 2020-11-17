@@ -1,23 +1,23 @@
 #+STARTUP: showall
-Updated: <2020-11-15>
+Updated: <2020-11-17>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.23, cairo version 1.17.3) of 2020-10-17
-  - build branch: feature/native-comp commit d5791ba
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.23, cairo version 1.17.3) of 2020-11-16
+  - build branch: feature/native-comp commit 54f2e9c
   - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick~
   - OS: Manjaro 20.2 Nibia
   - Shell: zsh 5.8
-  - Kernel: 5.9.2-1-MANJARO
+  - Kernel: 5.9.8-1-MANJARO
   - DE: Deepin 20
   - WM: KWin
   - GCC version: 10.2.0 with libgccjit
 
 * TODOs
-  - [ ] fix emacs-ipython-notebook configurations
   - [ ] treemacs, lsp-treemacs
   - [ ] improve tramp workflow performance
   - [ ] improve lsp workflow performance
   - [ ] neotree combine directories with only one child to make display more compact https://github.com/jaypei/emacs-neotree/issues/147
+  - [ ] fix emacs-ipython-notebook configurations
 
 * Features
   - =org=

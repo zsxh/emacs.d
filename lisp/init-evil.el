@@ -210,7 +210,9 @@ Modes
     (evil-make-overriding-map process-menu-mode-map 'normal)
 
     (evil-set-initial-state 'special-mode 'normal)
-    (evil-make-overriding-map special-mode-map 'normal))
+    (evil-make-overriding-map special-mode-map 'normal)
+    (evil-define-key 'normal special-mode-map
+      "gg" 'evil-goto-first-line))
 
   (with-eval-after-load 'imenu-list
     (evil-define-key 'normal imenu-list-major-mode-map
