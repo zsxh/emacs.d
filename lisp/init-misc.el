@@ -217,6 +217,13 @@
         (remove-hook 'pre-command-hook 'keycast-mode-line-update)
         (setq global-mode-string (delete '("" mode-line-keycast " ") global-mode-string))))))
 
+;; https://github.com/joostkremers/writeroom-mode
+;; `writeroom-mode'
+(use-package writeroom-mode
+  :defer t
+  :custom
+  (writeroom-width 106))
+
 
 (provide 'init-misc)
 
