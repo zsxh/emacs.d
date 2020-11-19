@@ -39,7 +39,8 @@
               "-XX:+UseStringDeduplication"
               ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
               ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
-              ,(concat "-javaagent:" lombok-jar))))))
+              ,(concat "-javaagent:" lombok-jar)))))
+  (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
 
 (use-package dap-java
   :after lsp-java

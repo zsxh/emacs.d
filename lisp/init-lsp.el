@@ -40,7 +40,7 @@
         ;; TODO: wait childframe rendering
         lsp-eldoc-render-all nil
         lsp-signature-render-documentation nil
-        lsp-signature-auto-activate t
+        lsp-signature-auto-activate '(:on-trigger-char)
         lsp-lens-enable t
         lsp-completion-sort-initial-results nil ; do not resort the result
         ;; lsp-completion--no-reordering t ; do not resort the result
@@ -112,7 +112,7 @@
                ("C-k" . lsp-ui-peek--select-prev)))
   :config
   (setq lsp-ui-doc-delay 0.5
-        lsp-ui-doc-header t
+        lsp-ui-doc-header nil
         lsp-ui-doc-include-signature t
         lsp-ui-doc-position 'at-point
         ;; FIXME: https://emacs-china.org/t/xwidget-async/10207/6
