@@ -37,8 +37,8 @@
                         (make-local-variable 'company-backends)
                         (company-auctex-init))))
 
-;; TODO: org-latex-instant-preview replace webkit-katex-render
-;; https://github.com/yangsheng6810/org-latex-instant-preview
+;; TODO: org-latex-impatient replace webkit-katex-render
+;; https://github.com/yangsheng6810/org-latex-impatient
 
 ;; realtime preview in Latex-mode, org-mode, ein
 (use-package webkit-katex-render

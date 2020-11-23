@@ -346,6 +346,7 @@ at the first function to return non-nil.")
         org-static-blog-posts-directory "~/org/blog/posts/"
         org-static-blog-drafts-directory "~/org/blog/drafts/"
         org-static-blog-use-preview t
+        org-static-blog-preview-ellipsis "Read more..."
         org-static-blog-preview-link-p t
         org-static-blog-enable-tags t)
   (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))

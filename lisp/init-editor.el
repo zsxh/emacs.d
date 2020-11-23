@@ -261,7 +261,9 @@
 ;; https://willschenk.com/articles/2020/tramp_tricks/
 (use-package tramp
   :ensure nil
-  :defer t)
+  :defer t
+  :config
+  (setq remote-file-name-inhibit-cache 120))
 
 ;; Adopt a sneaky garbage collection strategy of waiting until idle time to
 ;; collect; staving off the collector while the user is working.
