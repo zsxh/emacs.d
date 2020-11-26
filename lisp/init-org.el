@@ -259,14 +259,9 @@ at the first function to return non-nil.")
 
 (use-package ob-go :defer t)
 (use-package ob-rust :defer t)
-;; TODO: Deprecated ob-julia/ob-ipython, use ob-jupyter
-;; (use-package ob-ipython :defer t) ;https://github.com/nnicandro/emacs-jupyter#issues-with-ob-ipython
-;; (use-package ob-julia
-;;   :defer t
-;;   :quelpa (ob-julia :fetcher github :repo phrb/ob-julia))
 (use-package ob-restclient :defer t)
 (use-package ob-mermaid
-  ;; https://github.com/mermaid-js/mermaid-cl
+  ;; https://github.com/mermaid-js/mermaid-cli
   ;; > npm install -g @mermaid-js/mermaid-cli
   ;; https://github.com/arnm/ob-mermaid
   :defer t

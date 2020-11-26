@@ -41,7 +41,7 @@
         lsp-eldoc-render-all nil
         lsp-signature-render-documentation nil
         lsp-signature-auto-activate '(:on-trigger-char)
-        lsp-lens-enable t
+        lsp-lens-enable nil
         lsp-completion-sort-initial-results nil ; do not resort the result
         ;; lsp-completion--no-reordering t ; do not resort the result
         lsp-modeline-code-actions-enable nil
@@ -52,8 +52,12 @@
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
 
+  ;; Increase the amount of data which Emacs reads from the process.
+  ;; Again the emacs default is too low 4k considering that the some
+  ;; of the language server responses are in 800k - 3M range.
+  ;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
   (when (bound-and-true-p read-process-output-max)
-      (setq read-process-output-max (* 1024 1024)))
+    (setq read-process-output-max (* 1024 1024)))
 
   (use-package lsp-lens
     :ensure nil
@@ -78,15 +82,8 @@
   (advice-add 'lsp :before (lambda (&rest _args)
                              (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
-  ;; Increase the amount of data which Emacs reads from the process.
-  ;; Again the emacs default is too low 4k considering that the some
-  ;; of the language server responses are in 800k - 3M range.
-  ;; New variable 'read-process-ouput-max' controls sub-process throught since emacs27
-  (defun +lsp/setup ()
-    ;; (unless (member major-mode '(c-mode c++-mode java-mode))
-    ;;   (lsp-lens-mode))
-    (lsp-lens-mode))
-
+  ;; do nth now
+  (defun +lsp/setup () t)
   (add-hook 'lsp-managed-mode-hook '+lsp/setup)
 
   (defun +lsp/update-server ()

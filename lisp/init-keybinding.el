@@ -83,6 +83,7 @@
    "aoa" '(org-agenda :which-key "org-agenda")
    "aoc" '(org-capture :which-key "org-capture")
    "ap" '(list-processes :which-key "list-processes")
+   "at" '(telega :which-key "telega")
    "ay" '(nil :which-key "dictionary")
    "ays" '(youdao-dictionary-search-from-input :which-key "search-from-input")
    "ayt" '(powerthesaurus-lookup-word-dwim :which-key "powerthesaurus-lookup-word-dwim")

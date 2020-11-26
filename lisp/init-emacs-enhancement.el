@@ -436,6 +436,11 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 (use-package tree-sitter-langs
   :after tree-sitter)
 
+;;;;;;;;;;;;;; insert-char ;;;;;;;;;;;;;;
+(use-package insert-char-preview
+  :commands insert-char-preview
+  :bind ("C-x 8 RET" . insert-char-preview))
+
 
 (provide 'init-emacs-enhancement)
 

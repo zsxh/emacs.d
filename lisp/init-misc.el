@@ -224,6 +224,14 @@
   :custom
   (writeroom-width 106))
 
+;; archlinuxcn repo
+;; > pacman -S telegram-tdlib
+(use-package telega
+  :defer t
+  :config
+  (setq telega-proxies (list '(:server "127.0.0.1" :port 1081 :enable t :type (:@type "proxyTypeHttp"))
+                             '(:server "127.0.0.1" :port 1080 :enable nil :type (:@type "proxyTypeSocks5")))))
+
 
 (provide 'init-misc)
 
