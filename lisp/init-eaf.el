@@ -147,17 +147,6 @@
     (interactive)
     (eaf-open url "browser" nil))
 
-  (defun +eaf/buffer-names ()
-    (mapcar #'buffer-name (+eaf/buffers)))
-
-  (defun +eaf/buffers ()
-    (let* ((all-buffers (cl-remove-if-not
-                         (lambda (buffer)
-                           (with-current-buffer buffer
-                             (derived-mode-p 'eaf-mode)))
-                         (buffer-list))))
-      all-buffers))
-
   (defvar +eaf/browser-current-theme (cdr (assoc 'eaf-browser-dark-mode eaf-var-list)))
 
   ;; TODO: keybindings for eaf-mode
@@ -173,15 +162,6 @@
           (eaf-setq eaf-browser-dark-mode +eaf/browser-current-theme)
           (eaf-proxy-refresh_page))
       (message "+eaf/cycle-browser-theme can only be called in an EAF buffer")))
-
-  (defun +eaf/ivy-switch-buffer ()
-    (interactive)
-    (ivy-read "Switch to buffer: "
-              (delete (buffer-name (current-buffer))
-                      (+eaf/buffer-names))
-              :initial-input nil
-              :action #'ivy--switch-buffer-action
-              :caller '+eaf/ivy-switch-buffer))
 
   ;; TODO: remove jupyter-cmd, use eaf-python-command instead
   (setq jupyter-cmd "/home/zsxh/.pyenv/versions/3.8.6/bin/jupyter")

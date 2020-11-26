@@ -140,6 +140,9 @@
   (plist-put ivy-rich-display-transformers-list '+project/ivy-switch-buffer
              (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer))
 
+  (plist-put ivy-rich-display-transformers-list '+funcs/ivy-switch-major-mode-buffer
+             (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer))
+
   (plist-put ivy-rich-display-transformers-list 'counsel-find-file
              '(:columns
                ((ivy-rich-file-icon)
