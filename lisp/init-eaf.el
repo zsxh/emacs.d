@@ -26,7 +26,6 @@
              eaf-open-this-from-dired
              eaf-open-office
              eaf-open-mindmap
-             eaf-open-jupyter
              eaf-create-mindmap
              eaf-get-file-name-extension)
   :hook (eaf-mode . (lambda () (setq left-fringe-width 0
