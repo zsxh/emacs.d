@@ -230,7 +230,9 @@
   :defer t
   :config
   (setq telega-proxies (list '(:server "127.0.0.1" :port 1081 :enable t :type (:@type "proxyTypeHttp"))
-                             '(:server "127.0.0.1" :port 1080 :enable nil :type (:@type "proxyTypeSocks5")))))
+                             '(:server "127.0.0.1" :port 1080 :enable nil :type (:@type "proxyTypeSocks5"))))
+  (with-eval-after-load 'telega-msg
+    (define-key telega-msg-button-map (kbd "k") nil)))
 
 
 (provide 'init-misc)

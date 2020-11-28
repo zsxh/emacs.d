@@ -63,6 +63,11 @@
 
 (setq tramp-default-method "ssh")
 
+;; Disable electric-indent-mode globally
+(use-package electric
+  :ensure nil
+  :hook (after-init . (lambda () (electric-indent-mode -1))))
+
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
