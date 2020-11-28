@@ -13,8 +13,26 @@
 (eval-when-compile
   (require 'init-custom))
 
-;; Install EAF
 ;; https://github.com/manateelazycat/emacs-application-framework#install
+;;
+;; Install EAF
+;;
+;; 1) conda env
+;; $ conda create -n eaf python=VERSION & conda activate eaf
+;; $ conda install jupyterlab qtconsole dbus-python nb_conda_kernels
+;; $ pip install pymupdf
+;; $ sudo pacman -S wmctrl
+;;
+;; in order to use external kernels for tools other than jupyter notebooks via nb_conda_kernels
+;; you need to set `kernelspec_path`
+;; https://github.com/Anaconda-Platform/nb_conda_kernels#use-with-nbconvert-voila-papermill
+;;
+;; in order to run project local IJulia kernel
+;; you need to set (setenv "JULIA_LOAD_PATH" "YOUR_PROJECT_PATH") for example
+;;
+;; or 2) pyenv env
+;; $ pyenv install VERSION
+;; $ pyenv global VERSION & pip install ....
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
@@ -53,8 +71,7 @@
       (setq browse-url-browser-function 'eaf-open-browser)))
   :config
   (setq
-   ;; eaf-python-command "/usr/bin/python" ; Install dependencies from arch repo
-   eaf-python-command "/home/zsxh/.pyenv/versions/3.8.6/bin/python"
+   eaf-python-command (expand-file-name "~/.pyenv/versions/miniconda3-latest/envs/eaf/bin/python")
    eaf-enable-debug t
    eaf-browser-default-search-engine "duckduckgo"
    eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf/")))
@@ -163,14 +180,13 @@
           (eaf-proxy-refresh_page))
       (message "+eaf/cycle-browser-theme can only be called in an EAF buffer")))
 
-  ;; TODO: remove jupyter-cmd, use eaf-python-command instead
-  (setq jupyter-cmd "/home/zsxh/.pyenv/versions/3.8.6/bin/jupyter")
+  (setq jupyter-cmd (expand-file-name "~/.pyenv/versions/miniconda3-latest/envs/eaf/bin/jupyter"))
 
   (defun eaf-open-jupyter ()
     "Open jupyter."
     (interactive)
     (if (executable-find "jupyter-qtconsole")
-        (let* ((data (json-read-from-string (shell-command-to-string (concat jupyter-cmd " kernelspec list --json"))))
+        (let* ((data (json-read-from-string (shell-command-to-string (concat jupyter-cmd " kernelspec list --json --log-level=ERROR"))))
                (kernel (completing-read "Jupyter Kernels: " (mapcar #'car (alist-get 'kernelspecs data))))
                (args (make-hash-table :test 'equal)))
           (puthash "kernel" kernel args)
