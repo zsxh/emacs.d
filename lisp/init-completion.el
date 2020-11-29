@@ -107,11 +107,11 @@
   :hook (company-mode . company-box-mode)
   :config
   (setq company-box-show-single-candidate 'always
-              ;; company-box-backends-colors nil
-              company-box-highlight-prefix nil
-              company-box-doc-delay 0.5
-              company-box-tooltip-maximum-width company-tooltip-maximum-width
-              company-box-icons-alist 'company-box-icons-all-the-icons)
+        company-box-doc-enable nil
+        company-box-highlight-prefix nil
+        company-box-doc-delay 0.5
+        company-box-tooltip-maximum-width company-tooltip-maximum-width
+        company-box-icons-alist 'company-box-icons-all-the-icons)
   (setq company-box-icons-all-the-icons
         `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.8 :v-adjust -0.15))
           (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.02))
@@ -140,7 +140,16 @@
           (Operator . ,(all-the-icons-material "control_point" :height 0.8 :v-adjust -0.15))
           (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.02))
           (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15)))
-        company-box-icons-alist 'company-box-icons-all-the-icons))
+        company-box-icons-alist 'company-box-icons-all-the-icons)
+
+  ;; "C-h" toggle doc frame manually
+  (defun company-box-doc-manually-a ()
+    (interactive)
+    (let ((frame (or (frame-parent) (selected-frame))))
+      (company-box-doc--show company-selection frame)
+      (add-hook-run-once 'pre-command-hook (lambda () (company-box-doc--hide frame)))))
+
+  (advice-add 'company-box-doc-manually :override #'company-box-doc-manually-a))
 
 
 (provide 'init-completion)

@@ -21,6 +21,7 @@
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
              eaf-open-browser
+             eaf-open-browser-with-history
              eaf-open-dash
              eaf-open-bookmark
              eaf-open-this-from-dired
