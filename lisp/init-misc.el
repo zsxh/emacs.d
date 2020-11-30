@@ -231,8 +231,39 @@
   :config
   (setq telega-proxies (list '(:server "127.0.0.1" :port 1081 :enable t :type (:@type "proxyTypeHttp"))
                              '(:server "127.0.0.1" :port 1080 :enable nil :type (:@type "proxyTypeSocks5"))))
+
   (with-eval-after-load 'telega-msg
-    (define-key telega-msg-button-map (kbd "k") nil)))
+    (define-key telega-msg-button-map (kbd "k") nil))
+
+  (with-eval-after-load 'telega-ins
+    ;; customize date format
+    (defun telega-ins--date-a (timestamp)
+      "Insert TIMESTAMP.
+Format is:
+- HH:MM      if today
+- Mon/Tue/.. if on this week
+- YYYY/MM/DD otherwise"
+      (let* ((dtime (decode-time timestamp))
+             (current-ts (time-to-seconds (current-time)))
+             (ctime (decode-time current-ts))
+             (today00 (telega--time-at00 current-ts ctime)))
+        (if (and (> timestamp today00)
+                 (< timestamp (+ today00 (* 24 60 60))))
+            (telega-ins-fmt "%02d:%02d" (nth 2 dtime) (nth 1 dtime))
+
+          (let* ((week-day (nth 6 ctime))
+                 (mdays (+ week-day
+                           (- (if (< week-day telega-week-start-day) 7 0)
+                              telega-week-start-day)))
+                 (week-start00 (telega--time-at00
+                                (- current-ts (* mdays 24 3600)))))
+            (if (and (> timestamp week-start00)
+                     (< timestamp (+ week-start00 (* 7 24 60 60))))
+                (telega-ins (nth (nth 6 dtime) telega-week-day-names))
+
+              (telega-ins-fmt "%02d/%02d/%02d"
+                (nth 5 dtime) (nth 4 dtime) (nth 3 dtime)))))))
+    (advice-add #'telega-ins--date :override #'telega-ins--date-a)))
 
 
 (provide 'init-misc)

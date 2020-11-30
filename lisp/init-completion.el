@@ -108,6 +108,8 @@
   :config
   (setq company-box-show-single-candidate 'always
         company-box-doc-enable nil
+        company-box-enable-icon nil     ;poor gc perfomance
+        company-box-backends-colors nil
         company-box-highlight-prefix nil
         company-box-doc-delay 0.5
         company-box-tooltip-maximum-width company-tooltip-maximum-width
@@ -139,8 +141,12 @@
           (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
           (Operator . ,(all-the-icons-material "control_point" :height 0.8 :v-adjust -0.15))
           (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.02))
-          (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15)))
-        company-box-icons-alist 'company-box-icons-all-the-icons)
+          (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15))))
+
+  ;; Don't show documentation in echo area, because company-box displays its own
+  ;; in a child frame.
+  (when company-box-doc-enable
+    (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends)))
 
   ;; "C-h" toggle doc frame manually
   (defun company-box-doc-manually-a ()
