@@ -194,6 +194,20 @@
                       ""))
           nil)))
 
+;; sort and filter candidates in Ivy menus
+(use-package ivy-prescient
+  :after counsel
+  :config
+  (setq ivy-prescient-sort-commands
+        '(:not swiper swiper-isearch ivy-switch-buffer counsel-jq))
+  (ivy-prescient-mode))
+
+;; EmacsConf 2020: https://www.youtube.com/watch?v=1SulVSOb3U8
+;; Process Json Data
+;; https://github.com/200ok-ch/counsel-jq
+(use-package counsel-jq
+  :commands (counsel-jq))
+
 
 (provide 'init-ivy)
 
