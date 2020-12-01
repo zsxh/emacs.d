@@ -19,7 +19,8 @@
   :defer 3
   :bind ((:map org-mode-map
                ("C-c C-," . org-insert-structure-template)
-               ("C-M-<return>" . org-table-insert-hline)))
+               ("C-M-<return>" . org-table-insert-hline)
+               ("C-j" . org-return)))
   ;; :commands org-open-at-point
   :preface
   ;; customize before (require 'org)

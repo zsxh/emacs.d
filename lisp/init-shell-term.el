@@ -46,10 +46,12 @@ if no project root found, use current directory instead."
   :bind ((:map vterm-mode-map
                ("M-u" . ace-window)
                ("M-`" . +vterm/send-tmux-prefix-key)
-               ("C-s" . swiper)
+               ("C-s" . +vterm/swiper)
                ("<f9>" . +vterm/toggle-here)
                ("<f10>" . +vterm/toggle-other-window)
-               ("<f11>" . toggle-frame-fullscreen)))
+               ("<f11>" . toggle-frame-fullscreen))
+         (:map vterm-copy-mode-map
+               ("q" . vterm-copy-mode-done)))
   :custom
   (vterm-kill-buffer-on-exit t)
   (vterm-term-environment-variable "xterm-24bit")
@@ -62,7 +64,8 @@ if no project root found, use current directory instead."
     (set-face-background 'vterm-color-black (doom-color 'base6)))
 
   (with-eval-after-load 'evil
-    (evil-set-initial-state 'vterm-mode 'insert))
+    (evil-set-initial-state 'vterm-mode 'insert)
+    (evil-define-key '(normal insert emacs) vterm-copy-mode-map "q" #'vterm-copy-mode-done))
 
   (defvar +vterm/toggle--window-configration nil)
 
@@ -151,7 +154,13 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (when (and (featurep 'evil)
                (not (evil-insert-state-p)))
       (evil-insert-state))
-    (vterm-send-key "`" nil t)))
+    (vterm-send-key "`" nil t))
+
+  (defun +vterm/swiper ()
+    (interactive)
+    (vterm-copy-mode)
+    (message "vterm-copy-mode activated")
+    (swiper)))
 
 (use-package term
   :ensure nil
