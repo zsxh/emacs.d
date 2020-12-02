@@ -297,29 +297,30 @@ Version 2017-01-27"
          (funcall ,function))
        (add-hook ,hook ',sym ,append ,local))))
 
-(defun +funcs/ivy-switch-major-mode-buffer ()
+(defun +funcs/ivy-switch-major-mode-buffer (&rest modes)
   (interactive)
   (ivy-read "Switch to buffer: "
-            (let ((buf-mode major-mode))
-              (delete (buffer-name (current-buffer))
-                      (mapcar #'buffer-name (cl-remove-if-not
-                                             (lambda (buffer)
-                                               (with-current-buffer buffer
-                                                 (derived-mode-p buf-mode)))
-                                             (buffer-list)))))
+            (delete (buffer-name (current-buffer))
+                    (mapcar #'buffer-name (cl-remove-if-not
+                                           (lambda (buffer)
+                                             (with-current-buffer buffer
+                                               (member-if #'derived-mode-p modes)))
+                                           (buffer-list))))
             :initial-input nil
             :action #'ivy--switch-buffer-action
             :caller '+funcs/ivy-switch-major-mode-buffer))
 
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
-  (cond ((and
+  (cond ((eq major-mode 'eaf-mode)
+         (+funcs/ivy-switch-major-mode-buffer major-mode))
+        ((member major-mode '(telega-root-mode telega-chat-mode))
+         (+funcs/ivy-switch-major-mode-buffer 'telega-root-mode 'telega-chat-mode))
+        ((and
           (or (not (bound-and-true-p tramp-tramp-file-p))
               (not (tramp-tramp-file-p default-directory)))
           (+project/root))
          (+project/ivy-switch-buffer))
-        ((member major-mode '(eaf-mode telega-chat-mode))
-         (+funcs/ivy-switch-major-mode-buffer))
         (t
          (ivy-switch-buffer))))
 
