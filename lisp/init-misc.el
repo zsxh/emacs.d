@@ -50,6 +50,15 @@
    "t" '(nil :which-key "toggle")
    "ti" '(markdown-toggle-inline-images :which-key "inline-images")))
 
+;; https://github.com/lorniu/go-translate
+;; TODO: google translate token issue
+(use-package go-translate
+  :commands (go-translate go-translate-popup)
+  :config
+  (setq go-translate-token-current (cons 430675 2721866130))
+  (setq go-translate-local-language "zh-CN")
+  (setq go-translate-base-url "https://translate.google.cn"))
+
 ;; This extension will ask me Chinese words and then insert translation as variable or function name.
 ;; https://github.com/manateelazycat/insert-translated-name
 (use-package insert-translated-name

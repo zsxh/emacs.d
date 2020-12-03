@@ -94,7 +94,11 @@
   (if (display-graphic-p)
       (use-package flycheck-posframe
         :after flycheck
-        :hook (flycheck-mode . flycheck-posframe-mode))
+        :hook (flycheck-mode . flycheck-posframe-mode)
+        ;; inhibit display of flycheck posframe while company popups
+        ;; https://github.com/alexmurray/flycheck-posframe/issues/12
+        :custom (flycheck-posframe-inhibit-functions
+                 '((lambda (&rest _) (bound-and-true-p company-backend)))))
     (use-package flycheck-popup-tip
       :after flycheck
       :hook (flycheck-mode . flycheck-popup-tip-mode)))
