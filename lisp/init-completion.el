@@ -148,7 +148,12 @@
     (interactive)
     (let ((frame (or (frame-parent) (selected-frame))))
       (company-box-doc--show company-selection frame)
-      (add-hook-run-once 'pre-command-hook (lambda () (company-box-doc--hide frame)))))
+      (defun +company-box/auto-hide-frame-h ()
+        "auto hide company-box doc frame if not scrolling the frame"
+        (unless (eq this-command #'mwheel-scroll)
+          (company-box-doc--hide frame)
+          (remove-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
+      (add-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
 
   (advice-add 'company-box-doc-manually :override #'company-box-doc-manually-a))
 

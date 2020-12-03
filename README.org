@@ -116,6 +116,8 @@ Updated: <2020-11-17>
   - =others=
     - =eaf=
       emacs-application-framework for browsering web, previewing markdown, pdf ...
+    - =telega=
+      [[https://github.com/zevlg/telega.el][telega.el]] is full featured unofficial client for Telegram platform for GNU Emacs.
     - =elfeed=
       rss
     - =youdao-dictionary=
