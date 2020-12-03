@@ -102,7 +102,7 @@
   :hook (company-mode . company-box-mode)
   :config
   (setq company-box-show-single-candidate 'always
-        company-box-doc-enable nil
+        company-box-doc-enable nil      ;perfomance issue
         company-box-enable-icon nil     ;poor gc perfomance
         company-box-backends-colors nil
         company-box-highlight-prefix nil
