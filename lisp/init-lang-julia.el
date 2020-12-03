@@ -90,6 +90,10 @@
           (vterm-send-return)
           (vterm-send-backspace))))))
 
+;; TODO: julia-vterm workflow
+(use-package julia-vterm
+  :defer t)
+
 
 (provide 'init-lang-julia)
 

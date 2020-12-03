@@ -49,6 +49,7 @@
   :commands pyenv-mode
   :hook (python-mode . pyenv-mode))
 
+;; TODO: python vterm workflow: send region ...
 (with-eval-after-load 'python
   (defun +python/set-leader-keys ()
     (+language-server/set-common-leader-keys python-mode-map)
