@@ -112,10 +112,7 @@
         lsp-ui-doc-header nil
         lsp-ui-doc-include-signature t
         lsp-ui-doc-position 'at-point
-        ;; FIXME: https://emacs-china.org/t/xwidget-async/10207/6
-        ;; async process won't be killed after enabling xwdiget
-        ;; lsp-ui-doc-use-webkit (featurep 'xwidget-internal)
-        )
+        lsp-ui-doc-use-webkit nil)
 
   (setq-default lsp-ui-doc-frame-parameters
                 '((left . -1)

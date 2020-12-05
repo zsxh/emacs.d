@@ -159,9 +159,6 @@
                            (format "nmcli device wifi connect %s"
                                    (shell-quote-argument network))))))))
 
-(use-package webkit-color-picker
-  :commands (webkit-color-picker-show))
-
 ;; Major mode for crontab(5) files
 (use-package crontab-mode
   :mode ("\\.?cron\\(tab\\)?\\'" . crontab-mode))

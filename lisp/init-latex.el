@@ -37,21 +37,8 @@
                         (make-local-variable 'company-backends)
                         (company-auctex-init))))
 
-;; TODO: org-latex-impatient replace webkit-katex-render
+;; TODO: org-latex-impatient
 ;; https://github.com/yangsheng6810/org-latex-impatient
-
-;; realtime preview in Latex-mode, org-mode, ein
-(use-package webkit-katex-render
-  :if (featurep 'xwidget-internal)
-  :quelpa (webkit-katex-render
-           :fetcher github
-           :repo "fuxialexander/emacs-webkit-katex-render"
-           :files (:defaults "katex.html"))
-  :commands webkit-katex-render-mode
-  :config
-  ;; (with-eval-after-load 'doom-themes
-  ;;   (setq webkit-katex-render--background-color (doom-color 'bg)))
-  (setq webkit-katex-render--math-at-point-function 'webkit-katex-render--org-math-at-point))
 
 ;; org-latex edit, preview, export ...
 
@@ -183,7 +170,6 @@
     (interactive)
     (add-hook 'post-command-hook 'org-latex-fragment-toggle-auto nil t)
     (add-hook 'text-scale-mode-hook 'update-org-latex-fragments nil t)
-    (webkit-katex-render-mode)
     (plist-put org-format-latex-options :scale (+ text-scale-mode-amount 2))
     (org-latex-preview '(16)))
 
@@ -191,7 +177,6 @@
     (interactive)
     (remove-hook 'post-command-hook 'org-latex-fragment-toggle-auto t)
     (remove-hook 'text-scale-mode-hook 'update-org-latex-fragments t)
-    (webkit-katex-render-mode -1)
     (org-clear-latex-preview))
 
   ;; (add-hook 'org-mode-hook 'activate-org-latex-preview)

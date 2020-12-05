@@ -1,13 +1,13 @@
 #+STARTUP: showall
-Updated: <2020-11-17>
+Updated: <2020-12-05>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.23, cairo version 1.17.3) of 2020-11-16
-  - build branch: feature/native-comp commit 54f2e9c
-  - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick~
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.23, cairo version 1.17.3) of 2020-12-05
+  - build branch: feature/native-comp eb8d15
+  - system-configuration-options: ~--with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick~
   - OS: Manjaro 20.2 Nibia
   - Shell: zsh 5.8
-  - Kernel: 5.9.8-1-MANJARO
+  - Kernel: 5.8.18-1-MANJARO
   - DE: Deepin 20
   - WM: KWin
   - GCC version: 10.2.0 with libgccjit
@@ -30,8 +30,6 @@ Updated: <2020-11-17>
   - =latex=
     - =company-auctex=, =company-math=
       auto completion
-    - =webkit-katex-render=
-      real time latex preview at point
   - =client=
     - =restclient=
       client like postman
@@ -153,7 +151,7 @@ Updated: <2020-11-17>
      git clone --depth 1 https://github.com/emacs-mirror/emacs.git
      cd emacs
      ./autogen.sh
-     ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-imagemagick
+     ./configure --with-x-toolkit=gtk3 --with-imagemagick
      make -j8
      sudo make install
    #+end_src
@@ -166,7 +164,7 @@ Updated: <2020-11-17>
      git clone --depth 1 --branch feature/native-comp https://github.com/emacs-mirror/emacs.git emacs-native-comp
      cd emacs-native-comp
      ./autogen.sh
-     ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick
+     ./configure --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick
      make -j8
      sudo make install
    #+end_src
