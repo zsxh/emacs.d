@@ -47,7 +47,13 @@
         lsp-modeline-code-actions-enable nil
         lsp-modeline-workspace-status-enable nil
         lsp-modeline-diagnostics-enable nil
-        lsp-restart 'ignore)
+        lsp-restart 'ignore
+        lsp-session-file (expand-file-name ".cache/lsp-session" user-emacs-directory)
+        ;; Disable features that have great potential to be slow.
+        lsp-enable-folding nil
+        lsp-enable-text-document-color nil
+        ;; Reduce unexpected modifications to code
+        lsp-enable-on-type-formatting nil)
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
@@ -82,13 +88,43 @@
   (advice-add 'lsp :before (lambda (&rest _args)
                              (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
-  ;; do nth now
-  (defun +lsp/setup () t)
-  (add-hook 'lsp-managed-mode-hook '+lsp/setup)
+  ;; (defun +lsp/setup () t)
+  ;; (add-hook 'lsp-managed-mode-hook '+lsp/setup)
 
   (defun +lsp/update-server ()
     (interactive)
-    (lsp-install-server t)))
+    (lsp-install-server t))
+
+  ;; Code from doom-emacs
+  (defvar +lsp/defer-shutdown 10
+    "If non-nil, defer shutdown of LSP servers for this many seconds after last
+workspace buffer is closed.
+
+This delay prevents premature server shutdown when a user still intends on
+working on that project after closing the last buffer, or when programmatically
+killing and opening many LSP/eglot-powered buffers.")
+  (defvar +lsp/deferred-shutdown-timer nil)
+  (defun +lsp/defer-server-shutdown-a (orig-fn &optional restart)
+    "Defer server shutdown for a few seconds.
+This gives the user a chance to open other project files before the server is
+auto-killed (which is a potentially expensive process). It also prevents the
+server getting expensively restarted when reverting buffers."
+    (if (or lsp-keep-workspace-alive
+            restart
+            (null +lsp/defer-shutdown)
+            (= +lsp/defer-shutdown 0))
+        (funcall orig-fn restart)
+      (when (timerp +lsp/deferred-shutdown-timer)
+        (cancel-timer +lsp/deferred-shutdown-timer))
+      (setq +lsp/deferred-shutdown-timer
+            (run-at-time
+             (if (numberp +lsp/defer-shutdown) +lsp/defer-shutdown 3)
+             nil (lambda (workspace)
+                   (with-lsp-workspace workspace
+                     (unless (lsp--workspace-buffers workspace)
+                       (let ((lsp-restart 'ignore))
+                         (funcall orig-fn)))))
+             lsp--cur-workspace)))))
 
 (use-package lsp-ui
   :after lsp-mode
