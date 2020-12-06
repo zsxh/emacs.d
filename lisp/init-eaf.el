@@ -165,6 +165,20 @@
           (eaf-proxy-refresh_page))
       (message "+eaf/cycle-browser-theme can only be called in an EAF buffer"))))
 
+(use-package eaf-org
+  :load-path "~/.emacs.d/submodules/emacs-application-framework"
+  :after (eaf org)
+  :config
+  (defun +org/eaf-open-file (file-path link-without-schema)
+    (eaf-open file-path))
+  (setq org-file-apps '((auto-mode . emacs)
+                        ("\\.mm\\'" . default)
+                        ("\\.x?html?\\'" . default)
+                        ("\\.gif\\'" . +org/eaf-open-file)
+                        ("\\.png\\'" . +org/eaf-open-file)
+                        ("\\.jpe?g\\'" . +org/eaf-open-file)
+                        ("\\.pdf\\'" . +org/eaf-open-file))))
+
 
 (provide 'init-eaf)
 
