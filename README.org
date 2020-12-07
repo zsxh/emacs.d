@@ -4,7 +4,7 @@ Updated: <2020-12-05>
 * Enviroment
   - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.23, cairo version 1.17.3) of 2020-12-05
   - build branch: feature/native-comp eb8d15
-  - system-configuration-options: ~--with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick~
+  - system-configuration-options: ~CFLAGS='-O3' --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick~
   - OS: Manjaro 20.2 Nibia
   - Shell: zsh 5.8
   - Kernel: 5.8.18-1-MANJARO

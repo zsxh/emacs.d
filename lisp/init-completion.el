@@ -84,78 +84,83 @@
   :after company
   :hook (global-company-mode . company-quickhelp-terminal-mode))
 
-;; (use-package company-posframe
-;;   :if (and (>= emacs-major-version 26)
-;;            (display-graphic-p))
-;;   :after company
-;;   :hook (global-company-mode . company-posframe-mode)
-;;   :config
-;;   (setq company-posframe-quickhelp-delay 0.3
-;;         company-posframe-show-indicator t
-;;         company-posframe-show-metadata t))
+(defcustom +completion/company-frontend 'company-posframe
+  "Company frontend."
+  :type '(choice
+          (const :tag "company-posframe" company-posframe)
+          (const :tag "company-box" company-box)))
 
-;; Code from https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-company.el
-(use-package company-box
-  :if (and (>= emacs-major-version 26)
-           (display-graphic-p))
-  :after company
-  :hook (company-mode . company-box-mode)
-  :config
-  (setq company-box-show-single-candidate 'always
-        company-box-doc-enable nil
-        company-box-enable-icon t
-        company-box-backends-colors nil
-        company-box-highlight-prefix nil
-        company-box-doc-delay 0.5
-        company-box-tooltip-maximum-width company-tooltip-maximum-width
-        company-box-icons-alist 'company-box-icons-all-the-icons)
-  (setq company-box-icons-all-the-icons
-        `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.8 :v-adjust -0.15))
-          (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.02))
-          (Method . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
-          (Function . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
-          (Constructor . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
-          (Field . ,(all-the-icons-octicon "tag" :height 0.85 :v-adjust 0 :face 'all-the-icons-lblue))
-          (Variable . ,(all-the-icons-octicon "tag" :height 0.85 :v-adjust 0 :face 'all-the-icons-lblue))
-          (Class . ,(all-the-icons-material "settings_input_component" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
-          (Interface . ,(all-the-icons-material "share" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
-          (Module . ,(all-the-icons-material "view_module" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
-          (Property . ,(all-the-icons-faicon "wrench" :height 0.8 :v-adjust -0.02))
-          (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.8 :v-adjust -0.15))
-          (Value . ,(all-the-icons-material "format_align_right" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
-          (Enum . ,(all-the-icons-material "storage" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
-          (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.8 :v-adjust -0.15))
-          (Snippet . ,(all-the-icons-material "format_align_center" :height 0.8 :v-adjust -0.15))
-          (Color . ,(all-the-icons-material "palette" :height 0.8 :v-adjust -0.15))
-          (File . ,(all-the-icons-faicon "file-o" :height 0.8 :v-adjust -0.02))
-          (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.8 :v-adjust -0.15))
-          (Folder . ,(all-the-icons-faicon "folder-open" :height 0.8 :v-adjust -0.02))
-          (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.8 :v-adjust -0.15))
-          (Constant . ,(all-the-icons-faicon "square-o" :height 0.8 :v-adjust -0.1))
-          (Struct . ,(all-the-icons-material "settings_input_component" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
-          (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
-          (Operator . ,(all-the-icons-material "control_point" :height 0.8 :v-adjust -0.15))
-          (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.02))
-          (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15))))
+(when (and (>= emacs-major-version 26) (display-graphic-p))
+  (cond
+   ((eq +completion/company-frontend 'company-posframe)
+    (use-package company-posframe
+      :hook (global-company-mode . company-posframe-mode)
+      :config
+      (setq company-posframe-quickhelp-delay 0.3
+            company-posframe-show-indicator t
+            company-posframe-show-metadata t)))
 
-  ;; Don't show documentation in echo area, because company-box displays its own
-  ;; in a child frame.
-  (when company-box-doc-enable
-    (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends)))
+   ((eq +completion/company-frontend 'company-box)
+    ;; Code from https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-company.el
+    (use-package company-box
+      :hook (company-mode . company-box-mode)
+      :config
+      (setq company-box-show-single-candidate 'always
+            company-box-doc-enable nil
+            company-box-enable-icon t
+            company-box-backends-colors nil
+            company-box-highlight-prefix nil
+            company-box-doc-delay 0.5
+            company-box-tooltip-maximum-width company-tooltip-maximum-width
+            company-box-icons-alist 'company-box-icons-all-the-icons)
+      (setq company-box-icons-all-the-icons
+            `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.8 :v-adjust -0.15))
+              (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.02))
+              (Method . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
+              (Function . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
+              (Constructor . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
+              (Field . ,(all-the-icons-octicon "tag" :height 0.85 :v-adjust 0 :face 'all-the-icons-lblue))
+              (Variable . ,(all-the-icons-octicon "tag" :height 0.85 :v-adjust 0 :face 'all-the-icons-lblue))
+              (Class . ,(all-the-icons-material "settings_input_component" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
+              (Interface . ,(all-the-icons-material "share" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
+              (Module . ,(all-the-icons-material "view_module" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
+              (Property . ,(all-the-icons-faicon "wrench" :height 0.8 :v-adjust -0.02))
+              (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.8 :v-adjust -0.15))
+              (Value . ,(all-the-icons-material "format_align_right" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
+              (Enum . ,(all-the-icons-material "storage" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
+              (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.8 :v-adjust -0.15))
+              (Snippet . ,(all-the-icons-material "format_align_center" :height 0.8 :v-adjust -0.15))
+              (Color . ,(all-the-icons-material "palette" :height 0.8 :v-adjust -0.15))
+              (File . ,(all-the-icons-faicon "file-o" :height 0.8 :v-adjust -0.02))
+              (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.8 :v-adjust -0.15))
+              (Folder . ,(all-the-icons-faicon "folder-open" :height 0.8 :v-adjust -0.02))
+              (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.8 :v-adjust -0.15))
+              (Constant . ,(all-the-icons-faicon "square-o" :height 0.8 :v-adjust -0.1))
+              (Struct . ,(all-the-icons-material "settings_input_component" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
+              (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
+              (Operator . ,(all-the-icons-material "control_point" :height 0.8 :v-adjust -0.15))
+              (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.02))
+              (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15))))
 
-  ;; "C-h" toggle doc frame manually
-  (defun company-box-doc-manually-a ()
-    (interactive)
-    (let ((frame (or (frame-parent) (selected-frame))))
-      (company-box-doc--show company-selection frame)
-      (defun +company-box/auto-hide-frame-h ()
-        "auto hide company-box doc frame if not scrolling the frame"
-        (unless (eq this-command #'mwheel-scroll)
-          (company-box-doc--hide frame)
-          (remove-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
-      (add-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
+      ;; Don't show documentation in echo area, because company-box displays its own
+      ;; in a child frame.
+      (when company-box-doc-enable
+        (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends)))
 
-  (advice-add 'company-box-doc-manually :override #'company-box-doc-manually-a))
+      ;; "C-h" toggle doc frame manually
+      (defun company-box-doc-manually-a ()
+        (interactive)
+        (let ((frame (or (frame-parent) (selected-frame))))
+          (company-box-doc--show company-selection frame)
+          (defun +company-box/auto-hide-frame-h ()
+            "auto hide company-box doc frame if not scrolling the frame"
+            (unless (eq this-command #'mwheel-scroll)
+              (company-box-doc--hide frame)
+              (remove-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
+          (add-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
+
+      (advice-add 'company-box-doc-manually :override #'company-box-doc-manually-a)))
+   (t nil)))
 
 
 (provide 'init-completion)
