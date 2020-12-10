@@ -33,7 +33,7 @@
   :config
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
-        company-tooltip-maximum-width (/ (frame-width) 3)
+        company-tooltip-maximum-width (/ (frame-width) 2)
         company-idle-delay 0 ; decrease delay before autocompletion popup shows
         company-echo-delay (if (display-graphic-p) nil 0) ; remove annoying blinking
         company-minimum-prefix-length 1
@@ -84,7 +84,7 @@
   :after company
   :hook (global-company-mode . company-quickhelp-terminal-mode))
 
-(defcustom +completion/company-frontend 'company-posframe
+(defcustom +completion/company-frontend 'company-box
   "Company frontend."
   :type '(choice
           (const :tag "company-posframe" company-posframe)
@@ -95,10 +95,12 @@
    ((eq +completion/company-frontend 'company-posframe)
     (use-package company-posframe
       :hook (global-company-mode . company-posframe-mode)
+      :bind (:map company-posframe-active-map
+                  ("C-h" . company-posframe-quickhelp-toggle))
       :config
-      (setq company-posframe-quickhelp-delay 0.3
-            company-posframe-show-indicator t
-            company-posframe-show-metadata t)))
+      (setq company-posframe-quickhelp-delay 0.5
+            company-posframe-show-indicator nil
+            company-posframe-show-metadata nil)))
 
    ((eq +completion/company-frontend 'company-box)
     ;; Code from https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-company.el
@@ -154,7 +156,8 @@
           (company-box-doc--show company-selection frame)
           (defun +company-box/auto-hide-frame-h ()
             "auto hide company-box doc frame if not scrolling the frame"
-            (unless (eq this-command #'mwheel-scroll)
+            ;; (message "log: this-command %s" this-command)
+            (unless (member this-command '(mwheel-scroll ignore))
               (company-box-doc--hide frame)
               (remove-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
           (add-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))

@@ -10,7 +10,7 @@
 
 ;;; Code:
 
-;; Install Leiningen: https://github.com/technomancy/leiningen#installation
+;; Install clj: https://clojure.org/guides/getting_started#_installation_on_linux
 ;; Install cider-nrepl: https://docs.cider.mx/cider-nrepl/usage.html#_via_leiningen
 ;; Install shadow-cljs: https://shadow-cljs.org/
 ;; Install clojure lsp server:

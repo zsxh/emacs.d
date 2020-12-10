@@ -242,6 +242,10 @@
     (define-key telega-msg-button-map (kbd "k") nil)
     (define-key telega-msg-button-map (kbd "l") nil))
 
+  (with-eval-after-load 'telega-chat
+    (when evil-mode
+      (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)))
+
   (with-eval-after-load 'telega-ins
     ;; customize date format
     (defun telega-ins--date-a (timestamp)

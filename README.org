@@ -18,6 +18,7 @@ Updated: <2020-12-05>
   - [ ] improve lsp workflow performance
   - [ ] neotree combine directories with only one child to make display more compact https://github.com/jaypei/emacs-neotree/issues/147
   - [ ] fix emacs-ipython-notebook configurations
+  - [ ] fix vterm tracing directory
 
 * Features
   - =org=

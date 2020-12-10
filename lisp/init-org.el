@@ -152,7 +152,15 @@
    "'" '(org-edit-special :which-key "editor")))
 
 (use-package org-bullets
+  :if (< emacs-major-version 26)
   :hook (org-mode . org-bullets-mode))
+
+;; https://github.com/integral-dw/org-superstar-mode
+(use-package org-superstar
+  :if (and (>= emacs-major-version 26) (char-displayable-p ?◉))
+  :hook (org-mode . org-superstar-mode)
+  :custom
+  (org-superstar-headline-bullets-list '(?◉ ?🞛 ?○ ?▷)))
 
 ;; Presentation
 (use-package org-tree-slide

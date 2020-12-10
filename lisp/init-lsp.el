@@ -22,8 +22,6 @@
                     :repo "emacs-lsp/lsp-mode"
                     :files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
-  ;; :init
-  ;; (setq lsp-use-plists t)
   :config
   (setq lsp-auto-guess-root nil
         lsp-client-packages '()
@@ -124,7 +122,8 @@ server getting expensively restarted when reverting buffers."
                      (unless (lsp--workspace-buffers workspace)
                        (let ((lsp-restart 'ignore))
                          (funcall orig-fn)))))
-             lsp--cur-workspace)))))
+             lsp--cur-workspace))))
+  (advice-add #'lsp--shutdown-workspace :around #'+lsp/defer-server-shutdown-a))
 
 (use-package lsp-ui
   :after lsp-mode

@@ -89,7 +89,8 @@
    "ayt" '(powerthesaurus-lookup-word-dwim :which-key "powerthesaurus-lookup-word-dwim")
    "ayy" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
    "ayv" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
-   "aw" '(nil :which-key "emacs-web-wowser")
+   "aw" '(nil :which-key "emacs-browser")
+   "awe" '(eaf-open-browser-with-history :which-key "eaf-open-browser-with-history")
    "aww" '(eww :which-key "open eww")
    "awb" '(eww-list-bookmarks :which-key "list-bookmarks")
    ;; Buffers

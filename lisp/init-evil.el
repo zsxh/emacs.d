@@ -212,7 +212,8 @@ Modes
     (evil-set-initial-state 'special-mode 'normal)
     (evil-make-overriding-map special-mode-map 'normal)
     (evil-define-key 'normal special-mode-map
-      "gg" 'evil-goto-first-line))
+      "gg" 'evil-goto-first-line
+      "gr" 'revert-buffer))
 
   (with-eval-after-load 'imenu-list
     (evil-define-key 'normal imenu-list-major-mode-map

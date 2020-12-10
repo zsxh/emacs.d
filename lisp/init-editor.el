@@ -155,14 +155,21 @@
   ;; note: it's risky to disable lockfiles
   ;; https://emacs-china.org/t/filename/163/17
   (setq auto-save-default nil
+        auto-save-list-file-prefix nil
         create-lockfiles nil)
   :config
   (setq auto-save-silent t
         auto-save-delete-trailing-whitespace t)
   (setq auto-save-disable-predicates
         '((lambda ()
-            (and (featurep 'tramp)
-                 (tramp-tramp-file-p (buffer-file-name))))))
+            (or
+             ;; org capture will open 'CAPTURE-{capture-file}' and '{capture-file}' buffers
+             ;; auto save in the later original buffer will affect the former buffer
+             (and (derived-mode-p 'org-mode)
+                  (get-buffer (concat "CAPTURE-" (buffer-name))))
+             ;; performance issue auto-save in remote buffer
+             (and (featurep 'tramp)
+                  (tramp-tramp-file-p (buffer-file-name)))))))
   (auto-save-enable))
 
 ;; jumping to visible text using a char-based decision tree
