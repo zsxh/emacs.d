@@ -358,6 +358,11 @@ at the first function to return non-nil.")
         org-static-blog-enable-tags t)
   (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))
 
+;; TODO: https://github.com/abo-abo/org-download
+;; eg: https://et2010.github.io/blog/nikola-orgmode-tu-pian-xian-shi/
+(use-package org-download
+  :defer t)
+
 
 (provide 'init-org)
 

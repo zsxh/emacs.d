@@ -39,7 +39,20 @@
 ;; TODO: clojure debugger
 ;; https://github.com/clojure-emacs/sayid
 (use-package sayid
-  :hook (clojure-mode . sayid-setup-package))
+  :after clojure-mode
+  :preface
+  ;; FIXME: sayid-version gccemacs `load-true-file-name'
+  (advice-add 'sayid--inject-jack-in-dependencies
+              :before
+              (lambda ()
+                (setq sayid-version
+                      (let* ((dir (cl-find-if
+                                   (lambda (dirname) (string-prefix-p "sayid" dirname))
+                                   (directory-files (expand-file-name "elpa" user-emacs-directory))))
+                             (file (concat user-emacs-directory "elpa/" dir "/sayid.el")))
+                        (lm-version file)))))
+  :config
+  (sayid-setup-package))
 
 
 (provide 'init-lang-clojure)

@@ -108,7 +108,7 @@
       :hook (company-mode . company-box-mode)
       :config
       (setq company-box-show-single-candidate 'always
-            company-box-doc-enable nil
+            company-box-doc-enable t
             company-box-enable-icon t
             company-box-backends-colors nil
             company-box-highlight-prefix nil
