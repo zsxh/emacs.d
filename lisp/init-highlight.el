@@ -124,7 +124,9 @@
                    recenter-top-bottom
                    other-window
                    winum-select-window-by-number
+                   avy-jump
                    avy-goto-line))
+  ;; (advice-remove command #'pulse-line)
   (advice-add command :after #'pulse-line))
 
 
