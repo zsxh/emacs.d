@@ -114,6 +114,19 @@
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode))
 
+;; flash the line the cursor is on
+(defun pulse-line (&rest _)
+  "Pulse the current line."
+  (pulse-momentary-highlight-one-line (point)))
+
+(dolist (command '(scroll-up-command
+                   scroll-down-command
+                   recenter-top-bottom
+                   other-window
+                   winum-select-window-by-number
+                   avy-goto-line))
+  (advice-add command :after #'pulse-line))
+
 
 (provide 'init-highlight)
 
