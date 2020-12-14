@@ -115,6 +115,12 @@
   :hook (prog-mode . hl-todo-mode))
 
 ;; flash the line the cursor is on
+(use-package pulse
+  :ensure nil
+  :defer
+  :config
+  (set-face-background 'pulse-highlight-start-face "#51afef"))
+
 (defun pulse-line (&rest _)
   "Pulse the current line."
   (pulse-momentary-highlight-one-line (point)))

@@ -169,7 +169,6 @@
 ;; This package provides visual alignment for Org tables on GUI Emacs.
 ;; https://github.com/casouri/valign
 (use-package valign
-  :quelpa (valign :fetcher github :repo "casouri/valign")
   :hook ((org-mode markdown-mode) . valign-mode))
 
 ;; convert org-file to ipynb

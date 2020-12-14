@@ -73,7 +73,15 @@
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
   (setq lispy-eval-display-style 'overlay)
-  (setq lispy-use-sly t))
+  (setq lispy-use-sly t)
+
+  (defun lispy-hash-a (orig-fn &rest args)
+    (if (and (memq major-mode '(clojurescript-mode))
+             (lispy-looking-back "\\[:\\sw+"))
+        (insert "#")
+      (apply orig-fn args)))
+
+  (advice-add 'lispy-hash :around #'lispy-hash-a))
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros
@@ -92,7 +100,7 @@
 (use-package sly-el-indent
   :quelpa (sly-el-indent :fetcher github :repo "cireu/sly-el-indent")
   :after elisp-mode
-  :hook (emacs-lisp . sly-el-indent-setup))
+  :hook (emacs-lisp-mode . sly-el-indent-setup))
 
 
 (provide 'init-lang-emacs-lisp)
