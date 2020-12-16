@@ -165,7 +165,17 @@ Updated: <2020-12-05>
      git clone --depth 1 --branch feature/native-comp https://github.com/emacs-mirror/emacs.git emacs-native-comp
      cd emacs-native-comp
      ./autogen.sh
-     ./configure --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick
+     ./configure CFLAGS='-O3' --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick
+     make -j8
+     sudo make install
+   #+end_src
+
+** pgtk-nativecomp (eaf broken)
+
+   #+begin_src shell
+     git clone --depth 1 --branch pgtk-nativecomp https://github.com/flatwhatson/emacs.git emacs-pgtk-nativecomp
+     cd emacs-pgtk-nativecomp
+     ./configure CFLAGS='-O3' --with-pgtk --with-nativecomp --with-imagemagick
      make -j8
      sudo make install
    #+end_src
