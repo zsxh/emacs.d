@@ -54,10 +54,29 @@ Check https://github.com/hlissner/emacs-doom-themes"
 Check https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)
 
-(defcustom personal-gui-theme (let* ((hour (nth 2 (decode-time (current-time)))))
-                                (if (member hour (number-sequence 7 18))
-                                    personal-gui-theme-day
-                                  personal-gui-theme-night))
+(defun +custom/rand-theme (themes)
+  (nth (random (length themes)) themes))
+
+(defcustom personal-gui-theme-random-p nil
+  "Random pick GUI theme."
+  :type 'boolean)
+
+(defcustom personal-light-gui-themes '(doom-one-light doom-solarized-light)
+  "Random light themes"
+  :type '(repeat symbol))
+
+(defcustom personal-dark-gui-themes '(doom-one doom-dark+)
+  "Random dark themes"
+  :type '(repeat symbol))
+
+(defcustom personal-gui-theme (let* ((hour (nth 2 (decode-time (current-time))))
+                                     (day? (member hour (number-sequence 7 18)))
+                                     (theme-0 (if day? personal-gui-theme-day personal-gui-theme-night))
+                                     (theme-1 (and personal-gui-theme-random-p
+                                                   (+custom/rand-theme
+                                                    (cond (day? personal-light-gui-themes)
+                                                          (t personal-dark-gui-themes))))))
+                                (or theme-1 theme-0))
   "Customize Terminal UI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
 Check https://github.com/hlissner/emacs-doom-themes")
 

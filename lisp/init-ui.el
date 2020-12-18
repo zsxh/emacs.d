@@ -36,7 +36,7 @@
        (toggle-frame-fullscreen)))
 
 ;; Fringe
-(fringe-mode '(10 . 10))
+(fringe-mode '(8 . 8))
 
 ;; Installing Fonts
 ;; https://github.com/domtronn/all-the-icons.el#installing-fonts
@@ -184,6 +184,13 @@ By default, this shows the information specified by `global-mode-string'."
     (+ui/customize-faces)))
 
 (defun +ui/customize-faces ()
+  (with-eval-after-load 'font-lock
+    (set-face-italic 'font-lock-keyword-face t)
+    (let* ((func-name-fg (face-foreground font-lock-function-name-face))
+           (theme-type (frame-parameter nil 'background-mode))
+           (f (if (string-equal "light" theme-type) 'doom-lighten 'doom-darken)))
+      (set-face-background 'font-lock-function-name-face
+                           (funcall f func-name-fg 0.75))))
   (pcase current-theme
     ('doom-nord-light
      (progn
@@ -209,7 +216,9 @@ By default, this shows the information specified by `global-mode-string'."
        (with-eval-after-load 'dired
          (set-face-foreground 'dired-directory "#3B6EA8"))
        (with-eval-after-load 'all-the-icons-dired
-         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))))
+         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))
+       (with-eval-after-load 'lsp-headerline
+         (set-face-foreground 'lsp-headerline-breadcrumb-separator-face (doom-color 'fg)))))
     ('doom-one
      (progn
        (with-eval-after-load 'dired
@@ -221,9 +230,9 @@ By default, this shows the information specified by `global-mode-string'."
          (set-face-background 'org-block-begin-line nil)
          (set-face-background 'org-block-end-line nil)
          (set-face-attribute 'org-verbatim nil
-                    :foreground "#98be65"
-                    :background "#2e332d"
-                    :inherit 'fixed-pitch))
+                             :foreground "#98be65"
+                             :background "#2e332d"
+                             :inherit 'fixed-pitch))
        (with-eval-after-load 'ein-cell
          (set-face-attribute 'ein:cell-input-area nil :background "#22262e")
          (set-face-attribute 'ein:cell-input-prompt nil :foreground "#4F894C" :background "#282c34")
@@ -247,7 +256,9 @@ By default, this shows the information specified by `global-mode-string'."
              (set-face-attribute 'swiper-match-face-1 nil :inherit 'ivy-minibuffer-match-face-1)
              (set-face-attribute 'swiper-match-face-2 nil :inherit 'ivy-minibuffer-match-face-2)
              (set-face-attribute 'swiper-match-face-3 nil :inherit 'ivy-minibuffer-match-face-3)
-             (set-face-attribute 'swiper-match-face-4 nil :inherit 'ivy-minibuffer-match-face-4))))))
+             (set-face-attribute 'swiper-match-face-4 nil :inherit 'ivy-minibuffer-match-face-4))))
+       (with-eval-after-load 'lsp-headerline
+         (set-face-foreground 'lsp-headerline-breadcrumb-separator-face (doom-color 'fg)))))
     ('doom-solarized-light
      (progn
        (with-eval-after-load 'dired

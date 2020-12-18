@@ -51,7 +51,8 @@
         lsp-enable-folding nil
         lsp-enable-text-document-color nil
         ;; Reduce unexpected modifications to code
-        lsp-enable-on-type-formatting nil)
+        lsp-enable-on-type-formatting nil
+        lsp-headerline-breadcrumb-enable nil)
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
