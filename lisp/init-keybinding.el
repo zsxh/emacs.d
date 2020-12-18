@@ -193,7 +193,7 @@
    "tr" '(nil :which-key "replace")
    "trb" '(evilmr-replace-in-buffer :which-key "evil-replace-in-buffer")
    "trf" '(evilmr-replace-in-defun :which-key "evil-replace-in-defun")
-   "trt" '(instant-rename-tag)
+   "trt" '(instant-rename-tag :which-key "instant-rename-tag")
    "ts" '(hydra-text-scale/body :which-key "scale")
    "tS" '(hydra-string-inflection/body :which-key "string-inflection-cycle")
    ;; "tt"  '(tiny-expand :which-key "tiny-expand")

@@ -26,6 +26,7 @@
            ("\\.cljs\\'" . clojurescript-mode))
     :hook ((clojure-mode clojurec-mode clojurescript-mode) . +clojure/lsp)
     :config
+    (setq clojure-toplevel-inside-comment-form t)
     (require 'lsp-clojure)
     (dolist (mode-map '(clojure-mode-map clojurec-mode-map clojurescript-mode-map))
       (+language-server/set-common-leader-keys (symbol-value mode-map)))

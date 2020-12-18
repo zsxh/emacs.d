@@ -84,11 +84,12 @@
   :after company
   :hook (global-company-mode . company-quickhelp-terminal-mode))
 
-(defcustom +completion/company-frontend 'company-box
+(defcustom +completion/company-frontend 'company-posframe
   "Company frontend."
   :type '(choice
           (const :tag "company-posframe" company-posframe)
           (const :tag "company-box" company-box)))
+
 
 (when (and (>= emacs-major-version 26) (display-graphic-p))
   (cond
@@ -98,10 +99,27 @@
       :bind (:map company-posframe-active-map
                   ("C-h" . company-posframe-quickhelp-toggle))
       :config
-      (setq company-posframe-quickhelp-delay 0.5
+      (setq company-posframe-quickhelp-delay nil
             company-posframe-show-indicator nil
-            company-posframe-show-metadata nil)))
+            company-posframe-show-metadata nil)
+      (defun +company-posframe/quickhelp-auto-hide ()
+        (unless (member this-command '(mwheel-scroll
+                                       handle-switch-frame
+                                       company-posframe-quickhelp-scroll-up
+                                       company-posframe-quickhelp-scroll-down))
+          (company-posframe-quickhelp-hide)
+          (remove-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide)))
 
+      (defun company-posframe-quickhelp-toggle ()
+        (interactive)
+        (if (posframe-funcall
+             company-posframe-quickhelp-buffer
+             (lambda ()
+               (frame-parameter (window-frame) 'visibility)))
+            (company-posframe-quickhelp-hide)
+          (company-posframe-quickhelp-show)
+          (company-posframe-quickhelp-raise-frame)
+          (add-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide 0 t)))))
    ((eq +completion/company-frontend 'company-box)
     ;; Code from https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-company.el
     (use-package company-box

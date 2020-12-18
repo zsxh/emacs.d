@@ -102,11 +102,6 @@
   :config
   (elispfl-mode))
 
-(use-package sly-el-indent
-  :quelpa (sly-el-indent :fetcher github :repo "cireu/sly-el-indent")
-  :after elisp-mode
-  :hook (emacs-lisp-mode . sly-el-indent-setup))
-
 
 (provide 'init-lang-emacs-lisp)
 
