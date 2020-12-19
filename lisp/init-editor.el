@@ -294,7 +294,7 @@
   :init
   (setq garbage-collection-messages nil)
   (setq gcmh-idle-delay 10
-        ;; gcmh-high-cons-threshold (* 200 1024 1024)
+        gcmh-high-cons-threshold (* 16 1024 1024)
         gcmh-verbose t)
   :hook (after-init . gcmh-mode)
   :config
@@ -307,21 +307,21 @@
                         (gcmh-idle-garbage-collect))))
     (add-hook 'focus-out-hook 'gcmh-idle-garbage-collect))
 
-  ;; (defun +gcmh/set-local-high-cons-threshold ()
-  ;;   (setq-local gcmh-high-cons-threshold 209715200))
+  (defun +gcmh/set-local-high-cons-threshold ()
+    (setq-local gcmh-high-cons-threshold 104857600))
 
   ;; HACK Org is known to use a lot of unicode symbols (and large org files tend
   ;;      to be especially memory hungry). Compounded with
   ;;      `inhibit-compacting-font-caches' being non-nil, org needs more memory
   ;;      to be performant.
-  ;; (with-eval-after-load 'org
-  ;;   (add-hook 'org-mode-hook #'+gcmh/set-local-high-cons-threshold))
+  (with-eval-after-load 'org
+    (add-hook 'org-mode-hook #'+gcmh/set-local-high-cons-threshold))
 
   ;; REVIEW LSP causes a lot of allocations, with or without Emacs 27+'s
   ;;        native JSON library, so we up the GC threshold to stave off
   ;;        GC-induced slowdowns/freezes.
-  ;; (with-eval-after-load 'lsp-mode
-  ;;   (add-hook 'lsp-mode-hook #'+gcmh/set-local-high-cons-threshold))
+  (with-eval-after-load 'lsp-mode
+    (add-hook 'lsp-mode-hook #'+gcmh/set-local-high-cons-threshold))
   )
 
 ;; https://www.reddit.com/r/emacs/comments/j2ovcb/comprehensive_guide_on_handling_long_lines_in/g7ag4ds?utm_source=share&utm_medium=web2x&context=3

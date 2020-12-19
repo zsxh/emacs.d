@@ -17,9 +17,10 @@
     (set-face-italic 'font-lock-keyword-face t)
     (let* ((func-name-fg (face-foreground font-lock-function-name-face))
            (theme-type (frame-parameter nil 'background-mode))
-           (f (if (string-equal "light" theme-type) 'doom-lighten 'doom-darken)))
-      (set-face-background 'font-lock-function-name-face
-                           (funcall f func-name-fg 0.75))))
+           (bg (if (string-equal "light" theme-type)
+                   (doom-lighten func-name-fg 0.93)
+                 (doom-darken func-name-fg 0.75))))
+      (set-face-background 'font-lock-function-name-face bg)))
   (pcase current-theme
     ('doom-nord-light
      (progn
