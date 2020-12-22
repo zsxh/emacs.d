@@ -30,7 +30,7 @@
                ("RET" . ivy-occur-press-and-switch)))
   :config
   (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
+  (setq ivy-use-virtual-buffers nil)
   (setq enable-recursive-minibuffers t)
   (when IS-WINDOWS
     ;; use timer to improve the ivy-read performance, but it's so aggressive that
@@ -158,6 +158,36 @@
   ;;            (plist-get ivy-rich-display-transformers-list 'counsel-find-file))
 
   (ivy-rich-mode 1))
+
+;; https://github.com/Yevgnen/ivy-rich/issues/87#issuecomment-740440509
+;; `ivy-rich-switch-buffer-project' calls `projectile-project-root'(slow) multiple times
+;; cache ivy-switch-buffer candidates to speed up
+(eval-after-load 'ivy-rich
+  (progn
+    (defvar +ivy/ivy-rich-cache
+      (make-hash-table :test 'equal))
+
+    (defun +ivy/ivy-rich-cache-lookup (delegate candidate)
+      (let ((result (gethash candidate +ivy/ivy-rich-cache)))
+        (unless result
+          (setq result (funcall delegate candidate))
+          (puthash candidate result +ivy/ivy-rich-cache))
+        result))
+
+    (defun +ivy/ivy-rich-cache-reset ()
+      (clrhash +ivy/ivy-rich-cache))
+
+    (defun +ivy/ivy-rich-cache-rebuild ()
+      (mapc (lambda (buffer)
+              (ivy-rich--ivy-switch-buffer-transformer (buffer-name buffer)))
+            (buffer-list)))
+
+    (defun +ivy/ivy-rich-cache-rebuild-trigger ()
+      (+ivy/ivy-rich-cache-reset)
+      (run-with-idle-timer 1 nil '+ivy/ivy-rich-cache-rebuild))
+
+    (advice-add 'ivy-rich--ivy-switch-buffer-transformer :around '+ivy/ivy-rich-cache-lookup)
+    (advice-add 'ivy-switch-buffer :after '+ivy/ivy-rich-cache-rebuild-trigger)))
 
 (use-package ivy-xref
   :init

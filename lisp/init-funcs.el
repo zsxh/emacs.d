@@ -317,7 +317,7 @@ Version 2017-01-27"
         ((member major-mode '(telega-root-mode telega-chat-mode))
          (+funcs/ivy-switch-major-mode-buffer 'telega-root-mode 'telega-chat-mode))
         ((and
-          (or (not (bound-and-true-p tramp-tramp-file-p))
+          (or (not (fboundp 'tramp-tramp-file-p))
               (not (tramp-tramp-file-p default-directory)))
           (+project/root))
          (+project/ivy-switch-buffer))

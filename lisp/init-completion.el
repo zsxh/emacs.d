@@ -36,13 +36,16 @@
         company-tooltip-maximum-width (/ (frame-width) 2)
         company-idle-delay 0 ; decrease delay before autocompletion popup shows
         company-echo-delay (if (display-graphic-p) nil 0) ; remove annoying blinking
-        company-minimum-prefix-length 1
+        company-minimum-prefix-length 2
         ;; company-require-match nil
         ;; company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil    ; No downcase when completion.
         company-require-match nil ; Don't require match, so you can still move your cursor as expected.
         company-backends '(company-capf company-files company-dabbrev)
         company-global-modes '(not shell-mode eshell-mode eaf-mode))
+
+  (add-hook 'prog-mode-hook (lambda () (setq-local company-minimum-prefix-length 1)))
+
   (with-eval-after-load 'company-eclim
     ;;  Stop eclim auto save.
     (setq company-eclim-auto-save nil)))
