@@ -41,7 +41,7 @@
       "gd" 'evil-goto-definition
       "gg" 'evil-goto-first-line
       "h" 'evil-backward-char
-      "q" 'quit-window))
+      "q" (lambda nil (interactive) (kill-buffer))))
 
   (when (featurep 'elisp-demos)
     (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)))
