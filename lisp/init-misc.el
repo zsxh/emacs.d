@@ -276,6 +276,12 @@ Format is:
                 (nth 5 dtime) (nth 4 dtime) (nth 3 dtime)))))))
     (advice-add #'telega-ins--date :override #'telega-ins--date-a)))
 
+;; https://github.com/tecosaur/screenshot.git
+;; convert a selected region of code to a screenshot
+(use-package screenshot
+  :quelpa (screenshot :fetcher github :repo "tecosaur/screenshot")
+  :commands screenshot)
+
 
 (provide 'init-misc)
 

@@ -61,7 +61,10 @@
     (add-hook 'emacs-lisp-mode-hook 'company-fuzzy-mode)
     (add-hook 'lisp-interaction-mode-hook 'company-fuzzy-mode)))
 
-(use-package prescient :defer t)
+(use-package prescient
+  :defer t
+  :config
+  (setq prescient-sort-length-enable nil))
 
 (use-package yasnippet
   :hook (after-init . yas-global-mode)

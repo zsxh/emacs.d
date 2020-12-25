@@ -231,7 +231,8 @@
   :after counsel
   :config
   (setq ivy-prescient-sort-commands
-        '(:not swiper swiper-isearch ivy-switch-buffer counsel-jq))
+        '(:not swiper swiper-isearch ivy-switch-buffer counsel-jq)
+        ivy-prescient-retain-classic-highlighting t)
   (ivy-prescient-mode))
 
 ;; EmacsConf 2020: https://www.youtube.com/watch?v=1SulVSOb3U8
