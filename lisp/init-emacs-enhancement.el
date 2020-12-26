@@ -95,12 +95,12 @@
 
   (advice-add 'dired-jump :around '+dired/dired-jump-a)
 
-(defun +dired/dired-find-file-a (orig-fn &rest args)
-  (let ((buf (current-buffer)))
-    (apply orig-fn args)
-    (when (and (not (eq buf (current-buffer)))
-               (eq major-mode 'dired-mode))
-      (kill-buffer buf))))
+  (defun +dired/dired-find-file-a (orig-fn &rest args)
+    (let ((buf (current-buffer)))
+      (apply orig-fn args)
+      (when (and (not (eq buf (current-buffer)))
+                 (eq major-mode 'dired-mode))
+        (kill-buffer buf))))
 
   (advice-add 'dired-find-file :around '+dired/dired-find-file-a)
 
@@ -127,8 +127,9 @@
    "P" '(dired-ranger-paste :which-key "paste files")
    "R" '(dired-ranger-move :which-key "move files")
    "T" '(dired-filter-mode :which-key "toggle-dired-filter-mode")
-   "a" '(nil :which-key "dired-async")
-   "ac" '(dired-async-do-copy :which-key "async-copy")))
+   "a" '(nil :which-key "async/rsync")
+   "ac" '(dired-async-do-copy :which-key "dired-async-do-copy")
+   "ar" '(dired-rsync :which-key "direc-rsync")))
 
 (defalias '+dired/find-program 'find-name-dired)
 
@@ -162,15 +163,40 @@
    "/" '(dired-narrow :which-key "dired-narrow")
    "c" '(wdired-finish-edit :which-key "finish edit")
    "k" '(wdired-abort-changes :which-key "abort changes")
-   "q" '(wdired-exit :which-key "exit"))
-
-  (with-eval-after-load 'all-the-icons-dired
-    ;; (advice-add #'wdired-change-to-wdired-mode :before (lambda () (all-the-icons-dired-mode -1)))
-    ;; (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired-mode)))
-    (advice-add #'wdired-change-to-dired-mode :after (lambda () (all-the-icons-dired--refresh)))))
+   "q" '(wdired-exit :which-key "exit")))
 
 (use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode))
+  :hook (dired-mode . all-the-icons-dired-mode)
+  :config
+  (with-no-warnings
+    (advice-add #'dired-do-create-files :around #'all-the-icons-dired--refresh-advice)
+    (advice-add #'dired-create-directory :around #'all-the-icons-dired--refresh-advice)
+    (advice-add #'wdired-abort-changes :around #'all-the-icons-dired--refresh-advice))
+
+  (with-no-warnings
+    (defun my-all-the-icons-dired--refresh ()
+      "Display the icons of files in a dired buffer."
+      (all-the-icons-dired--remove-all-overlays)
+      ;; NOTE: don't display icons it too many items
+      (if (<= (count-lines (point-min) (point-max)) 1000)
+          (save-excursion
+            (goto-char (point-min))
+            (while (not (eobp))
+              (when (dired-move-to-filename nil)
+                (let ((file (file-local-name (dired-get-filename 'relative 'noerror))))
+                  (when file
+                    (let ((icon (if (file-directory-p file)
+                                    (all-the-icons-icon-for-dir file
+                                                                :face 'all-the-icons-dired-dir-face
+                                                                :height 0.9
+                                                                :v-adjust all-the-icons-dired-v-adjust)
+                                  (all-the-icons-icon-for-file file :height 0.9 :v-adjust all-the-icons-dired-v-adjust))))
+                      (if (member file '("." ".."))
+                          (all-the-icons-dired--add-overlay (point) "  \t")
+                        (all-the-icons-dired--add-overlay (point) (concat icon "\t")))))))
+              (forward-line 1)))
+        (message "Not display icons because of too many items.")))
+    (advice-add #'all-the-icons-dired--refresh :override #'my-all-the-icons-dired--refresh)))
 
 ;;;;;;;;;;;;;;;;;
 ;; Dired Tools ;;
