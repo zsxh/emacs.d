@@ -50,6 +50,7 @@
 (setq scroll-step 1)
 (setq compilation-always-kill t
       compilation-scroll-output t)
+(setq warning-minimum-level :error)
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs

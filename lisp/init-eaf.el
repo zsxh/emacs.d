@@ -54,6 +54,7 @@
     (with-eval-after-load 'org
       (setq browse-url-browser-function 'eaf-open-browser)))
   :config
+  (advice-remove 'find-file #'adviser-find-file)
   (setq
    eaf-python-command (expand-file-name "~/.pyenv/versions/3.8.6/bin/python")
    eaf-enable-debug t
