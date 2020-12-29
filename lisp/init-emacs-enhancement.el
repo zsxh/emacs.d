@@ -95,12 +95,16 @@
 
   (advice-add 'dired-jump :around '+dired/dired-jump-a)
 
+  ;; TODO: 同一个buffer split window 不能删
   (defun +dired/dired-find-file-a (orig-fn &rest args)
-    (let ((buf (current-buffer)))
+    (let ((pre-buf (current-buffer))
+          (cur-buf))
       (apply orig-fn args)
-      (when (and (not (eq buf (current-buffer)))
-                 (eq major-mode 'dired-mode))
-        (kill-buffer buf))))
+      (setq cur-buf (current-buffer))
+      (when (and (not (eq pre-buf cur-buf))
+                 (eq major-mode 'dired-mode)
+                 (null (get-buffer-window cur-buf)))
+        (kill-buffer pre-buf))))
 
   (advice-add 'dired-find-file :around '+dired/dired-find-file-a)
 
