@@ -270,7 +270,7 @@ Format is:
                                 (- current-ts (* mdays 24 3600)))))
             (if (and (> timestamp week-start00)
                      (< timestamp (+ week-start00 (* 7 24 60 60))))
-                (telega-ins (nth (nth 6 dtime) telega-week-day-names))
+                (telega-ins (nth (nth 6 dtime) telega-i18n-weekday-names))
 
               (telega-ins-fmt "%02d/%02d/%02d"
                 (nth 5 dtime) (nth 4 dtime) (nth 3 dtime)))))))
