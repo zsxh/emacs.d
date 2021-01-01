@@ -70,7 +70,7 @@ Check https://github.com/hlissner/emacs-doom-themes"
   :type '(repeat symbol))
 
 (defcustom personal-gui-theme (let* ((hour (nth 2 (decode-time (current-time))))
-                                     (day? (member hour (number-sequence 7 18)))
+                                     (day? (member hour (number-sequence 7 17)))
                                      (theme-0 (if day? personal-gui-theme-day personal-gui-theme-night))
                                      (theme-1 (and personal-gui-theme-random-p
                                                    (+custom/rand-theme

@@ -182,7 +182,7 @@
       "Display the icons of files in a dired buffer."
       (all-the-icons-dired--remove-all-overlays)
       ;; NOTE: don't display icons it too many items
-      (if (<= (count-lines (point-min) (point-max)) 1000)
+      (if (<= (count-lines (point-min) (point-max)) 200)
           (save-excursion
             (goto-char (point-min))
             (while (not (eobp))

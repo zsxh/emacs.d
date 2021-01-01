@@ -21,7 +21,8 @@
   (when personal-elfeed-feeds
     (setq elfeed-feeds personal-elfeed-feeds))
   (when (featurep 'evil-collection)
-    (evil-collection-init 'elfeed)))
+    (evil-collection-init 'elfeed))
+  (evil-define-key 'normal elfeed-search-mode-map (kbd "C-<return>") 'eaf-elfeed-open-url))
 
 ;; Youdao
 (use-package youdao-dictionary
@@ -141,6 +142,9 @@
 (defvar counsel-network-manager-history nil
   "Network manager history.")
 
+;; $ nmcli con delete <SSID> # if "Secrets were required, but not provided", and you already offer a password
+;; $ nmcli device wifi list
+;; $ nmcli device wifi connect <SSID> --ask
 (defun counsel-network-manager (&optional initial-input)
   "Connect to wifi network."
   (interactive)
@@ -155,8 +159,9 @@
               :action (lambda (line)
                         (let ((network (car (s-split " " (s-trim (s-chop-prefix "*" line)) t))))
                           (message "Connecting to \"%s\".." network)
+                          ;; NOTE: remember to insert your password in async shell buffer
                           (async-shell-command
-                           (format "nmcli device wifi connect %s"
+                           (format "nmcli device wifi connect %s --ask"
                                    (shell-quote-argument network))))))))
 
 ;; Major mode for crontab(5) files
