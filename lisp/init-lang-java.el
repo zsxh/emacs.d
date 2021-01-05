@@ -25,6 +25,13 @@
       (setq lsp-java-format-settings-url java-format-style-file
             lsp-java-format-settings-profile "GoogleStyle")))
   :config
+  (setq lsp-java-completion-overwrite nil
+        lsp-java-folding-range-enabled nil
+        lsp-java-progress-reports-enabled nil
+        lsp-java-format-comments-enabled nil
+        lsp-java-completion-max-results 100
+        lsp-java-selection-range-enabled nil)
+
   (require 'helm nil t)
   ;; (require 'lsp-java-boot)
   ;; (setq lsp-java-boot-enabled nil)
@@ -40,7 +47,19 @@
               ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
               ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
               ,(concat "-javaagent:" lombok-jar)))))
-  (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
+  (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string))
+
+  ;; FIXME: trigger characters doesn't work in lsp-java, native-comp issue?
+  (with-eval-after-load 'lsp-completion
+    (defun lsp-completion--looking-back-trigger-characterp (trigger-characters)
+      "Return trigger character if text before point match any of the TRIGGER-CHARACTERS."
+      (unless (= (point) (point-at-bol))
+        (seq-some
+         (lambda (trigger-char)
+           (and (equal (buffer-substring-no-properties (- (point) (length trigger-char)) (point))
+                       trigger-char)
+                trigger-char))
+         trigger-characters)))))
 
 (use-package dap-java
   :after lsp-java

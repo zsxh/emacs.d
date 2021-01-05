@@ -295,7 +295,7 @@
   :init
   (setq garbage-collection-messages nil)
   (setq gcmh-idle-delay 10
-        gcmh-high-cons-threshold (* 16 1024 1024)
+        gcmh-high-cons-threshold (* 8 1024 1024)
         gcmh-verbose t)
   :hook (after-init . gcmh-mode)
   :config

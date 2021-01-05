@@ -48,7 +48,10 @@
 
   (with-eval-after-load 'company-eclim
     ;;  Stop eclim auto save.
-    (setq company-eclim-auto-save nil)))
+    (setq company-eclim-auto-save nil))
+
+  (with-eval-after-load 'company-files
+    (add-to-list 'company-files--regexps "file:\\(\\(?:\\.\\{1,2\\}/\\|~/\\|/\\)[^\]\n]*\\)")))
 
 (use-package flx
   :defer t)

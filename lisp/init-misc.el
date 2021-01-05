@@ -233,7 +233,16 @@
 (use-package writeroom-mode
   :defer t
   :custom
-  (writeroom-width 106))
+  (writeroom-width 106)
+  (writeroom-restore-window-config t)
+  :config
+  (defun +writeroom/display-line-numbers ()
+    (if (and writeroom-mode
+             (derived-mode-p 'prog-mode))
+        (display-line-numbers-mode)
+      (display-line-numbers-mode -1)))
+  (add-hook 'writeroom-mode-enable-hook #'+writeroom/display-line-numbers)
+  (add-hook 'writeroom-mode-disable-hook #'+writeroom/display-line-numbers))
 
 ;; archlinuxcn repo
 ;; > pacman -S telegram-tdlib

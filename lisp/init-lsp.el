@@ -34,7 +34,7 @@
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
         lsp-diagnostics-provider :flycheck
-        lsp-log-io nil
+        lsp-log-io t
         ;; TODO: wait childframe rendering
         lsp-eldoc-render-all nil
         lsp-signature-render-documentation nil
@@ -124,7 +124,10 @@ server getting expensively restarted when reverting buffers."
                        (let ((lsp-restart 'ignore))
                          (funcall orig-fn)))))
              lsp--cur-workspace))))
-  (advice-add #'lsp--shutdown-workspace :around #'+lsp/defer-server-shutdown-a))
+  (advice-add #'lsp--shutdown-workspace :around #'+lsp/defer-server-shutdown-a)
+
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal lsp-log-io-mode-map "k" 'evil-previous-line)))
 
 (use-package lsp-ui
   :after lsp-mode

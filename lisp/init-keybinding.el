@@ -213,7 +213,8 @@
    "wd" '(delete-window :which-key "delete-window")
    "wm" '(+funcs/toggle-maximize-buffer :which-key "maximized")
    "ws" '(hydra-window-scale/body :which-key "scale")
-   "ww" '(ace-swap-window :which-key "swap-window")
+   "wS" '(ace-swap-window :which-key "swap-window")
+   "ww" '(writeroom-mode :which-key "writeroom-mode")
    "wz" '(zoom-mode :which-key "toggle-zoom-mode")
    ;; Toggle
    "T" '(nil :which-key "toggle")
