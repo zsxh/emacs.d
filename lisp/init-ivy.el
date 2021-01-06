@@ -189,6 +189,36 @@
     (advice-add 'ivy-rich--ivy-switch-buffer-transformer :around '+ivy/ivy-rich-cache-lookup)
     (advice-add 'ivy-switch-buffer :after '+ivy/ivy-rich-cache-rebuild-trigger)))
 
+(use-package ivy-posframe
+  :after ivy
+  :config
+  (ivy-posframe-mode)
+
+  (defun +ivy/custom-posframe-poshandler (info)
+    (cons (/ (- (plist-get info :parent-frame-width)
+                (plist-get info :posframe-width))
+             2)
+          (/ (- (plist-get info :parent-frame-height)
+                (plist-get info :posframe-height))
+             3)))
+
+  (defun +ivy/custom-posframe-display (str)
+    (ivy-posframe--display str #'+ivy/custom-posframe-poshandler))
+
+  (setq ivy-posframe-display-functions-alist
+        '((swiper . ivy-display-function-fallback)
+          (t . +ivy/custom-posframe-display)))
+
+  (setq ivy-posframe-border-width 5)
+
+  (defun +ivy/posframe-get-fixed-size ()
+    "Set the ivy-posframe size according to the current frame."
+    (let ((height (or ivy-posframe-height 11))
+          (width (min (or ivy-posframe-width 200) (round (* 0.62 (frame-width))))))
+      (list :height height :width width :min-height height :min-width width)))
+
+  (setq ivy-posframe-size-function '+ivy/posframe-get-fixed-size))
+
 (use-package ivy-xref
   :init
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs) ; Emacs< 27

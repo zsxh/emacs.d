@@ -293,9 +293,9 @@
 ;; https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
 (use-package gcmh
   :init
-  (setq garbage-collection-messages nil)
+  (setq garbage-collection-messages t)
   (setq gcmh-idle-delay 10
-        gcmh-high-cons-threshold (* 8 1024 1024)
+        gcmh-high-cons-threshold (* 16 1024 1024)
         gcmh-verbose t)
   :hook (after-init . gcmh-mode)
   :config
@@ -323,7 +323,9 @@
   ;;        GC-induced slowdowns/freezes.
   (with-eval-after-load 'lsp-mode
     (add-hook 'lsp-mode-hook #'+gcmh/set-local-high-cons-threshold))
-  )
+
+  (with-eval-after-load 'telega-chat
+    (add-hook 'telega-chat-mode-hook #'+gcmh/set-local-high-cons-threshold)))
 
 ;; https://www.reddit.com/r/emacs/comments/j2ovcb/comprehensive_guide_on_handling_long_lines_in/g7ag4ds?utm_source=share&utm_medium=web2x&context=3
 ;; If one enables `global-so-long-mode', long lines will be detected automatically and

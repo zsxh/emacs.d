@@ -34,7 +34,7 @@
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
         lsp-diagnostics-provider :flycheck
-        lsp-log-io t
+        lsp-log-io nil
         ;; TODO: wait childframe rendering
         lsp-eldoc-render-all nil
         lsp-signature-render-documentation nil
