@@ -258,7 +258,12 @@
 
   (with-eval-after-load 'telega-chat
     (when evil-mode
-      (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)))
+      (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer))
+    (when (functionp 'writeroom-mode)
+      (defun +telega/maybe-writeroom ()
+        (when (= 1 (length (window-list)))
+          (writeroom-mode)))
+      (add-hook 'telega-chat-mode-hook #'+telega/maybe-writeroom)))
 
   (with-eval-after-load 'telega-ins
     ;; customize date format

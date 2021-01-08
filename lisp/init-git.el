@@ -95,7 +95,8 @@
 
 ;; https://github.com/dgutov/diff-hl
 (use-package diff-hl
-  :after magit
+  ;; :after magit
+  :defer t
   :config
   ;; (setq diff-hl-fringe-bmp-function 'diff-hl-fringe-bmp-from-type)
   (global-diff-hl-mode)
