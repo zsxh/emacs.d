@@ -297,6 +297,8 @@
   (setq gcmh-idle-delay 10
         gcmh-high-cons-threshold (* 16 1024 1024)
         gcmh-verbose t)
+  (setq +gcmh/high-cons-threshold gcmh-high-cons-threshold
+        +gcmh/high-cons-threshold-special (* 100 1024 1024))
   :hook (after-init . gcmh-mode)
   :config
   ;; GC automatically while unfocusing the frame
@@ -308,8 +310,19 @@
                         (gcmh-idle-garbage-collect))))
     (add-hook 'focus-out-hook 'gcmh-idle-garbage-collect))
 
+  ;; ------------------------- minibuffer ---------------------------------
+  (defun +gcmh/minibuffer-setup-h ()
+    (setq gcmh-high-cons-threshold +gcmh/high-cons-threshold-special))
+
+  (defun +gcmh/minibuffer-exit-h ()
+    (setq gcmh-high-cons-threshold +gcmh/high-cons-threshold))
+
+  (add-hook 'minibuffer-setup-hook #'+gcmh/minibuffer-setup-h)
+  (add-hook 'minibuffer-exit-hook #'+gcmh/minibuffer-exit-h)
+
+  ;; -------------------- buffer local settings ---------------------------
   (defun +gcmh/set-local-high-cons-threshold ()
-    (setq-local gcmh-high-cons-threshold 104857600))
+    (setq-local gcmh-high-cons-threshold +gcmh/high-cons-threshold-special))
 
   ;; HACK Org is known to use a lot of unicode symbols (and large org files tend
   ;;      to be especially memory hungry). Compounded with
