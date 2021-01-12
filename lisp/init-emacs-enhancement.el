@@ -471,6 +471,37 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :commands insert-char-preview
   :bind ("C-x 8 RET" . insert-char-preview))
 
+;;;;;;;;;;;;;; posframe ;;;;;;;;;;;;;;
+(use-package posframe
+  :defer t
+  :config
+  (setq posframe-mouse-banish t)
+  (defun posframe--mouse-banish-a (parent-frame &optional posframe)
+    "Banish mouse to the (0 . 0) of PARENT-FRAME.
+Do not banish mouse when no-accept-focus frame parameter of POSFRAME
+is non-nil."
+    (when (and posframe-mouse-banish
+               ;; Do not banish mouse when posframe can accept focus.
+               ;; See posframe-show's accept-focus argument.
+               (frame-parameter posframe 'no-accept-focus)
+               (not (equal (cdr (mouse-position)) '(10000 . 10000))))
+      (set-mouse-position parent-frame 10000 10000)))
+  (advice-add 'posframe--mouse-banish :override #'posframe--mouse-banish-a))
+
+;;;;;;;;;;;;;; transient ;;;;;;;;;;;;;;
+;; https://github.com/magit/transient/blob/master/docs/transient.org
+(use-package transient
+  :defer t
+  :config
+  (setq transient-display-buffer-action '((display-buffer-below-selected)))
+  (define-key transient-map (kbd "<escape>") 'transient-quit-one))
+
+;; https://github.com/yanghaoxie/transient-posframe
+(use-package transient-posframe
+  :after transient
+  :config
+  (transient-posframe-mode))
+
 
 (provide 'init-emacs-enhancement)
 
