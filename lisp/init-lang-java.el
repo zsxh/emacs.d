@@ -30,7 +30,16 @@
         lsp-java-progress-reports-enabled nil
         lsp-java-format-comments-enabled nil
         lsp-java-completion-max-results 100
-        lsp-java-selection-range-enabled nil)
+        lsp-java-selection-range-enabled nil
+        ;; different jdk versions settings, lsp server require jdk11,
+        ;; Eclipse auto-discovers all installed Java versions and, I think it will use the correct one
+        ;; depending on the source compatibility version (for compilation) and target compatibility version (for running).
+        ;; https://github.com/emacs-lsp/lsp-java/issues/249
+        ;; https://github.com/redhat-developer/vscode-java/#setting-the-jdk
+        ;; https://github.com/emacs-lsp/lsp-java/issues/254
+        lsp-java-java-path "~/.jenv/versions/11/bin/java"
+        lsp-java-configuration-runtimes '[(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
+                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-20.3.0" :default t)])
 
   (require 'helm nil t)
   ;; (require 'lsp-java-boot)
@@ -103,6 +112,7 @@
   (setq-local lsp-completion-show-detail nil)
   (lsp-deferred)
 
+  ;; TODO: use jenv instead
   (defvar jdks-installed-dir "/usr/local/"
     "JDKs intalled directory.")
 
