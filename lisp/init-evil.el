@@ -82,13 +82,26 @@
       "l" 'evil-forward-char
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line))
+
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'edebug (evil-collection-init 'edebug))
   (with-eval-after-load 'popup (evil-collection-init 'popup))
+
   (with-eval-after-load 'arc-mode
     (evil-collection-init 'arc-mode)
     (evil-define-key 'normal archive-mode-map
-      (kbd "C-d")'evil-scroll-down)))
+      (kbd "C-d") 'evil-scroll-down))
+
+  (with-eval-after-load 'magit
+    (evil-collection-init 'magit)
+    (with-eval-after-load 'with-editor
+      (evil-define-minor-mode-key 'normal 'with-editor-mode
+        ",c" 'with-editor-finish
+        ",k" 'with-editor-cancel))
+    (with-eval-after-load 'magit-blame
+      (evil-define-minor-mode-key 'normal 'magit-blame-mode
+        "q" 'magit-blame-quit
+        "c" 'magit-blame-cycle-style))))
 
 ;; https://github.com/redguardtoo/evil-matchit
 ;; Usage: '%' go to matching pair

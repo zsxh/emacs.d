@@ -19,18 +19,6 @@
   ;; (setq auto-revert-check-vc-info t)
   (setq magit-bury-buffer-function 'magit-mode-quit-window))
 
-(use-package evil-magit
-  :after magit
-  :config
-  (with-eval-after-load 'with-editor
-    (evil-define-minor-mode-key 'normal 'with-editor-mode
-      ",c" 'with-editor-finish
-      ",k" 'with-editor-cancel))
-  (with-eval-after-load 'magit-blame
-    (evil-define-minor-mode-key 'normal 'magit-blame-mode
-      "q" 'magit-blame-quit
-      "c" 'magit-blame-cycle-style)))
-
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
   ;; :hook (magit-mode . magit-todos-mode)
