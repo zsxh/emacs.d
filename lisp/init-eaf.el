@@ -17,6 +17,7 @@
 ;; Install in pyenv enviroment
 ;; $ pip install PyQt5 PyQtWebEngine dbus-python PyMuPDF
 ;; $ sudo pacman -S wmctrl
+;; FIXME: presentation mode, max(height,width) : rect ~ 1:1
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open

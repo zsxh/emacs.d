@@ -374,6 +374,20 @@ behavior added."
 
 (global-set-key [remap keyboard-quit] #'keyboard-quit-context+)
 
+;; https://emacs-china.org/t/gif/11887
+(defun +funcs/video-compress-and-convert (video new)
+  (interactive "fvideo path: \nfnew item name (eg. exam.mp4, exam.gif) : ")
+  (let ((extension (cadr (split-string (file-name-nondirectory new) "\\."))))
+    (if (string= extension "gif")
+        (progn
+          (shell-command
+           (concat "ffmpeg -i " video " -r 5 " new))
+          (message "%s convert to %s successfully!" video new))
+      (progn
+        (shell-command
+         (concat "ffmpeg -i " video " -vcodec libx264 -b:v 5000k -minrate 5000k -maxrate 5000k -bufsize 4200k -preset fast -crf 20 -y -acodec libmp3lame -ab 128k " new))
+        (message "%s compress and convert to %s successfully!" video new)))))
+
 
 (provide 'init-funcs)
 
