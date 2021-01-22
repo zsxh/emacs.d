@@ -13,6 +13,11 @@
 (eval-when-compile
   (require 'init-custom))
 
+;; EAF dependencies
+(use-package ctable :ensure t :defer t)
+(use-package deferred :ensure t :defer t)
+(use-package epc :ensure t :defer t)
+
 ;; https://github.com/manateelazycat/emacs-application-framework#install
 ;; Install in pyenv enviroment
 ;; $ pip install PyQt5 PyQtWebEngine dbus-python PyMuPDF
@@ -60,7 +65,6 @@
   (advice-remove 'dired-find-alternate-file #'eaf--dired-find-file-advisor)
   (setq
    eaf-python-command (expand-file-name "~/.pyenv/versions/3.8.6/bin/python")
-   eaf-enable-debug t
    eaf-browser-default-search-engine "duckduckgo"
    eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf/"))
    ;; eaf-wm-focus-fix-wms (append '("deepin") eaf-wm-focus-fix-wms)
@@ -119,24 +123,33 @@
               ;; browser toggle insert/normal state except in devtool
               ;; devtool buffer will first open about:blank page and then redirect to devltools:// path
               (unless (string-prefix-p "about:blank" eaf--buffer-url)
-                (evil-local-set-key 'insert (kbd "<escape>") 'eaf-proxy-clear_focus)
-                (add-hook 'post-command-hook 'eaf-is-focus-toggle nil t))))
+                (evil-local-set-key 'insert (kbd "<escape>") #'+eaf/clear-focus)
+                (evil-local-set-key 'normal (kbd "<escape>") #'+eaf/clear-focus))))
 
-  (defun eaf-is-focus-toggle ()
-    "Toggle is-focus behavior in eaf-mode buffers."
-    (if (eaf-call "call_function" eaf--buffer-id "is_focus")
-        (unless (evil-insert-state-p)
-          (evil-insert-state))
-      (when (evil-insert-state-p)
-        (evil-normal-state))))
+  (defun +eaf/clear-focus ()
+    (interactive)
+    (eaf-proxy-clear_focus)
+    (when (not (evil-normal-state-p))
+      (evil-normal-state)))
 
-  (defun eaf-devtool-insert-advice (orig-fn &rest args)
-    (if (and (string-prefix-p "devtools://" eaf--buffer-url)
-             (not (evil-insert-state-p)))
-        (evil-insert-state)
-      (apply orig-fn args)))
+  (defun +eaf/focus-toggle (&rest _)
+    (let ((buf (current-buffer)))
+      (run-with-timer
+       0.1
+       nil
+       (lambda ()
+         (deferred:$
+           (epc:call-deferred eaf-process (read "call_function") `(,eaf--buffer-id "is_focus"))
+           (deferred:nextc it
+             (lambda (x)
+               (with-current-buffer buf
+                 (if (string= x "True")
+                     (unless (evil-insert-state-p) (evil-insert-state))
+                   (when (evil-insert-state-p) (evil-normal-state)))
+                 (setq last-focus-checked (current-time))))))))))
 
-  (advice-add 'eaf-proxy-insert_or_focus_input :around 'eaf-devtool-insert-advice)
+  (advice-add 'eaf--input-message :after #'+eaf/focus-toggle)
+  (advice-add 'eaf-proxy-insert_or_focus_input :after #'+eaf/focus-toggle)
 
   ;; utils
   (defun +eaf/switch-to-eww ()
