@@ -139,7 +139,7 @@
        nil
        (lambda ()
          (deferred:$
-           (epc:call-deferred eaf-process (read "call_function") `(,eaf--buffer-id "is_focus"))
+           (epc:call-deferred eaf-epc-process (read "call_function") `(,eaf--buffer-id "is_focus"))
            (deferred:nextc it
              (lambda (x)
                (with-current-buffer buf
