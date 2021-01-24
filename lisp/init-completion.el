@@ -135,7 +135,7 @@
       :hook (company-mode . company-box-mode)
       :config
       (setq company-box-show-single-candidate 'always
-            company-box-doc-enable t
+            company-box-doc-enable nil
             company-box-enable-icon t
             company-box-backends-colors nil
             company-box-highlight-prefix nil
@@ -184,7 +184,7 @@
           (defun +company-box/auto-hide-frame-h ()
             "auto hide company-box doc frame if not scrolling the frame"
             ;; (message "log: this-command %s" this-command)
-            (unless (member this-command '(mwheel-scroll ignore))
+            (unless (member this-command '(mwheel-scroll handle-switch-frame ignore))
               (company-box-doc--hide frame)
               (remove-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
           (add-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))

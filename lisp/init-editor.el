@@ -36,6 +36,7 @@
 ;; with very long lines; see variables line-number-display-limit
 ;; check `line-number-mode'
 (setq line-number-display-limit-width 1000)
+(setq inhibit-compacting-font-caches t)    ; don't compact font caches during GC
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
