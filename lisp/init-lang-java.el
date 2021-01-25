@@ -94,7 +94,6 @@
    "ic" '(lsp-java-add-import :which-key "import-class")
    "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
    "ig" '(lsp-java-generate-getters-and-setters :which-key "generate-getters-and-setters")
-   "j" '(+java/set-jdk :which-key "set-jdk")
    "r" '(nil :which-key "run")
    "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
    "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
@@ -110,37 +109,7 @@
   ;;               (lsp-java-lens-mode)
   ;;               (lsp-java-boot-lens-mode))))
   (setq-local lsp-completion-show-detail nil)
-  (lsp-deferred)
-
-  ;; TODO: use jenv instead
-  (defvar jdks-installed-dir "/usr/local/"
-    "JDKs intalled directory.")
-
-  (defun +java/set-jdk (jdk-version)
-    "Select JDK-VERSION in `jdks-installed-dir' as global version,
-JDK-VERSION directory name prefix \"jdk-\" is required,
-`jdks-installed-dir'/jdk/bin in $PATH is required."
-    (interactive (list (completing-read "JDK-version: " (+java/list-jdk-version))))
-    (let ((target (expand-file-name jdk-version jdks-installed-dir))
-          (link-name (expand-file-name "jdk" jdks-installed-dir)))
-      (+funcs/sudo-shell-command (concat "ln -nsf " target " " link-name))))
-
-  (defun +java/list-jdk-version ()
-    "Find all jdks which start with \"jdk-\" in `jdks-installed-dir'"
-    (let ((files (directory-files jdks-installed-dir))
-          (result nil))
-      (dolist (file files)
-        (if (string-match "\\(graalvm\\|jdk\\)-" file)
-            (push file result)))
-      result))
-
-  (defun +java/compile ()
-    (interactive)
-    (let ((default-directory (+project/root))
-          (compile-command "mvn clean compile test-compile"))
-      (compile compile-command)
-      (switch-to-buffer-other-window "*compilation*")
-      (end-of-buffer))))
+  (lsp-deferred))
 
 (with-eval-after-load 'lsp-java
   ;; install lsp java server via http proxy
