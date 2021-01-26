@@ -34,7 +34,8 @@
              eaf-open-office
              eaf-open-mindmap
              eaf-create-mindmap
-             eaf-get-file-name-extension)
+             eaf-get-file-name-extension
+             eaf-elfeed-open-url)
   :hook (eaf-mode . (lambda () (setq left-fringe-width 0
                                      right-fringe-width 0)))
   :init

@@ -83,10 +83,22 @@
 
 ;; https://github.com/dgutov/diff-hl
 (use-package diff-hl
-  ;; :after magit
-  :defer t
+  :after magit
   :config
-  ;; (setq diff-hl-fringe-bmp-function 'diff-hl-fringe-bmp-from-type)
+  ;; face
+  (with-eval-after-load 'init-ui
+    (let ((bg (face-attribute 'default :background)))
+      (set-face-background 'diff-hl-insert bg)
+      (set-face-background 'diff-hl-delete bg)
+      (set-face-background 'diff-hl-change bg)))
+  ;; fringe
+  (let* ((height (frame-char-height))
+         (width 2)
+         (ones (1- (expt 2 width)))
+         (bits (make-vector height ones)))
+    (define-fringe-bitmap '+git/diff-hl-bitmap bits height 2))
+  (setq diff-hl-fringe-bmp-function (lambda (type pos) '+git/diff-hl-bitmap))
+  ;; enable diff-hl
   (global-diff-hl-mode)
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
