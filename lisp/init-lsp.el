@@ -35,10 +35,11 @@
         lsp-debounce-full-sync-notifications-interval 1.0
         lsp-diagnostics-provider :flycheck
         lsp-log-io nil
-        ;; TODO: wait childframe rendering
         lsp-eldoc-render-all nil
+        ;; TODO: keybindings for signature show up
         lsp-signature-render-documentation nil
         lsp-signature-auto-activate '(:on-trigger-char)
+        lsp-signature-function 'lsp-signature-posframe
         lsp-lens-enable nil
         lsp-completion-sort-initial-results nil ; do not resort the result
         ;; lsp-completion--no-reordering t ; do not resort the result

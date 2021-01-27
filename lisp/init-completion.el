@@ -13,7 +13,6 @@
 (setq completion-ignore-case t)
 
 (use-package company
-  ;; :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :bind (("M-/" . yas-expand)
          ("C-c C-y" . company-yasnippet)
          (:map company-active-map
@@ -37,14 +36,16 @@
         company-idle-delay 0 ; decrease delay before autocompletion popup shows
         company-echo-delay (if (display-graphic-p) nil 0) ; remove annoying blinking
         company-minimum-prefix-length 2
-        ;; company-require-match nil
-        ;; company-dabbrev-ignore-case nil
+        ;; Only search the current buffer for `company-dabbrev' (a backend that
+        ;; suggests text your open buffers). This prevents Company from causing
+        ;; lag once you have a lot of buffers open.
+        company-dabbrev-other-buffers nil
         company-dabbrev-downcase nil    ; No downcase when completion.
         company-require-match nil ; Don't require match, so you can still move your cursor as expected.
         company-backends '(company-capf company-files company-dabbrev)
-        company-global-modes '(not shell-mode eshell-mode eaf-mode))
-
-  (add-hook 'prog-mode-hook (lambda () (setq-local company-minimum-prefix-length 1)))
+        company-global-modes '(not shell-mode eshell-mode eaf-mode
+                                   erc-mode message-mode help-mode
+                                   helpful-mode gud-mode))
 
   (with-eval-after-load 'company-eclim
     ;;  Stop eclim auto save.
@@ -141,6 +142,7 @@
             company-box-highlight-prefix nil
             company-box-doc-delay 0.5
             company-box-tooltip-maximum-width company-tooltip-maximum-width
+            company-box-max-candidates 50
             company-box-icons-alist 'company-box-icons-all-the-icons)
       (setq company-box-icons-all-the-icons
             `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.8 :v-adjust -0.15))

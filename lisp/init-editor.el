@@ -285,6 +285,7 @@
 ;; https://gitlab.com/koral/gcmh
 ;; https://github.com/hlissner/doom-emacs/commit/717d53c6665229a731c55b23f9786c86111b3474
 ;; https://www.reddit.com/r/emacs/comments/bg85qm/garbage_collector_magic_hack/elniyfv?utm_source=share&utm_medium=web2x
+;; https://github.com/hlissner/doom-emacs/issues/3108
 ;;
 ;; Follow the method recommended by Gnu Emacs Maintainer Eli Zaretskii: “My suggestion is
 ;; to repeatedly multiply gc-cons-threshold by 2 until you stop seeing significant improvements
@@ -294,10 +295,10 @@
 ;; https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
 (use-package gcmh
   :init
-  (setq garbage-collection-messages t)
-  (setq gcmh-idle-delay 10
+  (setq garbage-collection-messages nil)
+  (setq gcmh-idle-delay 5
         gcmh-high-cons-threshold (* 16 1024 1024)
-        gcmh-verbose t)
+        gcmh-verbose nil)
   (setq +gcmh/high-cons-threshold gcmh-high-cons-threshold
         +gcmh/high-cons-threshold-special (* 100 1024 1024))
   :hook (after-init . gcmh-mode)

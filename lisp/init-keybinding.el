@@ -215,8 +215,8 @@
    "wb" '(balance-windows :which-key "balance-windows")
    "wd" '(delete-window :which-key "delete-window")
    "wm" '(+funcs/toggle-maximize-buffer :which-key "maximized")
-   "ws" '(hydra-window-scale/body :which-key "scale")
-   "wS" '(ace-swap-window :which-key "swap-window")
+   "ws" '(ace-swap-window :which-key "swap-window")
+   "wS" '(hydra-window-scale/body :which-key "scale")
    "ww" '(writeroom-mode :which-key "writeroom-mode")
    "wz" '(zoom-mode :which-key "toggle-zoom-mode")
    ;; Toggle
