@@ -70,6 +70,8 @@
                 trigger-char))
          trigger-characters)))))
 
+;; NOTE: debug template args `vmArgs', `noDebug'...
+;; git clone https://github.com/microsoft/java-debug code base to checkout extra debug args, like `vmArgs'
 (use-package dap-java
   :after lsp-java
   :ensure lsp-java
@@ -86,8 +88,8 @@
 
   (+funcs/major-mode-leader-keys
    java-mode-map
-   "dr" '(dap-java-debug :which-key "run")
-   "dR" '(dap-debug :which-key "run-attach")
+   "dr" '(dap-java-debug :which-key "dap-java-debug")
+   "dR" '(dap-debug :which-key "dap-debug")
    "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
    "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
    "i" '(nil :which-key "implement")
