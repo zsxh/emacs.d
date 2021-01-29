@@ -20,6 +20,8 @@
   :config
   (when personal-elfeed-feeds
     (setq elfeed-feeds personal-elfeed-feeds))
+  (let ((proxy-arg (format "-xhttp://%s:%s" personal-proxy-http-host personal-proxy-http-port)))
+    (setq elfeed-curl-extra-arguments `(,proxy-arg)))
   (when (featurep 'evil-collection)
     (evil-collection-init 'elfeed))
   (evil-define-key 'normal elfeed-search-mode-map (kbd "C-<return>") 'eaf-elfeed-open-url))
