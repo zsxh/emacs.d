@@ -22,7 +22,6 @@
 ;; Install in pyenv enviroment
 ;; $ pip install PyQt5 PyQtWebEngine dbus-python PyMuPDF
 ;; $ sudo pacman -S wmctrl
-;; FIXME: presentation mode, max(height,width) : rect ~ 1:1
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
@@ -93,8 +92,6 @@
   (evil-define-key 'normal eaf-pdf-outline-mode-map (kbd "RET") 'eaf-pdf-outline-jump)
 
   (require 'dash)
-  (when personal-eaf-grip-token
-    (setq eaf-grip-token personal-eaf-grip-token))
 
   (setq eaf-proxy-host personal-proxy-http-host
         eaf-proxy-port (format "%s" personal-proxy-http-port)
