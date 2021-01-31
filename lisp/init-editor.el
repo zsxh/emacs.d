@@ -63,8 +63,6 @@
 (with-eval-after-load 'cc-vars
   (add-to-list 'c-offsets-alist '(case-label . +)))
 
-(setq tramp-default-method "ssh")
-
 ;; Disable electric-indent-mode in org-mode
 (use-package electric
   :ensure nil
@@ -273,11 +271,13 @@
 ;; TODO: Enhance Tramp
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
 ;; https://willschenk.com/articles/2020/tramp_tricks/
+;; https://mina86.com/2021/emacs-remote/
 (use-package tramp
   :ensure nil
   :defer t
   :config
-  (setq remote-file-name-inhibit-cache 120))
+  (setq tramp-default-method "ssh"
+        remote-file-name-inhibit-cache 120))
 
 ;; Adopt a sneaky garbage collection strategy of waiting until idle time to
 ;; collect; staving off the collector while the user is working.
