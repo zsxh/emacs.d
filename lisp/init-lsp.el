@@ -41,8 +41,6 @@
         lsp-signature-auto-activate '(:on-trigger-char)
         lsp-signature-function 'lsp-signature-posframe
         lsp-lens-enable nil
-        lsp-completion-sort-initial-results nil ; do not resort the result
-        ;; lsp-completion--no-reordering t ; do not resort the result
         lsp-modeline-code-actions-enable nil
         lsp-modeline-workspace-status-enable nil
         lsp-modeline-diagnostics-enable nil
@@ -73,7 +71,9 @@
   (use-package lsp-completion
     :ensure nil
     :config
-    (setq lsp-completion-provider :capf))
+    (setq lsp-completion-sort-initial-results nil ; do not resort the result
+          ;; lsp-completion--no-reordering t ; do not resort the result
+          lsp-completion-provider :capf))
 
   (use-package lsp-diagnostics
     :ensure nil

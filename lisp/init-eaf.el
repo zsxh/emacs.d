@@ -19,9 +19,13 @@
 (use-package epc :ensure t :defer t)
 
 ;; https://github.com/manateelazycat/emacs-application-framework#install
-;; Install in pyenv enviroment
-;; $ pip install PyQt5 PyQtWebEngine dbus-python PyMuPDF
-;; $ sudo pacman -S wmctrl
+;; 1) $ sudo pacman -S wmctrl
+;; 2) python dependencies:
+;; $ yay -S python-pyqt5-webengine
+;; $ pip install --user PyMuPDF epc
+;; or
+;; Install in pyenv independent enviroment
+;; $ pip install PyQt5 PyQtWebEngine PyMuPDF epc
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
@@ -64,7 +68,8 @@
   (advice-remove 'dired-find-file #'eaf--dired-find-file-advisor)
   (advice-remove 'dired-find-alternate-file #'eaf--dired-find-file-advisor)
   (setq
-   eaf-python-command (expand-file-name "~/.pyenv/versions/3.8.6/bin/python")
+   eaf-python-command "/usr/bin/python3"
+   ;; eaf-python-command (expand-file-name "~/.pyenv/versions/3.8.6/bin/python")
    eaf-browser-default-search-engine "duckduckgo"
    eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf/"))
    ;; eaf-wm-focus-fix-wms (append '("deepin") eaf-wm-focus-fix-wms)

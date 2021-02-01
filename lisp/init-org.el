@@ -169,7 +169,9 @@
 ;; This package provides visual alignment for Org tables on GUI Emacs.
 ;; https://github.com/casouri/valign
 (use-package valign
-  :hook ((org-mode markdown-mode) . valign-mode))
+  :defer t
+  ;; :hook ((org-mode markdown-mode) . valign-mode)
+  )
 
 ;; convert org-file to ipynb
 ;; https://github.com/jkitchin/ox-ipynb
@@ -337,6 +339,9 @@ at the first function to return non-nil.")
              org-sidebar-tree-toggle
              org-sidebar
              org-sidebar-toggle))
+
+;; TODO: weblorg
+;; https://emacs.love/weblorg/
 
 ;; Ory Static Blog
 (use-package org-static-blog
