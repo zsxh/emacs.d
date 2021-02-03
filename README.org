@@ -1,13 +1,13 @@
 #+STARTUP: showall
-Updated: <2021-01-22>
+Updated: <2021-02-03>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.24, cairo version 1.17.4) of 2021-01-18
-  - build branch: feature/native-comp 39b3bc
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.24, cairo version 1.17.4) of 2021-01-30
+  - build branch: feature/native-comp a8b8d22
   - system-configuration-options: ~CFLAGS='-O3' --with-x-toolkit=gtk3 --with-nativecomp --with-imagemagick~
   - OS: Manjaro 20.2.1 Nibia
   - Shell: zsh 5.8
-  - Kernel: 5.10.7-3-MANJARO
+  - Kernel: 5.10.10-1-MANJARO
   - DE: Deepin 20.1
   - WM: KWin
   - GCC version: 10.2.0 with libgccjit

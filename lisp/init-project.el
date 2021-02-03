@@ -82,7 +82,8 @@
 (use-package find-file-in-project
   :commands (find-file-in-project
              find-file-in-current-directory
-             find-file-in-project-not-ignore)
+             find-file-in-project-not-ignore
+             find-directory-in-project)
   :config
   (advice-add #'ffip-project-root :around (lambda (orig-fn)
                                             (or (+project/lsp-project-root)
@@ -97,7 +98,11 @@
   (defun find-file-in-project-not-ignore ()
     (interactive)
     (let ((ffip-rust-fd-respect-ignore-files nil))
-      (find-file-in-project))))
+      (find-file-in-project)))
+
+  (defun find-directory-in-project (&optional open-another-window)
+    (interactive "P")
+    (ffip-find-files nil open-another-window t)))
 
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 

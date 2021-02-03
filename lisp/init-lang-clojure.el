@@ -21,19 +21,23 @@
 ;; shadow-cljs repl connect js runtime: https://shadow-cljs.github.io/docs/UsersGuide.html#repl-troubleshooting
 
 (use-package clojure-mode
-    :mode (("\\.\\(clj\\|dtm\\|edn\\)\\'" . clojure-mode)
-           ("\\.cljc\\'" . clojurec-mode)
-           ("\\.cljs\\'" . clojurescript-mode))
-    :hook ((clojure-mode clojurec-mode clojurescript-mode) . +clojure/lsp)
-    :config
-    (setq clojure-toplevel-inside-comment-form t)
-    (require 'lsp-clojure)
-    (dolist (mode-map '(clojure-mode-map clojurec-mode-map clojurescript-mode-map))
-      (+language-server/set-common-leader-keys (symbol-value mode-map)))
-    (defun +clojure/lsp ()
-      (if (and buffer-file-name
-               (member (file-name-extension buffer-file-name) '("clj" "cljs" "cljc")))
-          (lsp-deferred))))
+  :mode (("\\.\\(clj\\|dtm\\|edn\\)\\'" . clojure-mode)
+         ("\\.cljc\\'" . clojurec-mode)
+         ("\\.cljs\\'" . clojurescript-mode))
+  :hook ((clojure-mode clojurec-mode clojurescript-mode) . +clojure/lsp)
+  :config
+  (setq clojure-toplevel-inside-comment-form t)
+  ;; FIXME: completion of non valid clojure code
+  ;; https://github.com/clojure-lsp/clojure-lsp/issues/270
+  ;; At this point, you can use `cider-jack-in-*' to parse the files to get completion
+  ;; until upstream fix this problem.
+  (require 'lsp-clojure)
+  (dolist (mode-map '(clojure-mode-map clojurec-mode-map clojurescript-mode-map))
+    (+language-server/set-common-leader-keys (symbol-value mode-map)))
+  (defun +clojure/lsp ()
+    (if (and buffer-file-name
+             (member (file-name-extension buffer-file-name) '("clj" "cljs" "cljc")))
+        (lsp-deferred))))
 
 ;; https://cider.mx/
 (use-package cider

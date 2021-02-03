@@ -181,7 +181,7 @@
    "pB" '(projectile-ibuffer :which-key "project-ibuffer")
    "pd" '(projectile-dired :which-key "project-root-dired")
    "pf" '(find-file-in-project :which-key "project-find-file")
-   "pF" '(find-file-in-project-not-ignore :which-key "project-find-file-not-ignore")
+   "pF" '(find-directory-in-project :which-key "project-find-directory")
    "pg" '(counsel-git :which-key "counsel-git")
    "pk" '(projectile-kill-buffers :which-key "project-kill-buffers")
    "pp" '(projectile-switch-project :which-key "switch-project")

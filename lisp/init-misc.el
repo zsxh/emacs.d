@@ -246,8 +246,13 @@
   (add-hook 'writeroom-mode-enable-hook #'+writeroom/display-line-numbers)
   (add-hook 'writeroom-mode-disable-hook #'+writeroom/display-line-numbers))
 
-;; archlinuxcn repo
-;; > pacman -S telegram-tdlib
+;; https://zevlg.github.io/telega.el/#building-tdlib
+;; $ git clone --depth 1 https://github.com/tdlib/td
+;; $ cd td
+;; $ mkdir build && cd build && cmake ../
+;; $ make -j8
+;; $ sudo make install
+;; `telega-server-libs-prefix'
 (use-package telega
   :defer t
   :config
@@ -259,7 +264,7 @@
     (define-key telega-msg-button-map (kbd "l") nil))
 
   (with-eval-after-load 'telega-chat
-    (when evil-mode
+    (with-eval-after-load 'evil
       (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer))
     (when (functionp 'writeroom-mode)
       (defun +telega/maybe-writeroom ()
