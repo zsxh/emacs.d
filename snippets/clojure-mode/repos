@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: repos
+# key: :repos
+# --
+:repositories {"central" {:url "https://maven.aliyun.com/nexus/content/groups/public/"}
+                "clojars" {:url "https://mirrors.tuna.tsinghua.edu.cn/clojars/"}
+                "maven-central" {:url "https://repo1.maven.org/maven2/"}
+                "clojars-default" {:url "https://clojars.org/repo"}}

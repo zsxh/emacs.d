@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: dev-http
+# key: :dev-http
+# --
+:dev-http {8700 "public"}

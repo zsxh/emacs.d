@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: nrepl
+# key: :nrepl
+# --
+:nrepl {:port 3333}
