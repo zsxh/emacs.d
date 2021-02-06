@@ -258,6 +258,7 @@ server getting expensively restarted when reverting buffers."
        "gD" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
        "gi" '(lsp-ui-peek-find-implementation :which-key "find-implementation")
        "gr" '(lsp-ui-peek-find-references :which-key "find-references")
+       "gs" '(lsp-ui-find-workspace-symbol :which-key "find-workspace-symbol")
        "l" '(lsp-avy-lens :which-key "Click lens using avy")
        "R" '(lsp-rename :which-key "rename"))))))
 
