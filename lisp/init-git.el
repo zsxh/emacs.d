@@ -92,7 +92,7 @@
       (set-face-background 'diff-hl-delete bg)
       (set-face-background 'diff-hl-change bg)))
   ;; fringe
-  (let* ((height (frame-char-height))
+  (let* ((height (* 2 (frame-char-height)))
          (width 2)
          (ones (1- (expt 2 width)))
          (bits (make-vector height ones)))

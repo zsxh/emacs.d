@@ -210,7 +210,7 @@ By default, this shows the information specified by `global-mode-string'."
   ;; TODO: reset faces in `+ui/customize-faces'
   ;; get rid of all loaded themes
   (mapcar #'disable-theme custom-enabled-themes)
-  (setq current-theme (first args))
+  (setq current-theme (cl-first args))
   (apply orig-fn args)
   (+ui/customize-faces))
 

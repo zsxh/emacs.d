@@ -237,6 +237,7 @@
   :custom
   (writeroom-width 106)
   (writeroom-restore-window-config t)
+  (writeroom-fullscreen-effect 'maximized)
   :config
   (defun +writeroom/display-line-numbers ()
     (if (and writeroom-mode
