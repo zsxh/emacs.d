@@ -25,6 +25,8 @@
       (setq lsp-java-format-settings-url java-format-style-file
             lsp-java-format-settings-profile "GoogleStyle")))
   :config
+  (with-eval-after-load 'exec-path-from-shell
+    (exec-path-from-shell-copy-envs '("JAVA_HOME")))
   (setq lsp-java-completion-overwrite nil
         lsp-java-folding-range-enabled nil
         lsp-java-progress-reports-enabled nil
@@ -39,10 +41,10 @@
         ;; https://github.com/emacs-lsp/lsp-java/issues/254
         lsp-java-java-path "~/.jenv/versions/11/bin/java"
         lsp-java-configuration-runtimes '[(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-20.3.0" :default t)])
+                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.0.0" :default t)])
 
   (require 'helm nil t)
-  ;; (require 'lsp-java-boot)
+  (require 'lsp-java-boot)
   ;; (setq lsp-java-boot-enabled nil)
 
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
@@ -101,6 +103,8 @@
    "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
 
 (add-hook-run-once 'java-mode-hook '+java/setup)
+(add-hook-run-once 'conf-javaprop-mode-hook '+java/setup)
+(add-hook-run-once 'yaml-mode-hook '+java/setup)
 
 (defun +java/setup ()
   (require 'lsp-java)

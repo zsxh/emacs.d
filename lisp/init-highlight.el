@@ -117,7 +117,7 @@
 ;; flash the line the cursor is on
 (use-package pulse
   :ensure nil
-  :defer
+  :defer t
   :config
   (set-face-background 'pulse-highlight-start-face "#51afef"))
 
