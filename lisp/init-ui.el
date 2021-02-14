@@ -170,7 +170,7 @@ By default, this shows the information specified by `global-mode-string'."
   ;; Download ans install SF Mono fonts:
   ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
   (if (member "SF Mono" (font-family-list))
-      (set-frame-font "SF Mono-13:weight=semi-bold" nil t)
+      (set-frame-font "SF Mono-12:weight=semi-bold" nil t)
     (message "[WARN] font \"SF Mono\" not found"))
   ;; Download specify font for all unicode characters, emoji for example
   ;; http://xahlee.info/comp/unicode_font_download.html

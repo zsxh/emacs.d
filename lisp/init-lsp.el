@@ -73,7 +73,18 @@
     :config
     (setq lsp-completion-sort-initial-results nil ; do not resort the result
           ;; lsp-completion--no-reordering t ; do not resort the result
-          lsp-completion-provider :capf))
+          lsp-completion-provider :capf)
+
+    ;; FIXME: trigger characters doesn't work in lsp-java, native-comp issue?
+    (defun lsp-completion--looking-back-trigger-characterp (trigger-characters)
+      "Return trigger character if text before point match any of the TRIGGER-CHARACTERS."
+      (unless (= (point) (point-at-bol))
+        (seq-some
+         (lambda (trigger-char)
+           (and (equal (buffer-substring-no-properties (- (point) (length trigger-char)) (point))
+                       trigger-char)
+                trigger-char))
+         trigger-characters))))
 
   (use-package lsp-diagnostics
     :ensure nil

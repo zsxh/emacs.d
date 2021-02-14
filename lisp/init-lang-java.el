@@ -58,19 +58,7 @@
               ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
               ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
               ,(concat "-javaagent:" lombok-jar)))))
-  (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string))
-
-  ;; FIXME: trigger characters doesn't work in lsp-java, native-comp issue?
-  (with-eval-after-load 'lsp-completion
-    (defun lsp-completion--looking-back-trigger-characterp (trigger-characters)
-      "Return trigger character if text before point match any of the TRIGGER-CHARACTERS."
-      (unless (= (point) (point-at-bol))
-        (seq-some
-         (lambda (trigger-char)
-           (and (equal (buffer-substring-no-properties (- (point) (length trigger-char)) (point))
-                       trigger-char)
-                trigger-char))
-         trigger-characters)))))
+  (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
 
 ;; NOTE: debug template args `vmArgs', `noDebug'...
 ;; git clone https://github.com/microsoft/java-debug code base to checkout extra debug args, like `vmArgs'
