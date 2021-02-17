@@ -193,6 +193,9 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 ;; https://blog.karssen.org/2016/03/02/fixing-emacs-tramp-mode-when-using-zsh/
 ;; https://www.emacswiki.org/emacs/TrampMode#toc8
 
+(use-package isend-mode
+  :defer t)
+
 
 (provide 'init-shell-term)
 
