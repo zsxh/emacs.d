@@ -474,8 +474,9 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 ;;;;;;;;;;;;;; posframe ;;;;;;;;;;;;;;
 (use-package posframe
   :defer t
+  :custom
+  (posframe--mouse-banish t)
   :config
-  (setq posframe-mouse-banish t)
   (defun posframe--mouse-banish-a (parent-frame &optional posframe)
     "Banish mouse to the (0 . 0) of PARENT-FRAME.
 Do not banish mouse when no-accept-focus frame parameter of POSFRAME

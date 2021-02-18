@@ -68,7 +68,8 @@
                (not (string-prefix-p "*ein: http" name))
                (not (string-prefix-p "*ein:notebooklist" name))
                (not (string-prefix-p "*vterm:" name))
-               (not (string-prefix-p "*cider" name)))
+               (not (string-prefix-p "*cider" name))
+               (not (string-prefix-p "*Python" name)))
           (string-match-p "magit.*:" name)
           (equal (buffer-name (current-buffer)) name))))
 

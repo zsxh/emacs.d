@@ -85,12 +85,6 @@
 (use-package diff-hl
   :after magit
   :config
-  ;; face
-  (with-eval-after-load 'init-ui
-    (let ((bg (face-attribute 'default :background)))
-      (set-face-background 'diff-hl-insert bg)
-      (set-face-background 'diff-hl-delete bg)
-      (set-face-background 'diff-hl-change bg)))
   ;; fringe
   (let* ((height (* 2 (frame-char-height)))
          (width 2)

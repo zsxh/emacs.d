@@ -21,6 +21,7 @@
                    (doom-lighten func-name-fg 0.93)
                  (doom-darken func-name-fg 0.75))))
       (set-face-background 'font-lock-function-name-face bg)))
+
   (pcase current-theme
     ('doom-nord-light
      (progn
@@ -118,7 +119,13 @@
 
   ;; global settings
   (with-eval-after-load 'magit-diff
-    (set-face-attribute 'magit-diff-revision-summary nil :inherit 'magit-diff-hunk-heading-highlight)))
+    (set-face-attribute 'magit-diff-revision-summary nil :inherit 'magit-diff-hunk-heading-highlight))
+
+  (with-eval-after-load 'diff-hl
+    (let ((bg (face-attribute 'default :background)))
+      (set-face-background 'diff-hl-insert bg)
+      (set-face-background 'diff-hl-delete bg)
+      (set-face-background 'diff-hl-change bg))))
 
 
 (provide 'zsxh-theme-custom)
