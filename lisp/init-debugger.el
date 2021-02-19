@@ -30,7 +30,7 @@
   ;; https://github.com/emacs-lsp/dap-mode/wiki/HowTo:-Display-debug-windows-on-session-startup
   (add-hook 'dap-ui-repl-mode-hook
             (lambda ()
-              (setq-local company-minimum-prefix-length 1)))
+              (setq-local company-minimum-prefix-length 2)))
 
   (defun +dap/window-visible (b-name)
     "Return whether B-NAME is visible."
