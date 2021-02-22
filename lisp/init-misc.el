@@ -309,6 +309,11 @@ Format is:
   :quelpa (screenshot :fetcher github :repo "tecosaur/screenshot")
   :commands screenshot)
 
+;; TODO: take note with videos
+;; https://github.com/yuchen-lea/org-media-note
+;; https://github.com/yuchen-lea/org-media-note/blob/master/README_CN.org
+;; https://emacs-china.org/t/org-media-note/16160
+
 
 (provide 'init-misc)
 
