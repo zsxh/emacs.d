@@ -133,24 +133,27 @@
   (defun +eaf/clear-focus ()
     (interactive)
     (eaf-proxy-clear_focus)
-    (when (not (evil-normal-state-p))
+    (when (and (bound-and-true-p evil-mode)
+               (not (evil-normal-state-p)))
       (evil-normal-state)))
 
   (defun +eaf/focus-toggle (&rest _)
     (let ((buf (current-buffer)))
-      (run-with-timer
-       0.1
-       nil
-       (lambda ()
-         (deferred:$
-           (epc:call-deferred eaf-epc-process (read "call_function") `(,eaf--buffer-id "is_focus"))
-           (deferred:nextc it
-             (lambda (x)
-               (with-current-buffer buf
-                 (if (string= x "True")
-                     (unless (evil-insert-state-p) (evil-insert-state))
-                   (when (evil-insert-state-p) (evil-normal-state)))
-                 (setq last-focus-checked (current-time))))))))))
+      (unless (and (bound-and-true-p evil-mode)
+                   (evil-insert-state-p))
+        (run-with-timer
+         0.1
+         nil
+         (lambda ()
+           (deferred:$
+             (epc:call-deferred eaf-epc-process (read "call_function") `(,eaf--buffer-id "is_focus"))
+             (deferred:nextc it
+               (lambda (x)
+                 (with-current-buffer buf
+                   (if (string= x "True")
+                       (unless (evil-insert-state-p) (evil-insert-state))
+                     (when (evil-insert-state-p) (evil-normal-state)))
+                   (setq last-focus-checked (current-time)))))))))))
 
   (advice-add 'eaf--input-message :after #'+eaf/focus-toggle)
   (advice-add 'eaf-proxy-insert_or_focus_input :after #'+eaf/focus-toggle)
@@ -186,7 +189,32 @@
           (setq +eaf/browser-current-theme next-theme)
           (eaf-setq eaf-browser-dark-mode +eaf/browser-current-theme)
           (eaf-proxy-refresh_page))
-      (message "+eaf/cycle-browser-theme can only be called in an EAF buffer"))))
+      (message "+eaf/cycle-browser-theme can only be called in an EAF buffer")))
+
+  (defun +eaf/translate-text (text)
+    "Use sdcv to translate selected TEXT."
+    (when (featurep 'youdao-dictionary)
+      (+eaf/youdao-search text)))
+
+  (defun +eaf/youdao-search (word)
+    "Search WORD simple translate result."
+    (let ((result (youdao-dictionary--format-result (youdao-dictionary--request word)))
+          (posframe-mouse-banish nil)
+          (buf-name youdao-dictionary-buffer-name))
+      ;; Show tooltip at point if word fetch from user cursor.
+      (posframe-show
+       buf-name
+       :string result
+       :position (if (derived-mode-p 'eaf-mode) (mouse-absolute-pixel-position) (point))
+       :timeout 5
+       :internal-border-color (face-foreground 'default)
+       :internal-border-width 1)
+      (unwind-protect
+          (push (read-event " ") unread-command-events)
+        (posframe-delete buf-name))))
+
+  ;; NOTE: press `Ctrl + <mouse-left-click>` to translate
+  (advice-add 'eaf-translate-text :override #'+eaf/translate-text))
 
 (use-package eaf-org
   :load-path "~/.emacs.d/submodules/emacs-application-framework"

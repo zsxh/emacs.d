@@ -36,6 +36,10 @@
   (with-eval-after-load 'evil
     (evil-define-key 'normal youdao-dictionary-mode-map "q" 'quit-window)))
 
+;; TODO: sdcv
+;; https://github.com/manateelazycat/sdcv/
+;; dictionary : http://download.huzheng.org/zh_CN/
+
 ;; Markdowm
 (with-eval-after-load 'markdown-mode
   (defun eaf-markdown-previewer ()

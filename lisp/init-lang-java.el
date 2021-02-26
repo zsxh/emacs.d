@@ -44,7 +44,7 @@
                                           (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.0.0" :default t)])
 
   (require 'helm nil t)
-  (require 'lsp-java-boot)
+  ;; (require 'lsp-java-boot)
   ;; (setq lsp-java-boot-enabled nil)
 
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
