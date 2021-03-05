@@ -24,7 +24,22 @@
     (setq elfeed-curl-extra-arguments `(,proxy-arg)))
   (when (featurep 'evil-collection)
     (evil-collection-init 'elfeed))
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "C-<return>") 'eaf-elfeed-open-url))
+
+  (require 'eaf)
+  (require 'elfeed-show)
+
+  (defun +eaf/elfeed-current-window ()
+    (interactive)
+    (let ((entry (elfeed-search-selected :ignore-region)))
+      (when (elfeed-entry-p entry)
+        ;; Move to next feed item.
+        (elfeed-untag entry 'unread)
+        (elfeed-search-update-entry entry)
+        (unless elfeed-search-remain-on-entry (forward-line))
+        ;; Open elfeed item in current window
+        (eaf-open-browser (elfeed-entry-link entry)))))
+
+  (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") '+eaf/elfeed-current-window))
 
 ;; Youdao
 (use-package youdao-dictionary
@@ -178,9 +193,6 @@
 ;; than url.el.
 (use-package request
   :defer t)
-
-;; TODO: deft-mode, notdeft, take notes
-;; https://emacs-china.org/t/v1/8218/53
 
 ;; Install lilypond and add it to load-path
 ;; $pacman -S lilypond

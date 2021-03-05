@@ -91,8 +91,8 @@
    "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
 
 (add-hook-run-once 'java-mode-hook '+java/setup)
-(add-hook-run-once 'conf-javaprop-mode-hook '+java/setup)
-(add-hook-run-once 'yaml-mode-hook '+java/setup)
+;; (add-hook-run-once 'conf-javaprop-mode-hook '+java/setup)
+;; (add-hook-run-once 'yaml-mode-hook '+java/setup)
 
 (defun +java/setup ()
   (require 'lsp-java)
@@ -168,6 +168,17 @@
 
    (+funcs/major-mode-leader-keys pom-xml-mode-map
                                   "f" '(+java/sortpom-formatter :which-key "format"))))
+
+;; http://www.tianxiangxiong.com/2017/02/12/decompiling-java-classfiles-in-emacs.html
+;; https://github.com/xiongtx/jdecomp
+;; https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine
+;; TODO: `jdecomp--fernflower-decompile-file' should extract all A.class and A${anonymous}.class
+(use-package jdecomp
+  :commands (jdecomp-mode)
+  :config
+  (setq jdecomp-decompiler-type 'fernflower
+        jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "~/.local/share/JetBrains/Toolbox/apps/IDEA-C/ch-0/203.7148.57/plugins/java-decompiler/lib/java-decompiler.jar")))
+        jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))))
 
 
 (provide 'init-lang-java)

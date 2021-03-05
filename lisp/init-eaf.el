@@ -175,22 +175,6 @@
     (interactive)
     (eaf-open url "browser" nil))
 
-  (defvar +eaf/browser-current-theme (cdr (assoc 'eaf-browser-dark-mode eaf-var-list)))
-
-  ;; TODO: keybindings for eaf-mode
-  (defun +eaf/cycle-browser-theme ()
-    (interactive)
-    (if (derived-mode-p 'eaf-mode)
-        (let ((next-theme (cond
-                           ((string= +eaf/browser-current-theme "follow") "false")
-                           ((string= +eaf/browser-current-theme "false") "true")
-                           ((string= +eaf/browser-current-theme "true") "follow"))))
-          (message "switch to dark-mode=%s" next-theme)
-          (setq +eaf/browser-current-theme next-theme)
-          (eaf-setq eaf-browser-dark-mode +eaf/browser-current-theme)
-          (eaf-proxy-refresh_page))
-      (message "+eaf/cycle-browser-theme can only be called in an EAF buffer")))
-
   (defun +eaf/translate-text (text)
     "Use sdcv to translate selected TEXT."
     (when (featurep 'youdao-dictionary)

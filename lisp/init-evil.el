@@ -55,11 +55,14 @@
                ("C-;" . evil-repeat-find-char-reverse)))
   :config
   ;; don't move cursor back, otherwise it will cause problem with lispy/awesome-pair
-  (setq evil-move-cursor-back t)
+  (setq evil-move-cursor-back nil)
   ;; the cursor is allowed to move past the last character of a line
   (setq evil-move-beyond-eol t)
   ;; show-paren-mode + Evil config
   (setq evil-highlight-closing-paren-at-point-states '(not emacs insert replace normal))
+  (setq evil-want-fine-undo t)
+  (setq evil-ex-interactive-search-highlight 'selected-window)
+  (setq evil-cross-lines t)
 
   ;; remove all keybindings from insert-state keymap,it is VERY VERY important
   (setcdr evil-insert-state-map nil)

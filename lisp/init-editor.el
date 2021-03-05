@@ -239,7 +239,42 @@
 ;; https://github.com/clvv/fasd
 (use-package fasd
   :hook (after-init . global-fasd-mode)
-  :commands (fasd-find-file))
+  :commands (fasd-find-file)
+  :config
+  ;; FIXME: wait upstream fix ivy support. https://framagit.org/steckerhalter/emacs-fasd/-/commit/c1d92553f33ebb018135c698db1a6d7f86731a26
+  (defun fasd-find-file (prefix &optional query)
+    "Use fasd to open a file, or a directory with dired.
+If PREFIX is positive consider only directories.
+If PREFIX is -1 consider only files.
+If PREFIX is nil consider files and directories.
+QUERY can be passed optionally to avoid the prompt."
+    (interactive "P")
+    (if (not (executable-find "fasd"))
+        (error "Fasd executable cannot be found.  It is required by `fasd.el'.  Cannot use `fasd-find-file'")
+      (unless query (setq query (if fasd-enable-initial-prompt
+                                    (read-from-minibuffer "Fasd query: ")
+                                  "")))
+      (let* ((prompt "Fasd query: ")
+             (results
+              (split-string
+               (shell-command-to-string
+                (concat "fasd -l -R"
+                        (pcase (prefix-numeric-value prefix)
+                          (`-1 " -f ")
+                          ((pred (< 1)) " -d ")
+                          (_ (concat " " fasd-standard-search " ")))
+                        query))
+               "\n" t))
+             (file (when results
+                     ;; set `this-command' to `fasd-find-file' is required because
+                     ;; `read-from-minibuffer' modifies its value, while `ivy-completing-read'
+                     ;; assumes it to be its caller
+                     (setq this-command 'fasd-find-file)
+                     (completing-read prompt results nil t))))
+        (if (not file)
+            (message "Fasd found nothing for query `%s'" query)
+          (when (featurep 'ivy)
+            (fasd-find-file-action file)))))))
 
 ;; This package allows Emacs to copy to and paste from the GUI clipboard
 ;; when running in text terminal.

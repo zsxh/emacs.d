@@ -44,6 +44,12 @@
   (setq org-src-window-setup 'other-window)
   (setq org-startup-with-inline-images t)
 
+  (setq org-link-frame-setup '((vm . vm-visit-folder-other-frame)
+                               (vm-imap . vm-visit-imap-folder-other-frame)
+                               (gnus . org-gnus-no-new-news)
+                               (file . find-file)
+                               (wl . wl-other-frame)))
+
   ;; display/update images in the buffer after I evaluate
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 
@@ -362,9 +368,40 @@ at the first function to return non-nil.")
         org-static-blog-enable-tags t)
   (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))
 
-;; TODO: https://github.com/abo-abo/org-download
+;; https://github.com/abo-abo/org-download
 ;; eg: https://et2010.github.io/blog/nikola-orgmode-tu-pian-xian-shi/
 (use-package org-download
+  :after org
+  :bind
+  (:map org-mode-map
+        (("s-Y" . org-download-screenshot)
+         ("s-y" . org-download-yank)))
+  :config
+  (setq org-download-screenshot-method "deepin-screen-recorder -s %s"))
+
+;; https://www.orgroam.com/manual.html
+;; https://www.orgroam.com/manual.html#Note_002dtaking-Workflows
+;; https://www.orgroam.com/manual.html#FAQ
+;; - We can have more than one Org-roam directory
+;; How-to-Take-Smart-Notes: https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzI1NTA4Nzk5Mw==&scene=1&album_id=1464601583634939905#wechat_redirect&tdsourcetag=s_pctim_aiomsg
+(use-package org-roam
+  :if (executable-find "sqlite3")
+  :commands (org-roam-mode
+             org-roam-db-build-cache
+             org-roam-find-file
+             org-roam-capture
+             org-roam-insert
+             org-roam
+             org-roam-jump-to-index)
+  :config
+  (setq org-roam-directory "~/org/org-roam"
+        org-roam-db-location "~/org/org-roam/org-roam.db"
+        org-roam-db-update-method 'immediate
+        org-roam-index-file "index.org"
+        org-roam-encrypt-files nil))
+
+;; TODO: org-ref
+(use-package org-ref
   :defer t)
 
 

@@ -192,6 +192,16 @@
 
 (add-hook 'org-load-hook '+latex/org-setup)
 
+;; TODO: mathpix.el use Mathpix's API to convert clips into latex equations
+;; https://github.com/jethrokuan/mathpix.el
+(use-package mathpix.el
+  :quelpa (mathpix :fetcher github :repo "jethrokuan/mathpix.el")
+  :custom ((mathpix-app-id "app-id")
+           (mathpix-app-key "app-key"))
+  :commands (mathpix-screenshot)
+  :config
+  (setq mathpix-screenshot-method "deepin-screen-recorder -s %s"))
+
 
 (provide 'init-latex)
 
