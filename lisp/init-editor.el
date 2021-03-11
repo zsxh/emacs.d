@@ -384,22 +384,6 @@ QUERY can be passed optionally to avoid the prompt."
   :ensure nil
   :hook (after-init . global-so-long-mode))
 
-(use-package json-mode
-  :defer t
-  :config
-  (+funcs/major-mode-leader-keys
-   json-mode-map
-   "A" nil
-   "d" nil
-   "D" nil
-   "e" nil
-   "f" nil
-   "g" nil
-   "l" nil
-   "j" '(counsel-jq :which-key "counsel-jq")
-   "p" '(json-mode-beautify :which-key "pretty-print")
-   "R" nil))
-
 
 (provide 'init-editor)
 

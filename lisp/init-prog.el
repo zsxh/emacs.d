@@ -302,6 +302,18 @@ current major mode."
   :hook (prog-mode . dumb-jump-mode)
   :custom (dump-jump-prefer-searcher 'rg))
 
+;; TODO: https://github.com/cosmicexplorer/cloc-emacs
+;; https://github.com/AlDanial/cloc
+;; Count Lines of Code
+;;
+;; Installation:
+;; > sudo pacman -S cloc
+;;
+;; Usage:
+;; > cloc .
+(use-package cloc
+  :defer t)
+
 
 (provide 'init-prog)
 

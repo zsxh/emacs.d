@@ -89,6 +89,25 @@
     (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
     (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))))
 
+;; Json config
+(use-package json-mode
+  :mode ("\\.json\\'" . json-mode)
+  :hook (json-mode . (lambda ()
+                       (make-local-variable 'js-indent-level)
+                       (setq js-indent-level 2)))
+  :config
+  (+funcs/major-mode-leader-keys json-mode-map
+                                 "A" nil
+                                 "d" nil
+                                 "D" nil
+                                 "e" nil
+                                 "f" nil
+                                 "g" nil
+                                 "l" nil
+                                 "j" '(counsel-jq :which-key "counsel-jq")
+                                 "p" '(json-pretty-print-buffer :which-key "pretty-print")
+                                 "R" nil))
+
 
 (provide 'init-lang-js)
 

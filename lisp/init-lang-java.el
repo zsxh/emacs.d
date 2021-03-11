@@ -48,7 +48,7 @@
   ;; (setq lsp-java-boot-enabled nil)
 
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
-  (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.10/lombok-1.18.10.jar")))
+  (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar")))
     (when (file-exists-p lombok-jar)
       (setq lsp-java-vmargs
             `("-noverify"
@@ -161,6 +161,7 @@
      (let ((output-buffer (get-buffer-create +web/pom-formatter-buffer-name))
            (cmd (s-join " " '("mvn"
                               "com.github.ekryd.sortpom:sortpom-maven-plugin:sort"
+                              ;; "-Dsort.nrOfIndentSpace=4"
                               "-Dsort.keepBlankLines"
                               "-Dsort.predefinedSortOrder=custom_1"
                               "-Dsort.createBackupFile=false"))))

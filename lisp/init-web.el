@@ -10,13 +10,6 @@
 
 ;;; Code:
 
-;; Json config
-(use-package json-mode
-  :mode ("\\.json\\'" . json-mode)
-  :hook (json-mode . (lambda ()
-                       (make-local-variable 'js-indent-level)
-                       (setq js-indent-level 2))))
-
 ;; YAML config
 (use-package yaml-mode
   :commands yaml-mode
