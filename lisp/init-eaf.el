@@ -177,8 +177,12 @@
 
   (defun +eaf/translate-text (text)
     "Use sdcv to translate selected TEXT."
-    (when (featurep 'youdao-dictionary)
-      (+eaf/youdao-search text)))
+    ;; (message (format "debug:%s" text))
+    (if (featurep 'youdao-dictionary)
+        (+eaf/youdao-search text)
+      (when (package-installed-p 'youdao-dictionary)
+        (require 'youdao-dictionary)
+        (+eaf/youdao-search text))))
 
   (defun +eaf/youdao-search (word)
     "Search WORD simple translate result."

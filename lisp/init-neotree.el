@@ -24,6 +24,10 @@
                         (unless (neo-window--minimize-p)
                           (neotree-stretch-toggle))))
 
+  ;; Improve performance
+  (setq neo-mode-line-custom-format (list " " "Neotree")
+        neo-mode-line-type 'custom)
+
   (with-eval-after-load 'evil-collection
     ;; Evil-Keybindings
     (evil-collection-init 'neotree)

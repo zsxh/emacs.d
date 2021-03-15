@@ -30,7 +30,6 @@
         lsp-enable-file-watchers nil
         lsp-enable-folding nil
         lsp-enable-symbol-highlighting nil ; turn off for better performance
-        lsp-keep-workspace-alive nil
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
         lsp-diagnostics-provider :flycheck
