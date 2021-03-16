@@ -374,6 +374,9 @@ QUERY can be passed optionally to avoid the prompt."
   (with-eval-after-load 'lsp-mode
     (add-hook 'lsp-mode-hook #'+gcmh/set-local-high-cons-threshold))
 
+  (with-eval-after-load '(and company-box prog-mode)
+    (add-hook 'prog-mode-hook #'+gcmh/set-local-high-cons-threshold))
+
   (with-eval-after-load 'telega-chat
     (add-hook 'telega-chat-mode-hook #'+gcmh/set-local-high-cons-threshold)))
 

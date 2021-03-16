@@ -43,6 +43,9 @@
 (use-package cider
   :defer t)
 
+;; TODO: clojurescript debugger
+;; https://emacs-lsp.github.io/lsp-mode/tutorials/debugging-clojure-script/
+
 ;; TODO: clojure debugger
 ;; https://github.com/clojure-emacs/sayid
 (use-package sayid

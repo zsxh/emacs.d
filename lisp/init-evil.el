@@ -140,21 +140,31 @@
              evil-multiedit-next
              evil-multiedit-prev))
 
-;; TODO: new keybinding for 'evil-mc-undo-all-cursors, "grq" is hard to remember
 (use-package evil-mc
-  :hook ((prog-mode conf-mode yaml-mode editorconfig-mode vue-mode) . evil-mc-mode)
+  :defer t
+  :init
+  (defun +evil-mc/toggle-on-click (event)
+    (interactive "e")
+    (unless (bound-and-true-p evil-mc-mode)
+      (evil-mc-mode))
+    (evil-mc-toggle-cursor-on-click event))
+  (defun +evil-mc/absort ()
+    (interactive)
+    (evil-mc-undo-all-cursors)
+    (when (bound-and-true-p evil-mc-mode)
+      (evil-mc-mode -1)))
   :config
-  (add-hook 'eaf-mode-hook (lambda () (evil-mc-mode -1)))
-  ;; "grq" 'evil-mc-undo-all-cursors
   (evil-define-key* '(normal visual) evil-mc-key-map
-                    ;; (kbd "gr") evil-mc-cursors-map
-                    (kbd "gr") nil
-                    (kbd "grq") 'evil-mc-undo-all-cursors
-                    (kbd "M-n") nil
-                    (kbd "M-p") nil
-                    (kbd "C-n") nil
-                    (kbd "C-t") nil
-                    (kbd "C-p") nil)
+    (kbd "gr") nil
+    (kbd "M-n") nil
+    (kbd "M-p") nil
+    (kbd "C-n") nil
+    (kbd "C-t") nil
+    (kbd "C-p") nil)
+
+  (evil-define-key '(normal visual insert emacs) evil-mc-key-map
+    (kbd "C-g") '+evil-mc/absort)
+
   (add-hook-run-once 'evil-mc-mode-hook
                      (lambda ()
                        (add-to-list 'evil-mc-incompatible-minor-modes 'lispy-mode)
@@ -162,7 +172,7 @@
 
 (with-eval-after-load 'hydra
   (defhydra hydra-evil-multiedit (:hint nil)
-    "evil multiedit"
+    "`evil-multiedit'"
     ("A" evil-multiedit-match-all "match-all")
     ("n" evil-multiedit-match-and-next "match-and-next")
     ("p" evil-multiedit-match-and-prev "match-and-prev")
@@ -171,14 +181,10 @@
     ("C-p" evil-multiedit-prev "prev")
     ("q" nil "quit"))
   (defhydra hydra-evil-mc (:hint nil)
-    "evil-mc"
-    ("A" evil-mc-make-all-cursors "match-all")
-    ("n" evil-mc-make-and-goto-next-match "match-and-next")
-    ("p" evil-mc-make-and-goto-prev-match "match-and-prev")
-    ("t" evil-mc-toggle-cursor-on-click "toggle")
-    ("C-n" evil-mc-skip-and-goto-next-match "skip-next")
-    ("C-p" evil-mc-skip-and-goto-prev-match "skip-prev")
-    ("q" evil-mc-undo-all-cursors "quit" :exit t))
+    "`evil-mc'"
+    ("<mouse-3>" +evil-mc/toggle-on-click "toggle")
+    ("C-g" '+evil-mc/absort "absort" :exit t)
+    ("q" '+evil-mc/absort "absort" :exit t))
   (defhydra hydra-multi-cursors (:hint nil :exit t)
     "
 Modes

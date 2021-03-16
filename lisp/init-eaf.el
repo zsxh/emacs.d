@@ -82,8 +82,8 @@
   (eaf-setq eaf-camera-save-path "~/Download")
   (eaf-setq eaf-browser-download-path "~/Download")
   (eaf-setq eaf-mindmap-save-path "~/Download")
-  (eaf-setq eaf-browser-dark-mode "false")
-  (eaf-setq eaf-pdf-dark-mode "false")
+  ;; (eaf-setq eaf-browser-dark-mode "false")
+  ;; (eaf-setq eaf-pdf-dark-mode "false")
 
   (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
@@ -190,16 +190,25 @@
           (posframe-mouse-banish nil)
           (buf-name youdao-dictionary-buffer-name))
       ;; Show tooltip at point if word fetch from user cursor.
-      (posframe-show
-       buf-name
-       :string result
-       :position (if (derived-mode-p 'eaf-mode) (mouse-absolute-pixel-position) (point))
-       :timeout 5
-       :internal-border-color (face-foreground 'default)
-       :internal-border-width 1)
+      (posframe-show buf-name
+                     :string result
+                     :position (if (derived-mode-p 'eaf-mode) (+eaf/mouse-absolute-pixel-position) (point))
+                     :timeout 5
+                     :internal-border-color (face-foreground 'default)
+                     :internal-border-width 1)
       (unwind-protect
           (push (read-event " ") unread-command-events)
         (posframe-delete buf-name))))
+
+  (defun +eaf/mouse-absolute-pixel-position ()
+    "Neither `mouse-absolute-pixel-position' or `mouse-pixel-position' work for multi monitors eaf frame,
+So I do some dirty hacks for my own user case."
+    (let* ((p (mouse-absolute-pixel-position))
+           (x (car p))
+           (y (cdr p)))
+      (if (> x 2560)
+          (cons (- x 2560) y)
+        p)))
 
   ;; NOTE: press `Ctrl + <mouse-left-click>` to translate
   (advice-add 'eaf-translate-text :override #'+eaf/translate-text))

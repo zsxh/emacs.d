@@ -100,7 +100,6 @@
           (const :tag "company-posframe" company-posframe)
           (const :tag "company-box" company-box)))
 
-
 (when (and (>= emacs-major-version 26) (display-graphic-p))
   (cond
    ((eq +completion/company-frontend 'company-posframe)
@@ -142,8 +141,11 @@
             company-box-highlight-prefix nil
             company-box-doc-delay 0.5
             company-box-tooltip-maximum-width company-tooltip-maximum-width
-            company-box-max-candidates 50
-            company-box-icons-alist 'company-box-icons-all-the-icons)
+            company-box-max-candidates 50)
+
+      (declare-function all-the-icons-faicon 'all-the-icons)
+      (declare-function all-the-icons-material 'all-the-icons)
+      (declare-function all-the-icons-octicon 'all-the-icons)
       (setq company-box-icons-all-the-icons
             `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.8 :v-adjust -0.15))
               (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.02))
@@ -171,7 +173,8 @@
               (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
               (Operator . ,(all-the-icons-material "control_point" :height 0.8 :v-adjust -0.15))
               (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.02))
-              (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15))))
+              (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15)))
+            company-box-icons-alist 'company-box-icons-all-the-icons)
 
       ;; Don't show documentation in echo area, because company-box displays its own
       ;; in a child frame.
