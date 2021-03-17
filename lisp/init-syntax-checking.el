@@ -98,27 +98,7 @@
         ;; inhibit display of flycheck posframe while company popups
         ;; https://github.com/alexmurray/flycheck-posframe/issues/12
         :custom (flycheck-posframe-inhibit-functions
-                 '((lambda (&rest _) (bound-and-true-p company-backend))))
-        :config
-        ;; FIXME: Temporarily fixed flycheck-posframe do not auto hide issue
-        (defun +flycheck/posframe-hidehandler (info) t)
-        (defun flycheck-posframe-show-posframe (errors)
-          "Display ERRORS, using posframe.el library."
-          (flycheck-posframe-hide-posframe)
-          (when (and errors
-                     (not (run-hook-with-args-until-success 'flycheck-posframe-inhibit-functions)))
-            (let ((poshandler (intern (format "posframe-poshandler-%s" flycheck-posframe-position))))
-              (unless (functionp poshandler)
-                (setq poshandler nil))
-              (posframe-show
-               flycheck-posframe-buffer
-               :string (flycheck-posframe-format-errors errors)
-               :background-color (face-background 'flycheck-posframe-background-face nil t)
-               :position (point)
-               :internal-border-width flycheck-posframe-border-width
-               :internal-border-color (face-foreground 'flycheck-posframe-border-face nil t)
-               :poshandler poshandler
-               :hidehandler #'+flycheck/posframe-hidehandler)))))
+                 '((lambda (&rest _) (bound-and-true-p company-backend)))))
     (use-package flycheck-popup-tip
       :after flycheck
       :hook (flycheck-mode . flycheck-popup-tip-mode)))
