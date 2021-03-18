@@ -317,7 +317,19 @@ Format is:
 
               (telega-ins-fmt "%02d/%02d/%02d"
                 (nth 5 dtime) (nth 4 dtime) (nth 3 dtime)))))))
-    (advice-add #'telega-ins--date :override #'telega-ins--date-a)))
+    (advice-add #'telega-ins--date :override #'telega-ins--date-a))
+
+  (with-eval-after-load 'all-the-icons
+    (add-to-list 'all-the-icons-mode-icon-alist
+                 '(telega-root-mode all-the-icons-fileicon "telegram"
+                                    :heigt 1.0
+                                    :v-adjust -0.2
+                                    :face all-the-icons-blue))
+    (add-to-list 'all-the-icons-mode-icon-alist
+                 '(telega-chat-mode all-the-icons-fileicon "telegram"
+                                    :heigt 1.0
+                                    :v-adjust -0.2
+                                    :face all-the-icons-blue))))
 
 ;; https://github.com/tecosaur/screenshot.git
 ;; convert a selected region of code to a screenshot
