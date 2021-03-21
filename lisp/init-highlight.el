@@ -84,7 +84,7 @@
   :hook ((lisp-mode emacs-lisp-mode) . rainbow-delimiters-mode))
 
 (use-package highlight-indent-guides
-  :hook ((python-mode) . highlight-indent-guides-mode)
+  :hook ((python-mode yaml-mode docker-compose-mode) . highlight-indent-guides-mode)
   :config
   (defun my-highlighter (level responsive display)
     (if (> 2 level)

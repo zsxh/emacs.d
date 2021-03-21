@@ -17,7 +17,10 @@
   :defer t
   :preface
   (setq lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/"))
-        lsp-java-inhibit-message t)
+        lsp-java-inhibit-message t
+        ;; https://github.com/dgileadi/vscode-java-decompiler
+        lsp-java-content-provider-preferred "fernflower")
+
   (let ((java-format-style-file (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml"))))
     (when (file-exists-p java-format-style-file)
       ;; https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
