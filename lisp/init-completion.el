@@ -94,7 +94,7 @@
   :after company
   :hook (global-company-mode . company-quickhelp-terminal-mode))
 
-(defcustom +completion/company-frontend 'company-posframe
+(defcustom +completion/company-frontend 'company-box
   "Company frontend."
   :type '(choice
           (const :tag "company-posframe" company-posframe)
