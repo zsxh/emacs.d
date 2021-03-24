@@ -172,6 +172,11 @@
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode)
   :config
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.xlsx?$" all-the-icons-fileicon "excel" :face all-the-icons-green))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.rar$" all-the-icons-octicon "file-zip" :v-adjust 0.0 :face all-the-icons-lmaroon))
+
   (with-no-warnings
     (advice-add #'dired-do-create-files :around #'all-the-icons-dired--refresh-advice)
     (advice-add #'dired-create-directory :around #'all-the-icons-dired--refresh-advice)
