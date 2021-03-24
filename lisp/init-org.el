@@ -328,8 +328,8 @@ at the first function to return non-nil.")
   :defer t
   :config
   (add-hook 'ob-async-pre-execute-src-block-hook
-            '(lambda ()
-               (setq inferior-julia-program-name "julia")))
+            (lambda ()
+              (setq inferior-julia-program-name "julia")))
   ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
   (setq ob-async-no-async-languages-alist
         '("ipython"

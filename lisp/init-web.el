@@ -14,8 +14,8 @@
 (use-package yaml-mode
   :commands yaml-mode
   :config (add-hook 'yaml-mode-hook
-                    '(lambda ()
-                       (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
+                    (lambda ()
+                      (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
 ;; Web mode for html,xml...
 (use-package web-mode
