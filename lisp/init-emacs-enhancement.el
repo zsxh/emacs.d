@@ -528,7 +528,8 @@ is non-nil."
   (setq garbage-collection-messages t)
   (setq gcmh-idle-delay 15
         ;; gcmh-high-cons-threshold (* 16 1024 1024)
-        gcmh-high-cons-threshold #x40000000 ; 1GB
+        ;; gcmh-high-cons-threshold #x40000000 ; 1GB
+        gcmh-high-cons-threshold (* 128 1024 1024) ; 128MB
         gcmh-verbose t)
   ;; (setq +gcmh/high-cons-threshold gcmh-high-cons-threshold
   ;;       +gcmh/high-cons-threshold-special (* 1024 1024 1024))

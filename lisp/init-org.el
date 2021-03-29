@@ -404,6 +404,19 @@ at the first function to return non-nil.")
 (use-package org-ref
   :defer t)
 
+;; https://logseq.github.io
+;; https://github.com/llcc/org-logseq
+;; Usage:
+;; set `org-logseq-dir'
+;; M-x `org-logseq-mode' in your current buffer
+;; or put ((org-mode . ((eval org-logseq-mode 1)))) in your .dir-locals
+;; C-c C-o to open pages or block references
+;; TODO: take notes in logseq
+(use-package org-logseq
+  :quelpa (org-logseq :fetcher github :repo "llcc/org-logseq" :files ("*"))
+  :custom (org-logseq-dir "~/Code/logseq")
+  :commands org-logseq-mode)
+
 
 (provide 'init-org)
 

@@ -72,7 +72,8 @@
     :config
     (setq lsp-completion-sort-initial-results nil ; do not resort the result
           ;; lsp-completion--no-reordering t ; do not resort the result
-          lsp-completion-provider :capf)
+          lsp-completion-provider :capf
+          lsp-completion-show-detail t)
 
     ;; FIXME: trigger characters doesn't work in lsp-java, native-comp issue?
     (defun lsp-completion--looking-back-trigger-characterp (trigger-characters)

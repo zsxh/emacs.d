@@ -99,13 +99,15 @@
 
 (defun +java/setup ()
   (require 'lsp-java)
-  (add-hook 'java-mode-hook 'lsp-deferred)
+  (add-hook 'java-mode-hook
+            (lambda ()
+              (setq-local lsp-completion-show-detail nil)
+              (lsp-deferred)))
   ;; (add-hook 'lsp-after-open-hook
   ;;           (lambda ()
   ;;             (when (eq major-mode 'java-mode)
   ;;               (lsp-java-lens-mode)
   ;;               (lsp-java-boot-lens-mode))))
-  (setq-local lsp-completion-show-detail nil)
   (lsp-deferred))
 
 (with-eval-after-load 'lsp-java
