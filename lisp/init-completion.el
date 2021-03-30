@@ -30,6 +30,8 @@
                ("C-j" . company-select-next)))
   :hook (after-init . global-company-mode)
   :config
+  (set-face-underline 'company-tooltip-common t)
+
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
         company-tooltip-maximum-width (/ (frame-width) 2)
@@ -45,7 +47,11 @@
         company-backends '(company-capf company-files company-dabbrev)
         company-global-modes '(not shell-mode eshell-mode eaf-mode
                                    erc-mode message-mode help-mode
-                                   helpful-mode gud-mode))
+                                   helpful-mode gud-mode)
+        company-format-margin-function (if (string-equal "light" (frame-parameter nil 'background-mode))
+                                           #'company-vscode-light-icons-margin
+                                         #'company-vscode-dark-icons-margin)
+        company-icon-size '(auto-scale . 15))
 
   (with-eval-after-load 'company-eclim
     ;;  Stop eclim auto save.
@@ -94,9 +100,10 @@
   :after company
   :hook (global-company-mode . company-quickhelp-terminal-mode))
 
-(defcustom +completion/company-frontend 'company-box
+(defcustom +completion/company-frontend 'company-posframe
   "Company frontend."
   :type '(choice
+          (const :tag "nil" nil)
           (const :tag "company-posframe" company-posframe)
           (const :tag "company-box" company-box)))
 
@@ -111,6 +118,18 @@
       (setq company-posframe-quickhelp-delay nil
             company-posframe-show-indicator nil
             company-posframe-show-metadata nil)
+      ;; FIXME: wait upstream fix company new icon position
+      (defun company-posframe-show-at-prefix (info)
+        "Poshandler showing `company-posframe' at `company-prefix'."
+        (let* ((parent-window (plist-get info :parent-window))
+               (point (with-current-buffer (window-buffer parent-window)
+                        (max (line-beginning-position)
+                             (- (plist-get info :position)
+                                (length company-prefix)
+                                company-tooltip-margin
+                                (if company-format-margin-function 1 0)))))
+               (info (plist-put info :position-info (posn-at-point point parent-window))))
+          (posframe-poshandler-point-bottom-left-corner info)))
       (defun +company-posframe/quickhelp-auto-hide ()
         (unless (member this-command '(mwheel-scroll
                                        handle-switch-frame

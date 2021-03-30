@@ -193,17 +193,19 @@ server getting expensively restarted when reverting buffers."
   (when (featurep 'doom-themes)
     (set-face-background 'lsp-ui-doc-background (doom-color 'bg-alt)))
 
-  (defun +lsp/toggle-doc-show ()
-    "Popup/Hide hover information"
+  (defun +lsp/doc-auto-hide ()
+    (unless (member this-command '(ignore
+                                   mwheel-scroll
+                                   handle-switch-frame
+                                   dap-tooltip-mouse-motion))
+      (lsp-ui-doc--hide-frame)
+      (remove-hook 'pre-command-hook #'+lsp/doc-auto-hide)))
+
+  (defun +lsp/doc-show ()
+    "Trigger display hover information popup and hide it on next typing."
     (interactive)
-    (if lsp-ui-doc-mode
-        (progn
-          (message "lsp-ui-doc disabled")
-          (lsp-ui-doc-hide)
-          (lsp-ui-doc-mode -1))
-      (message "lsp-ui-doc enabled")
-      (lsp-ui-doc-mode 1)
-      (lsp-ui-doc-show)))
+    (lsp-ui-doc--make-request)
+    (add-hook 'pre-command-hook #'+lsp/doc-auto-hide 0 t))
 
   (setq lsp-ui-sideline-show-symbol t
         lsp-ui-sideline-show-hover t
@@ -260,9 +262,9 @@ server getting expensively restarted when reverting buffers."
        "dh" '(dap-hydra :which-key "dap-hydra")
        "dl" '(dap-breakpoint-log-message :which-key "breakpoint-log-message")
        "dr" '(dap-debug :which-key "run")
-       ;; FIXME: lsp-ui-doc-glance scoll down doc will freeze emacs
+       ;; NOTE: I don't like `lsp-ui-doc--glance-hide-frame' strategy
        ;; "D" '(lsp-ui-doc-glance :which-key "lsp-ui-doc-glance")
-       "D" '(+lsp/toggle-doc-show :which-key "toggle-doc-hover")
+       "D" '(+lsp/doc-show :which-key "toggle-doc-hover")
        "f" '(lsp-format-buffer :which-key "format")
        "g" '(nil :which-key "go")
        "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")

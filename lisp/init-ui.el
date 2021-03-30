@@ -212,6 +212,11 @@ By default, this shows the information specified by `global-mode-string'."
   (mapcar #'disable-theme custom-enabled-themes)
   (setq current-theme (cl-first args))
   (apply orig-fn args)
+  (with-eval-after-load 'company
+    (when company-format-margin-function
+      (if (string-equal "light" (frame-parameter nil 'background-mode))
+          #'company-vscode-light-icons-margin
+        #'company-vscode-dark-icons-margin)))
   (+ui/customize-faces))
 
 (advice-add 'load-theme :around 'load-theme-a)
