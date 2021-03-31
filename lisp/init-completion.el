@@ -118,18 +118,7 @@
       (setq company-posframe-quickhelp-delay nil
             company-posframe-show-indicator nil
             company-posframe-show-metadata nil)
-      ;; FIXME: wait upstream fix company new icon position
-      (defun company-posframe-show-at-prefix (info)
-        "Poshandler showing `company-posframe' at `company-prefix'."
-        (let* ((parent-window (plist-get info :parent-window))
-               (point (with-current-buffer (window-buffer parent-window)
-                        (max (line-beginning-position)
-                             (- (plist-get info :position)
-                                (length company-prefix)
-                                company-tooltip-margin
-                                (if company-format-margin-function 1 0)))))
-               (info (plist-put info :position-info (posn-at-point point parent-window))))
-          (posframe-poshandler-point-bottom-left-corner info)))
+
       (defun +company-posframe/quickhelp-auto-hide ()
         (unless (member this-command '(mwheel-scroll
                                        handle-switch-frame
@@ -148,6 +137,7 @@
           (company-posframe-quickhelp-show)
           (company-posframe-quickhelp-raise-frame)
           (add-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide 0 t)))))
+
    ((eq +completion/company-frontend 'company-box)
     ;; Code from https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-company.el
     (use-package company-box
