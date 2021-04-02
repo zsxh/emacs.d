@@ -247,14 +247,11 @@
            str)))
 
   (defun pinyin-to-utf8 (str)
-    (cond ((equal 0 (length str))
-           nil)
-          ((equal (substring str 0 1) ":")
-           (mapconcat 'my-pinyinlib-build-regexp-string
-                      (remove nil (mapcar 'my-pinyin-regexp-helper (split-string
-                                                                    (replace-regexp-in-string ":" "" str) "")))
-                      ""))
-          nil)))
+    (mapconcat 'my-pinyinlib-build-regexp-string
+               (remove nil (mapcar 'my-pinyin-regexp-helper
+                                   (split-string
+                                    (replace-regexp-in-string ":" "" str) "")))
+               "")))
 
 ;; sort and filter candidates in Ivy menus
 (use-package ivy-prescient
