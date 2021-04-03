@@ -30,7 +30,7 @@
                ("C-j" . company-select-next)))
   :hook (after-init . global-company-mode)
   :config
-  (set-face-underline 'company-tooltip-common t)
+  ;; (set-face-underline 'company-tooltip-common t)
 
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
@@ -48,9 +48,7 @@
         company-global-modes '(not shell-mode eshell-mode eaf-mode
                                    erc-mode message-mode help-mode
                                    helpful-mode gud-mode)
-        company-format-margin-function (if (string-equal "light" (frame-parameter nil 'background-mode))
-                                           #'company-vscode-light-icons-margin
-                                         #'company-vscode-dark-icons-margin)
+        company-format-margin-function 'company-detect-icons-margin
         company-icon-size '(auto-scale . 15))
 
   (with-eval-after-load 'company-eclim
