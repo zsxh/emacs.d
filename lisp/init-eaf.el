@@ -83,7 +83,7 @@
   (eaf-setq eaf-browser-download-path "~/Download")
   (eaf-setq eaf-mindmap-save-path "~/Download")
   ;; (eaf-setq eaf-browser-dark-mode "false")
-  ;; (eaf-setq eaf-pdf-dark-mode "false")
+  (eaf-setq eaf-pdf-dark-mode "false")
 
   (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)

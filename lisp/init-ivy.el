@@ -51,6 +51,7 @@
     (setq ivy-re-builders-alist
           '((ivy-switch-buffer . ivy--pinyin-regex)
             (swiper . ivy--pinyin-regex)
+            ;; (counsel-M-x . ivy--pinyin-regex)
             (counsel-find-file . ivy--pinyin-regex)
             (find-file-in-project . ivy--pinyin-regex)
             (find-file-in-project-by-selected . ivy--pinyin-regex)
