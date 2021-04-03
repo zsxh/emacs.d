@@ -89,9 +89,10 @@
           (not (display-graphic-p)))
   :after company
   :bind ((:map company-active-map
-               ("M-h" . company-quickhelp-manual-begin)))
+               ("C-h" . company-quickhelp-manual-begin)))
   :hook (global-company-mode . company-quickhelp-mode)
-  :config (setq company-quickhelp-delay 0.3))
+  :config
+  (setq company-quickhelp-delay nil))
 
 (use-package company-quickhelp-terminal
   :if (not (display-graphic-p))
