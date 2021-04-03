@@ -25,12 +25,6 @@
   (tooltip-mode    -1)
   (menu-bar-mode   -1))
 
-;; Disable cursor blinking
-;; FIXME: emacs 28.1 no-blinking-cursor
-(when (and no-blinking-cursor
-           blink-cursor-mode)
-  (blink-cursor-mode -1))
-
 ;; Show buffer name in title
 (setq frame-title-format "emacs@%b")
 

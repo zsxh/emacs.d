@@ -44,6 +44,7 @@
 
 ;; Disable cursor blinking
 (setq no-blinking-cursor t)
+(blink-cursor-mode -1)
 
 ;; More performant rapid scrolling over unfontified regions. May cause brief
 ;; spells of inaccurate syntax highlighting right after scrolling, which should

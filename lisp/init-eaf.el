@@ -26,7 +26,6 @@
 ;; or
 ;; Install in pyenv independent enviroment
 ;; $ pip install PyQt5 PyQtWebEngine PyMuPDF epc
-;; FIXME: eaf-server bootstrap
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
