@@ -40,23 +40,44 @@
   ;; ;; https://github.com/abo-abo/swiper#frequently-asked-questions
   (setq ivy-use-selectable-prompt t)
 
-  (when (fboundp '+ivy/pinyin-config)
-    ;; initial input ":" to match pinyin
-    (+ivy/pinyin-config)
+  ;; Contribute pengpengxp
+  ;; https://emacs-china.org/t/ivy-read/2432/3
+  (use-package pinyinlib
+    :commands pinyinlib-build-regexp-string)
 
-    (defun ivy--pinyin-regex (str)
-      (or (pinyin-to-utf8 str)
-          (ivy--regex-plus str)))
+  (defun my-pinyinlib-build-regexp-string (str)
+    (progn
+      (cond ((equal str ".*")
+             ".*")
+            (t
+             (pinyinlib-build-regexp-string str t)))))
 
-    (setq ivy-re-builders-alist
-          '((ivy-switch-buffer . ivy--pinyin-regex)
-            (swiper . ivy--pinyin-regex)
-            ;; (counsel-M-x . ivy--pinyin-regex)
-            (counsel-recentf . ivy--pinyin-regex)
-            (counsel-find-file . ivy--pinyin-regex)
-            (find-file-in-project . ivy--pinyin-regex)
-            (find-file-in-project-by-selected . ivy--pinyin-regex)
-            (t . ivy--pinyin-regex))))
+  (defun my-pinyin-regexp-helper (str)
+    (cond ((equal str " ")
+           ".*")
+          ((equal str "")
+           nil)
+          (t
+           str)))
+
+  (defun pinyin-to-utf8 (str)
+    (mapconcat 'my-pinyinlib-build-regexp-string
+               (mapcar 'my-pinyin-regexp-helper (split-string str "" t))
+               ""))
+
+  (defun ivy--pinyin-regex (str)
+    (or (pinyin-to-utf8 str)
+        (ivy--regex-plus str)))
+
+  (setq ivy-re-builders-alist
+        '((ivy-switch-buffer . ivy--pinyin-regex)
+          (swiper . ivy--pinyin-regex)
+          ;; (counsel-M-x . ivy--pinyin-regex)
+          (counsel-recentf . ivy--pinyin-regex)
+          (counsel-find-file . ivy--pinyin-regex)
+          (find-file-in-project . ivy--pinyin-regex)
+          (find-file-in-project-by-selected . ivy--pinyin-regex)
+          (t . ivy--pinyin-regex)))
 
   (setq ivy-initial-inputs-alist nil)
 
@@ -226,32 +247,6 @@
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs) ; Emacs< 27
   (setq xref-show-definitions-function #'ivy-xref-show-defs) ; Emacs >= 27
   :commands ivy-xref-show-xrefs)
-
-(defun +ivy/pinyin-config ()
-  ;; Contribute pengpengxp
-  ;; https://emacs-china.org/t/ivy-read/2432/3
-  (use-package pinyinlib
-    :commands pinyinlib-build-regexp-string)
-
-  (defun my-pinyinlib-build-regexp-string (str)
-    (progn
-      (cond ((equal str ".*")
-             ".*")
-            (t
-             (pinyinlib-build-regexp-string str t)))))
-
-  (defun my-pinyin-regexp-helper (str)
-    (cond ((equal str " ")
-           ".*")
-          ((equal str "")
-           nil)
-          (t
-           str)))
-
-  (defun pinyin-to-utf8 (str)
-    (mapconcat 'my-pinyinlib-build-regexp-string
-               (mapcar 'my-pinyin-regexp-helper (split-string str "" t))
-               "")))
 
 ;; sort and filter candidates in Ivy menus
 (use-package ivy-prescient

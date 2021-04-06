@@ -56,7 +56,9 @@
       (setq lsp-java-vmargs
             `("-noverify"
               "-Xmx1G"
-              "-XX:+UseG1GC"
+              ;; "-XX:+UseG1GC"
+              "-XX:+UnlockExperimentalVMOptions"
+              "-XX:+UseZGC"
               "-XX:+UseStringDeduplication"
               ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
               ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
