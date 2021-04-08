@@ -223,6 +223,7 @@
    "wm" '(+funcs/toggle-maximize-buffer :which-key "maximized")
    "ws" '(ace-swap-window :which-key "swap-window")
    "wS" '(hydra-window-scale/body :which-key "scale")
+   "wt" '(hydra-transpose-frame/body :which-key "transpose-frame")
    "ww" '(writeroom-mode :which-key "writeroom-mode")
    "wz" '(zoom-mode :which-key "toggle-zoom-mode")
    ;; Toggle
@@ -258,6 +259,27 @@
   ("j" shrink-window "shrink-window")
   ("k" enlarge-window "enlarge-window")
   ("b" balance-windows "balance")
+  ("q" nil "quit"))
+
+(defhydra hydra-transpose-frame (:hint nil)
+  "
+    ^Transpose Frame^
+    ^ |A|B|^
+    ^ |C|D|^
+    ^^^^^----------------------
+    _t_: transpose-frame            B<->C
+    _-_: flip-frame                 AB<->CD
+    _/_: flop-frame                 AC<->BD
+    _x_: rotate-frame               A<->D B<->C
+    _o_: rotate-frame-clockwise     A->B->D->C->A
+    _O_: rotate-frame-anticlockwise A->C->D->B->A
+    "
+  ("t" transpose-frame)
+  ("-" flip-frame)
+  ("/" flop-frame)
+  ("x" rotate-frame)
+  ("o" rotate-frame-clockwise)
+  ("O" rotate-frame-anticlockwise)
   ("q" nil "quit"))
 
 (defhydra hydra-emacs-cheatsheet (:hint nil :exit t)

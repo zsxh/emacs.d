@@ -86,6 +86,8 @@
              find-file-in-project-not-ignore
              find-directory-in-project)
   :config
+  ;; TODO: improve showing project files on screen immediately and redraw it asynchronously.
+  ;; https://github.com/mpereira/.emacs.d/#a-fast-non-projectile-based-project-file-finder
   (advice-add #'ffip-project-root :around (lambda (orig-fn)
                                             (or (+project/lsp-project-root)
                                                 (funcall orig-fn))))

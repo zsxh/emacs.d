@@ -598,6 +598,14 @@ is non-nil."
   :ensure nil
   :hook (after-init . global-so-long-mode))
 
+(use-package profiler
+  :ensure  nil
+  :defer t
+  :config
+  ;; https://www.murilopereira.com/how-to-open-a-file-in-emacs
+  (setf (caar profiler-report-cpu-line-format) 80
+        (caar profiler-report-memory-line-format) 80))
+
 
 (provide 'init-emacs-enhancement)
 

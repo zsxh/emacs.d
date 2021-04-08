@@ -73,7 +73,7 @@
    eaf-browser-default-search-engine "duckduckgo"
    eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf/"))
    ;; eaf-wm-focus-fix-wms (append '("deepin") eaf-wm-focus-fix-wms)
-   eaf-elfeed-split-direction "right")
+   eaf-elfeed-split-direction "below")
 
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
   (eaf-setq eaf-browser-default-zoom "1.2")

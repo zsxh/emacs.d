@@ -135,6 +135,14 @@
   (with-eval-after-load 'neotree
     (add-to-list 'aw-ignored-buffers neo-buffer-name)))
 
+(use-package transpose-frame
+  :commands (transpose-frame            ; \
+             flip-frame                 ; -
+             flop-frame                 ; |
+             rotate-frame               ; x
+             rotate-frame-clockwise
+             rotate-frame-anticlockwise))
+
 ;; Treat undo history as a tree
 (use-package undo-tree
   :if (lambda nil (not (functionp 'undo-redo)))

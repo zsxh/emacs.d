@@ -28,18 +28,20 @@
   (require 'eaf)
   (require 'elfeed-show)
 
-  (defun +eaf/elfeed-current-window ()
-    (interactive)
-    (let ((entry (elfeed-search-selected :ignore-region)))
-      (when (elfeed-entry-p entry)
-        ;; Move to next feed item.
-        (elfeed-untag entry 'unread)
-        (elfeed-search-update-entry entry)
-        (unless elfeed-search-remain-on-entry (forward-line))
-        ;; Open elfeed item in current window
-        (eaf-open-browser (elfeed-entry-link entry)))))
+  ;; (defun +eaf/elfeed-current-window ()
+  ;;   (interactive)
+  ;;   (let ((entry (elfeed-search-selected :ignore-region)))
+  ;;     (when (elfeed-entry-p entry)
+  ;;       ;; Move to next feed item.
+  ;;       (elfeed-untag entry 'unread)
+  ;;       (elfeed-search-update-entry entry)
+  ;;       (unless elfeed-search-remain-on-entry (forward-line))
+  ;;       ;; Open elfeed item in current window
+  ;;       (eaf-open-browser (elfeed-entry-link entry)))))
 
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") '+eaf/elfeed-current-window))
+  ;; (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") '+eaf/elfeed-current-window)
+
+  (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") 'eaf-elfeed-open-url))
 
 ;; Youdao
 (use-package youdao-dictionary
