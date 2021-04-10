@@ -61,32 +61,33 @@
 
 ;; Short and sweet LISP editing
 (use-package lispy
-    :commands lispy-mode
-    :bind ((:map lispy-mode-map
-                 (":" . self-insert-command)))
-    :hook ((lisp-mode
-            emacs-lisp-mode
-            lisp-interaction-mode
-            clojure-mode
-            clojurec-mode
-            clojurescript-mode) . lispy-mode)
-    :config
-    ;; this requires CIDER or cider--display-interactive-eval-result function
-    (setq lispy-eval-display-style 'overlay)
-    (setq lispy-use-sly t)
+  :commands lispy-mode
+  :bind ((:map lispy-mode-map
+               (":" . self-insert-command)
+               ("C-j" . newline-and-indent)))
+  :hook ((lisp-mode
+          emacs-lisp-mode
+          lisp-interaction-mode
+          clojure-mode
+          clojurec-mode
+          clojurescript-mode) . lispy-mode)
+  :config
+  ;; this requires CIDER or cider--display-interactive-eval-result function
+  (setq lispy-eval-display-style 'overlay)
+  (setq lispy-use-sly t)
 
-    (defun lispy-hash-a (orig-fn &rest args)
-      (if (and (eq major-mode 'clojurescript-mode)
-               (lispy-looking-back "\\[:\\sw+"))
-          (insert "#")
-        (apply orig-fn args)))
-    (advice-add 'lispy-hash :around #'lispy-hash-a)
+  (defun lispy-hash-a (orig-fn &rest args)
+    (if (and (eq major-mode 'clojurescript-mode)
+             (lispy-looking-back "\\[:\\sw+"))
+        (insert "#")
+      (apply orig-fn args)))
+  (advice-add 'lispy-hash :around #'lispy-hash-a)
 
-    (defun lispy-eval-a (orig-fn &rest args)
-      (if (eq major-mode 'clojurescript-mode)
-          (cider-eval-last-sexp)
-        (apply orig-fn args)))
-    (advice-add 'lispy-eval :around #'lispy-eval-a))
+  (defun lispy-eval-a (orig-fn &rest args)
+    (if (eq major-mode 'clojurescript-mode)
+        (cider-eval-last-sexp)
+      (apply orig-fn args)))
+  (advice-add 'lispy-eval :around #'lispy-eval-a))
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros

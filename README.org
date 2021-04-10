@@ -19,6 +19,8 @@ Updated: <2021-03-26>
   - [X] neotree combine directories with only one child to make display more compact https://github.com/jaypei/emacs-neotree/issues/147
   - [ ] fix emacs-ipython-notebook configurations
   - [ ] fix vterm tracing directory
+  - [ ] replace projectile.el with emacs built-in project.el
+  - [ ] replace ivy with ...
 
 * Features
   - =org=

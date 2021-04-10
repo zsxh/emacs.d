@@ -148,6 +148,7 @@
    "heU" '(upgrade-packages :which-key "upgrade-emacs-packages-sync")
    "hf" '(helpful-callable :which-key "helpful-callable")
    "hF" '(describe-face :which-key "describe-face")
+   "hi" '(info :which-key "emacs-info")
    "hk" '(helpful-key :which-key "helpful-key")
    "hs" '(describe-syntax :which-key "describe-syntax")
    "hS" '(hydra-emacs-cheatsheet/body :which-key "my-emacs-cheatsheet")
