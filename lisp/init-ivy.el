@@ -10,6 +10,12 @@
 
 ;;; Code:
 
+;; TODO: https://github.com/raxod502/selectrum#complementary-extensions
+;; https://github.com/minad/consult
+;; https://github.com/raxod502/prescient.el
+;; https://github.com/oantolin/embark/
+;; https://github.com/oantolin/orderless
+
 ;; ivy
 (use-package ivy
   :bind ((:map ivy-minibuffer-map

@@ -411,11 +411,31 @@ at the first function to return non-nil.")
 ;; M-x `org-logseq-mode' in your current buffer
 ;; or put ((org-mode . ((eval org-logseq-mode 1)))) in your .dir-locals
 ;; C-c C-o to open pages or block references
-;; TODO: take notes in logseq
 (use-package org-logseq
   :quelpa (org-logseq :fetcher github :repo "llcc/org-logseq" :files ("*"))
-  :custom (org-logseq-dir "~/Code/logseq")
-  :commands org-logseq-mode)
+  :custom
+  (org-logseq-dir "~/Code/logseq")
+  (org-logseq-create-page-p t)
+  :commands org-logseq-mode
+  :config
+  ;; FIXME: fix grep path
+  (defun org-logseq-grep-query (page-or-id)
+    "Return grep result for searching PAGE-OR-ID in `org-logseq-dir'."
+    (let ((type (car page-or-id))
+          (query (cdr page-or-id)))
+      (format (pcase type
+                ('page "grep -niR \"^#+\\(TITLE\\): *%s\" %s --exclude-dir=\".git\"")
+                ('id "grep -niR \"^:id: *%s\" %s --exclude-dir=\".git\""))
+              query org-logseq-dir)))
+  ;; FIXME: fix create page dir
+  (defun org-logseq-create-page (page)
+    "Create a new PAGE org file in pages directory if setting
+ `org-logseq-create-page-p' to non-nil."
+    (if org-logseq-create-page-p
+        (progn
+          (find-file (expand-file-name (concat "pages/" page ".org") org-logseq-dir))
+          (insert (concat "#+TITLE: " page)))
+      (user-error "No page found; Check `org-logseq-create-page-p` variable"))))
 
 
 (provide 'init-org)
