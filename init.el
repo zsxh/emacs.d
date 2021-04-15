@@ -133,6 +133,7 @@
 
 ;; Completion in Emacs
 (require 'init-ivy)
+;; (require 'init-minibuffer)
 
 ;; Programing
 (require 'init-project)

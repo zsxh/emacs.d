@@ -607,6 +607,28 @@ is non-nil."
         (caar profiler-report-memory-line-format) 80))
 
 
+;; Calendar
+(use-package cal-china-x
+  :after calendar
+  :config
+  (require 'holidays)
+  (setq calendar-mark-holidays-flag t
+        cal-china-x-important-holidays cal-china-x-chinese-holidays
+        cal-china-x-general-holidays '((holiday-lunar 1 15 "元宵节"))
+        calendar-holidays (append cal-china-x-important-holidays
+                                  cal-china-x-general-holidays)))
+
+;; TODO: Calfw - A calendar framework for Emacs
+;; https://github.com/kiwanami/emacs-calfw
+(use-package calfw
+  :defer t
+  :config
+  (require 'calfw-org))
+
+(use-package calfw-org :defer t)
+(use-package calfw-cal :defer t)
+
+
 (provide 'init-emacs-enhancement)
 
 ;;; init-emacs-enhancement.el ends here

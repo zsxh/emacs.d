@@ -89,6 +89,7 @@
   (with-eval-after-load 'ediff (evil-collection-init 'ediff))
   (with-eval-after-load 'edebug (evil-collection-init 'edebug))
   (with-eval-after-load 'popup (evil-collection-init 'popup))
+  (with-eval-after-load 'calendar (evil-collection-init 'calendar))
   (with-eval-after-load 'info
     ;; (evil-set-initial-state 'Info-mode 'normal)
     (evil-collection-init 'info)

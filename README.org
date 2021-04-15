@@ -4,7 +4,7 @@ Updated: <2021-03-26>
 * Enviroment
   - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.27, cairo version 1.17.4) of 2021-03-26
   - build branch: feature/native-comp 79b8b6
-  - system-configuration-options: ~CFLAGS='-O3' --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick~
+  - system-configuration-options: ~--with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick~
   - OS: Manjaro 21.0 Ornara
   - Shell: zsh 5.8
   - Kernel: 5.10.23-1-MANJARO
@@ -167,7 +167,7 @@ Updated: <2021-03-26>
      git clone --depth 1 --branch feature/native-comp https://github.com/emacs-mirror/emacs.git emacs-native-comp
      cd emacs-native-comp
      ./autogen.sh
-     ./configure CFLAGS='-O3' --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick
+     ./configure --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick
      make -j8
      sudo make install
    #+end_src
@@ -177,7 +177,7 @@ Updated: <2021-03-26>
    #+begin_src shell
      git clone --depth 1 --branch pgtk-nativecomp https://github.com/flatwhatson/emacs.git emacs-pgtk-nativecomp
      cd emacs-pgtk-nativecomp
-     ./configure CFLAGS='-O3' --with-pgtk --with-native-compilation --with-imagemagick
+     ./configure --with-pgtk --with-native-compilation --with-imagemagick
      make -j8
      sudo make install
    #+end_src

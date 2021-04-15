@@ -297,7 +297,7 @@ Version 2017-01-27"
          (funcall ,function))
        (add-hook ,hook ',sym ,append ,local))))
 
-(defun +funcs/ivy-switch-major-mode-buffer (&rest modes)
+(defun +funcs/switch-major-mode-buffer (&rest modes)
   (interactive)
   (ivy-read "Switch to buffer: "
             (delete (buffer-name (current-buffer))
@@ -308,19 +308,19 @@ Version 2017-01-27"
                                            (buffer-list))))
             :initial-input nil
             :action #'ivy--switch-buffer-action
-            :caller '+funcs/ivy-switch-major-mode-buffer))
+            :caller '+funcs/switch-major-mode-buffer))
 
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
   (cond ((eq major-mode 'eaf-mode)
-         (+funcs/ivy-switch-major-mode-buffer major-mode))
+         (+funcs/switch-major-mode-buffer major-mode))
         ((member major-mode '(telega-root-mode telega-chat-mode))
-         (+funcs/ivy-switch-major-mode-buffer 'telega-root-mode 'telega-chat-mode))
+         (+funcs/switch-major-mode-buffer 'telega-root-mode 'telega-chat-mode))
         ((and
           (or (not (fboundp 'tramp-tramp-file-p))
               (not (tramp-tramp-file-p default-directory)))
           (+project/root))
-         (+project/ivy-switch-buffer))
+         (+project/switch-buffer))
         (t
          (ivy-switch-buffer))))
 

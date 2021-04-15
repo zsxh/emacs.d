@@ -168,10 +168,10 @@
                :predicate
                (lambda (cand) (get-buffer cand))))
 
-  (plist-put ivy-rich-display-transformers-list '+project/ivy-switch-buffer
+  (plist-put ivy-rich-display-transformers-list '+project/switch-buffer
              (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer))
 
-  (plist-put ivy-rich-display-transformers-list '+funcs/ivy-switch-major-mode-buffer
+  (plist-put ivy-rich-display-transformers-list '+funcs/switch-major-mode-buffer
              (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer))
 
   (plist-put ivy-rich-display-transformers-list 'counsel-find-file

@@ -36,7 +36,7 @@
 
 (defalias '+project/root 'projectile-project-root)
 
-(defun +project/ivy-switch-buffer ()
+(defun +project/switch-buffer ()
   (interactive)
   (ivy-read "Switch to buffer: "
             (delete (buffer-name (current-buffer))
@@ -44,7 +44,7 @@
                       (projectile-project-buffer-names)))
             :initial-input nil
             :action #'ivy--switch-buffer-action
-            :caller '+project/ivy-switch-buffer))
+            :caller '+project/switch-buffer))
 
 (use-package projectile
   :hook (after-init . projectile-mode)
