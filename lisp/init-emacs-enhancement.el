@@ -618,7 +618,8 @@ is non-nil."
         calendar-holidays (append cal-china-x-important-holidays
                                   cal-china-x-general-holidays)))
 
-;; TODO: Calfw - A calendar framework for Emacs
+;; TODO: Calfw keybindings
+;; Calfw - A calendar framework for Emacs
 ;; https://github.com/kiwanami/emacs-calfw
 (use-package calfw
   :defer t

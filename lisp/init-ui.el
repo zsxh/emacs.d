@@ -163,6 +163,7 @@ By default, this shows the information specified by `global-mode-string'."
 (ignore-errors
   ;; Download ans install SF Mono fonts:
   ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
+  ;; https://github.com/hick/emacs-chinese#emacs-中文基础
   (if (member "SF Mono" (font-family-list))
       (set-frame-font "SF Mono-12:weight=semi-bold" nil t)
     (message "[WARN] font \"SF Mono\" not found"))
