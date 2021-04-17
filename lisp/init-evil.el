@@ -273,7 +273,7 @@ Modes
     (evil-set-initial-state 'Man-mode 'normal)
     (evil-define-key 'normal Man-mode-map
       "0" 'evil-digit-argument-or-evil-beginning-of-line
-      "RET" 'man-follow
+      (kbd "RET") 'man-follow
       "gg" 'evil-goto-first-line
       "gj" 'Man-next-section
       "gk" 'Man-previous-section

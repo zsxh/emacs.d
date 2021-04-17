@@ -607,7 +607,7 @@ is non-nil."
         (caar profiler-report-memory-line-format) 80))
 
 
-;; Calendar
+;;;;;;;;;;;;;; Calendar ;;;;;;;;;;;;;;
 (use-package cal-china-x
   :after calendar
   :config
@@ -618,16 +618,40 @@ is non-nil."
         calendar-holidays (append cal-china-x-important-holidays
                                   cal-china-x-general-holidays)))
 
-;; TODO: Calfw keybindings
 ;; Calfw - A calendar framework for Emacs
 ;; https://github.com/kiwanami/emacs-calfw
-(use-package calfw
-  :defer t
-  :config
-  (require 'calfw-org))
-
-(use-package calfw-org :defer t)
 (use-package calfw-cal :defer t)
+(use-package calfw-org :commands (cfw:open-org-calendar))
+(use-package calfw
+  :commands (cfw:open-calendar-buffer)
+  :config
+  (require 'calfw-org)
+
+  (defun +calfw/auto-refresh-buffer (&rest _args)
+    (cfw:refresh-calendar-buffer nil))
+
+  (defun +calfw/setup ()
+    (add-hook 'window-configuration-change-hook #'+calfw/auto-refresh-buffer nil 'local))
+
+  (add-hook 'cfw:calendar-mode-hook #'+calfw/setup)
+
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'cfw:calendar-mode 'normal)
+    (evil-define-key 'normal cfw:calendar-mode-map
+      "h" 'cfw:navi-previous-day-command
+      "j" 'cfw:navi-next-week-command
+      "k" 'cfw:navi-previous-week-command
+      "l" 'cfw:navi-next-day-command
+      "q" 'kill-current-buffer
+      "<" 'cfw:navi-previous-month-command
+      ">" 'cfw:navi-next-month-command
+      (kbd "RET") 'cfw:org-open-agenda-day)
+    (evil-define-key 'normal cfw:org-schedule-map
+      "q" 'kill-current-buffer
+      (kbd "RET") 'cfw:org-open-agenda-day)
+    (evil-define-key 'normal cfw:org-custom-map
+      "q" 'kill-current-buffer
+      (kbd "RET") 'cfw:org-open-agenda-day)))
 
 
 (provide 'init-emacs-enhancement)
