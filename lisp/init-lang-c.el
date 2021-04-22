@@ -27,9 +27,27 @@
   (setq ccls-initialization-options
         '(:index (:comment 2) :cacheFormat "msgpack" :completion (:detailedLabel t))))
 
+;; https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb
+;; run `dap-gdb-lldb-setup' to setup automatically(auto download)
 (use-package dap-gdb-lldb
   :after ccls
   :ensure dap-mode)
+
+;; https://emacs-lsp.github.io/dap-mode/page/configuration/#vscode-cpptools
+;; run `dap-cpptools-setup' to setup automatically(auto download)
+(use-package dap-cpptools
+  :after ccls
+  :ensure dap-mode
+  :config
+  ;; TODO: auto build before launching debugger
+  (dap-register-debug-template
+   "cpptools::Run Configuration"
+   (list :type "cppdbg"
+         :request "launch"
+         :name "cpptools::Run Configuration"
+         :MIMode "gdb"
+         :program "${workspaceFolder}/${fileBasenameNoExtension}"
+         :cwd "${workspaceFolder}")))
 
 (defun +c/setup ()
   (require 'ccls)

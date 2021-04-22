@@ -67,7 +67,8 @@
   :ensure nil
   :defer t
   :bind (:map dired-mode-map
-              ("C-<return>" . 'dired-open-xdg))
+              ("C-<return>" . 'dired-open-xdg)
+              ("q" . nil))
   :config
   (setq dired-dwim-target t
         dired-recursive-copies 'always
@@ -87,15 +88,17 @@
            (match-string 1))))))
 
   (defun +dired/dired-jump-a (orig-fn &rest args)
-    (let ((buf (current-buffer))
-          (mode major-mode))
+    "Jump to Dired buffer corresponding to current buffer and
+kill the current buffer if it's dired buffer."
+    (let ((pre-buf (current-buffer))
+          (pre-mode major-mode))
       (apply orig-fn args)
-      (when (eq mode 'dired-mode)
-        (kill-buffer buf))))
+      (when (and (eq pre-mode 'dired-mode)
+                 (null (get-buffer-window pre-buf)))
+        (kill-buffer pre-buf))))
 
   (advice-add 'dired-jump :around '+dired/dired-jump-a)
 
-  ;; TODO: 同一个buffer split window 不能删
   (defun +dired/dired-find-file-a (orig-fn &rest args)
     (let ((pre-buf (current-buffer))
           (cur-buf))
@@ -103,7 +106,7 @@
       (setq cur-buf (current-buffer))
       (when (and (not (eq pre-buf cur-buf))
                  (eq major-mode 'dired-mode)
-                 (null (get-buffer-window cur-buf)))
+                 (null (get-buffer-window pre-buf)))
         (kill-buffer pre-buf))))
 
   (advice-add 'dired-find-file :around '+dired/dired-find-file-a)
@@ -119,6 +122,7 @@
       "G" 'evil-goto-line
       "h" 'evil-backward-char
       "l" 'evil-forward-char
+      "q" nil
       "v" 'evil-visual-char
       "V" 'evil-visual-line))
 
@@ -154,7 +158,7 @@
   (setq fd-dired-pre-fd-args "-0 -c never -I"
         fd-dired-ls-option '("| xargs -0 ls -alhdN" . "-ld")))
 
-;; Editable Dired mode configs
+;; Editable Dired pre-mode configs
 (use-package wdired
   :ensure nil
   :defer t

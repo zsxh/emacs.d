@@ -98,6 +98,8 @@
          (set-face-background 'show-paren-match "#E5E5E5"))))
     ('doom-dark+
      (progn
+       (with-eval-after-load 'all-the-icons-dired
+         (set-face-foreground 'all-the-icons-dired-dir-face "#C586C0"))
        (set-face-background 'fringe (face-attribute 'default :background))
        (with-eval-after-load 'company-posframe
          (set-face-background 'company-posframe-active-backend-name (doom-color 'modeline-bg))
