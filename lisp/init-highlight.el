@@ -87,7 +87,7 @@
   :hook ((python-mode yaml-mode docker-compose-mode) . highlight-indent-guides-mode)
   :config
   (defun my-highlighter (level responsive display)
-    (if (> 2 level)
+    (if (> 1 level)
         nil
       (highlight-indent-guides--highlighter-default level responsive display)))
 
