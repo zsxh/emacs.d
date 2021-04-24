@@ -13,8 +13,8 @@
 ;;;;;;;;;;;;;; Debug Adapter Protocol for Emacs ;;;;;;;;;;;;;;
 
 (use-package dap-mode
-  :quelpa (dap-mode :fetcher github :repo "emacs-lsp/dap-mode"
-                    :files (:defaults "icons"))
+  ;; :quelpa (dap-mode :fetcher github :repo "emacs-lsp/dap-mode"
+  ;;                   :files (:defaults "icons"))
   :hook ((lsp-mode . dap-mode)
          (dap-mode . dap-ui-mode)
          (dap-mode . dap-ui-controls-mode))

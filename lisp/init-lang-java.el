@@ -13,7 +13,7 @@
 (require 'init-lsp)
 
 (use-package lsp-java
-  :quelpa (lsp-java :fetcher github :repo "emacs-lsp/lsp-java")
+  ;; :quelpa (lsp-java :fetcher github :repo "emacs-lsp/lsp-java")
   :defer t
   :preface
   (setq lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/"))

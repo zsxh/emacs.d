@@ -17,10 +17,11 @@
 ;;
 ;; lsp-org command
 ;; https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/lsp-org.md
+;; (setq lsp-use-plists t)
 (use-package lsp-mode
-  :quelpa (lsp-mode :fetcher github
-                    :repo "emacs-lsp/lsp-mode"
-                    :files (:defaults "clients/*.el"))
+  ;; :quelpa (lsp-mode :fetcher github
+  ;;                   :repo "emacs-lsp/lsp-mode"
+  ;;                   :files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
   :config
   (setq lsp-auto-guess-root nil
