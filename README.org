@@ -1,13 +1,13 @@
 #+STARTUP: showall
-Updated: <2021-03-26>
+Updated: <2021-04-26>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.27, cairo version 1.17.4) of 2021-03-26
-  - build branch: feature/native-comp 79b8b6
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.28, cairo version 1.17.4) of 2021-04-26
+  - build branch: master 890631
   - system-configuration-options: ~--with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick~
-  - OS: Manjaro 21.0 Ornara
+  - OS: Manjaro 21.0.2 Ornara
   - Shell: zsh 5.8
-  - Kernel: 5.10.23-1-MANJARO
+  - Kernel: 5.10.30-1-MANJARO
   - DE: Deepin 20.1
   - WM: KWin
   - GCC version: 10.2.0 with libgccjit
@@ -147,35 +147,14 @@ Updated: <2021-03-26>
 
 * Build Emacs
 
-** Build Emacs 28
-   #+begin_src shell
-     git clone --depth 1 https://github.com/emacs-mirror/emacs.git
-     cd emacs
-     ./autogen.sh
-     ./configure --with-x-toolkit=gtk3 --with-imagemagick
-     make -j8
-     sudo make install
-   #+end_src
-
-** Or Install gccemacs, Bringing GNU Emacs to Native Code (Recommended)
+** Build Emacs 28 with native-comp
 
    Install libgccjit first https://aur.archlinux.org/packages/libgccjit/
 
    #+begin_src shell
-     git clone --depth 1 --branch feature/native-comp https://github.com/emacs-mirror/emacs.git emacs-native-comp
-     cd emacs-native-comp
-     ./autogen.sh
-     ./configure --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick
-     make -j8
-     sudo make install
-   #+end_src
-
-** pgtk-nativecomp (eaf broken)
-
-   #+begin_src shell
-     git clone --depth 1 --branch pgtk-nativecomp https://github.com/flatwhatson/emacs.git emacs-pgtk-nativecomp
-     cd emacs-pgtk-nativecomp
-     ./configure --with-pgtk --with-native-compilation --with-imagemagick
+     git clone --depth 1 https://github.com/emacs-mirror/emacs.git emacs-master
+     cd emacs-master
+     ./autogen.sh && ./configure --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick
      make -j8
      sudo make install
    #+end_src
