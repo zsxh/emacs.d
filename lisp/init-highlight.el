@@ -14,31 +14,36 @@
 (use-package paren
   :ensure nil
   :hook ((after-init . (lambda () (show-paren-mode -1)))
-         (prog-mode . show-paren-local-mode))
+         (prog-mode . show-paren-local-enable))
   :config
-  (setq show-paren-when-point-inside-paren t)
-  (setq show-paren-when-point-in-periphery t)
+  (setq show-paren-when-point-inside-paren t
+        show-paren-when-point-in-periphery t
+        show-paren-delay 0.125)
 
-  (defun show-paren-local-mode ()
-    (interactive)
+  (defun show-paren-local-enable ()
     (setq-local show-paren-mode t))
 
   (defun show-paren-function-advice (fn)
     "Highlight enclosing parens."
     (when show-paren-mode
-      (cond ((looking-at-p "\\s(") (funcall fn))
-            ((derived-mode-p 'python-mode)
-             (save-excursion
-               (ignore-errors
-                 (let* ((cur-pos (point))
-                        (paren-open-pos (search-backward-regexp "\\s(" (point-min) t))
-                        (paren-close-pos (and paren-open-pos (search-forward-regexp "\\s)" cur-pos t))))
-                   (when (and paren-open-pos (not paren-close-pos))
-                     (goto-char (1+ paren-open-pos))
-                     (funcall fn))))))
-            (t (save-excursion
-                 (ignore-errors (backward-up-list))
-                 (funcall fn))))))
+      (cond
+       ;; TODO: any performance issue here now?
+       ;; ((looking-at-p "\\s(") (funcall fn))
+       ;; ((derived-mode-p 'python-mode)
+       ;;  (save-excursion
+       ;;    (ignore-errors
+       ;;      (let* ((cur-pos (point))
+       ;;             (paren-open-pos (search-backward-regexp "\\s(" (point-min) t))
+       ;;             (paren-close-pos (and paren-open-pos (search-forward-regexp "\\s)" cur-pos t))))
+       ;;        (when (and paren-open-pos (not paren-close-pos))
+       ;;          (goto-char (1+ paren-open-pos))
+       ;;          (funcall fn))))))
+       ((or (derived-mode-p 'lisp-data-mode)
+            (derived-mode-p 'clojure-mode))
+        (save-excursion
+          (ignore-errors (backward-up-list))
+          (funcall fn)))
+       (t (funcall fn)))))
 
   (advice-add 'show-paren-function :around #'show-paren-function-advice))
 
@@ -93,9 +98,9 @@
       (highlight-indent-guides--highlighter-default level responsive display)))
 
   (setq highlight-indent-guides-method 'character
-        highlight-indent-guides-character ?\|
-        highlight-indent-guides-auto-character-face-perc 30
-        highlight-indent-guides-auto-top-character-face-perc 60
+        ;; highlight-indent-guides-character ?\|
+        ;; highlight-indent-guides-auto-character-face-perc 30
+        ;; highlight-indent-guides-auto-top-character-face-perc 60
         highlight-indent-guides-responsive 'top
         highlight-indent-guides-highlighter-function 'my-highlighter))
 
