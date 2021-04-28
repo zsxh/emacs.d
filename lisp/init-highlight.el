@@ -15,7 +15,6 @@
   :ensure nil
   :hook ((after-init . (lambda () (show-paren-mode -1)))
          (prog-mode . show-paren-local-mode))
-  ;; :hook ((prog-mode . show-paren-local-mode))
   :config
   (setq show-paren-when-point-inside-paren t)
   (setq show-paren-when-point-in-periphery t)
