@@ -63,6 +63,7 @@
    "ac" '(nil :which-key "client")
    "acr" '(+web/restclient-new-buffer :which-key "restclient")
    "acw" '(websocket-client-open :which-key "websocket-client")
+   "aC" '(cfw:open-org-calendar :which-key "calendar")
    "ad" '(docker :which-key "docker")
    "af" '(elfeed :which-key "elfeed")
    "aj" '(nil :which-key "jupyter")

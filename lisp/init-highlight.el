@@ -15,31 +15,33 @@
   :ensure nil
   :hook ((after-init . (lambda () (show-paren-mode -1)))
          (prog-mode . show-paren-local-mode))
+  ;; :hook ((prog-mode . show-paren-local-mode))
   :config
   (setq show-paren-when-point-inside-paren t)
   (setq show-paren-when-point-in-periphery t)
 
-  (defun show-paren-function-advice (fn)
-    "Highlight enclosing parens."
-    (cond ((looking-at-p "\\s(") (funcall fn))
-          ((derived-mode-p 'python-mode)
-           (save-excursion
-             (ignore-errors
-               (let* ((cur-pos (point))
-                      (paren-open-pos (search-backward-regexp "\\s(" (point-min) t))
-                      (paren-close-pos (and paren-open-pos (search-forward-regexp "\\s)" cur-pos t))))
-                 (when (and paren-open-pos (not paren-close-pos))
-                   (goto-char (1+ paren-open-pos))
-                   (funcall fn))))))
-          (t (save-excursion
-               (ignore-errors (backward-up-list))
-               (funcall fn)))))
-
-  (advice-add 'show-paren-function :around #'show-paren-function-advice)
-
   (defun show-paren-local-mode ()
     (interactive)
-    (setq-local show-paren-mode t)))
+    (setq-local show-paren-mode t))
+
+  (defun show-paren-function-advice (fn)
+    "Highlight enclosing parens."
+    (when show-paren-mode
+      (cond ((looking-at-p "\\s(") (funcall fn))
+            ((derived-mode-p 'python-mode)
+             (save-excursion
+               (ignore-errors
+                 (let* ((cur-pos (point))
+                        (paren-open-pos (search-backward-regexp "\\s(" (point-min) t))
+                        (paren-close-pos (and paren-open-pos (search-forward-regexp "\\s)" cur-pos t))))
+                   (when (and paren-open-pos (not paren-close-pos))
+                     (goto-char (1+ paren-open-pos))
+                     (funcall fn))))))
+            (t (save-excursion
+                 (ignore-errors (backward-up-list))
+                 (funcall fn))))))
+
+  (advice-add 'show-paren-function :around #'show-paren-function-advice))
 
 ;; Highlight Symbol
 (use-package symbol-overlay
