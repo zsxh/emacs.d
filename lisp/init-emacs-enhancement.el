@@ -253,6 +253,11 @@ kill the current buffer if it's dired buffer."
 (use-package dired-rsync
   :defer t)
 
+;; https://github.com/ralesi/ranger.el
+;; FIXME: close/disable ranger do not restore dired original format/layout
+(use-package ranger
+  :commands (ranger))
+
 ;;;;;;;;;;;;;; Simple HTML Renderer ;;;;;;;;;;;;;;
 
 (use-package shr
