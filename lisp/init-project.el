@@ -111,8 +111,12 @@
 
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 
+;; TODO: workspace layout
+;; https://www.youtube.com/watch?v=HRQhYAz3M-U
+
 (use-package persp-mode
   :defer t)
+
 
 
 (provide 'init-project)

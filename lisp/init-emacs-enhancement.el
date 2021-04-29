@@ -48,6 +48,7 @@
 
 ;;;;;;;;;;;;;; *Buffer* ;;;;;;;;;;;;;;
 
+;; TODO: support submodules
 (use-package ibuffer-vc
   :bind (("C-x C-b" . ibuffer))
   :hook ((ibuffer . (lambda ()
@@ -68,6 +69,7 @@
   :defer t
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
+              ("<tab>" . 'dired-subtree-toggle)
               ("q" . nil))
   :config
   (setq dired-dwim-target t
@@ -234,6 +236,9 @@ kill the current buffer if it's dired buffer."
     (setq dired-hacks-datetime-regexp "[0-9]\\{4\\}-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]"))
   ;; highlight executable files, but not directories
   (dired-rainbow-define-chmod executable-unix "#4F894C" "-[rw-]+x.*"))
+
+(use-package dired-subtree
+  :defer t)
 
 (use-package dired-ranger
   :commands (dired-ranger-copy dired-ranger-move dired-ranger-paste))
