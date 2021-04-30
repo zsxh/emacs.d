@@ -87,7 +87,7 @@
 
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
 (use-package rainbow-delimiters
-  :hook ((lisp-mode emacs-lisp-mode) . rainbow-delimiters-mode))
+  :hook (lisp-data-mode . rainbow-delimiters-mode))
 
 (use-package highlight-indent-guides
   :hook ((python-mode yaml-mode docker-compose-mode) . highlight-indent-guides-mode)
