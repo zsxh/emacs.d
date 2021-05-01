@@ -34,7 +34,7 @@
         lsp-java-folding-range-enabled nil
         lsp-java-progress-reports-enabled nil
         lsp-java-format-comments-enabled nil
-        lsp-java-completion-max-results 100
+        lsp-java-completion-max-results 50
         lsp-java-selection-range-enabled nil
         ;; different jdk versions settings, lsp server require jdk11,
         ;; Eclipse auto-discovers all installed Java versions and, I think it will use the correct one
@@ -53,16 +53,18 @@
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
   (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar")))
     (when (file-exists-p lombok-jar)
-      (setq lsp-java-vmargs
-            `("-noverify"
-              "-Xmx1G"
-              ;; "-XX:+UseG1GC"
-              "-XX:+UnlockExperimentalVMOptions"
-              "-XX:+UseZGC"
-              "-XX:+UseStringDeduplication"
-              ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
-              ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
-              ,(concat "-javaagent:" lombok-jar)))))
+      ;; "-XX:+UnlockExperimentalVMOptions"
+      ;; "-XX:+UseZGC"
+      ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
+      ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
+      ;; current VSCode default, https://github.com/redhat-developer/vscode-java/blob/master/package.json#L156
+      (setq lsp-java-vmargs `("-XX:+UseParallelGC"
+                              "-XX:GCTimeRatio=4"
+                              "-XX:AdaptiveSizePolicyWeight=90"
+                              "-Dsun.zip.disableMemoryMapping=true"
+                              "-Xmx2G"
+                              "-Xms100m"
+                              ,(concat "-javaagent:" lombok-jar)))))
   (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
 
 ;; NOTE: debug template args `vmArgs', `noDebug'...
