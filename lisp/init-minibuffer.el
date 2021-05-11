@@ -18,6 +18,8 @@
 (use-package consult
   :defer t)
 
+;; TODO: replace `counsel-M-x', `counsel-find-file', `counsel-recentf', `counsel-tramp', `counsel-imenu', `ivy-occur'...
+
 ;; filtering `prescient' or `orderless'
 (use-package prescient
   :defer t)
