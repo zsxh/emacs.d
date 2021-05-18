@@ -65,7 +65,12 @@ if no project root found, use current directory instead."
 
   (with-eval-after-load 'evil
     (evil-set-initial-state 'vterm-mode 'insert)
-    (evil-define-key '(normal insert emacs) vterm-copy-mode-map "q" #'vterm-copy-mode-done))
+    (evil-define-key '(normal insert emacs) vterm-copy-mode-map "q" #'vterm-copy-mode-done)
+    (defun +vterm/evil-esc ()
+      (interactive)
+      (vterm-send-escape)
+      (evil-normal-state))
+    (evil-define-key 'insert vterm-mode-map (kbd "<escape>") #'+vterm/evil-esc))
 
   (defvar +vterm/toggle--window-configration nil)
 

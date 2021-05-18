@@ -73,6 +73,8 @@
   :hook (after-init . doom-modeline-init)
   :config
   (setq doom-modeline-modal-icon nil
+        doom-modeline-bar t
+        doom-modeline-hud nil
         doom-modeline-unicode-fallback nil
         doom-modeline-major-mode-icon t
         doom-modeline-window-width-limit 100

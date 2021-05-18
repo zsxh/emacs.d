@@ -98,7 +98,22 @@
         ;; inhibit display of flycheck posframe while company popups
         ;; https://github.com/alexmurray/flycheck-posframe/issues/12
         :custom (flycheck-posframe-inhibit-functions
-                 '((lambda (&rest _) (bound-and-true-p company-backend)))))
+                 '((lambda (&rest _) (bound-and-true-p company-backend))))
+        :config
+        ;; disable `posframe-run-hidehandler', we manage flycheck posframe hidehandler ourself to improve performance
+        (defun +flycheck/hide-posframe ()
+          "Hide posframe if position has changed since last display and
+remove flycheck hide posframe function from local post-command-hook
+to avoid performance impact."
+          (when (not (flycheck-posframe-check-position))
+            (posframe-hide flycheck-posframe-buffer)
+            (remove-hook 'post-command-hook #'+flycheck/hide-posframe t)))
+
+        (defun +flycheck/posframe-advice (_errors)
+          "Add hook to hide flycheck posframe."
+          (add-hook 'post-command-hook #'+flycheck/hide-posframe 0 t))
+
+        (advice-add 'flycheck-posframe-show-posframe :after #'+flycheck/posframe-advice))
     (use-package flycheck-popup-tip
       :after flycheck
       :hook (flycheck-mode . flycheck-popup-tip-mode)))

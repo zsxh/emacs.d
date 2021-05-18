@@ -493,20 +493,23 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 ;;;;;;;;;;;;;; posframe ;;;;;;;;;;;;;;
 (use-package posframe
   :defer t
-  :custom
-  (posframe-mouse-banish t)
+  ;; :custom
+  ;; (posframe-mouse-banish t)
   :config
-  (defun posframe--mouse-banish-a (parent-frame &optional posframe)
-    "Banish mouse to the (0 . 0) of PARENT-FRAME.
-Do not banish mouse when no-accept-focus frame parameter of POSFRAME
-is non-nil."
-    (when (and posframe-mouse-banish
-               ;; Do not banish mouse when posframe can accept focus.
-               ;; See posframe-show's accept-focus argument.
-               (frame-parameter posframe 'no-accept-focus)
-               (not (equal (cdr (mouse-position)) '(10000 . 10000))))
-      (set-mouse-position parent-frame 10000 10000)))
-  (advice-add 'posframe--mouse-banish :override #'posframe--mouse-banish-a))
+  ;; improve performance and fix mouse issue
+  (remove-hook 'post-command-hook #'posframe-run-hidehandler)
+  ;; (defun posframe--mouse-banish-a (parent-frame &optional posframe)
+  ;;     "Banish mouse to the (0 . 0) of PARENT-FRAME.
+  ;; Do not banish mouse when no-accept-focus frame parameter of POSFRAME
+  ;; is non-nil."
+  ;;     (when (and posframe-mouse-banish
+  ;;                ;; Do not banish mouse when posframe can accept focus.
+  ;;                ;; See posframe-show's accept-focus argument.
+  ;;                (frame-parameter posframe 'no-accept-focus)
+  ;;                (not (equal (cdr (mouse-position)) '(10000 . 10000))))
+  ;;       (set-mouse-position parent-frame 10000 10000)))
+  ;; (advice-add 'posframe--mouse-banish :override #'posframe--mouse-banish-a)
+  )
 
 ;;;;;;;;;;;;;; transient ;;;;;;;;;;;;;;
 ;; https://github.com/magit/transient/blob/master/docs/transient.org
@@ -539,58 +542,11 @@ is non-nil."
 ;; https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
 (use-package gcmh
   :init
-  (setq garbage-collection-messages t)
+  (setq garbage-collection-messages nil)
   (setq gcmh-idle-delay 15
-        ;; gcmh-high-cons-threshold (* 16 1024 1024)
-        ;; gcmh-high-cons-threshold #x40000000 ; 1GB
-        gcmh-high-cons-threshold (* 128 1024 1024) ; 128MB
+        gcmh-high-cons-threshold 1073741824 ; 1GB
         gcmh-verbose t)
-  ;; (setq +gcmh/high-cons-threshold gcmh-high-cons-threshold
-  ;;       +gcmh/high-cons-threshold-special (* 1024 1024 1024))
-  :hook (after-init . gcmh-mode)
-  ;; :config
-  ;; GC automatically while unfocusing the frame
-  ;; `focus-out-hook' is obsolete since 27.1
-  ;; (if (boundp 'after-focus-change-function)
-  ;;     (add-function :after after-focus-change-function
-  ;;                   (lambda ()
-  ;;                     (unless (frame-focus-state)
-  ;;                       (gcmh-idle-garbage-collect))))
-  ;;   (add-hook 'focus-out-hook 'gcmh-idle-garbage-collect))
-
-  ;; ------------------------- minibuffer ---------------------------------
-  ;; (defun +gcmh/minibuffer-setup-h ()
-  ;;   (setq gcmh-high-cons-threshold +gcmh/high-cons-threshold-special))
-
-  ;; (defun +gcmh/minibuffer-exit-h ()
-  ;;   (setq gcmh-high-cons-threshold +gcmh/high-cons-threshold))
-
-  ;; (add-hook 'minibuffer-setup-hook #'+gcmh/minibuffer-setup-h)
-  ;; (add-hook 'minibuffer-exit-hook #'+gcmh/minibuffer-exit-h)
-
-  ;; -------------------- buffer local settings ---------------------------
-  ;; (defun +gcmh/set-local-high-cons-threshold ()
-  ;;   (setq-local gcmh-high-cons-threshold +gcmh/high-cons-threshold-special))
-
-  ;; HACK Org is known to use a lot of unicode symbols (and large org files tend
-  ;;      to be especially memory hungry). Compounded with
-  ;;      `inhibit-compacting-font-caches' being non-nil, org needs more memory
-  ;;      to be performant.
-  ;; (with-eval-after-load 'org
-  ;;   (add-hook 'org-mode-hook #'+gcmh/set-local-high-cons-threshold))
-
-  ;; REVIEW LSP causes a lot of allocations, with or without Emacs 27+'s
-  ;;        native JSON library, so we up the GC threshold to stave off
-  ;;        GC-induced slowdowns/freezes.
-  ;; (with-eval-after-load 'lsp-mode
-  ;;   (add-hook 'lsp-mode-hook #'+gcmh/set-local-high-cons-threshold))
-
-  ;; (with-eval-after-load '(and company-box prog-mode)
-  ;;   (add-hook 'prog-mode-hook #'+gcmh/set-local-high-cons-threshold))
-
-  ;; (with-eval-after-load 'telega-chat
-  ;;   (add-hook 'telega-chat-mode-hook #'+gcmh/set-local-high-cons-threshold))
-  )
+  :hook (after-init . gcmh-mode))
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
 ;; TODO: Enhance Tramp
