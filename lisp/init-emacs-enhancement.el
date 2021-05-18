@@ -493,23 +493,22 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 ;;;;;;;;;;;;;; posframe ;;;;;;;;;;;;;;
 (use-package posframe
   :defer t
-  ;; :custom
-  ;; (posframe-mouse-banish t)
+  :custom
+  (posframe-mouse-banish t)
   :config
   ;; improve performance and fix mouse issue
   (remove-hook 'post-command-hook #'posframe-run-hidehandler)
-  ;; (defun posframe--mouse-banish-a (parent-frame &optional posframe)
-  ;;     "Banish mouse to the (0 . 0) of PARENT-FRAME.
-  ;; Do not banish mouse when no-accept-focus frame parameter of POSFRAME
-  ;; is non-nil."
-  ;;     (when (and posframe-mouse-banish
-  ;;                ;; Do not banish mouse when posframe can accept focus.
-  ;;                ;; See posframe-show's accept-focus argument.
-  ;;                (frame-parameter posframe 'no-accept-focus)
-  ;;                (not (equal (cdr (mouse-position)) '(10000 . 10000))))
-  ;;       (set-mouse-position parent-frame 10000 10000)))
-  ;; (advice-add 'posframe--mouse-banish :override #'posframe--mouse-banish-a)
-  )
+  (defun posframe--mouse-banish-a (parent-frame &optional posframe)
+    "Banish mouse to the (0 . 0) of PARENT-FRAME.
+  Do not banish mouse when no-accept-focus frame parameter of POSFRAME
+  is non-nil."
+    (when (and posframe-mouse-banish
+               ;; Do not banish mouse when posframe can accept focus.
+               ;; See posframe-show's accept-focus argument.
+               (frame-parameter posframe 'no-accept-focus)
+               (not (equal (cdr (mouse-position)) '(10000 . 10000))))
+      (set-mouse-position parent-frame 10000 10000)))
+  (advice-add 'posframe--mouse-banish :override #'posframe--mouse-banish-a))
 
 ;;;;;;;;;;;;;; transient ;;;;;;;;;;;;;;
 ;; https://github.com/magit/transient/blob/master/docs/transient.org
