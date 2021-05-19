@@ -570,10 +570,11 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 (use-package profiler
   :ensure  nil
   :defer t
-  :config
+  ;; :config
   ;; https://www.murilopereira.com/how-to-open-a-file-in-emacs
-  (setf (caar profiler-report-cpu-line-format) 80
-        (caar profiler-report-memory-line-format) 80))
+  ;; (setf (caar profiler-report-cpu-line-format) 80
+  ;;       (caar profiler-report-memory-line-format) 80)
+  )
 
 
 ;;;;;;;;;;;;;; Calendar ;;;;;;;;;;;;;;

@@ -1,9 +1,9 @@
 #+STARTUP: showall
-Updated: <2021-05-14>
+Updated: <2021-05-19>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.29, cairo version 1.17.4) of 2021-05-14
-  - build branch: master 43701a
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.29, cairo version 1.17.4) of 2021-05-19
+  - build branch: master 567c31
   - system-configuration-options: ~--with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick~
   - OS: Manjaro 21.0.3 Ornara
   - Shell: zsh 5.8
