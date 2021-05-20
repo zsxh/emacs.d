@@ -76,14 +76,28 @@
           dired-mode
           neotree-mode
           magit-mode
-          conf-space-mode) . turn-on-auto-revert-mode)
+          conf-space-mode) . +autorevert/turn-on)
+  :init
+  ;; disable auto revert in remote buffers
+  (defun +autorevert/turn-on ()
+    (unless (and (featurep 'tramp)
+               (tramp-tramp-file-p default-directory))
+      (turn-on-auto-revert-mode)))
   :config
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil
         auto-revert-interval 5
         ;; turn off `auto-revert-use-notify' or customize `auto-revert-notify-exclude-dir-regexp'
         ;; to exclude I/O intensive directories from auto-reverting.
-        auto-revert-use-notify nil))
+        auto-revert-use-notify nil
+        ;; Since checking a remote file is slow, these modes check or revert
+        ;; remote files only if the user option `auto-revert-remote-files' is
+        ;; non-nil.  It is recommended to disable version control for remote
+        ;; files.
+        auto-revert-remote-files nil
+        ;; https://github.com/magit/magit/issues/2371#issuecomment-152746346
+        ;; value nil, vc mode-line update when buffer changed. t, update every auto-revert-interval seconds
+        auto-revert-check-vc-info t))
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2

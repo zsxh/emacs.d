@@ -14,9 +14,6 @@
   :commands (magit magit-blame magit-file-popup)
   :defer 10
   :config
-  ;; https://github.com/magit/magit/issues/2371#issuecomment-152746346
-  ;; value nil, vc mode-line update when buffer changed. t, update every auto-revert-interval seconds
-  (setq auto-revert-check-vc-info t)
   (setq magit-bury-buffer-function 'magit-mode-quit-window))
 
 ;; https://github.com/alphapapa/magit-todos
