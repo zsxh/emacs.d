@@ -74,6 +74,7 @@
     (setq lsp-completion-sort-initial-results nil ; do not resort the result
           ;; lsp-completion--no-reordering t ; do not resort the result
           lsp-completion-provider :capf
+          lsp-completion-default-behaviour :insert
           lsp-completion-show-detail t))
 
   (use-package lsp-diagnostics

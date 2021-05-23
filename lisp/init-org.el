@@ -33,7 +33,7 @@
   ;; https://orgmode.org/manual/Structure-Templates.html
   (require 'org-tempo)
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
-  (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
+  ;; (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
   (setq org-export-use-babel nil ; do not evaluate again during export.
         org-export-with-toc nil
         org-export-with-section-numbers nil
@@ -97,6 +97,13 @@
       (while (re-search-forward org-babel-result-regexp nil t)
         (save-excursion (goto-char (match-beginning 0))
                         (org-babel-hide-result-toggle-maybe))))))
+
+(use-package org-habit
+  :ensure org-plus-contrib
+  :after org-agenda
+  :config
+  (setq org-habit-show-habits-only-for-today t
+        org-habit-show-all-today t))
 
 ;; Org-mode keybindings
 (use-package evil-org
