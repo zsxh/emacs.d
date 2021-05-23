@@ -294,14 +294,6 @@ current major mode."
   ;; use `auto-save' package to deal with trailing whitespace
   (setq editorconfig-trim-whitespaces-mode (lambda (arg) nil)))
 
-(use-package dumb-jump
-  :bind (:map dumb-jump-mode-map
-              ("C-M-g" . dumb-jump-go)
-              ("C-M-p" . dumb-jump-back)
-              ("C-M-q" . dumb-jump-quick-look))
-  :hook (prog-mode . dumb-jump-mode)
-  :custom (dump-jump-prefer-searcher 'rg))
-
 ;; TODO: https://github.com/cosmicexplorer/cloc-emacs
 ;; https://github.com/AlDanial/cloc
 ;; Count Lines of Code
