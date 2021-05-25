@@ -543,8 +543,8 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :init
   (setq garbage-collection-messages nil)
   (setq gcmh-idle-delay 15
-        gcmh-high-cons-threshold 1073741824 ; 1GB
-        gcmh-verbose t)
+        gcmh-high-cons-threshold #x40000000 ; 1GB
+        gcmh-verbose nil)
   :hook (after-init . gcmh-mode))
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
@@ -557,7 +557,8 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :defer t
   :config
   (setq tramp-default-method "ssh"
-        remote-file-name-inhibit-cache 120))
+        remote-file-name-inhibit-cache 120
+        tramp-verbose 3))
 
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; https://www.reddit.com/r/emacs/comments/j2ovcb/comprehensive_guide_on_handling_long_lines_in/g7ag4ds?utm_source=share&utm_medium=web2x&context=3

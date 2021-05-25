@@ -316,6 +316,7 @@ Version 2017-01-27"
          (+funcs/switch-major-mode-buffer major-mode))
         ((member major-mode '(telega-root-mode telega-chat-mode))
          (+funcs/switch-major-mode-buffer 'telega-root-mode 'telega-chat-mode))
+        ;; TODO: switch between remote buffers
         ((and
           (or (not (fboundp 'tramp-tramp-file-p))
               (not (tramp-tramp-file-p default-directory)))

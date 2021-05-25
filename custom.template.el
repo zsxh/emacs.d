@@ -15,9 +15,8 @@
 (setq personal-tui-theme 'doom-dark+)
 
 ;; Rss feeds
-(setq personal-elfeed-feeds
-      '(("https://emacs-china.org/latest.rss" emacs china)
-        ("https://emacs-china.org/posts.rss" emacs china)))
+(setq elfeed-feeds
+      '(("http://sachachua.com/blog/category/emacs/feed/" Sacha-Chua)))
 
 ;; frame startup size, 'max or 'fullscreen
 (setq personal-frame-startup-size 'fullscreen)

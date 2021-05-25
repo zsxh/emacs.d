@@ -85,10 +85,6 @@ Check https://github.com/hlissner/emacs-doom-themes")
 Check https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)
 
-(defcustom personal-elfeed-feeds nil
-  "RSS feeds, eg: ((\"https://oremacs.com/atom.xml\" oremacs))."
-  :type 'cons)
-
 (defcustom personal-frame-startup-size 'max
   "Startup frame size. `'max' means maximized frame and `'fullscreen' means fullscreen frame."
   :type '(choice
