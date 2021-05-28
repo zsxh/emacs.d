@@ -389,6 +389,10 @@ behavior added."
          (concat "ffmpeg -i " video " -vcodec libx264 -b:v 5000k -minrate 5000k -maxrate 5000k -bufsize 4200k -preset fast -crf 20 -y -acodec libmp3lame -ab 128k " new))
         (message "%s compress and convert to %s successfully!" video new)))))
 
+(defun +funcs/current-buffer-remote-p ()
+  (and (featurep 'tramp)
+       (tramp-tramp-file-p default-directory)))
+
 
 (provide 'init-funcs)
 
