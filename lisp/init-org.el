@@ -96,7 +96,18 @@
       (goto-char (point-min))
       (while (re-search-forward org-babel-result-regexp nil t)
         (save-excursion (goto-char (match-beginning 0))
-                        (org-babel-hide-result-toggle-maybe))))))
+                        (org-babel-hide-result-toggle-maybe)))))
+
+  ;; zero-width spaces
+  (define-key org-mode-map (kbd "M-SPC M-SPC")
+    (lambda () (interactive) (insert "\u200b")))
+
+  (defun +org/export-remove-zero-width-space (text _backend _info)
+    "Remove zero width spaces from TEXT."
+    (unless (org-export-derived-backend-p 'org)
+      (replace-regexp-in-string "\u200b" "" text)))
+
+  (add-to-list 'org-export-filter-final-output-functions #'+org/export-remove-zero-width-space t))
 
 (use-package org-habit
   :ensure org-plus-contrib
@@ -330,6 +341,7 @@ at the first function to return non-nil.")
     (unless (bound-and-true-p jupyter-org-interaction-mode)
       (jupyter-org-interaction-mode))))
 
+;; TODO: use org-mode built-in async,check `https://blog.tecosaur.com/tmio/2021-05-31-async.html'
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
   :defer t
