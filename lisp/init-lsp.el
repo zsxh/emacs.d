@@ -54,7 +54,7 @@
         lsp-headerline-breadcrumb-enable nil)
 
   ;; don't scan 3rd party javascript libraries
-  (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored) ; json
+  (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored-files) ; json
 
   ;; Increase the amount of data which Emacs reads from the process.
   ;; Again the emacs default is too low 4k considering that the some
