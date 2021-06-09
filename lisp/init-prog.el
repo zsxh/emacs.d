@@ -35,6 +35,11 @@
   (setq helm-dash-common-docsets (dash-docs-installed-docsets))
   (setq helm-dash-enable-debugging nil))
 
+(use-package devdocs-browser
+  :commands (devdocs-browser-install-doc
+             devdocs-browser-open
+             devdocs-browser-open-in))
+
 ;;;;;;;;;;;;;; EDIT ;;;;;;;;;;;;;;
 
 ;; automatic parenthesis pairing for non prog mode

@@ -375,7 +375,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   (defun +eww/browse-at-point-with-eaf ()
     (interactive)
     (let ((url (eww-suggested-uris)))
-      (eaf-open-url (if (null url)
+      (eaf-open-browser (if (null url)
                         (plist-get eww-data :url)
                       (if (consp url) (car url) url)))))
 
@@ -500,8 +500,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :custom
   (posframe-mouse-banish t)
   :config
-  ;; improve performance and fix mouse issue
-  (remove-hook 'post-command-hook #'posframe-run-hidehandler)
   (defun posframe--mouse-banish-a (parent-frame &optional posframe)
     "Banish mouse to the (0 . 0) of PARENT-FRAME.
   Do not banish mouse when no-accept-focus frame parameter of POSFRAME
@@ -583,6 +581,13 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 
 
 ;;;;;;;;;;;;;; Calendar ;;;;;;;;;;;;;;
+(use-package calendar
+  :ensure nil
+  :defer t
+  :config
+  ;; week starts on Monday
+  (setq calendar-week-start-day 1))
+
 (use-package cal-china-x
   :after calendar
   :config

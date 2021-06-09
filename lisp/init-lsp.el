@@ -29,7 +29,6 @@
         lsp-keep-workspace-alive nil
         lsp-prefer-capf t
         lsp-enable-file-watchers nil
-        lsp-enable-folding nil
         lsp-enable-symbol-highlighting nil ; turn off for better performance
         lsp-idle-delay 1
         lsp-debounce-full-sync-notifications-interval 1.0
@@ -38,7 +37,7 @@
         lsp-eldoc-render-all nil
         ;; TODO: keybindings for signature show up
         lsp-signature-render-documentation nil
-        lsp-signature-auto-activate '(:on-trigger-char)
+        lsp-signature-auto-activate '(:on-trigger-char :on-server-request)
         lsp-signature-function 'lsp-signature-posframe
         lsp-lens-enable nil
         lsp-modeline-code-actions-enable nil
@@ -75,7 +74,8 @@
           ;; lsp-completion--no-reordering t ; do not resort the result
           lsp-completion-provider :capf
           lsp-completion-default-behaviour :insert
-          lsp-completion-show-detail t))
+          lsp-completion-show-detail t
+          lsp-completion-use-last-result t))
 
   (use-package lsp-diagnostics
     :ensure nil
