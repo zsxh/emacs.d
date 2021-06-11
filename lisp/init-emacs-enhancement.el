@@ -586,10 +586,11 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :defer t
   :config
   ;; week starts on Monday
-  (setq calendar-week-start-day 1))
+  (setq calendar-week-start-day 1)
+  (add-hook-run-once 'calendar-mode-hook (lambda () (require 'cal-china-x))))
 
 (use-package cal-china-x
-  :after calendar
+  :defer t
   :config
   (require 'holidays)
   (setq calendar-mark-holidays-flag t
