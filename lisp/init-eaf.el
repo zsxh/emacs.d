@@ -210,7 +210,25 @@ So I do some dirty hacks for my own user case."
         p)))
 
   ;; NOTE: press `Ctrl + <mouse-left-click>` to translate
-  (advice-add 'eaf-translate-text :override #'+eaf/translate-text))
+  (advice-add 'eaf-translate-text :override #'+eaf/translate-text)
+
+  (defun +eaf/monitor-buffer-kill-a ()
+    "A function monitoring when an EAF buffer is killed."
+    (run-with-idle-timer
+     0.5 nil
+     (lambda (id)
+       (ignore-errors
+         (eaf-call-async "kill_buffer" id)))
+     eaf--buffer-id)
+    ;; Kill eaf process when last eaf buffer closed.
+    ;; We need add timer to avoid the last web page kill when terminal is exited.
+    (run-with-idle-timer
+     5 nil
+     (lambda ()
+       (when (equal (length (eaf--get-eaf-buffers)) 0)
+         (eaf--kill-python-process)))))
+
+  (advice-add 'eaf--monitor-buffer-kill :override #'+eaf/monitor-buffer-kill-a))
 
 (use-package eaf-org
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
