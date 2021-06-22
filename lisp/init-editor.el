@@ -148,6 +148,8 @@ This filter de-installs itself after this call."
 (use-package separedit
   :commands (separedit)
   :config
+  (with-eval-after-load 'tree-sitter-hl
+    (add-to-list 'separedit-comment-faces 'tree-sitter-hl-face:comment))
   (with-eval-after-load '(and edit-indirect evil)
     (evil-define-minor-mode-key 'normal 'edit-indirect--overlay
       ",c" 'edit-indirect-commit

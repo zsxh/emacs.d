@@ -223,10 +223,10 @@
    "wb" '(balance-windows :which-key "balance-windows")
    "wd" '(delete-window :which-key "delete-window")
    "wm" '(+funcs/toggle-maximize-buffer :which-key "maximized")
-   "ws" '(ace-swap-window :which-key "swap-window")
-   "wS" '(hydra-window-scale/body :which-key "scale")
+   "ws" '(hydra-window-scale/body :which-key "scale")
    "wt" '(hydra-transpose-frame/body :which-key "transpose-frame")
-   "ww" '(writeroom-mode :which-key "writeroom-mode")
+   "ww" '(ace-swap-window :which-key "swap-window")
+   "wW" '(writeroom-mode :which-key "writeroom-mode")
    "wz" '(zoom-mode :which-key "toggle-zoom-mode")
    ;; Toggle
    "T" '(nil :which-key "toggle")
