@@ -83,7 +83,6 @@
 ;; Benchmark-init only measures time spent in `require' and `load'
 ;; FIXME: https://github.com/dholm/benchmark-init-el/issues/15
 (use-package benchmark-init
-  :defer t
   :config
   (benchmark-init/activate)
   (add-hook 'after-init-hook 'benchmark-init/deactivate)

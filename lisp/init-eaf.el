@@ -215,7 +215,7 @@ So I do some dirty hacks for my own user case."
   (defun +eaf/monitor-buffer-kill-a ()
     "A function monitoring when an EAF buffer is killed."
     (run-with-idle-timer
-     0.5 nil
+     3 nil
      (lambda (id)
        (ignore-errors
          (eaf-call-async "kill_buffer" id)))
@@ -223,7 +223,7 @@ So I do some dirty hacks for my own user case."
     ;; Kill eaf process when last eaf buffer closed.
     ;; We need add timer to avoid the last web page kill when terminal is exited.
     (run-with-idle-timer
-     5 nil
+     10 nil
      (lambda ()
        (when (equal (length (eaf--get-eaf-buffers)) 0)
          (eaf--kill-python-process)))))
