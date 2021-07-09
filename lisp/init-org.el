@@ -14,7 +14,7 @@
 ;; https://orgmode.org/Changes.html
 ;; https://org-babel.readthedocs.io/en/latest/header-args/
 (use-package org
-  :ensure org-plus-contrib
+  :ensure nil
   :mode ("\\.org\\'" . org-mode)
   :defer 3
   :bind ((:map org-mode-map
@@ -110,7 +110,7 @@
   (add-to-list 'org-export-filter-final-output-functions #'+org/export-remove-zero-width-space t))
 
 (use-package org-habit
-  :ensure org-plus-contrib
+  :ensure nil
   :after org-agenda
   :config
   (setq org-habit-show-habits-only-for-today t
@@ -301,7 +301,7 @@ at the first function to return non-nil.")
 ;; $ mkdir -p ~/.emacs.d/.cache/ob-plantuml & wget -c http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O ~/.emacs.d/.cache/ob-plantuml/plantuml.jar
 ;; $ sudo pacman -S graphviz
 (use-package ob-plantuml
-  :ensure org-plus-contrib
+  :ensure nil
   :defer t
   :custom (org-plantuml-jar-path (expand-file-name ".cache/ob-plantuml/plantuml.jar" user-emacs-directory)))
 
