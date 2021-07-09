@@ -297,9 +297,10 @@ This filter de-installs itself after this call."
 ;; Install fasd
 ;; https://github.com/clvv/fasd
 (use-package fasd
-  :hook (after-init . global-fasd-mode)
+  :defer 15
   :commands (fasd-find-file)
-  :preface
+  :config
+  (global-fasd-mode)
   (require 'ivy nil))
 
 ;; This package allows Emacs to copy to and paste from the GUI clipboard
