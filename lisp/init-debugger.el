@@ -80,9 +80,8 @@
   ;; https://github.com/emacs-lsp/dap-mode/wiki/How-to-activate-minor-modes-when-stepping-through-code
   (define-minor-mode +dap-running-session-mode
     "A mode for adding keybindings to running sessions"
-    nil
-    nil
-    +dap-running-session-mode-map
+    :global nil
+    :keymap +dap-running-session-mode-map
     (with-eval-after-load 'evil
       (evil-normalize-keymaps) ;; if you use evil, this is necessary to update the keymaps
       (evil-make-overriding-map +dap-running-session-mode-map))
