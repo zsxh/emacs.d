@@ -46,7 +46,8 @@
         '(("pdf-viewer" . eaf-pdf-extension-list)
           ("image-viewer" . eaf-image-extension-list)
           ("video-player" . eaf-video-extension-list)
-          ("mindmap" . eaf-mindmap-extension-list)))
+          ("mindmap" . eaf-mindmap-extension-list))
+        eaf-image-extension-list '("jpg" "jpeg" "png" "bmp" "gif" "webp"))
   (progn
     (defun eaf-find-file (orig-fn &rest args)
       (let* ((file (car args))
