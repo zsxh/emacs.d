@@ -44,7 +44,7 @@
         ;; https://github.com/emacs-lsp/lsp-java/issues/254
         lsp-java-java-path "~/.jenv/versions/11/bin/java"
         lsp-java-configuration-runtimes '[(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.0.0" :default t)])
+                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.2.0" :default t)])
 
   (require 'helm nil t)
   ;; (require 'lsp-java-boot)
