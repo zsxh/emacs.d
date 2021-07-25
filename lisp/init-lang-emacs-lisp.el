@@ -10,6 +10,11 @@
 
 ;;; Code:
 
+;; NOTE: Elisp Guide - https://github.com/chrisdone/elisp-guide
+;; Programmers who are too busy to read through long tutorials and manuals, but who want to extend their editor.
+;; You don't need to learn everything from the ground up, just enough knowledge to be self-sufficient.
+;; You've been using Emacs for a while and now it's time you started making some handy extensions for yourself.
+
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil

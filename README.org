@@ -1,13 +1,13 @@
 #+STARTUP: showall
-Updated: <2021-06-18>
+Updated: <2021-07-25>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.29, cairo version 1.17.4) of 2021-06-18
-  - build branch: master bc4476
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.29, cairo version 1.17.4) of 2021-07-25
+  - build branch: master cb28b2
   - system-configuration-options: ~--with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick~
-  - OS: Manjaro 21.0.6 Ornara
+  - OS: Manjaro 21.1.0 Pahvo
   - Shell: zsh 5.8
-  - Kernel: 5.10.42-1-MANJARO
+  - Kernel: 5.10.47-1-MANJARO
   - DE: Deepin 20.1
   - WM: KWin
   - GCC version: 11.1.0 with libgccjit
@@ -16,9 +16,7 @@ Updated: <2021-06-18>
   - [ ] treemacs, lsp-treemacs
   - [X] neotree combine directories with only one child to make display more compact https://github.com/jaypei/emacs-neotree/issues/147
   - [ ] fix emacs-ipython-notebook configurations
-  - [ ] fix vterm tracing directory
-  - [ ] replace projectile.el with emacs built-in project.el
-  - [ ] replace ivy with ...
+  - [X] fix vterm tracing directory
 
 * Features
   - =org=
