@@ -87,21 +87,22 @@
     (require 'lsp-tailwindcss))
   :config
   (setq lsp-tailwindcss-add-on-mode t)
-  (defun shadow-cljs-use-tailwind-p ()
-    (let ((shadow-cljs-edn-path (f-join (lsp-workspace-root) "shadow-cljs.edn")))
-      (and (file-exists-p shadow-cljs-edn-path)
-           (string-match
-            "tailwind"
-            (with-temp-buffer
-              (insert-file-contents shadow-cljs-edn-path)
-              (buffer-string))))))
-  (defun lsp-tailwindcss--should-start-a (&rest _args)
-    (and (lsp-workspace-root)
-         (or (file-exists-p (f-join (lsp-workspace-root) "tailwind.config.js"))
-             (file-exists-p (f-join (lsp-workspace-root) "assets" "tailwind.config.js"))
-             (locate-dominating-file (buffer-file-name) "tailwind.config.js")
-             (shadow-cljs-use-tailwind-p))))
-  (advice-add 'lsp-tailwindcss--should-start :override #'lsp-tailwindcss--should-start-a))
+  ;; (defun shadow-cljs-use-tailwind-p ()
+  ;;   (let ((shadow-cljs-edn-path (f-join (lsp-workspace-root) "shadow-cljs.edn")))
+  ;;     (and (file-exists-p shadow-cljs-edn-path)
+  ;;          (string-match
+  ;;           "tailwind"
+  ;;           (with-temp-buffer
+  ;;             (insert-file-contents shadow-cljs-edn-path)
+  ;;             (buffer-string))))))
+  ;; (defun lsp-tailwindcss--should-start-a (&rest _args)
+  ;;   (and (lsp-workspace-root)
+  ;;        (or (file-exists-p (f-join (lsp-workspace-root) "tailwind.config.js"))
+  ;;            (file-exists-p (f-join (lsp-workspace-root) "assets" "tailwind.config.js"))
+  ;;            (locate-dominating-file (buffer-file-name) "tailwind.config.js")
+  ;;            (shadow-cljs-use-tailwind-p))))
+  ;; (advice-add 'lsp-tailwindcss--should-start :override #'lsp-tailwindcss--should-start-a)
+  )
 
 ;; edit html
 (use-package sgml-mode

@@ -78,6 +78,16 @@
 ;; quickly self-correct.
 (setq fast-but-imprecise-scrolling t)
 
+;; If non-nil and there was input pending at the beginning of the command,
+;; the `fontification_functions` hook is not run.  This usually does not
+;; affect the display because redisplay is completely skipped anyway if input
+;; was pending, but it can make scrolling smoother by avoiding
+;; unnecessary fontification.
+;; It is similar to `fast-but-imprecise-scrolling' with similar tradeoffs,
+;; but with the advantage that it should only affect the behavior when Emacs
+;; has trouble keeping up with the incoming input rate.
+(setq redisplay-skip-fontification-on-input t)
+
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the
 ;; font. By inhibiting this, we easily halve startup times with fonts that are
 ;; larger than the system default.
