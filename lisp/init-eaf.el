@@ -77,13 +77,13 @@
    eaf-elfeed-split-direction "below")
 
   (eaf-setq eaf-browser-blank-page-url "https://duckduckgo.com")
-  (eaf-setq eaf-browser-default-zoom "1.2")
-  (eaf-setq eaf-browser-remember-history "true")
+  (eaf-setq eaf-browser-default-zoom 1.2)
+  (eaf-setq eaf-browser-remember-history t)
   (eaf-setq eaf-camera-save-path "~/Download")
   (eaf-setq eaf-browser-download-path "~/Download")
   (eaf-setq eaf-mindmap-save-path "~/Download")
-  (eaf-setq eaf-browser-dark-mode "false")
-  (eaf-setq eaf-pdf-dark-mode "false")
+  (eaf-setq eaf-browser-dark-mode nil)
+  (eaf-setq eaf-pdf-dark-mode nil)
 
   (eaf-bind-key scroll_up_page "d" eaf-pdf-viewer-keybinding)
   (eaf-bind-key scroll_down_page "u" eaf-pdf-viewer-keybinding)
