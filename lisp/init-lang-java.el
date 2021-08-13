@@ -64,7 +64,7 @@
                               ;; "-Dsun.zip.disableMemoryMapping=true"
                               "-XX:+UnlockExperimentalVMOptions"
                               "-XX:+UseZGC"
-                              "-Xmx2G"
+                              "-Xmx6G"
                               "-Xms100m"
                               ,(concat "-javaagent:" lombok-jar)))))
   (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
