@@ -414,6 +414,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
       (+eww/repeat-until-eww-buffer 'previous-buffer))
 
     (evil-define-key 'normal eww-mode-map
+      (kbd "SPC") nil
       "b" 'evil-backward-word-begin
       "w" 'evil-forward-word-begin
       "gg" 'evil-goto-first-line

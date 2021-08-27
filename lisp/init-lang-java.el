@@ -34,7 +34,7 @@
         lsp-java-folding-range-enabled nil
         lsp-java-progress-reports-enabled nil
         lsp-java-format-comments-enabled nil
-        lsp-java-completion-max-results 50
+        lsp-java-completion-max-results 0
         lsp-java-selection-range-enabled nil
         ;; different jdk versions settings, lsp server require jdk11,
         ;; Eclipse auto-discovers all installed Java versions and, I think it will use the correct one

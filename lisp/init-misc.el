@@ -280,7 +280,8 @@
 
   (with-eval-after-load 'telega-chat
     (with-eval-after-load 'evil
-      (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer))
+      (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
+      (define-key telega-msg-button-map (kbd "SPC") nil))
     (when (functionp 'writeroom-mode)
       (defun +telega/maybe-writeroom ()
         (when (= 1 (length (window-list)))
