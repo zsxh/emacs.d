@@ -33,7 +33,7 @@
   :defer t
   :ensure lsp-mode
   :custom
-  (lsp-rust-analyzer-download-url "https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-linux")
+  ;; (lsp-rust-analyzer-download-url "https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-linux")
   (lsp-rust-analyzer-server-display-inlay-hints t))
 
 (use-package dap-gdb-lldb

@@ -30,7 +30,7 @@
   (setq flycheck-indication-mode 'right-fringe
         flycheck-emacs-lisp-load-path 'inherit
         flycheck-idle-change-delay 2
-        flycheck-check-syntax-automatically '(save mode-enabled))
+        flycheck-check-syntax-automatically '(save mode-enabled idle-change))
 
   ;; Custom flycheck fringe icons
   (define-fringe-bitmap 'my-flycheck-fringe-indicator

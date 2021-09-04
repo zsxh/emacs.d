@@ -19,7 +19,8 @@
   (setq lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/"))
         lsp-java-inhibit-message t
         ;; https://github.com/dgileadi/vscode-java-decompiler
-        lsp-java-content-provider-preferred "fernflower")
+        lsp-java-content-provider-preferred "fernflower"
+        lsp-java-jdt-download-url "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz")
 
   (let ((java-format-style-file (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml"))))
     (when (file-exists-p java-format-style-file)
@@ -64,8 +65,8 @@
                               ;; "-Dsun.zip.disableMemoryMapping=true"
                               "-XX:+UnlockExperimentalVMOptions"
                               "-XX:+UseZGC"
-                              "-Xmx6G"
-                              "-Xms100m"
+                              "-Xmx3G"
+                              "-Xms200m"
                               ,(concat "-javaagent:" lombok-jar)))))
   (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
 
