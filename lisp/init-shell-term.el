@@ -55,6 +55,7 @@ if no project root found, use current directory instead."
   :custom
   (vterm-kill-buffer-on-exit t)
   (vterm-term-environment-variable "xterm-24bit")
+  (vterm-timer-delay 0.01)
   :init
   (global-set-key [f9] '+vterm/toggle-here)
   (global-set-key [f10] '+vterm/toggle-other-window)
