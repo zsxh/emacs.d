@@ -53,6 +53,7 @@
           vue-mode
           cider-repl-mode
           minibuffer-setup
+          protobuf-mode
           ) . electric-pair-local-mode)
   :bind ("C-j" . newline-and-indent))
 

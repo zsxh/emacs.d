@@ -30,7 +30,7 @@
   (setq flycheck-indication-mode 'right-fringe
         flycheck-emacs-lisp-load-path 'inherit
         flycheck-idle-change-delay 2
-        flycheck-check-syntax-automatically '(save mode-enabled idle-change))
+        flycheck-check-syntax-automatically '(save mode-enabled idle-buffer-switch))
 
   ;; Custom flycheck fringe icons
   (define-fringe-bitmap 'my-flycheck-fringe-indicator
@@ -98,7 +98,19 @@
         ;; inhibit display of flycheck posframe while company popups
         ;; https://github.com/alexmurray/flycheck-posframe/issues/12
         :custom (flycheck-posframe-inhibit-functions
-                 '((lambda (&rest _) (bound-and-true-p company-backend)))))
+                 '((lambda (&rest _) (bound-and-true-p company-backend))))
+        :config
+        ;; when position changed, hide posframe immediately
+        (defun hide-flycheck-posframe-immediately (&rest _)
+          (when (not (flycheck-posframe-check-position))
+            (posframe-hide flycheck-posframe-buffer)
+            (remove-hook 'post-command-hook #'hide-flycheck-posframe-immediately t))
+          (when (or (not (frame-live-p flycheck-posframe-buffer))
+                    (not (frame-visible-p flycheck-posframe-buffer)))
+            (remove-hook 'post-command-hook #'hide-flycheck-posframe-immediately t)))
+        (defun flycheck-posframe-show-posframe-a (&rest _)
+          (add-hook 'post-command-hook #'hide-flycheck-posframe-immediately 0 t))
+        (advice-add 'flycheck-posframe-show-posframe :after #'flycheck-posframe-show-posframe-a))
     (use-package flycheck-popup-tip
       :after flycheck
       :hook (flycheck-mode . flycheck-popup-tip-mode)))

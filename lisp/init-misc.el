@@ -383,6 +383,9 @@ Format is:
 ;;                   (set-cursor-color custom-blue))))
 ;;   (set-cursor-color custom-blue))
 
+(use-package protobuf-mode
+  :defer t)
+
 
 (provide 'init-misc)
 
