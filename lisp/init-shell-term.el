@@ -81,10 +81,14 @@ if no project root found, use current directory instead."
 If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (unless (fboundp 'module-load)
       (user-error "Your build of Emacs lacks dynamic modules support and cannot load vterm"))
-    (let* ((default-directory
-             (if arg
-                 default-directory
-               (or (projectile-project-root) default-directory)))
+    (let* ((dir-remote-p (and (featurep 'tramp)
+                              (tramp-tramp-file-p default-directory)))
+           (default-directory (if arg
+                                  default-directory
+                                (or
+                                 (when dir-remote-p nil)
+                                 (projectile-project-root)
+                                 default-directory)))
            (buffer-name
             (format "*vterm:<%s>*"
                     (file-name-nondirectory
@@ -100,20 +104,24 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
             (select-window win)
             (when (bound-and-true-p evil-local-mode)
               (evil-change-to-initial-state)))
-        (let ((buffer (get-buffer-create buffer-name))
-              (dir-remote-p (and (featurep 'tramp)
-                                 (tramp-tramp-file-p default-directory))))
+        (let ((buffer (get-buffer-create buffer-name)))
           (with-current-buffer buffer
             (unless (eq major-mode 'vterm-mode)
               (vterm-mode)
               (unless dir-remote-p
                 (+vterm/activate-local-python-venv)))
-            (when dir-remote-p
-              (+vterm/change-remote-directory)))
+            ;; (when dir-remote-p
+            ;;   (+vterm/change-remote-directory))
+            )
           (setq +vterm/toggle--window-configration (current-window-configuration))
           (if this-window-p
-              (switch-to-buffer buffer)
-            (pop-to-buffer buffer))))))
+              (let ((new-window (split-window
+                                 (selected-window)
+                                 (round (* (window-height (frame-root-window)) 0.7))
+                                 'below)))
+                (select-window new-window)
+                (switch-to-buffer buffer))
+              (pop-to-buffer buffer))))))
 
   (defun +vterm/toggle-other-window (arg)
     "Toggles a terminal popup window at project root.

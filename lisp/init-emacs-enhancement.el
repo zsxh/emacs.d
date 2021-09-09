@@ -637,6 +637,15 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   (setq dump-jump-prefer-searcher 'rg)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
+;;;;;;;;;;;;;; jit-lock ;;;;;;;;;;;;;;
+(use-package jit-lock
+  :ensure nil
+  :defer t
+  :config
+  ;; Increase jit-lock-chunk-size from 500 to 1500 for performance reasons
+  ;; https://github.com/emacs-mirror/emacs/commit/400b3c9376a5de033f98476263b7fe65988289a8
+  (setq jit-lock-chunk-size 1500))
+
 
 (provide 'init-emacs-enhancement)
 
