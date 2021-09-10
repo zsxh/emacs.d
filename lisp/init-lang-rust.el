@@ -15,8 +15,8 @@
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
   :hook (rust-mode . (lambda ()
-                       (lsp-deferred)
-                       (lsp-lens-mode 1)))
+                       (lsp-lens-mode)
+                       (lsp-deferred)))
   :config
   (setq rust-indent-offset 2)
   (require 'lsp-rust))

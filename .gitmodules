@@ -1,6 +1,3 @@
-[submodule "submodules/emacs-application-framework"]
-	path = submodules/emacs-application-framework
-	url = https://github.com/manateelazycat/emacs-application-framework
 [submodule "submodules/awesome-pair"]
 	path = submodules/awesome-pair
 	url = https://github.com/manateelazycat/awesome-pair
@@ -13,3 +10,7 @@
 [submodule "submodules/icons-int-terminal"]
 	path = submodules/icons-int-terminal
 	url = https://github.com/seagle0128/icons-in-terminal.el.git
+[submodule "/home/zsxh/.emacs.d/submodules/emacs-application-framework"]
+	path = /home/zsxh/.emacs.d/submodules/emacs-application-framework
+	url = https://github.com/emacs-eaf/emacs-application-framework.git
+	branch = master
