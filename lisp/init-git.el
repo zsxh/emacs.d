@@ -14,12 +14,12 @@
   :commands (magit magit-blame magit-file-popup)
   :defer 10
   :config
-  (setq magit-bury-buffer-function 'magit-mode-quit-window))
+  (setq magit-bury-buffer-function 'magit-mode-quit-window)
+  (require 'magit-todos))
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
   ;; :hook (magit-mode . magit-todos-mode)
-  :after magit-mode
   :custom
   (magit-todos-exclude-globs '("node_modules" "*.json"))
   ;; (magit-todos-update 3600)

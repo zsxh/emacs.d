@@ -28,11 +28,11 @@
 ;; https://github.com/manateelazycat/emacs-application-framework#install
 ;; 1) $ sudo pacman -S wmctrl
 ;; 2) python dependencies:
-;; $ yay -S python-pyqt5-webengine
-;; $ pip install --user PyMuPDF epc
+;; $ yay -S python-pyqt5-webengine python-pysocks
+;; $ pip install --user PyMuPDF
 ;; or
 ;; Install in pyenv independent enviroment
-;; $ pip install PyQt5 PyQtWebEngine PyMuPDF epc
+;; $ pip install PyQt5 PyQtWebEngine PyMuPDF pysocks
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
