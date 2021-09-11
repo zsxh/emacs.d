@@ -154,8 +154,7 @@
           (cancel-timer +eaf/evil-focus-timer))
         (setf +eaf/evil-focus-timer
               (run-with-timer
-               0.1
-               nil
+               0.1 nil
                (lambda (buf id)
                  (eaf-deferred-chain
                    (eaf-call-async "call_function" id "is_focus")
@@ -165,8 +164,7 @@
                                               (if (string= x "True")
                                                   (unless (evil-insert-state-p) (evil-insert-state))
                                                 (when (evil-insert-state-p) (evil-normal-state))))))))
-               buf
-               id)))))
+               buf id)))))
   (advice-add 'eaf--input-message :after #'+eaf/evil-focus)
   (advice-add 'eaf-py-proxy-insert_or_focus_input :after #'+eaf/evil-focus)
   ;; TODO: all insert_or_OPERATIONS

@@ -1,13 +1,13 @@
 #+STARTUP: showall
-Updated: <2021-07-25>
+Updated: <2021-09-11>
 
 * Enviroment
-  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.29, cairo version 1.17.4) of 2021-07-25
-  - build branch: master cb28b2
+  - GNU Emacs 28.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.30, cairo version 1.17.4) of 2021-09-11
+  - build branch: master 5c18d3
   - system-configuration-options: ~--with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick~
-  - OS: Manjaro 21.1.0 Pahvo
+  - OS: Manjaro 21.1.1 Pahvo
   - Shell: zsh 5.8
-  - Kernel: 5.10.47-1-MANJARO
+  - Kernel: 5.10.61-1-MANJARO
   - DE: Deepin 20.1
   - WM: KWin
   - GCC version: 11.1.0 with libgccjit
