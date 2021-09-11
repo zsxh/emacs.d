@@ -19,11 +19,14 @@
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
   ;; :hook (magit-mode . magit-todos-mode)
+  :after magit-mode
   :custom
   (magit-todos-exclude-globs '("node_modules" "*.json"))
+  ;; (magit-todos-update 3600)
   ;; magit-todos insert is slow for large repos, so toggle todos manually
   :commands (magit-todos-list)
   :config
+  (magit-todos-mode)
   (setq magit-todos-auto-group-items 'always)
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit-todos))

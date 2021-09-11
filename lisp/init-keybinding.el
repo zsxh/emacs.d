@@ -133,8 +133,9 @@
    "glf" '(magit-log-buffer-file :which-key "magit-log-buffer-file")
    "gm" '(vc-msg-show :which-key "vc-msg-show")
    "gs" '(magit :which-key "magit-status")
-   "gt" '(git-timemachine :which-key "git-timemachine")
-   "gT" '(magit-todos-list :which-key "magit-todos-list")
+   "gt" '(ivy-magit-todos :which-key "ivy-magit-todos")
+   ;; "gt" '(magit-todos-list :which-key "magit-todos-list")
+   "gT" '(git-timemachine :which-key "git-timemachine")
    ;; Help
    "h" '(nil :which-key "help")
    "hc" '(company-diag :which-key "company-diag")
