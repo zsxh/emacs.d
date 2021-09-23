@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+;; TODO: emasc-28 new minor mode `show-paren-local-mode'
 ;; Highlight matching parenthesis
 (use-package paren
   :ensure nil

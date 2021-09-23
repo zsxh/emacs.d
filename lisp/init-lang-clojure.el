@@ -43,6 +43,10 @@
 (use-package cider
   :defer t)
 
+(use-package lsp-clojure
+  :ensure lsp-mode
+  :defer t)
+
 ;; TODO: clojure formatter
 ;; https://github.com/DogLooksGood/zprint.el
 ;; https://github.com/kkinnear/zprint
