@@ -50,7 +50,8 @@
         lsp-enable-text-document-color nil
         ;; Reduce unexpected modifications to code
         lsp-enable-on-type-formatting nil
-        lsp-headerline-breadcrumb-enable nil)
+        lsp-headerline-breadcrumb-enable nil
+        lsp-response-timeout 5)
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored-files) ; json
