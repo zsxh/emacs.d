@@ -95,7 +95,14 @@
   ;; enable diff-hl
   (global-diff-hl-mode)
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  (with-eval-after-load 'autorevert
+    ;; NOTE: `auto-revert-handler' call `vc-refresh-state' when `auto-revert-check-vc-info' is t,
+    ;; it brokes vc state that diff-hl rely on.
+    ;; https://github.com/magit/magit/issues/4073#issuecomment-602072585
+    (when auto-revert-check-vc-info
+      (advice-add 'diff-hl-magit-pre-refresh :before (lambda () (setq auto-revert-check-vc-info nil)))
+      (advice-add 'diff-hl-magit-post-refresh :after (lambda () (setq auto-revert-check-vc-info t))))))
 
 
 (provide 'init-git)
