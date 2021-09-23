@@ -52,21 +52,23 @@
   ;; (setq lsp-java-boot-enabled nil)
 
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
-  (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar")))
+  (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar")))
     (when (file-exists-p lombok-jar)
       ;; "-XX:+UnlockExperimentalVMOptions"
       ;; "-XX:+UseZGC"
       ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
       ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
       ;; current VSCode default, https://github.com/redhat-developer/vscode-java/blob/master/package.json#L156
-      (setq lsp-java-vmargs `(;; "-XX:+UseParallelGC"
-                              ;; "-XX:GCTimeRatio=4"
-                              ;; "-XX:AdaptiveSizePolicyWeight=90"
-                              ;; "-Dsun.zip.disableMemoryMapping=true"
-                              "-XX:+UnlockExperimentalVMOptions"
-                              "-XX:+UseZGC"
-                              "-Xmx3G"
-                              "-Xms200m"
+      (setq lsp-java-vmargs `("-XX:+UseParallelGC"
+                              "-XX:GCTimeRatio=4"
+                              "-XX:AdaptiveSizePolicyWeight=90"
+                              "-Dsun.zip.disableMemoryMapping=true"
+                              "-Xmx1G"
+                              "-Xms100m"
+                              ;; "-XX:+UnlockExperimentalVMOptions"
+                              ;; "-XX:+UseZGC"
+                              ;; "-Xmx3G"
+                              ;; "-Xms200m"
                               ,(concat "-javaagent:" lombok-jar)))))
   (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
 
