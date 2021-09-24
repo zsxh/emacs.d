@@ -98,6 +98,7 @@
    "ic" '(lsp-java-add-import :which-key "import-class")
    "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
    "ig" '(lsp-java-generate-getters-and-setters :which-key "generate-getters-and-setters")
+   "ld" '(lsp-treemacs-java-deps-list :which-key "lsp-treemacs-java-deps-list")
    "r" '(nil :which-key "run")
    "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
    "rT" '(dap-java-run-test-class :which-key "run-junit-class")))

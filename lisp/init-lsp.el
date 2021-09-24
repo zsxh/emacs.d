@@ -220,6 +220,7 @@ server getting expensively restarted when reverting buffers."
       (+funcs/major-mode-leader-keys
        mode-map
        "e" '(nil :which-key "error")
+       "el" '(lsp-treemacs-errors-list :which-key "lsp-treemacs-errors-list")
        "en" '(flymake-goto-next-error :which-key "next-error")
        "ep" '(flymake-goto-prev-error :which-key "prev-error")))
      (t
@@ -227,7 +228,8 @@ server getting expensively restarted when reverting buffers."
       (+funcs/major-mode-leader-keys
        mode-map
        "e" '(nil :which-key "error")
-       "el" '(+flycheck/popup-errors :which-key "popup-errors")
+       "el" '(lsp-treemacs-errors-list :which-key "lsp-treemacs-errors-list")
+       ;; "el" '(+flycheck/popup-errors :which-key "popup-errors")
        "en" '(flycheck-next-error :which-key "next-error")
        "ep" '(flycheck-previous-error :which-key "prev-error"))))
 
@@ -263,7 +265,8 @@ server getting expensively restarted when reverting buffers."
        "gi" '(lsp-ui-peek-find-implementation :which-key "find-implementation")
        "gr" '(lsp-ui-peek-find-references :which-key "find-references")
        "gs" '(lsp-ui-find-workspace-symbol :which-key "find-workspace-symbol")
-       "l" '(lsp-avy-lens :which-key "Click lens using avy")
+       "l" '(nil :which-key "list")
+       "L" '(lsp-avy-lens :which-key "Click lens using avy")
        "R" '(lsp-rename :which-key "rename"))))))
 
 ;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;

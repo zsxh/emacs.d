@@ -86,7 +86,7 @@
   :config
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil
-        auto-revert-interval 5
+        auto-revert-interval 10
         ;; turn off `auto-revert-use-notify' or customize `auto-revert-notify-exclude-dir-regexp'
         ;; to exclude I/O intensive directories from auto-reverting.
         auto-revert-use-notify nil
