@@ -30,14 +30,15 @@
                                          "."
                                          1))
   :config
-  ;; https://orgmode.org/manual/Structure-Templates.html
-  (require 'org-tempo)
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
   ;; (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
   (setq org-export-use-babel nil ; do not evaluate again during export.
         org-export-with-toc nil
         org-export-with-section-numbers nil
-        org-hide-emphasis-markers nil)
+        org-hide-emphasis-markers nil
+        ;; NOTE: do not load used org modules to speed up first time load
+        ;; https://orgmode.org/manual/Structure-Templates.html
+        org-modules '(ol-bibtex org-tempo))
   ;; org restore window configuration after org-edit-src-exit
   ;; https://www.reddit.com/r/orgmode/comments/f9qy5h/in_orgmode_when_editing_a_source_block_with/
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2019-12/msg00263.html

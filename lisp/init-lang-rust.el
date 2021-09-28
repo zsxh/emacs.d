@@ -36,6 +36,9 @@
   ;; (lsp-rust-analyzer-download-url "https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-linux")
   (lsp-rust-analyzer-server-display-inlay-hints t))
 
+;; TODO: debugger, (require 'dap-cpptools), M-x `dap-cpptools-setup'
+;; https://emacs-lsp.github.io/dap-mode/page/configuration/#vscode-cpptools
+
 (use-package dap-gdb-lldb
   :after lsp-rust
   :ensure dap-mode)
