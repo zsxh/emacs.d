@@ -17,8 +17,16 @@
   (when (version< emacs-version minver)
     (error "Detected Emacs %s. This config requires v%s or higher" emacs-version minver)))
 
-;; Speedup boot time by unset file-name-handler-alist temporarily
-;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#unset-file-name-handler-alist-temporarily
+;; FIXME: have issue when in terminal
+(when (display-graphic-p)
+  ;; Speedup boot time by unset file-name-handler-alist temporarily
+  ;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#unset-file-name-handler-alist-temporarily
+  (defvar tmp--file-name-handler-alist file-name-handler-alist)
+  (setq file-name-handler-alist nil)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq file-name-handler-alist tmp--file-name-handler-alist))))
+
 (defvar tmp--file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
@@ -31,8 +39,7 @@
 (add-hook 'emacs-startup-hook (lambda ()
                                 "Restore defalut values after startup."
                                 (setq gc-cons-threshold 16777216 ; 16mb
-                                      gc-cons-percentage 0.1)
-                                (setq file-name-handler-alist tmp--file-name-handler-alist)))
+                                      gc-cons-percentage 0.1)))
 
 ;; Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
