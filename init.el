@@ -27,9 +27,6 @@
             (lambda ()
               (setq file-name-handler-alist tmp--file-name-handler-alist))))
 
-(defvar tmp--file-name-handler-alist file-name-handler-alist)
-(setq file-name-handler-alist nil)
-
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
 ;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#avoid-garbage-collection-at-startup
