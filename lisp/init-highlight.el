@@ -14,31 +14,26 @@
 ;; Highlight matching parenthesis
 (use-package paren
   :ensure nil
-  :hook ((after-init . (lambda () (show-paren-mode -1)))
-         (prog-mode . show-paren-local-enable))
+  :defer t
+  :init
+  (if (version<= "28" emacs-version)
+      (add-hook 'prog-mode-hook #'show-paren-local-mode)
+    (defun show-paren-local-enable ()
+      (setq-local show-paren-mode t))
+    (add-hook 'after-init-hook (lambda () (show-paren-mode -1)))
+    (add-hook 'prog-mode-hook #'show-paren-local-enable))
   :config
-  (setq show-paren-when-point-inside-paren t
+  (setq show-paren-mode nil
+        show-paren-when-point-inside-paren t
         show-paren-when-point-in-periphery t
         show-paren-delay 0.125)
-
-  (defun show-paren-local-enable ()
-    (setq-local show-paren-mode t))
 
   (defun show-paren-function-advice (fn)
     "Highlight enclosing parens."
     (when show-paren-mode
       (cond
+       ((looking-at-p "\\s(") (funcall fn))
        ;; TODO: any performance issue here now?
-       ;; ((looking-at-p "\\s(") (funcall fn))
-       ;; ((derived-mode-p 'python-mode)
-       ;;  (save-excursion
-       ;;    (ignore-errors
-       ;;      (let* ((cur-pos (point))
-       ;;             (paren-open-pos (search-backward-regexp "\\s(" (point-min) t))
-       ;;             (paren-close-pos (and paren-open-pos (search-forward-regexp "\\s)" cur-pos t))))
-       ;;        (when (and paren-open-pos (not paren-close-pos))
-       ;;          (goto-char (1+ paren-open-pos))
-       ;;          (funcall fn))))))
        ((or (derived-mode-p 'lisp-data-mode)
             (derived-mode-p 'clojure-mode))
         (save-excursion
