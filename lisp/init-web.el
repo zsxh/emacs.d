@@ -83,7 +83,7 @@
 (use-package lsp-tailwindcss
   :defer t
   :init
-  (with-eval-after-load '(or sgml-mode css-mode js clojure-mode)
+  (with-eval-after-load '(or js clojure-mode)
     (require 'lsp-tailwindcss))
   :config
   (setq lsp-tailwindcss-add-on-mode t)
