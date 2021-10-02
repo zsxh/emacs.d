@@ -76,7 +76,8 @@
         dired-recursive-copies 'always
         dired-recursive-deletes 'always
         ;; dired "human-readable" format
-        dired-listing-switches "-alh --time-style=long-iso --group-directories-first")
+        dired-listing-switches "-alh --time-style=long-iso --group-directories-first"
+        dired-kill-when-opening-new-dired-buffer t)
 
   (defun +dired/get-size ()
     (interactive)
@@ -89,29 +90,29 @@
            (re-search-backward "\\(^[ 0-9.,]+[A-Za-z]+\\).*total$")
            (match-string 1))))))
 
-  (defun +dired/dired-jump-a (orig-fn &rest args)
-    "Jump to Dired buffer corresponding to current buffer and
+  ;; NOTE: emacs 28 `dired-kill-when-opening-new-dired-buffer'
+  (when (version< emacs-version "28")
+    (defun +dired/dired-jump-a (orig-fn &rest args)
+      "Jump to Dired buffer corresponding to current buffer and
 kill the current buffer if it's dired buffer."
-    (let ((pre-buf (current-buffer))
-          (pre-mode major-mode))
-      (apply orig-fn args)
-      (when (and (eq pre-mode 'dired-mode)
-                 (null (get-buffer-window pre-buf)))
-        (kill-buffer pre-buf))))
+      (let ((pre-buf (current-buffer))
+            (pre-mode major-mode))
+        (apply orig-fn args)
+        (when (and (eq pre-mode 'dired-mode)
+                   (null (get-buffer-window pre-buf)))
+          (kill-buffer pre-buf))))
+    (advice-add 'dired-jump :around '+dired/dired-jump-a)
 
-  (advice-add 'dired-jump :around '+dired/dired-jump-a)
-
-  (defun +dired/dired-find-file-a (orig-fn &rest args)
-    (let ((pre-buf (current-buffer))
-          (cur-buf))
-      (apply orig-fn args)
-      (setq cur-buf (current-buffer))
-      (when (and (not (eq pre-buf cur-buf))
-                 (eq major-mode 'dired-mode)
-                 (null (get-buffer-window pre-buf)))
-        (kill-buffer pre-buf))))
-
-  (advice-add 'dired-find-file :around '+dired/dired-find-file-a)
+    (defun +dired/dired-find-file-a (orig-fn &rest args)
+      (let ((pre-buf (current-buffer))
+            (cur-buf))
+        (apply orig-fn args)
+        (setq cur-buf (current-buffer))
+        (when (and (not (eq pre-buf cur-buf))
+                   (eq major-mode 'dired-mode)
+                   (null (get-buffer-window pre-buf)))
+          (kill-buffer pre-buf))))
+    (advice-add 'dired-find-file :around '+dired/dired-find-file-a))
 
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'dired)
