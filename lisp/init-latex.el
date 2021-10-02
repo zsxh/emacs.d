@@ -202,6 +202,11 @@
   :config
   (setq mathpix-screenshot-method "deepin-screen-recorder -s %s"))
 
+;; https://github.com/io12/org-fragtog
+;; TODO: Automatically toggle Org mode LaTeX fragment previews as the cursor enters and exits them
+(use-package org-fragtog
+  :defer t)
+
 
 (provide 'init-latex)
 

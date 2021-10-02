@@ -47,7 +47,7 @@
             :caller '+project/switch-buffer))
 
 (use-package projectile
-  :defer 3
+  :defer 5
   :bind ("C-<tab>" . projectile-next-project-buffer)
   :commands (projectile-switch-project)
   :config

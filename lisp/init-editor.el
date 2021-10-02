@@ -205,7 +205,9 @@ This filter de-installs itself after this call."
 
 ;; Numbered window shortcuts
 (use-package winum
-  :hook (after-init . winum-mode))
+  :defer 0.5
+  :config
+  (winum-mode))
 
 ;; Use package auto-save instead of default auto save
 (use-package auto-save
