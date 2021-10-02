@@ -47,9 +47,11 @@
             :caller '+project/switch-buffer))
 
 (use-package projectile
-  :hook (after-init . projectile-mode)
+  :defer 3
   :bind ("C-<tab>" . projectile-next-project-buffer)
+  :commands (projectile-switch-project)
   :config
+  (projectile-mode)
   ;; switch project to project root dir instead of project file
   (setq projectile-switch-project-action #'projectile-dired)
   (add-to-list 'projectile-project-root-files-bottom-up "pom.xml")
