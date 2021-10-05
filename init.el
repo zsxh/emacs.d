@@ -179,6 +179,7 @@
 (require 'init-eaf)
 (require 'init-misc)
 (require 'init-experimental)
+(require 'init-window)
 
 (add-hook 'emacs-startup-hook (lambda () (setq debug-on-error nil)))
 
