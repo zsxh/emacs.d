@@ -647,6 +647,15 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   ;; https://github.com/emacs-mirror/emacs/commit/400b3c9376a5de033f98476263b7fe65988289a8
   (setq jit-lock-chunk-size 1500))
 
+;;;;;;;;;;;;;; eldoc ;;;;;;;;;;;;;;
+
+;; Show function arglist or variable docstring
+;; `global-eldoc-mode' is enabled by default.
+(use-package eldoc
+  :ensure nil
+  :defer t
+  :diminish eldoc-mode)
+
 
 (provide 'init-emacs-enhancement)
 

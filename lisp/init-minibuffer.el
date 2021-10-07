@@ -36,6 +36,7 @@
   (advice-add 'orderless-regexp :around #'eh-orderless-regexp))
 
 ;; minibuffer actions and occur/export features
+;; TODO: https://karthinks.com/software/fifteen-ways-to-use-embark/
 (use-package embark
   :defer t)
 

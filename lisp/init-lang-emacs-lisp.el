@@ -46,13 +46,6 @@
      "g" '(nil :which-key "goto")
      "gd" '(evil-goto-definition :which-key "goto-definition"))))
 
-;; Show function arglist or variable docstring
-;; `global-eldoc-mode' is enabled by default.
-(use-package eldoc
-  :ensure nil
-  :defer t
-  :diminish eldoc-mode)
-
 ;; Interactive macro expander
 (use-package macrostep
   :bind ((:map emacs-lisp-mode-map

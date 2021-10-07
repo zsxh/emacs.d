@@ -21,8 +21,8 @@
 (use-package magit-todos
   ;; :hook (magit-mode . magit-todos-mode)
   :custom
-  (magit-todos-exclude-globs '("node_modules" "*.json"))
-  ;; (magit-todos-update 3600)
+  (magit-todos-exclude-globs '("node_modules" "*.json" ".git/"))
+  ;; (magit-todos-update t)
   ;; magit-todos insert is slow for large repos, so toggle todos manually
   :commands (magit-todos-list)
   :config
