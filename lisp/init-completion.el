@@ -76,13 +76,13 @@
   (setq prescient-sort-length-enable nil))
 
 (use-package yasnippet
-  :hook (after-init . yas-global-mode)
+  ;; :hook (after-init . yas-global-mode)
+  :defer 3
   :config
   (use-package yasnippet-snippets)
-  (with-eval-after-load 'snippet
-    (+funcs/major-mode-leader-keys
-     snippet-mode-map
-     "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet"))))
+  (yas-global-mode)
+  (+funcs/major-mode-leader-keys snippet-mode-map
+                                 "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
 
 ;; Popup documentation for completion candidates
 (use-package company-quickhelp
