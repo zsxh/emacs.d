@@ -37,19 +37,20 @@
         company-tooltip-maximum-width (/ (frame-width) 2)
         company-idle-delay 0 ; decrease delay before autocompletion popup shows
         company-echo-delay (if (display-graphic-p) nil 0) ; remove annoying blinking
-        company-minimum-prefix-length 2
+        company-minimum-prefix-length 1
         ;; Only search the current buffer for `company-dabbrev' (a backend that
         ;; suggests text your open buffers). This prevents Company from causing
         ;; lag once you have a lot of buffers open.
         company-dabbrev-other-buffers nil
         company-dabbrev-downcase nil    ; No downcase when completion.
         company-require-match nil ; Don't require match, so you can still move your cursor as expected.
+        company-frontends '(company-pseudo-tooltip-unless-just-one-frontend company-preview-if-just-one-frontend) ; remove `company-echo-metadata-frontend' frontend
         company-backends '(company-capf company-files company-dabbrev)
         company-global-modes '(not shell-mode eshell-mode eaf-mode
                                    erc-mode message-mode help-mode
                                    helpful-mode gud-mode)
         company-format-margin-function 'company-detect-icons-margin
-        company-icon-size '(auto-scale . 15))
+        company-icon-size '(auto-scale . 16))
 
   (with-eval-after-load 'company-eclim
     ;;  Stop eclim auto save.
