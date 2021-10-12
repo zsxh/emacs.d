@@ -137,10 +137,10 @@ server getting expensively restarted when reverting buffers."
   :preface (setq lsp-ui-doc-enable nil
                  lsp-ui-sideline-enable nil)
   :bind ((:map lsp-ui-mode-map
-               ([remap evil-goto-definition] . lsp-ui-peek-find-definitions)
-               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+               ([remap evil-goto-definition] . lsp-find-definition)
+               ([remap xref-find-definitions] . lsp-find-definition)
                ([remap xref-find-references] . lsp-ui-peek-find-references)
-               ("C-M-g" . lsp-ui-peek-find-definitions)
+               ("C-M-g" . lsp-find-definition)
                ("C-M-r" . lsp-ui-peek-find-references)
                ("C-M-p" . lsp-ui-peek-jump-backward)
                ("C-M-n" . lsp-ui-peek-jump-forward))
@@ -261,7 +261,7 @@ server getting expensively restarted when reverting buffers."
        "D" '(+lsp/doc-show :which-key "toggle-doc-hover")
        "f" '(lsp-format-buffer :which-key "format")
        "g" '(nil :which-key "go")
-       "gd" '(lsp-ui-peek-find-definitions :which-key "find-definitions")
+       "gd" '(lsp-find-definition :which-key "find-definitions")
        "gD" '(lsp-describe-thing-at-point :which-key "describe-thing-at-point")
        "gi" '(lsp-ui-peek-find-implementation :which-key "find-implementation")
        "gr" '(lsp-ui-peek-find-references :which-key "find-references")

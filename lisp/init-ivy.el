@@ -180,8 +180,12 @@
                 (ivy-read-file-transformer))
                :delimiter "\t"))
 
+  (plist-put ivy-rich-display-transformers-list 'projectile-completing-read
+             (plist-get ivy-rich-display-transformers-list 'counsel-find-file))
+
   (plist-put ivy-rich-display-transformers-list 'find-file-in-project
              (plist-get ivy-rich-display-transformers-list 'counsel-find-file))
+
   ;; FIXME: doesn't work
   ;; (plist-put ivy-rich-display-transformers-list 'find-file-in-project-by-selected
   ;;            (plist-get ivy-rich-display-transformers-list 'counsel-find-file))
