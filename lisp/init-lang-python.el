@@ -62,7 +62,7 @@
 
   (defun +python/executable-find (command)
     (if (executable-find "pyenv")
-        (let ((version (first (split-string (shell-command-to-string "pyenv version"))))
+        (let ((version (cl-first (split-string (shell-command-to-string "pyenv version"))))
               (command-env (string-trim (shell-command-to-string (concat "pyenv whence " command)))))
           (if (string-equal version command-env)
               (shell-command-to-string (string-trim (concat "pyenv which " command)))
