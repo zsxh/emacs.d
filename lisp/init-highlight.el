@@ -10,7 +10,7 @@
 
 ;;; Code:
 
-;; TODO: emasc-28 new minor mode `show-paren-local-mode'
+;; NOTE: emasc-28 new minor mode `show-paren-local-mode'
 ;; Highlight matching parenthesis
 (use-package paren
   :ensure nil
@@ -33,7 +33,7 @@
     (when show-paren-mode
       (cond
        ((looking-at-p "\\s(") (funcall fn))
-       ;; TODO: any performance issue here now?
+       ;; NOTE: any performance issue here now?
        ((or (derived-mode-p 'lisp-data-mode)
             (derived-mode-p 'clojure-mode))
         (save-excursion

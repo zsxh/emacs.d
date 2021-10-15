@@ -18,7 +18,7 @@
     (error "Detected Emacs %s. This config requires v%s or higher" emacs-version minver)))
 
 (when (display-graphic-p)
-  ;; FIXME: have issue when in terminal
+  ;; NOTE: have issue when in terminal
   ;; Speedup boot time by unset file-name-handler-alist temporarily
   ;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#unset-file-name-handler-alist-temporarily
   (defvar tmp--file-name-handler-alist file-name-handler-alist)

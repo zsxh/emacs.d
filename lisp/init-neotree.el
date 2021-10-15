@@ -10,7 +10,6 @@
 
 ;;; Code:
 
-;; TODO: Combine directories with only one child to make display more compact
 ;; https://github.com/jaypei/emacs-neotree/issues/147
 ;; https://github.com/jaypei/emacs-neotree/issues/85
 ;; need to modify neo-buffer--insert-tree and neo-buffer--insert-dir-entry.

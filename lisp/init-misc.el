@@ -355,34 +355,6 @@ Format is:
 
 ;; (nasy/timer (format-mode-line mode-line-format))
 
-;; TODO: nano theme
-;; ;;;;;;;;;;;;;;;;;;;;;;
-;; ;; nano-emacs theme ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;
-
-;; (setq doom-theme nil)
-
-;; (require 'disp-table)
-;; (require 'nano-faces)
-;; (require 'nano-colors)
-;; (require 'nano-theme)
-;; (require 'nano-help)
-;; (require 'nano-modeline)
-;; (nano-faces)
-;; (nano-theme)
-
-;; (setq display-line-numbers-type nil
-;;       evil-default-cursor t
-;;       custom-blue "#718591"
-;;       custom-yellow "#BDA441")
-
-;; (if (daemonp)
-;;     (add-hook 'after-make-frame-functions
-;;               (lambda (frame)
-;;                 (with-selected-frame frame
-;;                   (set-cursor-color custom-blue))))
-;;   (set-cursor-color custom-blue))
-
 (use-package protobuf-mode
   :defer t)
 

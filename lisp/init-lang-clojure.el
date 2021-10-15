@@ -27,7 +27,7 @@
   :hook ((clojure-mode clojurec-mode clojurescript-mode) . +clojure/lsp)
   :config
   (setq clojure-toplevel-inside-comment-form t)
-  ;; FIXME: completion of non valid clojure code
+  ;; NOTE: completion of non valid clojure code
   ;; https://github.com/clojure-lsp/clojure-lsp/issues/270
   ;; At this point, you can use `cider-jack-in-*' to parse the files to get completion
   ;; until upstream fix this problem.
