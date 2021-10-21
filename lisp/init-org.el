@@ -34,7 +34,7 @@
   (setq org-export-use-babel nil ; do not evaluate again during export.
         org-export-with-toc nil
         org-export-with-section-numbers nil
-        org-hide-emphasis-markers nil
+        org-hide-emphasis-markers t
         ;; NOTE: do not load used org modules to speed up first time load
         ;; https://orgmode.org/manual/Structure-Templates.html
         org-modules '(ol-bibtex org-tempo))
@@ -115,6 +115,14 @@
   :config
   (setq org-habit-show-habits-only-for-today t
         org-habit-show-all-today t))
+
+;; Toggle visibility of hidden Org mode element parts upon entering and leaving an element
+;; https://github.com/awth13/org-appear
+;; TODO: evil normal state hiding, insert/visual state showing
+(use-package org-appear
+  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-delay 0.5))
 
 ;; Org-mode keybindings
 (use-package evil-org

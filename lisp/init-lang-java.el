@@ -29,8 +29,6 @@
       (setq lsp-java-format-settings-url java-format-style-file
             lsp-java-format-settings-profile "GoogleStyle")))
   :config
-  (with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-envs '("JAVA_HOME")))
   (setq lsp-java-completion-overwrite nil
         lsp-java-folding-range-enabled nil
         lsp-java-progress-reports-enabled nil
