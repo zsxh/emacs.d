@@ -37,15 +37,15 @@
         lsp-java-format-comments-enabled nil
         lsp-java-completion-max-results 0
         lsp-java-selection-range-enabled nil
-        ;; different jdk versions settings, lsp server require jdk11,
-        ;; Eclipse auto-discovers all installed Java versions and, I think it will use the correct one
-        ;; depending on the source compatibility version (for compilation) and target compatibility version (for running).
-        ;; https://github.com/emacs-lsp/lsp-java/issues/249
-        ;; https://github.com/redhat-developer/vscode-java/#setting-the-jdk
-        ;; https://github.com/emacs-lsp/lsp-java/issues/254
+        ;; JAVA Tooling JDK, lsp server require java 11+
+        ;; https://github.com/redhat-developer/vscode-java/#java-tooling-jdk
         lsp-java-java-path "~/.jenv/versions/11/bin/java"
+        ;; Project JDKs
+        ;; https://github.com/redhat-developer/vscode-java/#project-jdks
+        ;; https://github.com/redhat-developer/vscode-java/issues/2151
         lsp-java-configuration-runtimes '[(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.2.0" :default t)])
+                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.2.0" :default t)
+                                          (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-21.3.0")])
 
   (require 'helm nil t)
   ;; (require 'lsp-java-boot)
@@ -112,12 +112,12 @@
   (add-hook 'java-mode-hook
             (lambda ()
               (setq-local lsp-completion-show-detail nil)
-              (lsp-deferred)))
-  ;; (add-hook 'lsp-after-open-hook
-  ;;           (lambda ()
-  ;;             (when (eq major-mode 'java-mode)
-  ;;               (lsp-java-lens-mode)
-  ;;               (lsp-java-boot-lens-mode))))
+              (lsp-lens-mode)))
+  (add-hook 'lsp-configure-hook
+            (lambda ()
+              (when (eq major-mode 'java-mode)
+                (lsp-lens-mode)
+                (lsp-java-lens-mode))))
   (lsp-deferred))
 
 (add-hook-run-once

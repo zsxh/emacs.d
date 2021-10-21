@@ -111,6 +111,11 @@
   (setq eaf-browser-blank-page-url "https://duckduckgo.com"
         eaf-browser-default-zoom 1.2
         eaf-browser-dark-mode nil)
+
+  (setq eaf-app-extensions-alist
+      (cl-remove-if (lambda (elt) (string-equal "browser" (car elt)))
+                    eaf-app-extensions-alist))
+
   (eaf-bind-key +eaf/switch-to-eww "C-t" eaf-browser-keybinding)
   (eaf-bind-key nil "M-u" eaf-browser-keybinding)
   (eaf-bind-key clear_focus "M-p" eaf-browser-keybinding)
@@ -118,7 +123,7 @@
   (eaf-bind-key recover_prev_close_page "X" eaf-browser-keybinding)
 
   (with-eval-after-load 'org
-      (setq browse-url-browser-function 'eaf-open-browser))
+    (setq browse-url-browser-function 'eaf-open-browser))
 
   ;; overrides
   (defun eaf-open-devtool-page ()

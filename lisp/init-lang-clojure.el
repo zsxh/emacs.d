@@ -45,7 +45,9 @@
 
 (use-package lsp-clojure
   :ensure lsp-mode
-  :defer t)
+  :defer t
+  :custom
+  (lsp-clojure-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/clojure-workspace/"))))
 
 ;; TODO: clojure formatter
 ;; https://github.com/DogLooksGood/zprint.el

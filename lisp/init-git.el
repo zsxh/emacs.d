@@ -104,6 +104,14 @@
       (advice-add 'diff-hl-magit-pre-refresh :before (lambda () (setq auto-revert-check-vc-info nil)))
       (advice-add 'diff-hl-magit-post-refresh :after (lambda () (setq auto-revert-check-vc-info t))))))
 
+;; This package provides several major modes for editing Git
+;; configuration files.  The modes are:
+;; `gitattributes-mode' for .gitattributes, .git/info/attributes, and git/attributes files;
+;; `gitconfig-mode' for .gitignore, .git/info/exclude, and git/ignore files;
+;; `gitignore-mode' for .gitignore, .git/info/exclude, and git/ignore files.
+(use-package git-modes
+  :defer t)
+
 
 (provide 'init-git)
 
