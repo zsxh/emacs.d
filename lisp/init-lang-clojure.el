@@ -41,7 +41,10 @@
 
 ;; https://cider.mx/
 (use-package cider
-  :defer t)
+  :defer t
+  :config
+  (setq cider-invert-insert-eval-p t
+        cider-switch-to-repl-on-insert nil))
 
 (use-package lsp-clojure
   :ensure lsp-mode

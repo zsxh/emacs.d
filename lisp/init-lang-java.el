@@ -107,16 +107,17 @@
 
 (defun +java/setup ()
   (require 'lsp-java)
-  (add-hook 'java-mode-hook
-            (lambda ()
-              (setq-local lsp-completion-show-detail nil)
-              (lsp-lens-mode)))
-  (add-hook 'lsp-configure-hook
-            (lambda ()
-              (when (eq major-mode 'java-mode)
-                (lsp-lens-mode)
-                (lsp-java-lens-mode))))
-  (lsp-deferred))
+  (let ((f (lambda ()
+             (setq-local lsp-completion-show-detail nil
+                         company-minimum-prefix-length 2)
+             (lsp-deferred))))
+    (add-hook 'java-mode-hook f)
+    (add-hook 'lsp-configure-hook
+              (lambda ()
+                (when (eq major-mode 'java-mode)
+                  (lsp-lens-mode)
+                  (lsp-java-lens-mode))))
+    (funcall f)))
 
 (add-hook-run-once
  'pom-xml-mode-hook
