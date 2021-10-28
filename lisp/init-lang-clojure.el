@@ -35,9 +35,10 @@
   (dolist (mode-map '(clojure-mode-map clojurec-mode-map clojurescript-mode-map))
     (+language-server/set-common-leader-keys (symbol-value mode-map)))
   (defun +clojure/lsp ()
-    (if (and buffer-file-name
-             (member (file-name-extension buffer-file-name) '("clj" "cljs" "cljc")))
-        (lsp-deferred))))
+    (when (and buffer-file-name
+               (member (file-name-extension buffer-file-name) '("clj" "cljs" "cljc")))
+      (setq-local lsp-completion-no-cache t)
+      (lsp-deferred))))
 
 ;; https://cider.mx/
 ;; `cider-insert-last-sexp-in-repl'
