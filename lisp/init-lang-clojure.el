@@ -40,11 +40,9 @@
         (lsp-deferred))))
 
 ;; https://cider.mx/
+;; `cider-insert-last-sexp-in-repl'
 (use-package cider
-  :defer t
-  :config
-  (setq cider-invert-insert-eval-p t
-        cider-switch-to-repl-on-insert nil))
+  :defer t)
 
 (use-package lsp-clojure
   :ensure lsp-mode

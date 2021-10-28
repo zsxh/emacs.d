@@ -18,6 +18,8 @@
 ;; lsp-org command
 ;; https://github.com/emacs-lsp/lsp-mode/blob/master/docs/page/lsp-org.md
 ;; (setq lsp-use-plists t)
+;;
+;; TODO: check it out, https://github.com/iocanel/idee
 (use-package lsp-mode
   ;; :quelpa (lsp-mode :fetcher github
   ;;                   :repo "emacs-lsp/lsp-mode"
@@ -88,13 +90,6 @@
   ;; so the workspace folders are added on demand?
   (advice-add 'lsp :before (lambda (&rest _args)
                              (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
-
-  ;; (defun +lsp/setup () t)
-  ;; (add-hook 'lsp-managed-mode-hook '+lsp/setup)
-
-  (defun +lsp/update-server ()
-    (interactive)
-    (lsp-install-server t))
 
   ;; Code from doom-emacs
   (defvar +lsp/defer-shutdown 10

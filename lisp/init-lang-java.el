@@ -20,7 +20,8 @@
         lsp-java-inhibit-message t
         ;; https://github.com/dgileadi/vscode-java-decompiler
         lsp-java-content-provider-preferred "fernflower"
-        lsp-java-jdt-download-url "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz")
+        ;; lsp-java-jdt-download-url "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz"
+        )
 
   (let ((java-format-style-file (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml"))))
     (when (file-exists-p java-format-style-file)
@@ -29,11 +30,16 @@
       (setq lsp-java-format-settings-url java-format-style-file
             lsp-java-format-settings-profile "GoogleStyle")))
   :config
+  (require 'helm nil t)
+  ;; (require 'lsp-java-boot)
+  ;; (setq lsp-java-boot-enabled nil)
+
   (setq lsp-java-completion-overwrite nil
         lsp-java-folding-range-enabled nil
         lsp-java-progress-reports-enabled nil
         lsp-java-format-comments-enabled nil
-        lsp-java-completion-max-results 0
+        ;; Set a small num to improve performance
+        lsp-java-completion-max-results 30
         lsp-java-selection-range-enabled nil
         ;; JAVA Tooling JDK, lsp server require java 11+
         ;; https://github.com/redhat-developer/vscode-java/#java-tooling-jdk
@@ -45,28 +51,20 @@
                                           (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.2.0" :default t)
                                           (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-21.3.0")])
 
-  (require 'helm nil t)
-  ;; (require 'lsp-java-boot)
-  ;; (setq lsp-java-boot-enabled nil)
-
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
   (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar")))
     (when (file-exists-p lombok-jar)
-      ;; "-XX:+UnlockExperimentalVMOptions"
-      ;; "-XX:+UseZGC"
-      ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
-      ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
       ;; current VSCode default, https://github.com/redhat-developer/vscode-java/blob/master/package.json#L156
       (setq lsp-java-vmargs `("-XX:+UseParallelGC"
                               "-XX:GCTimeRatio=4"
                               "-XX:AdaptiveSizePolicyWeight=90"
                               "-Dsun.zip.disableMemoryMapping=true"
-                              "-Xmx1G"
-                              "-Xms100m"
+                              "-Xmx4G"
+                              "-Xms200m"
                               ;; "-XX:+UnlockExperimentalVMOptions"
                               ;; "-XX:+UseZGC"
-                              ;; "-Xmx3G"
-                              ;; "-Xms200m"
+                              ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
+                              ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
                               ,(concat "-javaagent:" lombok-jar)))))
   (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
 
@@ -109,7 +107,8 @@
   (require 'lsp-java)
   (let ((f (lambda ()
              (setq-local lsp-completion-show-detail nil
-                         company-minimum-prefix-length 2)
+                         ;; company-minimum-prefix-length 2
+                         )
              (lsp-deferred))))
     (add-hook 'java-mode-hook f)
     (add-hook 'lsp-configure-hook
