@@ -419,57 +419,15 @@ at the first function to return non-nil.")
 ;; - We can have more than one Org-roam directory
 ;; How-to-Take-Smart-Notes: https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzI1NTA4Nzk5Mw==&scene=1&album_id=1464601583634939905#wechat_redirect&tdsourcetag=s_pctim_aiomsg
 (use-package org-roam
-  :if (executable-find "sqlite3")
-  :commands (org-roam-mode
-             org-roam-db-build-cache
-             org-roam-find-file
-             org-roam-capture
-             org-roam-insert
-             org-roam
-             org-roam-jump-to-index)
-  :config
-  (setq org-roam-directory "~/org/org-roam"
-        org-roam-db-location "~/org/org-roam/org-roam.db"
-        org-roam-db-update-method 'immediate
-        org-roam-index-file "index.org"
-        org-roam-encrypt-files nil))
+  :defer t)
+
+;; TODO: https://github.com/nobiot/org-transclusion, work with `org-roam'
+
+;; TODO: https://coredumped.dev/2021/05/26/taking-org-roam-everywhere-with-logseq/, work with `logseq'
 
 ;; TODO: org-ref
 (use-package org-ref
   :defer t)
-
-;; https://logseq.github.io
-;; https://github.com/llcc/org-logseq
-;; Usage:
-;; set `org-logseq-dir'
-;; M-x `org-logseq-mode' in your current buffer
-;; or put ((org-mode . ((eval org-logseq-mode 1)))) in your .dir-locals
-;; C-c C-o to open pages or block references
-(use-package org-logseq
-  :quelpa (org-logseq :fetcher github :repo "llcc/org-logseq" :files ("*"))
-  :custom
-  (org-logseq-dir "~/Code/logseq")
-  (org-logseq-create-page-p t)
-  :commands org-logseq-mode
-  :config
-  ;; FIXME: fix grep path
-  (defun org-logseq-grep-query (page-or-id)
-    "Return grep result for searching PAGE-OR-ID in `org-logseq-dir'."
-    (let ((type (car page-or-id))
-          (query (cdr page-or-id)))
-      (format (pcase type
-                ('page "grep -niR \"^#+\\(TITLE\\): *%s\" %s --exclude-dir=\".git\"")
-                ('id "grep -niR \"^:id: *%s\" %s --exclude-dir=\".git\""))
-              query org-logseq-dir)))
-  ;; FIXME: fix create page dir
-  (defun org-logseq-create-page (page)
-    "Create a new PAGE org file in pages directory if setting
- `org-logseq-create-page-p' to non-nil."
-    (if org-logseq-create-page-p
-        (progn
-          (find-file (expand-file-name (concat "pages/" page ".org") org-logseq-dir))
-          (insert (concat "#+TITLE: " page)))
-      (user-error "No page found; Check `org-logseq-create-page-p` variable"))))
 
 
 (provide 'init-org)

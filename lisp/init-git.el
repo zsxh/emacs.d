@@ -112,6 +112,8 @@
 (use-package git-modes
   :defer t)
 
+;; TODO: https://github.com/Artawower/blamer.el
+
 
 (provide 'init-git)
 
