@@ -30,8 +30,6 @@
                ("C-j" . company-select-next)))
   :hook (after-init . global-company-mode)
   :config
-  ;; (set-face-underline 'company-tooltip-common t)
-
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
         company-tooltip-maximum-width (/ (frame-width) 2)
@@ -58,17 +56,6 @@
 
   (with-eval-after-load 'company-files
     (add-to-list 'company-files--regexps "file:\\(\\(?:\\.\\{1,2\\}/\\|~/\\|/\\)[^\]\n]*\\)")))
-
-(use-package flx
-  :defer t)
-
-;; FIXME: unknown backend information
-(use-package company-fuzzy
-  :defer t
-  :config
-  (with-eval-after-load 'elisp-mode
-    (add-hook 'emacs-lisp-mode-hook 'company-fuzzy-mode)
-    (add-hook 'lisp-interaction-mode-hook 'company-fuzzy-mode)))
 
 (use-package prescient
   :defer t
@@ -100,111 +87,35 @@
   :after company
   :hook (global-company-mode . company-quickhelp-terminal-mode))
 
-(defcustom +completion/company-frontend 'company-posframe
-  "Company frontend."
-  :type '(choice
-          (const :tag "nil" nil)
-          (const :tag "company-posframe" company-posframe)
-          (const :tag "company-box" company-box)))
+(use-package company-posframe
+  :if (and (>= emacs-major-version 26)
+           (display-graphic-p))
+  :hook (global-company-mode . company-posframe-mode)
+  :bind (:map company-posframe-active-map
+              ("C-h" . company-posframe-quickhelp-toggle))
+  :config
+  (setq company-posframe-quickhelp-delay nil
+        company-posframe-show-indicator nil
+        company-posframe-show-metadata nil)
 
-(when (and (>= emacs-major-version 26) (display-graphic-p))
-  (cond
-   ((eq +completion/company-frontend 'company-posframe)
-    (use-package company-posframe
-      :hook (global-company-mode . company-posframe-mode)
-      :bind (:map company-posframe-active-map
-                  ("C-h" . company-posframe-quickhelp-toggle))
-      :config
-      (setq company-posframe-quickhelp-delay nil
-            company-posframe-show-indicator nil
-            company-posframe-show-metadata nil)
+  (defun +company-posframe/quickhelp-auto-hide ()
+    (unless (member this-command '(mwheel-scroll
+                                   handle-switch-frame
+                                   company-posframe-quickhelp-scroll-up
+                                   company-posframe-quickhelp-scroll-down))
+      (company-posframe-quickhelp-hide)
+      (remove-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide)))
 
-      (defun +company-posframe/quickhelp-auto-hide ()
-        (unless (member this-command '(mwheel-scroll
-                                       handle-switch-frame
-                                       company-posframe-quickhelp-scroll-up
-                                       company-posframe-quickhelp-scroll-down))
-          (company-posframe-quickhelp-hide)
-          (remove-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide)))
-
-      (defun company-posframe-quickhelp-toggle ()
-        (interactive)
-        (if (posframe-funcall
-             company-posframe-quickhelp-buffer
-             (lambda ()
-               (frame-parameter (window-frame) 'visibility)))
-            (company-posframe-quickhelp-hide)
-          (company-posframe-quickhelp-show)
-          (company-posframe-quickhelp-raise-frame)
-          (add-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide 0 t)))))
-
-   ((eq +completion/company-frontend 'company-box)
-    ;; Code from https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-company.el
-    (use-package company-box
-      :hook (company-mode . company-box-mode)
-      :config
-      (setq company-box-show-single-candidate 'always
-            company-box-doc-enable nil
-            company-box-enable-icon t
-            company-box-backends-colors nil
-            company-box-highlight-prefix nil
-            company-box-doc-delay 0.5
-            company-box-tooltip-maximum-width company-tooltip-maximum-width
-            company-box-max-candidates 50)
-
-      (declare-function all-the-icons-faicon 'all-the-icons)
-      (declare-function all-the-icons-material 'all-the-icons)
-      (declare-function all-the-icons-octicon 'all-the-icons)
-      (setq company-box-icons-all-the-icons
-            `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.8 :v-adjust -0.15))
-              (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.02))
-              (Method . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
-              (Function . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
-              (Constructor . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.02 :face 'all-the-icons-purple))
-              (Field . ,(all-the-icons-octicon "tag" :height 0.85 :v-adjust 0 :face 'all-the-icons-lblue))
-              (Variable . ,(all-the-icons-octicon "tag" :height 0.85 :v-adjust 0 :face 'all-the-icons-lblue))
-              (Class . ,(all-the-icons-material "settings_input_component" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
-              (Interface . ,(all-the-icons-material "share" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
-              (Module . ,(all-the-icons-material "view_module" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
-              (Property . ,(all-the-icons-faicon "wrench" :height 0.8 :v-adjust -0.02))
-              (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.8 :v-adjust -0.15))
-              (Value . ,(all-the-icons-material "format_align_right" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-lblue))
-              (Enum . ,(all-the-icons-material "storage" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
-              (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.8 :v-adjust -0.15))
-              (Snippet . ,(all-the-icons-material "format_align_center" :height 0.8 :v-adjust -0.15))
-              (Color . ,(all-the-icons-material "palette" :height 0.8 :v-adjust -0.15))
-              (File . ,(all-the-icons-faicon "file-o" :height 0.8 :v-adjust -0.02))
-              (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.8 :v-adjust -0.15))
-              (Folder . ,(all-the-icons-faicon "folder-open" :height 0.8 :v-adjust -0.02))
-              (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.8 :v-adjust -0.15))
-              (Constant . ,(all-the-icons-faicon "square-o" :height 0.8 :v-adjust -0.1))
-              (Struct . ,(all-the-icons-material "settings_input_component" :height 0.8 :v-adjust -0.15 :face 'all-the-icons-orange))
-              (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
-              (Operator . ,(all-the-icons-material "control_point" :height 0.8 :v-adjust -0.15))
-              (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.02))
-              (Template . ,(all-the-icons-material "format_align_left" :height 0.8 :v-adjust -0.15)))
-            company-box-icons-alist 'company-box-icons-all-the-icons)
-
-      ;; Don't show documentation in echo area, because company-box displays its own
-      ;; in a child frame.
-      (when company-box-doc-enable
-        (setq company-frontends (delq 'company-echo-metadata-frontend company-frontends)))
-
-      ;; "C-h" toggle doc frame manually
-      (defun company-box-doc-manually-a ()
-        (interactive)
-        (let ((frame (or (frame-parent) (selected-frame))))
-          (company-box-doc--show company-selection frame)
-          (defun +company-box/auto-hide-frame-h ()
-            "auto hide company-box doc frame if not scrolling the frame"
-            ;; (message "log: this-command %s" this-command)
-            (unless (member this-command '(mwheel-scroll handle-switch-frame ignore))
-              (company-box-doc--hide frame)
-              (remove-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
-          (add-hook 'pre-command-hook #'+company-box/auto-hide-frame-h)))
-
-      (advice-add 'company-box-doc-manually :override #'company-box-doc-manually-a)))
-   (t nil)))
+  (defun company-posframe-quickhelp-toggle ()
+    (interactive)
+    (if (posframe-funcall
+         company-posframe-quickhelp-buffer
+         (lambda ()
+           (frame-parameter (window-frame) 'visibility)))
+        (company-posframe-quickhelp-hide)
+      (company-posframe-quickhelp-show)
+      (company-posframe-quickhelp-raise-frame)
+      (add-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide 0 t))))
 
 
 (provide 'init-completion)

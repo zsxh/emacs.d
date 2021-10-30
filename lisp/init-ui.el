@@ -157,7 +157,6 @@ By default, this shows the information specified by `global-mode-string'."
 ;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
 
 ;; Text Scale
-;; FIXME: company-box-background is not extended after text scale resizing
 (use-package default-text-scale
   :commands (default-text-scale-increase default-text-scale-descrease default-text-scale-reset)
   :config
