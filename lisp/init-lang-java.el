@@ -20,8 +20,7 @@
         lsp-java-inhibit-message t
         ;; https://github.com/dgileadi/vscode-java-decompiler
         lsp-java-content-provider-preferred "fernflower"
-        ;; lsp-java-jdt-download-url "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz"
-        )
+        lsp-java-jdt-download-url "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz")
 
   (let ((java-format-style-file (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml"))))
     (when (file-exists-p java-format-style-file)
@@ -48,8 +47,8 @@
         ;; https://github.com/redhat-developer/vscode-java/#project-jdks
         ;; https://github.com/redhat-developer/vscode-java/issues/2151
         lsp-java-configuration-runtimes '[(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.2.0" :default t)
-                                          (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-21.3.0")])
+                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.2.0")
+                                          (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-21.3.0" :default t)])
 
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
   (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar")))

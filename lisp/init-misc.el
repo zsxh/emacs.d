@@ -341,11 +341,6 @@ Format is:
 ;; https://github.com/yuchen-lea/org-media-note/blob/master/README_CN.org
 ;; https://emacs-china.org/t/org-media-note/16160
 
-(use-package hackernews
-  :commands (hackernews)
-  :config
-  (setq hackernews-items-per-page 30))
-
 ;; TODO: timers
 ;; (defmacro nasy/timer (&rest body)
 ;;   "Measure and return the time it takes evaluating BODY."

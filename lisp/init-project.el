@@ -49,7 +49,7 @@
 (use-package projectile
   :defer 5
   :bind ("C-<tab>" . projectile-next-project-buffer)
-  :commands (projectile-switch-project)
+  :commands (projectile-switch-project projectile-project-root)
   :config
   (projectile-mode)
   ;; switch project to project root dir instead of project file

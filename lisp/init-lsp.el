@@ -32,7 +32,7 @@
         lsp-prefer-capf t
         lsp-enable-file-watchers nil
         lsp-enable-symbol-highlighting nil ; turn off for better performance
-        lsp-idle-delay 1
+        lsp-idle-delay 0.5
         lsp-debounce-full-sync-notifications-interval 1.0
         lsp-diagnostics-provider :flycheck
         lsp-log-io nil
@@ -53,7 +53,7 @@
         ;; Reduce unexpected modifications to code
         lsp-enable-on-type-formatting nil
         lsp-headerline-breadcrumb-enable nil
-        lsp-response-timeout 5)
+        lsp-response-timeout 10)
 
   ;; don't scan 3rd party javascript libraries
   (push "[/\\\\][^/\\\\]*\\.json$" lsp-file-watch-ignored-files) ; json
@@ -77,6 +77,7 @@
           lsp-completion-provider :capf
           lsp-completion-default-behaviour :insert
           lsp-completion-show-detail t
+          lsp-completion-no-cache t
           lsp-completion-use-last-result t))
 
   (use-package lsp-diagnostics

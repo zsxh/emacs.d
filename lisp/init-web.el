@@ -82,11 +82,11 @@
 ;; https://github.com/merrickluo/lsp-tailwindcss
 (use-package lsp-tailwindcss
   :defer t
-  :init
-  (with-eval-after-load '(or js clojure-mode)
-    (require 'lsp-tailwindcss))
-  :config
-  (setq lsp-tailwindcss-add-on-mode t)
+  ;; :init
+  ;; (with-eval-after-load '(or js clojure-mode)
+  ;;   (require 'lsp-tailwindcss))
+  ;; :config
+  ;; (setq lsp-tailwindcss-add-on-mode t)
   ;; (defun shadow-cljs-use-tailwind-p ()
   ;;   (let ((shadow-cljs-edn-path (f-join (lsp-workspace-root) "shadow-cljs.edn")))
   ;;     (and (file-exists-p shadow-cljs-edn-path)
