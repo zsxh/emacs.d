@@ -85,7 +85,17 @@
     (if (eq major-mode 'clojurescript-mode)
         (cider-eval-last-sexp)
       (apply orig-fn args)))
-  (advice-add 'lispy-eval :around #'lispy-eval-a))
+  (advice-add 'lispy-eval :around #'lispy-eval-a)
+
+  ;; FIXME: cider eval issue, https://github.com/abo-abo/lispy/issues/609
+  (with-eval-after-load 'clojure-mode
+    (require 'le-clojure)
+    (cl-delete-if (lambda (dep) (string-equal "nrepl" (car dep))) lispy-cider-jack-in-dependencies)
+    (setq cider-jack-in-dependencies
+          (delete-dups
+           (append
+            cider-jack-in-dependencies
+            lispy-cider-jack-in-dependencies)))))
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros
