@@ -100,14 +100,15 @@
 
   ;; zero-width spaces
   (define-key org-mode-map (kbd "M-SPC M-SPC")
-    (lambda () (interactive) (insert "\u200b")))
+              (lambda () (interactive) (insert "\u200b")))
 
-  (defun +org/export-remove-zero-width-space (text _backend _info)
-    "Remove zero width spaces from TEXT."
-    (unless (org-export-derived-backend-p 'org)
-      (replace-regexp-in-string "\u200b" "" text)))
+  (with-eval-after-load 'ox
+    (defun +org/export-remove-zero-width-space (text _backend _info)
+      "Remove zero width spaces from TEXT."
+      (unless (org-export-derived-backend-p 'org)
+        (replace-regexp-in-string "\u200b" "" text)))
 
-  (add-to-list 'org-export-filter-final-output-functions #'+org/export-remove-zero-width-space t))
+    (add-to-list 'org-export-filter-final-output-functions #'+org/export-remove-zero-width-space t)))
 
 (use-package org-habit
   :ensure nil
