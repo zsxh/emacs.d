@@ -32,7 +32,7 @@
         lsp-prefer-capf t
         lsp-enable-file-watchers nil
         lsp-enable-symbol-highlighting nil ; turn off for better performance
-        lsp-idle-delay 1.0
+        lsp-idle-delay 1.5
         lsp-debounce-full-sync-notifications-interval 2.0
         lsp-diagnostics-provider :flycheck
         lsp-log-io nil

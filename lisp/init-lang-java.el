@@ -42,6 +42,8 @@
         lsp-java-completion-max-results 30
         lsp-java-selection-enabled nil
         lsp-java-selection-range-enabled nil
+        ;; disable autobuild to improve performance
+        lsp-java-autobuild-enabled nil
         ;; JAVA Tooling JDK, lsp server require java 11+
         ;; https://github.com/redhat-developer/vscode-java/#java-tooling-jdk
         lsp-java-java-path "~/.jenv/versions/11/bin/java"
@@ -110,7 +112,6 @@
              (setq-local lsp-completion-show-detail nil
                          lsp-completion-no-cache nil
                          company-minimum-prefix-length 2
-                         eldoc-idle-delay 1.0
                          auto-save-idle 3)
              (lsp-deferred))))
     (add-hook 'java-mode-hook f)
