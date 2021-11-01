@@ -418,7 +418,9 @@ at the first function to return non-nil.")
 ;; - We can have more than one Org-roam directory
 ;; How-to-Take-Smart-Notes: https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzI1NTA4Nzk5Mw==&scene=1&album_id=1464601583634939905#wechat_redirect&tdsourcetag=s_pctim_aiomsg
 (use-package org-roam
-  :defer t)
+  :defer t
+  :config
+  (setq org-roam-v2-ack t))
 
 ;; TODO: https://github.com/nobiot/org-transclusion, work with `org-roam'
 

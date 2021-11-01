@@ -304,7 +304,7 @@ Version 2017-01-27"
                     (mapcar #'buffer-name (cl-remove-if-not
                                            (lambda (buffer)
                                              (with-current-buffer buffer
-                                               (member-if #'derived-mode-p modes)))
+                                               (cl-member-if #'derived-mode-p modes)))
                                            (buffer-list))))
             :initial-input nil
             :action #'ivy--switch-buffer-action

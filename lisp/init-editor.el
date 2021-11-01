@@ -220,7 +220,8 @@ This filter de-installs itself after this call."
         create-lockfiles nil)
   :config
   (setq auto-save-silent t
-        auto-save-delete-trailing-whitespace t)
+        auto-save-delete-trailing-whitespace t
+        auto-save-idle 1)
   (setq auto-save-disable-predicates
         '((lambda ()
             (or
