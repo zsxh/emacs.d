@@ -279,6 +279,7 @@
     (define-key telega-msg-button-map (kbd "l") nil))
 
   (with-eval-after-load 'telega-chat
+    (define-key telega-chat-button-map (kbd "h") nil)
     (with-eval-after-load 'evil
       (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
       (define-key telega-msg-button-map (kbd "SPC") nil))
