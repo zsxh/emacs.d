@@ -39,7 +39,9 @@
         lsp-java-completion-max-results 30
         lsp-java-selection-enabled nil
         lsp-java-selection-range-enabled nil
-        ;; disable autobuild to improve performance
+        ;; NOTE: https://github.com/redhat-developer/vscode-java/issues/406#issuecomment-356303715
+        ;; > We enabled it by default so that workspace-wide errors can be reported (eg. removing a public method in one class would cause compilation errors in other files consuming that method).
+        ;; for large workspaces, it may make sense to be able to disable autobuild if it negatively impacts performance.
         lsp-java-autobuild-enabled nil
         ;; JAVA Tooling JDK, lsp server require java 11+
         ;; https://github.com/redhat-developer/vscode-java/#java-tooling-jdk
@@ -116,6 +118,7 @@
 
   (+funcs/major-mode-leader-keys
    java-mode-map
+   "B" '(lsp-java-build-project :which-key "lsp-java-build-project")
    "dr" '(dap-java-debug :which-key "dap-java-debug")
    "dR" '(dap-debug :which-key "dap-debug")
    "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
