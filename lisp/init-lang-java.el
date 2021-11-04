@@ -30,9 +30,6 @@
             lsp-java-format-settings-profile "GoogleStyle")))
   :config
   (require 'helm nil t)
-  ;; (require 'lsp-java-boot)
-  ;; (setq lsp-java-boot-enabled nil)
-
   (setq lsp-java-completion-overwrite nil
         lsp-java-folding-range-enabled nil
         lsp-java-progress-reports-enabled nil
@@ -71,6 +68,32 @@
                               ,(concat "-javaagent:" lombok-jar)))))
   (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
 
+(defun +java/setup ()
+  (require 'lsp-java)
+  (require 'lsp-java-boot)
+  ;; (setq lsp-java-boot-enabled nil)
+
+  (let ((f (lambda ()
+             (setq-local lsp-completion-show-detail nil
+                         lsp-completion-no-cache nil
+                         company-minimum-prefix-length 2
+                         auto-save-idle 3)
+             (lsp-deferred))))
+    (add-hook 'java-mode-hook f)
+    (add-hook 'lsp-configure-hook
+              (lambda ()
+                (when (eq major-mode 'java-mode)
+                  (lsp-lens-mode)
+                  (lsp-java-lens-mode))))
+    (funcall f)))
+
+(add-hook-run-once 'java-mode-hook '+java/setup)
+
+(with-eval-after-load '(or conf-mode yaml-mode)
+  (require 'lsp-java-boot)
+  (add-hook 'conf-javaprop-mode-hook 'lsp-deferred)
+  (add-hook 'yaml-mode-hook 'lsp-deferred))
+
 ;; NOTE: debug template args `vmArgs', `noDebug'...
 ;; git clone https://github.com/microsoft/java-debug code base to checkout extra debug args, like `vmArgs'
 (use-package dap-java
@@ -101,26 +124,6 @@
    "r" '(nil :which-key "run")
    "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
    "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
-
-(add-hook-run-once 'java-mode-hook '+java/setup)
-;; (add-hook-run-once 'conf-javaprop-mode-hook '+java/setup)
-;; (add-hook-run-once 'yaml-mode-hook '+java/setup)
-
-(defun +java/setup ()
-  (require 'lsp-java)
-  (let ((f (lambda ()
-             (setq-local lsp-completion-show-detail nil
-                         lsp-completion-no-cache nil
-                         company-minimum-prefix-length 2
-                         auto-save-idle 3)
-             (lsp-deferred))))
-    (add-hook 'java-mode-hook f)
-    ;; (add-hook 'lsp-configure-hook
-    ;;           (lambda ()
-    ;;             (when (eq major-mode 'java-mode)
-    ;;               (lsp-lens-mode)
-    ;;               (lsp-java-lens-mode))))
-    (funcall f)))
 
 (add-hook-run-once
  'pom-xml-mode-hook
