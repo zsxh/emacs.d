@@ -71,6 +71,7 @@
 (defun +java/setup ()
   (require 'lsp-java)
   (require 'lsp-java-boot)
+  ;; TODO: project specified/dir-locals `lsp-java-boot-enabled'
   ;; (setq lsp-java-boot-enabled nil)
 
   (let ((f (lambda ()
@@ -89,9 +90,12 @@
 
 (add-hook-run-once 'java-mode-hook '+java/setup)
 
-(with-eval-after-load '(or conf-mode yaml-mode)
+(with-eval-after-load 'conf-mode
   (require 'lsp-java-boot)
-  (add-hook 'conf-javaprop-mode-hook 'lsp-deferred)
+  (add-hook 'conf-javaprop-mode-hook 'lsp-deferred))
+
+(with-eval-after-load 'yaml-mode
+  (require 'lsp-java-boot)
   (add-hook 'yaml-mode-hook 'lsp-deferred))
 
 ;; NOTE: debug template args `vmArgs', `noDebug'...
