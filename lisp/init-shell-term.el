@@ -81,8 +81,7 @@ if no project root found, use current directory instead."
 If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (unless (fboundp 'module-load)
       (user-error "Your build of Emacs lacks dynamic modules support and cannot load vterm"))
-    (let* ((dir-remote-p (and (featurep 'tramp)
-                              (tramp-tramp-file-p default-directory)))
+    (let* ((dir-remote-p (file-remote-p default-directory))
            (default-directory (if arg
                                   default-directory
                                 (or

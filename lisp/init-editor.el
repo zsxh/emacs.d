@@ -80,8 +80,7 @@
   :init
   ;; disable auto revert in remote buffers
   (defun +autorevert/turn-on ()
-    (unless (and (featurep 'tramp)
-                 (tramp-tramp-file-p default-directory))
+    (unless (file-remote-p default-directory)
       (turn-on-auto-revert-mode)))
   :config
   (setq global-auto-revert-non-file-buffers t

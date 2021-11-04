@@ -195,7 +195,7 @@ kill the current buffer if it's dired buffer."
       (all-the-icons-dired--remove-all-overlays)
       ;; NOTE: don't display icons it too many items or remote buffer
       (cond
-       ((+funcs/current-buffer-remote-p)
+       ((file-remote-p default-directory)
         (message "Not display icons because of remote buffer."))
        ((> (count-lines (point-min) (point-max)) 200)
         (message "Not display icons because of too many items."))

@@ -53,31 +53,6 @@
     "gty" 'git-timemachine-kill-abbreviated-revision
     "gtY" 'git-timemachine-kill-revision))
 
-;; https://github.com/dandavison/magit-delta
-;; poor performance when diffing too many lines
-(use-package magit-delta
-  :defer t
-  ;; :if (executable-find "delta")
-  ;; :after magit
-  :config
-  ;; FIXME: magit-delta perfomance issue, https://github.com/dandavison/magit-delta/issues/9
-  (defvar nth/magit-delta-point-max 30000)
-  ;; Disable mode if there are too many characters
-  (advice-add 'magit-delta-call-delta-and-convert-ansi-escape-sequences :around
-              (defun nth/magit-delta-colorize-maybe-a (fn &rest args)
-                (if (<= (point-max) nth/magit-delta-point-max)
-                    (apply fn args)
-                  (magit-delta-mode -1))))
-  ;; Re-enable mode after `magit-refresh' if there aren't too many characters
-  (add-hook 'magit-post-refresh-hook
-            (defun nth/magit-enable-magit-delta-maybe-h (&rest _args)
-              (when (and (not magit-delta-mode)
-                         (<= (point-max) nth/magit-delta-point-max))
-                (magit-delta-mode 1))))
-
-  (setq magit-delta-hide-plus-minus-markers nil)
-  (magit-delta-mode))
-
 ;; Show Version Control Software (VCS) commit message of current line.
 ;; https://github.com/redguardtoo/vc-msg
 (use-package vc-msg
