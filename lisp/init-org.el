@@ -219,7 +219,8 @@
 ;; $pip install nbcorg
 (use-package ox-ipynb
   :quelpa (ox-ipynb :fetcher github :repo "jkitchin/ox-ipynb")
-  :after org)
+  ;; :after org
+  :defer t)
 
 ;; Org Bable
 ;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/contrib/jupyter.el

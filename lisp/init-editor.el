@@ -52,6 +52,9 @@
 (setq compilation-always-kill t
       compilation-scroll-output t)
 (setq warning-minimum-level :error)
+;; emacs 28 new feature, CJK word breaking lines
+(when (boundp 'word-wrap-by-category)
+  (setq word-wrap-by-category t))
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
