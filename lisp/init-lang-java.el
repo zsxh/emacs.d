@@ -50,7 +50,7 @@
         ;; https://github.com/redhat-developer/vscode-java/#project-jdks
         ;; https://github.com/redhat-developer/vscode-java/issues/2151
         lsp-java-configuration-runtimes '[(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.2.0")
+                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.3.0")
                                           (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-21.3.0" :default t)])
 
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773

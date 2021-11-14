@@ -10,6 +10,12 @@
 
 ;;; Code:
 
+;; TODO: user built-in `project' package instead,
+;; TODO: https://github.com/karthink/project-x
+;; `project-remember-project', `project-forget-project',
+;; `lsp-workspace-folders-add', `lsp-workspace-folders-remove'
+
+
 ;; (use-package counsel-projectile
 ;;   :hook (after-init . counsel-projectile-mode))
 
@@ -61,6 +67,9 @@
   (setq projectile-enable-caching t))
 
 (with-eval-after-load 'projectile
+  ;; TODO: alter ways
+  ;; `lsp-workspace-folders-add', `lsp-workspace-folders-remove'
+  ;; `projectile-add-known-project', `projectile-remove-known-project' ...
   (add-to-list 'projectile-project-root-files-functions #'+project/lsp-project-root)
 
   (defun +project/projectile-buffer-filter (buffer)
