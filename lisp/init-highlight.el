@@ -121,7 +121,9 @@
   :ensure nil
   :defer t
   :config
-  (set-face-background 'pulse-highlight-start-face "#51afef"))
+  (set-face-background 'pulse-highlight-start-face "#51afef")
+  (when (fboundp 'set-face-extend)
+    (set-face-extend 'pulse-highlight-start-face t)))
 
 (defun pulse-line (&rest _)
   "Pulse the current line."
