@@ -346,6 +346,8 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 (use-package eww
   :ensure nil
   :defer t
+  :custom
+  (eww-bookmarks-directory (locate-user-emacs-file ".cache/"))
   :preface
   (defun +eww/toggle-images-display ()
     "Toggle whether images are loaded and reload the current page from cache."
@@ -650,6 +652,19 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :ensure nil
   :defer t
   :diminish eldoc-mode)
+
+;;;;;;;;;;;;;; others ;;;;;;;;;;;;;;
+(use-package url
+  :ensure nil
+  :defer t
+  :custom
+  (url-configuration-directory (locate-user-emacs-file ".cache/url/")))
+
+(use-package bookmark
+  :ensure nil
+  :defer t
+  :custom
+  (bookmark-default-file (locate-user-emacs-file ".cache/bookmarks")))
 
 
 (provide 'init-emacs-enhancement)

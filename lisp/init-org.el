@@ -128,13 +128,6 @@
 ;; Org-mode keybindings
 (use-package evil-org
   :after (org evil)
-  :init
-  ;; FIXME: fix `evil-redirect-digit-argument' removed from evil temporary
-  ;; https://github.com/Somelauw/evil-org-mode/issues/93
-  (fset 'evil-redirect-digit-argument 'ignore)
-  (add-to-list 'evil-digit-bound-motions 'evil-org-beginning-of-line)
-  (evil-define-key 'motion 'evil-org-mode
-    (kbd "0") 'evil-org-beginning-of-line)
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook

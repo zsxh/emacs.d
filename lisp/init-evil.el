@@ -63,6 +63,7 @@
   (setq evil-want-fine-undo t)
   (setq evil-ex-interactive-search-highlight 'selected-window)
   (setq evil-cross-lines t)
+  (setq evil-kill-on-visual-paste nil)
 
   ;; remove all keybindings from insert-state keymap,it is VERY VERY important
   (setcdr evil-insert-state-map nil)

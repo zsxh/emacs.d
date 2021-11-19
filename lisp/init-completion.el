@@ -36,17 +36,17 @@
         company-idle-delay 0 ; decrease delay before autocompletion popup shows
         company-echo-delay (if (display-graphic-p) nil 0) ; remove annoying blinking
         company-minimum-prefix-length 1
-        ;; Only search the current buffer for `company-dabbrev' (a backend that
+        ;; Only search same major mode buffers for `company-dabbrev' (a backend that
         ;; suggests text your open buffers). This prevents Company from causing
         ;; lag once you have a lot of buffers open.
-        company-dabbrev-other-buffers nil
+        company-dabbrev-other-buffers t
         company-dabbrev-downcase nil    ; No downcase when completion.
         company-require-match nil ; Don't require match, so you can still move your cursor as expected.
         company-frontends '(company-pseudo-tooltip-unless-just-one-frontend company-preview-if-just-one-frontend) ; remove `company-echo-metadata-frontend' frontend
         company-backends '(company-capf company-files company-dabbrev)
         company-global-modes '(not shell-mode eshell-mode eaf-mode
                                    erc-mode message-mode help-mode
-                                   helpful-mode gud-mode)
+                                   helpful-mode gud-mode telega-chat-mode)
         company-format-margin-function 'company-detect-icons-margin
         company-icon-size '(auto-scale . 16))
 
@@ -63,11 +63,9 @@
   (setq prescient-sort-length-enable nil))
 
 (use-package yasnippet
-  ;; :hook (after-init . yas-global-mode)
-  :defer 3
+  :hook ((prog-mode nxml-mode) . yas-minor-mode)
   :config
   (use-package yasnippet-snippets)
-  (yas-global-mode)
   (+funcs/major-mode-leader-keys snippet-mode-map
                                  "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
 
