@@ -19,7 +19,7 @@
       '(("http://sachachua.com/blog/category/emacs/feed/" Sacha-Chua)))
 
 ;; frame startup size, 'max or 'fullscreen
-(setq personal-frame-startup-size 'fullscreen)
+(setq personal-frame-startup-size 'max)
 
 ;; "Shell used in `term' and `ansi-term'."
 (setq personal-shell-executable "/usr/bin/zsh")

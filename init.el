@@ -13,7 +13,7 @@
 (setq debug-on-error t)
 
 ;; Emacs Version
-(let ((minver "27.1"))
+(let ((minver "28"))
   (when (version< emacs-version minver)
     (error "Detected Emacs %s. This config requires v%s or higher" emacs-version minver)))
 
@@ -41,27 +41,6 @@
 ;; Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
-
-;; Pdumper configs
-(when (bound-and-true-p personal-dumped-p)
-  (setq load-path personal-dumped-load-path)
-  (global-font-lock-mode)
-  (transient-mark-mode)
-
-  ;; FIXME: magit-section fringe not working
-  (setq magit-section-visibility-indicator
-        (if (window-system)
-            '(magit-fringe-bitmap> . magit-fringe-bitmapv)
-          '("…" . t)))
-
-  (setq doom-modeline-icon (display-graphic-p))
-
-  ;; Some packages did not load correctly
-  (add-hook 'after-init-hook
-            (lambda ()
-              (save-excursion
-                (switch-to-buffer "*scratch*")
-                (lisp-interaction-mode)))))
 
 (defconst IS-MAC     (eq system-type 'darwin))
 (defconst IS-LINUX   (eq system-type 'gnu/linux))
