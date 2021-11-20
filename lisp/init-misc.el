@@ -152,11 +152,6 @@
 (use-package bongo
   :commands bongo)
 
-(use-package powerthesaurus
-  :commands (powerthesaurus-lookup-word
-             powerthesaurus-lookup-word-at-point
-             powerthesaurus-lookup-word-dwim))
-
 ;; Use nmcli to manage network
 (defvar counsel-network-manager-history nil
   "Network manager history.")
@@ -190,7 +185,9 @@
 ;; User can use curl when s/he has it, as curl is more reliable
 ;; than url.el.
 (use-package request
-  :defer t)
+  :defer t
+  :custom
+  (request-storage-directory (locate-user-emacs-file ".cache/request")))
 
 ;; Install lilypond and add it to load-path
 ;; $pacman -S lilypond

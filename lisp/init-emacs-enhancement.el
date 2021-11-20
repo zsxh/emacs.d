@@ -506,6 +506,10 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 ;; https://github.com/magit/transient/blob/master/docs/transient.org
 (use-package transient
   :defer t
+  :custom
+  (transient-levels-file (locate-user-emacs-file (convert-standard-filename ".cache/transient/levels.el")))
+  (transient-values-file (locate-user-emacs-file (convert-standard-filename ".cache/transient/values.el")))
+  (transient-history-file (locate-user-emacs-file (convert-standard-filename ".cache/transient/history.el")))
   :config
   (setq transient-display-buffer-action '((display-buffer-below-selected)))
   (define-key transient-map (kbd "<escape>") 'transient-quit-one))

@@ -94,7 +94,6 @@
    "at" '(telega :which-key "telega")
    "ay" '(nil :which-key "dictionary")
    "ays" '(youdao-dictionary-search-from-input :which-key "search-from-input")
-   "ayt" '(powerthesaurus-lookup-word-dwim :which-key "powerthesaurus-lookup-word-dwim")
    "ayy" '(youdao-dictionary-search-at-point-posframe :which-key "translate-at-point")
    "ayv" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
    "aw" '(nil :which-key "emacs-browser")
