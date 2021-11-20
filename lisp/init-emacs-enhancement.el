@@ -460,6 +460,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :config
   (setq recentf-auto-cleanup "05:00am"
         recentf-max-saved-items 200
+        recentf-save-file (locate-user-emacs-file ".cache/recentf")
         recentf-exclude '((expand-file-name package-user-dir)
                           ".cache"
                           ".cask"
@@ -550,6 +551,12 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   (setq tramp-default-method "ssh"
         remote-file-name-inhibit-cache 120
         tramp-verbose 3))
+
+(use-package tramp-cache
+  :ensure nil
+  :defer t
+  :custom
+  (tramp-persistency-file-name (locate-user-emacs-file ".cache/tramp")))
 
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; https://www.reddit.com/r/emacs/comments/j2ovcb/comprehensive_guide_on_handling_long_lines_in/g7ag4ds?utm_source=share&utm_medium=web2x&context=3
@@ -665,6 +672,12 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :defer t
   :custom
   (bookmark-default-file (locate-user-emacs-file ".cache/bookmarks")))
+
+(use-package nsm
+  :ensure nil
+  :defer t
+  :custom
+  (nsm-settings-file (locate-user-emacs-file ".cache/network-security.data")))
 
 
 (provide 'init-emacs-enhancement)

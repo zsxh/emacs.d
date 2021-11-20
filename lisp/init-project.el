@@ -14,6 +14,12 @@
 ;; TODO: https://github.com/karthink/project-x
 ;; `project-remember-project', `project-forget-project',
 ;; `lsp-workspace-folders-add', `lsp-workspace-folders-remove'
+;; TODO: user built-in project package
+(use-package project
+  :ensure nil
+  :defer t
+  :custom
+  (project-list-file (locate-user-emacs-file ".cache/projects")))
 
 
 ;; (use-package counsel-projectile
@@ -56,6 +62,10 @@
   :defer 5
   :bind ("C-<tab>" . projectile-next-project-buffer)
   :commands (projectile-switch-project projectile-project-root)
+  :custom
+  (projectile-known-projects-file (expand-file-name ".cache/projectile-bookmarks.eld"
+                                                    user-emacs-directory))
+  (projectile-cache-file (expand-file-name ".cache/projectile.cache" user-emacs-directory))
   :config
   (projectile-mode)
   ;; switch project to project root dir instead of project file
@@ -127,7 +137,6 @@
 
 (use-package persp-mode
   :defer t)
-
 
 
 (provide 'init-project)
