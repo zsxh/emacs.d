@@ -199,13 +199,6 @@
 (use-package org-tree-slide
   :commands org-tree-slide-mode)
 
-;; This package provides visual alignment for Org tables on GUI Emacs.
-;; https://github.com/casouri/valign
-(use-package valign
-  :defer t
-  ;; :hook ((org-mode markdown-mode) . valign-mode)
-  )
-
 ;; convert org-file to ipynb
 ;; https://github.com/jkitchin/ox-ipynb
 ;; convert ipynb to org-file

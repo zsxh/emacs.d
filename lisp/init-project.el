@@ -15,12 +15,9 @@
 ;; `project-remember-project', `project-forget-project',
 ;; `lsp-workspace-folders-add', `lsp-workspace-folders-remove'
 ;; TODO: user built-in project package
-(use-package project
-  :ensure nil
-  :defer t
-  :custom
-  (project-list-file (locate-user-emacs-file ".cache/projects")))
-
+;; (use-package project
+;;   :ensure nil
+;;   :defer t)
 
 ;; (use-package counsel-projectile
 ;;   :hook (after-init . counsel-projectile-mode))

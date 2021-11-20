@@ -300,18 +300,6 @@ current major mode."
   ;; use `auto-save' package to deal with trailing whitespace
   (setq editorconfig-trim-whitespaces-mode (lambda (arg) nil)))
 
-;; TODO: https://github.com/cosmicexplorer/cloc-emacs
-;; https://github.com/AlDanial/cloc
-;; Count Lines of Code
-;;
-;; Installation:
-;; > sudo pacman -S cloc
-;;
-;; Usage:
-;; > cloc .
-(use-package cloc
-  :defer t)
-
 
 (provide 'init-prog)
 

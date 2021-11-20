@@ -10,62 +10,6 @@
 
 ;;; Code:
 
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-
-;; Miscs
-;; (setq initial-scratch-message nil)
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
-(setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
-(setq adaptive-fill-first-line-regexp "^* *$")
-(setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
-(setq make-backup-files nil)               ; Forbide to make backup files
-(setq set-mark-command-repeat-pop t)       ; Repeating C-SPC after popping mark pops it again
-;; (setq-default kill-whole-line t)           ; Kill line including '\n'
-(fset 'yes-or-no-p 'y-or-n-p)
-;; (setq auto-save-default nil)               ; Disable built in default auto save
-(setq read-file-name-completion-ignore-case t) ; file ignores case
-(setq-default truncate-lines t)
-(setq use-dialog-box nil)                  ; no gui dialog box popups
-(setq confirm-kill-processes nil)          ; just kill the process on exit
-(setq column-number-mode t)                ; enable column number
-(setq x-wait-for-event-timeout 0)          ; no wait for X events
-;; Line numbers do not appear for very large buffers and buffers
-;; with very long lines; see variables line-number-display-limit
-;; check `line-number-mode'
-(setq line-number-display-limit-width 1000)
-(setq inhibit-compacting-font-caches t)    ; don't compact font caches during GC
-
-(setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
-(setq sentence-end-double-space nil)
-;; auth-sources
-(setq epg-pinentry-mode 'loopback)
-;; (setq epa-file-select-keys 0)
-;; ask encryption password once
-;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-;; (epa-file-enable)
-(add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
-
-(setq scroll-step 1)
-(setq compilation-always-kill t
-      compilation-scroll-output t)
-(setq warning-minimum-level :error)
-;; emacs 28 new feature, CJK word breaking lines
-(when (boundp 'word-wrap-by-category)
-  (setq word-wrap-by-category t))
-
-;; Tab and Space
-;; Permanently indent with spaces, never with TABs
-;; M-^ delete-indentation
-(setq-default c-basic-offset   2
-              tab-width        2
-              indent-tabs-mode nil)
-
-(with-eval-after-load 'cc-vars
-  (add-to-list 'c-offsets-alist '(case-label . +)))
-
 ;; Disable electric-indent-mode in org-mode
 (use-package electric
   :ensure nil
@@ -170,8 +114,6 @@ This filter de-installs itself after this call."
 (use-package expand-region
   :commands er/expand-region)
 
-(setq mouse-drag-copy-region t)
-
 ;; Framework for mode-specific buffer indexes
 (use-package imenu-list
   :commands imenu-list-smart-toggle
@@ -245,22 +187,6 @@ This filter de-installs itself after this call."
          ("C-c e" . avy-goto-word-0))
   ;; :config (setq avy-style 'pre)
   )
-
-;; inserting numeric ranges
-;; https://oremacs.com/2014/12/26/the-little-package-that-could/
-(use-package tiny
-  :commands tiny-expand
-  :config (tiny-setup-default))
-
-;; look through everything you've killed
-(use-package browse-kill-ring
-  :bind (("M-C-y" . browse-kill-ring)
-         (:map browse-kill-ring-mode-map
-               ("j" . browse-kill-ring-forward)
-               ("k" . browse-kill-ring-previous)))
-  :config
-  (setq browse-kill-ring-highlight-current-entry t)
-  (setq browse-kill-ring-highlight-inserted-item t))
 
 ;; rigrep
 (use-package rg

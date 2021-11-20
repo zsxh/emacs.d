@@ -346,8 +346,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 (use-package eww
   :ensure nil
   :defer t
-  :custom
-  (eww-bookmarks-directory (locate-user-emacs-file ".cache/"))
   :preface
   (defun +eww/toggle-images-display ()
     "Toggle whether images are loaded and reload the current page from cache."
@@ -460,7 +458,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :config
   (setq recentf-auto-cleanup "05:00am"
         recentf-max-saved-items 200
-        recentf-save-file (locate-user-emacs-file ".cache/recentf")
         recentf-exclude '((expand-file-name package-user-dir)
                           ".cache"
                           ".cask"
@@ -558,9 +555,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 
 (use-package tramp-cache
   :ensure nil
-  :defer t
-  :custom
-  (tramp-persistency-file-name (locate-user-emacs-file ".cache/tramp")))
+  :defer t)
 
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; https://www.reddit.com/r/emacs/comments/j2ovcb/comprehensive_guide_on_handling_long_lines_in/g7ag4ds?utm_source=share&utm_medium=web2x&context=3
@@ -663,25 +658,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :ensure nil
   :defer t
   :diminish eldoc-mode)
-
-;;;;;;;;;;;;;; others ;;;;;;;;;;;;;;
-(use-package url
-  :ensure nil
-  :defer t
-  :custom
-  (url-configuration-directory (locate-user-emacs-file ".cache/url/")))
-
-(use-package bookmark
-  :ensure nil
-  :defer t
-  :custom
-  (bookmark-default-file (locate-user-emacs-file ".cache/bookmarks")))
-
-(use-package nsm
-  :ensure nil
-  :defer t
-  :custom
-  (nsm-settings-file (locate-user-emacs-file ".cache/network-security.data")))
 
 
 (provide 'init-emacs-enhancement)

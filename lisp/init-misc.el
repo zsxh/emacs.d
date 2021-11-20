@@ -351,6 +351,13 @@ Format is:
 (use-package protobuf-mode
   :defer t)
 
+(use-package esup
+  :defer t)
+
+(use-package ssh-deploy
+  :defer t
+  :commands (ssh-deploy-hydra))
+
 
 (provide 'init-misc)
 
