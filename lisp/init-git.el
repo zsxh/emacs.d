@@ -106,6 +106,23 @@
 
 ;; TODO: https://github.com/Artawower/blamer.el
 
+;; hydra `smerge-next', `smerge-keep-upper', `smerge-keep-lower'
+(with-eval-after-load 'smerge-mode
+  (defhydra hydra-smerge (:hint nil)
+    "
+    ^Smerge^
+    ^^^^^----------------------
+    [_j_]: smerge-next
+    [_k_]: smerge-prev
+    [_1_]: smerge-keep-upper
+    [_2_]: smerge-keep-lower
+    "
+    ("j" smerge-next)
+    ("k" smerge-prev)
+    ("1" smerge-keep-upper)
+    ("2" smerge-keep-lower)
+    ("q" nil "quit")))
+
 
 (provide 'init-git)
 

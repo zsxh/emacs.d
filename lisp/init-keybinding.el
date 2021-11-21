@@ -131,6 +131,7 @@
    "gld" '(magit-dired-log :which-key "magit-dired-log")
    "glf" '(magit-log-buffer-file :which-key "magit-log-buffer-file")
    "gm" '(vc-msg-show :which-key "vc-msg-show")
+   "gM" '(hydra-smerge/body :which-key "hydra-smerge")
    "gs" '(magit :which-key "magit-status")
    "gt" '(ivy-magit-todos :which-key "ivy-magit-todos")
    ;; "gt" '(magit-todos-list :which-key "magit-todos-list")
