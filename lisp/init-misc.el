@@ -187,7 +187,7 @@
 (use-package request
   :defer t
   :custom
-  (request-storage-directory (locate-user-emacs-file ".cache/request")))
+  (request-storage-directory (locate-user-emacs-file "cache/request")))
 
 ;; Install lilypond and add it to load-path
 ;; $pacman -S lilypond

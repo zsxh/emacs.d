@@ -39,7 +39,7 @@
 (use-package forge
   :defer t
   :custom
-  (forge-database-file (expand-file-name ".cache/forge-database.sqlite" user-emacs-directory)))
+  (forge-database-file (expand-file-name "cache/forge-database.sqlite" user-emacs-directory)))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine

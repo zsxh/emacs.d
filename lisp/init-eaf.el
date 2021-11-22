@@ -81,7 +81,7 @@
 
   (setq eaf-python-command "/usr/bin/python3"
         eaf-browser-default-search-engine "duckduckgo"
-        eaf-config-location (expand-file-name (locate-user-emacs-file ".cache/eaf/"))
+        eaf-config-location (expand-file-name (locate-user-emacs-file "cache/eaf/"))
         eaf-proxy-host personal-proxy-http-host
         eaf-proxy-port (format "%s" personal-proxy-http-port)
         eaf-proxy-type "http")

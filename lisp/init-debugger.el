@@ -19,8 +19,8 @@
          (dap-mode . dap-ui-mode)
          (dap-mode . dap-ui-controls-mode))
   :custom
-  (dap-utils-extension-path (expand-file-name ".cache/dap-extension" user-emacs-directory))
-  (dap-breakpoints-file (expand-file-name ".cache/.dap-breakpoints" user-emacs-directory))
+  (dap-utils-extension-path (expand-file-name "cache/dap-extension" user-emacs-directory))
+  (dap-breakpoints-file (expand-file-name "cache/.dap-breakpoints" user-emacs-directory))
   ;; (dap-auto-configure-features '(sessions locals breakpoints expressions controls tooltip))
   :config
   (require 'dap-utils))

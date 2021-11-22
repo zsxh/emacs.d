@@ -60,9 +60,9 @@
   :bind ("C-<tab>" . projectile-next-project-buffer)
   :commands (projectile-switch-project projectile-project-root)
   :custom
-  (projectile-known-projects-file (expand-file-name ".cache/projectile-bookmarks.eld"
+  (projectile-known-projects-file (expand-file-name "cache/projectile-bookmarks.eld"
                                                     user-emacs-directory))
-  (projectile-cache-file (expand-file-name ".cache/projectile.cache" user-emacs-directory))
+  (projectile-cache-file (expand-file-name "cache/projectile.cache" user-emacs-directory))
   :config
   (projectile-mode)
   ;; switch project to project root dir instead of project file

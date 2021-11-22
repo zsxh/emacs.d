@@ -123,13 +123,13 @@
   (add-to-list 'c-offsets-alist '(case-label . +)))
 
 ;; normal cache location
-(setq url-configuration-directory (locate-user-emacs-file ".cache/url/")
-      bookmark-default-file (locate-user-emacs-file ".cache/bookmarks")
-      nsm-settings-file (locate-user-emacs-file ".cache/network-security.data")
-      eww-bookmarks-directory (locate-user-emacs-file ".cache/")
-      recentf-save-file (locate-user-emacs-file ".cache/recentf")
-      tramp-persistency-file-name (locate-user-emacs-file ".cache/tramp")
-      project-list-file (locate-user-emacs-file ".cache/projects"))
+(setq url-configuration-directory (locate-user-emacs-file "cache/url/")
+      bookmark-default-file (locate-user-emacs-file "cache/bookmarks")
+      nsm-settings-file (locate-user-emacs-file "cache/network-security.data")
+      eww-bookmarks-directory (locate-user-emacs-file "cache/")
+      recentf-save-file (locate-user-emacs-file "cache/recentf")
+      tramp-persistency-file-name (locate-user-emacs-file "cache/tramp")
+      project-list-file (locate-user-emacs-file "cache/projects"))
 
 
 (provide 'init-config)

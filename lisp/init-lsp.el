@@ -46,7 +46,7 @@
         lsp-modeline-workspace-status-enable nil
         lsp-modeline-diagnostics-enable nil
         lsp-restart 'ignore
-        lsp-session-file (expand-file-name ".cache/lsp-session" user-emacs-directory)
+        lsp-session-file (expand-file-name "cache/lsp-session" user-emacs-directory)
         ;; Disable features that have great potential to be slow.
         lsp-enable-folding nil
         lsp-enable-text-document-color nil

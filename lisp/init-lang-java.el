@@ -16,13 +16,13 @@
   ;; :quelpa (lsp-java :fetcher github :repo "emacs-lsp/lsp-java")
   :defer t
   :preface
-  (setq lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file ".cache/java-workspace/"))
+  (setq lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file "cache/java-workspace/"))
         lsp-java-inhibit-message t
         ;; https://github.com/dgileadi/vscode-java-decompiler
         lsp-java-content-provider-preferred "fernflower"
         lsp-java-jdt-download-url "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz")
 
-  (let ((java-format-style-file (expand-file-name (locate-user-emacs-file ".cache/eclipse-java-google-style.xml"))))
+  (let ((java-format-style-file (expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))))
     (when (file-exists-p java-format-style-file)
       ;; https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
       ;; I prefer {join_wrapped_lines : false}

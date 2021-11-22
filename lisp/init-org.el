@@ -287,7 +287,7 @@ at the first function to return non-nil.")
 ;; https://github.com/mermaid-js/mermaid-cli
 ;; https://github.com/arnm/ob-mermaid
 ;;
-;; $ mkdir -p ~/.emacs.d/.cache/ob-mermaid & cd ~/.emacs.d/.cache/ob-mermaid & npm install -g @mermaid-js/mermaid-cli
+;; $ mkdir -p ~/.emacs.d/cache/ob-mermaid & cd ~/.emacs.d/cache/ob-mermaid & npm install -g @mermaid-js/mermaid-cli
 ;;
 ;; #+begin_src mermaid :file ob-mermaid/test.svg
 ;; sequenceDiagram
@@ -296,15 +296,15 @@ at the first function to return non-nil.")
 (use-package ob-mermaid
   :defer t
   :config
-  (setq ob-mermaid-cli-path (expand-file-name ".cache/ob-mermaid/node_modules/.bin/mmdc" user-emacs-directory)))
+  (setq ob-mermaid-cli-path (expand-file-name "cache/ob-mermaid/node_modules/.bin/mmdc" user-emacs-directory)))
 
 ;; http://plantuml.sourceforge.net/
-;; $ mkdir -p ~/.emacs.d/.cache/ob-plantuml & wget -c http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O ~/.emacs.d/.cache/ob-plantuml/plantuml.jar
+;; $ mkdir -p ~/.emacs.d/cache/ob-plantuml & wget -c http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O ~/.emacs.d/cache/ob-plantuml/plantuml.jar
 ;; $ sudo pacman -S graphviz
 (use-package ob-plantuml
   :ensure nil
   :defer t
-  :custom (org-plantuml-jar-path (expand-file-name ".cache/ob-plantuml/plantuml.jar" user-emacs-directory)))
+  :custom (org-plantuml-jar-path (expand-file-name "cache/ob-plantuml/plantuml.jar" user-emacs-directory)))
 
 ;; FIXME: ob-jupyter, ob-async wierd conflict
 ;; Incase you don't know, ob-jupyter need to read kernel info to config org-mode babel
