@@ -25,6 +25,8 @@
   ;;                   :repo "emacs-lsp/lsp-mode"
   ;;                   :files (:defaults "clients/*.el"))
   :commands (lsp lsp-deferred lsp-session lsp-session-folders lsp-org)
+  :custom
+  (lsp-server-install-dir (locate-user-emacs-file "cache/lsp"))
   :config
   (setq lsp-auto-guess-root nil
         lsp-client-packages '()

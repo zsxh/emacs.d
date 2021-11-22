@@ -77,7 +77,7 @@
         doom-modeline-unicode-fallback nil
         doom-modeline-major-mode-icon t
         doom-modeline-window-width-limit 100
-        doom-modeline-buffer-file-name-style 'auto
+        doom-modeline-buffer-file-name-style 'truncate-with-project
         ;; Customize segments
         ;; Requires `eyebrowse-mode' to be enabled or `tab-bar-mode' tabs to be created
         doom-modeline-workspace-name nil)
