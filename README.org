@@ -4,7 +4,7 @@ Updated: <2021-11-14>
 * Enviroment
   - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.30, cairo version 1.17.4) of 2021-11-14
   - build branch: master 370d40
-  - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --with-mailutils~
+  - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --with-mailutils~
   - OS: Manjaro 21.2.0 Qonos
   - Shell: zsh 5.8
   - Kernel: 5.15.2-1-MANJARO

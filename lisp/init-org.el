@@ -178,6 +178,7 @@
    "ls" '(lsp-virtual-buffer-disconnect :which-key "lsp-virtual-buffer-disconnect")
    "n" '(org-babel-next-src-block :which-key "next-src-block")
    "p" '(org-babel-previous-src-block :which-key "previous-src-block")
+   "r" '(hydra-org-roam/body :which-key "org-roam-hydra")
    "T" '(nil :which-key "toggle")
    "Ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
    "Tl" '(org-toggle-link-display :which-key "toggle-link-display")
@@ -399,15 +400,55 @@ at the first function to return non-nil.")
   :config
   (setq org-download-screenshot-method "deepin-screen-recorder -s %s"))
 
-;; https://www.orgroam.com/manual.html
+;; TODO: https://www.orgroam.com/manual.html 5.4
 ;; https://www.orgroam.com/manual.html#Note_002dtaking-Workflows
 ;; https://www.orgroam.com/manual.html#FAQ
 ;; - We can have more than one Org-roam directory
 ;; How-to-Take-Smart-Notes: https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzI1NTA4Nzk5Mw==&scene=1&album_id=1464601583634939905#wechat_redirect&tdsourcetag=s_pctim_aiomsg
+;;
+;; Node(File/Headline ID) `org-id-get-create'
+;; Org's standard ID link (e.g. id:foo)
+;; `org-roam-node-insert', `org-roam-node-find', `org-roam-capture'
 (use-package org-roam
   :defer t
+  :commands (org-roam-db-autosync-mode org-roam-db-sync)
+  :custom
+  (org-roam-db-location (expand-file-name "cache/org-roam.db" user-emacs-directory))
+  (org-id-locations-file (locate-user-emacs-file "cache/.org-id-locations"))
+  :preface
+  (setq org-roam-v2-ack t)
   :config
-  (setq org-roam-v2-ack t))
+  (require 'ucs-normalize)
+  (require 'org-roam-dailies)
+  ;; (make-directory "~/org/org-roam")
+  (setq org-roam-directory (file-truename "~/org/org-roam")
+        org-roam-dailies-directory "daily/"
+        ;; org-roam-db-update-on-save t
+        )
+  (defhydra hydra-org-roam (:hint nil :exit t)
+    "
+Org-Roam
+^Node^                 ^Properties^
+^^^^^^^^-------------------------------
+_ni_: node-insert      _aa_: alias-add
+_nf_: node-find        _ar_: alias-remove
+_nc_: capture          _ra_: ref-add
+_nd_: dailies-capture  _rr_: ref-remove
+"
+    ("ni" org-roam-node-insert)
+    ("nf" org-roam-node-find)
+    ("nc" org-roam-capture)
+    ("nd" org-roam-dailies-capture-date)
+    ("aa" org-roam-alias-add)
+    ("ar" org-roam-alias-remove)
+    ("ra" org-roam-ref-add)
+    ("rr" org-roam-ref-remove)
+    ("q" nil "quit" :color blue)
+    )
+  )
+
+;; (use-package org-roam-ui
+;;   :defer t)
 
 ;; TODO: https://github.com/nobiot/org-transclusion, work with `org-roam'
 

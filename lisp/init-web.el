@@ -80,6 +80,7 @@
                                  "c" '(css-cycle-color-format :which-key "css-cycle-color-format")))
 
 ;; https://github.com/merrickluo/lsp-tailwindcss
+;; clojurescript https://github.com/tailwindlabs/tailwindcss-intellisense/issues/400
 (use-package lsp-tailwindcss
   :defer t
   ;; :init

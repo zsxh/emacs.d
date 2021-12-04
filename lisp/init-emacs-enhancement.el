@@ -659,6 +659,12 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :defer t
   :diminish eldoc-mode)
 
+;;;;;;;;;;;;;; others ;;;;;;;;;;;;;;
+
+;; Toggle pixel scrolling, according to the turning of the mouse wheel
+(when (boundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1))
+
 
 (provide 'init-emacs-enhancement)
 

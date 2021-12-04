@@ -105,6 +105,18 @@
   :defer t)
 
 ;; TODO: https://github.com/Artawower/blamer.el
+(use-package blamer
+  :defer t
+  :custom
+  (blamer-idle-time 0.5)
+  (blamer-min-offset 70)
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                    :background nil
+                    :height 140
+                    :italic t)))
+  :config
+  (global-blamer-mode 1))
 
 ;; hydra `smerge-next', `smerge-keep-upper', `smerge-keep-lower'
 (with-eval-after-load 'smerge-mode
