@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+;; TODO: EmacsTalk project.el 使用说明, https://emacstalk.github.io/post/010/
 ;; TODO: user built-in `project' package instead,
 ;; TODO: https://github.com/karthink/project-x
 ;; `project-remember-project', `project-forget-project',

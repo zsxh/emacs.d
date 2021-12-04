@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;; TODO: 使用 deftheme 来修改样式
+;; https://emacstalk.github.io/post/008/
 
 (defun zsxh-fix-theme ()
   "Load zsxh customize theme faces."
