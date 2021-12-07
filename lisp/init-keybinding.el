@@ -148,6 +148,7 @@
    "her" '(restart-emacs :which-key "restart-emacs")
    "heu" '(upgrade-packages-async :which-key "upgrade-emacs-packages-async")
    "heU" '(upgrade-packages :which-key "upgrade-emacs-packages-sync")
+   "hev" '(view-lossage :which-key "view-lossage")
    "hf" '(helpful-callable :which-key "helpful-callable")
    "hF" '(describe-face :which-key "describe-face")
    "hi" '(info :which-key "emacs-info")
