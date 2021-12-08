@@ -3,7 +3,7 @@ Updated: <2021-12-07>
 
 * Enviroment
   - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.30, cairo version 1.17.4) of 2021-12-07
-  - build branch: master db56e3
+  - emacs-repository-version: db56e32d1241a6573cb7b688362669abec28e648
   - system-configuration-options: ~--with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --with-mailutils~
   - OS: Manjaro 21.2.0 Qonos
   - Shell: zsh 5.8
