@@ -24,7 +24,7 @@
   ;; The last line is needed or no picked up by 'shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
-(defun +shell/projectile-shell-pop ()
+(defun +shell/project-shell-pop ()
   "Open a term buffer at projectile project root,
 if no project root found, use current directory instead."
   (interactive)

@@ -10,123 +10,189 @@
 
 ;;; Code:
 
-;; TODO: EmacsTalk project.el 使用说明, https://emacstalk.github.io/post/010/
-;; TODO: user built-in `project' package instead,
-;; TODO: https://github.com/karthink/project-x
+;; NOTE: https://emacstalk.github.io/post/010/ EmacsTalk
+;; NOTE: https://github.com/karthink/project-x
 ;; `project-remember-project', `project-forget-project',
 ;; `lsp-workspace-folders-add', `lsp-workspace-folders-remove'
-;; TODO: user built-in project package
-;; (use-package project
-;;   :ensure nil
-;;   :defer t)
-
-;; (use-package counsel-projectile
-;;   :hook (after-init . counsel-projectile-mode))
-
-(defvar +project/lsp-project-root-cache (make-hash-table :test 'equal)
-  "Cached value of function `+project/lsp-project-root`.")
-
-(defun +project/lsp-project-root (&optional dir)
-  (let* ((dir (or dir default-directory))
-         (cache-key dir)
-         (cache-value (gethash cache-key +project/lsp-project-root-cache)))
-    (if (and cache-value (file-exists-p cache-value))
-        cache-value
-      (let* ((lsp-folders (lsp-session-folders (lsp-session)))
-             (value (cl-find-if
-                     (lambda (path)
-                       (and
-                        ;; fast filter to improve `ivy-rich-switch-buffer-root' performance, but not accurate
-                        (string-prefix-p path (expand-file-name dir))
-                        ;; double check if current dir in the lsp-project roots
-                        (file-in-directory-p dir path)))
-                     lsp-folders)))
-        (puthash cache-key value +project/lsp-project-root-cache)
-        value))))
-
-(defalias '+project/root 'projectile-project-root)
-
-(defun +project/switch-buffer ()
-  (interactive)
-  (ivy-read "Switch to buffer: "
-            (delete (buffer-name (current-buffer))
-                    (when (+project/root)
-                      (projectile-project-buffer-names)))
-            :initial-input nil
-            :action #'ivy--switch-buffer-action
-            :caller '+project/switch-buffer))
-
-(use-package projectile
-  :defer 5
-  :bind ("C-<tab>" . projectile-next-project-buffer)
-  :commands (projectile-switch-project projectile-project-root)
-  :custom
-  (projectile-known-projects-file (expand-file-name "cache/projectile-bookmarks.eld"
-                                                    user-emacs-directory))
-  (projectile-cache-file (expand-file-name "cache/projectile.cache" user-emacs-directory))
+(use-package project
+  :ensure nil
+  :defer t
+  :commands (project-root)
   :config
-  (projectile-mode)
-  ;; switch project to project root dir instead of project file
-  (setq projectile-switch-project-action #'projectile-dired)
-  (add-to-list 'projectile-project-root-files-bottom-up "pom.xml")
-  (with-eval-after-load 'ivy
-    (setq projectile-completion-system 'ivy))
-  ;; cache file in ~/.emacs.d/projectile.cache
-  (setq projectile-enable-caching t))
+  (setq my/project-local-identifier '(".project" "go.mod" "Cargo.toml"
+                                      "project.clj" "pom.xml" "package.json"
+                                      "Makefile" "README.org" "README.md"))
 
-(with-eval-after-load 'projectile
-  ;; TODO: alter ways
-  ;; `lsp-workspace-folders-add', `lsp-workspace-folders-remove'
-  ;; `projectile-add-known-project', `projectile-remove-known-project' ...
-  (add-to-list 'projectile-project-root-files-functions #'+project/lsp-project-root)
+  (defun my/project-try-local (dir)
+    "Determine if DIR is a non-VC project."
+    (if-let ((root (if (listp my/project-local-identifier)
+                       (seq-some (lambda (n)
+                                   (locate-dominating-file dir n))
+                                 my/project-local-identifier)
+                     (locate-dominating-file dir my/project-local-identifier))))
+        (cons 'local root)))
 
-  (defun +project/projectile-buffer-filter (buffer)
-    (let ((name (buffer-name buffer)))
-      (or (and (string-prefix-p "*" name)
-               (not (string-prefix-p "*eww*" name))
-               (not (string-prefix-p "*ein: http" name))
-               (not (string-prefix-p "*ein:notebooklist" name))
-               (not (string-prefix-p "*vterm:" name))
-               (not (string-prefix-p "*cider" name))
-               (not (string-prefix-p "*Python" name)))
-          (string-match-p "magit.*:" name)
-          (equal (buffer-name (current-buffer)) name))))
+  (cl-defmethod project-root ((project (head local)))
+    (cdr project))
 
-  (defun +project/projectile-buffer-filter-function (buffers)
+  (add-hook 'project-find-functions 'my/project-try-local)
+
+  (when (executable-find "fd")
+    (defvar my/project-prune-patterns
+      '(;; VCS
+        "*/.git"
+        "*/.svn"
+        "*/.cvs"
+        "*/.tox"
+        "*/.bzr"
+        "*/.hg"
+        "*/.DS_Store"
+        "*/.sass-cache"
+        "*/elpy"
+        "*/dcache"
+        "*/.npm"
+        "*/.tmp"
+        "*/.idea"
+        "*/node_modules"
+        "*/bower_components"
+        "*/.gradle"
+        "*/.cask")
+      "Ignored directories(prune patterns).")
+
+    (defvar my/project-ignore-filenames
+      '(;; VCS
+        ;; project misc
+        "*.log"
+        ;; Ctags
+        "tags"
+        "TAGS"
+        ;; compressed
+        "*.tgz"
+        "*.gz"
+        "*.xz"
+        "*.zip"
+        "*.tar"
+        "*.rar"
+        ;; Global/Cscope
+        "GTAGS"
+        "GPATH"
+        "GRTAGS"
+        "cscope.files"
+        ;; html/javascript/css
+        "*bundle.js"
+        "*min.js"
+        "*min.css"
+        ;; Images
+        "*.png"
+        "*.jpg"
+        "*.jpeg"
+        "*.gif"
+        "*.bmp"
+        "*.tiff"
+        "*.ico"
+        ;; documents
+        "*.doc"
+        "*.docx"
+        "*.xls"
+        "*.ppt"
+        "*.pdf"
+        "*.odt"
+        ;; C/C++
+        "*.obj"
+        "*.so"
+        "*.o"
+        "*.a"
+        "*.ifso"
+        "*.tbd"
+        "*.dylib"
+        "*.lib"
+        "*.d"
+        "*.dll"
+        "*.exe"
+        ;; Java
+        ".metadata*"
+        "*.class"
+        "*.war"
+        "*.jar"
+        ;; Emacs/Vim
+        "*flymake"
+        "#*#"
+        ".#*"
+        "*.swp"
+        "*~"
+        "*.elc"
+        ;; Python
+        "*.pyc")
+      "Ignored file names.  Wildcast is supported.")
+
+    (setq my/fd-prune-patterns
+          (mapconcat (lambda (p)
+                       (format "-E \"%s\"" (replace-regexp-in-string "^\*/" "" p)))
+                     my/project-prune-patterns " ")
+
+          my/fd-ignore-filenames
+          (mapconcat (lambda (p)
+                       (format "-E \"%s\"" p))
+                     my/project-ignore-filenames " "))
+
+    (defun my/project-files-in-directory (dir)
+      "Use `fd' to list files in DIR."
+      (let* ((default-directory dir)
+             (localdir (file-local-name (expand-file-name dir)))
+             (command (format "fd -H -t f -0 %s %s . %s" my/fd-prune-patterns my/fd-ignore-filenames localdir)))
+        (project--remote-file-names
+         (sort (split-string (shell-command-to-string command) "\0" t)
+               #'string<))))
+
+    (cl-defmethod project-files ((project (head local)) &optional dirs)
+      "Override `project-files' to use `fd' in local projects."
+      (mapcan #'my/project-files-in-directory
+              (or dirs (list (project-root project)))))))
+
+(defun my/project-root (&optional dir)
+  (project-root (project-current t dir)))
+
+(defalias '+project/root 'my/project-root)
+
+(defun my/project-discover ()
+  "Add dir under search-path to project."
+  (interactive)
+  (dolist (search-path '("~/code/" "~/git/"))
+    (dolist (file (file-name-all-completions "" search-path))
+      (when (not (member file '("./" "../")))
+        (let ((full-name (expand-file-name file search-path)))
+          (when (file-directory-p full-name)
+            (when-let ((pr (project-current nil full-name)))
+              (project-remember-project pr)
+              (message "add project %s..." pr))))))))
+
+(defun +project/project-buffer-filter (buffer)
+  (let ((name (buffer-name buffer)))
+    (or (and (string-prefix-p "*" name)
+             (not (string-prefix-p "*eww*" name))
+             (not (string-prefix-p "*ein: http" name))
+             (not (string-prefix-p "*ein:notebooklist" name))
+             (not (string-prefix-p "*vterm:" name))
+             (not (string-prefix-p "*cider" name))
+             (not (string-prefix-p "*Python" name)))
+        (string-match-p "magit.*:" name)
+        (equal (buffer-name (current-buffer)) name))))
+
+(defun +project/project-buffer-filter-function (buffers)
     (cl-remove-if
-     (lambda (buffer) (+project/projectile-buffer-filter buffer))
+     (lambda (buffer) (+project/project-buffer-filter buffer))
      buffers))
 
-  (setq projectile-buffers-filter-function #'+project/projectile-buffer-filter-function))
+(defun my/project-buffers-a (fn project)
+  (+project/project-buffer-filter-function
+   (funcall fn project)))
 
-(use-package find-file-in-project
-  :commands (find-file-in-project
-             find-file-in-current-directory
-             find-file-in-project-not-ignore
-             find-directory-in-project)
-  :config
-  ;; TODO: improve showing project files on screen immediately and redraw it asynchronously.
-  ;; https://github.com/mpereira/.emacs.d/#a-fast-non-projectile-based-project-file-finder
-  ;; emacs M-x `info', check minibuffer, process, project
-  ;; emacs built-in `completing-read',`completion-table-dynamic'
-  (advice-add #'ffip-project-root :around (lambda (orig-fn)
-                                            (or (+project/lsp-project-root)
-                                                (funcall orig-fn))))
-  (add-to-list 'ffip-project-file "pom.xml")
+(advice-add 'project-buffers :around 'my/project-buffers-a)
 
-  ;; A simple, fast and user-friendly alternative to 'find'
-  ;; https://github.com/sharkdp/fd
-  (when (executable-find "fd")
-    (setq ffip-use-rust-fd t))
+(defun my/project-switch-project (dir)
+  (interactive (list (project-prompt-project-dir)))
+  (dired dir))
 
-  (defun find-file-in-project-not-ignore ()
-    (interactive)
-    (let ((ffip-rust-fd-respect-ignore-files nil))
-      (find-file-in-project)))
-
-  (defun find-directory-in-project (&optional open-another-window)
-    (interactive "P")
-    (ffip-find-files nil open-another-window t)))
 
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 
