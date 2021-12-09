@@ -64,63 +64,23 @@
         ;; project misc
         "*.log"
         ;; Ctags
-        "tags"
-        "TAGS"
+        "tags" "TAGS"
         ;; compressed
-        "*.tgz"
-        "*.gz"
-        "*.xz"
-        "*.zip"
-        "*.tar"
-        "*.rar"
+        "*.tgz" "*.gz" "*.xz" "*.zip" "*.tar" "*.rar"
         ;; Global/Cscope
-        "GTAGS"
-        "GPATH"
-        "GRTAGS"
-        "cscope.files"
+        "GTAGS" "GPATH" "GRTAGS" "cscope.files"
         ;; html/javascript/css
-        "*bundle.js"
-        "*min.js"
-        "*min.css"
+        "*bundle.js" "*min.js" "*min.css"
         ;; Images
-        "*.png"
-        "*.jpg"
-        "*.jpeg"
-        "*.gif"
-        "*.bmp"
-        "*.tiff"
-        "*.ico"
+        "*.png" "*.jpg" "*.jpeg" "*.gif" "*.bmp" "*.tiff" "*.ico"
         ;; documents
-        "*.doc"
-        "*.docx"
-        "*.xls"
-        "*.ppt"
-        "*.pdf"
-        "*.odt"
+        "*.doc" "*.docx" "*.xls" "*.ppt" "*.pdf" "*.odt"
         ;; C/C++
-        "*.obj"
-        "*.so"
-        "*.o"
-        "*.a"
-        "*.ifso"
-        "*.tbd"
-        "*.dylib"
-        "*.lib"
-        "*.d"
-        "*.dll"
-        "*.exe"
+        "*.obj" "*.so" "*.o" "*.a" "*.ifso" "*.tbd" "*.dylib" "*.lib" "*.d" "*.dll" "*.exe"
         ;; Java
-        ".metadata*"
-        "*.class"
-        "*.war"
-        "*.jar"
+        ".metadata*" "*.class" "*.war" "*.jar"
         ;; Emacs/Vim
-        "*flymake"
-        "#*#"
-        ".#*"
-        "*.swp"
-        "*~"
-        "*.elc"
+        "*flymake" "#*#" ".#*" "*.swp" "*~" "*.elc"
         ;; Python
         "*.pyc")
       "Ignored file names.  Wildcast is supported.")
