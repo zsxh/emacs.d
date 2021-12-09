@@ -310,7 +310,7 @@ Version 2017-01-27"
           (or (not (fboundp 'tramp-tramp-file-p))
               (not (tramp-tramp-file-p default-directory)))
           (+project/root))
-         (+project/switch-buffer))
+         (call-interactively 'project-switch-to-buffer))
         (t
          (ivy-switch-buffer))))
 

@@ -25,7 +25,7 @@
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
 (defun +shell/project-shell-pop ()
-  "Open a term buffer at projectile project root,
+  "Open a term buffer at project root,
 if no project root found, use current directory instead."
   (interactive)
   (let ((default-directory (or (+project/root) default-directory)))
@@ -86,7 +86,8 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
                                   default-directory
                                 (or
                                  (when dir-remote-p nil)
-                                 (projectile-project-root)
+                                 (if-let ((pr (project-current)))
+                                     (project-root pr))
                                  default-directory)))
            (buffer-name
             (format "*vterm:<%s>*"
@@ -120,7 +121,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
                                  'below)))
                 (select-window new-window)
                 (switch-to-buffer buffer))
-              (pop-to-buffer buffer))))))
+            (pop-to-buffer buffer))))))
 
   (defun +vterm/toggle-other-window (arg)
     "Toggles a terminal popup window at project root.

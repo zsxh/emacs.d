@@ -127,7 +127,10 @@
   (if (neo-global--window-exists-p)
       (neotree-hide)
     (let ((origin-buffer-file-name (buffer-file-name)))
-      (neotree-find (+project/root))
+      (neotree-find (or
+                     (if-let ((pr (project-current)))
+                         (project-root pr))
+                     default-directory))
       (neotree-find origin-buffer-file-name))))
 
 ;; HACK neotree
