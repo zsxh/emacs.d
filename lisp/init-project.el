@@ -17,7 +17,7 @@
 (use-package project
   :ensure nil
   :defer t
-  :commands (project-root)
+  :commands (project-root project-forget-zombie-projects)
   :config
   (setq my/project-local-identifier '(".project" "go.mod" "Cargo.toml"
                                       "project.clj" "pom.xml" "package.json"
