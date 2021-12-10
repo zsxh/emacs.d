@@ -19,6 +19,9 @@
   :defer t
   :commands (project-root project-forget-zombie-projects)
   :config
+  ;; autoremove zombie projects
+  (run-with-idle-timer 5 nil (lambda () (project-forget-zombie-projects)))
+
   (setq my/project-local-identifier '(".project" "go.mod" "Cargo.toml"
                                       "project.clj" "pom.xml" "package.json"
                                       "Makefile" "README.org" "README.md"))

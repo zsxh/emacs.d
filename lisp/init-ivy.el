@@ -122,7 +122,7 @@
 ;; https://github.com/seagle0128/all-the-icons-ivy-rich
 (use-package ivy-rich
   ;; :after ivy
-  :defer 3
+  :defer t
   :config
   (setq ivy-rich-parse-remote-buffer nil)
 
