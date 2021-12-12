@@ -35,11 +35,26 @@
       "j" nil)))
 
 ;; FIXME: gitlab instances via http
-;; https://github.com/magit/forge/issues/9
 (use-package forge
   :defer t
   :custom
-  (forge-database-file (expand-file-name "cache/forge-database.sqlite" user-emacs-directory)))
+  (forge-database-file (expand-file-name "cache/forge-database.sqlite" user-emacs-directory))
+  :config
+  ;; https://github.com/magit/forge/wiki/Tips-and-Tricks#accessing-private-gitlab-instances-via-http
+  (defclass forge-gitlab-http-repository (forge-gitlab-repository)
+    ((issues-url-format :initform "http://%h/%o/%n/issues")
+     (issue-url-format :initform "http://%h/%o/%n/issues/%i")
+     (issue-post-url-format :initform "http://%h/%o/%n/issues/%i#note_%I")
+     (pullreqs-url-format :initform "http://%h/%o/%n/merge_requests")
+     (pullreq-url-format :initform "http://%h/%o/%n/merge_requests/%i")
+     (pullreq-post-url-format :initform "http://%h/%o/%n/merge_requests/%i#note_%I")
+     (commit-url-format :initform "http://%h/%o/%n/commit/%r")
+     (branch-url-format :initform "http://%h/%o/%n/commits/%r")
+     (remote-url-format :initform "http://%h/%o/%n")
+     (create-issue-url-format :initform "http://%h/%o/%n/issues/new")
+     (create-pullreq-url-format :initform "http://%h/%o/%n/merge_requests/new")
+     (pullreq-refspec :initform "+refs/merge-requests/*/head:refs/pullreqs/*")))
+  (add-to-list 'ghub-insecure-hosts "git.private.network.repo/api/v4"))
 
 ;; Walk through git revisions of a file
 (use-package git-timemachine
