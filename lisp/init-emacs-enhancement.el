@@ -79,6 +79,13 @@
         dired-listing-switches "-alh --time-style=long-iso --group-directories-first"
         dired-kill-when-opening-new-dired-buffer t)
 
+  (defun +dried/dired-do-delete-a (fn &rest args)
+    (let ((delete-by-moving-to-trash (and (not (file-remote-p default-directory))
+                                          delete-by-moving-to-trash)))
+      (apply fn args)))
+
+  (advice-add 'dired-do-delete :around '+dried/dired-do-delete-a)
+
   (defun +dired/get-size ()
     (interactive)
     (let ((files (dired-get-marked-files)))

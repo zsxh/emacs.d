@@ -109,7 +109,7 @@
     "Executing ipython/python in project virtual environment,
 virtual environment path should be 'venv' in project root."
     (interactive)
-    (let ((default-directory (+project/root)))
+    (let ((default-directory (+project/root t)))
       (with-current-buffer (vterm-other-window)
         (when (file-exists-p (expand-file-name "venv" default-directory))
           (dolist (char (string-to-list "source venv/bin/activate"))

@@ -38,6 +38,8 @@
   (cl-defmethod project-root ((project (head local)))
     (cdr project))
 
+  (cl-defmethod project-root ((project (eql nil))) nil)
+
   (add-hook 'project-find-functions 'my/project-try-local)
 
   (when (executable-find "fd")
@@ -112,8 +114,11 @@
       (mapcan #'my/project-files-in-directory
               (or dirs (list (project-root project)))))))
 
-(defun my/project-root (&optional dir)
-  (project-root (project-current t dir)))
+(defun my/project-root (&optional maybe-prompt dir)
+  "Return the project root in DIR,
+MAYBE-PROMPT: if it is nil or omitted, return nil,
+else ask the user for a directory in which to look for the project."
+  (project-root (project-current maybe-prompt dir)))
 
 (defalias '+project/root 'my/project-root)
 

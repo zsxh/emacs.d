@@ -28,7 +28,7 @@
   "Open a term buffer at project root,
 if no project root found, use current directory instead."
   (interactive)
-  (let ((default-directory (or (+project/root) default-directory)))
+  (let ((default-directory (or (+project/root t) default-directory)))
     (call-interactively 'shell-pop)))
 
 ;; HIGHLY RECOMMENDED
@@ -85,9 +85,8 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
            (default-directory (if arg
                                   default-directory
                                 (or
-                                 (when dir-remote-p nil)
-                                 (if-let ((pr (project-current)))
-                                     (project-root pr))
+                                 (not dir-remote-p)
+                                 (+project/root)
                                  default-directory)))
            (buffer-name
             (format "*vterm:<%s>*"

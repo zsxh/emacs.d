@@ -79,7 +79,7 @@
 (with-eval-after-load 'julia-mode
   (defun +julia/repl-vterm ()
     (interactive)
-    (let ((default-directory (+project/root)))
+    (let ((default-directory (+project/root t)))
       (with-current-buffer (vterm-other-window)
         (when (file-exists-p (expand-file-name "Project.toml" default-directory))
           (dolist (char (string-to-list "julia"))
