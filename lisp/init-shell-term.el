@@ -82,12 +82,10 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (unless (fboundp 'module-load)
       (user-error "Your build of Emacs lacks dynamic modules support and cannot load vterm"))
     (let* ((dir-remote-p (file-remote-p default-directory))
-           (default-directory (if arg
+           (default-directory (if (or arg dir-remote-p)
                                   default-directory
-                                (or
-                                 (not dir-remote-p)
-                                 (+project/root)
-                                 default-directory)))
+                                (or (+project/root)
+                                    default-directory)))
            (buffer-name
             (format "*vterm:<%s>*"
                     (file-name-nondirectory
