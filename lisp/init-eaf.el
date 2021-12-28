@@ -29,7 +29,7 @@
 ;; 1) $ sudo pacman -S wmctrl
 ;; 2) python dependencies:
 ;; $ yay -S python-pyqt5-webengine python-pysocks
-;; $ pip install --user PyMuPDF
+;; $ pip install --user PyMuPDF epc lxml
 ;; or
 ;; Install in pyenv independent enviroment
 ;; $ pip install PyQt5 PyQtWebEngine PyMuPDF pysocks

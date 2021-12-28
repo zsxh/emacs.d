@@ -37,7 +37,7 @@
   (defun +clojure/lsp ()
     (when (and buffer-file-name
                (member (file-name-extension buffer-file-name) '("clj" "cljs" "cljc")))
-      (setq-local lsp-completion-no-cache t)
+      ;; (setq-local lsp-completion-no-cache t)
       (lsp-deferred))))
 
 ;; https://cider.mx/

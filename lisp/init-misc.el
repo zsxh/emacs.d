@@ -261,7 +261,7 @@
 ;; https://zevlg.github.io/telega.el/#building-tdlib
 ;; $ git clone --depth 1 https://github.com/tdlib/td
 ;; $ cd td
-;; $ mkdir build && cd build && cmake ../
+;; $ mkdir -p build && cd build && cmake ../
 ;; $ make -j8
 ;; $ sudo make install
 ;; `telega-server-libs-prefix'
