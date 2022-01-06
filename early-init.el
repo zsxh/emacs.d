@@ -43,7 +43,8 @@
 ;; (setq package-quickstart t)
 
 ;; Disable cursor blinking
-(setq no-blinking-cursor t)
+(setq no-blinking-cursor t
+      visible-cursor nil)
 (blink-cursor-mode -1)
 
 ;; More performant rapid scrolling over unfontified regions. May cause brief
