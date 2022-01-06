@@ -400,7 +400,7 @@ at the first function to return non-nil.")
   :config
   (setq org-download-screenshot-method "deepin-screen-recorder -s %s"))
 
-;; TODO: https://www.orgroam.com/manual.html 5.4
+;; NOTE: https://www.orgroam.com/manual.html
 ;; https://www.orgroam.com/manual.html#Note_002dtaking-Workflows
 ;; https://www.orgroam.com/manual.html#FAQ
 ;; - We can have more than one Org-roam directory
@@ -408,7 +408,8 @@ at the first function to return non-nil.")
 ;;
 ;; Node(File/Headline ID) `org-id-get-create'
 ;; Org's standard ID link (e.g. id:foo)
-;; `org-roam-node-insert', `org-roam-node-find', `org-roam-capture'
+;; `org-roam-node-insert', `org-roam-node-find', `org-roam-capture', `org-roam-buffer-toggle'
+;; TODO: https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/
 (use-package org-roam
   :defer t
   :commands (org-roam-db-autosync-mode org-roam-db-sync)

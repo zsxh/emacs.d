@@ -90,31 +90,6 @@
       "k" 'flycheck-error-list-previous-error)))
 
 (with-eval-after-load 'flycheck
-  ;; Display Flycheck errors in GUI tooltips
-  (if (display-graphic-p)
-      (use-package flycheck-posframe
-        :after flycheck
-        :hook (flycheck-mode . flycheck-posframe-mode)
-        ;; inhibit display of flycheck posframe while company popups
-        ;; https://github.com/alexmurray/flycheck-posframe/issues/12
-        :custom (flycheck-posframe-inhibit-functions
-                 '((lambda (&rest _) (bound-and-true-p company-backend))))
-        :config
-        ;; when position changed, hide posframe immediately
-        (defun hide-flycheck-posframe-immediately (&rest _)
-          (when (not (flycheck-posframe-check-position))
-            (posframe-hide flycheck-posframe-buffer)
-            (remove-hook 'post-command-hook #'hide-flycheck-posframe-immediately t))
-          (when (or (not (frame-live-p flycheck-posframe-buffer))
-                    (not (frame-visible-p flycheck-posframe-buffer)))
-            (remove-hook 'post-command-hook #'hide-flycheck-posframe-immediately t)))
-        (defun flycheck-posframe-show-posframe-a (&rest _)
-          (add-hook 'post-command-hook #'hide-flycheck-posframe-immediately 0 t))
-        (advice-add 'flycheck-posframe-show-posframe :after #'flycheck-posframe-show-posframe-a))
-    (use-package flycheck-popup-tip
-      :after flycheck
-      :hook (flycheck-mode . flycheck-popup-tip-mode)))
-
   ;; toggle flycheck window
   (defun +flycheck/toggle-flycheck-error-list ()
     "Toggle flycheck's error list window.
@@ -147,6 +122,31 @@ If the error list is visible, hide it.  Otherwise, show it."
     (popwin:popup-buffer flycheck-error-list-buffer)
     ;; Finally, refresh the error list to show the most recent errors
     (flycheck-error-list-refresh)))
+
+;; This is extension for Flycheck. It implements minor-mode for displaying errors from Flycheck using popup.el.
+(use-package flycheck-popup-tip
+  :if (not (display-graphic-p))
+  :hook (flycheck-mode . flycheck-popup-tip-mode))
+
+(use-package flycheck-posframe
+  :if (display-graphic-p)
+  :hook (flycheck-mode . flycheck-posframe-mode)
+  ;; inhibit display of flycheck posframe while company popups
+  ;; https://github.com/alexmurray/flycheck-posframe/issues/12
+  :custom (flycheck-posframe-inhibit-functions
+           '((lambda (&rest _) (bound-and-true-p company-backend))))
+  :config
+  ;; when position changed, hide posframe immediately
+  (defun hide-flycheck-posframe-immediately (&rest _)
+    (when (not (flycheck-posframe-check-position))
+      (posframe-hide flycheck-posframe-buffer)
+      (remove-hook 'post-command-hook #'hide-flycheck-posframe-immediately t))
+    (when (or (not (frame-live-p flycheck-posframe-buffer))
+              (not (frame-visible-p flycheck-posframe-buffer)))
+      (remove-hook 'post-command-hook #'hide-flycheck-posframe-immediately t)))
+  (defun flycheck-posframe-show-posframe-a (&rest _)
+    (add-hook 'post-command-hook #'hide-flycheck-posframe-immediately 0 t))
+  (advice-add 'flycheck-posframe-show-posframe :after #'flycheck-posframe-show-posframe-a))
 
 
 (provide 'init-syntax-checking)
