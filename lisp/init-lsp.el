@@ -79,7 +79,7 @@
           lsp-completion-provider :capf
           lsp-completion-default-behaviour :insert
           lsp-completion-show-detail t
-          lsp-completion-no-cache t
+          lsp-completion-no-cache nil
           lsp-completion-use-last-result t))
 
   (use-package lsp-diagnostics
@@ -88,9 +88,11 @@
     ;; lsp flycheck faces
     (setq lsp-diagnostics-attributes '((deprecated :strike-through t))))
 
-  ;; https://emacs-lsp.github.io/lsp-mode/page/faq/
-  ;; How do I force lsp-mode to forget the workspace folders for multi root servers
-  ;; so the workspace folders are added on demand?
+  ;; > What are workspaces in emacs-lsp? What about multi-root?
+  ;;   https://github.com/emacs-lsp/lsp-mode/discussions/3095
+  ;; > How do I force lsp-mode to forget the workspace folders for multi root servers
+  ;;   so the workspace folders are added on demand?
+  ;;   https://emacs-lsp.github.io/lsp-mode/page/faq/
   (advice-add 'lsp :before (lambda (&rest _args)
                              (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
