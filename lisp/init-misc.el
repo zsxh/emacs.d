@@ -153,30 +153,31 @@
   :commands bongo)
 
 ;; Use nmcli to manage network
-(defvar counsel-network-manager-history nil
+(defvar nmcli-network-manager-history nil
   "Network manager history.")
 
 ;; $ nmcli con delete <SSID> # if "Secrets were required, but not provided", and you already offer a password
 ;; $ nmcli device wifi list
 ;; $ nmcli device wifi connect <SSID> --ask
-(defun counsel-network-manager (&optional initial-input)
+(defun nmcli-network-manager (&optional initial-input)
   "Connect to wifi network."
   (interactive)
   (shell-command "nmcli device wifi rescan")
-  (let ((networks-list (s-split "\n" (shell-command-to-string "nmcli device wifi"))))
-    (ivy-read "Select network" networks-list
-              :initial-input initial-input
-              :require-match t
-              :history counsel-network-manager-history
-              :sort nil
-              :caller 'counsel-network-manager
-              :action (lambda (line)
-                        (let ((network (car (s-split " " (s-trim (s-chop-prefix "*" line)) t))))
-                          (message "Connecting to \"%s\".." network)
-                          ;; NOTE: remember to insert your password in async shell buffer
-                          (async-shell-command
-                           (format "nmcli device wifi connect %s --ask"
-                                   (shell-quote-argument network))))))))
+  (let ((networks-list (s-split "\n" (shell-command-to-string "nmcli device wifi")))
+        (line (consult--read networks-list
+                             :prompt "Select network"
+                             :initial initial-input
+                             :require-match t
+                             :sort nil
+                             :history nmcli-network-manager-history))
+        (f (lambda (line)
+             (let ((network (car (s-split " " (s-trim (s-chop-prefix "*" line)) t))))
+               (message "Connecting to \"%s\".." network)
+               ;; NOTE: remember to insert your password in async shell buffer
+               (async-shell-command
+                (format "nmcli device wifi connect %s --ask"
+                        (shell-quote-argument network)))))))
+    (funcall 'f line)))
 
 ;; Major mode for crontab(5) files
 (use-package crontab-mode

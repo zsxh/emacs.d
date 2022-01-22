@@ -164,11 +164,6 @@
         ivy-prescient-retain-classic-highlighting t)
   (ivy-prescient-mode))
 
-;; EmacsConf 2020: https://www.youtube.com/watch?v=1SulVSOb3U8
-;; Process Json Data
-;; https://github.com/200ok-ch/counsel-jq
-(use-package counsel-jq
-  :commands (counsel-jq))
 
 
 (provide 'init-ivy)

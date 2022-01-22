@@ -96,6 +96,13 @@
                        (make-local-variable 'js-indent-level)
                        (setq js-indent-level 2)))
   :config
+  ;; EmacsConf 2020: https://www.youtube.com/watch?v=1SulVSOb3U8
+  ;; Process Json Data
+  ;; https://github.com/200ok-ch/counsel-jq
+  ;; TODO: replace ivy counsel
+  (use-package counsel-jq
+    :commands (counsel-jq))
+
   (+funcs/major-mode-leader-keys json-mode-map
                                  "A" nil
                                  "d" nil

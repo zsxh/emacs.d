@@ -69,9 +69,8 @@
 (require 'init-editor)
 (require 'init-docker)
 
-;; Completion in Emacs
-(require 'init-ivy)
-;; (require 'init-minibuffer)
+;; Completion in minibuffer
+(require 'init-minibuffer)
 
 ;; Programing
 (require 'init-project)

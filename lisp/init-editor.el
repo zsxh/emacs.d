@@ -231,8 +231,7 @@ This filter de-installs itself after this call."
   :defer 15
   :commands (fasd-find-file)
   :config
-  (global-fasd-mode)
-  (require 'ivy nil))
+  (global-fasd-mode))
 
 ;; This package allows Emacs to copy to and paste from the GUI clipboard
 ;; when running in text terminal.

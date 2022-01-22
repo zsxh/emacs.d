@@ -73,23 +73,6 @@
        (with-eval-after-load 'jupyter-repl
          (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
          (set-face-background 'jupyter-repl-traceback "#4B483F"))
-       (with-eval-after-load 'ivy
-         (let ((base3 (doom-color 'base3))
-               (blue (doom-color 'blue))
-               (magenta (doom-color 'magenta))
-               (green (doom-color 'green))
-               (yellow (doom-color 'yellow))
-               (violet (doom-color 'violet)))
-           (set-face-attribute 'ivy-minibuffer-match-face-1 nil :foreground yellow :background base3 :weight 'bold)
-           (set-face-attribute 'ivy-minibuffer-match-face-2 nil :foreground magenta :background base3 :weight 'bold)
-           (set-face-attribute 'ivy-minibuffer-match-face-3 nil :foreground green :background base3 :weight 'bold)
-           (set-face-attribute 'ivy-minibuffer-match-face-4 nil :foreground blue :background base3 :weight 'bold)
-           (set-face-attribute 'ivy-minibuffer-match-highlight nil :foreground violet :weight 'bold)
-           (with-eval-after-load 'swiper
-             (set-face-attribute 'swiper-match-face-1 nil :inherit 'ivy-minibuffer-match-face-1)
-             (set-face-attribute 'swiper-match-face-2 nil :inherit 'ivy-minibuffer-match-face-2)
-             (set-face-attribute 'swiper-match-face-3 nil :inherit 'ivy-minibuffer-match-face-3)
-             (set-face-attribute 'swiper-match-face-4 nil :inherit 'ivy-minibuffer-match-face-4))))
        (with-eval-after-load 'lsp-headerline
          (set-face-foreground 'lsp-headerline-breadcrumb-separator-face (doom-color 'fg)))))
     ('doom-solarized-light

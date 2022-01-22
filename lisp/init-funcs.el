@@ -288,16 +288,18 @@ Version 2017-01-27"
 
 (defun +funcs/switch-major-mode-buffer (&rest modes)
   (interactive)
-  (ivy-read "Switch to buffer: "
-            (delete (buffer-name (current-buffer))
-                    (mapcar #'buffer-name (cl-remove-if-not
-                                           (lambda (buffer)
-                                             (with-current-buffer buffer
-                                               (cl-member-if #'derived-mode-p modes)))
-                                           (buffer-list))))
-            :initial-input nil
-            :action #'ivy--switch-buffer-action
-            :caller '+funcs/switch-major-mode-buffer))
+  (let ((buffer (consult--read
+                 (delete (buffer-name (current-buffer))
+                         (mapcar #'buffer-name (cl-remove-if-not
+                                                (lambda (buffer)
+                                                  (with-current-buffer buffer
+                                                    (cl-member-if #'derived-mode-p modes)
+                                                    ;; (cl-member-if #'derived-mode-p '(emacs-lisp-mode))
+                                                    ))
+                                                (buffer-list))))
+                 :prompt "Switch to: ")))
+    ;; (message "log: %s" buffer)
+    (switch-to-buffer buffer)))
 
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
@@ -312,7 +314,7 @@ Version 2017-01-27"
           (+project/root))
          (call-interactively 'project-switch-to-buffer))
         (t
-         (ivy-switch-buffer))))
+         (consult-buffer))))
 
 (defun +funcs/toggle-maximize-buffer ()
   "Toggle Maximize buffer"

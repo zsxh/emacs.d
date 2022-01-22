@@ -41,7 +41,7 @@
    :global-prefix "M-o"
    "" nil
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "last-buffer")
-   "SPC" '(counsel-M-x :which-key "M-x")
+   "SPC" '(execute-extended-command :which-key "M-x")
    "'" '(separedit :which-key "edit-comment")
    "!" '(shell-command :which-key "shell-command")
    ":" '(eval-expression :which-key "eval-expression")
@@ -115,12 +115,11 @@
    "f" '(nil :which-key "file")
    "fd" '(+dired/find-program :which-key "find-files-in-dired")
    "fe" '(+funcs/sudo-edit-current-file :which-key "sudo-edit-current-file")
-   "ff" '(counsel-find-file :which-key "find-files")
+   "ff" '(find-file :which-key "find-file")
    "fF" '(find-file-in-current-directory :which-key "find-file-in-current-directory")
    "fj" '(fasd-find-file :which-key "fasd-find-file")
    "fp" '(xah-copy-file-path :which-key "copy-file-path")
-   "fr" '(counsel-recentf :which-key "counsel-recentf")
-   "ft" '(counsel-tramp :which-key "counsel-tramp")
+   "fr" '(consult-recent-file :which-key "open-recentf-file")
    "f/" '(rg-dwim-current-file :which-key "rg-dwim-current-file")
    ;; Git
    "g" '(nil :which-key "git")
@@ -133,8 +132,7 @@
    "gm" '(vc-msg-show :which-key "vc-msg-show")
    "gM" '(hydra-smerge/body :which-key "hydra-smerge")
    "gs" '(magit :which-key "magit-status")
-   "gt" '(ivy-magit-todos :which-key "ivy-magit-todos")
-   ;; "gt" '(magit-todos-list :which-key "magit-todos-list")
+   "gt" '(magit-todos-list :which-key "magit-todos-list")
    "gT" '(git-timemachine :which-key "git-timemachine")
    ;; Help
    "h" '(nil :which-key "help")
@@ -178,7 +176,7 @@
    ;; Navigator
    "n" '(nil :which-key "navigator")
    "nd" '(helm-dash-at-point :which-key "helm-dash-at-point")
-   "nm" '(counsel-imenu :which-key "imenu")
+   "nm" '(consult-imenu :which-key "imenu")
    "ns" '(nil :which-key "symbol-overlay")
    "nsc" '(symbol-overlay-remove-all :which-key "symbol-overlay-remove-all")
    "nsh" '(symbol-overlay-map-help :which-key "symbol-overlay-help")
@@ -191,7 +189,6 @@
    "pd" '(project-dired :which-key "project-root-dired")
    "pf" '(project-find-file :which-key "project-find-file")
    "pF" '(project-find-dir :which-key "project-find-directory")
-   "pg" '(counsel-git :which-key "counsel-git")
    "pk" '(project-kill-buffers :which-key "project-kill-buffers")
    "pp" '(my/project-switch-project :which-key "switch-project")
    "pt" '(+neotree/find-project-root :which-key "neotree-find-project-root")
@@ -213,6 +210,7 @@
    "t=" '(er/expand-region :which-key "expand-region")
    ;; View
    "v" '(nil :which-key "view")
+   ;; TODO: replace ivy view
    "vp" '(ivy-push-view :which-key "ivy-push-view")
    "vo" '(ivy-pop-view :which-key "ivy-pop-view")
    "vu" '((lambda () (interactive) (ivy-push-view 1)) :which-key "ivy-update-view")

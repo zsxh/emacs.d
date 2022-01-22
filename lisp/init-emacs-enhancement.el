@@ -22,20 +22,11 @@
 ;; A better *Help* buffer
 (use-package helpful
   :defer t
-  :defines ivy-initial-inputs-alist
   :bind (("C-c C-d" . helpful-at-point)
          ("C-h f" . helpful-callable) ;; replace built-in `describe-function'
          ("C-h k" . helpful-key)
          ("C-h v" . helpful-variable))
   :config
-  (with-eval-after-load 'ivy
-    (dolist (cmd '(helpful-callable
-                   helpful-variable
-                   helpful-function
-                   helpful-macro
-                   helpful-command))
-      (cl-pushnew `(,cmd . "^") ivy-initial-inputs-alist)))
-
   (with-eval-after-load 'evil
     (evil-define-key 'normal helpful-mode-map
       "gd" 'evil-goto-definition
@@ -671,6 +662,18 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 ;; Toggle pixel scrolling, according to the turning of the mouse wheel
 (when (boundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode 1))
+
+(defun up-directory (path)
+  "Move up a directory (delete backwards to /)."
+  (interactive "p")
+  (if (string-match-p "/." (minibuffer-contents))
+      (let ((end (point)))
+	      (re-search-backward "/.")
+	      (forward-char)
+	      (delete-region (point) end))))
+
+(define-key minibuffer-local-filename-completion-map
+            [C-backspace] #'up-directory)
 
 
 (provide 'init-emacs-enhancement)
