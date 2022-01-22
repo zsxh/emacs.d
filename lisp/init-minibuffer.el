@@ -16,6 +16,9 @@
   :bind ((:map vertico-map
                ("C-k" . vertico-previous)
                ("C-j" . vertico-next)
+               ("~" . +vertico/insert-tilde)
+               ;; ;; TODO: improve find file root path and protocols
+               ("/" . +vertico/insert-slash)
                ([backspace] . vertico-directory-delete-char)
                ([escape] . abort-recursive-edit)))
   :custom
@@ -24,7 +27,29 @@
     (evil-set-initial-state 'vertico-mode 'emacs))
   :config
   (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless))))
-  (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic partial-completion emacs22)))))
+  (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic partial-completion emacs22))))
+
+  (defun +vertico/directory-home ()
+    (when (and (> (point) (minibuffer-prompt-end))
+               (eq (char-before) ?/)
+               (vertico-directory--completing-file-p))
+      (delete-minibuffer-contents)
+      (insert "~/")
+      t))
+  (defun +vertico/insert-tilde ()
+    (interactive)
+    (unless (+vertico/directory-home)
+      (insert "~")))
+  (defun +vertico/insert-slash ()
+    (interactive)
+    (when (and (> (point) (minibuffer-prompt-end))
+               (eq (char-before) ?/)
+               (save-excursion
+                 (goto-char (1- (point)))
+                 (eq (char-before) ?/))
+               (vertico-directory--completing-file-p))
+      (delete-minibuffer-contents))
+    (insert "/")))
 
 (use-package orderless
   :config
@@ -55,6 +80,29 @@
 
 (use-package all-the-icons-completion
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
+
+(use-package vertico-posframe
+  :hook (vertico-mode . vertico-posframe-mode)
+  :config
+  (setq vertico-posframe-border-width 5)
+
+  (defun +vertico/custom-posframe-poshandler (info)
+    (cons (/ (- (plist-get info :parent-frame-width)
+                (plist-get info :posframe-width))
+             2)
+          (/ (- (plist-get info :parent-frame-height)
+                (plist-get info :posframe-height))
+             3)))
+  (setq vertico-posframe-poshandler #'+vertico/custom-posframe-poshandler)
+
+  ;; (defun +vertico/posframe-get-fixed-size ()
+  ;;   "Set the vertico-posframe size according to the current frame."
+  ;;   (let ((height (or vertico-posframe-height 11))
+  ;;         (width (min (or vertico-posframe-width 200) (round (* 0.62 (frame-width))))))
+  ;;     (list :height height :width width :min-height height :min-width width)))
+
+  ;; (setq vertico-posframe-size-function '+vertico/posframe-get-fixed-size)
+  )
 
 
 (provide 'init-minibuffer)
