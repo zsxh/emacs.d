@@ -29,6 +29,18 @@
   (popper-mode +1)
   (popper-echo-mode +1))                ; For echo area hints
 
+;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
+
+(use-package persp-mode
+  :commands (persp-switch persp-add-new persp-switch-to-buffer)
+  :custom
+  (persp-auto-save-persps-to-their-file nil)
+  (persp-auto-save-opt 0)
+  (persp-auto-resume-time 0)
+  (persp-init-frame-behaviour t)
+  :config
+  (persp-mode t))
+
 
 (provide 'init-window)
 

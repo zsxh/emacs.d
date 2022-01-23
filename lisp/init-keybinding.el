@@ -208,13 +208,12 @@
    ;; "tt"  '(tiny-expand :which-key "tiny-expand")
    "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    "t=" '(er/expand-region :which-key "expand-region")
-   ;; View
-   "v" '(nil :which-key "view")
-   ;; TODO: replace ivy view
-   "vp" '(ivy-push-view :which-key "ivy-push-view")
-   "vo" '(ivy-pop-view :which-key "ivy-pop-view")
-   "vu" '((lambda () (interactive) (ivy-push-view 1)) :which-key "ivy-update-view")
-   "vv" '(ivy-switch-view :which-key "ivy-switch-view")
+   ;; View/Workspace/Layout
+   "v" '(nil :which-key "workspace")
+   "va" '(persp-add-buffer :which-key "persp-add-buffer")
+   "vb" '(persp-switch-to-buffer :which-key "persp-switch-to-buffer")
+   "vk" '(persp-kill :which-key "persp-kill")
+   "vv" '(persp-switch :which-key "persp-switch")
    ;; Window
    "w" '(nil :which-key "window")
    "w/" '(split-window-right :which-key "split-right")

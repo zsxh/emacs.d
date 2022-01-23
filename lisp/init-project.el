@@ -162,15 +162,6 @@ else ask the user for a directory in which to look for the project."
   (dired dir))
 
 
-;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
-
-;; TODO: workspace layout
-;; https://www.youtube.com/watch?v=HRQhYAz3M-U
-;; https://github.com/hlissner/doom-emacs/blob/master/modules/ui/workspaces/autoload/workspaces.el
-(use-package persp-mode
-  :defer t)
-
-
 (provide 'init-project)
 
 ;;; init-project.el ends here

@@ -1,9 +1,9 @@
 #+STARTUP: showall
-Updated: <2022-01-14>
+Updated: <2022-01-23>
 
 * Enviroment
-  - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.31, cairo version 1.17.4) of 2022-01-14
-  - emacs-repository-version: 10cf00648ba323e9d928e4b0430b075c33c196c1
+  - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.31, cairo version 1.17.4) of 2022-01-23
+  - emacs-repository-version: 1319d108dae70a8349110acd0f88d22436a9a70c
   - system-configuration-options: ~--with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --with-mailutils~
   - OS: Manjaro 21.2.1 Qonos
   - Shell: zsh 5.8
@@ -83,8 +83,8 @@ Updated: <2022-01-14>
     - =emacs-libvterm=
       emacs libvterm intergration, great terminal in emacs, better than ansi-term
       [[https://github.com/akermu/emacs-libvterm][Installing Emacs-libvterm]]
-  - =ivy=
-      completion for emacs command
+  - =vertico, orderless, marginalia, consult=
+      minibuffer completion
   - =programming=
     - =eglot/lsp-mode=
       language server support: code completion, reformat, find definitions, etc.
