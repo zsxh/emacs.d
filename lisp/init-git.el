@@ -34,7 +34,6 @@
     (evil-collection-define-key nil 'magit-todos-item-section-map
       "j" nil)))
 
-;; FIXME: gitlab instances via http
 (use-package forge
   :defer t
   :custom

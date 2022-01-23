@@ -217,11 +217,6 @@
 (use-package memory-usage
   :commands memory-usage)
 
-;; TODO: View Large Files
-;; https://github.com/m00natic/vlfi
-(use-package vlf
-  :defer t)
-
 (use-package netease-cloud-music
   :if (executable-find "mplayer")
   :load-path (lambda () (expand-file-name "submodules/netease-cloud-music" user-emacs-directory))

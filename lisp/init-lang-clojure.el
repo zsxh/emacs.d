@@ -51,12 +51,6 @@
   :custom
   (lsp-clojure-workspace-dir (expand-file-name (locate-user-emacs-file "cache/clojure-workspace/"))))
 
-;; TODO: clojure formatter
-;; https://github.com/DogLooksGood/zprint.el
-;; https://github.com/kkinnear/zprint
-;; (use-package zprint
-;;   :defer t)
-
 ;; TODO: clojurescript debugger
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/debugging-clojure-script/
 

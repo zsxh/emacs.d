@@ -39,7 +39,6 @@
 
 ;;;;;;;;;;;;;; *Buffer* ;;;;;;;;;;;;;;
 
-;; TODO: support submodules
 (use-package ibuffer-vc
   :bind (("C-x C-b" . ibuffer))
   :hook ((ibuffer . (lambda ()

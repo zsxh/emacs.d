@@ -367,9 +367,6 @@ at the first function to return non-nil.")
              org-sidebar
              org-sidebar-toggle))
 
-;; TODO: weblorg
-;; https://emacs.love/weblorg/
-
 ;; Ory Static Blog
 (use-package org-static-blog
   :commands (org-static-blog-mode
