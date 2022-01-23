@@ -17,14 +17,23 @@
                ("C-k" . vertico-previous)
                ("C-j" . vertico-next)
                ("~" . +vertico/insert-tilde)
-               ;; ;; TODO: improve find file root path and protocols
                ("/" . +vertico/insert-slash)
                ([backspace] . vertico-directory-delete-char)
                ([escape] . abort-recursive-edit)))
   :custom
   (vertico-resize nil)
   (with-eval-after-load 'evil
-    (evil-set-initial-state 'vertico-mode 'emacs))
+    (dolist (mode '(vertico-mode
+                    vertico-buffer-mode
+                    vertico-flat-mode
+                    vertico-grid-mode
+                    vertico-indexed-mode
+                    vertico-mouse-mode
+                    vertico-multiform-mode
+                    vertico-reverse-mode
+                    vertico-unobtrusive-mode
+                    vertico-posframe-mode))
+      (evil-set-initial-state mode 'emacs)))
   :config
   (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless))))
   (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic partial-completion emacs22))))
@@ -64,7 +73,7 @@
 (use-package marginalia
   :hook (after-init . marginalia-mode)
   :custom
-  (marginalia-align 'center))
+  (marginalia-align 'left))
 
 ;; similar to Swiper
 (use-package consult
@@ -82,7 +91,11 @@
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 
 (use-package vertico-posframe
-  :hook (vertico-mode . vertico-posframe-mode)
+  ;; :hook (vertico-mode . vertico-posframe-mode)
+  :defer t
+  :custom
+  (vertico-posframe-min-height 11)
+  (vertico-posframe-min-width (min 200 (round (* 0.62 (frame-width)))))
   :config
   (setq vertico-posframe-border-width 5)
 
@@ -93,16 +106,7 @@
           (/ (- (plist-get info :parent-frame-height)
                 (plist-get info :posframe-height))
              3)))
-  (setq vertico-posframe-poshandler #'+vertico/custom-posframe-poshandler)
-
-  ;; (defun +vertico/posframe-get-fixed-size ()
-  ;;   "Set the vertico-posframe size according to the current frame."
-  ;;   (let ((height (or vertico-posframe-height 11))
-  ;;         (width (min (or vertico-posframe-width 200) (round (* 0.62 (frame-width))))))
-  ;;     (list :height height :width width :min-height height :min-width width)))
-
-  ;; (setq vertico-posframe-size-function '+vertico/posframe-get-fixed-size)
-  )
+  (setq vertico-posframe-poshandler #'+vertico/custom-posframe-poshandler))
 
 
 (provide 'init-minibuffer)
