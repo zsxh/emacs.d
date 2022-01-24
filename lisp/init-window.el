@@ -32,7 +32,11 @@
 ;;;;;;;;;;;;;; Layout ;;;;;;;;;;;;;;
 
 (use-package persp-mode
-  :commands (persp-switch persp-add-new persp-switch-to-buffer)
+  :commands (persp-switch
+             persp-add-new
+             persp-switch-to-buffer
+             get-current-persp
+             persp-contain-buffer-p)
   :custom
   (persp-auto-save-persps-to-their-file nil)
   (persp-auto-save-opt 0)

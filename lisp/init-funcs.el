@@ -313,6 +313,8 @@ Version 2017-01-27"
               (not (tramp-tramp-file-p default-directory)))
           (+project/root))
          (call-interactively 'project-switch-to-buffer))
+        ((get-current-persp)
+         (call-interactively 'persp-switch-to-buffer))
         (t
          (consult-buffer))))
 

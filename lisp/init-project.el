@@ -144,6 +144,8 @@ else ask the user for a directory in which to look for the project."
              (not (string-prefix-p "*cider" name))
              (not (string-prefix-p "*Python" name)))
         (string-match-p "magit.*:" name)
+        (when-let ((cur-persp (get-current-persp)))
+          (not (persp-contain-buffer-p buffer cur-persp)))
         (equal (buffer-name (current-buffer)) name))))
 
 (defun +project/project-buffer-filter-function (buffers)
