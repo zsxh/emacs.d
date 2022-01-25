@@ -78,7 +78,7 @@
 ;; similar to Swiper
 (use-package consult
   :bind ("C-s" . consult-line)
-  :commands (consult-buffer consult-imenu consult-line consult-grep consult-ripgrep)
+  :commands (consult-buffer consult-imenu consult-line consult-grep consult-ripgrep consult--read)
   :config
   (setq consult-preview-key nil))
 

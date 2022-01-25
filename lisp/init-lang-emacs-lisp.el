@@ -72,30 +72,7 @@
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
   (setq lispy-eval-display-style 'overlay)
-  (setq lispy-use-sly t)
-
-  (defun lispy-hash-a (orig-fn &rest args)
-    (if (and (eq major-mode 'clojurescript-mode)
-             (lispy-looking-back "\\[:\\sw+"))
-        (insert "#")
-      (apply orig-fn args)))
-  (advice-add 'lispy-hash :around #'lispy-hash-a)
-
-  (defun lispy-eval-a (orig-fn &rest args)
-    (if (eq major-mode 'clojurescript-mode)
-        (cider-eval-last-sexp)
-      (apply orig-fn args)))
-  (advice-add 'lispy-eval :around #'lispy-eval-a)
-
-  ;; FIXME: cider eval issue, https://github.com/abo-abo/lispy/issues/609
-  (with-eval-after-load 'clojure-mode
-    (require 'le-clojure)
-    (cl-delete-if (lambda (dep) (string-equal "nrepl" (car dep))) lispy-cider-jack-in-dependencies)
-    (setq cider-jack-in-dependencies
-          (delete-dups
-           (append
-            cider-jack-in-dependencies
-            lispy-cider-jack-in-dependencies)))))
+  (setq lispy-use-sly t))
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros

@@ -57,6 +57,8 @@
           ) . electric-pair-local-mode)
   :bind ("C-j" . newline-and-indent))
 
+;; TODO: try `puni' https://github.com/AmaiKinono/puni
+
 (use-package awesome-pair
   :load-path "~/.emacs.d/submodules/awesome-pair"
   :bind ((:map awesome-pair-mode-map
