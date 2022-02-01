@@ -466,7 +466,8 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
                           "recentf"
                           "undo-tree-hist"
                           "url"
-                          "COMMIT_EDITMSG\\'")))
+                          "COMMIT_EDITMSG\\'"))
+  (recentf-mode t))
 
 
 ;;;;;;;;;;;;;; Change priority of minor-mode keymaps ;;;;;;;;;;;;;;

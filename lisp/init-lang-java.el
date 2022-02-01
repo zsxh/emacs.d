@@ -46,12 +46,13 @@
         ;; JAVA Tooling JDK, lsp server require java 11+
         ;; https://github.com/redhat-developer/vscode-java/#java-tooling-jdk
         lsp-java-java-path "~/.jenv/versions/11/bin/java"
+        ;; lsp-java-java-path "~/.jenv/versions/17/bin/java"
         ;; Project JDKs
         ;; https://github.com/redhat-developer/vscode-java/#project-jdks
         ;; https://github.com/redhat-developer/vscode-java/issues/2151
         lsp-java-configuration-runtimes '[(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-21.3.0")
-                                          (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-21.3.0" :default t)])
+                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-22.0.0.2")
+                                          (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-22.0.0.2" :default t)])
 
   ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
   (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar")))

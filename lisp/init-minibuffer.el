@@ -38,6 +38,8 @@
   (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless))))
   (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic partial-completion emacs22))))
 
+  (require 'vertico-directory)
+
   (defun +vertico/directory-home ()
     (when (and (> (point) (minibuffer-prompt-end))
                (eq (char-before) ?/)
@@ -78,9 +80,18 @@
 ;; similar to Swiper
 (use-package consult
   :bind ("C-s" . consult-line)
-  :commands (consult-buffer consult-imenu consult-line consult-grep consult-ripgrep consult--read)
+  :commands (consult-buffer consult-imenu consult-line consult-grep consult-ripgrep consult--read consult-locate)
   :config
-  (setq consult-preview-key nil))
+  (setq consult-preview-key 'any
+        consult-async-min-input 2)
+  ;; NOTE: https://www.reddit.com/r/emacs/comments/qk8akt/lsp_mode_and_consults_recent_files/
+  (with-eval-after-load 'lsp-mode
+    (defun advices/inhibit-if-non-essential (oldfun &rest args)
+      "An around advice that inhibit OLDFUN if `non-essential' is non-nil."
+      (unless non-essential
+        (apply oldfun args)))
+    (advice-add 'lsp-deferred :around #'advices/inhibit-if-non-essential)
+    (advice-add 'lsp :around #'advices/inhibit-if-non-essential)))
 
 ;; minibuffer actions and occur/export features
 ;; TODO: https://karthinks.com/software/fifteen-ways-to-use-embark/
