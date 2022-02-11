@@ -175,7 +175,6 @@
    "m" '(nil :which-key "major")
    ;; Navigator
    "n" '(nil :which-key "navigator")
-   "nd" '(helm-dash-at-point :which-key "helm-dash-at-point")
    "nm" '(consult-imenu :which-key "imenu")
    "ns" '(nil :which-key "symbol-overlay")
    "nsc" '(symbol-overlay-remove-all :which-key "symbol-overlay-remove-all")

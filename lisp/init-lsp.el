@@ -260,6 +260,11 @@ server getting expensively restarted when reverting buffers."
        "L" '(lsp-avy-lens :which-key "Click lens using avy")
        "R" '(lsp-rename :which-key "rename"))))))
 
+;; TODO: `consult-lsp' https://github.com/gagbo/consult-lsp
+;; (use-package consult-lsp
+;;   :defer t)
+
+
 ;;;;;;;;;;;;;; Eglot ;;;;;;;;;;;;;;
 
 (use-package eglot

@@ -46,7 +46,7 @@ if no project root found, use current directory instead."
   :bind ((:map vterm-mode-map
                ("M-u" . ace-window)
                ("M-`" . +vterm/send-tmux-prefix-key)
-               ("C-s" . +vterm/swiper)
+               ("C-s" . +vterm/search-line)
                ("<f9>" . +vterm/toggle-here)
                ("<f10>" . +vterm/toggle-other-window)
                ("<f11>" . toggle-frame-fullscreen))
@@ -167,11 +167,11 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
       (evil-insert-state))
     (vterm-send-key "`" nil t))
 
-  (defun +vterm/swiper ()
+  (defun +vterm/search-line ()
     (interactive)
     (vterm-copy-mode)
     (message "vterm-copy-mode activated")
-    (swiper)))
+    (consult-line)))
 
 (use-package term
   :ensure nil

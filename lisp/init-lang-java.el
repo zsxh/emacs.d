@@ -29,7 +29,6 @@
       (setq lsp-java-format-settings-url java-format-style-file
             lsp-java-format-settings-profile "GoogleStyle")))
   :config
-  (require 'helm nil t)
   (setq lsp-java-completion-overwrite nil
         lsp-java-folding-range-enabled nil
         lsp-java-progress-reports-enabled nil

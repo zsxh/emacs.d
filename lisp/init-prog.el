@@ -21,20 +21,6 @@
 (use-package zeal-at-point
   :commands zeal-at-point)
 
-;; require `zeal' or `dash' docsets
-;; helm-dash
-(use-package helm-dash
-  :commands (helm-dash helm-dash-at-point)
-  :bind ((:map helm-map
-               ("C-j" . helm-next-line)
-               ("C-k" . helm-previous-line)))
-  :config
-  ;; (setq helm-dash-browser-func 'eww)
-  (setq helm-dash-browser-func 'eaf-open-dash)
-  (setq helm-dash-docsets-path (expand-file-name "~/.local/share/Zeal/Zeal/docsets"))
-  (setq helm-dash-common-docsets (dash-docs-installed-docsets))
-  (setq helm-dash-enable-debugging nil))
-
 (use-package devdocs-browser
   :commands (devdocs-browser-install-doc
              devdocs-browser-open
