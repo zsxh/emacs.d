@@ -157,6 +157,8 @@
   ;; major mode keybindings
   (+funcs/major-mode-leader-keys
    org-mode-map
+   ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Help-Echo.html
+   "." '(display-local-help :which-key "display-local-help")
    "a" '(org-agenda :which-key "agenda")
    "b" '(nil :which-key "block")
    "bb" '(playonline :which-key "play-code-with-online-playground")

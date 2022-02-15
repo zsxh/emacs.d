@@ -75,7 +75,20 @@
 (use-package marginalia
   :hook (after-init . marginalia-mode)
   :custom
-  (marginalia-align 'left))
+  (marginalia-align 'left)
+  :config
+  ;; Format TIME as an absolute age
+  (define-advice marginalia--time-absolute
+      (:override (orig-fun &rest args) advice)
+    (let ((system-time-locale "C")
+          (time (nth 1 args)))
+      (format-time-string
+       ;; decoded-time-year is only available on Emacs 27, use nth 5 here.
+       (if (> (nth 5 (decode-time (current-time)))
+              (nth 5 (decode-time time)))
+           " %Y-%m-%d"
+         "%m-%d %H:%M")
+       time))))
 
 ;; similar to Swiper
 (use-package consult
