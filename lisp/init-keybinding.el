@@ -213,6 +213,7 @@
    "vb" '(persp-switch-to-buffer :which-key "persp-switch-to-buffer")
    "vk" '(persp-kill :which-key "persp-kill")
    "vv" '(persp-switch :which-key "persp-switch")
+   "vV" '(+persp/add-new-with-visible-buffers :which-key "my-persp-switch-init-view")
    ;; Window
    "w" '(nil :which-key "window")
    "w/" '(split-window-right :which-key "split-right")

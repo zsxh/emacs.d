@@ -43,7 +43,16 @@
   (persp-auto-resume-time 0)
   (persp-init-frame-behaviour t)
   :config
-  (persp-mode t))
+  (persp-mode t)
+  (defun +persp/add-new-with-visible-buffers (name)
+    "Create new perspective and add all visible buffers into it."
+    (interactive "sA name for the new perspective: ")
+    (let ((p (persp-add-new name)))
+      (dolist (win (window-list))
+        (persp-add-buffer (window-buffer win) p))
+      (setf (persp-window-conf p)
+            (funcall persp-window-state-get-function (selected-frame)))
+      (persp-switch name))))
 
 
 (provide 'init-window)
