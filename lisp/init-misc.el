@@ -274,15 +274,27 @@
     (define-key telega-msg-button-map (kbd "l") nil))
 
   (with-eval-after-load 'telega-chat
+
     (define-key telega-chat-button-map (kbd "h") nil)
     (with-eval-after-load 'evil
       (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
       (define-key telega-msg-button-map (kbd "SPC") nil))
+
     (when (functionp 'writeroom-mode)
       (defun +telega/maybe-writeroom ()
         (when (= 1 (length (window-list)))
           (writeroom-mode)))
-      (add-hook 'telega-chat-mode-hook #'+telega/maybe-writeroom)))
+      (add-hook 'telega-chat-mode-hook #'+telega/maybe-writeroom))
+
+    (defun my-telega-chat-mode ()
+      (set (make-local-variable 'company-backends)
+           (append (list telega-emoji-company-backend
+                         'telega-company-username
+                         'telega-company-hashtag)
+                   (when (telega-chat-bot-p telega-chatbuf--chat)
+                     '(telega-company-botcmd))))
+      (company-mode 1))
+    (add-hook 'telega-chat-mode-hook 'my-telega-chat-mode))
 
   (with-eval-after-load 'telega-ins
     ;; customize date format
