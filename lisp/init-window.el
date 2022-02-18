@@ -36,7 +36,8 @@
              persp-add-new
              persp-switch-to-buffer
              get-current-persp
-             persp-contain-buffer-p)
+             persp-contain-buffer-p
+             +persp/add-new-with-visible-buffers)
   :custom
   (persp-auto-save-persps-to-their-file nil)
   (persp-auto-save-opt 0)

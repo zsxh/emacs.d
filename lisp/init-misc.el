@@ -44,6 +44,8 @@
   :commands (youdao-dictionary-search-at-point+
              youdao-dictionary-search-at-point-tooltip
              youdao-dictionary-play-voice-at-point)
+  :custom
+  (youdao-dictionary-search-history-file (locate-user-emacs-file "cache/youdao-history"))
   :config
   (setq url-automatic-caching t)
   (with-eval-after-load 'evil
