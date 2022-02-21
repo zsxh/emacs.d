@@ -63,7 +63,14 @@
   (setq prescient-sort-length-enable nil))
 
 (use-package yasnippet
-  :hook ((prog-mode nxml-mode) . yas-minor-mode)
+  :init
+  (defun +yasnippet/enable-yas-minor-mode ()
+    (cond
+     ((eq major-mode 'lisp-interaction-mode)
+      (run-with-idle-timer 2 nil (lambda () (yas-minor-mode 1))))
+     (t
+      (yas-minor-mode 1))))
+  :hook ((prog-mode nxml-mode) . +yasnippet/enable-yas-minor-mode)
   :config
   (use-package yasnippet-snippets)
   (+funcs/major-mode-leader-keys snippet-mode-map
