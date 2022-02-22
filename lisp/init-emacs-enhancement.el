@@ -27,11 +27,6 @@
          ("C-h k" . helpful-key)
          ("C-h v" . helpful-variable))
   :config
-  ;; FIXME: read-with-symbol-position and read-symbol-positions-list were removed in emacs 29
-  ;; https://github.com/Wilfred/elisp-refs/issues/35
-  (when (version<= "29" emacs-version)
-    (defvar read-symbol-positions-list nil))
-
   (with-eval-after-load 'evil
     (evil-define-key 'normal helpful-mode-map
       "gd" 'evil-goto-definition
