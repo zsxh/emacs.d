@@ -38,6 +38,7 @@
         lsp-debounce-full-sync-notifications-interval 2.0
         lsp-diagnostics-provider :flycheck
         lsp-log-io nil
+        lsp-eldoc-enable-hover t
         lsp-eldoc-render-all nil
         ;; TODO: keybindings for signature show up
         lsp-signature-render-documentation nil
@@ -71,6 +72,24 @@
     :ensure nil
     :config
     (setq lsp-lens-debounce-interval 1.5))
+
+  ;; Enable code lens
+  ;; (add-hook 'lsp-configure-hook
+  ;;           (lambda ()
+  ;;             (cond
+  ;;              ((eq major-mode 'java-mode)
+  ;;               (progn
+  ;;                 (lsp-lens-mode)
+  ;;                 (lsp-java-lens-mode)))
+  ;;              ((eq major-mode 'rust-mode)
+  ;;               (lsp-lens-mode))
+  ;;              (t nil))))
+  (defun +lsp/enable-or-avy-lens ()
+    "Manually toggle code lens in specific buffer."
+    (interactive)
+    (if lsp-lens-mode
+        (lsp-avy-lens)
+      (lsp-lens-mode)))
 
   (use-package lsp-completion
     :ensure nil
@@ -257,7 +276,7 @@ server getting expensively restarted when reverting buffers."
        "gr" '(lsp-ui-peek-find-references :which-key "find-references")
        "gs" '(lsp-ui-find-workspace-symbol :which-key "find-workspace-symbol")
        "l" '(nil :which-key "list")
-       "L" '(lsp-avy-lens :which-key "Click lens using avy")
+       "L" '(+lsp/enable-or-avy-lens :which-key "Enable/Avy lens")
        "R" '(lsp-rename :which-key "rename"))))))
 
 ;; TODO: `consult-lsp' https://github.com/gagbo/consult-lsp

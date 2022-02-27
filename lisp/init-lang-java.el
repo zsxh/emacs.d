@@ -83,11 +83,6 @@
                          auto-save-idle 3)
              (lsp-deferred))))
     (add-hook 'java-mode-hook f)
-    (add-hook 'lsp-configure-hook
-              (lambda ()
-                (when (eq major-mode 'java-mode)
-                  (lsp-lens-mode)
-                  (lsp-java-lens-mode))))
     (funcall f)))
 
 (add-hook-run-once 'java-mode-hook '+java/setup)

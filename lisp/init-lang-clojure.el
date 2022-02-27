@@ -50,6 +50,12 @@
 ;; TODO: clojurescript debugger
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/debugging-clojure-script/
 
+(use-package sayid
+  :after cider
+  :config
+  ;; FIXME: temporary fixed clojure-cli dependencies
+  (add-to-list 'cider-jack-in-dependencies `("com.billpiel/sayid" ,sayid-injected-plugin-version)))
+
 
 (provide 'init-lang-clojure)
 
