@@ -410,6 +410,7 @@ at the first function to return non-nil.")
 ;; `org-roam-node-insert', `org-roam-node-find', `org-roam-capture', `org-roam-buffer-toggle'
 ;; TODO: https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/
 ;; TODO: subdirectories https://www.reddit.com/r/emacs/comments/s8mwiw/orgroam_a_way_to_use_subdirectories/
+;; TODO: https://jethrokuan.github.io/org-roam-guide/
 (use-package org-roam
   :defer t
   :commands (org-roam-db-autosync-mode org-roam-db-sync)

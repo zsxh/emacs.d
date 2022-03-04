@@ -1,16 +1,16 @@
 #+STARTUP: showall
-Updated: <2022-01-23>
+Updated: <2022-03-04>
 
 * Enviroment
-  - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.31, cairo version 1.17.4) of 2022-01-23
-  - emacs-repository-version: 1319d108dae70a8349110acd0f88d22436a9a70c
-  - system-configuration-options: ~--with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --with-mailutils~
-  - OS: Manjaro 21.2.1 Qonos
-  - Shell: zsh 5.8
-  - Kernel: 5.15.12-1-MANJARO
+  - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.31, cairo version 1.17.4) of 2022-03-04
+  - emacs-repository-version: 62d97d
+  - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars~
+  - OS: Manjaro 21.2.4 Qonos
+  - Shell: zsh 5.8.1
+  - Kernel: 5.16.11-2-MANJARO
   - DE: Deepin 20.2.2
   - WM: KWin
-  - GCC version: 11.1.0 with libgccjit
+  - GCC version: 11.2.0 with libgccjit
 
 * TODOs
   - [ ] treemacs, lsp-treemacs
