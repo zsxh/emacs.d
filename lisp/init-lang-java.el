@@ -61,7 +61,7 @@
                               "-XX:GCTimeRatio=4"
                               "-XX:AdaptiveSizePolicyWeight=90"
                               "-Dsun.zip.disableMemoryMapping=true"
-                              "-Xmx4G"
+                              "-Xmx6G"
                               "-Xms200m"
                               ;; "-XX:+UnlockExperimentalVMOptions"
                               ;; "-XX:+UseZGC"

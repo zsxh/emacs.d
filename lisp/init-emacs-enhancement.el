@@ -509,12 +509,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   (setq transient-display-buffer-action '((display-buffer-below-selected)))
   (define-key transient-map (kbd "<escape>") 'transient-quit-one))
 
-;; https://github.com/yanghaoxie/transient-posframe
-(use-package transient-posframe
-  :after transient
-  :config
-  (transient-posframe-mode))
-
 ;;;;;;;;;;;;;; Garbage-Collection ;;;;;;;;;;;;;;
 ;; Adopt a sneaky garbage collection strategy of waiting until idle time to
 ;; collect; staving off the collector while the user is working.
