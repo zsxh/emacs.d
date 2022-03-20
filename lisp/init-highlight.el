@@ -114,7 +114,9 @@
 
 ;; highlight comment tags like TODO, BUG, FIXME, etc.
 (use-package hl-todo
-  :hook (prog-mode . hl-todo-mode))
+  :hook (prog-mode . hl-todo-mode)
+  :config
+  (push '("WIP" . "#7cb8bb") hl-todo-keyword-faces))
 
 ;; flash the line the cursor is on
 (use-package pulse

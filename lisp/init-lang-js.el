@@ -10,47 +10,41 @@
 
 ;;; Code:
 
-(require 'init-lsp)
+(require 'init-eglot)
 
 (use-package nvm
   :after js)
 
-;;    1) lsp-mode auto install out-of-box(`lsp-package-ensure')
-;; OR 2) use `lsp-install-server' install server
-;; OR 3) npm install -g javascript-typescript-langserver
+;; TODO: javascript-typescript-langserver
 (use-package js
   :ensure nil
   :bind ((:map js-mode-map
                ("/" . sgml-slash)))
-  :hook (js-mode . +js/lsp)
+  :hook (js-mode . +js/eglot-setup)
   ;; https://www.emacswiki.org/emacs/RegularExpression
   ;; use `rx' to generate emacs regular expression
   ;; :mode ("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode) ; enable gloabl-so-long-mode, that's all
   :config
   (require 'sgml-mode)
   (setq js-indent-level 2)
-  (+language-server/set-common-leader-keys js-mode-map)
+  (+eglot/set-leader-keys js-mode-map)
 
-  (require 'lsp-javascript)
-  (defun +js/lsp ()
+  (defun +js/eglot-setup ()
     ;; This fix beginning-of-defun raise exception problem
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)
     (unless (member major-mode '(json-mode ein:ipynb-mode))
-      (lsp-deferred))))
+      (eglot-ensure))))
 
-;;    1) lsp-mode auto install out-of-box(`lsp-package-ensure')
-;; OR 2) use `lsp-install-server' install server
-;; OR 3) npm install -g javascript-typescript-langserver
 (use-package typescript-mode
   :defer t
-  :hook (typescript-mode . lsp-deferred)
+  :hook (typescript-mode . eglot-ensure)
   :config
-  (+language-server/set-common-leader-keys typescript-mode-map))
+  (+eglot/set-leader-keys typescript-mode-map))
 
-;; npm install -g vue-language-server
+;; TODO: vue-language-server
 (use-package vue-mode
   :commands vue-mode
-  :hook (vue-mode . lsp)
+  :hook (vue-mode . eglot-ensure)
   :bind ((:map vue-mode-map
                ("C-c C-l" . vue-mode-reparse)))
   :config
@@ -60,9 +54,6 @@
   ;;   'semi': ['error', 'always'],
   ;;   'quotes': [2, 'double', { 'avoidEscape': true }]
   ;; }
-  (with-eval-after-load 'lsp-vetur
-    (setq lsp-vetur-format-default-formatter-js "prettier-eslint"))
-
   (defun eslint/binary ()
     (or
      ;; Try to find bin in node_modules (via 'npm install prettier-eslint-cli')

@@ -10,122 +10,57 @@
 
 ;;; Code:
 
-(require 'init-lsp)
+(require 'init-eglot)
 
-(use-package lsp-java
-  ;; :quelpa (lsp-java :fetcher github :repo "emacs-lsp/lsp-java")
-  :defer t
-  :preface
-  (setq lsp-java-workspace-dir (expand-file-name (locate-user-emacs-file "cache/java-workspace/"))
-        lsp-java-inhibit-message t
-        ;; https://github.com/dgileadi/vscode-java-decompiler
-        lsp-java-content-provider-preferred "fernflower"
-        lsp-java-jdt-download-url "https://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz")
+(defun +java/eglot-ensure ()
+  (require 'eglot)
 
-  (let ((java-format-style-file (expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))))
-    (when (file-exists-p java-format-style-file)
-      ;; https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
-      ;; I prefer {join_wrapped_lines : false}
-      (setq lsp-java-format-settings-url java-format-style-file
-            lsp-java-format-settings-profile "GoogleStyle")))
-  :config
-  (setq lsp-java-completion-overwrite nil
-        lsp-java-folding-range-enabled nil
-        lsp-java-progress-reports-enabled nil
-        lsp-java-format-comments-enabled nil
-        lsp-java-signature-help-enabled nil
-        ;; Set a small num to improve performance
-        lsp-java-completion-max-results 30
-        lsp-java-selection-enabled nil
-        lsp-java-selection-range-enabled nil
-        ;; NOTE: https://github.com/redhat-developer/vscode-java/issues/406#issuecomment-356303715
-        ;; > We enabled it by default so that workspace-wide errors can be reported (eg. removing a public method in one class would cause compilation errors in other files consuming that method).
-        ;; for large workspaces, it may make sense to be able to disable autobuild if it negatively impacts performance.
-        lsp-java-autobuild-enabled nil
-        ;; JAVA Tooling JDK, lsp server require java 11+
-        ;; https://github.com/redhat-developer/vscode-java/#java-tooling-jdk
-        lsp-java-java-path "~/.jenv/versions/11/bin/java"
-        ;; lsp-java-java-path "~/.jenv/versions/17/bin/java"
-        ;; Project JDKs
-        ;; https://github.com/redhat-developer/vscode-java/#project-jdks
-        ;; https://github.com/redhat-developer/vscode-java/issues/2151
-        lsp-java-configuration-runtimes '[(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-22.0.0.2")
-                                          (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-22.0.0.2" :default t)])
+  ;; https://github.com/joaotavora/eglot/discussions/868
+  (add-to-list 'eglot-server-programs
+               `(java-mode "jdtls"
+                           "-configuration" ,(expand-file-name "cache/language-server/java/jdtls/config_linux" user-emacs-directory)
+                           "-data" ,(expand-file-name "cache/java-workspace" user-emacs-directory)
+                           ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))))
 
-  ;; check this out, https://github.com/emacs-lsp/lsp-java/issues/54#issuecomment-553995773
-  (let ((lombok-jar (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar")))
-    (when (file-exists-p lombok-jar)
-      ;; current VSCode default, https://github.com/redhat-developer/vscode-java/blob/master/package.json#L156
-      (setq lsp-java-vmargs `("-XX:+UseParallelGC"
-                              "-XX:GCTimeRatio=4"
-                              "-XX:AdaptiveSizePolicyWeight=90"
-                              "-Dsun.zip.disableMemoryMapping=true"
-                              "-Xmx6G"
-                              "-Xms200m"
-                              ;; "-XX:+UnlockExperimentalVMOptions"
-                              ;; "-XX:+UseZGC"
-                              ;; ,(concat "-DproxyHost=" personal-proxy-http-host)
-                              ;; ,(format "-DproxyPort=%s" personal-proxy-http-port)
-                              ,(concat "-javaagent:" lombok-jar)))))
-  (setq global-mode-string (delete (list '(t lsp-java-progress-string)) global-mode-string)))
+  (puthash 'java-mode
+           `(:settings
+             (:java
+              (:configuration
+               (:runtime [(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
+                          (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-22.0.0.2")
+                          (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-22.0.0.2" :default t)])
+               :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
+                                        :profile "GoogleStyle"))
+               ;; NOTE: https://github.com/redhat-developer/vscode-java/issues/406#issuecomment-356303715
+               ;; > We enabled it by default so that workspace-wide errors can be reported (eg. removing a public method in one class would cause compilation errors in other files consuming that method).
+               ;; for large workspaces, it may make sense to be able to disable autobuild if it negatively impacts performance.
+               :autobuild (:enabled t)
+               ;; https://github.com/dgileadi/vscode-java-decompiler
+               :contentProvider (:preferred "fernflower")))
+             ;; WIP: support non standard LSP `java/classFileContents', `Location' items that have a `jdt://...' uri
+             ;; https://github.com/eclipse/eclipse.jdt.ls/issues/1384
+             ;; nvim impl demo: https://github.com/mfussenegger/dotfiles/commit/3cddf73cd43120da2655e2df6d79bdfd06697f0e
+             ;; lsp-java impl demo: https://github.com/emacs-lsp/lsp-java/blob/master/lsp-java.el
+             :extendedClientCapabilities (:classFileContentsSupport t)
+             ;; bundles: decompilers, etc.
+             ;; https://github.com/dgileadi/dg.jdt.ls.decompiler
+             :bundles ,(let ((bundles-dir (expand-file-name (locate-user-emacs-file "cache/language-server/java/bundles" user-emacs-directory)))
+                             jdtls-bundles)
+                         (->> (when (file-directory-p bundles-dir)
+                                (directory-files bundles-dir t "\\.jar$"))
+                              (append jdtls-bundles)
+                              (apply #'vector))))
+           +eglot/initialization-options-map)
 
-(defun +java/setup ()
-  (require 'lsp-java)
-  (require 'lsp-java-boot)
-  ;; TODO: project specified/dir-locals `lsp-java-boot-enabled'
-  ;; (setq lsp-java-boot-enabled nil)
+  (+eglot/set-leader-keys)
+  (eglot-ensure)
+  (add-hook 'java-mode-hook #'eglot-ensure))
 
-  (let ((f (lambda ()
-             (setq-local lsp-completion-show-detail nil
-                         lsp-completion-no-cache nil
-                         company-minimum-prefix-length 2
-                         auto-save-idle 3)
-             (lsp-deferred))))
-    (add-hook 'java-mode-hook f)
-    (funcall f)))
+(add-hook-run-once 'java-mode-hook #'+java/eglot-ensure)
 
-(add-hook-run-once 'java-mode-hook '+java/setup)
 
-(with-eval-after-load 'conf-mode
-  (require 'lsp-java-boot)
-  (add-hook 'conf-javaprop-mode-hook 'lsp-deferred))
-
-(with-eval-after-load 'yaml-mode
-  (require 'lsp-java-boot)
-  (add-hook 'yaml-mode-hook 'lsp-deferred))
-
-;; NOTE: debug template args `vmArgs', `noDebug'...
+;; TODO: debug template args `vmArgs', `noDebug'...
 ;; git clone https://github.com/microsoft/java-debug code base to checkout extra debug args, like `vmArgs'
-(use-package dap-java
-  :after lsp-java
-  :ensure lsp-java
-  :config
-  (require 'dap-java)
-  (setq dap-java-test-runner (expand-file-name
-                              (concat lsp-java-server-install-dir
-                                      "test-runner/junit-platform-console-standalone.jar"))
-        dap-java-default-debug-port 5005))
-
-(with-eval-after-load 'cc-mode
-  ;; FIXME: when I put these codes in +java/setup, i have to toggle emacs/evil mode to activate keybindings, i think it's a bug of evil mode
-  (+language-server/set-common-leader-keys java-mode-map)
-
-  (+funcs/major-mode-leader-keys
-   java-mode-map
-   "B" '(lsp-java-build-project :which-key "lsp-java-build-project")
-   "dr" '(dap-java-debug :which-key "dap-java-debug")
-   "dR" '(dap-debug :which-key "dap-debug")
-   "dt" '(dap-java-debug-test-method :which-key "debug-junit-test-method")
-   "dT" '(dap-java-debug-test-class :which-key "debug-junit-class")
-   "i" '(nil :which-key "implement")
-   "ic" '(lsp-java-add-import :which-key "import-class")
-   "im" '(lsp-java-add-unimplemented-methods :which-key "add-unimplemented-methods")
-   "ig" '(lsp-java-generate-getters-and-setters :which-key "generate-getters-and-setters")
-   "ld" '(lsp-treemacs-java-deps-list :which-key "lsp-treemacs-java-deps-list")
-   "r" '(nil :which-key "run")
-   "rt" '(dap-java-run-test-method :which-key "run-junit-test-method")
-   "rT" '(dap-java-run-test-class :which-key "run-junit-class")))
 
 (add-hook-run-once
  'pom-xml-mode-hook

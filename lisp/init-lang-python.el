@@ -10,25 +10,15 @@
 
 ;;; Code:
 
-(require 'init-lsp)
+(require 'init-eglot)
 
+;; TODO: pyright language server
 (use-package python
   :ensure nil
-  :defer t
-  :hook (python-mode . lsp-deferred)
-  :custom (python-indent-offset 2))
-
-;; https://github.com/emacs-lsp/lsp-pyright
-;; Install server:
-;;    1) lsp-mode auto install out-of-box(`lsp-package-ensure')
-;;    2) use `lsp-install-server' install server
-;; OR 3) > npm install -g pyright
-(use-package lsp-pyright
-  :after python)
-
-(use-package dap-python
-  :after lsp-pyright
-  :ensure dap-mode)
+  :hook (python-mode . eglot-ensure)
+  :custom (python-indent-offset 2)
+  :config
+  (+eglot/set-leader-keys python-mode-map))
 
 ;; The main entry points are `pyvenv-activate', which queries the user for a virtual environment directory
 ;; to activate, and `pyvenv-workon', which queries for a virtual environment in $WORKON_HOME (from virtualenvwrapper.sh).
@@ -52,7 +42,6 @@
 ;; TODO: python vterm workflow: send region ...
 (with-eval-after-load 'python
   (defun +python/set-leader-keys ()
-    (+language-server/set-common-leader-keys python-mode-map)
     (+funcs/major-mode-leader-keys
      python-mode-map
      "'" '(+python/repl-vterm :which-key "repl")

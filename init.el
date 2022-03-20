@@ -79,8 +79,7 @@
 (require 'init-git)
 (require 'init-highlight)
 (require 'init-prog)
-(require 'init-lsp)
-(require 'init-debugger)
+(require 'init-eglot)
 
 ;; Language
 (require 'init-lang-emacs-lisp)
@@ -96,7 +95,7 @@
 (require 'init-lang-sql)
 (require 'init-web)
 (require 'init-jupyter)
-;; (require 'init-latex)
+(require 'init-latex)
 
 ;; Misc
 (require 'init-eaf)

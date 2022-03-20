@@ -37,7 +37,7 @@
         lsp-idle-delay 1.5
         lsp-debounce-full-sync-notifications-interval 2.0
         lsp-diagnostics-provider :flycheck
-        lsp-log-io nil
+        lsp-log-io t
         lsp-eldoc-enable-hover t
         lsp-eldoc-render-all nil
         ;; TODO: keybindings for signature show up
@@ -234,7 +234,8 @@ server getting expensively restarted when reverting buffers."
        "e" '(nil :which-key "error")
        "el" '(lsp-treemacs-errors-list :which-key "lsp-treemacs-errors-list")
        "en" '(flymake-goto-next-error :which-key "next-error")
-       "ep" '(flymake-goto-prev-error :which-key "prev-error")))
+       "ep" '(flymake-goto-prev-error :which-key "prev-error"))
+      )
      (t
       ;; flycheck
       (+funcs/major-mode-leader-keys

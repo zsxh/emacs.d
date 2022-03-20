@@ -10,25 +10,20 @@
 
 ;;; Code:
 
-(require 'init-lsp)
+(require 'init-eglot)
 
 ;; Julia PkgServer/Mirrors https://discourse.juliacn.com/t/topic/2969
-;; Install Julia LanguageServer
+;; TODO: Install Julia LanguageServer
 ;; $ julia
 ;; julia> ]
 ;; pkg> add LanguageServer
 (use-package julia-mode
   :mode ("\\.jl\\'" . julia-mode)
-  :hook ((julia-mode . (lambda ()
-                         (setq-local lsp-enable-folding t
-                                     lsp-folding-range-limit 100)
-                         (lsp-deferred)))
+  :hook ((julia-mode . eglot-ensure)
          (julia-mode . julia-repl-mode))
   :config
   (setq julia-indent-offset 2)
-
-  (require 'lsp-julia)
-  (+language-server/set-common-leader-keys julia-mode-map)
+  (+eglot/set-leader-keys julia-mode-map)
   (+funcs/major-mode-leader-keys julia-mode-map
                                  "'" '(+julia/repl-vterm :which-key "repl"))
 
@@ -66,12 +61,6 @@
                    ">>>=" OR ">>" OR "<<" OR
                    "\\)"))
         1 font-lock-type-face)))))
-
-(use-package lsp-julia
-  :load-path (lambda () (expand-file-name "submodules/lsp-julia" user-emacs-directory))
-  :defer t
-  :config
-  (setq lsp-julia-format-indent julia-indent-offset))
 
 (use-package julia-repl
   :commands julia-repl-mode)
