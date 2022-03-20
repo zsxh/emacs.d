@@ -63,14 +63,14 @@
 (add-hook-run-once
  'pom-xml-mode-hook
  (lambda nil
-   (setq +web/pom-formatter-buffer-name "*format pom xml*")
+   (setq +java/pom-formatter-buffer-name "*format pom xml*")
 
    (add-to-list 'display-buffer-alist
-                `(,+web/pom-formatter-buffer-name . (display-buffer-no-window . nil)))
+                `(,+java/pom-formatter-buffer-name display-buffer-below-selected))
 
    (defun +java/sortpom-formatter ()
      (interactive)
-     (let ((output-buffer (get-buffer-create +web/pom-formatter-buffer-name))
+     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
            (cmd (s-join " " '("mvn"
                               "com.github.ekryd.sortpom:sortpom-maven-plugin:sort"
                               ;; "-Dsort.nrOfIndentSpace=4"
@@ -79,8 +79,22 @@
                               "-Dsort.createBackupFile=false"))))
        (async-shell-command cmd output-buffer)))
 
-   (+funcs/major-mode-leader-keys pom-xml-mode-map
-                                  "f" '(+java/sortpom-formatter :which-key "format"))))
+   (defun +java/tidy:check ()
+     (interactive)
+     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
+           (cmd "mvn tidy:check"))
+       (async-shell-command cmd output-buffer)))
+
+   (defun +java/tidy:pom ()
+     (interactive)
+     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
+           (cmd "mvn tidy:pom"))
+       (async-shell-command cmd output-buffer)))
+
+   (+funcs/major-mode-leader-keys
+    pom-xml-mode-map
+    "c" '(+java/tidy:check :which-key "tidy:check")
+    "f" '(+java/tidy:pom :which-key "tidy:pom(format)"))))
 
 ;; http://www.tianxiangxiong.com/2017/02/12/decompiling-java-classfiles-in-emacs.html
 ;; https://github.com/xiongtx/jdecomp
