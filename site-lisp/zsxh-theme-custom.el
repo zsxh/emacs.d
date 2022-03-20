@@ -49,9 +49,7 @@
        (with-eval-after-load 'dired
          (set-face-foreground 'dired-directory "#3B6EA8"))
        (with-eval-after-load 'all-the-icons-dired
-         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))
-       (with-eval-after-load 'lsp-headerline
-         (set-face-foreground 'lsp-headerline-breadcrumb-separator-face (doom-color 'fg)))))
+         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))))
     ('doom-one
      (progn
        (with-eval-after-load 'dired
@@ -72,9 +70,7 @@
          (set-face-attribute 'ein:cell-output-prompt nil :foreground "darkred" :background "#282c34"))
        (with-eval-after-load 'jupyter-repl
          (set-face-foreground 'jupyter-repl-input-prompt "#4F894C")
-         (set-face-background 'jupyter-repl-traceback "#4B483F"))
-       (with-eval-after-load 'lsp-headerline
-         (set-face-foreground 'lsp-headerline-breadcrumb-separator-face (doom-color 'fg)))))
+         (set-face-background 'jupyter-repl-traceback "#4B483F"))))
     ('doom-solarized-light
      (progn
        (with-eval-after-load 'dired

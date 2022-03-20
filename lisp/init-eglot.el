@@ -16,7 +16,8 @@
 (use-package eglot
   :commands (eglot eglot-ensure)
   :config
-  (setq eglot-autoshutdown t)
+  (setq eglot-autoshutdown t
+        eglot-ignored-server-capabilities '(:documentHighlightProvider))
 
   ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
   (cl-defmethod eglot-execute-command
