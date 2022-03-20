@@ -95,7 +95,7 @@
 (require 'init-lang-sql)
 (require 'init-web)
 (require 'init-jupyter)
-(require 'init-latex)
+;; (require 'init-latex)
 
 ;; Misc
 (require 'init-eaf)
