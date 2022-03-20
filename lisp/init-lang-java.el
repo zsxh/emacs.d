@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-(require 'init-eglot)
-
 (defun +java/eglot-ensure ()
   (require 'eglot)
 

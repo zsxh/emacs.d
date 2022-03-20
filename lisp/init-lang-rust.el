@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-(require 'init-eglot)
-
 ;; TODO: Install rust-analyzer:
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)

@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-(require 'init-eglot)
-
 (use-package nvm
   :after js)
 

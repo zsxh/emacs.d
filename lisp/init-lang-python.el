@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-(require 'init-eglot)
-
 ;; TODO: pyright language server
 (use-package python
   :ensure nil

@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-(require 'init-eglot)
-
 ;; TODO: clang language server
 (use-package cc-mode
   ;; By default files ending in .h are treated as c files rather than c++ files.

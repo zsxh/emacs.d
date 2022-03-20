@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-(require 'init-eglot)
-
 ;; Julia PkgServer/Mirrors https://discourse.juliacn.com/t/topic/2969
 ;; TODO: Install Julia LanguageServer
 ;; $ julia

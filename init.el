@@ -79,9 +79,9 @@
 (require 'init-git)
 (require 'init-highlight)
 (require 'init-prog)
-(require 'init-eglot)
 
 ;; Language
+(require 'init-eglot)
 (require 'init-lang-emacs-lisp)
 (require 'init-lang-common-lisp)
 (require 'init-lang-c)
