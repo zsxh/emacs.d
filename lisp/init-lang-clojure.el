@@ -24,12 +24,15 @@
   :config
   (setq clojure-toplevel-inside-comment-form t)
 
+  (unless (featurep 'eglot)
+    (require 'eglot))
+
   (dolist (mode '(clojure-mode clojurescript-mode))
-    (+eglot/set-leader-keys (intern (format "%s-map" mode)))
-    (puthash mode
-             ;; NOTE: :zip scheme no response from the server?
-             '(:dependency-scheme "jar")
-             +eglot/initialization-options-map))
+    (+eglot/set-leader-keys (intern (format "%s-map" mode))))
+
+  (cl-defmethod eglot-initialization-options ((server eglot-lsp-server) &context (major-mode clojure-mode))
+    ;; NOTE: :zip scheme no response from the server?
+    '(:dependency-scheme "jar"))
 
   (defun +clojure/setup ()
     (when (and buffer-file-name

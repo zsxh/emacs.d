@@ -13,17 +13,10 @@
 (when (bound-and-true-p read-process-output-max)
   (setq read-process-output-max (* 1024 1024)))
 
-(defvar +eglot/initialization-options-map (make-hash-table :size 5))
-
 (use-package eglot
   :commands (eglot eglot-ensure)
   :config
   (setq eglot-autoshutdown t)
-
-  (cl-defmethod eglot-initialization-options ((server eglot-lsp-server))
-    (if-let ((init-options (gethash (eglot--major-mode server) +eglot/initialization-options-map)))
-        init-options
-      eglot--{}))
 
   ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
   (cl-defmethod eglot-execute-command
