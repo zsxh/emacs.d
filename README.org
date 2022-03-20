@@ -1,9 +1,9 @@
 #+STARTUP: showall
-Updated: <2022-03-04>
+Updated: <2022-03-20>
 
 * Enviroment
-  - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.31, cairo version 1.17.4) of 2022-03-04
-  - emacs-repository-version: 62d97d
+  - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.31, cairo version 1.17.4) of 2022-03-19
+  - emacs-repository-version: c7f085
   - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars~
   - OS: Manjaro 21.2.4 Qonos
   - Shell: zsh 5.8.1
@@ -13,10 +13,6 @@ Updated: <2022-03-04>
   - GCC version: 11.2.0 with libgccjit
 
 * TODOs
-  - [ ] treemacs, lsp-treemacs
-  - [X] neotree combine directories with only one child to make display more compact https://github.com/jaypei/emacs-neotree/issues/147
-  - [ ] fix emacs-ipython-notebook configurations
-  - [X] fix vterm tracing directory
 
 * Features
   - =org=
@@ -86,7 +82,7 @@ Updated: <2022-03-04>
   - =vertico, orderless, marginalia, consult=
       minibuffer completion
   - =programming=
-    - =eglot/lsp-mode=
+    - =eglot=
       language server support: code completion, reformat, find definitions, etc.
     - =dap-mode=
       debuger (require lsp-mode)
@@ -122,26 +118,6 @@ Updated: <2022-03-04>
     - =insert-translated-name=
       Insert translated string, type chinese insertd english for short
   - =portable dumper=
-
-* Languages Support
-** Features like auto complete, go to definitions, documentation on hover
-  - [X] =C/C++= install [[https://github.com/MaskRay/emacs-ccls][emacs-ccls]]
-  - [X] =Java= install [[https://github.com/emacs-lsp/lsp-java][lsp-java]]
-  - [X] =Python= install [[https://github.com/emacs-lsp/lsp-pyright][lsp-pyright]], lsp-mode download server out-of-box or `npm install -g pyright`
-  - [X] =Rust= lsp-mode download server out-of-box or install [[https://rust-analyzer.github.io/manual.html#building-from-source][rust-analyzer]]
-  - [X] =Go= install [[https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation][gopls]]
-  - [X] =Common-Lisp= install [[https://github.com/joaotavora/sly][sly]]
-  - [X] =Julia= v1.5.1, using submodules/lsp-julia
-  - [X] =Javascript/Typescript= lsp-mode download server out-of-box or npm i -g typescript typescript-language-server
-  - [X] =Clojure/ClojureScript= lsp-mode download server out-of-box or install [[https://github.com/snoe/clojure-lsp#installation][clojure-lsp]] manually
-** Debugger
-  - [X] =C/C++= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb][dap-gdb-lldb]]
-  - [X] =Java= install [[https://github.com/emacs-lsp/dap-mode#java][dap-java]]
-  - [X] =Python= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#python][dap-python]]
-  - [X] =Rust= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#native-debug-gdblldb][dap-gdb-lldb]]
-  - [X] =Go= install [[https://emacs-lsp.github.io/dap-mode/page/configuration/#go][dap-go]]
-  - [ ] =Julia=
-  - [ ] =Javascript/Typescript=
 
 * Build Emacs
 
