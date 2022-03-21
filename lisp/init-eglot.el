@@ -93,6 +93,7 @@
      "f" '(eglot-format :which-key "format")
      "e" '(nil :which-key "error")
      "el" '(consult-flymake :which-key "list-error")
+     "eL" '(flymake-show-project-diagnostics :which-key "show-project-diagnostics")
      "en" '(flymake-goto-next-error :which-key "next-error")
      "ep" '(flymake-goto-prev-error :which-key "prev-error")
      "g" '(nil :which-key "goto")
