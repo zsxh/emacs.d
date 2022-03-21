@@ -22,9 +22,10 @@
   ;; autoremove zombie projects
   (run-with-idle-timer 5 nil (lambda () (project-forget-zombie-projects)))
 
-  (setq my/project-local-identifier '(".project" "go.mod" "Cargo.toml"
-                                      "project.clj" "pom.xml" "package.json"
-                                      "Makefile" "README.org" "README.md"))
+  ;; (setq my/project-local-identifier '(".projectile" ".project" "go.mod" "Cargo.toml"
+  ;;                                     "project.clj" "pom.xml" "package.json"
+  ;;                                     "Makefile" "README.org" "README.md"))
+  (setq my/project-local-identifier '(".projectile"))
 
   (defun my/project-try-local (dir)
     "Determine if DIR is a non-VC project."

@@ -114,24 +114,6 @@
 (use-package all-the-icons-completion
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 
-(use-package vertico-posframe
-  ;; :hook (vertico-mode . vertico-posframe-mode)
-  :defer t
-  :custom
-  (vertico-posframe-min-height 11)
-  (vertico-posframe-min-width (min 200 (round (* 0.62 (frame-width)))))
-  :config
-  (setq vertico-posframe-border-width 5)
-
-  (defun +vertico/custom-posframe-poshandler (info)
-    (cons (/ (- (plist-get info :parent-frame-width)
-                (plist-get info :posframe-width))
-             2)
-          (/ (- (plist-get info :parent-frame-height)
-                (plist-get info :posframe-height))
-             3)))
-  (setq vertico-posframe-poshandler #'+vertico/custom-posframe-poshandler))
-
 
 (provide 'init-minibuffer)
 

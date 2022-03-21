@@ -17,6 +17,7 @@
   :commands (eglot eglot-ensure)
   :config
   (setq eglot-autoshutdown t
+        eglot-send-changes-idle-time 1
         eglot-ignored-server-capabilities '(:documentHighlightProvider))
 
   ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
