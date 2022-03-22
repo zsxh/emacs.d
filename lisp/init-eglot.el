@@ -77,6 +77,7 @@
 
   (define-advice eglot--uri-to-path (:around (orig-fn uri) advice)
     "Support non standard LSP uri scheme."
+    (when (keywordp uri) (setq uri (substring (symbol-name uri) 1)))
     (or (+eglot/ext-uri-to-path uri)
         (funcall orig-fn uri)))
 
