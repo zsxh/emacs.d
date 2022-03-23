@@ -12,6 +12,13 @@
 
 ;;;;;;;;;;;;;; FLYMAKE ;;;;;;;;;;;;;;
 
+(use-package flymake
+  :defer t
+  :ensure nil
+  :config
+  (setq flymake-no-changes-timeout 10
+        flymake-start-on-save-buffer nil))
+
 (use-package flymake-diagnostic-at-point
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))

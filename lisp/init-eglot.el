@@ -18,7 +18,10 @@
   :config
   (setq eglot-autoshutdown t
         eglot-send-changes-idle-time 1
-        eglot-ignored-server-capabilities '(:documentHighlightProvider))
+        eglot-ignored-server-capabilities '(:documentHighlightProvider
+                                            :foldingRangeProvider)
+        ;; eglot-send-changes-idle-time 1
+        )
 
   ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
   (cl-defmethod eglot-execute-command
