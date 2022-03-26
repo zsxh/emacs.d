@@ -624,7 +624,9 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 ;;;;;;;;;;;;;; Xref ;;;;;;;;;;;;;;
 (use-package xref
   :ensure nil
-  :bind (("C-M-p" . xref-pop-marker-stack)))
+  :bind (("C-M-p" . xref-pop-marker-stack))
+  :config
+  (setq xref-show-xrefs-function 'consult-xref))
 
 ;; https://github.com/jacktasia/dumb-jump#obsolete-commands-and-options
 (use-package dumb-jump

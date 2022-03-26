@@ -114,6 +114,11 @@
 (use-package all-the-icons-completion
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 
+;; (use-package minibuffer
+;;   :ensure nil
+;;   :bind (:map minibuffer-local-completion-map
+;;               ("TAB" . minibuffer-force-complete)))
+
 
 (provide 'init-minibuffer)
 

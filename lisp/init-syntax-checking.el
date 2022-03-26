@@ -16,7 +16,7 @@
   :defer t
   :ensure nil
   :config
-  (setq flymake-no-changes-timeout 10
+  (setq flymake-no-changes-timeout 2
         flymake-start-on-save-buffer nil))
 
 (use-package flymake-diagnostic-at-point
