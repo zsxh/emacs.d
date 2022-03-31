@@ -16,12 +16,14 @@
   (unless (featurep 'eglot)
     (require 'eglot))
 
-  ;; https://github.com/joaotavora/eglot/discussions/868
-  (add-to-list 'eglot-server-programs
-               `(java-mode "jdtls"
-                           "-configuration" ,(expand-file-name "cache/language-server/java/jdtls/config_linux" user-emacs-directory)
-                           "-data" ,(expand-file-name "cache/java-workspace" user-emacs-directory)
-                           ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))))
+  (defun +eglot/jdtls-contact (interactive)
+    `("jdtls"
+      "-configuration" ,(expand-file-name "cache/language-server/java/jdtls/config_linux" user-emacs-directory)
+      "-data" ,(expand-file-name (file-name-base (directory-file-name (project-root (eglot--current-project))))
+                                 (locate-user-emacs-file "cache/java-workspace"))
+      ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))))
+
+  (add-to-list 'eglot-server-programs '(java-mode . +eglot/jdtls-contact))
 
   (cl-defmethod eglot-initialization-options ((server eglot-lsp-server) &context (major-mode java-mode))
     `(:settings
