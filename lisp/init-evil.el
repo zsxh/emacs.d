@@ -279,7 +279,10 @@ Modes
       "gj" 'Man-next-section
       "gk" 'Man-previous-section
       "k" 'evil-previous-line
-      "m" 'man)))
+      "m" 'man))
+
+  (with-eval-after-load 'comint
+    (evil-set-initial-state 'comint-mode 'normal)))
 
 
 (provide 'init-evil)

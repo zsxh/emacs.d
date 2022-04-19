@@ -53,6 +53,8 @@
 
 ;;;;;;;;;;;;;; Dired ;;;;;;;;;;;;;;
 
+;; TODO: https://github.com/alexluigit/dirvish
+
 ;; Dired Configs
 (use-package dired
   :ensure nil

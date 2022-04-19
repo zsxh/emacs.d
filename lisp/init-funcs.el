@@ -388,6 +388,14 @@ behavior added."
      ,@body
      (message "%.06f" (float-time (time-since time)))))
 
+(defun +funcs/pos-at-line-col (line column)
+  "Transfer (`LINE', `COLUMN') to buffer position."
+  (save-excursion
+    (goto-char (point-min))
+    (forward-line l)
+    (move-to-column c)
+    (point)))
+
 
 (provide 'init-funcs)
 
