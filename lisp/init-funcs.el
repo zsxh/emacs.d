@@ -392,8 +392,8 @@ behavior added."
   "Transfer (`LINE', `COLUMN') to buffer position."
   (save-excursion
     (goto-char (point-min))
-    (forward-line l)
-    (move-to-column c)
+    (forward-line line)
+    (move-to-column column)
     (point)))
 
 
