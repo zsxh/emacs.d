@@ -143,7 +143,7 @@
    "he" '(nil :which-key "emacs")
    "hek" '(kill-emacs :which-key "kill-emacs")
    "hep" '(dump-emacs :which-key "portable-dump-emacs")
-   ;; "her" '(restart-emacs :which-key "restart-emacs")
+   "her" '(restart-emacs :which-key "restart-emacs")
    "heu" '(auto-package-update-now :which-key "upgrade-packages")
    "heU" '(auto-package-update-now-async :which-key "upgrade-packages-async")
    "hev" '(view-lossage :which-key "view-lossage")
