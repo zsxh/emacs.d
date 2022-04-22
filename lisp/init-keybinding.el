@@ -143,9 +143,9 @@
    "he" '(nil :which-key "emacs")
    "hek" '(kill-emacs :which-key "kill-emacs")
    "hep" '(dump-emacs :which-key "portable-dump-emacs")
-   "her" '(restart-emacs :which-key "restart-emacs")
-   "heu" '(upgrade-packages-async :which-key "upgrade-emacs-packages-async")
-   "heU" '(upgrade-packages :which-key "upgrade-emacs-packages-sync")
+   ;; "her" '(restart-emacs :which-key "restart-emacs")
+   "heu" '(auto-package-update-now :which-key "upgrade-packages")
+   "heU" '(auto-package-update-now-async :which-key "upgrade-packages-async")
    "hev" '(view-lossage :which-key "view-lossage")
    "hf" '(helpful-callable :which-key "helpful-callable")
    "hF" '(describe-face :which-key "describe-face")
@@ -239,30 +239,31 @@
    "Tx" '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
    "Tz" '(evil-toggle-fold :which-key "evil-toggle-fold")))
 
-(use-package hydra)
 (use-package lv
   :hook (lv-window . visual-line-mode))
 
-(defhydra hydra-text-scale (:hint nil)
-  "zoom"
-  ("k" default-text-scale-increase "default-text-scale-increase")
-  ("j" default-text-scale-decrease "default-text-scale-decrease")
-  ("0" default-text-scale-reset "default-text-scale-reset")
-  ("K" text-scale-increase "text-scale-increase")
-  ("J" text-scale-decrease "text-scale-decrease")
-  ("q" nil "quit"))
+(use-package hydra
+  :config
+  (defhydra hydra-text-scale (:hint nil)
+    "zoom"
+    ("k" default-text-scale-increase "default-text-scale-increase")
+    ("j" default-text-scale-decrease "default-text-scale-decrease")
+    ("0" default-text-scale-reset "default-text-scale-reset")
+    ("K" text-scale-increase "text-scale-increase")
+    ("J" text-scale-decrease "text-scale-decrease")
+    ("q" nil "quit"))
 
-(defhydra hydra-window-scale (:hint nil)
-  "scale window"
-  ("h" shrink-window-horizontally "shrink-window-horizontally")
-  ("l" enlarge-window-horizontally "enlarger-window-horizontally")
-  ("j" shrink-window "shrink-window")
-  ("k" enlarge-window "enlarge-window")
-  ("b" balance-windows "balance")
-  ("q" nil "quit"))
+  (defhydra hydra-window-scale (:hint nil)
+    "scale window"
+    ("h" shrink-window-horizontally "shrink-window-horizontally")
+    ("l" enlarge-window-horizontally "enlarger-window-horizontally")
+    ("j" shrink-window "shrink-window")
+    ("k" enlarge-window "enlarge-window")
+    ("b" balance-windows "balance")
+    ("q" nil "quit"))
 
-(defhydra hydra-transpose-frame (:hint nil)
-  "
+  (defhydra hydra-transpose-frame (:hint nil)
+    "
     ^Transpose Frame^
     ^ |A|B|^
     ^ |C|D|^
@@ -274,28 +275,28 @@
     _o_: rotate-frame-clockwise     A->B->D->C->A
     _O_: rotate-frame-anticlockwise A->C->D->B->A
     "
-  ("t" transpose-frame)
-  ("-" flip-frame)
-  ("/" flop-frame)
-  ("x" rotate-frame)
-  ("o" rotate-frame-clockwise)
-  ("O" rotate-frame-anticlockwise)
-  ("q" nil "quit"))
+    ("t" transpose-frame)
+    ("-" flip-frame)
+    ("/" flop-frame)
+    ("x" rotate-frame)
+    ("o" rotate-frame-clockwise)
+    ("O" rotate-frame-anticlockwise)
+    ("q" nil "quit"))
 
-(defhydra hydra-emacs-cheatsheet (:hint nil :exit t)
-  "
+  (defhydra hydra-emacs-cheatsheet (:hint nil :exit t)
+    "
     ^Emacs Cheatsheet^
     ^^^^^----------------------
     _s_: \"C-x TAB\" indent-rigidly
     "
-  ("s" indent-rigidly)                  ; shift line[s] left/right
-  ("q" nil "quit"))
+    ("s" indent-rigidly)                ; shift line[s] left/right
+    ("q" nil "quit"))
 
-(defhydra hydra-string-inflection (:hint nil)
-  "cycle text objects through camelCase, kebab-case, snake case and UPPER CASE.
+  (defhydra hydra-string-inflection (:hint nil)
+    "cycle text objects through camelCase, kebab-case, snake case and UPPER CASE.
 "
-  ("s" string-inflection-all-cycle "string-inflection-all-cycle")
-  ("q" nil "quit"))
+    ("s" string-inflection-all-cycle "string-inflection-all-cycle")
+    ("q" nil "quit")))
 
 
 (provide 'init-keybinding)

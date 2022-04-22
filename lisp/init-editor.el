@@ -197,8 +197,9 @@ This filter de-installs itself after this call."
                ("gr" . rg-recompile)))
   :commands (rg rg-dwim rg-project rg-literal rg-dwim-current-file)
   :config
-  (evil-define-key 'normal rg-mode-map
-    "gg" 'evil-goto-first-line))
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal rg-mode-map
+      "gg" 'evil-goto-first-line)))
 
 ;; wgrep allows you to edit a grep buffer and apply those changes to the file buffer
 (use-package wgrep
