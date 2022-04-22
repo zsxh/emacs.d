@@ -128,50 +128,6 @@ If RETURN-P, return the message as a string instead of displaying it."
   ;; from an ELPA repo :ensure needs to be disabled if the :quelpa keyword is found.
   (quelpa-use-package-activate-advice))
 
-(defun +package/quelpa-upgrade ()
-  "Upgrade all packages found in `quelpa-cache'.
-This provides an easy way to upgrade all the packages for which
-the `quelpa' command has been run in the current Emacs session."
-  (interactive)
-  (unless (featurep 'quelpa)
-    (require 'quelpa))
-  (when (quelpa-setup-p)
-    (let ((quelpa-upgrade-p t)
-          (packages-installed-by-quelpa nil))
-      (when quelpa-self-upgrade-p
-        (quelpa-self-upgrade))
-      (setq quelpa-cache
-            (cl-remove-if-not #'package-installed-p quelpa-cache :key #'car))
-      (setq packages-installed-by-quelpa
-            (seq-filter (lambda (item) (memq ':fetcher item)) quelpa-cache))
-      (condition-case err
-          (mapc (lambda (item)
-                  (when (package-installed-p (car (quelpa-arg-rcp item)))
-                    (quelpa item)))
-                packages-installed-by-quelpa)
-        (error
-         (message "[Error] +package/quelpa-upgrade, %s" (error-message-string err))
-         nil))
-      ;; Delete outdate packages
-      (dolist (package-info packages-installed-by-quelpa)
-        (let ((package (car package-info)))
-          (+package/delete-outdate-package package))))))
-
-(defun +package/delete-outdate-package (package)
-  "Delete PACKAGE outdate versions."
-  (let* ((p-desc-list (cdr (assq package package-alist)))
-         (p-desc-cur (car p-desc-list))
-         (p-desc-else (cdr p-desc-list))
-         (p-desc-to-delete nil))
-    (dolist (p-desc p-desc-else)
-      (if (version-list-<= (package-desc-version p-desc-cur) (package-desc-version p-desc))
-          (progn
-            (setf p-desc-to-delete p-desc-cur)
-            (setf p-desc-cur p-desc))
-        (setf p-desc-to-delete p-desc))
-      (package-delete p-desc-to-delete)
-      (format "package %s deleted" (package-desc-full-name p-desc-to-delete)))))
-
 (defun +package/quelpa-clean-cache (pkg-desc &optional force nosave)
   (let ((pkg-name (package-desc-name pkg-desc)))
     (unless (featurep 'quelpa)
@@ -188,40 +144,31 @@ the `quelpa' command has been run in the current Emacs session."
 
 (advice-add 'package-delete :after '+package/quelpa-clean-cache)
 
-;; Extensions
-(use-package package-utils
-  :commands (upgrade-packages upgrade-packages-and-restart upgrade-packages-async)
+(use-package auto-package-update
+  :init
+  (setq auto-package-update-delete-old-versions t
+        auto-package-update-prompt-before-update t
+        auto-package-update-show-preview t
+        auto-package-update-hide-results nil
+        auto-package-update-excluded-packages nil
+        auto-package-update-last-update-day-path (expand-file-name "cache/.last-package-update-day" user-emacs-directory))
+  (defalias 'upgrade-packages #'auto-package-update-now)
   :config
-  (defun upgrade-packages ()
-    (interactive)
-    (package-utils-upgrade-all)
-    (message "\n-------------------- upgrading quelpa build packages --------------------\n")
-    (+package/quelpa-upgrade))
-
-  (defun upgrade-packages-and-restart ()
-    (interactive)
-    (message "Updating Pakcages...")
-    (upgrade-packages)
-    (sleep-for 1)
-    (restart-emacs))
-
-  (defun upgrade-packages-async ()
-    (interactive)
-    (if (fboundp 'async-start)
+  (add-hook 'auto-package-update-before-hook #'package-refresh-contents)
+  (defun apu--safe-package-install (package)
+    (condition-case nil
         (progn
-          (message "Async Updating Pakcages...")
-          (async-start
-           `(lambda ()
-              ,(async-inject-variables "\\`\\(load-path\\)\\'")
-              (require 'init-custom)
-              (require 'init-package)
-              (upgrade-packages)
-              (with-current-buffer "*Messages*"
-                (buffer-string)))
-           (lambda (result)
-             (message "%s" result)
-             (message "Async Update Done. Restart to complete process."))))
-      (message "[Error] upgrade-package-async need async.el installation"))))
+          (let* ((pkg-desc (cadr (assoc package package-archive-contents)))
+                 (transaction (package-compute-transaction (list pkg-desc)
+                                                           (package-desc-reqs pkg-desc))))
+            (package-download-transaction transaction))
+          (format "%s up to date." (symbol-name package))
+          ;; NOTE: Only delete old packages when upgrade successfully
+
+          (when auto-package-update-delete-old-versions
+            (apu--add-to-old-versions-dirs-list package)))
+      (error
+       (format "Error installing %s" (symbol-name package))))))
 
 ;; Multi-file support for `eval-after-load'.
 ;; Usage:
