@@ -155,6 +155,12 @@ If RETURN-P, return the message as a string instead of displaying it."
   (defalias 'upgrade-packages #'auto-package-update-now)
   :config
   (add-hook 'auto-package-update-before-hook #'package-refresh-contents)
+
+  (defun apu--add-to-old-versions-dirs-list (package)
+    "Add package all old version dirs to apu--old-versions-dirs-list"
+    (dolist (desc (cddr (assq package package-alist)))
+      (add-to-list 'apu--old-versions-dirs-list (package-desc-dir desc))))
+
   (defun apu--safe-package-install (package)
     (condition-case nil
         (progn
@@ -162,11 +168,10 @@ If RETURN-P, return the message as a string instead of displaying it."
                  (transaction (package-compute-transaction (list pkg-desc)
                                                            (package-desc-reqs pkg-desc))))
             (package-download-transaction transaction))
-          (format "%s up to date." (symbol-name package))
           ;; NOTE: Only delete old packages when upgrade successfully
-
           (when auto-package-update-delete-old-versions
-            (apu--add-to-old-versions-dirs-list package)))
+            (apu--add-to-old-versions-dirs-list package))
+          (format "%s up to date." (symbol-name package)))
       (error
        (format "Error installing %s" (symbol-name package))))))
 
