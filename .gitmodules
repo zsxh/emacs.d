@@ -1,9 +1,6 @@
 [submodule "submodules/awesome-pair"]
 	path = submodules/awesome-pair
 	url = https://github.com/manateelazycat/awesome-pair
-[submodule "submodules/lsp-julia"]
-	path = submodules/lsp-julia
-	url = https://github.com/zsxh/lsp-julia.git
 [submodule "submodules/icons-int-terminal"]
 	path = submodules/icons-int-terminal
 	url = https://github.com/seagle0128/icons-in-terminal.el.git
