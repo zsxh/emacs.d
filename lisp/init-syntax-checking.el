@@ -23,6 +23,9 @@
   :after flymake
   :hook (flymake-mode . flymake-diagnostic-at-point-mode))
 
+;; NOTE: flymake-collection
+;; https://github.com/mohkale/flymake-collection
+
 
 (provide 'init-syntax-checking)
 

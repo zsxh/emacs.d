@@ -78,7 +78,6 @@
               (org-babel-jupyter-aliases-from-kernelspecs t)
               (message "Refresh kernelpsecs: %s" jupyter--kernelspecs))
             :which-key "refresh-kernelspecs")
-   "ak" '(keycast-mode :which-key "keycast")
    "am" '(man :which-key "man-page")
    "ao" '(nil :which-key "org")
    "aoa" '(org-agenda :which-key "org-agenda")
