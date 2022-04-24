@@ -224,21 +224,6 @@
   :load-path (lambda () (expand-file-name "submodules/netease-cloud-music" user-emacs-directory))
   :commands (netease-cloud-music))
 
-;; https://github.com/tarsius/keycast/issues/7#issuecomment-627604064
-(use-package keycast
-  :defer t
-  :config
-  (with-eval-after-load 'keycast
-    (define-minor-mode keycast-mode
-      "Show current command and its key binding in the mode line."
-      :global t
-      (if keycast-mode
-          (progn
-            (add-hook 'pre-command-hook 'keycast-mode-line-update t)
-            (add-to-list 'global-mode-string '("" mode-line-keycast " ")))
-        (remove-hook 'pre-command-hook 'keycast-mode-line-update)
-        (setq global-mode-string (delete '("" mode-line-keycast " ") global-mode-string))))))
-
 ;; https://github.com/joostkremers/writeroom-mode
 ;; `writeroom-mode'
 (use-package writeroom-mode
