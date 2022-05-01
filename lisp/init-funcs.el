@@ -286,6 +286,10 @@ Version 2017-01-27"
          (funcall ,function))
        (add-hook ,hook ',sym ,append ,local))))
 
+(defun advice-run-once (symbol where function &optional props)
+  (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
+  (advice-add symbol where function props))
+
 (defun +funcs/switch-major-mode-buffer (&rest modes)
   (interactive)
   (let ((buffer (consult--read

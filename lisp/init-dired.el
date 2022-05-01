@@ -12,6 +12,18 @@
 
 ;; TODO: replace neotree with dirvish-side
 
+;; Lazy load `dirvish' to speedup bootstrap time
+(defvar dirvish-override-dired-p nil)
+
+(defun dirvish-override-dired-mode-maybe (&rest _)
+  "Call `dirvish-override-dired-mode' only once."
+  (unless dirvish-override-dired-p
+    ;; (message "debug: load dirvish")
+    (setq dirvish-override-dired-p t)
+    (dirvish-override-dired-mode)))
+
+(advice-run-once 'find-file :before #'dirvish-override-dired-mode-maybe)
+
 ;; https://github.com/alexluigit/dirvish/blob/main/Configuration.org
 (use-package dirvish
   :defer t
@@ -28,13 +40,14 @@
               ("M-m" . dirvish-setup-menu)
               ("M-f" . dirvish-toggle-fullscreen)
               ("M-h" . dirvish-show-history)
-              ([remap dired-summary] . dirvish-dispatch)        ; "?"
+              ([remap dired-summary] . dirvish-dispatch) ; "?"
               ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
               ([remap dired-do-copy] . dirvish-yank) ; "C" copy, "C-u C" move, "R" rename
               ([remap mode-line-other-buffer] . dirvish-other-buffer)
               ([remap dired-omit-mode] . dired-filter-mode))
   :config
-  (dirvish-override-dired-mode)
+  (dirvish-override-dired-mode-maybe)
+  ;; (dirvish-override-dired-mode)
   ;; (dirvish-peek-mode)
   (when (executable-find "exa")
     (dirvish-define-preview exa (file)
@@ -47,14 +60,14 @@
   :ensure nil
   :defer t
   :config
+  (dirvish-override-dired-mode-maybe)
+
   (setq dired-dwim-target t
         dired-recursive-copies 'always
         dired-recursive-deletes 'always
         ;; dired-kill-when-opening-new-dired-buffer t
         ;; dired "human-readable" format
         dired-listing-switches "-alh --time-style=long-iso --group-directories-first --no-group")
-
-  (require 'dirvish)
 
   (defun +dried/dired-do-delete-a (fn &rest args)
     (let ((delete-by-moving-to-trash (and (not (file-remote-p default-directory))
@@ -98,6 +111,7 @@
 
 (use-package dired-x
   :ensure nil
+  :defer t
   ;; Enable dired-omit-mode by default
   ;; :hook
   ;; (dired-mode . dired-omit-mode)
