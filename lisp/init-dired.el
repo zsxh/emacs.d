@@ -100,12 +100,6 @@
   (setq dired-omit-files
         (concat dired-omit-files "\\|^\\..*$")))
 
-;; Addtional syntax highlighting for dired
-(use-package diredfl
-  ;; :hook
-  ;; (dired-mode . diredfl-mode)
-  :defer t)
-
 ;; Turn Dired into a tree browser
 (use-package dired-subtree
   :commands (dired-subtree-toggle)
