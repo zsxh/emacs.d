@@ -93,6 +93,9 @@
 ;; similar to Swiper
 (use-package consult
   :bind ("C-s" . consult-line)
+  :init
+  (setq xref-show-xrefs-function 'consult-xref
+        xref-show-definitions-function #'consult-xref)
   :commands (consult-buffer consult-imenu consult-line consult-grep consult-ripgrep consult--read consult-locate)
   :config
   (setq consult-preview-key 'any
