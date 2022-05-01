@@ -33,7 +33,7 @@
               ("M-h" . dirvish-show-history)
               ([remap dired-summary] . dirvish-dispatch) ; "?"
               ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
-              ([remap dired-do-copy] . dirvish-yank) ; "C" copy, "C-u C" move
+              ([remap dired-do-copy] . dirvish-yank) ; "C" copy, "C-u C" move, "R" rename
               ([remap mode-line-other-buffer] . dirvish-other-buffer)
               ([remap dired-omit-mode] . dired-filter-mode)))
 
@@ -99,6 +99,11 @@
   ;; Make dired-omit-mode hide all "dotfiles"
   (setq dired-omit-files
         (concat dired-omit-files "\\|^\\..*$")))
+
+;; Addtional syntax highlighting for dired
+(use-package diredfl
+  :hook
+  (dired-mode . diredfl-mode))
 
 ;; Turn Dired into a tree browser
 (use-package dired-subtree
