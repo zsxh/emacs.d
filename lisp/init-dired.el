@@ -18,9 +18,6 @@
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.
   (dirvish-attributes '(expanded-state all-the-icons file-size))
-  :config
-  (dirvish-override-dired-mode)
-  ;; (dirvish-peek-mode)
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
               ("TAB" . 'dired-subtree-toggle)
@@ -31,11 +28,20 @@
               ("M-m" . dirvish-setup-menu)
               ("M-f" . dirvish-toggle-fullscreen)
               ("M-h" . dirvish-show-history)
-              ([remap dired-summary] . dirvish-dispatch) ; "?"
+              ([remap dired-summary] . dirvish-dispatch)        ; "?"
               ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
               ([remap dired-do-copy] . dirvish-yank) ; "C" copy, "C-u C" move, "R" rename
               ([remap mode-line-other-buffer] . dirvish-other-buffer)
-              ([remap dired-omit-mode] . dired-filter-mode)))
+              ([remap dired-omit-mode] . dired-filter-mode))
+  :config
+  (dirvish-override-dired-mode)
+  ;; (dirvish-peek-mode)
+  (when (executable-find "exa")
+    (dirvish-define-preview exa (file)
+      "Use `exa' to generate directory preview."
+      (when (file-directory-p file) ; we only interest in directories here
+        `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the output of `exa' command as preview
+    (add-to-list 'dirvish-preview-dispatchers 'exa)))
 
 (use-package dired
   :ensure nil
