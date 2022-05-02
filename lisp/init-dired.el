@@ -30,6 +30,7 @@
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.
   (dirvish-attributes '(expanded-state all-the-icons file-size))
+  (dirvish-mode-line-format '(:left (bar winum sort omit) :right (index)))
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
               ("TAB" . 'dired-subtree-toggle)
@@ -49,12 +50,39 @@
   (dirvish-override-dired-mode-maybe)
   ;; (dirvish-override-dired-mode)
   ;; (dirvish-peek-mode)
-  (when (executable-find "exa")
-    (dirvish-define-preview exa (file)
-      "Use `exa' to generate directory preview."
-      (when (file-directory-p file) ; we only interest in directories here
-        `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the output of `exa' command as preview
-    (add-to-list 'dirvish-preview-dispatchers 'exa)))
+
+  (dirvish-define-mode-line bar "doom-modeline bar"
+    (when (and
+           (bound-and-true-p doom-modeline-mode)
+           (dirvish-dired-p (dirvish-curr)))
+      (doom-modeline--bar)))
+
+  (dirvish-define-mode-line winum "`winum' indicator"
+    (setq winum-auto-setup-mode-line nil)
+    (if-let* ((_ (bound-and-true-p winum-mode))
+              (_ (bound-and-true-p doom-modeline-mode))
+              (_ (dirvish-dired-p (dirvish-curr)))
+              (num (winum-get-number-string))
+              (_ (and (< 0 (length num))
+                      (< 1 (length (cl-mapcan
+                                    (lambda (frame)
+                                      ;; Exclude minibuffer and child frames
+                                      (unless (and (fboundp 'frame-parent)
+                                                   (frame-parent frame))
+                                        (window-list frame 'never)))
+                                    (visible-frame-list)))))))
+        (propertize (format " %s " num)
+                    'face (if (doom-modeline--active)
+                              'doom-modeline-buffer-major-mode
+                            'mode-line-inactive))
+      (doom-modeline-spc)))
+
+    (when (executable-find "exa")
+      (dirvish-define-preview exa (file)
+        "Use `exa' to generate directory preview."
+        (when (file-directory-p file) ; we only interest in directories here
+          `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the output of `exa' command as preview
+      (add-to-list 'dirvish-preview-dispatchers 'exa)))
 
 (use-package dired
   :ensure nil
