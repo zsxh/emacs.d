@@ -37,6 +37,7 @@
               ("f" . dirvish-file-info-menu)
               ("h" . dired-omit-mode)
               ("K" . dired-up-directory)
+              ("l" . nil)
               ("N" . dired-narrow)
               ("M-a" . dirvish-mark-actions-menu)
               ("M-m" . dirvish-setup-menu)
@@ -115,6 +116,7 @@
       "F" 'dired-create-empty-file
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line
+      "h" 'dired-filter-mode
       "i" 'dired-toggle-read-only
       "j" 'dired-next-line
       "k" 'dired-previous-line
