@@ -35,6 +35,7 @@
               ("C-<return>" . 'dired-open-xdg)
               ("TAB" . 'dired-subtree-toggle)
               ("f" . dirvish-file-info-menu)
+              ("h" . dired-omit-mode)
               ("K" . dired-up-directory)
               ("N" . dired-narrow)
               ("M-a" . dirvish-mark-actions-menu)
@@ -104,37 +105,28 @@
 
   (advice-add 'dired-do-delete :around '+dried/dired-do-delete-a)
 
-  (with-eval-after-load 'evil-collection
-    (evil-collection-init 'dired)
+  (with-eval-after-load 'evil
     (evil-define-key 'normal dired-mode-map
       (kbd "SPC") nil
       "," nil
       ":" 'evil-ex
+      "a" 'dired-create-empty-file
+      "d" 'dired-flag-file-deletion
       "F" 'dired-create-empty-file
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line
-      "h" 'evil-backward-char
-      "K" 'dired-up-directory
-      "l" 'evil-forward-char
-      "N" 'dired-narrow
+      "i" 'dired-toggle-read-only
+      "j" 'dired-next-line
+      "k" 'dired-previous-line
       "q" 'quit-window
-      "s" 'dirvish-ls-switches-menu
       "v" 'evil-visual-char
       "V" 'evil-visual-line))
 
   (+funcs/major-mode-leader-keys
    dired-mode-map
    "/" '(dired-narrow :which-key "dired-narrow")
-   "?" '(dirvish-dispatch :which-key "dirvish-dispatch")
-   "a" '(dirvish-mark-actions-menu :which-key "mark-actions-menu")
-   "f" '(dirvish-file-info-menu :which-key "file-info-menu")
-   "F" '(dirvish-toggle-fullscreen :which-key "dirvish-toggle-fullscreen")
-   "h" '(dirvish-show-history :which-key "dirvish-show-history")
-   "m" '(dirvish-setup-menu :which-key "dirvish-setup-menu")
    "M" '(lambda () (interactive) (dirvish-yank 'move) :which-key "move-file")
    "P" '(dirvish-yank :which-key "paste-file")
-   "r" '(dired-narrow-regexp :which-key "dired-narrow-regexp")
-   "s" '(dirvish-ls-switches-menu :which-key "dirvish-ls-switches-menu")
    "T" '(dired-filter-mode :which-key "toggle-dired-filter-mode")))
 
 (use-package dired-x
@@ -149,9 +141,9 @@
         (concat dired-omit-files "\\|^\\..*$")))
 
 ;; Addtional syntax highlighting for dired
-(use-package diredfl
-  :hook
-  (dired-mode . diredfl-mode))
+;; (use-package diredfl
+;;   :hook
+;;   (dired-mode . diredfl-mode))
 
 ;; Turn Dired into a tree browser
 (use-package dired-subtree
