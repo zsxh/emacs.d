@@ -17,6 +17,10 @@
   (setq magit-bury-buffer-function 'magit-mode-quit-window)
   (require 'magit-todos))
 
+;; FIXME: Performance Issue caused by overlays, https://github.com/dandavison/magit-delta/issues/9
+(use-package magit-delta
+  :hook (magit-mode . magit-delta-mode))
+
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
   ;; :hook (magit-mode . magit-todos-mode)
