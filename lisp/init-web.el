@@ -37,15 +37,8 @@
   :hook ((web-mode . +web/config))
   :config
   (defun +web/config ()
-    (unless (and (buffer-file-name)
-                 (equal "xml" (file-name-extension (buffer-file-name))))
-      (flycheck-mode))
     (setq-local company-backends
                 '(company-capf company-files company-css company-dabbrev)))
-
-  ;; Install tidy to check html syntax, https://www.flycheck.org/en/latest/languages.html#html
-  (require 'flycheck)
-  (flycheck-add-mode 'html-tidy 'web-mode)
 
   (defun +web/formatter ()
     (interactive)
@@ -53,8 +46,6 @@
 
   (+funcs/major-mode-leader-keys web-mode-map
                                  "e" '(nil :which-key "error")
-                                 "en" '(flycheck-next-error :which-key "next-error")
-                                 "ep" '(flycheck-previous-error :which-key "prev-error")
                                  "f" '(+web/formatter :which-key "format-html")
                                  "p" '(nil :which-key "preview"))
 

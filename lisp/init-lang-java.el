@@ -227,10 +227,14 @@
            (cmd "mvn tidy:pom"))
        (async-shell-command cmd output-buffer)))
 
+   ;; NOTE: xml-format-maven-plugin
+   ;; https://acegi.github.io/xml-format-maven-plugin/usage.html
+
    (+funcs/major-mode-leader-keys
     pom-xml-mode-map
     "c" '(+java/tidy:check :which-key "tidy:check")
-    "f" '(+java/tidy:pom :which-key "tidy:pom(format)"))))
+    "f" '(+java/tidy:pom :which-key "tidy:pom")
+    "F" '(+java/sortpom-formatter :which-key "sortpom:sort"))))
 
 
 (provide 'init-lang-java)
