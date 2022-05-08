@@ -45,7 +45,9 @@
               ("M-h" . dirvish-show-history)
               ([remap dired-summary] . dirvish-dispatch) ; "?"
               ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
-              ([remap dired-do-copy] . dirvish-yank) ; "C" copy, "C-u C" move, "R" rename
+              ([remap dired-do-copy] . dirvish-yank) ; "C" copy
+              ;; ("R". dired-do-rename) ; "R" rename
+              ("M" . dirvish-move)      ; "M" move
               ([remap mode-line-other-buffer] . dirvish-other-buffer)
               ([remap dired-omit-mode] . dired-filter-mode))
   :config
