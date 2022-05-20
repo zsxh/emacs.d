@@ -19,7 +19,9 @@
   (setq eglot-autoshutdown t
         eglot-send-changes-idle-time 0.5
         eglot-ignored-server-capabilities '(:documentHighlightProvider
-                                            :foldingRangeProvider))
+                                            :foldingRangeProvider)
+        ;; NOTE: drop jsonrpc log to improve performance
+        eglot-events-buffer-size 0)
 
   ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
   (cl-defmethod eglot-execute-command

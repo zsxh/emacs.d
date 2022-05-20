@@ -10,6 +10,11 @@
 
 ;;; Code:
 
+;; NOTE: https://github.com/calve/flycheck-infer Flycheck for java using Infer
+;; NOTE: https://fbinfer.com/ Infer
+;; NOTE: https://github.com/pmd/pmd-emacs PMD Emacs
+;; NOTE: https://pmd.github.io/latest/index.html PMD
+
 ;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
 (defvar +java/junit-platform-console-standalone-jar
   (expand-file-name (locate-user-emacs-file "cache/language-server/java/junit-console/junit-platform-console-standalone.jar")))

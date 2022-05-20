@@ -113,7 +113,13 @@
     (cl-defmethod project-files ((project (head local)) &optional dirs)
       "Override `project-files' to use `fd' in local projects."
       (mapcan #'my/project-files-in-directory
-              (or dirs (list (project-root project)))))))
+              (or dirs (list (project-root project)))))
+
+    ;; (cl-defmethod project-files ((project (head vc)) &optional dirs)
+    ;;   "Override `project-files' to use `fd' in local projects."
+    ;;   (mapcan #'my/project-files-in-directory
+    ;;           (or dirs (list (project-root project)))))
+    ))
 
 (defun my/project-root (&optional maybe-prompt dir)
   "Return the project root in DIR,

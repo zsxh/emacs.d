@@ -40,6 +40,7 @@
               ("l" . nil)
               ("N" . dired-narrow)
               ("M-a" . dirvish-mark-actions-menu)
+              ("M-c" . dired-collapse-mode)
               ("M-m" . dirvish-setup-menu)
               ("M-f" . dirvish-toggle-fullscreen)
               ("M-h" . dirvish-show-history)
@@ -55,17 +56,15 @@
   ;; (dirvish-override-dired-mode)
   ;; (dirvish-peek-mode)
 
+  ;; FIXME: missing bar in dirvish modeline
   (dirvish-define-mode-line bar "doom-modeline bar"
-    (when (and
-           (bound-and-true-p doom-modeline-mode)
-           (dirvish-dired-p (dirvish-curr)))
+    (when (bound-and-true-p doom-modeline-mode)
       (doom-modeline--bar)))
 
   (dirvish-define-mode-line winum "`winum' indicator"
     (setq winum-auto-setup-mode-line nil)
     (if-let* ((_ (bound-and-true-p winum-mode))
               (_ (bound-and-true-p doom-modeline-mode))
-              (_ (dirvish-dired-p (dirvish-curr)))
               (num (winum-get-number-string))
               (_ (and (< 0 (length num))
                       (< 1 (length (cl-mapcan
@@ -167,6 +166,9 @@
   ;; Do not touch the header line
   (dired-filter-show-filters nil)
   (dired-filter-revert 'always))
+
+(use-package dired-collapse
+  :commands dired-collapse-mode)
 
 ;; open files with external applications(just for linux now)
 (use-package dired-open
