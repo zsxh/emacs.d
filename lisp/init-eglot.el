@@ -21,7 +21,7 @@
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
         ;; NOTE: drop jsonrpc log to improve performance
-        eglot-events-buffer-size 0)
+        eglot-events-buffer-size 1)
 
   ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
   (cl-defmethod eglot-execute-command

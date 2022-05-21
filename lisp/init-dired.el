@@ -33,7 +33,7 @@
   (dirvish-mode-line-format '(:left (bar winum sort omit) :right (index)))
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
-              ("TAB" . 'dired-subtree-toggle)
+              ("TAB" . 'dirvish-toggle-subtree)
               ("f" . dirvish-file-info-menu)
               ("h" . dired-omit-mode)
               ("K" . dired-up-directory)
@@ -147,12 +147,6 @@
 ;; (use-package diredfl
 ;;   :hook
 ;;   (dired-mode . diredfl-mode))
-
-;; Turn Dired into a tree browser
-(use-package dired-subtree
-  :commands (dired-subtree-toggle)
-  :config
-  (setq dired-subtree-use-backgrounds nil))
 
 ;; Narrow a dired buffer to the files matching a string.
 (use-package dired-narrow
