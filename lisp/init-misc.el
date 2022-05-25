@@ -325,6 +325,7 @@ Format is:
 
 ;; https://github.com/tecosaur/screenshot.git
 ;; convert a selected region of code to a screenshot
+;; FIXME: https://github.com/tecosaur/screenshot/pull/14
 (use-package screenshot
   :quelpa (screenshot :fetcher github :repo "tecosaur/screenshot")
   :commands screenshot)
