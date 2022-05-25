@@ -136,22 +136,15 @@
   :config
   (global-blamer-mode 1))
 
-;; hydra `smerge-next', `smerge-keep-upper', `smerge-keep-lower'
 (with-eval-after-load 'smerge-mode
-  (defhydra hydra-smerge (:hint nil)
-    "
-    ^Smerge^
-    ^^^^^----------------------
-    [_j_]: smerge-next
-    [_k_]: smerge-prev
-    [_1_]: smerge-keep-upper
-    [_2_]: smerge-keep-lower
-    "
-    ("j" smerge-next)
-    ("k" smerge-prev)
-    ("1" smerge-keep-upper)
-    ("2" smerge-keep-lower)
-    ("q" nil "quit")))
+  (require 'transient)
+  (transient-define-prefix transient-smerge ()
+    ["Smerge"
+     ("j" smerge-next :transient t)
+     ("k" smerge-prev :transient t)
+     ("1" smerge-keep-upper :transient t)
+     ("2" smerge-keep-lower :transient t)
+     ("q" "quit" transient-quit-all)]))
 
 
 (provide 'init-git)

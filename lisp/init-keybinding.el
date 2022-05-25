@@ -129,7 +129,7 @@
    "gld" '(magit-dired-log :which-key "magit-dired-log")
    "glf" '(magit-log-buffer-file :which-key "magit-log-buffer-file")
    "gm" '(vc-msg-show :which-key "vc-msg-show")
-   "gM" '(hydra-smerge/body :which-key "hydra-smerge")
+   "gM" '(transient-smerge :which-key "smerge-menu")
    "gs" '(magit :which-key "magit-status")
    "gt" '(magit-todos-list :which-key "magit-todos-list")
    "gT" '(git-timemachine :which-key "git-timemachine")
@@ -151,7 +151,7 @@
    "hi" '(info :which-key "emacs-info")
    "hk" '(helpful-key :which-key "helpful-key")
    "hs" '(describe-syntax :which-key "describe-syntax")
-   "hS" '(hydra-emacs-cheatsheet/body :which-key "my-emacs-cheatsheet")
+   "hS" '(transient-emacs-cheatsheet :which-key "my-emacs-cheatsheet")
    "hv" '(helpful-variable :which-key "helpful-variable")
    "hp" '(helpful-at-point :which-key "helpful-at-point")
    "hP" '(nil :which-key "profiler")
@@ -195,14 +195,13 @@
    "tB" '(comment-box :which-key "comment-box")
    "ti" '(nil :which-key "insert")
    "tit" '(insert-translated-name-insert :which-key "chinese->engish")
-   "tm" '(hydra-multi-cursors/body :which-key "mutli-cursors")
    "tn" '(+funcs/narrow-or-widen-dwim :which-key "narrow-to-region")
    "tr" '(nil :which-key "replace")
    "trb" '(evilmr-replace-in-buffer :which-key "evilmr-replace-in-buffer")
    "trf" '(evilmr-replace-in-defun :which-key "evilmr-replace-in-defun")
    "trl" '(evilmr-replace-lines :which-key "evilmr-replace-lines")
-   "ts" '(hydra-text-scale/body :which-key "scale")
-   "tS" '(hydra-string-inflection/body :which-key "string-inflection-cycle")
+   "ts" '(transient-text-scale :which-key "scale")
+   "tS" '(transient-string-inflection :which-key "string-inflection-cycle")
    ;; "tt"  '(tiny-expand :which-key "tiny-expand")
    "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    "t=" '(er/expand-region :which-key "expand-region")
@@ -220,8 +219,8 @@
    "wb" '(balance-windows :which-key "balance-windows")
    "wd" '(delete-window :which-key "delete-window")
    "wm" '(+funcs/toggle-maximize-buffer :which-key "maximized")
-   "ws" '(hydra-window-scale/body :which-key "scale")
-   "wt" '(hydra-transpose-frame/body :which-key "transpose-frame")
+   "ws" '(transient-window-scale :which-key "scale")
+   "wt" '(transient-transpose-frame :which-key "transpose-frame")
    "ww" '(ace-swap-window :which-key "swap-window")
    "wW" '(writeroom-mode :which-key "writeroom-mode")
    "wz" '(zoom-mode :which-key "toggle-zoom-mode")
@@ -241,61 +240,55 @@
 (use-package lv
   :hook (lv-window . visual-line-mode))
 
-(use-package hydra
+(use-package transient
+  :ensure nil
   :config
-  (defhydra hydra-text-scale (:hint nil)
-    "zoom"
-    ("k" default-text-scale-increase "default-text-scale-increase")
-    ("j" default-text-scale-decrease "default-text-scale-decrease")
-    ("0" default-text-scale-reset "default-text-scale-reset")
-    ("K" text-scale-increase "text-scale-increase")
-    ("J" text-scale-decrease "text-scale-decrease")
-    ("q" nil "quit"))
+  (setq transient-show-popup t)
 
-  (defhydra hydra-window-scale (:hint nil)
-    "scale window"
-    ("h" shrink-window-horizontally "shrink-window-horizontally")
-    ("l" enlarge-window-horizontally "enlarger-window-horizontally")
-    ("j" shrink-window "shrink-window")
-    ("k" enlarge-window "enlarge-window")
-    ("b" balance-windows "balance")
-    ("q" nil "quit"))
+  (transient-define-prefix transient-text-scale ()
+    "text scale"
+    ["text scale"
+     ("k" "default-text-scale-increase" default-text-scale-increase :transient t)
+     ("j" "default-text-scale-decrease" default-text-scale-decrease :transient t)
+     ("0" "default-text-scale-reset" default-text-scale-reset :transient t)
+     ("K" "text-scale-increase" text-scale-increase :transient t)
+     ("J" "text-scale-decrease" text-scale-decrease :transient t)
+     ("q" "quit" transient-quit-all)])
 
-  (defhydra hydra-transpose-frame (:hint nil)
-    "
-    ^Transpose Frame^
-    ^ |A|B|^
-    ^ |C|D|^
-    ^^^^^----------------------
-    _t_: transpose-frame            B<->C
-    _-_: flip-frame                 AB<->CD
-    _/_: flop-frame                 AC<->BD
-    _x_: rotate-frame               A<->D B<->C
-    _o_: rotate-frame-clockwise     A->B->D->C->A
-    _O_: rotate-frame-anticlockwise A->C->D->B->A
-    "
-    ("t" transpose-frame)
-    ("-" flip-frame)
-    ("/" flop-frame)
-    ("x" rotate-frame)
-    ("o" rotate-frame-clockwise)
-    ("O" rotate-frame-anticlockwise)
-    ("q" nil "quit"))
+  (transient-define-prefix transient-window-scale ()
+    "window scale"
+    ["window scale"
+     ("h" "shrink-window-horizontally" shrink-window-horizontally :transient t)
+     ("l" "enlarger-window-horizontally" enlarge-window-horizontally :transient t)
+     ("j" "shrink-window" shrink-window :transient t)
+     ("k" "enlarge-window" enlarge-window :transient t)
+     ("b" "balance" balance-windows :transient t)
+     ("q" "quit" transient-quit-all)])
 
-  (defhydra hydra-emacs-cheatsheet (:hint nil :exit t)
-    "
-    ^Emacs Cheatsheet^
-    ^^^^^----------------------
-    _s_: \"C-x TAB\" indent-rigidly
-    "
-    ("s" indent-rigidly)                ; shift line[s] left/right
-    ("q" nil "quit"))
+  ;; FIXME: property :transient t would mess up windows
+  (transient-define-prefix transient-transpose-frame ()
+    "transpose frame"
+    ["transpose frame
+    |A|B|
+    |C|D|"
+     ("t" "transpose-frame            B<->C" transpose-frame)
+     ("-" "flip-frame                 AB<->CD" flip-frame)
+     ("/" "flop-frame                 AC<->BD" flop-frame)
+     ("x" "rotate-frame               A<->D B<->C" rotate-frame)
+     ("o" "rotate-frame-clockwise     A->B->D->C->A" rotate-frame-clockwise)
+     ("O" "rotate-frame-anticlockwise A->C->D->B->A" rotate-frame-anticlockwise)
+     ("q" "quit" transient-quit-all)])
 
-  (defhydra hydra-string-inflection (:hint nil)
-    "cycle text objects through camelCase, kebab-case, snake case and UPPER CASE.
-"
-    ("s" string-inflection-all-cycle "string-inflection-all-cycle")
-    ("q" nil "quit")))
+  (transient-define-prefix transient-emacs-cheatsheet ()
+    "emacs cheatsheet"
+    ["Emacs Cheatsheet"
+     ("s" "\"C-x TAB\" indent-rigidly" indent-rigidly) ; shift line[s] left/right
+     ("q" "quit" transient-quit-all)])
+
+  (transient-define-prefix transient-string-inflection ()
+    ["Cycle text objects through camelCase, kebab-case, snake case and UPPER CASE."
+     ("s" "string-inflection-all-cycle" string-inflection-all-cycle :transient t)
+     ("q" "quit" transient-quit-all)]))
 
 
 (provide 'init-keybinding)

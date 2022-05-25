@@ -139,69 +139,6 @@
              evilmr-tag-selected-region
              evilmr-replace-in-tagged-region))
 
-(use-package evil-multiedit
-  :after evil
-  :commands (evil-multiedit-match-all
-             evil-multiedit-match-and-next
-             evil-multiedit-match-and-prev
-             evil-multiedit-toggle-or-restrict-region
-             evil-multiedit-next
-             evil-multiedit-prev))
-
-(use-package evil-mc
-  :defer t
-  :init
-  (defun +evil-mc/toggle-on-click (event)
-    (interactive "e")
-    (unless (bound-and-true-p evil-mc-mode)
-      (evil-mc-mode))
-    (evil-mc-toggle-cursor-on-click event))
-  (defun +evil-mc/absort ()
-    (interactive)
-    (evil-mc-undo-all-cursors)
-    (when (bound-and-true-p evil-mc-mode)
-      (evil-mc-mode -1)))
-  :config
-  (evil-define-key* '(normal visual) evil-mc-key-map
-    (kbd "gr") nil
-    (kbd "M-n") nil
-    (kbd "M-p") nil
-    (kbd "C-n") nil
-    (kbd "C-t") nil
-    (kbd "C-p") nil)
-
-  (evil-define-key '(normal visual insert emacs) evil-mc-key-map
-    (kbd "C-g") '+evil-mc/absort)
-
-  (add-hook-run-once 'evil-mc-mode-hook
-                     (lambda ()
-                       (add-to-list 'evil-mc-incompatible-minor-modes 'lispy-mode)
-                       (add-to-list 'evil-mc-incompatible-minor-modes 'awesome-pair-mode))))
-
-(with-eval-after-load 'hydra
-  (defhydra hydra-evil-multiedit (:hint nil)
-    "`evil-multiedit'"
-    ("A" evil-multiedit-match-all "match-all")
-    ("n" evil-multiedit-match-and-next "match-and-next")
-    ("p" evil-multiedit-match-and-prev "match-and-prev")
-    ("t" evil-multiedit-toggle-or-restrict-region "toggle-or-restrict-region")
-    ("C-n" evil-multiedit-next "next")
-    ("C-p" evil-multiedit-prev "prev")
-    ("q" nil "quit"))
-  (defhydra hydra-evil-mc (:hint nil)
-    "`evil-mc'"
-    ("<mouse-3>" +evil-mc/toggle-on-click "toggle")
-    ("C-g" '+evil-mc/absort "absort" :exit t)
-    ("q" '+evil-mc/absort "absort" :exit t))
-  (defhydra hydra-multi-cursors (:hint nil :exit t)
-    "
-Modes
-------------
-[_c_] evil-mc (cursor)
-[_e_] evil-multiedit (region)"
-    ("c" hydra-evil-mc/body)
-    ("e" hydra-evil-multiedit/body)))
-
 ;; https://github.com/VanLaser/evil-nl-break-undo
 ;; It means that, for example, after you write an entire paragraph in insert state,
 ;; and then you hit u in normal state to undo, changes are undone line by line,

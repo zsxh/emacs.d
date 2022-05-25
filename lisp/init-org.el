@@ -180,7 +180,7 @@
    "ls" '(lsp-virtual-buffer-disconnect :which-key "lsp-virtual-buffer-disconnect")
    "n" '(org-babel-next-src-block :which-key "next-src-block")
    "p" '(org-babel-previous-src-block :which-key "previous-src-block")
-   "r" '(hydra-org-roam/body :which-key "org-roam-hydra")
+   "r" '(transient-org-roam :which-key "org-roam-menu")
    "T" '(nil :which-key "toggle")
    "Ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
    "Tl" '(org-toggle-link-display :which-key "toggle-link-display")
@@ -427,27 +427,19 @@ at the first function to return non-nil.")
         org-roam-dailies-directory "daily/"
         ;; org-roam-db-update-on-save t
         )
-  (defhydra hydra-org-roam (:hint nil :exit t)
-    "
-Org-Roam
-^Node^                 ^Properties^
-^^^^^^^^-------------------------------
-_ni_: node-insert      _aa_: alias-add
-_nf_: node-find        _ar_: alias-remove
-_nc_: capture          _ra_: ref-add
-_nd_: dailies-capture  _rr_: ref-remove
-"
-    ("ni" org-roam-node-insert)
-    ("nf" org-roam-node-find)
-    ("nc" org-roam-capture)
-    ("nd" org-roam-dailies-capture-date)
-    ("aa" org-roam-alias-add)
-    ("ar" org-roam-alias-remove)
-    ("ra" org-roam-ref-add)
-    ("rr" org-roam-ref-remove)
-    ("q" nil "quit" :color blue)
-    )
-  )
+  (require 'transient)
+  (transient-define-prefix transient-org-roam ()
+    [["Node"
+      ("ni" "node-insert" org-roam-node-insert)
+      ("nf" "node-find" org-roam-node-find)
+      ("nc" "capture" org-roam-capture)
+      ("nd" "dailies-capture" org-roam-dailies-capture-date)
+      ("q" "quit" transient-quit-all)]
+     ["Properties"
+      ("aa" "alias-add" org-roam-alias-add)
+      ("ar" "alias-remove" org-roam-alias-remove)
+      ("ra" "ref-add" org-roam-ref-add)
+      ("rr" "ref-remove" org-roam-ref-remove)]]))
 
 ;; (use-package org-roam-ui
 ;;   :defer t)
