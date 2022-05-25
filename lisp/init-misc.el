@@ -349,10 +349,6 @@ Format is:
 (use-package esup
   :defer t)
 
-(use-package ssh-deploy
-  :defer t
-  :commands (ssh-deploy-hydra))
-
 
 (provide 'init-misc)
 

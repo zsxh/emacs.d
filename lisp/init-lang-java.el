@@ -48,7 +48,20 @@
         ;; for large workspaces, it may make sense to be able to disable autobuild if it negatively impacts performance.
         :autobuild (:enabled t)
         ;; https://github.com/dgileadi/vscode-java-decompiler
-        :contentProvider (:preferred "fernflower")))
+        :contentProvider (:preferred "fernflower"))
+       :completion
+       (:guessMethodArguments t
+        :overwrite t
+        :enabled t
+        :favoriteStaticMembers ["org.junit.Assert.*"
+                                "org.junit.Assume.*"
+                                "org.junit.jupiter.api.Assertions.*"
+                                "org.junit.jupiter.api.Assumptions.*"
+                                "org.junit.jupiter.api.DynamicContainer.*"
+                                "org.junit.jupiter.api.DynamicTest.*"
+                                "org.mockito.Mockito.*"
+                                "org.mockito.ArgumentMatchers.*"
+                                "org.mockito.Answers.*"]))
       ;; support non standard LSP `java/classFileContents', `Location' items that have a `jdt://...' uri
       ;; https://github.com/eclipse/eclipse.jdt.ls/issues/1384
       :extendedClientCapabilities (:classFileContentsSupport t)
