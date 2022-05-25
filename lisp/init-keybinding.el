@@ -242,6 +242,11 @@
 
 (use-package transient
   :ensure nil
+  :commands (transient-text-scale
+             transient-window-scale
+             transient-transpose-frame
+             transient-emacs-cheatsheet
+             transient-string-inflection)
   :config
   (setq transient-show-popup t)
 
