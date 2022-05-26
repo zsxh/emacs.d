@@ -38,19 +38,20 @@
               ("h" . dired-omit-mode)
               ("K" . dired-up-directory)
               ("l" . nil)
-              ("N" . dired-narrow)
+              ("N" . consult-focus-lines)
               ("M-a" . dirvish-mark-actions-menu)
               ("M-c" . dired-collapse-mode)
               ("M-m" . dirvish-setup-menu)
               ("M-f" . dirvish-toggle-fullscreen)
               ("M-h" . dirvish-show-history)
-              ([remap dired-summary] . dirvish-dispatch) ; "?"
+              ([remap dired-summary] . dirvish-dispatch)        ; "?"
               ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
               ([remap dired-do-copy] . dirvish-yank) ; "C" copy
               ;; ("R". dired-do-rename) ; "R" rename
               ("M" . dirvish-move)      ; "M" move
               ([remap mode-line-other-buffer] . dirvish-other-buffer)
-              ([remap dired-omit-mode] . dired-filter-mode))
+              ("." . dired-omit-mode) ;; toggle dotfiles
+              )
   :config
   (dirvish-override-dired-mode-maybe)
   ;; (dirvish-override-dired-mode)
@@ -117,7 +118,6 @@
       "F" 'dired-create-empty-file
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line
-      "h" 'dired-filter-mode
       "i" 'dired-toggle-read-only
       "j" 'dired-next-line
       "k" 'dired-previous-line
@@ -127,10 +127,10 @@
 
   (+funcs/major-mode-leader-keys
    dired-mode-map
-   "/" '(dired-narrow :which-key "dired-narrow")
+   "N" '(consult-focus-lines :which-key "consult-focus-lines")
    "M" '(lambda () (interactive) (dirvish-yank 'move) :which-key "move-file")
    "P" '(dirvish-yank :which-key "paste-file")
-   "T" '(dired-filter-mode :which-key "toggle-dired-filter-mode")))
+   "." '(dired-omit-mode :which-key "toggle-dotfiles")))
 
 (use-package dired-x
   :ensure nil
@@ -147,19 +147,6 @@
 ;; (use-package diredfl
 ;;   :hook
 ;;   (dired-mode . diredfl-mode))
-
-;; Narrow a dired buffer to the files matching a string.
-(use-package dired-narrow
-  :commands (dired-narrow))
-
-;; `ibuffer' like file filtering system
-(use-package dired-filter
-  :after dirvish
-  :config
-  :custom
-  ;; Do not touch the header line
-  (dired-filter-show-filters nil)
-  (dired-filter-revert 'always))
 
 (use-package dired-collapse
   :commands dired-collapse-mode)
@@ -178,7 +165,7 @@
 
   (+funcs/major-mode-leader-keys
    wdired-mode-map
-   "/" '(dired-narrow :which-key "dired-narrow")
+   "N" '(consult-focus-lines :which-key "consult-focus-lines")
    "c" '(wdired-finish-edit :which-key "finish edit")
    "k" '(wdired-abort-changes :which-key "abort changes")
    "q" '(wdired-exit :which-key "exit")))
