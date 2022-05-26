@@ -29,7 +29,7 @@
   :defer t
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.
-  (dirvish-attributes '(expanded-state all-the-icons file-size))
+  (dirvish-attributes '(subtree-state all-the-icons file-size))
   (dirvish-mode-line-format '(:left (bar winum sort omit) :right (index)))
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
