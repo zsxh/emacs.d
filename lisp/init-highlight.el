@@ -10,38 +10,15 @@
 
 ;;; Code:
 
-;; NOTE: emasc-28 new minor mode `show-paren-local-mode'
 ;; Highlight matching parenthesis
 (use-package paren
   :ensure nil
-  :defer t
-  :init
-  (if (version<= "28" emacs-version)
-      (add-hook 'prog-mode-hook #'show-paren-local-mode)
-    (defun show-paren-local-enable ()
-      (setq-local show-paren-mode t))
-    (add-hook 'after-init-hook (lambda () (show-paren-mode -1)))
-    (add-hook 'prog-mode-hook #'show-paren-local-enable))
+  :hook (prog-mode . show-paren-local-mode)
   :config
   (setq show-paren-mode nil
         show-paren-when-point-inside-paren t
         show-paren-when-point-in-periphery t
-        show-paren-delay 0.125)
-
-  (defun show-paren-function-advice (fn)
-    "Highlight enclosing parens."
-    (when show-paren-mode
-      (cond
-       ((looking-at-p "\\s(") (funcall fn))
-       ;; NOTE: any performance issue here now?
-       ((or (derived-mode-p 'lisp-data-mode)
-            (derived-mode-p 'clojure-mode))
-        (save-excursion
-          (ignore-errors (backward-up-list))
-          (funcall fn)))
-       (t (funcall fn)))))
-
-  (advice-add 'show-paren-function :around #'show-paren-function-advice))
+        show-paren-delay 0.125))
 
 ;; Highlight Symbol
 (use-package symbol-overlay
