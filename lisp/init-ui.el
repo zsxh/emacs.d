@@ -13,6 +13,15 @@
 (eval-when-compile
   (require 'init-custom))
 
+;; TODO: It's usually best to put code that;s GUI/Terminal specific in `after-make-frame-functions'
+;; (add-hook 'after-make-frame-functions
+;;           (lambda ()
+;;             (if (display-graphic-p)
+;;                 ;; we do something only in GUI Emacs
+;;                 nil
+;;               ;; we do something only in terminal Emacs
+;;               nil)))
+
 (defvar current-theme (if (display-graphic-p)
                           personal-gui-theme
                         personal-tui-theme)
