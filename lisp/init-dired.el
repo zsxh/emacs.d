@@ -57,7 +57,6 @@
   ;; (dirvish-override-dired-mode)
   ;; (dirvish-peek-mode)
 
-  ;; FIXME: missing bar in dirvish modeline
   (dirvish-define-mode-line bar "doom-modeline bar"
     (when (bound-and-true-p doom-modeline-mode)
       (doom-modeline--bar)))

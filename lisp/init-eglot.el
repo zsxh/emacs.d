@@ -116,25 +116,7 @@
   (setq eldoc-echo-area-use-multiline-p 1))
 
 (use-package eldoc-box
-  :commands (eldoc-box-eglot-help-at-point)
-  :config
-  ;; FIXME: Symbol’s value as variable is void: contents(macro byte compilation issue)
-  ;; Waiting upstream fix it.
-  ;; https://github.com/casouri/eldoc-box/issues/25
-  ;; https://github.com/casouri/eldoc-box/pull/42
-  (defun eldoc-box-eglot-help-at-point ()
-    "Display documentation of the symbol at point."
-    (interactive)
-    (when eglot--managed-mode
-      (let ((eldoc-box-position-function #'eldoc-box--default-at-point-position-function))
-        (eldoc-box--display
-         (eglot--dbind ((Hover) contents range)
-             (jsonrpc-request (eglot--current-server-or-lose) :textDocument/hover
-                              (eglot--TextDocumentPositionParams))
-           (when (seq-empty-p contents) (eglot--error "No hover info here"))
-           (eglot--hover-info contents range))))
-      (setq eldoc-box-eglot-help-at-point-last-point (point))
-      (run-with-timer 0.1 nil #'eldoc-box--eglot-help-at-point-cleanup))))
+  :commands (eldoc-box-eglot-help-at-point))
 
 
 (provide 'init-eglot)
