@@ -131,6 +131,9 @@
       tramp-persistency-file-name (locate-user-emacs-file "cache/tramp")
       project-list-file (locate-user-emacs-file "cache/projects"))
 
+(setq mouse-drag-and-drop-region-cross-program t
+      mouse-drag-and-drop-region t)
+
 
 (provide 'init-config)
 

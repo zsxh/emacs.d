@@ -82,12 +82,12 @@
   :ensure nil
   :commands ansi-color-apply-on-region)
 
-(defun colorize-compilation-buffer ()
-  (toggle-read-only)
-  (ansi-color-apply-on-region (point-min) (point-max))
-  (toggle-read-only))
-
-(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+(with-eval-after-load 'compile
+  (defun colorize-compilation-buffer ()
+    (toggle-read-only)
+    (ansi-color-apply-on-region (point-min) (point-max))
+    (toggle-read-only))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 
 ;; highlight comment tags like TODO, BUG, FIXME, etc.
 (use-package hl-todo
