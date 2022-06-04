@@ -339,7 +339,8 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :config
   (setq tramp-default-method "ssh"
         remote-file-name-inhibit-cache 120
-        tramp-verbose 3))
+        tramp-verbose 3
+        tramp-chunksize 2000))
 
 (use-package tramp-cache
   :ensure nil

@@ -29,8 +29,9 @@
   :defer t
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.
+  (dirvish-time-format-string "%F %R")
   (dirvish-attributes '(subtree-state all-the-icons file-size))
-  (dirvish-mode-line-format '(:left (bar winum sort omit) :right (index)))
+  (dirvish-mode-line-format '(:left (bar winum sort omit file-time) :right (vc-info index)))
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
               ("TAB" . 'dirvish-toggle-subtree)
@@ -44,7 +45,7 @@
               ("M-m" . dirvish-setup-menu)
               ("M-f" . dirvish-toggle-fullscreen)
               ("M-h" . dirvish-show-history)
-              ([remap dired-summary] . dirvish-dispatch)        ; "?"
+              ([remap dired-summary] . dirvish-dispatch) ; "?"
               ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
               ([remap dired-do-copy] . dirvish-yank) ; "C" copy
               ;; ("R". dired-do-rename) ; "R" rename
