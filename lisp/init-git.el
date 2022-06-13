@@ -18,8 +18,8 @@
   (require 'magit-todos))
 
 ;; FIXME: Performance Issue caused by overlays, https://github.com/dandavison/magit-delta/issues/9
-(use-package magit-delta
-  :hook (magit-mode . magit-delta-mode))
+;; (use-package magit-delta
+;;   :hook (magit-mode . magit-delta-mode))
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
@@ -140,10 +140,10 @@
   (require 'transient)
   (transient-define-prefix transient-smerge ()
     ["Smerge"
-     ("j" smerge-next :transient t)
-     ("k" smerge-prev :transient t)
-     ("1" smerge-keep-upper :transient t)
-     ("2" smerge-keep-lower :transient t)
+     ("j" "smerge-next" smerge-next :transient t)
+     ("k" "smerge-prev" smerge-prev :transient t)
+     ("1" "smerge-keep-upper" smerge-keep-upper :transient t)
+     ("2" "smerge-keep-lower" smerge-keep-lower :transient t)
      ("q" "quit" transient-quit-all)]))
 
 

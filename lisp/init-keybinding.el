@@ -260,14 +260,15 @@
      ("J" "text-scale-decrease" text-scale-decrease :transient t)
      ("q" "quit" transient-quit-all)])
 
+  ;; FIXME: property :transient t
   (transient-define-prefix transient-window-scale ()
     "window scale"
     ["window scale"
-     ("h" "shrink-window-horizontally" shrink-window-horizontally :transient t)
-     ("l" "enlarger-window-horizontally" enlarge-window-horizontally :transient t)
-     ("j" "shrink-window" shrink-window :transient t)
-     ("k" "enlarge-window" enlarge-window :transient t)
-     ("b" "balance" balance-windows :transient t)
+     ("h" "shrink-window-horizontally" shrink-window-horizontally)
+     ("l" "enlarger-window-horizontally" enlarge-window-horizontally)
+     ("j" "shrink-window" shrink-window)
+     ("k" "enlarge-window" enlarge-window)
+     ("b" "balance" balance-windows)
      ("q" "quit" transient-quit-all)])
 
   ;; FIXME: property :transient t would mess up windows
