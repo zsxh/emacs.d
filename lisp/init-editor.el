@@ -216,7 +216,7 @@ This filter de-installs itself after this call."
       ",t" 'wgrep-toggle-readonly-area
       ",u" 'wgrep-remove-all-change
       ",k" 'wgrep-abort-changes
-      "q" 'wgrep-exit))
+      "q" 'wgrep-exit)))
 
 ;; https://github.com/rejeep/drag-stuff.el
 ;; Work fine with evil-mode
