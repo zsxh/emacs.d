@@ -14,16 +14,17 @@
   :commands (magit magit-blame magit-file-popup)
   :defer 10
   :config
-  (setq magit-bury-buffer-function 'magit-mode-quit-window)
-  (require 'magit-todos))
+  (setq magit-bury-buffer-function 'magit-mode-quit-window))
 
 ;; FIXME: Performance Issue caused by overlays, https://github.com/dandavison/magit-delta/issues/9
-;; (use-package magit-delta
-;;   :hook (magit-mode . magit-delta-mode))
+(use-package magit-delta
+  ;; :hook (magit-mode . magit-delta-mode)
+  :defer t)
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
   ;; :hook (magit-mode . magit-todos-mode)
+  :after magit
   :custom
   (magit-todos-exclude-globs '("node_modules" "*.json" ".git/"))
   ;; (magit-todos-update t)

@@ -205,17 +205,18 @@ This filter de-installs itself after this call."
 (use-package wgrep
   :defer t
   :config
-  (advice-add 'wgrep-change-to-wgrep-mode :after (lambda () (evil-normal-state) (wgrep-toggle-readonly-area)))
-  (advice-add 'wgrep-finish-edit :after (lambda () (evil-normal-state)))
-  (advice-add 'wgrep-abort-changes :after (lambda () (evil-normal-state)))
-  (evil-define-key 'normal wgrep-mode-map
-    ",c" 'wgrep-finish-edit
-    ",d" 'wgrep-mark-deletion
-    ",r" 'wgrep-remove-change
-    ",t" 'wgrep-toggle-readonly-area
-    ",u" 'wgrep-remove-all-change
-    ",k" 'wgrep-abort-changes
-    "q" 'wgrep-exit))
+  (with-eval-after-load 'evil
+    (advice-add 'wgrep-change-to-wgrep-mode :after (lambda () (evil-normal-state) (wgrep-toggle-readonly-area)))
+    (advice-add 'wgrep-finish-edit :after (lambda () (evil-normal-state)))
+    (advice-add 'wgrep-abort-changes :after (lambda () (evil-normal-state)))
+    (evil-define-key 'normal wgrep-mode-map
+      ",c" 'wgrep-finish-edit
+      ",d" 'wgrep-mark-deletion
+      ",r" 'wgrep-remove-change
+      ",t" 'wgrep-toggle-readonly-area
+      ",u" 'wgrep-remove-all-change
+      ",k" 'wgrep-abort-changes
+      "q" 'wgrep-exit))
 
 ;; https://github.com/rejeep/drag-stuff.el
 ;; Work fine with evil-mode
