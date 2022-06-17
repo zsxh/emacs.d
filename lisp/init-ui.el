@@ -79,7 +79,7 @@
   (doom-themes-org-config))
 
 (use-package doom-modeline
-  :hook (after-init . doom-modeline-init)
+  :hook (after-init . doom-modeline-mode)
   :config
   (setq doom-modeline-modal-icon nil
         doom-modeline-hud nil

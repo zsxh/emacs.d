@@ -11,6 +11,7 @@
 ;;; Code:
 
 ;; minibuffer ui
+;; FIXME: `vertico-directory-delete-char', tramp path
 (use-package vertico
   :hook (after-init . vertico-mode)
   :bind ((:map vertico-map
