@@ -13,7 +13,6 @@
 ;; NOTE: https://emacstalk.github.io/post/010/ EmacsTalk
 ;; NOTE: https://github.com/karthink/project-x
 ;; `project-remember-project', `project-forget-project',
-;; `lsp-workspace-folders-add', `lsp-workspace-folders-remove'
 (use-package project
   :ensure nil
   :defer t

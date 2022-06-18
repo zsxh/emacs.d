@@ -175,9 +175,6 @@
    "i" '(nil :which-key "insert")
    "is" '(org-insert-structure-template :which-key "structure-template")
    "it" '(org-time-stamp :which-key "time-stamp")
-   "l" '(nil :which-key "lsp-org")
-   "lc" '(lsp-org :which-key "lsp-org")
-   "ls" '(lsp-virtual-buffer-disconnect :which-key "lsp-virtual-buffer-disconnect")
    "n" '(org-babel-next-src-block :which-key "next-src-block")
    "p" '(org-babel-previous-src-block :which-key "previous-src-block")
    "r" '(transient-org-roam :which-key "org-roam-menu")
@@ -323,27 +320,27 @@ at the first function to return non-nil.")
 ;; A: Set correct enviroment and eval (org-babel-jupyter-aliases-from-kernelspecs t)
 ;; Q: What header-args are needed?
 ;; A: :session must be included, :async is optional
-(use-package ob-jupyter
-  :ensure jupyter
-  :defer t
-  :init
-  (defun +org/babel-load-jupyter-h (lang)
-    (when (string-prefix-p "jupyter-" (symbol-name lang))
-      (require 'jupyter)
-      (let* ((lang-name (symbol-name lang))
-             (lang-tail (string-remove-prefix "jupyter-" lang-name)))
-        (and (not (assoc lang-tail org-src-lang-modes))
-             (require (intern (format "ob-%s" lang-tail)) nil t)
-             (add-to-list 'org-src-lang-modes (cons lang-name (intern lang-tail)))))
-      (with-demoted-errors "Jupyter: %s"
-        (require lang nil t)
-        (require 'ob-jupyter nil t))))
+;; (use-package ob-jupyter
+;;   :ensure jupyter
+;;   :defer t
+;;   :init
+;;   (defun +org/babel-load-jupyter-h (lang)
+;;     (when (string-prefix-p "jupyter-" (symbol-name lang))
+;;       (require 'jupyter)
+;;       (let* ((lang-name (symbol-name lang))
+;;              (lang-tail (string-remove-prefix "jupyter-" lang-name)))
+;;         (and (not (assoc lang-tail org-src-lang-modes))
+;;              (require (intern (format "ob-%s" lang-tail)) nil t)
+;;              (add-to-list 'org-src-lang-modes (cons lang-name (intern lang-tail)))))
+;;       (with-demoted-errors "Jupyter: %s"
+;;         (require lang nil t)
+;;         (require 'ob-jupyter nil t))))
 
-  (add-hook '+org/babel-load-functions #'+org/babel-load-jupyter-h)
-  :config
-  (defun +org/babel-jupyter-initiate-session-a (&rest _)
-    (unless (bound-and-true-p jupyter-org-interaction-mode)
-      (jupyter-org-interaction-mode))))
+;;   (add-hook '+org/babel-load-functions #'+org/babel-load-jupyter-h)
+;;   :config
+;;   (defun +org/babel-jupyter-initiate-session-a (&rest _)
+;;     (unless (bound-and-true-p jupyter-org-interaction-mode)
+;;       (jupyter-org-interaction-mode))))
 
 ;; TODO: use org-mode built-in async,check `https://blog.tecosaur.com/tmio/2021-05-31-async.html'
 ;; ob-async enables asynchronous execution of org-babel src blocks

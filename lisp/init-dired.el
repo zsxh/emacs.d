@@ -32,7 +32,7 @@
   (dirvish-time-format-string "%F %R")
   (dirvish-attributes '(subtree-state all-the-icons file-size))
   (dirvish-mode-line-format '(:left (bar winum sort omit file-time) :right (vc-info index)))
-  (dirvish-keep-alive-on-quit t)
+  (dirvish-keep-alive-on-quit nil)
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
               ("TAB" . 'dirvish-toggle-subtree)

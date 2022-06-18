@@ -95,7 +95,7 @@
 (require 'init-lang-clojure)
 (require 'init-lang-sql)
 (require 'init-web)
-(require 'init-jupyter)
+;; (require 'init-jupyter)
 ;; (require 'init-latex)
 
 ;; Misc
