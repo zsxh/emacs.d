@@ -33,6 +33,7 @@
   (dirvish-attributes '(subtree-state all-the-icons file-size))
   (dirvish-mode-line-format '(:left (bar winum sort omit file-time) :right (vc-info index)))
   (dirvish-keep-alive-on-quit nil)
+  (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
               ("TAB" . 'dirvish-toggle-subtree)
@@ -41,8 +42,8 @@
               ("K" . dired-up-directory)
               ("l" . nil)
               ("N" . consult-focus-lines)
+              ;; "o" `dired-find-file-other-window'
               ("M-a" . dirvish-mark-actions-menu)
-              ("M-c" . dired-collapse-mode)
               ("M-m" . dirvish-setup-menu)
               ("M-f" . dirvish-toggle-fullscreen)
               ("M-h" . dirvish-show-history)
@@ -149,9 +150,6 @@
 ;; (use-package diredfl
 ;;   :hook
 ;;   (dired-mode . diredfl-mode))
-
-(use-package dired-collapse
-  :commands dired-collapse-mode)
 
 ;; open files with external applications(just for linux now)
 (use-package dired-open
