@@ -81,7 +81,7 @@
                     'face (if (doom-modeline--active)
                               'doom-modeline-buffer-major-mode
                             'mode-line-inactive))
-      (doom-modeline-spc)))
+      doom-modeline-spc))
 
   (when (executable-find "exa")
     (dirvish-define-preview exa (file)
