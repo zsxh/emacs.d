@@ -56,6 +56,7 @@
               ("." . dired-omit-mode) ;; toggle dotfiles
               )
   :config
+  (require 'dirvish-vc)
   (dirvish-override-dired-mode-maybe)
   ;; (dirvish-override-dired-mode)
   ;; (dirvish-peek-mode)
