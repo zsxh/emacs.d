@@ -32,8 +32,7 @@
                     vertico-mouse-mode
                     vertico-multiform-mode
                     vertico-reverse-mode
-                    vertico-unobtrusive-mode
-                    vertico-posframe-mode))
+                    vertico-unobtrusive-mode))
       (evil-set-initial-state mode 'emacs)))
   :config
   (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless))))
@@ -44,7 +43,7 @@
   (defun +vertico/directory-home ()
     (when (and (> (point) (minibuffer-prompt-end))
                (eq (char-before) ?/)
-               (vertico-directory--completing-file-p))
+               (eq 'file (vertico--metadata-get 'category)))
       (delete-minibuffer-contents)
       (insert "~/")
       t))
@@ -59,7 +58,7 @@
                (save-excursion
                  (goto-char (1- (point)))
                  (eq (char-before) ?/))
-               (vertico-directory--completing-file-p))
+               (eq 'file (vertico--metadata-get 'category)))
       (delete-minibuffer-contents))
     (insert "/")))
 

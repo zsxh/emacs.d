@@ -105,6 +105,8 @@
 
   (with-eval-after-load 'magit
     (evil-collection-init 'magit)
+    (evil-define-key '(normal visual) magit-mode-map
+      "$" 'magit-process-buffer)
     (with-eval-after-load 'with-editor
       (evil-define-minor-mode-key 'normal 'with-editor-mode
         ",c" 'with-editor-finish
