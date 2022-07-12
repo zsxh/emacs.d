@@ -39,8 +39,8 @@
       (:java
        (:configuration
         (:runtime [(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                   (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-22.0.0.2")
-                   (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-22.0.0.2" :default t)])
+                   (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-22.1.0")
+                   (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-22.1.0" :default t)])
         :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
                                  :profile "GoogleStyle"))
         ;; NOTE: https://github.com/redhat-developer/vscode-java/issues/406#issuecomment-356303715
