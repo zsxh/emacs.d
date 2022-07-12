@@ -8,3 +8,6 @@
 	path = submodules/emacs-application-framework
 	url = https://github.com/emacs-eaf/emacs-application-framework.git
 	branch = master
+[submodule "submodules/lsp-bridge"]
+	path = submodules/lsp-bridge
+	url = https://github.com/manateelazycat/lsp-bridge.git
