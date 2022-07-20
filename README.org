@@ -1,5 +1,5 @@
 #+STARTUP: showall
-Updated: <2022-04-23>
+Updated: <2022-07-20>
 
 * Enviroment
   - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.33, cairo version 1.17.6) of 2022-04-22
@@ -40,5 +40,14 @@ Updated: <2022-04-23>
   git submodule update --init --recursive
 #+end_src
 
-* Display emacs build settings?
-  =M-x describe-variable= =system-configuration-options=
+* Q&A
+
+** Display emacs build settings?
+
+=M-x describe-variable= =system-configuration-options=
+
+** compat.el issue
+
+recompile all the packages
+
+=(byte-recompile-directory package-user-dir nil 'force)=
