@@ -38,9 +38,9 @@
     `(:settings
       (:java
        (:configuration
-        (:runtime [(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                   (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-22.1.0")
-                   (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-22.1.0" :default t)])
+        (:runtimes [(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
+                    (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-22.1.0")
+                    (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-22.1.0" :default t)])
         :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
                                  :profile "GoogleStyle"))
         ;; NOTE: https://github.com/redhat-developer/vscode-java/issues/406#issuecomment-356303715
@@ -64,9 +64,11 @@
                                 "org.mockito.Answers.*"]))
       ;; support non standard LSP `java/classFileContents', `Location' items that have a `jdt://...' uri
       ;; https://github.com/eclipse/eclipse.jdt.ls/issues/1384
+      ;; FIXME: wrong place
       :extendedClientCapabilities (:classFileContentsSupport t)
       ;; bundles: decompilers, etc.
       ;; https://github.com/dgileadi/dg.jdt.ls.decompiler
+      ;; FIXME: wrong place
       :bundles ,(let ((bundles-dir (expand-file-name (locate-user-emacs-file "cache/language-server/java/bundles" user-emacs-directory)))
                       jdtls-bundles)
                   (->> (when (file-directory-p bundles-dir)

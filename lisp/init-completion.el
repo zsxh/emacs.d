@@ -46,7 +46,8 @@
         company-backends '(company-capf company-files company-dabbrev)
         company-global-modes '(not shell-mode eshell-mode eaf-mode
                                    erc-mode message-mode help-mode
-                                   helpful-mode gud-mode telega-chat-mode)
+                                   helpful-mode gud-mode telega-chat-mode
+                                   java-mode)
         company-format-margin-function 'company-detect-icons-margin
         company-icon-size '(auto-scale . 16))
 

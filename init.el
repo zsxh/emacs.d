@@ -82,12 +82,13 @@
 (require 'init-prog)
 
 ;; Language
-(require 'init-eglot)
+;; (require 'init-eglot)
+(require 'init-lsp)
 (require 'init-lang-emacs-lisp)
 (require 'init-lang-common-lisp)
 (require 'init-lang-c)
 (require 'init-lang-python)
-(require 'init-lang-java)
+;; (require 'init-lang-java)
 (require 'init-lang-julia)
 (require 'init-lang-js)
 (require 'init-lang-rust)
