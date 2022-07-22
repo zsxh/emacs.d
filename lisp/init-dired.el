@@ -30,7 +30,7 @@
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.
   (dirvish-time-format-string "%F %R")
-  (dirvish-attributes '(subtree-state all-the-icons file-size))
+  (dirvish-attributes '(subtree-state all-the-icons file-size collapse))
   (dirvish-mode-line-format '(:left (bar winum sort omit file-time) :right (vc-info index)))
   (dirvish-keep-alive-on-quit nil)
   (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
@@ -171,12 +171,15 @@
    "k" '(wdired-abort-changes :which-key "abort changes")
    "q" '(wdired-exit :which-key "exit")))
 
+;; TODO: dirvish-fd
+;; https://github.com/alexluigit/dirvish/blob/main/EXTENSIONS.org#dirvish-as-the-interface-of-fd-dirvish-fdel
 
 (defalias '+dired/find-program 'find-name-dired)
 (with-eval-after-load 'find-dired
   (setq find-ls-option
         (cons "-print0 | xargs -0 ls -alhdN" "")))
 
+;; TODO: remove fd-dired
 ;; Drop-in replacement for find-dired
 ;; install rust fd first: pacman -S fd
 ;; https://github.com/sharkdp/fd
