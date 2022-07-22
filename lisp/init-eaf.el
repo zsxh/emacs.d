@@ -13,8 +13,6 @@
 (eval-when-compile
   (require 'init-custom))
 
-;; Install
-;;
 ;; cd ~/.emacs.d
 ;; git submodule add --depth=1 -b master https://github.com/emacs-eaf/emacs-application-framework.git ~/.emacs.d/submodules/emacs-application-framework/
 ;; cd ~/.emacs.d/submodules/emacs-application-framework
@@ -22,17 +20,12 @@
 ;; git clone --depth 1 --single-branch https://github.com/emacs-eaf/eaf-pdf-viewer.git app/eaf-pdf-viewer
 ;; git clone --depth 1 --single-branch https://github.com/emacs-eaf/eaf-image-viewer.git app/eaf-image-viewer
 ;;
-;; npm install (in each app directory)
+;; python dependencies, check dependencies.json
+;; core: pip install --user epc tld lxml PyQt6 PyQt6-Qt6 PyQt6-sip PyQt6-WebEngine PyQt6-WebEngine-Qt6
+;; browser: pip install --user pysocks
+;; pdf: pip install --user pymupdf
 ;;
-;; DEPENDENCIES
-;; https://github.com/manateelazycat/emacs-application-framework#install
-;; 1) $ sudo pacman -S wmctrl
-;; 2) python dependencies:
-;; $ yay -S python-pyqt5-webengine python-pysocks
-;; $ pip install --user PyMuPDF epc lxml
-;; or
-;; Install in pyenv independent enviroment
-;; $ pip install PyQt5 PyQtWebEngine PyMuPDF pysocks
+;; js Dependencies, check package.json
 (use-package eaf
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
@@ -79,7 +72,7 @@
   (advice-remove 'dired-find-file #'eaf--dired-find-file-advisor)
   (advice-remove 'dired-find-alternate-file #'eaf--dired-find-file-advisor)
 
-  (setq eaf-python-command "/usr/bin/python3"
+  (setq eaf-python-command (expand-file-name "~/.pyenv/versions/3.10.5/bin/python")
         eaf-browser-default-search-engine "duckduckgo"
         eaf-config-location (expand-file-name (locate-user-emacs-file "cache/eaf/"))
         eaf-proxy-host personal-proxy-http-host
