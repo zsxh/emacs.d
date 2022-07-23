@@ -64,11 +64,9 @@
                                 "org.mockito.Answers.*"]))
       ;; support non standard LSP `java/classFileContents', `Location' items that have a `jdt://...' uri
       ;; https://github.com/eclipse/eclipse.jdt.ls/issues/1384
-      ;; FIXME: wrong place
       :extendedClientCapabilities (:classFileContentsSupport t)
       ;; bundles: decompilers, etc.
       ;; https://github.com/dgileadi/dg.jdt.ls.decompiler
-      ;; FIXME: wrong place
       :bundles ,(let ((bundles-dir (expand-file-name (locate-user-emacs-file "cache/language-server/java/bundles" user-emacs-directory)))
                       jdtls-bundles)
                   (->> (when (file-directory-p bundles-dir)
