@@ -14,9 +14,9 @@
 ;; https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
-  :hook (go-mode . eglot-ensure)
+  :hook (go-mode . lsp-bridge-mode)
   :config
-  (+eglot/set-leader-keys go-mode-map)
+  (+lsp/set-leader-keys go-mode-map)
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY"))))

@@ -18,31 +18,31 @@
   :ensure nil
   :bind ((:map js-mode-map
                ("/" . sgml-slash)))
-  :hook (js-mode . +js/eglot-setup)
+  :hook (js-mode . +js/lsp-setup)
   ;; https://www.emacswiki.org/emacs/RegularExpression
   ;; use `rx' to generate emacs regular expression
   ;; :mode ("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode) ; enable gloabl-so-long-mode, that's all
   :config
   (require 'sgml-mode)
   (setq js-indent-level 2)
-  (+eglot/set-leader-keys js-mode-map)
+  (+lsp/set-leader-keys js-mode-map)
 
-  (defun +js/eglot-setup ()
+  (defun +js/lsp-setup ()
     ;; This fix beginning-of-defun raise exception problem
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)
     (unless (member major-mode '(json-mode ein:ipynb-mode))
-      (eglot-ensure))))
+      (lsp-bridge-mode))))
 
 (use-package typescript-mode
   :defer t
-  :hook (typescript-mode . eglot-ensure)
+  :hook (typescript-mode . lsp-bridge-mode)
   :config
-  (+eglot/set-leader-keys typescript-mode-map))
+  (+lsp/set-leader-keys typescript-mode-map))
 
 ;; TODO: vue-language-server
 (use-package vue-mode
   :commands vue-mode
-  :hook (vue-mode . eglot-ensure)
+  :hook (vue-mode . lsp-bridge-mode)
   :bind ((:map vue-mode-map
                ("C-c C-l" . vue-mode-reparse)))
   :config

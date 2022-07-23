@@ -12,7 +12,7 @@
 
 (use-package lsp-bridge
   :load-path "~/.emacs.d/submodules/lsp-bridge"
-  :commands (lsp-bridge-mode)
+  :commands (lsp-bridge-mode +lsp/set-leader-keys)
   :config
   (setq
    lsp-bridge-enable-debug nil
@@ -37,6 +37,7 @@
 
   (defun +lsp/set-leader-keys (&optional map)
     (let ((mode-map (or map (keymap-symbol (current-local-map)))))
+      ;; (message "debug: current local map: %s" mode-map)
       (+funcs/major-mode-leader-keys
        mode-map
        "A" '(lsp-bridge-code-action :which-key "code-action")
@@ -59,28 +60,11 @@
       "k" 'lsp-bridge-ref-jump-prev-keyword
       "C-j" 'lsp-bridge-ref-jump-next-file
       "C-k" 'lsp-bridge-ref-jump-prev-file
+      (kbd "RET")'lsp-bridge-ref-open-file-and-stay
       "q" 'lsp-bridge-ref-quit))
 
   (define-key lsp-bridge-mode-map [remap evil-goto-definition] #'lsp-bridge-find-def)
   (define-key lsp-bridge-mode-map [remap xref-go-back] #'lsp-bridge-return-from-def))
-
-(use-package lsp-bridge-jdtls
-  :ensure nil
-  :defer t
-  :config
-  (setq
-   lsp-bridge-jdtls-worksapce (expand-file-name "cache/lsp-bridge-jdtls" user-emacs-directory)
-   lsp-bridge-jdtls-default-file (expand-file-name "lsp-bridge-config/jdtls.json" user-emacs-directory)
-   lsp-bridge-jdtls-jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar")))))
-
-(add-hook 'java-mode-hook
-          (lambda ()
-            (unless (bound-and-true-p lsp-bridge-get-lang-server-by-project)
-              ;; (message "setup lsp bridge java")
-              (require 'lsp-bridge)
-              (setq-local lsp-bridge-get-lang-server-by-project 'lsp-bridge-get-jdtls-server-by-project))
-            (lsp-bridge-mode)
-            (+lsp/set-leader-keys)))
 
 (use-package acm
   :ensure nil

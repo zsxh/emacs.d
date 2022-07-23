@@ -14,10 +14,10 @@
 (use-package cc-mode
   ;; By default files ending in .h are treated as c files rather than c++ files.
   :mode ("\\.h\\'" . c++-mode)
-  :hook ((c-mode c++-mode) . eglot-ensure)
+  :hook ((c-mode c++-mode) . lsp-bridge-mode)
   :config
-  (add-hook-run-once 'c-mode-hook '+eglot/set-leader-keys)
-  (add-hook-run-once 'c++-mode-hook '+eglot/set-leader-keys))
+  (add-hook-run-once 'c-mode-hook '+lsp/set-leader-keys)
+  (add-hook-run-once 'c++-mode-hook '+lsp/set-leader-keys))
 
 (use-package cmake-mode
   :defer t
