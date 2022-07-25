@@ -32,7 +32,6 @@
   (dirvish-time-format-string "%F %R")
   (dirvish-attributes '(subtree-state all-the-icons file-size collapse))
   (dirvish-mode-line-format '(:left (bar winum sort omit file-time) :right (vc-info index)))
-  (dirvish-keep-alive-on-quit nil)
   (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
