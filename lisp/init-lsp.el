@@ -73,7 +73,10 @@
                ("C-j" . acm-select-next)
                ("C-k" . acm-select-prev)
                ("TAB" . acm-insert-common)
-               ("\t" . acm-insert-common))))
+               ("\t" . acm-insert-common)))
+  :config
+  (setq acm-enable-search-words nil
+        acm-menu-length 10))
 
 
 (provide 'init-lsp)
