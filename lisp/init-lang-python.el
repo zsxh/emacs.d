@@ -10,7 +10,6 @@
 
 ;;; Code:
 
-;; TODO: pyright language server
 (use-package python
   :ensure nil
   :hook ((python-mode . lsp-bridge-mode)
@@ -18,6 +17,10 @@
   :custom (python-indent-offset 2)
   :config
   (+lsp/set-leader-keys python-mode-map))
+
+;; TODO: pyright custom type stub
+;; settings python.analysis.stubPath, https://github.com/microsoft/pyright/blob/main/docs/settings.md
+;; customize type stub, https://github.com/microsoft/python-type-stubs
 
 ;; https://github.com/manateelazycat/lsp-bridge/wiki/Python-virtualenv
 (defun local/lsp-bridge-get-lang-server-by-project (project-path filepath)
