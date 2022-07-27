@@ -46,11 +46,11 @@
             },
             {
               "name": "JavaSE-11",
-              "path": "/usr/local/graalvm-ce-java11-22.1.0"
+              "path": "/usr/local/graalvm-ce-java11-22.2.0"
             },
             {
               "name": "JavaSE-17",
-              "path": "/usr/local/graalvm-ce-java17-22.1.0",
+              "path": "/usr/local/graalvm-ce-java17-22.2.0",
               "default": true
             }
           ]
