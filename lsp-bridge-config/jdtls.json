@@ -20,6 +20,10 @@
           "org.mockito.Mockito.*",
           "org.mockito.ArgumentMatchers.*",
           "org.mockito.Answers.*"
+        ],
+        "filteredTypes": [
+          "java.awt.*",
+          "com.sun.*"
         ]
       }
     }
@@ -60,6 +64,12 @@
           "importOnFirstTimeStartup": "automatic",
           "referencedLibraries": [
             "lib/**/*.jar"
+          ],
+          "resourceFilters": [
+            "node_modules",
+            ".metadata",
+            "archetype-resources",
+            "META-INF/maven"
           ]
         },
         "server": {

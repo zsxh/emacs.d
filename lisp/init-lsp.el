@@ -76,7 +76,8 @@
                ("\t" . acm-insert-common)))
   :config
   (setq acm-enable-search-words nil
-        acm-menu-length 10))
+        acm-menu-length 10
+        acm-candidate-match-function 'orderless-flex))
 
 
 (provide 'init-lsp)

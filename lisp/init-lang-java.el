@@ -15,6 +15,7 @@
 ;; NOTE: https://github.com/pmd/pmd-emacs PMD Emacs
 ;; NOTE: https://pmd.github.io/latest/index.html PMD
 
+;; NOTE: Clean up old lsp-bridge config json in `lsp-bridge-jdtls-worksapce' when you change your customize config file/code
 (use-package lsp-bridge-jdtls
   :ensure nil
   :defer t
@@ -22,7 +23,10 @@
   (setq
    lsp-bridge-jdtls-worksapce (expand-file-name "cache/lsp-bridge-jdtls" user-emacs-directory)
    lsp-bridge-jdtls-default-file (expand-file-name "lsp-bridge-config/jdtls.json" user-emacs-directory)
-   lsp-bridge-jdtls-jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar")))))
+   lsp-bridge-jdtls-jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
+                               "-Xmx8G"
+                               "-XX:+UseG1GC"
+                               "-XX:+UseStringDeduplication")))
 
 (add-hook-run-once 'java-mode-hook #'+lsp/set-leader-keys)
 
