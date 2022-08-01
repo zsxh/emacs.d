@@ -347,11 +347,10 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :defer t)
 
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
-;; https://www.reddit.com/r/emacs/comments/j2ovcb/comprehensive_guide_on_handling_long_lines_in/g7ag4ds?utm_source=share&utm_medium=web2x&context=3
-;; If one enables `global-so-long-mode', long lines will be detected automatically and
-;; the remediation action automatically applied. No need for anything else.
+;; Emacs is now capable of editing files with very long lines since 29.1, `long-line-threshold'
 (use-package so-long
   :ensure nil
+  :if (version< emacs-version "29")
   :hook (after-init . global-so-long-mode))
 
 (use-package profiler

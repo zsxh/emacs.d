@@ -32,9 +32,9 @@
 
 (add-hook 'java-mode-hook
           (lambda ()
-            (unless (bound-and-true-p lsp-bridge-get-lang-server-by-project)
+            (unless (bound-and-true-p lsp-bridge-get-single-lang-server-by-project)
               (require 'lsp-bridge)
-              (setq-local lsp-bridge-get-lang-server-by-project 'lsp-bridge-get-jdtls-server-by-project))
+              (setq-local lsp-bridge-get-single-lang-server-by-project 'lsp-bridge-get-jdtls-server-by-project))
             (lsp-bridge-mode)))
 
 ;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
