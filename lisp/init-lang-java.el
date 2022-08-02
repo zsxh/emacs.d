@@ -37,6 +37,12 @@
               (setq-local lsp-bridge-get-single-lang-server-by-project 'lsp-bridge-get-jdtls-server-by-project))
             (lsp-bridge-mode)))
 
+(defun lsp-bridge-jdtls-clean-cache ()
+  (interactive)
+  (when-let ((_ (bound-and-true-p lsp-bridge-jdtls-worksapce))
+             (_ (yes-or-no-p (format "delete %s" lsp-bridge-jdtls-worksapce))))
+    (delete-directory lsp-bridge-jdtls-worksapce t)))
+
 ;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
 (defvar +java/junit-platform-console-standalone-jar
   (expand-file-name (locate-user-emacs-file "cache/language-server/java/junit-console/junit-platform-console-standalone.jar")))
