@@ -25,13 +25,14 @@
 (advice-run-once 'find-file :before #'dirvish-override-dired-mode-maybe)
 
 ;; https://github.com/alexluigit/dirvish/blob/main/Configuration.org
+;; MacOS require: brew install coreutils fd poppler ffmpegthumbnailer mediainfo imagemagick gnu-tar unzip
 (use-package dirvish
   :defer t
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.
   (dirvish-time-format-string "%F %R")
   (dirvish-attributes '(subtree-state all-the-icons file-size collapse))
-  (dirvish-mode-line-format '(:left (bar winum sort omit file-time) :right (vc-info index)))
+  (dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index)))
   (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
@@ -56,9 +57,26 @@
               )
   :config
   (require 'dirvish-vc)
+  (setq dirvish-vc-state-face-alist
+      '((up-to-date . nil)
+        (edited . diff-changed)
+        (added . diff-added)
+        (removed . diff-removed)
+        (missing . vc-missing-state)
+        (needs-merge . dirvish-vc-needs-merge-face)
+        (conflict . vc-conflict-state)
+        (unlocked-changes . vc-locked-state)
+        (needs-update . vc-needs-update-state)
+        (ignored . nil)
+        (unregistered . dirvish-vc-unregistered-face)))
+
   (dirvish-override-dired-mode-maybe)
   ;; (dirvish-override-dired-mode)
   ;; (dirvish-peek-mode)
+
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal dirvish-mode-map
+      "q" 'dirvish-quit))
 
   (dirvish-define-mode-line bar "doom-modeline bar"
     (when (bound-and-true-p doom-modeline-mode)

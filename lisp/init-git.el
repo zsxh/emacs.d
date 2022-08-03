@@ -92,29 +92,6 @@
                                  (concat git-dir (plist-get info :filename))))))
           vc-msg-git-extra)))
 
-;; https://github.com/dgutov/diff-hl
-(use-package diff-hl
-  :after magit
-  :config
-  ;; fringe
-  (let* ((height (* 2 (frame-char-height)))
-         (width 2)
-         (ones (1- (expt 2 width)))
-         (bits (make-vector height ones)))
-    (define-fringe-bitmap '+git/diff-hl-bitmap bits height 2))
-  (setq diff-hl-fringe-bmp-function (lambda (type pos) '+git/diff-hl-bitmap))
-  ;; enable diff-hl
-  (global-diff-hl-mode)
-  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  (with-eval-after-load 'autorevert
-    ;; NOTE: `auto-revert-handler' call `vc-refresh-state' when `auto-revert-check-vc-info' is t,
-    ;; it brokes vc state that diff-hl rely on.
-    ;; https://github.com/magit/magit/issues/4073#issuecomment-602072585
-    (when auto-revert-check-vc-info
-      (advice-add 'diff-hl-magit-pre-refresh :before (lambda () (setq auto-revert-check-vc-info nil)))
-      (advice-add 'diff-hl-magit-post-refresh :after (lambda () (setq auto-revert-check-vc-info t))))))
-
 ;; This package provides several major modes for editing Git
 ;; configuration files.  The modes are:
 ;; `gitattributes-mode' for .gitattributes, .git/info/attributes, and git/attributes files;
