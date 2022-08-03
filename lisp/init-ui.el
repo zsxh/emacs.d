@@ -89,68 +89,7 @@
         doom-modeline-buffer-file-name-style 'truncate-with-project
         ;; Customize segments
         ;; Requires `eyebrowse-mode' to be enabled or `tab-bar-mode' tabs to be created
-        doom-modeline-workspace-name nil)
-
-  (defun display-battery-if-offline (fn)
-    (let* ((data (and (bound-and-true-p display-battery-mode)
-                      (funcall battery-status-function)))
-           (status (cdr (assoc ?L data)))
-           (online-p (if (version< emacs-version "28")
-                         (string-equal "AC" status)
-                       (string-equal "on-line" status))))
-      (if online-p
-          (setq doom-modeline--battery-status nil)
-        (funcall fn))))
-
-  (advice-add 'doom-modeline-update-battery-status :around 'display-battery-if-offline)
-
-  ;; customize display time window width,
-  (doom-modeline-def-segment misc-info
-    "Mode line construct for miscellaneous information.
-By default, this shows the information specified by `global-mode-string'."
-    (when (and (doom-modeline--active)
-               (>= (window-width) 90))
-      '("" mode-line-misc-info))))
-
-;; Display time on modeline
-(defvar +ui/time-format-short "[%H:%M]"
-  "Short display time format.")
-
-(defvar +ui/time-format-long "[%Y-%m-%d %a %H:%M]"
-  "Long display time format.")
-
-(defcustom +ui/display-time-format-style 'long
-  "Customize time format."
-  :type '(radio (const :tag "Display time format, Year/Month/Day/Weekname/Hour:Minute" long)
-                (const :tag "Display time format, Hour/Minute" short)))
-
-(setq display-time-format (if (eq 'long +ui/display-time-format-style)
-                              +ui/time-format-long
-                            +ui/time-format-short))
-(setq display-time-default-load-average nil) ; don't show load avera
-(add-hook 'after-init-hook 'display-time-mode)
-
-(defun +ui/toggle-display-time-mode ()
-  "Display time format depending on window-width."
-  (unless (active-minibuffer-window)
-    (cond
-     ((and (eq +ui/display-time-format-style 'long)
-           (<= (window-width) 110))
-      (setq +ui/display-time-format-style 'short)
-      (setq display-time-format +ui/time-format-short)
-      (display-time-mode -1)
-      (display-time-mode 1))
-     ((and (eq +ui/display-time-format-style 'short)
-           (> (window-width) 110))
-      (setq +ui/display-time-format-style 'long)
-      (setq display-time-format +ui/time-format-long)
-      (display-time-mode -1)
-      (display-time-mode 1)))))
-
-(add-hook 'window-configuration-change-hook '+ui/toggle-display-time-mode)
-
-;; Display battery status
-(add-hook 'after-init-hook 'display-battery-mode)
+        doom-modeline-workspace-name nil))
 
 ;; Line Number
 (use-package display-line-numbers

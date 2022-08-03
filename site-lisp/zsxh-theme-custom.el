@@ -15,15 +15,6 @@
 
 (defun zsxh-fix-theme ()
   "Load zsxh customize theme faces."
-  (with-eval-after-load 'font-lock
-    (set-face-italic 'font-lock-keyword-face t)
-    (let* ((func-name-fg (face-foreground font-lock-function-name-face))
-           (theme-type (frame-parameter nil 'background-mode))
-           (bg (if (string-equal "light" theme-type)
-                   (doom-lighten func-name-fg 0.93)
-                 (doom-darken func-name-fg 0.75))))
-      (set-face-background 'font-lock-function-name-face bg)))
-
   (pcase current-theme
     ('doom-nord-light
      (progn
