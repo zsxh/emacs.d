@@ -129,7 +129,7 @@
     "Enable Socks proxy."
     (setq url-gateway-method 'socks)
     (setq socks-noproxy '("localhost"))
-    (setq socks-server '("Default server" "localhost" ,personal-proxy-socks5-port 5))
+    (setq socks-server `("Default server" "localhost" ,personal-proxy-socks5-port 5))
     (message "socks proxy %s enabled" socks-server))
 
   (defun proxy-mode-socks-disable ()
