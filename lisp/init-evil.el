@@ -223,6 +223,7 @@
   (with-eval-after-load 'comint
     (evil-set-initial-state 'comint-mode 'normal)))
 
+(with-eval-after-load 'evil
 ;; Customize
 
 ;; Code faster by extending Emacs EVIL text object
@@ -262,7 +263,7 @@ COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive.
 
 (define-key evil-inner-text-objects-map "g" #'my-evil-inner-paren)
 (define-key evil-outer-text-objects-map "g" #'my-evil-a-paren)
-
+)
 
 (provide 'init-evil)
 
