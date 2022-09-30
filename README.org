@@ -1,16 +1,16 @@
 #+STARTUP: showall
-Updated: <2022-08-02>
+Updated: <2022-09-30>
 
 * Enviroment
-  - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.34, cairo version 1.17.6) of 2022-08-01
-  - emacs-repository-version: eef591
+  - GNU Emacs 29.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.34, cairo version 1.17.6) of 2022-09-30
+  - emacs-repository-version: a42dd0
   - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars~
-  - OS: Manjaro 21.3.1 Ruah
+  - OS: Manjaro 22.0.0 Sikaris
   - Shell: zsh 5.9
-  - Kernel: 5.18.7-1-MANJARO
-  - DE: Deepin 20.2.2
+  - Kernel: 5.19.11-1-MANJARO
+  - DE: Deepin 20.6
   - WM: KWin
-  - GCC version: 12.1.0 with libgccjit
+  - GCC version: 12.2.0 with libgccjit
 
 * TODOs
 
