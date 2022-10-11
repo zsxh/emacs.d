@@ -31,7 +31,8 @@
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.
   (dirvish-time-format-string "%F %R")
-  (dirvish-attributes '(subtree-state all-the-icons file-size collapse))
+  (dirvish-attributes '(subtree-state all-the-icons file-size))
+  ;; (dirvish-attributes '(subtree-state all-the-icons file-size collapse))
   (dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index)))
   (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
@@ -49,7 +50,7 @@
               ("M-h" . dirvish-show-history)
               ([remap dired-summary] . dirvish-dispatch) ; "?"
               ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
-              ([remap dired-do-copy] . dirvish-yank) ; "C" copy
+              ([remap dired-do-copy] . dirvish-yank) ; "C", "P" copy
               ;; ("R". dired-do-rename) ; "R" rename
               ("M" . dirvish-move)      ; "M" move
               ([remap mode-line-other-buffer] . dirvish-other-buffer)
@@ -149,7 +150,7 @@
   (+funcs/major-mode-leader-keys
    dired-mode-map
    "N" '(consult-focus-lines :which-key "consult-focus-lines")
-   "M" '(lambda () (interactive) (dirvish-yank 'move) :which-key "move-file")
+   "M" '(dirvish-move :which-key "move-file")
    "P" '(dirvish-yank :which-key "paste-file")
    "." '(dired-omit-mode :which-key "toggle-dotfiles")))
 
