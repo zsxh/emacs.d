@@ -23,6 +23,7 @@
                ([escape] . abort-recursive-edit)))
   :custom
   (vertico-resize nil)
+  :config
   (with-eval-after-load 'evil
     (dolist (mode '(vertico-mode
                     vertico-buffer-mode
@@ -34,7 +35,6 @@
                     vertico-reverse-mode
                     vertico-unobtrusive-mode))
       (evil-set-initial-state mode 'emacs)))
-  :config
   (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless))))
   (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic partial-completion emacs22))))
 
@@ -96,6 +96,8 @@
   :init
   (setq xref-show-xrefs-function 'consult-xref
         xref-show-definitions-function #'consult-xref)
+  :custom
+  (consult-line-start-from-top t)
   :commands (consult-buffer consult-imenu consult-line consult-grep consult-ripgrep consult--read consult-locate)
   :config
   (setq consult-preview-key 'any

@@ -255,6 +255,10 @@
                              '(:server "127.0.0.1" :port 1080 :enable nil :type (:@type "proxyTypeSocks5")))
         telega-old-date-format "%Y/%M/%D")
 
+  (with-eval-after-load 'telega-root
+    (with-eval-after-load 'evil
+      (evil-define-key 'normal telega-root-mode-map "Q" #'telega-kill)))
+
   (with-eval-after-load 'telega-msg
     (define-key telega-msg-button-map (kbd "k") nil)
     (define-key telega-msg-button-map (kbd "l") nil))
