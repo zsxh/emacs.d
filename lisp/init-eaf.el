@@ -106,8 +106,8 @@
         eaf-browser-dark-mode nil)
 
   (setq eaf-app-extensions-alist
-      (cl-remove-if (lambda (elt) (string-equal "browser" (car elt)))
-                    eaf-app-extensions-alist))
+        (cl-remove-if (lambda (elt) (string-equal "browser" (car elt)))
+                      eaf-app-extensions-alist))
 
   (eaf-bind-key +eaf/switch-to-eww "C-t" eaf-browser-keybinding)
   (eaf-bind-key nil "M-u" eaf-browser-keybinding)
@@ -119,52 +119,53 @@
     (setq browse-url-browser-function 'eaf-open-browser))
 
   ;; overrides
-  (defun eaf-open-devtool-page ()
-    (split-window (selected-window)
-                  (/ (* (nth 3 (eaf-get-window-allocation (selected-window))) 2) 3)
-                  nil t)
-    (other-window 1)
-    (eaf-open "about:blank" "browser" "devtools"))
+  ;; (defun eaf-open-devtool-page ()
+  ;;   (split-window (selected-window)
+  ;;                 (/ (* (nth 3 (eaf-get-window-allocation (selected-window))) 2) 3)
+  ;;                 nil t)
+  ;;   (other-window 1)
+  ;;   (eaf-open "about:blank" "browser" "devtools"))
 
-  (defun +eaf/clear-focus ()
-    (interactive)
-    (eaf-call-async "call_function" eaf--buffer-id "clear_focus")
-    (when (and (bound-and-true-p evil-mode)
-               (not (evil-normal-state-p)))
-      (evil-normal-state)))
+  ;; (defun +eaf/clear-focus ()
+  ;;   (interactive)
+  ;;   (eaf-call-async "call_function" eaf--buffer-id "clear_focus")
+  ;;   (when (and (bound-and-true-p evil-mode)
+  ;;              (not (evil-normal-state-p)))
+  ;;     (evil-normal-state)))
 
-  (add-hook 'eaf-browser-hook
-            (lambda ()
-              ;; browser toggle insert/normal state except in devtool
-              ;; devtool buffer will first open about:blank page and then redirect to devltools:// path
-              (unless (string-prefix-p "about:blank" eaf--buffer-url)
-                (evil-local-set-key 'insert (kbd "<escape>") #'+eaf/clear-focus)
-                (evil-local-set-key 'normal (kbd "<escape>") #'+eaf/clear-focus))))
+  ;; (add-hook 'eaf-browser-hook
+  ;;           (lambda ()
+  ;;             ;; browser toggle insert/normal state except in devtool
+  ;;             ;; devtool buffer will first open about:blank page and then redirect to devltools:// path
+  ;;             (unless (string-prefix-p "about:blank" eaf--buffer-url)
+  ;;               (evil-local-set-key 'insert (kbd "<escape>") #'+eaf/clear-focus)
+  ;;               (evil-local-set-key 'normal (kbd "<escape>") #'+eaf/clear-focus))))
 
-  (defvar +eaf/evil-focus-timer nil)
+  ;; (defvar +eaf/evil-focus-timer nil)
 
-  (defun +eaf/evil-focus (&rest _)
-    (let ((buf (current-buffer))
-          (id eaf--buffer-id))
-      (unless (and (bound-and-true-p evil-mode)
-                   (evil-insert-state-p))
-        (when (timerp +eaf/evil-focus-timer)
-          (cancel-timer +eaf/evil-focus-timer))
-        (setf +eaf/evil-focus-timer
-              (run-with-timer
-               0.1 nil
-               (lambda (buf id)
-                 (eaf-deferred-chain
-                   (eaf-call-async "call_function" id "is_focus")
-                   (eaf-deferred-nextc it (lambda (x)
-                                            (with-current-buffer buf
-                                              ;; (message "debug eaf: is_focus=%s" x)
-                                              (if (string= x "True")
-                                                  (unless (evil-insert-state-p) (evil-insert-state))
-                                                (when (evil-insert-state-p) (evil-normal-state))))))))
-               buf id)))))
-  (advice-add 'eaf--input-message :after #'+eaf/evil-focus)
-  (advice-add 'eaf-py-proxy-insert_or_focus_input :after #'+eaf/evil-focus)
+  ;; (defun +eaf/evil-focus (&rest _)
+  ;;   (let ((buf (current-buffer))
+  ;;         (id eaf--buffer-id))
+  ;;     (unless (and (bound-and-true-p evil-mode)
+  ;;                  (evil-insert-state-p))
+  ;;       (when (timerp +eaf/evil-focus-timer)
+  ;;         (cancel-timer +eaf/evil-focus-timer))
+  ;;       (setf +eaf/evil-focus-timer
+  ;;             (run-with-timer
+  ;;              0.1 nil
+  ;;              (lambda (buf id)
+  ;;                (eaf-deferred-chain
+  ;;                  (eaf-call-async "call_function" id "is_focus")
+  ;;                  (eaf-deferred-nextc it (lambda (x)
+  ;;                                           (with-current-buffer buf
+  ;;                                             ;; (message "debug eaf: is_focus=%s" x)
+  ;;                                             (if (string= x "True")
+  ;;                                                 (unless (evil-insert-state-p) (evil-insert-state))
+  ;;                                               (when (evil-insert-state-p) (evil-normal-state))))))))
+  ;;              buf id)))))
+  ;; (advice-add 'eaf--input-message :after #'+eaf/evil-focus)
+  ;; (advice-add 'eaf-py-proxy-insert_or_focus_input :after #'+eaf/evil-focus)
+
   ;; TODO: all insert_or_OPERATIONS
   ;; eaf-py-proxy-insert_or_edit_url
 
