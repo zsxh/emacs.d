@@ -255,6 +255,9 @@
                              '(:server "127.0.0.1" :port 1080 :enable nil :type (:@type "proxyTypeSocks5")))
         telega-old-date-format "%Y/%M/%D")
 
+  ;; avatar size
+  (setf (alist-get 2 telega-avatar-factors-alist ) '(0.4 . 0.1))
+
   (with-eval-after-load 'telega-root
     (with-eval-after-load 'evil
       (evil-define-key 'normal telega-root-mode-map "Q" #'telega-kill)))

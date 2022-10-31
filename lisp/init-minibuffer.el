@@ -35,8 +35,6 @@
                     vertico-reverse-mode
                     vertico-unobtrusive-mode))
       (evil-set-initial-state mode 'emacs)))
-  (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless))))
-  (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic partial-completion emacs22))))
 
   (require 'vertico-directory)
 
@@ -64,6 +62,7 @@
 
 (use-package orderless
   :config
+  (setq completion-styles '(basic orderless))
   ;; pinyin
   (use-package pinyinlib
     :commands pinyinlib-build-regexp-string)
