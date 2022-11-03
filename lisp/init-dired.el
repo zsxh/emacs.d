@@ -130,6 +130,17 @@
 
   (advice-add 'dired-do-delete :around '+dried/dired-do-delete-a)
 
+  (defun +dired/get-size ()
+    (interactive)
+    (let ((files (dired-get-marked-files)))
+      (with-temp-buffer
+        (apply 'call-process "/usr/bin/du" nil t nil "-sch" files)
+        (message
+         "Size of all marked files: %s"
+         (progn
+           (re-search-backward "\\(^[ 0-9.,]+[A-Za-z]+\\).*total$")
+           (match-string 1))))))
+
   (with-eval-after-load 'evil
     (evil-define-key 'normal dired-mode-map
       (kbd "SPC") nil
@@ -152,6 +163,7 @@
    "N" '(consult-focus-lines :which-key "consult-focus-lines")
    "M" '(dirvish-move :which-key "move-file")
    "P" '(dirvish-yank :which-key "paste-file")
+   "s" '(+dired/get-size :which-key "get-size")
    "." '(dired-omit-mode :which-key "toggle-dotfiles")))
 
 (use-package dired-x
