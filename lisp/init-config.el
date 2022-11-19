@@ -129,7 +129,8 @@
       eww-bookmarks-directory (locate-user-emacs-file "cache/")
       recentf-save-file (locate-user-emacs-file "cache/recentf")
       tramp-persistency-file-name (locate-user-emacs-file "cache/tramp")
-      project-list-file (locate-user-emacs-file "cache/projects"))
+      project-list-file (locate-user-emacs-file "cache/projects")
+      elfeed-db-directory (locate-user-emacs-file "cache/elfeed"))
 
 (setq mouse-drag-and-drop-region-cross-program t
       mouse-drag-and-drop-region t)

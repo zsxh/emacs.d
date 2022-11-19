@@ -60,11 +60,11 @@
       "k" 'lsp-bridge-ref-jump-prev-keyword
       "C-j" 'lsp-bridge-ref-jump-next-file
       "C-k" 'lsp-bridge-ref-jump-prev-file
-      (kbd "RET")'lsp-bridge-ref-open-file-and-stay
+      (kbd "RET") 'lsp-bridge-ref-open-file-and-stay
       "q" 'lsp-bridge-ref-quit))
 
   (define-key lsp-bridge-mode-map [remap evil-goto-definition] #'lsp-bridge-find-def)
-  (define-key lsp-bridge-mode-map [remap xref-go-back] #'lsp-bridge-return-from-def))
+  (define-key lsp-bridge-mode-map [remap xref-go-back] #'lsp-bridge-find-def-return))
 
 (use-package acm
   :ensure nil
