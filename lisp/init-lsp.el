@@ -32,7 +32,7 @@
 
   (defun +lsp/lookup-document ()
     (interactive)
-    (lsp-bridge-lookup-documentation)
+    (lsp-bridge-popup-documentation)
     (trainsient-scoll-popup-lsp-document))
 
   (defun +lsp/set-leader-keys (&optional map)
@@ -43,9 +43,9 @@
        "A" '(lsp-bridge-code-action :which-key "code-action")
        "D" '(+lsp/lookup-document :which-key "hover:document")
        "e" '(nil :which-key "error")
-       "el" '(lsp-bridge-list-diagnostics :which-key "list-error")
-       "en" '(lsp-bridge-jump-to-next-diagnostic :which-key "next-error")
-       "ep" '(lsp-bridge-jump-to-prev-diagnostic :which-key "prev-error")
+       "el" '(lsp-bridge-diagnostic-list :which-key "list-error")
+       "en" '(lsp-bridge-diagnostic-jump-next :which-key "next-error")
+       "ep" '(lsp-bridge-diagnostic-jump-prev :which-key "prev-error")
        "f" '(lsp-bridge-code-format :which-key "format")
        "g" '(nil :which-key "goto")
        "gd" '(lsp-bridge-find-def :which-key "find-definitions")
@@ -73,7 +73,8 @@
                ("C-j" . acm-select-next)
                ("C-k" . acm-select-prev)
                ("TAB" . acm-insert-common)
-               ("\t" . acm-insert-common)))
+               ("\t" . acm-insert-common)
+               ("C-h" . acm-doc-toggle)))
   :config
   (setq acm-enable-search-words nil
         acm-menu-length 10

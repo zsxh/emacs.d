@@ -271,17 +271,7 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
   :commands show-minor-mode-map-priority)
 
 ;;;;;;;;;;;;;; Tree-Sitter ;;;;;;;;;;;;;;
-;; https://github.com/ubolonton/emacs-tree-sitter
-(use-package tree-sitter
-  :if (lambda () (functionp 'module-load))
-  ;; :defer 15
-  :defer t
-  :config
-  (add-hook 'tree-sitter-after-on-hook 'tree-sitter-hl-mode)
-  (global-tree-sitter-mode))
-
-(use-package tree-sitter-langs
-  :after tree-sitter)
+;; TODO: emacs 29.1 built-in treesitter
 
 ;;;;;;;;;;;;;; insert-char ;;;;;;;;;;;;;;
 (use-package insert-char-preview
