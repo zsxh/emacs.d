@@ -22,7 +22,9 @@
                                              "Customize lsp-bridge get project root function"
                                              (when-let ((root (+project/root nil (directory-file-name filepath))))
                                                (expand-file-name root)))
-   lsp-bridge-lookup-doc-tooltip-border-width 10)
+   lsp-bridge-lookup-doc-tooltip-border-width 10
+   lsp-bridge-signature-show-function (if (display-graphic-p) 'lsp-bridge-signature-posframe 'message)
+   lsp-bridge-signature-help-fetch-idle 0.3)
 
   (transient-define-prefix trainsient-scoll-popup-lsp-document ()
     ["scoll popup document"
