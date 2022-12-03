@@ -20,7 +20,7 @@
    lsp-bridge-python-command (expand-file-name "~/.pyenv/versions/3.10.5/bin/python")
    lsp-bridge-get-project-path-by-filepath (lambda (filepath)
                                              "Customize lsp-bridge get project root function"
-                                             (when-let ((root (+project/root nil (directory-file-name filepath))))
+                                             (when-let ((root (+project/root nil (file-name-directory filepath))))
                                                (expand-file-name root)))
    lsp-bridge-lookup-doc-tooltip-border-width 10
    lsp-bridge-signature-show-function (if (display-graphic-p) 'lsp-bridge-signature-posframe 'message)
