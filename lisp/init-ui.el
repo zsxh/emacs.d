@@ -52,12 +52,6 @@
 (use-package all-the-icons
   :defer t)
 
-;; https://github.com/seagle0128/icons-in-terminal.el
-;; M-x: icons-in-terminal-install-font
-(use-package icons-in-terminal
-  :defer t
-  :load-path "~/.emacs.d/submodules/icons-int-terminal")
-
 ;; Theme
 (use-package doom-themes
   :config

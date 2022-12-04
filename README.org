@@ -1,9 +1,9 @@
 #+STARTUP: showall
-Updated: <2022-12-03>
+Updated: <2022-12-04>
 
 * Enviroment
-  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.35, cairo version 1.17.6) of 2022-12-02
-  - emacs-repository-version: 64044f
+  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.35, cairo version 1.17.6) of 2022-12-04
+  - emacs-repository-version: f96a9e
   - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
   - OS: Manjaro 22.0.0 Sikaris
   - Shell: zsh 5.9
