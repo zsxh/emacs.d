@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;; python dependencies
+;; pip install --user epc orjson six
 (use-package lsp-bridge
   :load-path "~/.emacs.d/submodules/lsp-bridge"
   :commands (lsp-bridge-mode +lsp/set-leader-keys)
@@ -17,14 +19,21 @@
   (setq
    lsp-bridge-enable-debug nil
    lsp-bridge-enable-log nil
-   lsp-bridge-python-command (expand-file-name "~/.pyenv/versions/3.10.5/bin/python")
+   lsp-bridge-python-command (expand-file-name "~/.pyenv/versions/3.11.1/bin/python")
    lsp-bridge-get-project-path-by-filepath (lambda (filepath)
                                              "Customize lsp-bridge get project root function"
                                              (when-let ((root (+project/root nil (file-name-directory filepath))))
                                                (expand-file-name root)))
    lsp-bridge-lookup-doc-tooltip-border-width 10
    lsp-bridge-signature-show-function (if (display-graphic-p) 'lsp-bridge-signature-posframe 'message)
-   lsp-bridge-signature-help-fetch-idle 0.3)
+   lsp-bridge-signature-posframe-params (list :poshandler #'posframe-poshandler-point-bottom-left-corner-upward
+                                              :internal-border-width 8
+                                              :max-width 60
+                                              :max-height 12)
+   lsp-bridge-signature-help-fetch-idle 0.3
+   lsp-bridge-diagnostic-tooltip-border-width 0
+   lsp-bridge-code-action-preview-delay 1
+   lsp-bridge-completion-obey-trigger-characters-p t)
 
   (transient-define-prefix trainsient-scoll-popup-lsp-document ()
     ["scoll popup document"

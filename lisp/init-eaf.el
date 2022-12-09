@@ -21,9 +21,9 @@
 ;; git clone --depth 1 --single-branch https://github.com/emacs-eaf/eaf-image-viewer.git app/eaf-image-viewer
 ;;
 ;; python dependencies, check dependencies.json
-;; core: pip install --user epc tld lxml PyQt6 PyQt6-Qt6 PyQt6-sip PyQt6-WebEngine PyQt6-WebEngine-Qt6
+;; core: pip install --user epc sexpdata tld lxml PyQt6 PyQt6-Qt6 PyQt6-sip PyQt6-WebEngine PyQt6-WebEngine-Qt6
 ;; browser: pip install --user pysocks
-;; pdf: pip install --user pymupdf
+;; pdf: pip install --user packaging pymupdf
 ;;
 ;; js Dependencies, check package.json
 (use-package eaf
@@ -72,7 +72,7 @@
   (advice-remove 'dired-find-file #'eaf--dired-find-file-advisor)
   (advice-remove 'dired-find-alternate-file #'eaf--dired-find-file-advisor)
 
-  (setq eaf-python-command (expand-file-name "~/.pyenv/versions/3.10.5/bin/python")
+  (setq eaf-python-command (expand-file-name "~/.pyenv/versions/3.11.1/bin/python")
         eaf-browser-default-search-engine "duckduckgo"
         eaf-config-location (expand-file-name (locate-user-emacs-file "cache/eaf/"))
         eaf-proxy-host personal-proxy-http-host

@@ -25,7 +25,8 @@
    lsp-bridge-jdtls-default-file (expand-file-name "lsp-bridge-config/jdtls.json" user-emacs-directory)
    lsp-bridge-jdtls-jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
                                "-Xmx8G"
-                               "-XX:+UseG1GC"
+                               ;; "-XX:+UseG1GC"
+                               "-XX:+UseZGC"
                                "-XX:+UseStringDeduplication")))
 
 (add-hook-run-once 'java-mode-hook #'+lsp/set-leader-keys)
