@@ -74,6 +74,8 @@
       (kbd "RET") 'lsp-bridge-ref-open-file-and-stay
       "q" 'lsp-bridge-ref-quit))
 
+  ;; TODO: remap `lsp-bridge-call-hierarchy-mode-map'
+
   (define-key lsp-bridge-mode-map [remap evil-goto-definition] #'lsp-bridge-find-def)
   (define-key lsp-bridge-mode-map [remap xref-go-back] #'lsp-bridge-find-def-return))
 
@@ -87,9 +89,12 @@
                ("\t" . acm-insert-common)
                ("C-h" . acm-doc-toggle)))
   :config
-  (setq acm-enable-search-words nil
-        acm-menu-length 10
-        acm-candidate-match-function 'orderless-flex))
+  (setq acm-menu-length 10
+        acm-candidate-match-function 'orderless-flex
+        ;; backends
+        acm-enable-tabnine nil
+        acm-enable-telega nil
+        acm-enable-search-file-words nil))
 
 
 (provide 'init-lsp)

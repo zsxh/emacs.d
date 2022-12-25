@@ -38,7 +38,14 @@
         "import": {
           "maven": {
             "enabled": true
-          }
+          },
+          "exclusions": [
+            "**/node_modules/**",
+            "**/.metadata/**",
+            "**/archetype-resources/**",
+            "**/META-INF/maven/**",
+            "/**/test/**"
+          ]
         },
         "configuration": {
           "updateBuildConfiguration": "automatic",
@@ -71,6 +78,7 @@
           ],
           "resourceFilters": [
             "node_modules",
+            ".git",
             ".metadata",
             "archetype-resources",
             "META-INF/maven"
