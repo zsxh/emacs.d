@@ -118,8 +118,6 @@
       (set-fontset-font t 'unicode "Symbola" nil 'prepend)
     (message "[WARN] font \"Symbola\" not found")))
 
-;; TODO: Typographic Ligatures in Emacs, https://github.com/mickeynp/ligature.el
-
 (defun +ui/frame-config (frame)
   "Custom behaviours for new frames."
   (with-selected-frame frame

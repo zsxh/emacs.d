@@ -46,7 +46,7 @@
   :bind ((:map vue-mode-map
                ("C-c C-l" . vue-mode-reparse)))
   :config
-  ;; FIXME: lsp-vetur (lsp-format-buffer) just ignore .eslintrc.js file
+  ;; NOTE: lsp-vetur (lsp-format-buffer) just ignore .eslintrc.js file
   ;; so we need to set .eslintrc.js configs to avoid eslint error, check https://eslint.org/ for details
   ;; rules: {
   ;;   'semi': ['error', 'always'],

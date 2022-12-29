@@ -119,7 +119,6 @@
 
 ;; Toggle visibility of hidden Org mode element parts upon entering and leaving an element
 ;; https://github.com/awth13/org-appear
-;; TODO: evil normal state hiding, insert/visual state showing
 (use-package org-appear
   :hook (org-mode . org-appear-mode)
   :custom
@@ -339,59 +338,6 @@ at the first function to return non-nil.")
         org-static-blog-preview-link-p t
         org-static-blog-enable-tags t)
   (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))
-
-;; NOTE: https://www.orgroam.com/manual.html
-;; https://www.orgroam.com/manual.html#Note_002dtaking-Workflows
-;; https://www.orgroam.com/manual.html#FAQ
-;; - We can have more than one Org-roam directory
-;; How-to-Take-Smart-Notes: https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzI1NTA4Nzk5Mw==&scene=1&album_id=1464601583634939905#wechat_redirect&tdsourcetag=s_pctim_aiomsg
-;;
-;; Node(File/Headline ID) `org-id-get-create'
-;; Org's standard ID link (e.g. id:foo)
-;; `org-roam-node-insert', `org-roam-node-find', `org-roam-capture', `org-roam-buffer-toggle'
-;; TODO: https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/
-;; TODO: subdirectories https://www.reddit.com/r/emacs/comments/s8mwiw/orgroam_a_way_to_use_subdirectories/
-;; TODO: https://jethrokuan.github.io/org-roam-guide/
-(use-package org-roam
-  :defer t
-  :commands (org-roam-db-autosync-mode org-roam-db-sync)
-  :custom
-  (org-roam-db-location (expand-file-name "cache/org-roam.db" user-emacs-directory))
-  (org-id-locations-file (locate-user-emacs-file "cache/.org-id-locations"))
-  :preface
-  (setq org-roam-v2-ack t)
-  :config
-  (require 'ucs-normalize)
-  (require 'org-roam-dailies)
-  ;; (make-directory "~/org/org-roam")
-  (setq org-roam-directory (file-truename "~/org/org-roam")
-        org-roam-dailies-directory "daily/"
-        ;; org-roam-db-update-on-save t
-        )
-  (require 'transient)
-  (transient-define-prefix transient-org-roam ()
-    [["Node"
-      ("ni" "node-insert" org-roam-node-insert)
-      ("nf" "node-find" org-roam-node-find)
-      ("nc" "capture" org-roam-capture)
-      ("nd" "dailies-capture" org-roam-dailies-capture-date)
-      ("q" "quit" transient-quit-all)]
-     ["Properties"
-      ("aa" "alias-add" org-roam-alias-add)
-      ("ar" "alias-remove" org-roam-alias-remove)
-      ("ra" "ref-add" org-roam-ref-add)
-      ("rr" "ref-remove" org-roam-ref-remove)]]))
-
-;; (use-package org-roam-ui
-;;   :defer t)
-
-;; TODO: https://github.com/nobiot/org-transclusion, work with `org-roam'
-
-;; TODO: https://coredumped.dev/2021/05/26/taking-org-roam-everywhere-with-logseq/, work with `logseq'
-
-;; TODO: org-ref
-(use-package org-ref
-  :defer t)
 
 
 (provide 'init-org)

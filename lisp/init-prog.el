@@ -166,12 +166,7 @@
 ;; "z r" evil-open-folds
 (use-package hideshow
   :commands hs-minor-mode
-  ;; FIXME: https://github.com/millejoh/emacs-ipython-notebook/issues/464#issuecomment-460380151
-  ;; the bicycle extension was using hideshow and conflicted with ein
-  :hook ((prog-mode) .
-         (lambda ()
-           (unless (member major-mode '(poly-ein-mode ein:notebook-multilang-mode))
-             (hs-minor-mode))))
+  :hook (prog-mode . hs-minor-mode)
   :config
   (with-eval-after-load 'evil
     (define-key evil-normal-state-map (kbd "zf") 'hs-hide-level)))
