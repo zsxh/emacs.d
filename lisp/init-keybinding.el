@@ -32,7 +32,7 @@
 ;; keybindings with which-key,evil well supported
 (use-package general)
 
-(with-eval-after-load '(and evil general)
+(with-eval-after-load 'evil
   (define-key global-map "\M-o" nil) ; disable `facemenu-keymap' default keybindings first
   (general-define-key
    :states '(normal visual motion insert emacs)

@@ -96,7 +96,7 @@ This filter de-installs itself after this call."
   :config
   (with-eval-after-load 'tree-sitter-hl
     (add-to-list 'separedit-comment-faces 'tree-sitter-hl-face:comment))
-  (with-eval-after-load '(and edit-indirect evil)
+  (with-eval-after-load 'evil
     (evil-define-minor-mode-key 'normal 'edit-indirect--overlay
       ",c" 'edit-indirect-commit
       ",k" 'edit-indirect-abort)))

@@ -173,13 +173,6 @@ If RETURN-P, return the message as a string instead of displaying it."
       (error
        (format "Error installing %s" (symbol-name package))))))
 
-;; Multi-file support for `eval-after-load'.
-;; Usage:
-;; (with-eval-after-load '(and a (or b c))
-;;   ...)
-(use-package meal
-  :quelpa (meal :fetcher github :repo "twlz0ne/meal.el"))
-
 (use-package async
   :defer t
   :commands (async-start))

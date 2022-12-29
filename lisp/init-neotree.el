@@ -45,7 +45,45 @@
 
   (with-eval-after-load 'winum
     ;; window 0 is reserved for file trees
-    (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func)))
+    (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func))
+
+  (with-eval-after-load 'doom-themes-ext-neotree
+    (defun doom-themes-neotree-insert-dir-a (node depth expanded &optional short-name)
+      (let ((short-name (or short-name (neo-path--file-short-name node)))
+            (faces '(doom-themes-neotree-dir-face))
+            icon-text)
+        ;; insert indentation
+        (insert-char ?\s (* (- depth 1) 2))
+        ;; vcs integration
+        (let ((vc (if neo-vc-integration (neo-vc-for-node node))))
+          (when (memq 'char neo-vc-integration)
+            (insert-char (car vc))
+            (insert-char ?\s))
+          (unless (and (memq 'face neo-vc-integration)
+                       (not (eq (cdr vc) 'neo-vc-up-to-date-face))
+                       (setq faces (list (cdr vc))))
+            (cl-destructuring-bind (&key face icon)
+                (doom-themes-neotree-spec node doom-themes-neotree-dir-rules)
+              (if face (push face faces))
+              (if icon (setq icon-text icon)))))
+        ;; insert icon
+        (let ((type (if expanded 'open 'close)))
+          (if (display-graphic-p)
+              (doom--neotree-insert-icon type node icon-text faces)
+            (neo-buffer--insert-fold-symbol type node)))
+        ;; insert label button
+        (when doom-themes-neotree-enable-variable-pitch
+          (push 'variable-pitch faces))
+        (insert-button short-name
+                       'follow-link t
+                       'face `(:inherit (,@faces))
+                       'neo-full-path node
+                       'keymap neotree-dir-button-keymap)
+        ;; metadata + newline
+        (neo-buffer--node-list-set nil node)
+        (neo-buffer--newline-and-begin)))
+
+    (advice-add #'doom-themes-neotree-insert-dir :override #'doom-themes-neotree-insert-dir-a)))
 
 (defun +neotree/jump-to-dired (&optional arg)
   "Jump to Dired buffer corresponding to current neotree node."
@@ -192,44 +230,7 @@
 (advice-add #'neo-buffer--insert-tree :override #'neo-buffer--insert-tree-a)
 (advice-add #'neo-buffer--insert-dir-entry :override #'neo-buffer--insert-dir-entry-a)
 
-(with-eval-after-load '(and neotree doom-themes-ext-neotree)
 
-  (defun doom-themes-neotree-insert-dir-a (node depth expanded &optional short-name)
-    (let ((short-name (or short-name (neo-path--file-short-name node)))
-          (faces '(doom-themes-neotree-dir-face))
-          icon-text)
-      ;; insert indentation
-      (insert-char ?\s (* (- depth 1) 2))
-      ;; vcs integration
-      (let ((vc (if neo-vc-integration (neo-vc-for-node node))))
-        (when (memq 'char neo-vc-integration)
-          (insert-char (car vc))
-          (insert-char ?\s))
-        (unless (and (memq 'face neo-vc-integration)
-                     (not (eq (cdr vc) 'neo-vc-up-to-date-face))
-                     (setq faces (list (cdr vc))))
-          (cl-destructuring-bind (&key face icon)
-              (doom-themes-neotree-spec node doom-themes-neotree-dir-rules)
-            (if face (push face faces))
-            (if icon (setq icon-text icon)))))
-      ;; insert icon
-      (let ((type (if expanded 'open 'close)))
-        (if (display-graphic-p)
-            (doom--neotree-insert-icon type node icon-text faces)
-          (neo-buffer--insert-fold-symbol type node)))
-      ;; insert label button
-      (when doom-themes-neotree-enable-variable-pitch
-        (push 'variable-pitch faces))
-      (insert-button short-name
-                     'follow-link t
-                     'face `(:inherit (,@faces))
-                     'neo-full-path node
-                     'keymap neotree-dir-button-keymap)
-      ;; metadata + newline
-      (neo-buffer--node-list-set nil node)
-      (neo-buffer--newline-and-begin)))
-
-  (advice-add #'doom-themes-neotree-insert-dir :override #'doom-themes-neotree-insert-dir-a))
 
 
 (provide 'init-neotree)
