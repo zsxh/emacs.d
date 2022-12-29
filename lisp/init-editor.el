@@ -110,10 +110,6 @@ This filter de-installs itself after this call."
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-merge-split-window-function 'split-window-horizontally))
 
-;; Increase selected region by semantic units
-(use-package expand-region
-  :commands er/expand-region)
-
 ;; Framework for mode-specific buffer indexes
 (use-package imenu-list
   :commands imenu-list-smart-toggle
@@ -137,15 +133,6 @@ This filter de-installs itself after this call."
              rotate-frame               ; x
              rotate-frame-clockwise
              rotate-frame-anticlockwise))
-
-;; Treat undo history as a tree
-(use-package undo-tree
-  :if (lambda nil (not (functionp 'undo-redo)))
-  :config
-  ;; https://emacs.stackexchange.com/questions/31438/possible-not-to-use-undo-tree-in-evil-mode/34214#34214
-  ;; https://github.com/emacs-evil/evil/issues/1074
-  (setq undo-tree-enable-undo-in-region nil)
-  (add-hook 'after-init-hook 'global-undo-tree-mode))
 
 ;; Numbered window shortcuts
 (use-package winum

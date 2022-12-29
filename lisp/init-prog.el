@@ -16,15 +16,6 @@
 
 ;;;;;;;;;;;;;; DOC ;;;;;;;;;;;;;;
 
-;; require `zeal' installation
-;; zeal (dash for linux)
-(use-package zeal-at-point
-  :commands zeal-at-point)
-
-(use-package devdocs-browser
-  :commands (devdocs-browser-install-doc
-             devdocs-browser-open
-             devdocs-browser-open-in))
 
 ;;;;;;;;;;;;;; EDIT ;;;;;;;;;;;;;;
 

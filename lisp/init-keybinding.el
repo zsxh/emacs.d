@@ -182,7 +182,6 @@
    ;; Project
    "p" '(nil :which-key "project")
    "p/" '(rg-project :which-key "ripgrep-search-project")
-   "p'" '(+shell/project-shell-pop :which-key "project-root-shell-pop")
    "pb" '(project-switch-to-buffer :which-key "switch-to-project-buffer")
    "pd" '(project-dired :which-key "project-root-dired")
    "pf" '(project-find-file :which-key "project-find-file")
@@ -204,7 +203,6 @@
    "tS" '(transient-string-inflection :which-key "string-inflection-cycle")
    ;; "tt"  '(tiny-expand :which-key "tiny-expand")
    "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
-   "t=" '(er/expand-region :which-key "expand-region")
    ;; View/Workspace/Layout
    "v" '(nil :which-key "workspace")
    "va" '(persp-add-buffer :which-key "persp-add-buffer")

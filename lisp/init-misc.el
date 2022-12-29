@@ -51,10 +51,6 @@
   (with-eval-after-load 'evil
     (evil-define-key 'normal youdao-dictionary-mode-map "q" 'quit-window)))
 
-;; TODO: sdcv
-;; https://github.com/manateelazycat/sdcv/
-;; dictionary : http://download.huzheng.org/zh_CN/
-
 ;; Markdowm
 (with-eval-after-load 'markdown-mode
   (defun eaf-markdown-previewer ()
@@ -150,10 +146,6 @@
 (use-package with-proxy
   :commands with-proxy)
 
-;; Music Player
-(use-package bongo
-  :commands bongo)
-
 ;; Use nmcli to manage network
 (defvar nmcli-network-manager-history nil
   "Network manager history.")
@@ -181,35 +173,12 @@
                         (shell-quote-argument network)))))))
     (funcall 'f line)))
 
-;; Major mode for crontab(5) files
-(use-package crontab-mode
-  :mode ("\\.?cron\\(tab\\)?\\'" . crontab-mode))
-
 ;; User can use curl when s/he has it, as curl is more reliable
 ;; than url.el.
 (use-package request
   :defer t
   :custom
   (request-storage-directory (locate-user-emacs-file "cache/request")))
-
-;; Install lilypond and add it to load-path
-;; $pacman -S lilypond
-(use-package lilypond-mode
-  :if (and (executable-find "lilypond")
-           (file-exists-p "/usr/share/emacs/site-lisp/lilypond-mode.el"))
-  :load-path "/usr/share/emacs/site-lisp"
-  :commands LilyPond-mode
-  :mode (("\\.ly$" . LilyPond-mode)
-         ("\\.ily$" . LilyPond-mode)))
-
-;; https://github.com/benma/visual-regexp.el
-(use-package visual-regexp
-  :defer t)
-
-;; https://github.com/twlz0ne/playonline.el
-;; `playonline-block' (require org-mode / markdown)
-(use-package playonline
-  :commands (playonline))
 
 ;; Usage:
 ;; emacs -batch -l ${package-elpa-dir}/elisp-benchmarks.el -f elisp-benchmarks-run
@@ -218,11 +187,6 @@
 
 (use-package memory-usage
   :commands memory-usage)
-
-(use-package netease-cloud-music
-  :if (executable-find "mplayer")
-  :load-path (lambda () (expand-file-name "submodules/netease-cloud-music" user-emacs-directory))
-  :commands (netease-cloud-music))
 
 ;; https://github.com/joostkremers/writeroom-mode
 ;; `writeroom-mode'
@@ -303,15 +267,10 @@
 
 ;; https://github.com/tecosaur/screenshot.git
 ;; convert a selected region of code to a screenshot
-;; FIXME: https://github.com/tecosaur/screenshot/pull/14
 (use-package screenshot
   :quelpa (screenshot :fetcher github :repo "tecosaur/screenshot")
   :commands screenshot)
 
-;; TODO: take note with videos
-;; https://github.com/yuchen-lea/org-media-note
-;; https://github.com/yuchen-lea/org-media-note/blob/master/README_CN.org
-;; https://emacs-china.org/t/org-media-note/16160
 
 ;; TODO: timers
 ;; (defmacro nasy/timer (&rest body)

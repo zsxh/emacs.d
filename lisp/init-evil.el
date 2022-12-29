@@ -224,46 +224,46 @@
     (evil-set-initial-state 'comint-mode 'normal)))
 
 (with-eval-after-load 'evil
-;; Customize
+  ;; Customize
 
-;; Code faster by extending Emacs EVIL text object
-;; http://blog.binchen.org/posts/code-faster-by-extending-emacs-evil-text-object/
-;; press `vib' to do exactly same thing as vi(
-;; using `vig' to replace vi[, vi{, vi(, and vi<
-(defun my-evil-paren-range (count beg end type inclusive)
-  "Get minimum range of paren text object.
+  ;; Code faster by extending Emacs EVIL text object
+  ;; http://blog.binchen.org/posts/code-faster-by-extending-emacs-evil-text-object/
+  ;; press `vib' to do exactly same thing as vi(
+  ;; using `vig' to replace vi[, vi{, vi(, and vi<
+  (defun my-evil-paren-range (count beg end type inclusive)
+    "Get minimum range of paren text object.
 COUNT, BEG, END, TYPE is used.  If INCLUSIVE is t, the text object is inclusive."
-  (let* ((parens '("()" "[]" "{}" "<>"))
-         range
-         found-range)
-    (dolist (p parens)
-      (condition-case nil
-          (setq range (evil-select-paren (aref p 0) (aref p 1) beg end type count inclusive))
-        (error nil))
-      (when range
-        (cond
-         (found-range
-          (when (< (- (nth 1 range) (nth 0 range))
-                   (- (nth 1 found-range) (nth 0 found-range)))
-            (setf (nth 0 found-range) (nth 0 range))
-            (setf (nth 1 found-range) (nth 1 range))))
-         (t
-          (setq found-range range)))))
-    found-range))
+    (let* ((parens '("()" "[]" "{}" "<>"))
+           range
+           found-range)
+      (dolist (p parens)
+        (condition-case nil
+            (setq range (evil-select-paren (aref p 0) (aref p 1) beg end type count inclusive))
+          (error nil))
+        (when range
+          (cond
+           (found-range
+            (when (< (- (nth 1 range) (nth 0 range))
+                     (- (nth 1 found-range) (nth 0 found-range)))
+              (setf (nth 0 found-range) (nth 0 range))
+              (setf (nth 1 found-range) (nth 1 range))))
+           (t
+            (setq found-range range)))))
+      found-range))
 
-(evil-define-text-object my-evil-a-paren (count &optional beg end type)
-  "Select a paren."
-  :extend-selection t
-  (my-evil-paren-range count beg end type t))
+  (evil-define-text-object my-evil-a-paren (count &optional beg end type)
+    "Select a paren."
+    :extend-selection t
+    (my-evil-paren-range count beg end type t))
 
-(evil-define-text-object my-evil-inner-paren (count &optional beg end type)
-  "Select 'inner' paren."
-  :extend-selection nil
-  (my-evil-paren-range count beg end type nil))
+  (evil-define-text-object my-evil-inner-paren (count &optional beg end type)
+    "Select 'inner' paren."
+    :extend-selection nil
+    (my-evil-paren-range count beg end type nil))
 
-(define-key evil-inner-text-objects-map "g" #'my-evil-inner-paren)
-(define-key evil-outer-text-objects-map "g" #'my-evil-a-paren)
-)
+  (define-key evil-inner-text-objects-map "g" #'my-evil-inner-paren)
+  (define-key evil-outer-text-objects-map "g" #'my-evil-a-paren))
+
 
 (provide 'init-evil)
 

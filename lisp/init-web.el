@@ -157,13 +157,6 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
   :ensure nil
   :commands websocket-client-open)
 
-;; install formatter
-;; sudo pacman -S tidy
-(use-package format-all
-  :commands (format-all-buffer)
-  :config
-  (setq-default format-all-formatters '(("HTML" html-tidy))))
-
 (use-package know-your-http-well
   :defer t)
 

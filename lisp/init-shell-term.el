@@ -13,31 +13,11 @@
 (eval-when-compile
   (require 'init-custom))
 
-(use-package shell-pop
-  :commands shell-pop
-  :config
-  (setq shell-pop-term-shell personal-shell-executable)
-  (cond ((functionp 'vterm)
-         (setq shell-pop-shell-type '("vterm" "*vterm*" (lambda () (vterm)))))
-        (t (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))))
-  (setq shell-pop-window-position "bottom")
-  ;; The last line is needed or no picked up by 'shell-pop'
-  (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
-
-(defun +shell/project-shell-pop ()
-  "Open a term buffer at project root,
-if no project root found, use current directory instead."
-  (interactive)
-  (let ((default-directory (or (+project/root t) default-directory)))
-    (call-interactively 'shell-pop)))
-
 ;; HIGHLY RECOMMENDED
 ;; https://github.com/akermu/emacs-libvterm
 ;; On ArchLinux or Manjaro install libvterm first
 ;; sudo pacman -S libvterm
 (use-package vterm
-  ;; :quelpa (vterm :fetcher github :repo "jixiuf/emacs-libvterm"
-  ;;                :files (:defaults "*.c" "*.h" "CMakeLists.txt"))
   :if (and (executable-find "vterm-ctrl")
            (executable-find "make")
            (executable-find "cmake")
@@ -54,7 +34,7 @@ if no project root found, use current directory instead."
                ("q" . vterm-copy-mode-done)))
   :custom
   (vterm-kill-buffer-on-exit t)
-  (vterm-term-environment-variable "xterm-24bit")
+  ;; (vterm-term-environment-variable "xterm-24bit")
   (vterm-timer-delay 0.01)
   :init
   (global-set-key [f9] '+vterm/toggle-here)
@@ -200,12 +180,6 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 ;;   :quelpa (term-keys :fetcher github :repo "CyberShadow/term-keys")
 ;;   :hook (after-init . term-keys-mode))
 
-;; Note: Fixing Emacs tramp mode when using zsh
-;; https://blog.karssen.org/2016/03/02/fixing-emacs-tramp-mode-when-using-zsh/
-;; https://www.emacswiki.org/emacs/TrampMode#toc8
-
-(use-package isend-mode
-  :defer t)
 
 
 (provide 'init-shell-term)

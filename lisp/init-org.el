@@ -199,15 +199,6 @@
 (use-package org-tree-slide
   :commands org-tree-slide-mode)
 
-;; convert org-file to ipynb
-;; https://github.com/jkitchin/ox-ipynb
-;; convert ipynb to org-file
-;; $pip install nbcorg
-(use-package ox-ipynb
-  :quelpa (ox-ipynb :fetcher github :repo "jkitchin/ox-ipynb")
-  ;; :after org
-  :defer t)
-
 ;; Org Bable
 ;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/contrib/jupyter.el
 ;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/config.el
@@ -306,42 +297,6 @@ at the first function to return non-nil.")
   :defer t
   :custom (org-plantuml-jar-path (expand-file-name "cache/ob-plantuml/plantuml.jar" user-emacs-directory)))
 
-;; FIXME: ob-jupyter, ob-async wierd conflict
-;; Incase you don't know, ob-jupyter need to read kernel info to config org-mode babel
-;; so, you need to set the correct enviroment first.
-;;
-;; For example, I use virtual/project enviroment for jupyter/ijulia
-;; #+begin_src elisp
-;;   (conda-env-activate VIRTUAL_ENV)
-;;   (setenv "JULIA_LOAD_PATH" JULIA_PROJECT_ENV)
-;; #+end_src
-;;
-;; Q: How do i resolve "No org-babel-execute function for jupyter-LANG"?
-;; A: Set correct enviroment and eval (org-babel-jupyter-aliases-from-kernelspecs t)
-;; Q: What header-args are needed?
-;; A: :session must be included, :async is optional
-;; (use-package ob-jupyter
-;;   :ensure jupyter
-;;   :defer t
-;;   :init
-;;   (defun +org/babel-load-jupyter-h (lang)
-;;     (when (string-prefix-p "jupyter-" (symbol-name lang))
-;;       (require 'jupyter)
-;;       (let* ((lang-name (symbol-name lang))
-;;              (lang-tail (string-remove-prefix "jupyter-" lang-name)))
-;;         (and (not (assoc lang-tail org-src-lang-modes))
-;;              (require (intern (format "ob-%s" lang-tail)) nil t)
-;;              (add-to-list 'org-src-lang-modes (cons lang-name (intern lang-tail)))))
-;;       (with-demoted-errors "Jupyter: %s"
-;;         (require lang nil t)
-;;         (require 'ob-jupyter nil t))))
-
-;;   (add-hook '+org/babel-load-functions #'+org/babel-load-jupyter-h)
-;;   :config
-;;   (defun +org/babel-jupyter-initiate-session-a (&rest _)
-;;     (unless (bound-and-true-p jupyter-org-interaction-mode)
-;;       (jupyter-org-interaction-mode))))
-
 ;; TODO: use org-mode built-in async,check `https://blog.tecosaur.com/tmio/2021-05-31-async.html'
 ;; ob-async enables asynchronous execution of org-babel src blocks
 (use-package ob-async
@@ -384,17 +339,6 @@ at the first function to return non-nil.")
         org-static-blog-preview-link-p t
         org-static-blog-enable-tags t)
   (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))
-
-;; https://github.com/abo-abo/org-download
-;; eg: https://et2010.github.io/blog/nikola-orgmode-tu-pian-xian-shi/
-(use-package org-download
-  :after org
-  :bind
-  (:map org-mode-map
-        (("s-Y" . org-download-screenshot)
-         ("s-y" . org-download-yank)))
-  :config
-  (setq org-download-screenshot-method "deepin-screen-recorder -s %s"))
 
 ;; NOTE: https://www.orgroam.com/manual.html
 ;; https://www.orgroam.com/manual.html#Note_002dtaking-Workflows

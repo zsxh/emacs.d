@@ -23,7 +23,7 @@
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
-  ;; :hook (magit-mode . magit-todos-mode)
+  :hook (magit-mode . magit-todos-mode)
   :after magit
   :custom
   (magit-todos-exclude-globs '("node_modules" "*.json" ".git/"))
@@ -99,20 +99,6 @@
 ;; `gitignore-mode' for .gitignore, .git/info/exclude, and git/ignore files.
 (use-package git-modes
   :defer t)
-
-;; TODO: https://github.com/Artawower/blamer.el
-(use-package blamer
-  :defer t
-  :custom
-  (blamer-idle-time 0.5)
-  (blamer-min-offset 70)
-  :custom-face
-  (blamer-face ((t :foreground "#7a88cf"
-                    :background nil
-                    :height 140
-                    :italic t)))
-  :config
-  (global-blamer-mode 1))
 
 (with-eval-after-load 'smerge-mode
   (require 'transient)
