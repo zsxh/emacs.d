@@ -142,7 +142,8 @@ This filter de-installs itself after this call."
 
 ;; Use package auto-save instead of default auto save
 (use-package auto-save
-  :quelpa (auto-save :fetcher github :repo "manateelazycat/auto-save")
+  :ensure nil
+  :init (slot/vc-install :fetcher "github" :repo "manateelazycat/auto-save")
   :preface
   ;; note: it's risky to disable lockfiles
   ;; https://emacs-china.org/t/filename/163/17

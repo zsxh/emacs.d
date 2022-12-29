@@ -10,19 +10,12 @@
 
 ;;; Code:
 
+;; NOTE: `package-vc-install', `package-vc-update', `package-vc-update-all' for packages not in mepla/elpa
+
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil) ; To prevent initializing twice
   (package-initialize))
-
-;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly.
-;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
-(defun my-save-selected-packages (&optional value)
-  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
-  (when value
-    (setq package-selected-packages value)))
-
-(advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
 
 ;; Set EPLA
 (defun set-package-archives (archives)
@@ -57,23 +50,30 @@
 
 (set-package-archives personal-package-archives)
 
-;; Setup `use-package'
-;; how do I specify a specific branch for a git repo?
-;; https://github.com/quelpa/quelpa-use-package/issues/8
-;; https://github.com/melpa/melpa#recipe-format
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; https://tony-zorman.com/posts/2022-11-30-package-vc-install.html
+(cl-defun slot/vc-install (&key (fetcher "github") repo name rev backend)
+  "Install a package from a remote if it's not already installed.
+This is a thin wrapper around `package-vc-install' in order to
+make non-interactive usage more ergonomic.  Takes the following
+named arguments:
 
-;; TIPS:
-;; https://stackoverflow.com/questions/46386362/execution-order-of-eval-after-load-vs-hooks-for-a-given-major-mode-in-emacs
-;; https://stackoverflow.com/questions/2736087/eval-after-load-vs-mode-hook
+- FETCHER the remote where to get the package (e.g., \"gitlab\").
+  If omitted, this defaults to \"github\".
+
+- REPO should be the name of the repository (e.g.,
+  \"slotThe/arXiv-citation\".
+
+- NAME, REV, and BACKEND are as in `package-vc-install' (which
+  see)."
+  (let* ((url (format "https://www.%s.com/%s" fetcher repo))
+         (iname (when name (intern name)))
+         (pac-name (or iname (intern (file-name-base repo)))))
+    (unless (package-installed-p pac-name)
+      (package-vc-install url iname rev backend))))
 
 (eval-when-compile
-  (require 'use-package)
-  (require 'use-package-ensure)
-  (setq use-package-always-ensure t)
-  (setq use-package-verbose t))
+  (setq use-package-always-ensure t
+        use-package-verbose t))
 
 ;; Benchmark-init only measures time spent in `require' and `load'
 (use-package benchmark-init
@@ -104,43 +104,6 @@ If RETURN-P, return the message as a string instead of displaying it."
                (setq emacs-startup-time (float-time (time-subtract (current-time) before-init-time))))))
 
 (add-hook 'emacs-startup-hook #'+package/display-benchmark)
-
-;; Build and install your Emacs Lisp packages on-the-fly and directly from source
-(use-package quelpa-use-package
-  :after (use-package)
-  :init
-  ;; Using quelpa with :ensure
-  ;; (setq use-package-ensure-function 'quelpa)
-  (setq quelpa-self-upgrade-p nil)
-  (setq quelpa-update-melpa-p nil)
-  (setq quelpa-melpa-dir (expand-file-name "quelpa/melpa" user-emacs-directory))
-  (when (file-exists-p (expand-file-name ".git" quelpa-melpa-dir))
-    (setq quelpa-checkout-melpa-p nil))
-  ;; Avoid loading quelpa unless necessary.
-  ;; This improves performance, but can prevent packages from being updated automatically.
-  (setq quelpa-use-package-inhibit-loading-quelpa t)
-  (when (bound-and-true-p package-quickstart)
-    (add-hook 'quelpa-after-hook 'package-quickstart-refresh))
-  :config
-  ;; To install some packages with quelpa but use use-package-always-ensure to install all others
-  ;; from an ELPA repo :ensure needs to be disabled if the :quelpa keyword is found.
-  (quelpa-use-package-activate-advice))
-
-(defun +package/quelpa-clean-cache (pkg-desc &optional force nosave)
-  (let ((pkg-name (package-desc-name pkg-desc)))
-    (unless (featurep 'quelpa)
-      (require 'quelpa))
-    (when (and (quelpa-setup-p)
-               (not (assq pkg-name package-alist))
-               (cl-assoc pkg-name quelpa-cache))
-      (let ((build-dir (expand-file-name (symbol-name pkg-name) quelpa-build-dir)))
-        (when (file-exists-p build-dir)
-          (delete-directory build-dir t))
-        (setq quelpa-cache (cl-remove pkg-name quelpa-cache :key #'car))
-        (quelpa-save-cache)
-        (format "package %s quelpa cache cleaned" pkg-name)))))
-
-(advice-add 'package-delete :after '+package/quelpa-clean-cache)
 
 (use-package auto-package-update
   :init

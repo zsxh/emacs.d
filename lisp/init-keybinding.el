@@ -193,7 +193,6 @@
    "t" '(nil :which-key "text")
    "tB" '(comment-box :which-key "comment-box")
    "ti" '(nil :which-key "insert")
-   "tit" '(insert-translated-name-insert :which-key "chinese->engish")
    "tn" '(+funcs/narrow-or-widen-dwim :which-key "narrow-to-region")
    "tr" '(nil :which-key "replace")
    "trb" '(evilmr-replace-in-buffer :which-key "evilmr-replace-in-buffer")

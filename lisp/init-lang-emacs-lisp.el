@@ -83,7 +83,8 @@
 
 ;; Extra font lock for emacs lisp
 (use-package elispfl
-  :quelpa (elispfl :fetcher github :repo "cireu/elispfl")
+  :ensure nil
+  :init (slot/vc-install :fetcher "github" :repo "cireu/elispfl")
   :after elisp-mode
   :config
   (elispfl-mode))

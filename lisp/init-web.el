@@ -107,7 +107,8 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 
 ;; https://github.com/manateelazycat/highlight-matching-tag
 (use-package highlight-matching-tag
-  :quelpa (highlight-matching-tag :fetcher github :repo "manateelazycat/highlight-matching-tag")
+  :ensure nil
+  :init (slot/vc-install :fetcher "github" :repo "manateelazycat/highlight-matching-tag")
   :commands highlight-matching-tag
   :hook (web-mode . (lambda () (highlight-matching-tag 1))))
 

@@ -77,12 +77,6 @@
   (setq go-translate-local-language "zh-CN")
   (setq go-translate-base-url "https://translate.google.cn"))
 
-;; This extension will ask me Chinese words and then insert translation as variable or function name.
-;; https://github.com/manateelazycat/insert-translated-name
-(use-package insert-translated-name
-  :commands insert-translated-name-insert
-  :quelpa (insert-translated-name :fetcher github :repo "manateelazycat/insert-translated-name"))
-
 ;; Leetcode
 ;; https://github.com/kaiwk/leetcode.el
 ;; Remember to set your account and password
@@ -268,9 +262,9 @@
 ;; https://github.com/tecosaur/screenshot.git
 ;; convert a selected region of code to a screenshot
 (use-package screenshot
-  :quelpa (screenshot :fetcher github :repo "tecosaur/screenshot")
+  :ensure nil
+  :init (slot/vc-install :fetcher "github" :repo "tecosaur/screenshot")
   :commands screenshot)
-
 
 ;; TODO: timers
 ;; (defmacro nasy/timer (&rest body)
