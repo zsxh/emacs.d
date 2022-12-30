@@ -40,6 +40,8 @@
 (setq package-enable-at-startup nil)
 
 ;; Quickstart: precompute activation actions for faster start up
+;; However, if you do this, then you have to manually run the command ‘package-quickstart-refresh’ when the
+;; activations need to be changed, such as when you change the value of  ‘package-load-list’
 ;; (setq package-quickstart t)
 
 ;; Disable cursor blinking

@@ -60,6 +60,7 @@
 (set-package-archives personal-package-archives)
 
 ;; https://tony-zorman.com/posts/2022-11-30-package-vc-install.html
+;; NOTE: https://github.com/slotThe/vc-use-package
 (cl-defun slot/vc-install (&key (fetcher "github") repo name rev backend)
   "Install a package from a remote if it's not already installed.
 This is a thin wrapper around `package-vc-install' in order to

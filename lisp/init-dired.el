@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-;; TODO: replace neotree with dirvish-side
-
 ;; Lazy load `dirvish' to speedup bootstrap time
 (defvar dirvish-override-dired-p nil)
 
