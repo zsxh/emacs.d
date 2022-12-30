@@ -11,7 +11,7 @@
 ;;; Code:
 
 ;; Julia PkgServer/Mirrors https://discourse.juliacn.com/t/topic/2969
-;; TODO: Install Julia LanguageServer
+;; NOTE: Install Julia LanguageServer
 ;; $ julia
 ;; julia> ]
 ;; pkg> add LanguageServer
@@ -77,7 +77,6 @@
           (vterm-send-return)
           (vterm-send-backspace))))))
 
-;; TODO: julia-vterm workflow
 (use-package julia-vterm
   :defer t)
 

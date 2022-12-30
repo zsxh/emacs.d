@@ -44,11 +44,10 @@
 ;; (setenv "JULIA_LOAD_PATH" "YOUR_PROJECT_PATH")
 
 ;; An interface ot communicate with Jupyter kernels in Emacs
-;; TODO: Replacing Jupyter Notebook with Org Mode, https://sqrtminusone.xyz/posts/2021-05-01-org-python/
+;; NOTE: Replacing Jupyter Notebook with Org Mode, https://sqrtminusone.xyz/posts/2021-05-01-org-python/
 ;; (use-package jupyter
 ;;   :commands (jupyter-run-repl jupyter-connect-repl))
 
-;; TODO: config ein
 ;; (use-package ein
 ;;   :defer t)
 

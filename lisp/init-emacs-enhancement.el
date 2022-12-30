@@ -270,9 +270,6 @@ Hack to use `insert-sliced-image' to avoid jerky image scrolling."
 (use-package minor-mode-hack
   :commands show-minor-mode-map-priority)
 
-;;;;;;;;;;;;;; Tree-Sitter ;;;;;;;;;;;;;;
-;; TODO: emacs 29.1 built-in treesitter
-
 ;;;;;;;;;;;;;; insert-char ;;;;;;;;;;;;;;
 (use-package insert-char-preview
   :commands insert-char-preview

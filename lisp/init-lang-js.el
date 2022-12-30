@@ -13,7 +13,7 @@
 (use-package nvm
   :after js)
 
-;; TODO: javascript-typescript-langserver
+;; NOTE: javascript-typescript-langserver
 (use-package js
   :ensure nil
   :bind ((:map js-mode-map
@@ -39,7 +39,7 @@
   :config
   (+lsp/set-leader-keys typescript-mode-map))
 
-;; TODO: vue-language-server
+;; NOTE: vue-language-server
 (use-package vue-mode
   :commands vue-mode
   :hook (vue-mode . lsp-bridge-mode)

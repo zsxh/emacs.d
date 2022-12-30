@@ -103,7 +103,7 @@
         consult-async-min-input 2))
 
 ;; minibuffer actions and occur/export features
-;; TODO: https://karthinks.com/software/fifteen-ways-to-use-embark/
+;; NOTE: https://karthinks.com/software/fifteen-ways-to-use-embark/
 (use-package embark
   :defer t)
 

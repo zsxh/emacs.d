@@ -69,13 +69,10 @@
    "ti" '(markdown-toggle-inline-images :which-key "inline-images")))
 
 ;; https://github.com/lorniu/go-translate
-;; TODO: google translate token issue
 (use-package go-translate
   :commands (go-translate go-translate-popup)
   :config
-  (setq go-translate-token-current (cons 430675 2721866130))
-  (setq go-translate-local-language "zh-CN")
-  (setq go-translate-base-url "https://translate.google.cn"))
+  (setq gts-translate-list '(("en" "zh"))))
 
 ;; Leetcode
 ;; https://github.com/kaiwk/leetcode.el
@@ -266,7 +263,7 @@
   :init (slot/vc-install :fetcher "github" :repo "tecosaur/screenshot")
   :commands screenshot)
 
-;; TODO: timers
+;; NOTE: timers
 ;; (defmacro nasy/timer (&rest body)
 ;;   "Measure and return the time it takes evaluating BODY."
 ;;   `(let ((time (current-time)))
