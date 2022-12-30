@@ -35,7 +35,7 @@
   (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
               ("C-<return>" . 'dired-open-xdg)
-              ("TAB" . 'dirvish-toggle-subtree)
+              ("TAB" . 'dirvish-subtree-toggle)
               ("f" . dirvish-file-info-menu)
               ("h" . dired-omit-mode)
               ("K" . dired-up-directory)
@@ -44,7 +44,7 @@
               ;; "o" `dired-find-file-other-window'
               ("M-a" . dirvish-mark-actions-menu)
               ("M-m" . dirvish-setup-menu)
-              ("M-f" . dirvish-toggle-fullscreen)
+              ("M-f" . dirvish-layout-toggle)
               ("M-h" . dirvish-show-history)
               ([remap dired-summary] . dirvish-dispatch) ; "?"
               ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
@@ -57,17 +57,17 @@
   :config
   (require 'dirvish-vc)
   (setq dirvish-vc-state-face-alist
-      '((up-to-date . nil)
-        (edited . diff-changed)
-        (added . diff-added)
-        (removed . diff-removed)
-        (missing . vc-missing-state)
-        (needs-merge . dirvish-vc-needs-merge-face)
-        (conflict . vc-conflict-state)
-        (unlocked-changes . vc-locked-state)
-        (needs-update . vc-needs-update-state)
-        (ignored . nil)
-        (unregistered . dirvish-vc-unregistered-face)))
+        '((up-to-date . nil)
+          (edited . diff-changed)
+          (added . diff-added)
+          (removed . diff-removed)
+          (missing . vc-missing-state)
+          (needs-merge . dirvish-vc-needs-merge-face)
+          (conflict . vc-conflict-state)
+          (unlocked-changes . vc-locked-state)
+          (needs-update . vc-needs-update-state)
+          (ignored . nil)
+          (unregistered . dirvish-vc-unregistered-face)))
 
   (dirvish-override-dired-mode-maybe)
   ;; (dirvish-override-dired-mode)
