@@ -14,6 +14,7 @@
   (setq read-process-output-max (* 1024 1024)))
 
 (use-package eglot
+  :ensure nil
   :commands (eglot eglot-ensure)
   :config
   (setq eglot-autoshutdown t

@@ -103,7 +103,7 @@
   :bind (:map company-posframe-active-map
               ("C-h" . company-posframe-quickhelp-toggle))
   :config
-  (setq company-posframe-quickhelp-delay nil
+  (setq company-posframe-quickhelp-delay 0.2
         company-posframe-show-indicator nil
         company-posframe-show-metadata nil)
 

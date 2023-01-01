@@ -206,15 +206,6 @@ This filter de-installs itself after this call."
       ",k" 'wgrep-abort-changes
       "q" 'wgrep-exit)))
 
-;; https://github.com/rejeep/drag-stuff.el
-;; Work fine with evil-mode
-(use-package drag-stuff
-  :after lispy
-  :config
-  (drag-stuff-global-mode 1)
-  ;; bind "M-<up/down/left/right>" to move texts up/down/left/right
-  (drag-stuff-define-keys))
-
 ;; Install fasd
 ;; https://github.com/clvv/fasd
 (use-package fasd
@@ -228,9 +219,6 @@ This filter de-installs itself after this call."
 (use-package xclip
   :if (not (display-graphic-p))
   :hook (after-init . xclip-mode))
-
-(use-package darkroom
-  :commands (darkroom-mode darkroom-tentative-mode))
 
 ;; keyboard macros
 ;;           Normal                         While defining macro
