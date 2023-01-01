@@ -67,6 +67,11 @@
   :after kubernetes)
 
 
+;; https://github.com/emacsorphanage/terraform-mode
+(use-package terraform-mode
+  :defer t)
+
+
 (provide 'init-docker)
 
 ;;; init-docker.el ends here
