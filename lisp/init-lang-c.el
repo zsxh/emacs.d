@@ -12,12 +12,22 @@
 
 ;; NOTE: clang language server
 (use-package cc-mode
+  :ensure nil
   ;; By default files ending in .h are treated as c files rather than c++ files.
   :mode ("\\.h\\'" . c++-mode)
   :hook ((c-mode c++-mode) . lsp-bridge-mode)
   :config
   (add-hook-run-once 'c-mode-hook '+lsp/set-leader-keys)
   (add-hook-run-once 'c++-mode-hook '+lsp/set-leader-keys))
+
+(use-package c-ts-mode
+  :ensure nil
+  ;; By default files ending in .h are treated as c files rather than c++ files.
+  ;; :mode ("\\.h\\'" . c++-ts-mode)
+  :hook ((c-ts-mode c++-ts-mode) . lsp-bridge-mode)
+  :config
+  (add-hook-run-once 'c-ts-mode-hook '+lsp/set-leader-keys)
+  (add-hook-run-once 'c++-ts-mode-hook '+lsp/set-leader-keys))
 
 (use-package cmake-mode
   :defer t

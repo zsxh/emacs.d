@@ -13,10 +13,13 @@
 (use-package python
   :ensure nil
   :hook ((python-mode . lsp-bridge-mode)
-         (python-mode . pyenv-mode))
+         (python-mode . pyenv-mode)
+         (python-ts-mode . lsp-bridge-mode)
+         (python-ts-mode . pyenv-mode))
   :custom (python-indent-offset 2)
   :config
-  (+lsp/set-leader-keys python-mode-map))
+  (+lsp/set-leader-keys python-mode-map)
+  (+lsp/set-leader-keys python-ts-mode-map))
 
 ;; TODO: pyright custom type stub
 ;; settings python.analysis.stubPath, https://github.com/microsoft/pyright/blob/main/docs/settings.md
@@ -40,6 +43,7 @@
     custom-config))
 
 (add-hook 'python-mode-hook (lambda () (setq-local lsp-bridge-get-lang-server-by-project 'local/lsp-bridge-get-lang-server-by-project)))
+(add-hook 'python-ts-mode-hook (lambda () (setq-local lsp-bridge-get-lang-server-by-project 'local/lsp-bridge-get-lang-server-by-project)))
 
 (use-package pyvenv
   :commands pyvenv-activate)

@@ -135,6 +135,24 @@
 (setq mouse-drag-and-drop-region-cross-program t
       mouse-drag-and-drop-region t)
 
+;; remap major mode
+(when (treesit-available-p)
+  (setq major-mode-remap-alist
+        '((c-mode          . c-ts-mode)
+          (c++-mode        . c++-ts-mode)
+          (conf-toml-mode  . toml-ts-mode)
+          (csharp-mode     . csharp-ts-mode)
+          (css-mode        . css-ts-mode)
+          (java-mode       . java-ts-mode)
+          (js-mode         . js-ts-mode)
+          (javascript-mode . js-ts-mode)
+          (js-json-mode    . json-ts-mode)
+          (python-mode     . python-ts-mode)
+          ;; (ruby-mode       . ruby-ts-mode)
+          (go-mode         . go-ts-mode)
+          (typescript-mode . typescript-ts-mode)
+          (sh-mode         . bash-ts-mode))))
+
 
 (provide 'init-config)
 

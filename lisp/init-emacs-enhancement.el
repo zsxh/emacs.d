@@ -51,6 +51,7 @@
   :init
   (add-hook-run-once 'ibuffer-hook (lambda () (all-the-icons-ibuffer-mode))))
 
+;; TODO: try https://github.com/alphapapa/bufler.el
 
 ;;;;;;;;;;;;;; Setup a menu of recently opened files ;;;;;;;;;;;;;;
 (use-package recentf
@@ -117,10 +118,10 @@
 ;; https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
 (use-package gcmh
   :init
-  (setq garbage-collection-messages nil)
+  (setq garbage-collection-messages t)
   (setq gcmh-idle-delay 15
         gcmh-high-cons-threshold #x40000000 ; 1GB
-        gcmh-verbose nil)
+        gcmh-verbose t)
   :hook (after-init . gcmh-mode))
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;

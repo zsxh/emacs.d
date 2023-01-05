@@ -50,7 +50,10 @@
                                    c-mode c++-mode go-mode java-mode
                                    clojure-mode clojurec-mode clojurescript-mode
                                    js-mode typescript-mode vue-mode
-                                   julia-mode python-mode rust-mode)
+                                   julia-mode python-mode rust-mode
+                                   c-ts-mode c++-ts-mode go-ts-mode java-ts-mode
+                                   js-ts-mode typescript-ts-mode
+                                   python-ts-mode rust-ts-mode)
         company-format-margin-function 'company-detect-icons-margin
         company-icon-size '(auto-scale . 16))
 

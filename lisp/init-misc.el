@@ -171,6 +171,8 @@
   :custom
   (request-storage-directory (locate-user-emacs-file "cache/request")))
 
+;; TODO: try another http client using curl as a backend, https://github.com/alphapapa/plz.el
+
 ;; Usage:
 ;; emacs -batch -l ${package-elpa-dir}/elisp-benchmarks.el -f elisp-benchmarks-run
 (use-package elisp-benchmarks

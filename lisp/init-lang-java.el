@@ -30,13 +30,17 @@
                                "-XX:+UseStringDeduplication")))
 
 (add-hook-run-once 'java-mode-hook #'+lsp/set-leader-keys)
+(add-hook-run-once 'java-ts-mode-hook #'+lsp/set-leader-keys)
 
-(add-hook 'java-mode-hook
-          (lambda ()
-            (unless (bound-and-true-p lsp-bridge-get-single-lang-server-by-project)
-              (require 'lsp-bridge)
-              (setq-local lsp-bridge-get-single-lang-server-by-project 'lsp-bridge-get-jdtls-server-by-project))
-            (lsp-bridge-mode)))
+(defun +java/enable-lsp ()
+  (unless (bound-and-true-p lsp-bridge-get-single-lang-server-by-project)
+    (require 'lsp-bridge)
+    (setq-local lsp-bridge-get-single-lang-server-by-project 'lsp-bridge-get-jdtls-server-by-project))
+  (lsp-bridge-mode))
+
+(add-hook 'java-mode-hook #'+java/enable-lsp)
+(add-hook 'java-ts-mode-hook #'+java/enable-lsp)
+
 
 (defun lsp-bridge-jdtls-clean-cache ()
   (interactive)

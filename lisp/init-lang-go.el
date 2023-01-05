@@ -21,6 +21,16 @@
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY"))))
 
+(use-package go-ts-mode
+  :ensure nil
+  ;; :mode ("\\.go\\'" . go-ts-mode)
+  :hook (go-ts-mode . lsp-bridge-mode)
+  :config
+  (+lsp/set-leader-keys go-ts-mode-map)
+  ;; Env vars
+  (with-eval-after-load 'exec-path-from-shell
+    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY"))))
+
 
 (provide 'init-lang-go)
 

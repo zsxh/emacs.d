@@ -17,8 +17,10 @@
 (use-package js
   :ensure nil
   :bind ((:map js-mode-map
+               ("/" . sgml-slash))
+         (:map js-ts-mode-map
                ("/" . sgml-slash)))
-  :hook (js-mode . +js/lsp-setup)
+  :hook ((js-mode js-ts-mode) . +js/lsp-setup)
   ;; https://www.emacswiki.org/emacs/RegularExpression
   ;; use `rx' to generate emacs regular expression
   ;; :mode ("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode) ; enable gloabl-so-long-mode, that's all
@@ -26,18 +28,46 @@
   (require 'sgml-mode)
   (setq js-indent-level 2)
   (+lsp/set-leader-keys js-mode-map)
+  (+lsp/set-leader-keys js-ts-mode-map)
 
   (defun +js/lsp-setup ()
     ;; This fix beginning-of-defun raise exception problem
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)
-    (unless (member major-mode '(json-mode ein:ipynb-mode))
-      (lsp-bridge-mode))))
+    (unless (member major-mode '(js-json-mode ein:ipynb-mode))
+      (lsp-bridge-mode)))
+
+  (+funcs/major-mode-leader-keys js-json-mode-map
+                                 "A" nil
+                                 "d" nil
+                                 "D" nil
+                                 "e" nil
+                                 "f" nil
+                                 "g" nil
+                                 "l" nil
+                                 "j" '(counsel-jq :which-key "counsel-jq")
+                                 "p" '(json-pretty-print-buffer :which-key "pretty-print")
+                                 "R" nil))
+
+(use-package json-ts-mode
+  :ensure nil
+  :defer t
+  :config
+  (+funcs/major-mode-leader-keys json-ts-mode-map
+                                 "j" '(counsel-jq :which-key "counsel-jq")
+                                 "p" '(json-pretty-print-buffer :which-key "pretty-print")))
 
 (use-package typescript-mode
   :defer t
   :hook (typescript-mode . lsp-bridge-mode)
   :config
   (+lsp/set-leader-keys typescript-mode-map))
+
+(use-package typescript-ts-mode
+  :ensure nil
+  :defer t
+  :hook (typescript-ts-mode . lsp-bridge-mode)
+  :config
+  (+lsp/set-leader-keys typescript-ts-mode-map))
 
 ;; NOTE: vue-language-server
 (use-package vue-mode
@@ -77,25 +107,6 @@
     ;; https://github.com/AdamNiederer/vue-mode/issues/74
     (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
     (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))))
-
-;; Json config
-(use-package json-mode
-  :mode ("\\.json\\'" . json-mode)
-  :hook (json-mode . (lambda ()
-                       (make-local-variable 'js-indent-level)
-                       (setq js-indent-level 2)))
-  :config
-  (+funcs/major-mode-leader-keys json-mode-map
-                                 "A" nil
-                                 "d" nil
-                                 "D" nil
-                                 "e" nil
-                                 "f" nil
-                                 "g" nil
-                                 "l" nil
-                                 "j" '(counsel-jq :which-key "counsel-jq")
-                                 "p" '(json-pretty-print-buffer :which-key "pretty-print")
-                                 "R" nil))
 
 
 (provide 'init-lang-js)

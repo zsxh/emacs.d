@@ -35,6 +35,9 @@
    lsp-bridge-code-action-preview-delay 1
    lsp-bridge-completion-obey-trigger-characters-p t)
 
+  ;; FIXME: temp fix java-ts-mode
+  (add-to-list 'lsp-bridge-single-lang-server-mode-list (cons '(java-mode java-ts-mode) "jdtls"))
+
   (transient-define-prefix trainsient-scoll-popup-lsp-document ()
     ["scoll popup document"
      ("j" "scroll up" lsp-bridge-popup-documentation-scroll-up :transient t)
