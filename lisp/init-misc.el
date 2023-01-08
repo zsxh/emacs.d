@@ -205,6 +205,7 @@
 ;; $ make -j8
 ;; $ sudo make install
 ;; `telega-server-libs-prefix'
+;; M-x `telega-server-build'
 (use-package telega
   :defer t
   :config
