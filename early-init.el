@@ -64,6 +64,10 @@
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
+;; Inhibit automatic native compilation of loaded .elc files
+;; (setq native-comp-deferred-compilation nil
+;;       inhibit-automatic-native-compilation t)
+
 
 (provide 'early-init)
 

@@ -27,7 +27,10 @@
                                "-Xmx8G"
                                ;; "-XX:+UseG1GC"
                                "-XX:+UseZGC"
-                               "-XX:+UseStringDeduplication")))
+                               "-XX:+UseStringDeduplication"
+                               ;; "-XX:FreqInlineSize=325"
+                               ;; "-XX:MaxInlineLevel=9"
+                               "-XX:+UseCompressedOops")))
 
 (add-hook-run-once 'java-mode-hook #'+lsp/set-leader-keys)
 (add-hook-run-once 'java-ts-mode-hook #'+lsp/set-leader-keys)

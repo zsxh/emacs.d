@@ -77,7 +77,8 @@
         eaf-config-location (expand-file-name (locate-user-emacs-file "cache/eaf/"))
         eaf-proxy-host personal-proxy-http-host
         eaf-proxy-port (format "%s" personal-proxy-http-port)
-        eaf-proxy-type "http")
+        eaf-proxy-type "http"
+        eaf-webengine-default-zoom 1.2)
 
   (defun +eaf/monitor-buffer-kill-a ()
     "A function monitoring when an EAF buffer is killed."

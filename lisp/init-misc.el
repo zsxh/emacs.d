@@ -18,8 +18,9 @@
 (use-package elfeed
   :commands elfeed
   :config
-  (let ((proxy-arg (format "-xhttp://%s:%s" personal-proxy-http-host personal-proxy-http-port)))
-    (setq elfeed-curl-extra-arguments `(,proxy-arg)))
+  (setq elfeed-curl-extra-arguments `(,(format "-xhttp://%s:%s" personal-proxy-http-host personal-proxy-http-port))
+        elfeed-log-level 'debug)
+
   (when (featurep 'evil-collection)
     (evil-collection-init 'elfeed))
 
@@ -280,6 +281,8 @@
 
 (use-package esup
   :defer t)
+
+;; TODO: https://github.com/ginqi7/plantuml-emacs
 
 
 (provide 'init-misc)
