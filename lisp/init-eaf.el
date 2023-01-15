@@ -58,7 +58,6 @@
             (lambda ()
               (setq left-fringe-width 0
                     right-fringe-width 0)
-
               (when (featurep 'evil)
                 (setq-local evil-motion-state-map nil)
                 ;; "C-z" normal-state -> emacs-state
@@ -66,7 +65,11 @@
                 (setq-local evil-normal-state-map
                             '(keymap
                               (58 . evil-ex)
-                              (26 . evil-emacs-state))))))
+                              (26 . evil-emacs-state)))
+                ;; evil leader key has higher priority than eaf-mode keys
+                (add-to-ordered-list 'emulation-mode-map-alists 'evil-mode-map-alist 1)
+                (add-to-ordered-list 'emulation-mode-map-alists 'general-maps-alist 2)
+                (add-to-ordered-list 'emulation-mode-map-alists 'eaf--buffer-map-alist 3))))
   ;; Remove unwanted advices
   (advice-remove 'find-file #'eaf--find-file-advisor)
   (advice-remove 'dired-find-file #'eaf--dired-find-file-advisor)
@@ -114,6 +117,8 @@
   (eaf-bind-key clear_focus "M-p" eaf-browser-keybinding)
   (eaf-bind-key nil "T" eaf-browser-keybinding)
   (eaf-bind-key recover_prev_close_page "X" eaf-browser-keybinding)
+
+  ;; TODO: evil normal mode clear focus
 
   (with-eval-after-load 'org
     (setq browse-url-browser-function 'eaf-open-browser))

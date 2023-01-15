@@ -29,11 +29,15 @@
   (setq resize-mini-windows t)
   (which-key-mode))
 
+;; NOTE: `Master-Key-Bindings-Emacs' https://www.masteringemacs.org/article/mastering-key-bindings-emacs
+;; NOTE: `general.el' https://github.com/noctuid/general.el
+
 ;; keybindings with which-key,evil well supported
 (use-package general)
 
 (with-eval-after-load 'evil
   (define-key global-map "\M-o" nil) ; disable `facemenu-keymap' default keybindings first
+  ;; NOTE: https://github.com/noctuid/evil-guide#leader-key
   (general-define-key
    :states '(normal visual motion insert emacs)
    :keymaps '(override global)
@@ -128,6 +132,7 @@
    "hF" '(describe-face :which-key "describe-face")
    "hi" '(info :which-key "emacs-info")
    "hk" '(helpful-key :which-key "helpful-key")
+   "hm" '(describe-keymap :which-key "describe-keymap")
    "hs" '(describe-syntax :which-key "describe-syntax")
    "hS" '(transient-emacs-cheatsheet :which-key "my-emacs-cheatsheet")
    "hv" '(helpful-variable :which-key "helpful-variable")

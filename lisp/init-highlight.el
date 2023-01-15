@@ -10,6 +10,15 @@
 
 ;;; Code:
 
+;; TreeSitter
+(use-package treesit
+  :if (featurep 'treesit)
+  :ensure nil
+  :config
+  (setq-default treesit-font-lock-level 4)
+  ;; (treesit-font-lock-recompute-features '(command string variable function operator bracket keyword))
+  )
+
 ;; Highlight matching parenthesis
 (use-package paren
   :ensure nil

@@ -53,19 +53,19 @@
           "runtimes": [
             {
               "name": "JavaSE-1.8",
-              "path": "/usr/local/jdk-8"
+              "path": "/usr/local/java-8"
             },
             {
               "name": "JavaSE-11",
-              "path": "/usr/local/graalvm-ce-java11-22.3.0"
+              "path": "/usr/local/java-11"
             },
             {
               "name": "JavaSE-17",
-              "path": "/usr/local/graalvm-ce-java17-22.3.0"
+              "path": "/usr/local/java-17"
             },
             {
               "name": "JavaSE-19",
-              "path": "/usr/local/graalvm-ce-java19-22.3.0",
+              "path": "/usr/local/java-19",
               "default": true
             }
           ]
