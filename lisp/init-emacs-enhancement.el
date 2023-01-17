@@ -247,6 +247,11 @@
 (define-key minibuffer-local-filename-completion-map
             [C-backspace] #'up-directory)
 
+;; emacsql use emacs built-in sqlite
+(use-package emacsql-sqlite-builtin
+  :if (>= emacs-major-version 29)
+  :defer t)
+
 
 (provide 'init-emacs-enhancement)
 

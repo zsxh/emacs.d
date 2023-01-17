@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;; NOTE: `PDM' https://chriswarrick.com/blog/2023/01/15/how-to-improve-python-packaging/
+
 (use-package python
   :ensure nil
   :hook ((python-mode . lsp-bridge-mode)
