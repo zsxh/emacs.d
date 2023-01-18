@@ -188,47 +188,6 @@
         jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "~/.local/share/JetBrains/Toolbox/apps/IDEA-C/ch-0/203.7148.57/plugins/java-decompiler/lib/java-decompiler.jar")))
         jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))))
 
-;; POM.xml format
-(add-hook-run-once
- 'pom-xml-mode-hook
- (lambda nil
-   (setq +java/pom-formatter-buffer-name "*format pom xml*")
-
-   (add-to-list 'display-buffer-alist
-                `(,+java/pom-formatter-buffer-name display-buffer-below-selected))
-
-   (defun +java/sortpom-formatter ()
-     (interactive)
-     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
-           (cmd (s-join " " '("mvn"
-                              "com.github.ekryd.sortpom:sortpom-maven-plugin:sort"
-                              ;; "-Dsort.nrOfIndentSpace=4"
-                              "-Dsort.keepBlankLines"
-                              "-Dsort.predefinedSortOrder=custom_1"
-                              "-Dsort.createBackupFile=false"))))
-       (async-shell-command cmd output-buffer)))
-
-   (defun +java/tidy:check ()
-     (interactive)
-     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
-           (cmd "mvn tidy:check"))
-       (async-shell-command cmd output-buffer)))
-
-   (defun +java/tidy:pom ()
-     (interactive)
-     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
-           (cmd "mvn tidy:pom"))
-       (async-shell-command cmd output-buffer)))
-
-   ;; NOTE: xml-format-maven-plugin
-   ;; https://acegi.github.io/xml-format-maven-plugin/usage.html
-
-   (+funcs/major-mode-leader-keys
-    pom-xml-mode-map
-    "c" '(+java/tidy:check :which-key "tidy:check")
-    "f" '(+java/tidy:pom :which-key "tidy:pom")
-    "F" '(+java/sortpom-formatter :which-key "sortpom:sort"))))
-
 
 (provide 'init-lang-java)
 
