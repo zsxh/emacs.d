@@ -70,6 +70,7 @@
            (class (+java/treesit-get-class))
            (method (+java/treesit-get-method))
            (target-path (expand-file-name (locate-dominating-file default-directory "target")))
+           ;; TODO: jar dependencies
            (class-path (format "%starget/classes:%starget/test-classes" target-path target-path)))
       (if (and pkg class target-path)
           (compile
