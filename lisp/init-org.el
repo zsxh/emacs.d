@@ -110,6 +110,14 @@
 
     (add-to-list 'org-export-filter-final-output-functions #'+org/export-remove-zero-width-space t)))
 
+;; https://github.com/xenodium/org-block-capf
+(use-package org-block-capf
+  :ensure nil
+  :init (slot/vc-install :fetcher "github" :repo "xenodium/org-block-capf")
+  :custom
+  (org-block-capf-edit-style 'inline)
+  :hook (org-mode . org-block-capf-add-to-completion-at-point-functions))
+
 (use-package org-habit
   :ensure nil
   :after org-agenda
