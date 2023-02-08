@@ -32,7 +32,7 @@
                                               :max-height 12)
    lsp-bridge-signature-help-fetch-idle 0.3
    lsp-bridge-diagnostic-tooltip-border-width 0
-   lsp-bridge-code-action-preview-delay 1
+   lsp-bridge-code-action-preview-delay 0.5
    lsp-bridge-completion-obey-trigger-characters-p t)
 
   ;; FIXME: temp fix java-ts-mode
