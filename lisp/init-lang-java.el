@@ -54,6 +54,11 @@
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode
 
+  (with-eval-after-load 'editorconfig
+    (add-to-list 'editorconfig-indentation-alist '(java-ts-mode java-ts-mode-indent-offset)))
+  (with-eval-after-load 'lsp-bridge
+    (add-to-list 'lsp-bridge-formatting-indent-alist '(java-ts-mode . java-ts-mode-indent-offset)))
+
   ;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
   (defvar +java/junit-platform-console-standalone-jar
     (expand-file-name (locate-user-emacs-file "cache/language-server/java/junit-console/junit-platform-console-standalone.jar")))
@@ -69,10 +74,11 @@
     (let* ((pkg (+java/treesit-get-package))
            (class (+java/treesit-get-class))
            (method (+java/treesit-get-method))
-           (target-path (expand-file-name (locate-dominating-file default-directory "target")))
-           ;; TODO: jar dependencies
-           (class-path (format "%starget/classes:%starget/test-classes" target-path target-path)))
-      (if (and pkg class target-path)
+           (target-location (expand-file-name (locate-dominating-file default-directory "target")))
+           (target-path (format "%starget" target-location))
+           (deps-cp (+java/get-deps-classpath target-path))
+           (class-path (format "%s/classes:%s/test-classes:%s" target-path target-path deps-cp)))
+      (if (and pkg class target-location)
           (compile
            (concat "java -jar " +java/junit-platform-console-standalone-jar
                    " -cp " class-path
@@ -109,7 +115,19 @@
      (treesit-parent-until
       (treesit-node-at (point))
       (lambda (parent)
-        (member (treesit-node-type parent) '("method_declaration")))))))
+        (member (treesit-node-type parent) '("method_declaration"))))))
+
+  (defun +java/get-deps-classpath (target-location)
+    "Get dependencies classpath."
+    (let* ((project-root-path (+project/root))
+           (default-directory project-root-path)
+           (deps-cp-file (format "%s/deps-cp" target-location)))
+      (unless (file-exists-p deps-cp-file)
+        ;; NOTE: Cache deps classpath to speed up shell command, regenerate it once you modify project dependencies.
+        (shell-command-to-string "mvn test-compile dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=target/deps-cp"))
+      (with-temp-buffer
+        (insert-file-contents deps-cp-file)
+        (buffer-string)))))
 
 ;; http://www.tianxiangxiong.com/2017/02/12/decompiling-java-classfiles-in-emacs.html
 ;; https://github.com/xiongtx/jdecomp
