@@ -118,7 +118,7 @@
         dired-recursive-deletes 'always
         ;; dired-kill-when-opening-new-dired-buffer t
         ;; dired "human-readable" format
-        dired-listing-switches "-alh --time-style=long-iso --group-directories-first --no-group"
+        dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group"
         dired-mouse-drag-files t)
 
   (defun +dried/dired-do-delete-a (fn &rest args)
