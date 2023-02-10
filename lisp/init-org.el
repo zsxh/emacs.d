@@ -15,6 +15,7 @@
 ;; https://org-babel.readthedocs.io/en/latest/header-args/
 (use-package org
   :ensure nil
+  :defer t
   :mode ("\\.org\\'" . org-mode)
   :bind ((:map org-mode-map
                ("C-c C-," . org-insert-structure-template)
@@ -135,18 +136,17 @@
 
 ;; Org-mode keybindings
 (use-package evil-org
-  :after (org evil)
+  :hook (org-mode . evil-org-mode)
   :config
-  (add-hook 'org-mode-hook 'evil-org-mode)
-  (add-hook 'evil-org-mode-hook
-            (lambda ()
-              (evil-org-set-key-theme)
-              ;; Open links and files with RET in normal state
-              (evil-define-key 'normal org-mode-map
-                (kbd "RET") 'org-open-at-point)))
+  (evil-org-set-key-theme)
 
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys)
+
+  ;; Open links and files with RET in normal state
+  (evil-define-key 'normal org-mode-map
+    (kbd "RET") 'org-open-at-point)
+
   (evil-define-key 'motion org-agenda-mode-map
     "?" 'org-agenda-view-mode-dispatch
     "0" 'digit-argument)
@@ -192,13 +192,8 @@
    "Tp" '(+latex/toggle-latex-preview :which-key "toggle-latex-preview")
    "'" '(org-edit-special :which-key "editor")))
 
-(use-package org-bullets
-  :if (< emacs-major-version 26)
-  :hook (org-mode . org-bullets-mode))
-
 ;; https://github.com/integral-dw/org-superstar-mode
 (use-package org-superstar
-  :if (and (>= emacs-major-version 26) (char-displayable-p ?◉))
   :hook (org-mode . org-superstar-mode)
   :custom
   (org-superstar-headline-bullets-list '(?◉ ?🞛 ?○ ?▷)))
@@ -320,14 +315,6 @@ at the first function to return non-nil.")
           "jupyter-julia"
           "jupyter-R"
           "jupyter-javascript")))
-
-;; https://github.com/alphapapa/org-sidebar
-(use-package org-sidebar
-  :after org
-  :commands (org-sidebar-tree
-             org-sidebar-tree-toggle
-             org-sidebar
-             org-sidebar-toggle))
 
 ;; Ory Static Blog
 (use-package org-static-blog

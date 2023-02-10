@@ -87,6 +87,7 @@
 
 ;; Line Number
 (use-package display-line-numbers
+  :ensure nil
   :defer t
   ;; :hook (prog-mode . display-line-numbers-mode)
   :config (setq display-line-numbers-type 'relative))

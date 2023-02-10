@@ -115,6 +115,7 @@ If RETURN-P, return the message as a string instead of displaying it."
 
 (add-hook 'emacs-startup-hook #'+package/display-benchmark)
 
+;; Commands: `auto-package-update-now', `auto-package-update-now-async'
 (use-package auto-package-update
   :init
   (setq auto-package-update-delete-old-versions t
@@ -123,7 +124,7 @@ If RETURN-P, return the message as a string instead of displaying it."
         auto-package-update-hide-results nil
         auto-package-update-excluded-packages nil
         auto-package-update-last-update-day-path (expand-file-name "cache/.last-package-update-day" user-emacs-directory))
-  (defalias 'upgrade-packages #'auto-package-update-now)
+  :defer t
   :config
   (add-hook 'auto-package-update-before-hook #'package-refresh-contents)
 
