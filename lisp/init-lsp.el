@@ -11,7 +11,7 @@
 ;;; Code:
 
 ;; python dependencies
-;; pip install --user epc orjson six
+;; pip install --user --upgrade epc orjson sexpdata six
 (use-package lsp-bridge
   :load-path "~/.emacs.d/submodules/lsp-bridge"
   :commands (lsp-bridge-mode +lsp/set-leader-keys)
