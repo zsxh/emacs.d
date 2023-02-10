@@ -10,6 +10,30 @@
 
 ;;; Code:
 
+
+;; just-in-time fontification
+(use-package jit-lock
+  :ensure nil
+  :config
+  ;; NOTE: [Re: Some performance questions.] https://lists.gnu.org/archive/html/emacs-devel/2023-02/msg00216.html
+  ;; Turning on jit-stealth also lowers the GC pressure because it
+  ;; fontifies buffers during idle time, so by the time you get to actually
+  ;; editing a buffer it is already fontified, and thus all the garbage
+  ;; produced by fontifications was already produced and collected; the
+  ;; editing itself will produce much less garbage.
+  (setq jit-lock-stealth-time 16
+        jit-lock-stealth-load 100
+        jit-lock-contextually t))
+
+;; TreeSitter
+(use-package treesit
+  :if (featurep 'treesit)
+  :ensure nil
+  :config
+  (setq-default treesit-font-lock-level 4)
+  ;; (treesit-font-lock-recompute-features '(command string variable function operator bracket keyword))
+  )
+
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
 
 (use-package elisp-demos
