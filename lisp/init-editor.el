@@ -256,7 +256,6 @@ This filter de-installs itself after this call."
 
 ;; https://github.com/AmaiKinono/puni
 ;; Puni contains commands for soft deletion, which means deleting while keeping parentheses (or other delimiters, like html tags) balanced.
-;; FIX: java String[]| `puni-backward-delete-char'
 (use-package puni
   :defer t
   :hook ((prog-mode sgml-mode nxml-mode tex-mode eval-expression-minibuffer-setup) . puni-mode)
@@ -291,7 +290,18 @@ This filter de-installs itself after this call."
   (with-eval-after-load 'rust-mode
     ;; Reset angle brackets syntax
     (modify-syntax-entry ?< "." rust-mode-syntax-table)
-    (modify-syntax-entry ?> "." rust-mode-syntax-table)))
+    (modify-syntax-entry ?> "." rust-mode-syntax-table))
+
+  ;; FIX: String[]| `puni-backward-delete-char', check `forward-sexp', `forward-sexp-function', `treesit-forward-sexp' for details
+  (define-advice puni-backward-delete-char (:around (orig-fn n) advice)
+    (if (and
+         (member major-mode '(java-ts-mode))
+         (eq ?\] (char-before))
+         (eq ?\[ (char-after
+                  (scan-sexps (point) -1)))
+         (eq (prefix-numeric-value n) 1))
+        (backward-char)
+      (funcall orig-fn n))))
 
 ;; Change variable name style
 (use-package string-inflection
