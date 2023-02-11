@@ -128,6 +128,9 @@
   (define-key transient-map (kbd "<escape>") 'transient-quit-one))
 
 ;;;;;;;;;;;;;; Garbage-Collection ;;;;;;;;;;;;;;
+
+(setq garbage-collection-messages t)
+
 ;; Adopt a sneaky garbage collection strategy of waiting until idle time to
 ;; collect; staving off the collector while the user is working.
 ;;
@@ -144,11 +147,11 @@
 ;; https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
 (use-package gcmh
   :init
-  (setq garbage-collection-messages t)
-  (setq gcmh-idle-delay 15
-        gcmh-high-cons-threshold #x40000000 ; 1GB
-        gcmh-verbose t)
-  :hook (after-init . gcmh-mode))
+  :defer t
+  :hook (after-init . gcmh-mode)
+  :config
+  (setq gcmh-verbose t
+        gcmh-low-cons-threshold 1800000))
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
 ;; TODO: Enhance Tramp
