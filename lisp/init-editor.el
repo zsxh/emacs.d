@@ -238,6 +238,65 @@ This filter de-installs itself after this call."
 ;;  S-mouse-3  Set point at click and       End macro and execute macro at
 ;;             execute last macro.          click.
 
+;;;;;;;;;;;;;; EDIT ;;;;;;;;;;;;;;
+
+;; automatic parenthesis pairing for non prog mode
+(use-package elec-pair
+  :ensure nil
+  :hook ((prog-mode
+          conf-mode
+          yaml-mode
+          editorconfig-mode
+          vue-mode
+          cider-repl-mode
+          minibuffer-setup
+          protobuf-mode
+          ) . electric-pair-local-mode)
+  :bind ("C-j" . newline-and-indent))
+
+;; https://github.com/AmaiKinono/puni
+;; Puni contains commands for soft deletion, which means deleting while keeping parentheses (or other delimiters, like html tags) balanced.
+;; FIX: java String[]| `puni-backward-delete-char'
+(use-package puni
+  :defer t
+  :hook ((prog-mode sgml-mode nxml-mode tex-mode eval-expression-minibuffer-setup) . puni-mode)
+  :config
+  (define-key puni-mode-map (kbd "<") #'+editor/insert-angle)
+  (define-key puni-mode-map (kbd "|") #'+editor/insert-rust-closure)
+
+  (defun +editor/insert-angle ()
+    "Insert angle brackets like intellij idea."
+    (interactive)
+    (save-excursion
+      (let ((pos (point))
+            (bounds (bounds-of-thing-at-point 'symbol)))
+        (if bounds
+            (let ((letter (char-after (car bounds))))
+              (if (and (eq (upcase letter) letter)
+                       (not (eq (downcase letter) letter)))
+                  (insert "<>")
+                (insert "<")))
+          (insert "<"))))
+    (forward-char))
+
+  (defun +editor/insert-rust-closure ()
+    (interactive)
+    (save-excursion
+      (if (and (equal major-mode 'rust-mode)
+               (eq ?\( (char-before)))
+          (insert "||")
+        (insert "|")))
+    (forward-char))
+
+  (with-eval-after-load 'rust-mode
+    ;; Reset angle brackets syntax
+    (modify-syntax-entry ?< "." rust-mode-syntax-table)
+    (modify-syntax-entry ?> "." rust-mode-syntax-table)))
+
+;; Change variable name style
+(use-package string-inflection
+  :commands string-inflection-all-cycle)
+
 
 (provide 'init-editor)
 

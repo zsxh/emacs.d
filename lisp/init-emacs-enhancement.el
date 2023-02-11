@@ -14,6 +14,7 @@
 ;; just-in-time fontification
 (use-package jit-lock
   :ensure nil
+  :defer t
   :config
   ;; NOTE: [Re: Some performance questions.] https://lists.gnu.org/archive/html/emacs-devel/2023-02/msg00216.html
   ;; Turning on jit-stealth also lowers the GC pressure because it
@@ -29,6 +30,7 @@
 (use-package treesit
   :if (featurep 'treesit)
   :ensure nil
+  :defer t
   :config
   (setq-default treesit-font-lock-level 4)
   ;; (treesit-font-lock-recompute-features '(command string variable function operator bracket keyword))
