@@ -24,10 +24,9 @@
   :ensure nil
   ;; By default files ending in .h are treated as c files rather than c++ files.
   ;; :mode ("\\.h\\'" . c++-ts-mode)
-  :hook ((c-ts-mode c++-ts-mode) . lsp-bridge-mode)
+  :hook (c-ts-base-mode . lsp-bridge-mode)
   :config
-  (add-hook-run-once 'c-ts-mode-hook '+lsp/set-leader-keys)
-  (add-hook-run-once 'c++-ts-mode-hook '+lsp/set-leader-keys))
+  (add-hook-run-once 'c-ts-base-mode-hook '+lsp/set-leader-keys))
 
 (use-package cmake-mode
   :defer t

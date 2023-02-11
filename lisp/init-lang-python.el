@@ -28,8 +28,7 @@
       (setq-local lsp-bridge-user-langserver-dir dir
                   lsp-bridge-user-multiserver-dir dir))
     (lsp-bridge-mode))
-  :hook ((python-mode . +python/enable-lsp)
-         (python-ts-mode . +python/enable-lsp))
+  :hook (python-base-mode . +python/enable-lsp)
   :custom (python-indent-offset 2)
   :config
   (+lsp/set-leader-keys python-mode-map)
