@@ -144,6 +144,7 @@ This filter de-installs itself after this call."
 (use-package auto-save
   :ensure nil
   :init (slot/vc-install :fetcher "github" :repo "manateelazycat/auto-save")
+  :hook (after-init . auto-save-enable)
   :preface
   ;; note: it's risky to disable lockfiles
   ;; https://emacs-china.org/t/filename/163/17
@@ -163,8 +164,7 @@ This filter de-installs itself after this call."
                   (get-buffer (concat "CAPTURE-" (buffer-name))))
              ;; performance issue auto-save in remote buffer
              (and (featurep 'tramp)
-                  (tramp-tramp-file-p (buffer-file-name)))))))
-  (auto-save-enable))
+                  (tramp-tramp-file-p (buffer-file-name))))))))
 
 ;; jumping to visible text using a char-based decision tree
 (use-package avy

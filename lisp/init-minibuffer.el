@@ -61,6 +61,9 @@
     (insert "/")))
 
 (use-package orderless
+  :defer 10
+  :init
+  (add-hook-run-once 'minibuffer-setup-hook (lambda () (require 'orderless)))
   :config
   (setq completion-styles '(basic orderless))
   ;; pinyin
