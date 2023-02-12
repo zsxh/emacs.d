@@ -16,22 +16,20 @@
 (use-package org
   :ensure nil
   :defer t
-  :mode ("\\.org\\'" . org-mode)
   :bind ((:map org-mode-map
                ("C-c C-," . org-insert-structure-template)
                ("C-M-<return>" . org-table-insert-hline)
                ("C-j" . org-return)))
-  ;; :commands org-open-at-point
   :preface
-  ;; customize before (require 'org)
   (setq org-emphasis-regexp-components '("-[:space:][:nonascii:]('\"{"
                                          "-[:space:][:nonascii:].,:!?;'\")}\\["
                                          "[:space:]"
                                          "."
-                                         1))
-  :config
+                                         1)))
+
+(with-eval-after-load 'org
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
-  ;; (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
+  (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
   (setq org-export-use-babel nil ; do not evaluate again during export.
         org-export-with-toc nil
         org-export-with-section-numbers nil
@@ -62,19 +60,19 @@
 
   ;; org todo keyword
   (setq org-todo-keywords
-        '((type "TODO" "DOING" "MAYBE" "|" "DONE" "DROP")))
+        '((type "TODO" "WIP" "|" "DONE" "DROP")))
 
   (setq org-todo-keyword-faces
-        '(("DOING" . (:foreground "#dc322f" :weight bold :underline t))
-          ("MAYBE" . (:foreground "#ECBE7B" :weight bold))
+        '(("WIP" . (:foreground "#ECBE7B" :weight bold :underline t))
           ("DROP" . (:foreground "#96A7A9" :weight bold :strike-through t))))
 
   ;; Org table font
-  ;; (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
-  (when (and (not (display-graphic-p))
-             (member "M+ 1m" (font-family-list)))
-    ;; Download font https://mplus-fonts.osdn.jp/about-en.html
-    (set-face-attribute 'org-table nil :family "M+ 1m"))
+  (ignore-errors
+    ;; (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
+    (when (and (not (display-graphic-p))
+               (member "M+ 1m" (font-family-list)))
+      ;; Download font https://mplus-fonts.osdn.jp/about-en.html
+      (set-face-attribute 'org-table nil :family "M+ 1m")))
 
   (defun +org/remove-all-result-blocks ()
     "Remove all results in the current buffer."
@@ -100,17 +98,78 @@
         (save-excursion (goto-char (match-beginning 0))
                         (org-babel-hide-result-toggle-maybe)))))
 
-  ;; zero-width spaces
-  (define-key org-mode-map (kbd "M-SPC M-SPC")
-              (lambda () (interactive) (insert "\u200b")))
+  ;; Lazy Load Org Bable to reduce org-mode initial load time
+  ;; Org Bable
+  ;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/contrib/jupyter.el
+  ;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/config.el
+  (defvar +org/babel-mode-alist
+    '((cpp . C)
+      (C++ . C)
+      (D . C)
+      (elisp . emacs-lisp)
+      (sh . shell)
+      (bash . shell)
+      (matlab . octave)
+      ;; I'm not using rustic-mode now
+      ;; (rust . rustic-babel)
+      (amm . ammonite))
+    "An alist mapping languages to babel libraries. This is necessary for babel
+libraries (ob-*.el) that don't match the name of the language.
+For example, with (fish . shell) will cause #+BEGIN_SRC fish to load ob-shell.el
+when executed.")
 
-  (with-eval-after-load 'ox
-    (defun +org/export-remove-zero-width-space (text _backend _info)
-      "Remove zero width spaces from TEXT."
-      (unless (org-export-derived-backend-p 'org)
-        (replace-regexp-in-string "\u200b" "" text)))
+  (defvar +org/babel-load-functions ()
+    "A list of functions executed to load the current executing src block. They
+take one argument (the language specified in the src block, as a string). Stops
+at the first function to return non-nil.")
 
-    (add-to-list 'org-export-filter-final-output-functions #'+org/export-remove-zero-width-space t)))
+  (defun +org/init-label-lazy-loader-h ()
+    "Load label libraries lazily when babel blocks are executed."
+
+    ;; It doesn't matter what +org/babel-lazy-load return
+    (defun +org/babel-lazy-load (lang &optional async)
+      (cl-check-type lang symbol)
+      (when (and async (not (featurep 'ob-async))
+                 ;; ob-async has its own agenda for lazy loading packages (in the
+                 ;; child process), so we only need to make sure it's loaded.
+                 (require 'ob-async nil t)))
+      (unless (cdr (assq lang org-babel-load-languages))
+        (prog1
+            (or (run-hook-with-args-until-success '+org/babel-load-functions lang)
+                (require (intern (format "ob-%s" lang)) nil t)
+                (require lang nil t))
+          (add-to-list 'org-babel-load-languages (cons lang t)))))
+
+    (defun +org/export-lazy-load-library-h ()
+      (+org/babel-lazy-load-library-a (org-babel-get-src-block-info)))
+
+    (advice-add 'org-babel-exp-src-block :before '+org/export-lazy-load-library-h)
+
+    (defun +org/src-lazy-load-library-a (lang)
+      "Lazy load a babel package to ensure syntax highlighting."
+      (when lang
+        (or (cdr (assoc lang org-src-lang-modes))
+            (+org/babel-lazy-load (cond ((symbolp lang) lang)
+                                        ((stringp lang) (intern lang)))))))
+
+    (advice-add #'org-src-get-lang-mode :before #'+org/src-lazy-load-library-a)
+
+    ;; This also works for tangling and exporting
+    (defun +org/babel-lazy-load-library-a (info)
+      "Load babel libraries lazily when babel blocks are executed."
+      (let* ((lang (nth 0 info))
+             (lang (cond ((symbolp lang) lang)
+                         ((stringp lang) (intern lang))))
+             (lang (or (cdr (assq lang +org/babel-mode-alist))
+                       lang)))
+        (+org/babel-lazy-load lang (assq :async (nth 2 info)))
+        t))
+
+    (advice-add #'org-babel-confirm-evaluate :after-while #'+org/babel-lazy-load-library-a)
+
+    (advice-add #'org-babel-do-load-languages :override #'ignore))
+
+  (+org/init-label-lazy-loader-h))
 
 ;; https://github.com/xenodium/org-block-capf
 (use-package org-block-capf
@@ -188,7 +247,6 @@
    "T" '(nil :which-key "toggle")
    "Ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
    "Tl" '(org-toggle-link-display :which-key "toggle-link-display")
-   "Tp" '(+latex/toggle-latex-preview :which-key "toggle-latex-preview")
    "'" '(org-edit-special :which-key "editor")))
 
 ;; https://github.com/integral-dw/org-superstar-mode
@@ -200,78 +258,6 @@
 ;; Presentation
 (use-package org-tree-slide
   :commands org-tree-slide-mode)
-
-;; Org Bable
-;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/contrib/jupyter.el
-;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/config.el
-(defvar +org/babel-mode-alist
-  '((cpp . C)
-    (C++ . C)
-    (D . C)
-    (elisp . emacs-lisp)
-    (sh . shell)
-    (bash . shell)
-    (matlab . octave)
-    ;; I'm not using rustic-mode now
-    ;; (rust . rustic-babel)
-    (amm . ammonite))
-  "An alist mapping languages to babel libraries. This is necessary for babel
-libraries (ob-*.el) that don't match the name of the language.
-For example, with (fish . shell) will cause #+BEGIN_SRC fish to load ob-shell.el
-when executed.")
-
-(defvar +org/babel-load-functions ()
-  "A list of functions executed to load the current executing src block. They
-take one argument (the language specified in the src block, as a string). Stops
-at the first function to return non-nil.")
-
-(defun +org/init-label-lazy-loader-h ()
-  "Load label libraries lazily when babel blocks are executed."
-
-  ;; It doesn't matter what +org/babel-lazy-load return
-  (defun +org/babel-lazy-load (lang &optional async)
-    (cl-check-type lang symbol)
-    (when (and async (not (featurep 'ob-async))
-               ;; ob-async has its own agenda for lazy loading packages (in the
-               ;; child process), so we only need to make sure it's loaded.
-               (require 'ob-async nil t)))
-    (unless (cdr (assq lang org-babel-load-languages))
-      (prog1
-          (or (run-hook-with-args-until-success '+org/babel-load-functions lang)
-              (require (intern (format "ob-%s" lang)) nil t)
-              (require lang nil t))
-        (add-to-list 'org-babel-load-languages (cons lang t)))))
-
-  (defun +org/export-lazy-load-library-h ()
-    (+org/babel-lazy-load-library-a (org-babel-get-src-block-info)))
-
-  (advice-add 'org-babel-exp-src-block :before '+org/export-lazy-load-library-h)
-
-  (defun +org/src-lazy-load-library-a (lang)
-    "Lazy load a babel package to ensure syntax highlighting."
-    (when lang
-      (or (cdr (assoc lang org-src-lang-modes))
-          (+org/babel-lazy-load (cond ((symbolp lang) lang)
-                                      ((stringp lang) (intern lang)))))))
-
-  (advice-add #'org-src-get-lang-mode :before #'+org/src-lazy-load-library-a)
-
-  ;; This also works for tangling and exporting
-  (defun +org/babel-lazy-load-library-a (info)
-    "Load babel libraries lazily when babel blocks are executed."
-    (let* ((lang (nth 0 info))
-           (lang (cond ((symbolp lang) lang)
-                       ((stringp lang) (intern lang))))
-           (lang (or (cdr (assq lang +org/babel-mode-alist))
-                     lang)))
-      (+org/babel-lazy-load lang (assq :async (nth 2 info)))
-      t))
-
-  (advice-add #'org-babel-confirm-evaluate :after-while #'+org/babel-lazy-load-library-a)
-
-  (advice-add #'org-babel-do-load-languages :override #'ignore))
-
-(add-hook 'org-load-hook #'+org/init-label-lazy-loader-h)
 
 (use-package ob-go :defer t)
 (use-package ob-rust :defer t)
@@ -315,7 +301,7 @@ at the first function to return non-nil.")
           "jupyter-R"
           "jupyter-javascript")))
 
-;; Ory Static Blog
+;; DROP: Ory Static Blog
 (use-package org-static-blog
   :commands (org-static-blog-mode
              org-static-blog-publish
@@ -333,6 +319,15 @@ at the first function to return non-nil.")
         org-static-blog-preview-link-p t
         org-static-blog-enable-tags t)
   (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))
+
+;; TODO: hugo static blog
+;; - hugo: https://gohugo.io/getting-started/quick-start/
+;; - hugo papermode theme: https://github.com/adityatelange/hugo-PaperMod/
+;; - org hugo example: https://lucidmanager.org/productivity/create-websites-with-org-mode-and-hugo/
+;; - parser:
+;;   - org parser go-org: https://github.com/niklasfasching/go-org
+;;   - hugo use go-org:  https://github.com/gohugoio/hugo/blob/master/markup/org/convert.go
+;; - Youtube Hugo - Static Site Generator | Tutorial: https://www.youtube.com/playlist?list=PLLAZ4kZ9dFpOnyRlyS-liKL5ReHDcj4G3
 
 
 (provide 'init-org)
