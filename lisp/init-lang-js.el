@@ -58,6 +58,8 @@
 
 (use-package typescript-mode
   :defer t
+  ;; :init
+  ;; (define-derived-mode typescript-tsx-mode typescript-mode "TypeScript[tsx]")
   :hook (typescript-mode . lsp-bridge-mode)
   :config
   (+lsp/set-leader-keys typescript-mode-map))
@@ -65,9 +67,10 @@
 (use-package typescript-ts-mode
   :ensure nil
   :defer t
-  :hook (typescript-ts-mode . lsp-bridge-mode)
+  :hook (typescript-ts-base-mode . lsp-bridge-mode)
   :config
-  (+lsp/set-leader-keys typescript-ts-mode-map))
+  (+lsp/set-leader-keys typescript-ts-mode-map)
+  (+lsp/set-leader-keys tsx-ts-mode-map))
 
 ;; NOTE: vue-language-server
 (use-package vue-mode
