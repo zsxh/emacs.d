@@ -54,11 +54,6 @@
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode
 
-  (with-eval-after-load 'editorconfig
-    (add-to-list 'editorconfig-indentation-alist '(java-ts-mode java-ts-mode-indent-offset)))
-  (with-eval-after-load 'lsp-bridge
-    (add-to-list 'lsp-bridge-formatting-indent-alist '(java-ts-mode . java-ts-mode-indent-offset)))
-
   ;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
   (defvar +java/junit-platform-console-standalone-jar
     (expand-file-name (locate-user-emacs-file "cache/language-server/java/junit-console/junit-platform-console-standalone.jar")))
