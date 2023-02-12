@@ -10,20 +10,22 @@
 
 ;;; Code:
 
-(use-package nvm
-  :after js)
+;; NOTE: JavaScript Tool Manager: Volta, fnm
+;; Volta: https://volta.sh/
+;; fnm: https://github.com/Schniz/fnm
 
-;; NOTE: javascript-typescript-langserver
+;; NOTE: Build tool: Vite
+;; https://github.com/vitejs/vite
+
+;; NOTE: Install TypeScript & JavaScript Language Server
+;; https://github.com/typescript-language-server/typescript-language-server
+;; npm install -g typescript-language-server typescript
+
 (use-package js
   :ensure nil
-  :bind ((:map js-mode-map
-               ("/" . sgml-slash))
-         (:map js-ts-mode-map
+  :bind ((:map js-base-mode-map
                ("/" . sgml-slash)))
-  :hook ((js-mode js-ts-mode) . +js/lsp-setup)
-  ;; https://www.emacswiki.org/emacs/RegularExpression
-  ;; use `rx' to generate emacs regular expression
-  ;; :mode ("\\.chunk\\.\\(?:\\(?:cs\\|j\\)s\\)" . fundamental-mode) ; enable gloabl-so-long-mode, that's all
+  :hook (js-base-mode . +js/lsp-setup)
   :config
   (require 'sgml-mode)
   (setq js-indent-level 2)
@@ -44,7 +46,6 @@
                                  "f" nil
                                  "g" nil
                                  "l" nil
-                                 "j" '(counsel-jq :which-key "counsel-jq")
                                  "p" '(json-pretty-print-buffer :which-key "pretty-print")
                                  "R" nil))
 
