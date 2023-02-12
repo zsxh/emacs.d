@@ -220,9 +220,8 @@
       "m" 'man))
 
   (with-eval-after-load 'comint
-    (evil-set-initial-state 'comint-mode 'normal)))
+    (evil-set-initial-state 'comint-mode 'normal))
 
-(with-eval-after-load 'evil
   ;; Customize
 
   ;; Code faster by extending Emacs EVIL text object

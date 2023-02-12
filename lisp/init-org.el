@@ -169,7 +169,6 @@
    "." '(display-local-help :which-key "display-local-help")
    "a" '(org-agenda :which-key "agenda")
    "b" '(nil :which-key "block")
-   "bb" '(playonline :which-key "play-code-with-online-playground")
    "bf" '(+org/babel-result-hide-all :which-key "fold-all-results")
    "bF" '(+org/babel-result-show-all :which-key "show-all-results")
    "br" '(org-babel-remove-result :which-key "remove-result")

@@ -53,21 +53,13 @@
     (evil-define-key 'normal youdao-dictionary-mode-map "q" 'quit-window)))
 
 ;; Markdowm
-(with-eval-after-load 'markdown-mode
-  (defun eaf-markdown-previewer ()
-    "Markdown Previewer."
-    (interactive)
-    (eaf-open buffer-file-name))
-
+(use-package markdown-mode
+  :defer t
+  :config
   (+funcs/major-mode-leader-keys
    markdown-mode-map
-   "b" '(nil :which-key "block")
-   "bb" '(playonline :which-key "play-code-with-online-playground")
-   "y" '(youdao-dictionary-search-at-point-tooltip :which-key "translate-at-point")
-   "v" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
-   "p" '(eaf-markdown-previewer :which-key "previewer")
-   "t" '(nil :which-key "toggle")
-   "ti" '(markdown-toggle-inline-images :which-key "inline-images")))
+   "T" '(nil :which-key "toggle")
+   "Ti" '(markdown-toggle-inline-images :which-key "inline-images")))
 
 ;; https://github.com/lorniu/go-translate
 (use-package go-translate

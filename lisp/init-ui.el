@@ -63,14 +63,19 @@
   ;; (doom-themes-visual-bell-config)
 
   ;; Enable neotree theme
-  (setq doom-themes-neotree-file-icons t)
-  (doom-themes-neotree-config) ; all-the-icons fonts must be installed!
+  (with-eval-after-load 'neotree
+    ;;  all-the-icons fonts must be installed!
+    (setq doom-themes-neotree-file-icons t)
+    (require 'doom-themes-ext-neotree))
+
   ;; Enable treemacs theme
-  (setq doom-themes-treemacs-theme "doom-colors")
-  (doom-themes-treemacs-config)
+  (with-eval-after-load 'treemacs
+    (setq doom-themes-treemacs-theme "doom-colors")
+    (require 'doom-themes-ext-treemacs))
 
   ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  (with-eval-after-load 'org-mode
+    (require 'doom-themes-ext-org)))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
