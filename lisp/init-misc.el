@@ -182,23 +182,6 @@
 (use-package memory-usage
   :commands memory-usage)
 
-;; https://github.com/joostkremers/writeroom-mode
-;; `writeroom-mode'
-(use-package writeroom-mode
-  :defer t
-  :custom
-  (writeroom-width 106)
-  (writeroom-restore-window-config t)
-  (writeroom-fullscreen-effect 'maximized)
-  :config
-  (defun +writeroom/display-line-numbers ()
-    (if (and writeroom-mode
-             (derived-mode-p 'prog-mode))
-        (display-line-numbers-mode)
-      (display-line-numbers-mode -1)))
-  (add-hook 'writeroom-mode-enable-hook #'+writeroom/display-line-numbers)
-  (add-hook 'writeroom-mode-disable-hook #'+writeroom/display-line-numbers))
-
 ;; https://zevlg.github.io/telega.el/#building-tdlib
 ;; $ git clone --depth 1 https://github.com/tdlib/td
 ;; $ cd td
@@ -232,12 +215,6 @@
     (with-eval-after-load 'evil
       (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
       (define-key telega-msg-button-map (kbd "SPC") nil))
-
-    (when (functionp 'writeroom-mode)
-      (defun +telega/maybe-writeroom ()
-        (when (= 1 (length (window-list)))
-          (writeroom-mode)))
-      (add-hook 'telega-chat-mode-hook #'+telega/maybe-writeroom))
 
     (defun my-telega-chat-mode ()
       (set (make-local-variable 'company-backends)
