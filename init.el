@@ -79,7 +79,6 @@
 (require 'init-syntax-checking)
 (require 'init-git)
 (require 'init-highlight)
-(require 'init-prog)
 
 ;; Language
 (require 'init-lsp)

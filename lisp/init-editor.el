@@ -307,6 +307,36 @@ This filter de-installs itself after this call."
 (use-package string-inflection
   :commands string-inflection-all-cycle)
 
+;;;;;;;;;;;;;; Quick Scroll line ;;;;;;;;;;;;;;
+;; keymap ("C-l" 'recenter-top-bottom) cycling 25%,top,bottom line position
+(add-hook 'prog-mode-hook (lambda () (setq-local recenter-positions '(0.25 top bottom))))
+
+;;;;;;;;;;;;;; Code Folding ;;;;;;;;;;;;;;
+;; evil open/close/toggle folds rely on hideshow
+;; "z a" evil-toggle-fold
+;; "z m" evil-close-folds
+;; "z r" evil-open-folds
+(use-package hideshow
+  :commands hs-minor-mode
+  :hook (prog-mode . hs-minor-mode)
+  :config
+  (with-eval-after-load 'evil
+    (define-key evil-normal-state-map (kbd "zf") 'hs-hide-level)))
+
+;; NOTE: RMSBolt tries to make it easy to see what your compiler is doing.
+;; It does this by showing you the assembly output of a given source code file.
+;; https://gitlab.com/jgkamat/rmsbolt
+(use-package rmsbolt
+  :commands rmsbolt-mode)
+
+;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
+
+(use-package editorconfig
+  :hook (emacs-startup . editorconfig-mode)
+  :config
+  ;; use `auto-save' package to deal with trailing whitespace
+  (setq editorconfig-trim-whitespaces-mode (lambda (arg) nil)))
+
 
 (provide 'init-editor)
 
