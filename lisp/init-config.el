@@ -135,6 +135,10 @@
 (setq mouse-drag-and-drop-region-cross-program t
       mouse-drag-and-drop-region t)
 
+;; Increase subprocess read chunk size
+(when (bound-and-true-p read-process-output-max)
+  (setq read-process-output-max (* 1024 1024)))
+
 ;; remap major mode
 (when (treesit-available-p)
   (setq major-mode-remap-alist
