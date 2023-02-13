@@ -151,7 +151,8 @@
           ;; (ruby-mode       . ruby-ts-mode)
           (go-mode         . go-ts-mode)
           (typescript-mode . typescript-ts-mode)
-          (sh-mode         . bash-ts-mode))))
+          (sh-mode         . bash-ts-mode)
+          (rust-mode       . rust-ts-mode))))
 
 
 (provide 'init-config)

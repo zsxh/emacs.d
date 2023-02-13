@@ -281,7 +281,7 @@ This filter de-installs itself after this call."
   (defun +editor/insert-rust-closure ()
     (interactive)
     (save-excursion
-      (if (and (equal major-mode 'rust-mode)
+      (if (and (member major-mode '(rust-mode rust-ts-mode))
                (eq ?\( (char-before)))
           (insert "||")
         (insert "|")))

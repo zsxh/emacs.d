@@ -11,17 +11,26 @@
 ;;; Code:
 
 ;; Install rust-analyzer
-;; https://github.com/rust-analyzer/rust-analyzer/releases
+;; NOTE: https://github.com/rust-analyzer/rust-analyzer/releases
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
   :hook (rust-mode . lsp-bridge-mode)
   :config
   (setq rust-indent-offset 2)
-
   (+lsp/set-leader-keys rust-mode-map)
+  (+rust/set-custom-leader-keys rust-mode-map))
 
+(use-package rust-ts-mode
+  :ensure nil
+  :hook (rust-ts-mode . lsp-bridge-mode)
+  :config
+  (setq rust-ts-mode-indent-offset 2)
+  (+lsp/set-leader-keys rust-ts-mode-map)
+  (+rust/set-custom-leader-keys rust-ts-mode-map))
+
+(defun +rust/set-custom-leader-keys (mode-map)
   (+funcs/major-mode-leader-keys
-   rust-mode-map
+   mode-map
    "c" '(nil :which-key "cargo")
    "c." '(cargo-process-repeat :which-key "repeat-last-command")
    "cC" '(cargo-process-clean :which-key "clean")
@@ -40,9 +49,7 @@
    "cu" '(cargo-process-update :which-key "update-dependencies")
    "cx" '(cargo-process-run :which-key "run")
    "cv" '(cargo-process-check :which-key "check")
-   "cT" '(cargo-process-test :which-key "all-unit-tests")
-   "m" '(nil :which-key "macro")
-   "ms" '(+rust/expand-macro :which-key "expand-macro")))
+   "cT" '(cargo-process-test :which-key "all-unit-tests")))
 
 (use-package cargo
   :after rust-mode)
