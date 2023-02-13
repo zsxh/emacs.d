@@ -15,6 +15,8 @@
 ;; NOTE: https://github.com/pmd/pmd-emacs PMD Emacs
 ;; NOTE: https://pmd.github.io/latest/index.html PMD
 
+;; NOTE: jdtls settings: https://github.com/eclipse/eclipse.jdt.ls/blob/master/org.eclipse.jdt.ls.core/src/org/eclipse/jdt/ls/core/internal/preferences/Preferences.java
+
 ;; NOTE: Clean up old lsp-bridge config json in `lsp-bridge-jdtls-workspace' when you change your customize config file/code
 (use-package lsp-bridge-jdtls
   :ensure nil
