@@ -1,9 +1,9 @@
 #+STARTUP: showall
-Updated: <2023-02-13>
+Updated: <2023-02-16>
 
 * Enviroment
-  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.36, cairo version 1.17.8) of 2023-02-12
-  - emacs-repository-version: 08bd066149faee95fe6660d5002306a1dbc4b91b
+  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.36, cairo version 1.17.8) of 2023-02-16
+  - emacs-repository-version: dc843e0a9b3ba3e29bc65bdbd1050cfcc96cad5d
   - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
   - OS: Manjaro 22.0.3 Sikaris
   - Shell: zsh 5.9
@@ -30,13 +30,20 @@ Updated: <2023-02-13>
 * Installation
 #+begin_src shell
   git clone --recursive https://github.com/zsxh/emacs.d.git ~/.emacs.d
+  git submodule update --init --recursive --depth 1
+  cd submodules/emacs-application-framework
+  mkdir app
+  cd app
+  git clone --depth 1 https://github.com/emacs-eaf/eaf-browser.git
+  git clone --depth 1 https://github.com/emacs-eaf/eaf-pdf-viewer.git
+  git clone --depth 1 https://github.com/emacs-eaf/eaf-image-viewer.git
 #+end_src
 
 * Updating
 #+begin_src shell
   cd ~/.emacs.d/
   git pull
-  git submodule update --init --recursive
+  git submodule update --init --recursive --depth 1
 #+end_src
 
 * Q&A

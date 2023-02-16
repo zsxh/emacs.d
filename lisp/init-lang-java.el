@@ -15,7 +15,10 @@
 ;; NOTE: https://github.com/pmd/pmd-emacs PMD Emacs
 ;; NOTE: https://pmd.github.io/latest/index.html PMD
 
-;; NOTE: jdtls settings: https://github.com/eclipse/eclipse.jdt.ls/blob/master/org.eclipse.jdt.ls.core/src/org/eclipse/jdt/ls/core/internal/preferences/Preferences.java
+;; NOTE: Install `jdtls', https://github.com/eclipse/eclipse.jdt.ls
+;; NOTE: Install decomiplers, https://github.com/dgileadi/dg.jdt.ls.decompiler, https://marketplace.visualstudio.com/items?itemName=dgileadi.java-decompiler
+
+;; NOTE: `jdtls' settings: https://github.com/eclipse/eclipse.jdt.ls/blob/master/org.eclipse.jdt.ls.core/src/org/eclipse/jdt/ls/core/internal/preferences/Preferences.java
 
 ;; NOTE: Clean up old lsp-bridge config json in `lsp-bridge-jdtls-workspace' when you change your customize config file/code
 (use-package lsp-bridge-jdtls
@@ -58,7 +61,7 @@
 
   ;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
   (defvar +java/junit-platform-console-standalone-jar
-    (expand-file-name (locate-user-emacs-file "cache/language-server/java/junit-console/junit-platform-console-standalone.jar")))
+    (expand-file-name (locate-user-emacs-file "cache/lsp-servers/java/junit-console/junit-platform-console-standalone.jar")))
 
   (+funcs/major-mode-leader-keys
    java-ts-mode-map

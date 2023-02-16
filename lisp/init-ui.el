@@ -145,7 +145,8 @@
     (funcall +ui/customize-faces-fn)))
 
 ;; Set config now
-(+ui/frame-config (selected-frame))
+(with-eval-after-load 'doom-themes
+  (+ui/frame-config (selected-frame)))
 
 ;; Run later, for emacs daemon, emacsclients -c [-nw]
 (add-hook 'after-make-frame-functions '+ui/frame-config)
