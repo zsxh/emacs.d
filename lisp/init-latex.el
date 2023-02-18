@@ -11,7 +11,7 @@
 ;;; Code:
 
 ;; TODO: https://github.com/dandavison/xenops
-
+;; NOTE: https://karthinks.com/software/latex-input-for-impatient-scholars/
 
 
 (provide 'init-latex)
