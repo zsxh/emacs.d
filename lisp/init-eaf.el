@@ -21,9 +21,9 @@
 ;; git clone --depth 1 --single-branch https://github.com/emacs-eaf/eaf-image-viewer.git app/eaf-image-viewer
 ;;
 ;; python dependencies, check dependencies.json
-;; core: pip install --user epc sexpdata tld lxml PyQt6 PyQt6-Qt6 PyQt6-sip PyQt6-WebEngine PyQt6-WebEngine-Qt6
-;; browser: pip install --user pysocks
-;; pdf: pip install --user packaging pymupdf
+;; core: pip install --user --upgrade epc sexpdata tld lxml PyQt6 PyQt6-Qt6 PyQt6-sip PyQt6-WebEngine PyQt6-WebEngine-Qt6
+;; browser: pip install --user --upgrade pysocks braveblock
+;; pdf: pip install --user --upgrade packaging pymupdf
 ;;
 ;; js Dependencies, check package.json
 (use-package eaf

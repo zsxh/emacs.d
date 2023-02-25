@@ -292,7 +292,7 @@ This filter de-installs itself after this call."
     (modify-syntax-entry ?< "." rust-mode-syntax-table)
     (modify-syntax-entry ?> "." rust-mode-syntax-table))
 
-  ;; FIX: String[]| `puni-backward-delete-char', check `forward-sexp', `forward-sexp-function', `treesit-forward-sexp' for details
+  ;; HACK: String[]| `puni-backward-delete-char', check `forward-sexp', `forward-sexp-function', `treesit-forward-sexp' for details
   (define-advice puni-backward-delete-char (:around (orig-fn n) advice)
     (if (and
          (member major-mode '(java-ts-mode))
