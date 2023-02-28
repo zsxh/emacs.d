@@ -30,29 +30,35 @@
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
              eaf-open-browser
-             eaf-open-browser-with-history)
+             eaf-open-browser-with-history
+             +eaf/find-file)
   :init
-  (progn
-    (defun eaf-find-file (orig-fn &rest args)
-      (require 'eaf)
-      (let* ((file (car args))
-             (file-extension (file-name-extension file))
-             (ext (if file-extension (downcase file-extension) nil)))
-        (cond
-         ((not ext) (apply orig-fn args))
-         ((member (eaf-get-file-name-extension file) eaf-office-extension-list)
-          (eaf-open-office file))
-         ((eaf--get-app-for-extension
-           (eaf-get-file-name-extension file))
-          (eaf-open file))
-         (t (apply orig-fn args)))))
-    (advice-add #'find-file :around #'eaf-find-file))
+  (advice-add #'find-file :around #'+eaf/find-file)
   :config
   (require 'eaf-browser)
   (require 'eaf-pdf-viewer)
   (require 'eaf-image-viewer)
   (with-eval-after-load 'org
     (require 'eaf-org))
+
+  (defun +eaf/match-app-p (extension-name)
+    (cl-loop for (app . ext) in eaf-app-extensions-alist
+             if (member extension-name (symbol-value ext))
+             return app))
+
+  (defun +eaf/find-file (orig-fn &rest args)
+    "Find file advice"
+    (let* ((file (car args))
+           (file-extension (file-name-extension file))
+           (ext (if file-extension (downcase file-extension) nil)))
+      (cond
+       ((not ext) (apply orig-fn args))
+       ((member (eaf-get-file-name-extension file) eaf-office-extension-list)
+        (eaf-open-office file))
+       ((+eaf/match-app-p
+         (eaf-get-file-name-extension file))
+        (eaf-open file))
+       (t (apply orig-fn args)))))
 
   (add-hook 'eaf-mode-hook
             (lambda ()
