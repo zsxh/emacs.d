@@ -52,9 +52,9 @@
 
 (defun lsp-bridge-jdtls-clean-cache ()
   (interactive)
-  (when-let ((_ (bound-and-true-p lsp-bridge-jdtls-worksapce))
-             (_ (yes-or-no-p (format "delete %s" lsp-bridge-jdtls-worksapce))))
-    (delete-directory lsp-bridge-jdtls-worksapce t)))
+  (when-let ((_ (bound-and-true-p lsp-bridge-jdtls-workspace))
+             (_ (yes-or-no-p (format "delete %s" lsp-bridge-jdtls-workspace))))
+    (delete-directory lsp-bridge-jdtls-workspace t)))
 
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode
