@@ -10,6 +10,9 @@
 
 ;;; Code:
 
+;; https://github.com/emacs-lsp/lsp-java/blob/master/lsp-java.el
+;; https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/
+
 ;; python dependencies
 ;; pip install --user --upgrade epc orjson sexpdata six
 (use-package lsp-bridge
@@ -36,11 +39,8 @@
         ;; Disable unused acm backends, HACK: disable elisp backends
         acm-backend-elisp-symbols-update-timer -1
         lsp-bridge-enable-search-words nil
-        lsp-bridge-enable-auto-format-code nil)
-
-
-  ;; FIXME: temp fix java-ts-mode
-  (add-to-list 'lsp-bridge-single-lang-server-mode-list (cons '(java-mode java-ts-mode) "jdtls"))
+        lsp-bridge-enable-auto-format-code nil
+        lsp-bridge-code-action-enable-popup-menu nil)
 
   (transient-define-prefix trainsient-scoll-popup-lsp-document ()
     ["scoll popup document"
@@ -102,6 +102,7 @@
         acm-enable-tabnine nil
         acm-enable-telega nil
         acm-enable-search-file-words nil))
+
 
 
 (provide 'init-lsp)

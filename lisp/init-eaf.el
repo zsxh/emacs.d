@@ -31,21 +31,8 @@
   :commands (eaf-open
              eaf-open-browser
              eaf-open-browser-with-history
-             +eaf/find-file)
+             eaf-get-file-name-extension)
   :init
-  (advice-add #'find-file :around #'+eaf/find-file)
-  :config
-  (require 'eaf-browser)
-  (require 'eaf-pdf-viewer)
-  (require 'eaf-image-viewer)
-  (with-eval-after-load 'org
-    (require 'eaf-org))
-
-  (defun +eaf/match-app-p (extension-name)
-    (cl-loop for (app . ext) in eaf-app-extensions-alist
-             if (member extension-name (symbol-value ext))
-             return app))
-
   (defun +eaf/find-file (orig-fn &rest args)
     "Find file advice"
     (let* ((file (car args))
@@ -59,6 +46,18 @@
          (eaf-get-file-name-extension file))
         (eaf-open file))
        (t (apply orig-fn args)))))
+  (advice-add #'find-file :around #'+eaf/find-file)
+  :config
+  (require 'eaf-browser)
+  (require 'eaf-pdf-viewer)
+  (require 'eaf-image-viewer)
+  (with-eval-after-load 'org
+    (require 'eaf-org))
+
+  (defun +eaf/match-app-p (extension-name)
+    (cl-loop for (app . ext) in eaf-app-extensions-alist
+             if (member extension-name (symbol-value ext))
+             return app))
 
   (add-hook 'eaf-mode-hook
             (lambda ()

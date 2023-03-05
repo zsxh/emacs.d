@@ -123,6 +123,8 @@ If RETURN-P, return the message as a string instead of displaying it."
         auto-package-update-show-preview t
         auto-package-update-hide-results nil
         auto-package-update-excluded-packages nil
+        auto-package-update-excluded-packages
+        '(elispfl auto-save highlight-matching-tag org-block-capf screenshot)
         auto-package-update-last-update-day-path (expand-file-name "cache/.last-package-update-day" user-emacs-directory))
   :defer t
   :config
@@ -135,11 +137,11 @@ If RETURN-P, return the message as a string instead of displaying it."
 
   (defun apu--safe-package-install (package)
     (condition-case nil
-        (progn
-          (let* ((pkg-desc (cadr (assoc package package-archive-contents)))
-                 (transaction (package-compute-transaction (list pkg-desc)
-                                                           (package-desc-reqs pkg-desc))))
-            (package-download-transaction transaction))
+        (when-let* ((info (assoc package package-archive-contents))
+                    (pkg-desc (cadr info))
+                    (transaction (package-compute-transaction (list pkg-desc)
+                                                              (package-desc-reqs pkg-desc))))
+          (package-download-transaction transaction)
           ;; NOTE: Only delete old packages when upgrade successfully
           (when auto-package-update-delete-old-versions
             (apu--add-to-old-versions-dirs-list package))
