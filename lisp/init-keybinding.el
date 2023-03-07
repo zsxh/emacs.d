@@ -227,6 +227,11 @@
              transient-string-inflection)
   :config
   (setq transient-show-popup t)
+  (defvar +transient/non-dedicated-display '(display-buffer-in-side-window
+                                             (side . bottom)
+                                             (dedicated . nil)
+                                             (inhibit-same-window . t)
+                                             (window-parameters (no-other-window . t))))
 
   (transient-define-prefix transient-text-scale ()
     "text scale"
@@ -238,18 +243,20 @@
      ("J" "text-scale-decrease" text-scale-decrease :transient t)
      ("q" "quit" transient-quit-all)])
 
-  ;; FIXME: property :transient t
   (transient-define-prefix transient-window-scale ()
     "window scale"
     ["window scale"
-     ("h" "shrink-window-horizontally" shrink-window-horizontally)
-     ("l" "enlarger-window-horizontally" enlarge-window-horizontally)
-     ("j" "shrink-window" shrink-window)
-     ("k" "enlarge-window" enlarge-window)
+     ("h" "shrink-window-horizontally" shrink-window-horizontally :transient t)
+     ("l" "enlarger-window-horizontally" enlarge-window-horizontally :transient t)
+     ("j" "shrink-window" shrink-window :transient t)
+     ("k" "enlarge-window" enlarge-window :transient t)
      ("b" "balance" balance-windows)
      ("q" "quit" transient-quit-all)])
 
-  ;; FIXME: property :transient t would mess up windows
+  (define-advice transient-window-scale (:around (orig-fn) advice)
+    (let ((transient-display-buffer-action +transient/non-dedicated-display))
+      (funcall orig-fn)))
+
   (transient-define-prefix transient-transpose-frame ()
     "transpose frame"
     ["transpose frame
