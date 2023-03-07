@@ -257,6 +257,13 @@
 
 ;; TODO: https://github.com/ginqi7/plantuml-emacs
 
+;; https://github.com/vedang/pdf-tools
+;; (use-package pdf-tools
+;;   :defer t
+;;   :mode ("\\.pdf\\'" . pdf-view-mode)
+;;   :config
+;;   (pdf-tools-install))
+
 
 (provide 'init-misc)
 

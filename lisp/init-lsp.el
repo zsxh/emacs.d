@@ -15,6 +15,7 @@
 
 ;; python dependencies
 ;; pip install --user --upgrade epc orjson sexpdata six
+;; emacs -batch -f batch-byte-compile acm/*.el *.el
 (use-package lsp-bridge
   :load-path "~/.emacs.d/submodules/lsp-bridge"
   :commands (lsp-bridge-mode +lsp/set-leader-keys)
@@ -97,11 +98,12 @@
                ("C-h" . acm-doc-toggle)))
   :config
   (setq acm-menu-length 10
-        acm-candidate-match-function 'orderless-flex
+        ;; acm-candidate-match-function 'orderless-flex
         ;; backends
         acm-enable-tabnine nil
         acm-enable-telega nil
-        acm-enable-search-file-words nil))
+        acm-enable-search-file-words nil
+        acm-enable-tempel nil))
 
 
 

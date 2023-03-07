@@ -27,6 +27,7 @@
 ;;
 ;; js Dependencies, check package.json
 (use-package eaf
+  :if (eq system-type 'gnu/linux)
   :load-path "~/.emacs.d/submodules/emacs-application-framework"
   :commands (eaf-open
              eaf-open-browser
@@ -107,6 +108,7 @@
   (advice-add 'eaf--monitor-buffer-kill :override #'+eaf/monitor-buffer-kill-a))
 
 (use-package eaf-browser
+  :if (eq system-type 'gnu/linux)
   :load-path "~/.emacs.d/submodules/emacs-application-framework/app/eaf-browser"
   :defer t
   :config
@@ -167,6 +169,7 @@ So I do some dirty hacks for my own user case."
   (advice-add 'eaf-translate-text :override #'+eaf/translate-text))
 
 (use-package eaf-pdf-viewer
+  :if (eq system-type 'gnu/linux)
   :load-path "~/.emacs.d/submodules/emacs-application-framework/app/eaf-pdf-viewer"
   :defer t
   :config
@@ -178,12 +181,14 @@ So I do some dirty hacks for my own user case."
     (evil-define-key 'normal eaf-pdf-outline-mode-map (kbd "RET") 'eaf-pdf-outline-jump)))
 
 (use-package eaf-image-viewer
+  :if (eq system-type 'gnu/linux)
   :load-path "~/.emacs.d/submodules/emacs-application-framework/app/eaf-image-viewer"
   :defer t
   :config
   (setq eaf-image-extension-list '("jpg" "jpeg" "png" "bmp" "gif" "webp")))
 
 (use-package eaf-org
+  :if (eq system-type 'gnu/linux)
   :load-path "~/.emacs.d/submodules/emacs-application-framework/extension"
   :defer t
   :config

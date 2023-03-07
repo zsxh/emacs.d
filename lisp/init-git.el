@@ -24,7 +24,7 @@
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
   :defer t
-  ;; :hook (magit-mode . magit-todos-mode)
+  :hook (magit-mode . magit-todos-mode)
   ;; :after magit
   :custom
   (magit-todos-exclude-globs '("node_modules" "*.json" ".git/"))

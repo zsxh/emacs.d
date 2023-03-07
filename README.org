@@ -58,6 +58,12 @@ recompile all the packages
 
 =(byte-recompile-directory package-user-dir nil 'force)=
 
+** Can not find autoload file
+
+generate autoloads for elpa packages
+
+=(package-generate-autoloads "compat" "~/.emacs.d/elpa/compat-29.1.4.0")=
+
 ** Low Resolution Emacs Icon In KDE Task Switcher
 
 - https://forum.suse.org.cn/t/emacs/4656 ~emacs -nbi~
