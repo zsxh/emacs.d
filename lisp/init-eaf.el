@@ -32,7 +32,8 @@
   :commands (eaf-open
              eaf-open-browser
              eaf-open-browser-with-history
-             eaf-get-file-name-extension)
+             eaf-get-file-name-extension
+             +eaf/match-app-p)
   :init
   (defun +eaf/find-file (orig-fn &rest args)
     "Find file advice"
@@ -40,11 +41,7 @@
            (file-extension (file-name-extension file))
            (ext (if file-extension (downcase file-extension) nil)))
       (cond
-       ((not ext) (apply orig-fn args))
-       ((member (eaf-get-file-name-extension file) eaf-office-extension-list)
-        (eaf-open-office file))
-       ((+eaf/match-app-p
-         (eaf-get-file-name-extension file))
+       ((+eaf/match-app-p ext)
         (eaf-open file))
        (t (apply orig-fn args)))))
   (advice-add #'find-file :around #'+eaf/find-file)
@@ -52,11 +49,15 @@
   (require 'eaf-browser)
   (require 'eaf-pdf-viewer)
   (require 'eaf-image-viewer)
+  (setq eaf-app-extensions-alist (cl-remove-if
+                                  (lambda (elt) (member (car elt) '("browser" "office")))
+                                  eaf-app-extensions-alist))
+  (defvar eaf-app-exts (apply #'append (mapcar
+                                        (lambda (pair) (symbol-value (cdr pair)))
+                                        eaf-app-extensions-alist)))
 
   (defun +eaf/match-app-p (extension-name)
-    (cl-loop for (app . ext) in eaf-app-extensions-alist
-             if (member extension-name (symbol-value ext))
-             return app))
+    (member extension-name eaf-app-exts))
 
   (add-hook 'eaf-mode-hook
             (lambda ()
@@ -112,10 +113,6 @@
   :config
   (setq eaf-browser-blank-page-url "https://duckduckgo.com"
         eaf-browser-dark-mode nil)
-
-  (setq eaf-app-extensions-alist
-        (cl-remove-if (lambda (elt) (string-equal "browser" (car elt)))
-                      eaf-app-extensions-alist))
 
   (eaf-bind-key +eaf/switch-to-eww "C-t" eaf-browser-keybinding)
   (eaf-bind-key nil "M-u" eaf-browser-keybinding)
