@@ -317,11 +317,14 @@ This filter de-installs itself after this call."
 ;; "z m" evil-close-folds
 ;; "z r" evil-open-folds
 (use-package hideshow
-  :commands hs-minor-mode
-  :hook (prog-mode . hs-minor-mode)
-  :config
+  :commands (hs-minor-mode hs-hide-level)
+  :init
   (with-eval-after-load 'evil
-    (define-key evil-normal-state-map (kbd "zf") 'hs-hide-level)))
+    (define-key evil-normal-state-map (kbd "zf") 'hs-hide-level))
+  :config
+  (add-hook 'prog-mode-hook 'hs-minor-mode)
+  (when (derived-mode-p 'prog-mode)
+    (hs-minor-mode)))
 
 ;; NOTE: RMSBolt tries to make it easy to see what your compiler is doing.
 ;; It does this by showing you the assembly output of a given source code file.
