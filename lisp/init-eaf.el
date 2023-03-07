@@ -52,8 +52,6 @@
   (require 'eaf-browser)
   (require 'eaf-pdf-viewer)
   (require 'eaf-image-viewer)
-  (with-eval-after-load 'org
-    (require 'eaf-org))
 
   (defun +eaf/match-app-p (extension-name)
     (cl-loop for (app . ext) in eaf-app-extensions-alist
@@ -128,6 +126,15 @@
   ;; TODO: evil normal mode clear focus
 
   (with-eval-after-load 'org
+    (defun +org/eaf-open-file (file-path link-without-schema)
+      (eaf-open file-path))
+    (setq org-file-apps '((auto-mode . emacs)
+                          ("\\.mm\\'" . default)
+                          ("\\.x?html?\\'" . default)
+                          ("\\.gif\\'" . +org/eaf-open-file)
+                          ("\\.png\\'" . +org/eaf-open-file)
+                          ("\\.jpe?g\\'" . +org/eaf-open-file)
+                          ("\\.pdf\\'" . +org/eaf-open-file)))
     (setq browse-url-browser-function 'eaf-open-browser))
 
   (defun +eaf/translate-text (text)
@@ -186,21 +193,6 @@ So I do some dirty hacks for my own user case."
   :defer t
   :config
   (setq eaf-image-extension-list '("jpg" "jpeg" "png" "bmp" "gif" "webp")))
-
-(use-package eaf-org
-  :if (eq system-type 'gnu/linux)
-  :load-path "~/.emacs.d/submodules/emacs-application-framework/extension"
-  :defer t
-  :config
-  (defun +org/eaf-open-file (file-path link-without-schema)
-    (eaf-open file-path))
-  (setq org-file-apps '((auto-mode . emacs)
-                        ("\\.mm\\'" . default)
-                        ("\\.x?html?\\'" . default)
-                        ("\\.gif\\'" . +org/eaf-open-file)
-                        ("\\.png\\'" . +org/eaf-open-file)
-                        ("\\.jpe?g\\'" . +org/eaf-open-file)
-                        ("\\.pdf\\'" . +org/eaf-open-file))))
 
 
 (provide 'init-eaf)
