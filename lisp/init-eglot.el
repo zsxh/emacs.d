@@ -25,7 +25,7 @@
         eglot-events-buffer-size 1
         eglot-report-progress nil)
 
-  (defvar eglot-path-uri-hashtable (make-hash-table :test 'eq))
+  (defvar eglot-path-uri-cache (list))
 
   (cl-defgeneric +eglot/ext-uri-to-path (uri)
     "Support extension uri."
@@ -39,7 +39,7 @@
 
   (define-advice eglot--path-to-uri (:around (orig-fn path) advice)
     "Support non standard LSP uri scheme."
-    (or (gethash path eglot-path-uri-hashtable)
+    (or (plist-get eglot-path-uri-cache (intern path))
         (funcall orig-fn path))))
 
 (defun +eglot/set-leader-keys (&optional map)

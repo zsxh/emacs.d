@@ -77,7 +77,7 @@
                                         :java/classFileContents
                                         (list :uri uri))))
           (with-temp-file source-file (insert content))))
-      (puthash source-file uri eglot-path-uri-hashtable)
+      (setq eglot-path-uri-cache (plist-put eglot-path-uri-cache (intern source-file) uri))
       source-file))
 
   (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode java-mode))
