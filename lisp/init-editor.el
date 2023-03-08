@@ -164,7 +164,8 @@ This filter de-installs itself after this call."
                   (get-buffer (concat "CAPTURE-" (buffer-name))))
              ;; performance issue auto-save in remote buffer
              (and (featurep 'tramp)
-                  (tramp-tramp-file-p (buffer-file-name))))))))
+                  (tramp-tramp-file-p (buffer-file-name)))
+             (string-match-p "\\.gpg\\'" (buffer-name)))))))
 
 ;; jumping to visible text using a char-based decision tree
 (use-package avy

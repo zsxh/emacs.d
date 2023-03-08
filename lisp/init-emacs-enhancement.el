@@ -281,6 +281,16 @@
   :if (>= emacs-major-version 29)
   :defer t)
 
+;;;;;;;;;;;;;; GnuPG and Auth Sources ;;;;;;;;;;;;;;
+;; TODO: gpg and auth-sources
+(setq epg-pinentry-mode 'loopback)
+;; (setq epa-file-select-keys 0)
+;; ask encryption password once
+;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+;; (epa-file-enable)
+;; (add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
+
+
 
 (provide 'init-emacs-enhancement)
 
