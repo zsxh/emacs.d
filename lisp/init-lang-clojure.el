@@ -55,7 +55,7 @@
                                           :clojure/dependencyContents
                                           (list :uri uri))))
             (with-temp-file source-file (insert content))))
-        (setq eglot-path-uri-cache (plist-put eglot-path-uri-cache (intern source-file) uri))
+        (puthash source-file uri eglot-path-uri-cache)
         source-file))))
 
 ;; https://cider.mx/

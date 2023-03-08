@@ -22,10 +22,11 @@
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
         ;; NOTE: drop jsonrpc log to improve performance
-        eglot-events-buffer-size 1
+        eglot-events-buffer-size 100000
         eglot-report-progress nil)
 
-  (defvar eglot-path-uri-cache (list))
+  (defvar eglot-path-uri-cache (make-hash-table :test #'equal)
+    "Cache file path to uri relations.")
 
   (cl-defgeneric +eglot/ext-uri-to-path (uri)
     "Support extension uri."
@@ -39,7 +40,7 @@
 
   (define-advice eglot--path-to-uri (:around (orig-fn path) advice)
     "Support non standard LSP uri scheme."
-    (or (plist-get eglot-path-uri-cache (intern path))
+    (or (gethash path eglot-path-uri-cache)
         (funcall orig-fn path))))
 
 (defun +eglot/set-leader-keys (&optional map)

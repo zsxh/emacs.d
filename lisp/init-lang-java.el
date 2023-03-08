@@ -59,9 +59,34 @@
 
   ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
   (cl-defmethod eglot-execute-command
+    "Command `java.apply.workspaceEdit' handler"
     (_server (_cmd (eql java.apply.workspaceEdit)) arguments)
     "Eclipse JDT breaks spec and replies with edits as arguments."
     (mapc #'eglot--apply-workspace-edit arguments))
+
+  (cl-defmethod eglot-execute-command
+    "Command `java.action.overrideMethodsPrompt' handler"
+    (_server (_cmd (eql java.action.overrideMethodsPrompt)) arguments)
+    "Eclipse JDT breaks spec and replies with edits as arguments."
+    (let* ((argument (aref arguments 0))
+           (list-methods-result (jsonrpc-request (eglot--current-server-or-lose)
+                                                 :java/listOverridableMethods
+                                                 argument))
+           (methods (plist-get list-methods-result :methods))
+           (menu-items (mapcar (lambda (method)
+                                 (let* ((name (plist-get method :name))
+                                        (parameters (plist-get method :parameters))
+                                        (class (plist-get method :declaringClass)))
+                                   (cons (format "%s(%s) class: %s" name (string-join parameters ", ") class) method)))
+                               methods))
+           (selected-methods (cl-map 'vector
+                                     (lambda (choice) (alist-get choice menu-items nil nil 'equal))
+                                     (delete-dups
+                                      (completing-read-multiple "overridable methods: " menu-items))))
+           (add-methods-result (jsonrpc-request (eglot--current-server-or-lose)
+                                                :java/addOverridableMethods
+                                                (list :overridableMethods selected-methods :context argument))))
+      (eglot--apply-workspace-edit add-methods-result)))
 
   (defun +eglot/jdtls-uri-to-path (uri)
     "Support Eclipse jdtls `jdt://' uri scheme."
@@ -77,7 +102,7 @@
                                         :java/classFileContents
                                         (list :uri uri))))
           (with-temp-file source-file (insert content))))
-      (setq eglot-path-uri-cache (plist-put eglot-path-uri-cache (intern source-file) uri))
+      (puthash source-file uri eglot-path-uri-cache)
       source-file))
 
   (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode java-mode))
