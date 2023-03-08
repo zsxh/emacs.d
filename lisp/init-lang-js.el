@@ -29,14 +29,14 @@
   :config
   (require 'sgml-mode)
   (setq js-indent-level 2)
-  (+lsp/set-leader-keys js-mode-map)
-  (+lsp/set-leader-keys js-ts-mode-map)
+  (+eglot/set-leader-keys js-mode-map)
+  (+eglot/set-leader-keys js-ts-mode-map)
 
   (defun +js/lsp-setup ()
     ;; This fix beginning-of-defun raise exception problem
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)
     (unless (member major-mode '(js-json-mode ein:ipynb-mode))
-      (lsp-bridge-mode)))
+      (eglot-ensure)))
 
   (+funcs/major-mode-leader-keys js-json-mode-map
                                  "A" nil
@@ -61,22 +61,22 @@
   :defer t
   ;; :init
   ;; (define-derived-mode typescript-tsx-mode typescript-mode "TypeScript[tsx]")
-  :hook (typescript-mode . lsp-bridge-mode)
+  :hook (typescript-mode . eglot-ensure)
   :config
-  (+lsp/set-leader-keys typescript-mode-map))
+  (+eglot/set-leader-keys typescript-mode-map))
 
 (use-package typescript-ts-mode
   :ensure nil
   :defer t
-  :hook (typescript-ts-base-mode . lsp-bridge-mode)
+  :hook (typescript-ts-base-mode . eglot-ensure)
   :config
-  (+lsp/set-leader-keys typescript-ts-mode-map)
-  (+lsp/set-leader-keys tsx-ts-mode-map))
+  (+eglot/set-leader-keys typescript-ts-mode-map)
+  (+eglot/set-leader-keys tsx-ts-mode-map))
 
 ;; NOTE: vue-language-server
 (use-package vue-mode
   :commands vue-mode
-  :hook (vue-mode . lsp-bridge-mode)
+  :hook (vue-mode . eglot-ensure)
   :bind ((:map vue-mode-map
                ("C-c C-l" . vue-mode-reparse)))
   :config

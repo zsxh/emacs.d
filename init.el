@@ -83,8 +83,7 @@
 (require 'init-highlight)
 
 ;; Language
-(require 'init-lsp)
-;; (require 'init-eglot)
+(require 'init-eglot)
 (require 'init-lang-emacs-lisp)
 (require 'init-lang-common-lisp)
 (require 'init-lang-c)

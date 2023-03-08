@@ -20,41 +20,72 @@
 
 ;; NOTE: `jdtls' settings: https://github.com/eclipse/eclipse.jdt.ls/blob/master/org.eclipse.jdt.ls.core/src/org/eclipse/jdt/ls/core/internal/preferences/Preferences.java
 
-;; NOTE: Clean up old lsp-bridge config json in `lsp-bridge-jdtls-workspace' when you change your customize config file/code
-(use-package lsp-bridge-jdtls
-  :ensure nil
-  :defer t
-  :config
-  (setq
-   lsp-bridge-jdtls-workspace (expand-file-name "cache/lsp-bridge-jdtls" user-emacs-directory)
-   lsp-bridge-jdtls-default-file (expand-file-name "lsp-bridge-config/jdtls.json" user-emacs-directory)
-   lsp-bridge-jdtls-jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
-                               "-Xmx8G"
-                               ;; "-XX:+UseG1GC"
-                               "-XX:+UseZGC"
-                               "-XX:+UseStringDeduplication"
-                               ;; "-XX:FreqInlineSize=325"
-                               ;; "-XX:MaxInlineLevel=9"
-                               "-XX:+UseCompressedOops")))
+(add-hook-run-once 'java-mode-hook #'+eglot/set-leader-keys)
+(add-hook-run-once 'java-ts-mode-hook #'+eglot/set-leader-keys)
 
-(add-hook-run-once 'java-mode-hook #'+lsp/set-leader-keys)
-(add-hook-run-once 'java-ts-mode-hook #'+lsp/set-leader-keys)
+(add-hook 'java-mode-hook #'eglot-ensure)
+(add-hook 'java-ts-mode-hook #'eglot-ensure)
 
-(defun +java/enable-lsp ()
-  (unless (bound-and-true-p lsp-bridge-get-single-lang-server-by-project)
-    (require 'lsp-bridge)
-    (setq-local lsp-bridge-get-single-lang-server-by-project 'lsp-bridge-get-jdtls-server-by-project))
-  (lsp-bridge-mode))
+(with-eval-after-load 'eglot
+  (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
 
-(add-hook 'java-mode-hook #'+java/enable-lsp)
-(add-hook 'java-ts-mode-hook #'+java/enable-lsp)
+  (defun jdtls-command-contact (&optional interactive)
+    (let* ((jdtls-cache-dir (file-name-concat user-emacs-directory "cache" "lsp-cache"))
+           (project-dir (file-name-nondirectory (directory-file-name (+project/root))))
+           (data-dir (expand-file-name (file-name-concat jdtls-cache-dir (md5 project-dir))))
+           (jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
+                       "-Xmx8G"
+                       ;; "-XX:+UseG1GC"
+                       "-XX:+UseZGC"
+                       "-XX:+UseStringDeduplication"
+                       ;; "-XX:FreqInlineSize=325"
+                       ;; "-XX:MaxInlineLevel=9"
+                       "-XX:+UseCompressedOops"))
+           (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
+           (contact (append '("jdtls") jvm-args `("-data" ,data-dir))))
+      contact))
 
+  (defun jdtls-initialization-options ()
+    (let ((setting-json-file (file-name-concat user-emacs-directory "lsp-config" "jdtls.json")))
+      (with-temp-buffer
+        (insert-file-contents setting-json-file)
+        (json-parse-buffer :object-type 'plist))))
 
-(defun lsp-bridge-jdtls-clean-cache ()
-  (interactive)
-  (when-let ((_ (bound-and-true-p lsp-bridge-jdtls-workspace))
-             (_ (yes-or-no-p (format "delete %s" lsp-bridge-jdtls-workspace))))
-    (delete-directory lsp-bridge-jdtls-workspace t)))
+  (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
+    (jdtls-initialization-options))
+
+  (cl-defmethod eglot-initialization-options (server &context (major-mode java-ts-mode))
+    (jdtls-initialization-options))
+
+  ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
+  (cl-defmethod eglot-execute-command
+    (_server (_cmd (eql java.apply.workspaceEdit)) arguments)
+    "Eclipse JDT breaks spec and replies with edits as arguments."
+    (mapc #'eglot--apply-workspace-edit arguments))
+
+  (defun +eglot/jdtls-uri-to-path (uri)
+    "Support Eclipse jdtls `jdt://' uri scheme."
+    (when-let* ((jdt-scheme-p (string-prefix-p "jdt://" uri))
+                (filename (when (string-match "^jdt://contents/\\(.*?\\)/\\(.*\\)\.class\\?" uri)
+                            (format "%s.java" (replace-regexp-in-string "/" "." (match-string 2 uri) t t))))
+                (source-dir (file-name-concat (project-root (eglot--current-project)) ".eglot"))
+                (source-file (expand-file-name (file-name-concat source-dir filename))))
+      (unless (file-directory-p source-dir)
+        (make-directory source-dir t))
+      (unless (file-readable-p source-file)
+        (let ((content (jsonrpc-request (eglot--current-server-or-lose)
+                                        :java/classFileContents
+                                        (list :uri uri))))
+          (with-temp-file source-file (insert content))))
+      (puthash source-file uri eglot-path-uri-hashtable)
+      source-file))
+
+  (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode java-mode))
+    (+eglot/jdtls-uri-to-path uri))
+
+  (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode java-ts-mode))
+    (+eglot/jdtls-uri-to-path uri)))
+
 
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode

@@ -15,18 +15,18 @@
   :ensure nil
   ;; By default files ending in .h are treated as c files rather than c++ files.
   :mode ("\\.h\\'" . c++-mode)
-  :hook ((c-mode c++-mode) . lsp-bridge-mode)
+  :hook ((c-mode c++-mode) . eglot-ensure)
   :config
-  (add-hook-run-once 'c-mode-hook '+lsp/set-leader-keys)
-  (add-hook-run-once 'c++-mode-hook '+lsp/set-leader-keys))
+  (add-hook-run-once 'c-mode-hook '+eglot/set-leader-keys)
+  (add-hook-run-once 'c++-mode-hook '+eglot/set-leader-keys))
 
 (use-package c-ts-mode
   :ensure nil
   ;; By default files ending in .h are treated as c files rather than c++ files.
   ;; :mode ("\\.h\\'" . c++-ts-mode)
-  :hook (c-ts-base-mode . lsp-bridge-mode)
+  :hook (c-ts-base-mode . eglot-ensure)
   :config
-  (add-hook-run-once 'c-ts-base-mode-hook '+lsp/set-leader-keys))
+  (add-hook-run-once 'c-ts-base-mode-hook '+eglot/set-leader-keys))
 
 (use-package cmake-mode
   :defer t

@@ -1,0 +1,96 @@
+{
+  "settings": {
+    "java": {
+      "maxConcurrentBuilds": 1,
+      "autobuild": {
+        "enabled": true
+      },
+      "import": {
+        "maven": {
+          "enabled": true
+        },
+        "exclusions": [
+          "**/node_modules/**",
+          "**/.metadata/**",
+          "**/archetype-resources/**",
+          "**/META-INF/maven/**"
+        ]
+      },
+      "configuration": {
+        "updateBuildConfiguration": "automatic",
+        "checkProjectSettingsExclusions": true,
+        "runtimes": [
+          {
+            "name": "JavaSE-1.8",
+            "path": "/usr/local/java-8"
+          },
+          {
+            "name": "JavaSE-11",
+            "path": "/usr/local/java-11"
+          },
+          {
+            "name": "JavaSE-17",
+            "path": "/usr/local/java-17"
+          },
+          {
+            "name": "JavaSE-19",
+            "path": "/usr/local/java-19",
+            "default": true
+          }
+        ]
+      },
+      "project": {
+        "importHint": true,
+        "importOnFirstTimeStartup": "automatic",
+        "referencedLibraries": [
+          "lib/**"
+        ],
+        "resourceFilters": [
+          "node_modules",
+          "\\.git",
+          ".metadata",
+          "archetype-resources",
+          "META-INF/maven"
+        ]
+      },
+      "server": {
+        "launchMode": "Hybrid"
+      },
+      "format": {
+        "settings": {
+          "url": "/home/zsxh/.emacs.d/cache/eclipse-java-google-style.xml",
+          "profile": "GoogleStyle"
+        }
+      },
+      "contentProvider": {
+        "preferred": "fernflower"
+      },
+      "completion": {
+        "guessMethodArguments": true,
+        "overwrite": true,
+        "enabled": true,
+        "favoriteStaticMembers": [
+          "org.junit.Assert.*",
+          "org.junit.Assume.*",
+          "org.junit.jupiter.api.Assertions.*",
+          "org.junit.jupiter.api.Assumptions.*",
+          "org.junit.jupiter.api.DynamicContainer.*",
+          "org.junit.jupiter.api.DynamicTest.*",
+          "org.mockito.Mockito.*",
+          "org.mockito.ArgumentMatchers.*",
+          "org.mockito.Answers.*"
+        ]
+      }
+    }
+  },
+  "extendedClientCapabilities": {
+    "classFileContentsSupport": true,
+    "overrideMethodsPromptSupport": true
+  },
+  "bundles": [
+    "/home/zsxh/.emacs.d/cache/lsp-servers/java/bundles/dg.jdt.ls.decompiler.cfr-0.0.3.jar",
+    "/home/zsxh/.emacs.d/cache/lsp-servers/java/bundles/dg.jdt.ls.decompiler.common-0.0.3.jar",
+    "/home/zsxh/.emacs.d/cache/lsp-servers/java/bundles/dg.jdt.ls.decompiler.fernflower-0.0.3.jar",
+    "/home/zsxh/.emacs.d/cache/lsp-servers/java/bundles/dg.jdt.ls.decompiler.procyon-0.0.3.jar"
+  ]
+}

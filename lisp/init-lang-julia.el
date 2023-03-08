@@ -17,11 +17,11 @@
 ;; pkg> add LanguageServer
 (use-package julia-mode
   :mode ("\\.jl\\'" . julia-mode)
-  :hook ((julia-mode . lsp-bridge-mode)
+  :hook ((julia-mode . eglot-mode)
          (julia-mode . julia-repl-mode))
   :config
   (setq julia-indent-offset 2)
-  (+lsp/set-leader-keys julia-mode-map)
+  (+eglot/set-leader-keys julia-mode-map)
   (+funcs/major-mode-leader-keys julia-mode-map
                                  "'" '(+julia/repl-vterm :which-key "repl"))
 

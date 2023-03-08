@@ -15,14 +15,14 @@
 (use-package rust-mode
   :defer t
   :mode ("\\.rs\\'" . rust-mode)
-  :hook (rust-mode . lsp-bridge-mode)
+  :hook (rust-mode . eglot-ensure)
   :config
   (setq rust-indent-offset 2))
 
 (use-package rust-ts-mode
   :ensure nil
   :defer t
-  :hook (rust-ts-mode . lsp-bridge-mode)
+  :hook (rust-ts-mode . eglot-ensure)
   :config
   (setq rust-ts-mode-indent-offset 2))
 
@@ -35,7 +35,7 @@
 (defun +rust/set-custom-leader-keys (&optional map)
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))
     (require 'cargo nil t)
-    (+lsp/set-leader-keys mode-map)
+    (+eglot/set-leader-keys mode-map)
     (+funcs/major-mode-leader-keys
      mode-map
      "c" '(nil :which-key "cargo")
