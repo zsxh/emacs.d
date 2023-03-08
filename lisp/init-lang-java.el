@@ -59,15 +59,13 @@
 
   ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
   (cl-defmethod eglot-execute-command
-    "Command `java.apply.workspaceEdit' handler"
     (_server (_cmd (eql java.apply.workspaceEdit)) arguments)
-    "Eclipse JDT breaks spec and replies with edits as arguments."
+    "Command `java.apply.workspaceEdit' handler."
     (mapc #'eglot--apply-workspace-edit arguments))
 
   (cl-defmethod eglot-execute-command
-    "Command `java.action.overrideMethodsPrompt' handler"
     (_server (_cmd (eql java.action.overrideMethodsPrompt)) arguments)
-    "Eclipse JDT breaks spec and replies with edits as arguments."
+    "Command `java.action.overrideMethodsPrompt' handler."
     (let* ((argument (aref arguments 0))
            (list-methods-result (jsonrpc-request (eglot--current-server-or-lose)
                                                  :java/listOverridableMethods
