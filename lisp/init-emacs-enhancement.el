@@ -283,6 +283,7 @@
 
 ;;;;;;;;;;;;;; GnuPG and Auth Sources ;;;;;;;;;;;;;;
 ;; TODO: gpg and auth-sources
+;; NOTE: https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sources
 (setq epg-pinentry-mode 'loopback)
 ;; (setq epa-file-select-keys 0)
 ;; ask encryption password once

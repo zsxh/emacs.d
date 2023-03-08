@@ -151,7 +151,16 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (interactive)
     (vterm-copy-mode)
     (message "vterm-copy-mode activated")
-    (consult-line)))
+    (consult-line))
+
+  ;; Kill vterm window and buffer when a vterm process is finished
+  (add-hook 'vterm-exit-functions
+            (lambda (_ _)
+              (let* ((buffer (current-buffer))
+                     (window (get-buffer-window buffer)))
+                (when (not (one-window-p))
+                  (delete-window window))
+                (kill-buffer buffer)))))
 
 (use-package term
   :ensure nil
