@@ -84,7 +84,7 @@
   :ensure nil
   :defer t
   :config
-  (setq recentf-auto-cleanup "05:00am"
+  (setq recentf-auto-cleanup "07:00pm"
         recentf-max-saved-items 200
         recentf-exclude '((expand-file-name package-user-dir)
                           ".cache"
