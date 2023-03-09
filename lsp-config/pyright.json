@@ -1,0 +1,17 @@
+{
+  "python": {
+    "analysis": {
+      "autoImportCompletions": true,
+      "typeshedPaths": [],
+      "stubPath": "",
+      "useLibraryCodeForTypes": true,
+      "diagnosticMode": "openFilesOnly",
+      "typeCheckingMode": "basic",
+      "logLevel": "info",
+      "autoSearchPaths": true,
+      "extraPaths": []
+    },
+    "pythonPath": "python",
+    "venvPath": ""
+  }
+}
