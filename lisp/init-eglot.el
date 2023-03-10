@@ -13,6 +13,7 @@
 (when (bound-and-true-p read-process-output-max)
   (setq read-process-output-max (* 1024 1024)))
 
+;; NOTE: https://joaotavora.github.io/eglot/
 (use-package eglot
   :ensure nil
   :commands (eglot eglot-ensure)
@@ -22,7 +23,7 @@
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
         ;; NOTE: drop jsonrpc log to improve performance
-        eglot-events-buffer-size 100000
+        eglot-events-buffer-size 0
         eglot-report-progress nil)
 
   (defvar eglot-path-uri-cache (make-hash-table :test #'equal)
@@ -50,17 +51,18 @@
      "A" '(eglot-code-actions :which-key "code-action")
      "D" '(eldoc-box-eglot-help-at-point :which-key "hover:document")
      "e" '(nil :which-key "error")
-     "el" '(consult-flymake :which-key "list-error")
-     "eL" '(flymake-show-project-diagnostics :which-key "show-project-diagnostics")
+     "el" '(consult-flymake :which-key "show-buffer-diagnostics")
+     "eL" '((lambda () (interactive) (consult-flymake t)) :which-key "show-project-diagnostics")
      "en" '(flymake-goto-next-error :which-key "next-error")
      "ep" '(flymake-goto-prev-error :which-key "prev-error")
      "f" '(eglot-format :which-key "format")
-     "g" '(nil :which-key "goto")
+     "g" '(nil :which-key "find/goto")
      "gd" '(xref-find-definitions :which-key "find-definitions")
      "ge" '(eglot-find-declaration :which-key "find-declaration")
      "gi" '(eglot-find-implementation :which-key "find-implementation")
      "gr" '(xref-find-references :which-key "find-references")
      "gt" '(eglot-find-typeDefinition :which-key "find-typeDefinition")
+     "gs" '(consult-eglot-symbols :which-key "workspace-symbols")
      "R" '(eglot-rename :which-key "rename"))))
 
 (use-package eldoc
@@ -71,6 +73,10 @@
 
 (use-package eldoc-box
   :commands (eldoc-box-eglot-help-at-point))
+
+;; https://github.com/mohkale/consult-eglot
+(use-package consult-eglot
+  :defer t)
 
 
 (provide 'init-eglot)

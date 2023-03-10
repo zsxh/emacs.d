@@ -151,19 +151,12 @@ else ask the user for a directory in which to look for the project."
              (not (string-prefix-p "*Python" name)))
         (string-match-p "magit.*:" name)
         (when-let ((cur-persp (get-current-persp)))
-          (not (persp-contain-buffer-p buffer cur-persp)))
-        (equal (buffer-name (current-buffer)) name))))
+          (not (persp-contain-buffer-p buffer cur-persp))))))
 
-(defun +project/project-buffer-filter-function (buffers)
-    (cl-remove-if
-     (lambda (buffer) (+project/project-buffer-filter buffer))
-     buffers))
-
-(defun my/project-buffers-a (fn project)
-  (+project/project-buffer-filter-function
-   (funcall fn project)))
-
-(advice-add 'project-buffers :around 'my/project-buffers-a)
+(define-advice project-buffers (:around (orig-fn project) advice)
+  (cl-remove-if
+   (lambda (buffer) (+project/project-buffer-filter buffer))
+   (funcall orig-fn project)))
 
 (defun my/project-switch-project (dir)
   (interactive (list (project-prompt-project-dir)))

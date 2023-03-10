@@ -34,7 +34,7 @@
            (project-dir (file-name-nondirectory (directory-file-name (+project/root))))
            (data-dir (expand-file-name (file-name-concat jdtls-cache-dir (md5 project-dir))))
            (jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
-                       "-Xmx8G"
+                       "-Xmx4G"
                        ;; "-XX:+UseG1GC"
                        "-XX:+UseZGC"
                        "-XX:+UseStringDeduplication"
