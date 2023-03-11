@@ -128,14 +128,11 @@
     (let* ((pkg (+java/treesit-get-package))
            (class (+java/treesit-get-class))
            (method (+java/treesit-get-method))
-           (target-location (expand-file-name (locate-dominating-file default-directory "target")))
-           (target-path (format "%starget" target-location))
-           (deps-cp (+java/get-deps-classpath target-path))
-           (class-path (format "%s/classes:%s/test-classes:%s" target-path target-path deps-cp)))
-      (if (and pkg class target-location)
+           (classpath (+java/eglot-get-project-classpath)))
+      (if (and pkg class classpath)
           (compile
            (concat "java -jar " +java/junit-platform-console-standalone-jar
-                   " -cp " class-path
+                   " -cp " classpath
                    (if method
                        (format " -m '%s.%s#%s'" pkg class method)
                      (format " -c '%s.%s'" pkg class)))
@@ -171,7 +168,7 @@
       (lambda (parent)
         (member (treesit-node-type parent) '("method_declaration"))))))
 
-  (defun +java/get-deps-classpath (target-location)
+  (defun +java/maven-get-deps-classpath (target-location)
     "Get dependencies classpath."
     (let* ((project-root-path (+project/root))
            (default-directory project-root-path)
@@ -181,7 +178,30 @@
         (shell-command-to-string "mvn test-compile dependency:build-classpath -Dmdep.includeScope=test -Dmdep.outputFile=target/deps-cp"))
       (with-temp-buffer
         (insert-file-contents deps-cp-file)
-        (buffer-string)))))
+        (buffer-string))))
+
+  (defun +java/maven-get-project-classpath ()
+    (when-let* ((target-location (expand-file-name (locate-dominating-file default-directory "target")))
+                (target-path (format "%starget" target-location))
+                (deps-cp (+java/maven-get-deps-classpath target-path)))
+      (format "%s/classes:%s/test-classes:%s" target-path target-path deps-cp)))
+
+  (defun +java/eglot-get-project-classpath (&optional filename scope)
+    (let* ((filename (or filename (buffer-file-name)))
+           (scope (or scope "test"))
+           (classpaths (plist-get (eglot-execute-command (eglot--current-server-or-lose)
+                                                         "java.project.getClasspaths"
+                                                         (vector (eglot--path-to-uri filename)
+                                                                 (json-encode `(("scope" . ,scope)))))
+                                  :classpaths)))
+      (mapconcat #'identity classpaths path-separator)))
+
+  (defun +java/testfile-p (file-path)
+    "Tell if a file locate at FILE-PATH is a test class."
+    (eglot-execute-command
+     (eglot--current-server-or-lose)
+     "java.project.isTestFile"
+     (vector (eglot--path-to-uri file-path)))))
 
 ;; http://www.tianxiangxiong.com/2017/02/12/decompiling-java-classfiles-in-emacs.html
 ;; https://github.com/xiongtx/jdecomp
