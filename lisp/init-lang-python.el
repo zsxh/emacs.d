@@ -48,6 +48,7 @@
         (plist-put python-section :pythonPath venv-python-cmd))
     settings))
 
+;; TODO: Check https://github.com/wyuenho/emacs-pet
 (defun +python/locate-venv-python-cmd ()
   "Look for virtual environments local to the workspace."
   (when-let* ((project-dir (+project/root))
