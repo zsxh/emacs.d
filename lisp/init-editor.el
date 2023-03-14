@@ -341,6 +341,11 @@ This filter de-installs itself after this call."
   ;; use `auto-save' package to deal with trailing whitespace
   (setq editorconfig-trim-whitespaces-mode (lambda (arg) nil)))
 
+;; TODO: formatter for python
+;; https://github.com/lassik/emacs-format-all-the-code
+(use-package format-all
+  :defer t)
+
 
 (provide 'init-editor)
 
