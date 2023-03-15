@@ -18,27 +18,27 @@
 (use-package elfeed
   :commands elfeed
   :config
+  (require 'elfeed-show)
   (setq elfeed-curl-extra-arguments `(,(format "-xhttp://%s:%s" personal-proxy-http-host personal-proxy-http-port))
         elfeed-log-level 'debug)
 
   (when (featurep 'evil-collection)
     (evil-collection-init 'elfeed))
 
-  (require 'eaf)
-  (require 'elfeed-show)
+  (when (and (eq system-type 'gnu/linux)
+             (require 'eaf nil t))
+    (defun +eaf/elfeed-current-window ()
+      (interactive)
+      (let ((entry (elfeed-search-selected :ignore-region)))
+        (when (elfeed-entry-p entry)
+          ;; Move to next feed item.
+          (elfeed-untag entry 'unread)
+          (elfeed-search-update-entry entry)
+          (unless elfeed-search-remain-on-entry (forward-line))
+          ;; Open elfeed item in current window
+          (eaf-open-browser (elfeed-entry-link entry)))))
 
-  (defun +eaf/elfeed-current-window ()
-    (interactive)
-    (let ((entry (elfeed-search-selected :ignore-region)))
-      (when (elfeed-entry-p entry)
-        ;; Move to next feed item.
-        (elfeed-untag entry 'unread)
-        (elfeed-search-update-entry entry)
-        (unless elfeed-search-remain-on-entry (forward-line))
-        ;; Open elfeed item in current window
-        (eaf-open-browser (elfeed-entry-link entry)))))
-
-  (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") '+eaf/elfeed-current-window))
+    (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") '+eaf/elfeed-current-window)))
 
 ;; Youdao
 (use-package youdao-dictionary

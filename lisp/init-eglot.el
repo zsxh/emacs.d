@@ -19,7 +19,7 @@
   :commands (eglot eglot-ensure)
   :config
   (setq eglot-autoshutdown t
-        eglot-send-changes-idle-time 0.5
+        eglot-send-changes-idle-time 0.3
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
         ;; NOTE: drop jsonrpc log to improve performance
@@ -69,7 +69,10 @@
   :ensure nil
   :defer t
   :config
-  (setq eldoc-echo-area-use-multiline-p 1))
+  (setq eldoc-echo-area-use-multiline-p 1
+        eldoc-idle-delay 0.3)
+  (set-face-foreground 'eldoc-highlight-function-argument
+                       (face-attribute 'font-lock-variable-name-face :foreground)))
 
 (use-package eldoc-box
   :commands (eldoc-box-eglot-help-at-point))

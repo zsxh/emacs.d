@@ -78,7 +78,7 @@
 ;; Programing
 (require 'init-project)
 (require 'init-completion)
-(require 'init-syntax-checking)
+(require 'init-diagnostic)
 (require 'init-git)
 (require 'init-highlight)
 

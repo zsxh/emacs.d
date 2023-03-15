@@ -61,6 +61,13 @@
 
 ;; https://tony-zorman.com/posts/2022-11-30-package-vc-install.html
 ;; NOTE: https://github.com/slotThe/vc-use-package
+(defconst slot/package-vc-fetchers
+  '(:github "https://github.com/"
+    :gitlab "https://gitlab.com/"
+    :codeberg "https://codeberg.org/"
+    :sourcehut "https://git.sr.ht/~")
+  "Places from where to fetch packages.")
+
 (cl-defun slot/vc-install (&key (fetcher "github") repo name rev backend)
   "Install a package from a remote if it's not already installed.
 This is a thin wrapper around `package-vc-install' in order to
@@ -75,11 +82,12 @@ named arguments:
 
 - NAME, REV, and BACKEND are as in `package-vc-install' (which
   see)."
-  (let* ((url (format "https://www.%s.com/%s" fetcher repo))
+  (let* ((fetcher-url (plist-get slot/package-vc-fetchers (intern (concat ":" fetcher))))
+         (url (format "%s%s" fetcher-url repo))
          (iname (when name (intern name)))
          (pac-name (or iname (intern (file-name-base repo)))))
     (unless (package-installed-p pac-name)
-      (package-vc-install url iname rev backend))))
+      (package-vc-install url rev backend iname))))
 
 (eval-when-compile
   (setq use-package-always-ensure t
