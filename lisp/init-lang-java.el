@@ -49,7 +49,7 @@
     (let ((setting-json-file (file-name-concat user-emacs-directory "lsp-config" "jdtls.json")))
       (with-temp-buffer
         (insert-file-contents setting-json-file)
-        (json-parse-buffer :object-type 'plist))))
+        (json-parse-buffer :object-type 'plist :false-object :json-false))))
 
   (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
     (jdtls-initialization-options))
