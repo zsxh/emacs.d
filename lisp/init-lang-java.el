@@ -30,16 +30,12 @@
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
 
   (defun jdtls-command-contact (&optional interactive)
-    (let* ((jdtls-cache-dir (file-name-concat user-emacs-directory "cache" "lsp-cache"))
+    (let* ((jdtls-cache-dir (file-name-concat user-emacs-directory "cache" "jdtls-cache"))
            (project-dir (file-name-nondirectory (directory-file-name (+project/root))))
            (data-dir (expand-file-name (file-name-concat jdtls-cache-dir (md5 project-dir))))
-           (jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
-                       "-Xmx8G"
-                       ;; "-XX:+UseG1GC"
-                       "-XX:+UseZGC"
+           (jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar"))
+                       "-XX:+UseG1GC"
                        "-XX:+UseStringDeduplication"
-                       ;; "-XX:FreqInlineSize=325"
-                       ;; "-XX:MaxInlineLevel=9"
                        "-XX:+UseCompressedOops"))
            (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
            (contact (append '("jdtls") jvm-args `("-data" ,data-dir))))
@@ -212,7 +208,7 @@
   :commands (jdecomp-mode)
   :config
   (setq jdecomp-decompiler-type 'fernflower
-        jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "~/.local/share/JetBrains/Toolbox/apps/IDEA-C/ch-0/203.7148.57/plugins/java-decompiler/lib/java-decompiler.jar")))
+        jdecomp-decompiler-paths `((fernflower . ,(file-name-concat user-emacs-directory "cache" "lsp-servers" "java" "bundles" "dg.jdt.ls.decompiler.fernflower-0.0.3.jar")))
         jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))))
 
 

@@ -18,8 +18,25 @@
   :defer t
   :commands (project-root project-forget-zombie-projects)
   :config
-  ;; autoremove zombie projects
-  (run-with-idle-timer 5 nil (lambda () (project-forget-zombie-projects)))
+  (defun +project/project-buffer-filter (buffer)
+    (let ((name (buffer-name buffer)))
+      (or (and (string-prefix-p "*" name)
+               (not (string-prefix-p "*eww*" name))
+               (not (string-prefix-p "*ein: http" name))
+               (not (string-prefix-p "*ein:notebooklist" name))
+               (not (string-prefix-p "*vterm:" name))
+               (not (string-prefix-p "*cider" name))
+               (not (string-prefix-p "*Python" name)))
+          (string-match-p "magit.*:" name)
+          (when-let ((cur-persp (get-current-persp)))
+            (not (persp-contain-buffer-p buffer cur-persp))))))
+
+  (if (boundp 'project-ignore-buffer-conditions)
+      (setq project-ignore-buffer-conditions '(+project/project-buffer-filter))
+    (define-advice project-buffers (:around (orig-fn project) advice)
+      (cl-remove-if
+       (lambda (buffer) (+project/project-buffer-filter buffer))
+       (funcall orig-fn project))))
 
   ;; (setq my/project-local-identifier '(".projectile" ".project" "go.mod" "Cargo.toml"
   ;;                                     "project.clj" "pom.xml" "package.json"
@@ -128,39 +145,17 @@ else ask the user for a directory in which to look for the project."
 
 (defalias '+project/root 'my/project-root)
 
-(defun my/project-discover ()
-  "Add dir under search-path to project."
-  (interactive)
-  (dolist (search-path '("~/code/" "~/git/"))
-    (dolist (file (file-name-all-completions "" search-path))
-      (when (not (member file '("./" "../")))
-        (let ((full-name (expand-file-name file search-path)))
-          (when (file-directory-p full-name)
-            (when-let ((pr (project-current nil full-name)))
-              (project-remember-project pr)
-              (message "add project %s..." pr))))))))
-
-(defun +project/project-buffer-filter (buffer)
-  (let ((name (buffer-name buffer)))
-    (or (and (string-prefix-p "*" name)
-             (not (string-prefix-p "*eww*" name))
-             (not (string-prefix-p "*ein: http" name))
-             (not (string-prefix-p "*ein:notebooklist" name))
-             (not (string-prefix-p "*vterm:" name))
-             (not (string-prefix-p "*cider" name))
-             (not (string-prefix-p "*Python" name)))
-        (string-match-p "magit.*:" name)
-        (when-let ((cur-persp (get-current-persp)))
-          (not (persp-contain-buffer-p buffer cur-persp))))))
-
-(define-advice project-buffers (:around (orig-fn project) advice)
-  (cl-remove-if
-   (lambda (buffer) (+project/project-buffer-filter buffer))
-   (funcall orig-fn project)))
-
 (defun my/project-switch-project (dir)
   (interactive (list (project-prompt-project-dir)))
   (dired dir))
+
+;; autoremove zombie projects
+(add-hook 'emacs-startup-hook (lambda ()
+                                (run-with-idle-timer
+                                 60 nil
+                                 (lambda ()
+                                   (message "Clean up zombie projects...")
+                                   (project-forget-zombie-projects)))))
 
 
 (provide 'init-project)

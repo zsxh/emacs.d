@@ -17,7 +17,8 @@
   :ensure nil
   :config
   (setq flymake-no-changes-timeout 2
-        flymake-start-on-save-buffer nil))
+        flymake-start-on-save-buffer nil)
+  (advice-add 'flymake-eldoc-function :override #'ignore))
 
 ;; TODO: flymake-collection
 ;; https://github.com/mohkale/flymake-collection
@@ -33,7 +34,9 @@
   :ensure nil
   :hook (flymake-mode . flymake-popon-mode)
   :config
-  (setq flymake-popon-method 'posframe))
+  (setq flymake-popon-method 'posframe
+        flymake-popon-width 80
+        flymake-popon-delay 0.3))
 
 
 (provide 'init-diagnostic)

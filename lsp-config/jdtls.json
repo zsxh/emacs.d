@@ -1,24 +1,11 @@
 {
   "settings": {
     "java": {
-      "maxConcurrentBuilds": 1,
+      "maxConcurrentBuilds": 3,
       "autobuild": {
-        "enabled": true
-      },
-      "import": {
-        "maven": {
-          "enabled": true
-        },
-        "exclusions": [
-          "**/node_modules/**",
-          "**/.metadata/**",
-          "**/archetype-resources/**",
-          "**/META-INF/maven/**"
-        ]
+        "enabled": false
       },
       "configuration": {
-        "updateBuildConfiguration": "automatic",
-        "checkProjectSettingsExclusions": true,
         "runtimes": [
           {
             "name": "JavaSE-1.8",
@@ -39,23 +26,6 @@
           }
         ]
       },
-      "project": {
-        "importHint": true,
-        "importOnFirstTimeStartup": "automatic",
-        "referencedLibraries": [
-          "lib/**"
-        ],
-        "resourceFilters": [
-          "node_modules",
-          "\\.git",
-          ".metadata",
-          "archetype-resources",
-          "META-INF/maven"
-        ]
-      },
-      "server": {
-        "launchMode": "Hybrid"
-      },
       "format": {
         "settings": {
           "url": "/home/zsxh/.emacs.d/cache/eclipse-java-google-style.xml",
@@ -67,8 +37,6 @@
       },
       "completion": {
         "guessMethodArguments": true,
-        "overwrite": true,
-        "enabled": true,
         "favoriteStaticMembers": [
           "org.junit.Assert.*",
           "org.junit.Assume.*",
