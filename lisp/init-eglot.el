@@ -91,8 +91,7 @@
       (posframe-hide +eglot/display-buf)))
 
   ;; Signature
-  (defun +eglot/signature-help-at-point ()
-    (interactive)
+  (defun +eglot/show-signature-help ()
     (when (eglot--server-capable :signatureHelpProvider)
       (unless +eglot/signature-last-point
         (setq +eglot/signature-last-point (point)))
@@ -124,16 +123,20 @@
 
   (defun +eglot/hide-signature (buf)
     (with-current-buffer buf
-      (remove-hook 'post-command-hook #'+eglot/signature-help-at-point t))
+      (remove-hook 'post-command-hook #'+eglot/show-signature-help t))
     (setq +eglot/signature-last-point nil
           +eglot/signature-retries 0)
     (posframe-hide +eglot/display-buf))
 
+  (defun +eglot/signature-help-at-point ()
+    (interactive)
+    (when (eglot-managed-p)
+      (+eglot/show-signature-help)
+      (add-hook 'post-command-hook #'+eglot/show-signature-help nil t)))
+
   (with-eval-after-load 'company
     (define-advice company-complete-selection (:after (&rest _) eglot-signature)
-      (when (eglot-managed-p)
-        (+eglot/signature-help-at-point)
-        (add-hook 'post-command-hook #'+eglot/signature-help-at-point nil t)))))
+      (+eglot/signature-help-at-point))))
 
 (defun +eglot/set-leader-keys (&optional map)
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))
