@@ -175,6 +175,7 @@
                                         :position +eglot/signature-last-point
                                         :border-width 1
                                         :border-color (face-background '+eglot/display-border nil t)
+                                        :max-width (/ (frame-width) 3)
                                         :poshandler 'posframe-poshandler-point-bottom-left-corner-upward))))))
              :timeout-fn (lambda () (+eglot/hide-signature buf))
              :error-fn (lambda () (+eglot/hide-signature buf))
@@ -196,7 +197,14 @@
 
   (with-eval-after-load 'company
     (define-advice company-complete-selection (:after (&rest _) eglot-signature)
-      (+eglot/signature-help-at-point))))
+      (+eglot/signature-help-at-point)))
+
+  (with-eval-after-load 'flymake-popon
+    (define-advice flymake-popon--show (:around (orig-fn) eglot-hover-signature)
+      (unless (and (bound-and-true-p +eglot/display-frame)
+                   (frame-live-p +eglot/display-frame)
+                   (frame-visible-p +eglot/display-frame))
+        (funcall orig-fn)))))
 
 (defun +eglot/set-leader-keys (&optional map)
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))
