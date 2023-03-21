@@ -57,11 +57,6 @@
   (with-eval-after-load 'company-files
     (add-to-list 'company-files--regexps "file:\\(\\(?:\\.\\{1,2\\}/\\|~/\\|/\\)[^\]\n]*\\)")))
 
-(use-package prescient
-  :defer t
-  :config
-  (setq prescient-sort-length-enable nil))
-
 (use-package yasnippet
   :init
   (defun +yasnippet/enable-yas-minor-mode ()
