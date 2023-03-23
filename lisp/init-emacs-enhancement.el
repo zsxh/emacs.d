@@ -242,6 +242,9 @@
       "q" 'kill-current-buffer
       (kbd "RET") 'cfw:org-open-agenda-day)))
 
+;; `xref-find-definitions': <motion-state> gd
+;; `xref-go-back': M-,
+
 ;; https://github.com/jacktasia/dumb-jump#obsolete-commands-and-options
 (use-package dumb-jump
   :after xref

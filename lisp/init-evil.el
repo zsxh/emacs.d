@@ -39,6 +39,7 @@
                ("M-e" . evil-scroll-line-down)
                ("M-y" . evil-scroll-line-up))
          (:map evil-motion-state-map
+               ([remap evil-goto-definition] . xref-find-definitions)
                ("C-a" . +funcs/smart-beginning-of-line)
                ("C-e" . move-end-of-line)
                ("C-n" . next-line)

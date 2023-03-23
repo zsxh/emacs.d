@@ -149,7 +149,8 @@
       ""))
 
   (defun +eglot/show-signature-help ()
-    (when (eglot--server-capable :signatureHelpProvider)
+    (when (and (eglot-managed-p)
+               (eglot--server-capable :signatureHelpProvider))
       (unless +eglot/signature-last-point
         (setq +eglot/signature-last-point (point)))
       (let ((buf (current-buffer)))
@@ -191,7 +192,8 @@
 
   (defun +eglot/signature-help-at-point ()
     (interactive)
-    (when (eglot-managed-p)
+    (when (and (eglot-managed-p)
+               (eglot--server-capable :signatureHelpProvider))
       (+eglot/show-signature-help)
       (add-hook 'post-command-hook #'+eglot/show-signature-help nil t)))
 
