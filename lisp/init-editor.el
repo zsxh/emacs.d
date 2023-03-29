@@ -158,10 +158,6 @@ This filter de-installs itself after this call."
   (setq auto-save-disable-predicates
         '((lambda ()
             (or
-             ;; org capture will open 'CAPTURE-{capture-file}' and '{capture-file}' buffers
-             ;; auto save in the later original buffer will affect the former buffer
-             (and (derived-mode-p 'org-mode)
-                  (get-buffer (concat "CAPTURE-" (buffer-name))))
              ;; performance issue auto-save in remote buffer
              (and (featurep 'tramp)
                   (tramp-tramp-file-p (buffer-file-name)))
