@@ -92,10 +92,13 @@ If point was already at that position, move point to beginning of line."
 (defun +funcs/sudo-edit-current-file ()
   "Sudo edit current file."
   (interactive)
-  (when (buffer-file-name)
-    (let ((old-point (point)))
-      (find-file (concat "/sudo:root@localhost:" (buffer-file-name)))
-      (goto-char old-point))))
+  (cond ((eq major-mode 'dired-mode)
+         (when-let ((filename (dired-file-name-at-point)))
+           (find-file (concat "/sudo:root@localhost:" (expand-file-name filename)))))
+        ((buffer-file-name)
+         (let ((old-point (point)))
+           (find-file (concat "/sudo:root@localhost:" (buffer-file-name)))
+           (goto-char old-point)))))
 
 (defun +funcs/sudo-shell-command (command)
   "Sudo execute string COMMAND in inferior shell; display output."
