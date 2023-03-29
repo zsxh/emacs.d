@@ -36,7 +36,15 @@
   :config
   (setq flymake-popon-method 'posframe
         flymake-popon-width 80
-        flymake-popon-delay 0.3))
+        flymake-popon-delay 0.3)
+
+  (define-advice flymake-popon--show (:around (orig-fn) eglot-hover-signature)
+    (unless (and (bound-and-true-p +eglot/display-frame)
+                 (frame-live-p +eglot/display-frame)
+                 (frame-visible-p +eglot/display-frame)
+                 (functionp 'company--show-inline-p)
+                 (not (company--show-inline-p)))
+      (funcall orig-fn))))
 
 
 (provide 'init-diagnostic)

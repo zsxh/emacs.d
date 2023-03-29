@@ -20,8 +20,8 @@
             "path": "/usr/local/java-17"
           },
           {
-            "name": "JavaSE-19",
-            "path": "/usr/local/java-19",
+            "name": "JavaSE-20",
+            "path": "/usr/local/java-20",
             "default": true
           }
         ]

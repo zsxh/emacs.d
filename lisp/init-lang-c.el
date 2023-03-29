@@ -26,7 +26,8 @@
   ;; :mode ("\\.h\\'" . c++-ts-mode)
   :hook (c-ts-base-mode . eglot-ensure)
   :config
-  (add-hook-run-once 'c-ts-base-mode-hook '+eglot/set-leader-keys))
+  (add-hook-run-once 'c-ts-mode-hook '+eglot/set-leader-keys)
+  (add-hook-run-once 'c++-ts-mode-hook '+eglot/set-leader-keys))
 
 (use-package cmake-mode
   :defer t

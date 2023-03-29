@@ -264,6 +264,9 @@
 ;;   :config
 ;;   (pdf-tools-install))
 
+;; TODO: another chatgpt wrapper
+;; https://github.com/xenodium/chatgpt-shell
+
 ;; A simple ChatGPT client for Emacs
 ;; https://github.com/karthink/gptel
 (use-package gptel
@@ -271,28 +274,29 @@
   :config
   (when (bound-and-true-p personal-openai-key)
     (setq gptel-api-key personal-openai-key))
-  (defun gptel-curl--get-args (prompts token)
-    "Produce list of arguments for calling Curl.
+  (with-eval-after-load 'gptel-curl
+    (defun gptel-curl--get-args (prompts token)
+      "Produce list of arguments for calling Curl.
 
   PROMPTS is the data to send, TOKEN is a unique identifier."
-    (let* ((args
-            (list "--location" "--silent" "--compressed" "--disable" "-xhttp://127.0.0.1:1081"))
-          (url "https://api.openai.com/v1/chat/completions")
-          (data (encode-coding-string
-                  (json-encode (gptel--request-data prompts))
-                  'utf-8))
-          (headers
-            `(("Content-Type" . "application/json")
-              ("Authorization" . ,(concat "Bearer " (gptel--api-key))))))
-      (push (format "-X%s" "POST") args)
-      (push (format "-w(%s . %%{size_header})" token) args)
-      ;; (push (format "--keepalive-time %s" 240) args)
-      (push (format "-m%s" 60) args)
-      (push "-D-" args)
-      (pcase-dolist (`(,key . ,val) headers)
-        (push (format "-H%s: %s" key val) args))
-      (push (format "-d%s" data) args)
-      (nreverse (cons url args)))))
+      (let* ((args
+              (list "--location" "--silent" "--compressed" "--disable" "-xhttp://127.0.0.1:1081"))
+             (url "https://api.openai.com/v1/chat/completions")
+             (data (encode-coding-string
+                    (json-encode (gptel--request-data prompts))
+                    'utf-8))
+             (headers
+              `(("Content-Type" . "application/json")
+                ("Authorization" . ,(concat "Bearer " (gptel--api-key))))))
+        (push (format "-X%s" "POST") args)
+        (push (format "-w(%s . %%{size_header})" token) args)
+        ;; (push (format "--keepalive-time %s" 240) args)
+        (push (format "-m%s" 60) args)
+        (push "-D-" args)
+        (pcase-dolist (`(,key . ,val) headers)
+          (push (format "-H%s: %s" key val) args))
+        (push (format "-d%s" data) args)
+        (nreverse (cons url args))))))
 
 
 (provide 'init-misc)

@@ -199,14 +199,7 @@
 
   (with-eval-after-load 'company
     (define-advice company-complete-selection (:after (&rest _) eglot-signature)
-      (+eglot/signature-help-at-point)))
-
-  (with-eval-after-load 'flymake-popon
-    (define-advice flymake-popon--show (:around (orig-fn) eglot-hover-signature)
-      (unless (and (bound-and-true-p +eglot/display-frame)
-                   (frame-live-p +eglot/display-frame)
-                   (frame-visible-p +eglot/display-frame))
-        (funcall orig-fn)))))
+      (+eglot/signature-help-at-point))))
 
 (defun +eglot/set-leader-keys (&optional map)
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))
