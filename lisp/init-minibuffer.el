@@ -65,7 +65,10 @@
   :init
   (add-hook-run-once 'minibuffer-setup-hook (lambda () (require 'orderless)))
   :config
-  (setq completion-styles '(basic orderless))
+  ;; NOTE: https://github.com/minad/consult#bug-reports
+  ;; Ensure that the `completion-styles' variable is properly configured.
+  ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
+  (setq completion-styles '(substring orderless basic))
   ;; pinyin
   (use-package pinyinlib
     :commands pinyinlib-build-regexp-string)
