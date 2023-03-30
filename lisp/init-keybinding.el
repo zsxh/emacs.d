@@ -91,7 +91,7 @@
    "bm" '((lambda () (interactive) (switch-to-buffer (messages-buffer))) :which-key "*Messages*")
    "bn" '((lambda () (interactive) (+funcs/switch-empty-buffer-or-create "untitled")) :which-key "jump-empty-buffer")
    "bN" '(+funcs/new-empty-buffer :which-key "create-empty-buffer")
-   "bs" '((lambda () (interactive) (+funcs/switch-buffer-or-create "*scratch*")) :which-key "*scratch*")
+   "bs" '(scratch-buffer :which-key "*scratch*")
    ;; Files
    "f" '(nil :which-key "file")
    "fd" '(+dired/find-program :which-key "find-files-in-dired")

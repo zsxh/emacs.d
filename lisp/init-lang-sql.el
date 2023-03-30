@@ -14,6 +14,16 @@
 (use-package sql-indent
   :hook (sql-mode . sqlind-minor-mode))
 
+;; emacsql use emacs built-in sqlite
+(use-package emacsql-sqlite-builtin
+  :if (>= emacs-major-version 29)
+  :defer t)
+
+;; `sqlite-mode-open-file'
+;; (use-package sqlite-mode
+;;   :ensure nil
+;;   :defer t)
+
 
 (provide 'init-lang-sql)
 

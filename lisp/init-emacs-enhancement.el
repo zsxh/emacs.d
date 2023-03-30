@@ -244,6 +244,11 @@
 
 ;; `xref-find-definitions': <motion-state> gd
 ;; `xref-go-back': M-,
+(use-package xref
+  :ensure nil
+  :defer nil
+  :config
+  (setq xref-history-storage 'xref-window-local-history))
 
 ;; https://github.com/jacktasia/dumb-jump#obsolete-commands-and-options
 (use-package dumb-jump
@@ -285,11 +290,6 @@
 (define-key minibuffer-local-filename-completion-map
             [C-backspace] #'up-directory)
 
-;; emacsql use emacs built-in sqlite
-(use-package emacsql-sqlite-builtin
-  :if (>= emacs-major-version 29)
-  :defer t)
-
 ;;;;;;;;;;;;;; GnuPG and Auth Sources ;;;;;;;;;;;;;;
 ;; TODO: gpg and auth-sources
 ;; NOTE: https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sources
@@ -299,7 +299,6 @@
 ;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 ;; (epa-file-enable)
 ;; (add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
-
 
 
 (provide 'init-emacs-enhancement)

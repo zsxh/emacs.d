@@ -44,7 +44,9 @@
      "me" '(pp-macroexpand-expression :which-key "macroexpand-expression")
      "ms" '(macrostep-expand :which-key "macrostep-expand")
      "g" '(nil :which-key "goto")
-     "gd" '(evil-goto-definition :which-key "goto-definition"))))
+     "gd" '(xref-find-definitions :which-key "xref-find-definitions")
+     "gr" '(xref-find-references :which-key "xref-find-references")
+     "R" '(xref-find-references-and-replace :which-key "xref-find-references-and-replace"))))
 
 ;; Interactive macro expander
 (use-package macrostep
