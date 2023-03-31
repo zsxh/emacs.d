@@ -305,8 +305,12 @@
 ;;   (setq auto-save-default nil
 ;;         auto-save-list-file-prefix nil
 ;;         create-lockfiles nil)
+
 (setq auto-save-visited-interval 1
-      save-silently t)
+      save-silently t
+      auto-save-visited-predicate
+      (lambda () (not (string-match-p "\\.gpg\\'" buffer-file-name))))
+
 (add-hook 'after-init-hook #'auto-save-visited-mode)
 
 
