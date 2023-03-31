@@ -302,30 +302,12 @@
 
 ;;;;;;;;;;;;;; Auto Save ;;;;;;;;;;;;;;
 
-;; NOTE: `auto-save-visited-mode', todo: inhibit-message
-;; (setq auto-save-visited-interval 1)
-;; (add-hook 'after-init-hook #'auto-save-visited-mode)
-(use-package auto-save
-  :ensure nil
-  :init (slot/vc-install :fetcher "github" :repo "manateelazycat/auto-save")
-  :hook (after-init . auto-save-enable)
-  :preface
-  ;; note: it's risky to disable lockfiles
-  ;; https://emacs-china.org/t/filename/163/17
-  (setq auto-save-default nil
-        auto-save-list-file-prefix nil
-        create-lockfiles nil)
-  :config
-  (setq auto-save-silent t
-        auto-save-delete-trailing-whitespace t
-        auto-save-idle 1)
-  (setq auto-save-disable-predicates
-        '((lambda ()
-            (or
-             ;; performance issue auto-save in remote buffer
-             (not buffer-file-name)
-             (file-remote-p buffer-file-name)
-             (string-match-p "\\.gpg\\'" buffer-file-name))))))
+;;   (setq auto-save-default nil
+;;         auto-save-list-file-prefix nil
+;;         create-lockfiles nil)
+(setq auto-save-visited-interval 1
+      save-silently t)
+(add-hook 'after-init-hook #'auto-save-visited-mode)
 
 
 (provide 'init-emacs-enhancement)
