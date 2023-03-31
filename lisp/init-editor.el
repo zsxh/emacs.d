@@ -140,29 +140,6 @@ This filter de-installs itself after this call."
   :config
   (winum-mode))
 
-;; Use package auto-save instead of default auto save
-(use-package auto-save
-  :ensure nil
-  :init (slot/vc-install :fetcher "github" :repo "manateelazycat/auto-save")
-  :hook (after-init . auto-save-enable)
-  :preface
-  ;; note: it's risky to disable lockfiles
-  ;; https://emacs-china.org/t/filename/163/17
-  (setq auto-save-default nil
-        auto-save-list-file-prefix nil
-        create-lockfiles nil)
-  :config
-  (setq auto-save-silent t
-        auto-save-delete-trailing-whitespace t
-        auto-save-idle 1)
-  (setq auto-save-disable-predicates
-        '((lambda ()
-            (or
-             ;; performance issue auto-save in remote buffer
-             (and (featurep 'tramp)
-                  (tramp-tramp-file-p (buffer-file-name)))
-             (string-match-p "\\.gpg\\'" (buffer-name)))))))
-
 ;; jumping to visible text using a char-based decision tree
 (use-package avy
   :bind (("C-c c" . avy-goto-char)
