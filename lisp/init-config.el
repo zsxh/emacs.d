@@ -61,10 +61,6 @@
 (unless IS-MAC   (setq command-line-ns-option-alist nil))
 (unless IS-LINUX (setq command-line-x-option-alist nil))
 
-;; Delete files to trash on macOS, as an extra layer of precaution against
-;; accidentally deleting wanted files.
-(setq delete-by-moving-to-trash IS-MAC)
-
 ;; Coding System
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)

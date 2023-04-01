@@ -5,10 +5,7 @@
 ;;; Code:
 
 ;; Emacs package archives
-;; (setq personal-package-archives 'tencent)
-
-;; Github token string for eaf-markdown-previewer
-(setq personal-eaf-grip-token nil)
+;; (setq personal-package-archives 'tuna)
 
 ;; `doom-themes'
 (setq personal-gui-theme 'doom-solarized-light)
