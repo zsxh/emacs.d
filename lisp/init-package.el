@@ -132,7 +132,7 @@ If RETURN-P, return the message as a string instead of displaying it."
         auto-package-update-hide-results nil
         auto-package-update-excluded-packages nil
         auto-package-update-excluded-packages
-        '(elispfl highlight-matching-tag org-block-capf screenshot popon flymake-popon)
+        '(elispfl org-block-capf screenshot popon flymake-popon)
         auto-package-update-last-update-day-path (expand-file-name "cache/.last-package-update-day" user-emacs-directory))
   :defer t
   :config
