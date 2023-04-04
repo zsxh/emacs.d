@@ -21,7 +21,7 @@
 (use-package web-mode
   :commands web-mode
   :init
-  (define-derived-mode pom-xml-mode web-mode "POM-XML"
+  (define-derived-mode xml-web-mode web-mode "XML"
     "A major mode derived from web-mode, for editing pom.xml files.")
   :mode (("\\.phtml\\'" . web-mode)
          ("\\.phtml\\'" . web-mode)
@@ -32,32 +32,34 @@
          ("\\.mustache\\'" . web-mode)
          ("\\.djhtml\\'" . web-mode)
          ("\\.html?\\'" . web-mode)
-         ("\\.xml?\\'" . web-mode)
-         ("pom.xml?\\'" . pom-xml-mode))
+         ("\\.xml?\\'" . xml-web-mode))
   :hook ((web-mode . +web/config))
   :config
-  (defun +web/config ()
-    (setq-local company-backends
-                '(company-capf company-files company-css company-dabbrev)))
-
-  (defun +web/formatter ()
-    (interactive)
-    (format-all-buffer))
-
-  (+funcs/major-mode-leader-keys web-mode-map
-                                 "e" '(nil :which-key "error")
-                                 "f" '(+web/formatter :which-key "format-html")
-                                 "p" '(nil :which-key "preview"))
-
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2
         web-mode-code-indent-offset 2
         web-mode-attr-indent-offset 2
         web-mode-sql-indent-offset 2)
 
+  (defun +web/config ()
+    (setq-local company-backends
+                '(company-capf company-files company-css company-dabbrev)))
+
+  (add-to-list 'hs-special-modes-alist
+               '(xml-web-mode
+                 "<!--\\|<[^/>]*[^/]>"
+                 "-->\\|</[^/>]*[^/]>"
+                 "<!--"
+                 sgml-skip-tag-forward
+                 nil))
+
+  (defun +web/formatter ()
+    (interactive)
+    (format-all-buffer))
+
   (+funcs/major-mode-leader-keys
    web-mode-map
-   "r" 'instant-rename-tag))
+   "f" '(+web/formatter :which-key "format-html")))
 
 (use-package css-mode
   :ensure nil
@@ -71,6 +73,12 @@
     (+funcs/major-mode-leader-keys
      mode-map
      "c" '(css-cycle-color-format :which-key "css-cycle-color-format"))))
+
+(use-package nxml-mode
+  :ensure nil
+  :defer t
+  :config
+  (setq nxml-slash-auto-complete-flag t))
 
 ;; edit html
 (use-package sgml-mode

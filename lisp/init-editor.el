@@ -295,10 +295,15 @@ This filter de-installs itself after this call."
   :init
   (with-eval-after-load 'evil
     (define-key evil-normal-state-map (kbd "zf") 'hs-hide-level))
+  :hook ((prog-mode nxml-mode) . hs-minor-mode)
   :config
-  (add-hook 'prog-mode-hook 'hs-minor-mode)
-  (when (derived-mode-p 'prog-mode)
-    (hs-minor-mode)))
+  (add-to-list 'hs-special-modes-alist
+               '(nxml-mode
+                 "<!--\\|<[^/>]*[^/]>"
+                 "-->\\|</[^/>]*[^/]>"
+                 "<!--"
+                 sgml-skip-tag-forward
+                 nil)))
 
 ;; NOTE: RMSBolt tries to make it easy to see what your compiler is doing.
 ;; It does this by showing you the assembly output of a given source code file.
