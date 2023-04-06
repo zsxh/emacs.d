@@ -311,6 +311,8 @@
       auto-save-visited-predicate
       (lambda () (not (string-match-p "\\.gpg\\'" buffer-file-name))))
 
+(add-to-list 'write-file-functions 'delete-trailing-whitespace)
+
 (add-hook 'after-init-hook #'auto-save-visited-mode)
 
 

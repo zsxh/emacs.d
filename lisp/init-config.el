@@ -145,7 +145,8 @@
           (go-mode         . go-ts-mode)
           (typescript-mode . typescript-ts-mode)
           (sh-mode         . bash-ts-mode)
-          (rust-mode       . rust-ts-mode))))
+          (rust-mode       . rust-ts-mode)
+          (yaml-mode       . yaml-ts-mode))))
 
 
 (provide 'init-config)

@@ -312,12 +312,9 @@ This filter de-installs itself after this call."
   :commands rmsbolt-mode)
 
 ;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
-
+;; https://github.com/editorconfig/editorconfig-emacs
 (use-package editorconfig
-  :hook (emacs-startup . editorconfig-mode)
-  :config
-  ;; use `auto-save' package to deal with trailing whitespace
-  (setq editorconfig-trim-whitespaces-mode (lambda (arg) nil)))
+  :hook (emacs-startup . editorconfig-mode))
 
 ;; TODO: formatter for python
 ;; https://github.com/lassik/emacs-format-all-the-code
