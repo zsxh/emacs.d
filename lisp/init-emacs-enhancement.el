@@ -309,7 +309,8 @@
 (setq auto-save-visited-interval 1
       save-silently t
       auto-save-visited-predicate
-      (lambda () (not (string-match-p "\\.gpg\\'" buffer-file-name))))
+      (lambda () (and (not (string-match-p "\\.gpg\\'" buffer-file-name))
+                      (not (string-equal "COMMIT_EDITMSG" (buffer-name))))))
 
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
