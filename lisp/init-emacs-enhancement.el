@@ -310,7 +310,9 @@
       save-silently t
       auto-save-visited-predicate
       (lambda () (and (not (string-match-p "\\.gpg\\'" buffer-file-name))
-                      (not (string-equal "COMMIT_EDITMSG" (buffer-name))))))
+                      (not (string-equal "COMMIT_EDITMSG" (buffer-name)))))
+      remote-file-name-inhibit-auto-save t
+      remote-file-name-inhibit-auto-save-visited t)
 
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
