@@ -18,6 +18,9 @@
   :defer t
   :commands (project-root project-forget-zombie-projects)
   :config
+  ;; auto clean up zombie projects
+  (run-at-time "07:00pm" (* 24 60 60) 'project-forget-zombie-projects)
+
   (defun +project/project-buffer-filter (buffer)
     (let ((name (buffer-name buffer)))
       (or (and (string-prefix-p "*" name)
@@ -148,14 +151,6 @@ else ask the user for a directory in which to look for the project."
 (defun my/project-switch-project (dir)
   (interactive (list (project-prompt-project-dir)))
   (dired dir))
-
-;; autoremove zombie projects
-(add-hook 'emacs-startup-hook (lambda ()
-                                (run-with-idle-timer
-                                 60 nil
-                                 (lambda ()
-                                   (message "Clean up zombie projects...")
-                                   (project-forget-zombie-projects)))))
 
 
 (provide 'init-project)
