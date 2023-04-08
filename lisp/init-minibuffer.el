@@ -68,7 +68,8 @@
   ;; NOTE: https://github.com/minad/consult#bug-reports
   ;; Ensure that the `completion-styles' variable is properly configured.
   ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
-  (setq completion-styles '(substring orderless basic))
+  (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(substring orderless basic))))
+  (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic orderless))))
   ;; pinyin
   (use-package pinyinlib
     :commands pinyinlib-build-regexp-string)
