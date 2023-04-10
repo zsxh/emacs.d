@@ -67,6 +67,12 @@
     (or (gethash path eglot-path-uri-cache)
         (funcall orig-fn path)))
 
+  ;; handle workspace configuration
+  (cl-defgeneric +eglot/workspace-configuration (server)
+    "Config response to workspace/configuration."
+    nil)
+  (setq-default eglot-workspace-configuration #'+eglot/workspace-configuration)
+
   ;; Hover
   (defun +eglot/show-hover-at-point ()
     (interactive)
@@ -115,7 +121,7 @@
              (eglot--current-server-or-lose)
              :textDocument/signatureHelp (eglot--TextDocumentPositionParams)
              :success-fn (eglot--lambda ((SignatureHelp)
-                                         signatures activeSignature activeParameter)
+                                         signatures activeSignature (activeParameter 0))
                            (eglot--when-buffer-window buf
                              (let ((active-sig (and (cl-plusp (length signatures))
                                                     (aref signatures (or activeSignature 0)))))
@@ -123,7 +129,7 @@
                                    (+eglot/hide-signature buf)
                                  (with-current-buffer (get-buffer-create +eglot/display-buf)
                                    (erase-buffer)
-                                   (insert (or (eglot--sig-info active-sig t activeParameter) "")))
+                                   (insert (or (eglot--sig-info active-sig activeParameter t) "")))
                                  (setq +eglot/display-frame
                                        (posframe-show
                                         (get-buffer-create +eglot/display-buf)

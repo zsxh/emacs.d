@@ -302,12 +302,12 @@
 
 ;;;;;;;;;;;;;; Auto Save ;;;;;;;;;;;;;;
 
-;;   (setq auto-save-default nil
-;;         auto-save-list-file-prefix nil
-;;         create-lockfiles nil)
-
-(setq auto-save-visited-interval 1
-      save-silently t
+;; NOTE: For MacOS, https://emacs-china.org/t/macos-save-silently-t/24086
+(setq save-silently t
+      auto-save-default nil
+      create-lockfiles nil
+      make-backup-files nil
+      auto-save-visited-interval 1
       auto-save-visited-predicate
       (lambda () (and (not (string-match-p "\\.gpg\\'" buffer-file-name))
                       (not (string-equal "COMMIT_EDITMSG" (buffer-name)))))

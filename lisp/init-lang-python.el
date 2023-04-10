@@ -28,25 +28,11 @@
 ;; customize type stub, https://github.com/microsoft/python-type-stubs
 (use-package python
   :ensure nil
-  :hook (python-base-mode . +python/enable-lsp)
+  :hook (python-base-mode . eglot-ensure)
   :custom (python-indent-offset 2)
   :config
   (+eglot/set-leader-keys python-mode-map)
   (+eglot/set-leader-keys python-ts-mode-map))
-
-(defun +python/enable-lsp ()
-  (setq eglot-workspace-configuration #'+python/workspace-configuration)
-  (eglot-ensure))
-
-(defun +python/workspace-configuration (&optional server)
-  (when-let* ((config-file (file-name-concat user-emacs-directory "lsp-config" "pyright.json"))
-              (settings (with-temp-buffer
-                          (insert-file-contents config-file)
-                          (json-parse-buffer :object-type 'plist :false-object :json-false))))
-    (if-let ((venv-python-cmd (+python/locate-venv-python-cmd))
-             (python-section (plist-get settings :python)))
-        (plist-put python-section :pythonPath venv-python-cmd))
-    settings))
 
 ;; TODO: Check https://github.com/wyuenho/emacs-pet
 (defun +python/locate-venv-python-cmd ()
@@ -60,6 +46,22 @@
               (python-cmd (executable-find (file-name-concat venv-dir "bin" "python"))))
     python-cmd))
 
+(with-eval-after-load 'eglot
+  (defun +python/workspace-configuration (&optional server)
+    (when-let* ((config-file (file-name-concat user-emacs-directory "lsp-config" "pyright.json"))
+                (settings (with-temp-buffer
+                            (insert-file-contents config-file)
+                            (json-parse-buffer :object-type 'plist :false-object :json-false))))
+      (if-let ((venv-python-cmd (+python/locate-venv-python-cmd))
+               (python-section (plist-get settings :python)))
+          (plist-put python-section :pythonPath venv-python-cmd))
+      settings))
+
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-mode))
+    (+python/workspace-configuration))
+
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-ts-mode))
+    (+python/workspace-configuration)))
 
 
 (provide 'init-lang-python)

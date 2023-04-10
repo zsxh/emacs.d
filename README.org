@@ -1,13 +1,13 @@
 #+STARTUP: showall
-Updated: <2023-04-03>
+Updated: <2023-04-10>
 
 * Enviroment
-  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.37, cairo version 1.17.8) of 2023-04-03
-  - emacs-repository-version: =8125d4cfc5605ead9102b7d823c4241029eb76cc=
+  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.37, cairo version 1.17.8) of 2023-04-10
+  - emacs-repository-version: =cb4f4dd89131e5a8956c788fee7ede65f13b2a69=
   - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
   - OS: Manjaro 22.0.5 Sikaris
   - Shell: zsh 5.9
-  - Kernel: 6.2.7-2-MANJARO
+  - Kernel: 6.2.9-1-MANJARO
   - DE: Deepin 20.6
   - WM: KWin
   - GCC version: 12.2.1 with libgccjit
@@ -22,7 +22,8 @@ Updated: <2023-04-03>
 #+begin_src shell
   git clone --depth 1 https://github.com/emacs-mirror/emacs.git emacs-master
   cd emacs-master
-  ./autogen.sh && ./configure --with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
+  #./autogen.sh && ./configure --with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
+  ./autogen.sh && ./configure --with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
   make -j8
   sudo make install
 #+end_src
