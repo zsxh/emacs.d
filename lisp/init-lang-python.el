@@ -34,19 +34,21 @@
   (+eglot/set-leader-keys python-mode-map)
   (+eglot/set-leader-keys python-ts-mode-map))
 
-;; TODO: Check https://github.com/wyuenho/emacs-pet
-(defun +python/locate-venv-python-cmd ()
-  "Look for virtual environments local to the workspace."
-  (when-let* ((project-dir (+project/root))
-              (venv-dir (or
-                         (when-let ((venv (locate-dominating-file project-dir "venv")))
-                           (file-name-concat venv "venv"))
-                         (when-let ((venv (locate-dominating-file project-dir ".venv")))
-                           (file-name-concat venv ".venv"))))
-              (python-cmd (executable-find (file-name-concat venv-dir "bin" "python"))))
-    python-cmd))
+(with-eval-after-load 'python
+  ;; TODO: Check https://github.com/wyuenho/emacs-pet
+  (defun +python/locate-venv-python-cmd ()
+    "Look for virtual environments local to the workspace."
+    (when-let* ((project-dir (+project/root))
+                (venv-dir (or
+                           (when-let ((venv (locate-dominating-file project-dir "venv")))
+                             (file-name-concat venv "venv"))
+                           (when-let ((venv (locate-dominating-file project-dir ".venv")))
+                             (file-name-concat venv ".venv"))))
+                (python-cmd (executable-find (file-name-concat venv-dir "bin" "python"))))
+      python-cmd))
 
-(with-eval-after-load 'eglot
+  (require 'eglot)
+
   (defun +python/workspace-configuration (&optional server)
     (when-let* ((config-file (file-name-concat user-emacs-directory "lsp-config" "pyright.json"))
                 (settings (with-temp-buffer
