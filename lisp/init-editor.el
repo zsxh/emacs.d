@@ -314,7 +314,16 @@ This filter de-installs itself after this call."
 ;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
 ;; https://github.com/editorconfig/editorconfig-emacs
 (use-package editorconfig
-  :hook (emacs-startup . editorconfig-mode))
+  :hook (emacs-startup . editorconfig-mode)
+  :config
+  (define-minor-mode +editor/auto-save-trim-whitespaces-mode
+    "Minor mode for `editorconfig-trim-whitespaces-mode'."
+    :global nil
+    (if +editor/auto-save-trim-whitespaces-mode
+        (add-to-list 'write-file-functions 'delete-trailing-whitespace-skip-current-line)
+      (setq write-file-functions
+            (remove 'delete-trailing-whitespace-skip-current-line write-file-functions))))
+  (setq editorconfig-trim-whitespaces-mode '+editor/auto-save-trim-whitespaces-mode))
 
 ;; TODO: formatter for python
 ;; https://github.com/lassik/emacs-format-all-the-code

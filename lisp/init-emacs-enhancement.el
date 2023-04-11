@@ -314,7 +314,16 @@
       remote-file-name-inhibit-auto-save t
       remote-file-name-inhibit-auto-save-visited t)
 
-(add-to-list 'write-file-functions 'delete-trailing-whitespace)
+(defun delete-trailing-whitespace-skip-current-line ()
+    (interactive)
+    (let ((begin (line-beginning-position))
+          (end (point)))
+      (when (< (point-min) begin)
+        (delete-trailing-whitespace (point-min) (1- begin)))
+      (when (> (point-max) end)
+        (delete-trailing-whitespace end (point-max)))))
+
+(add-to-list 'write-file-functions 'delete-trailing-whitespace-skip-current-line)
 
 (add-hook 'after-init-hook #'auto-save-visited-mode)
 
