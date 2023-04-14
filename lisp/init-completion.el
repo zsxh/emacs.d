@@ -92,7 +92,7 @@
            (display-graphic-p))
   :hook (global-company-mode . company-posframe-mode)
   :bind (:map company-posframe-active-map
-              ("C-h" . company-posframe-quickhelp-toggle))
+              ("C-h" . +company-posframe/quickhelp-toggle))
   :config
   (setq company-posframe-quickhelp-delay 0.2
         company-posframe-show-indicator nil
@@ -102,20 +102,25 @@
     (unless (member this-command '(mwheel-scroll
                                    handle-switch-frame
                                    company-posframe-quickhelp-scroll-up
-                                   company-posframe-quickhelp-scroll-down))
+                                   company-posframe-quickhelp-scroll-down
+                                   +company-posframe/quickhelp-toggle))
       (company-posframe-quickhelp-hide)
-      (remove-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide)))
+      (remove-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide t)))
 
-  (defun company-posframe-quickhelp-toggle ()
+  (defun +company-posframe/quickhelp-toggle ()
     (interactive)
-    (if (posframe-funcall
-         company-posframe-quickhelp-buffer
-         (lambda ()
-           (frame-parameter (window-frame) 'visibility)))
-        (company-posframe-quickhelp-hide)
+    (if (with-current-buffer company-posframe-quickhelp-buffer
+          (and (frame-live-p posframe--frame)
+               (frame-visible-p posframe--frame)))
+        (progn
+          (message "toggle hide!")
+          (company-posframe-quickhelp-hide))
+      (message "toggle show!")
       (company-posframe-quickhelp-show)
       (company-posframe-quickhelp-raise-frame)
       (add-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide 0 t))))
+
+
 
 
 (provide 'init-completion)
