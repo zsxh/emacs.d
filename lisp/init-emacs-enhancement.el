@@ -32,8 +32,15 @@
   :ensure nil
   :defer t
   :config
-  (setq-default treesit-font-lock-level 4)
+  (setq treesit-font-lock-level 4)
   ;; (treesit-font-lock-recompute-features '(command string variable function operator bracket keyword))
+  )
+
+(use-package treesit-auto
+  :if (featurep 'treesit)
+  :defer t
+  ;; :config
+  ;; (global-treesit-auto-mode)
   )
 
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;

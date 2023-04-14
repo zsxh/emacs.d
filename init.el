@@ -13,7 +13,7 @@
 (setq debug-on-error t)
 
 ;; Emacs Version
-(let ((minver "29"))
+(let ((minver "30"))
   (when (version< emacs-version minver)
     (error "Detected Emacs %s. This config requires v%s or higher" emacs-version minver)))
 
