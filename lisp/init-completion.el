@@ -33,8 +33,8 @@
   (setq company-tooltip-align-annotations t ; aligns annotation to the right
         company-tooltip-limit 12            ; bigger popup window
         company-tooltip-maximum-width (/ (frame-width) 2)
-        company-idle-delay 0 ; decrease delay before autocompletion popup shows
-        company-echo-delay (if (display-graphic-p) nil 0) ; remove annoying blinking
+        company-idle-delay 0.01 ; decrease delay before autocompletion popup shows
+        company-echo-delay 0.01
         company-minimum-prefix-length 1
         ;; Only search same major mode buffers for `company-dabbrev' (a backend that
         ;; suggests text your open buffers). This prevents Company from causing

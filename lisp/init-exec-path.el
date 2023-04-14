@@ -13,7 +13,6 @@
 (defvar exec-path-from-shell-initialize-p nil)
 
 (use-package exec-path-from-shell
-  :if (not (file-remote-p default-directory))
   :defer 1
   :config
   (setq

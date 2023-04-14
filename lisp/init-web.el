@@ -130,9 +130,13 @@
 (use-package verb
   :defer t)
 
-(use-package websocket-client
-  :ensure nil
-  :commands websocket-client-open)
+;; This is a elisp library for websocket clients to talk to websocket servers,
+;; and for websocket servers to accept connections from websocket clients.
+;; This library is designed to be used by other library writers,
+;; to write apps that use websockets, and is not useful by itself.
+;; https://github.com/ahyatt/emacs-websocket
+(use-package websocket
+  :defer t)
 
 (use-package know-your-http-well
   :defer t)

@@ -174,10 +174,6 @@
         tramp-verbose 3
         tramp-chunksize 2000))
 
-(use-package tramp-cache
-  :ensure nil
-  :defer t)
-
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; Emacs is now capable of editing files with very long lines since 29.1, `long-line-threshold'
 (use-package so-long

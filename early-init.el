@@ -44,6 +44,10 @@
 ;; activations need to be changed, such as when you change the value of  ‘package-load-list’
 ;; (setq package-quickstart t)
 
+;; Emacs startup *scratch* buffer
+(setq inhibit-startup-screen t
+      initial-buffer-choice  t)
+
 ;; Disable cursor blinking
 (setq no-blinking-cursor t
       visible-cursor nil)
@@ -59,6 +63,11 @@
 ;; larger than the system default.
 (setq frame-inhibit-implied-resize t)
 
+;; Font compacting can be terribly expensive, especially for rendering icon
+;; fonts on Windows. Whether it has a notable affect on Linux and Mac hasn't
+;; been determined, but we inhibit it there anyway.
+(setq inhibit-compacting-font-caches t)
+
 ;; Ignore X resources; its settings would be redundant with the other settings
 ;; in this file and can conflict with later config (particularly where the
 ;; cursor color is concerned).
@@ -67,6 +76,23 @@
 ;; Inhibit automatic native compilation of loaded .elc files
 ;; (setq native-comp-deferred-compilation nil
 ;;       inhibit-automatic-native-compilation t)
+
+;; If non-nil and there was input pending at the beginning of the command,
+;; the `fontification_functions` hook is not run.  This usually does not
+;; affect the display because redisplay is completely skipped anyway if input
+;; was pending, but it can make scrolling smoother by avoiding
+;; unnecessary fontification.
+;; It is similar to `fast-but-imprecise-scrolling' with similar tradeoffs,
+;; but with the advantage that it should only affect the behavior when Emacs
+;; has trouble keeping up with the incoming input rate.
+(setq redisplay-skip-fontification-on-input t)
+
+;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
+;; in non-focused windows.
+(setq-default cursor-in-non-selected-windows nil)
+
+;; no wait for X events
+(setq x-wait-for-event-timeout 0)
 
 
 (provide 'early-init)

@@ -15,40 +15,6 @@
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 
-;; Emacs startup *scratch* buffer
-(setq inhibit-startup-screen t
-      initial-buffer-choice  nil)
-
-;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
-;; in non-focused windows.
-(setq-default cursor-in-non-selected-windows nil)
-(setq highlight-nonselected-windows nil)
-
-;; More performant rapid scrolling over unfontified regions. May cause brief
-;; spells of inaccurate syntax highlighting right after scrolling, which should
-;; quickly self-correct.
-(setq fast-but-imprecise-scrolling t)
-
-;; If non-nil and there was input pending at the beginning of the command,
-;; the `fontification_functions` hook is not run.  This usually does not
-;; affect the display because redisplay is completely skipped anyway if input
-;; was pending, but it can make scrolling smoother by avoiding
-;; unnecessary fontification.
-;; It is similar to `fast-but-imprecise-scrolling' with similar tradeoffs,
-;; but with the advantage that it should only affect the behavior when Emacs
-;; has trouble keeping up with the incoming input rate.
-(setq redisplay-skip-fontification-on-input t)
-
-;; Resizing the Emacs frame can be a terribly expensive part of changing the
-;; font. By inhibiting this, we easily halve startup times with fonts that are
-;; larger than the system default.
-(setq frame-inhibit-implied-resize t)
-
-;; Font compacting can be terribly expensive, especially for rendering icon
-;; fonts on Windows. Whether it has a notable affect on Linux and Mac hasn't
-;; been determined, but we inhibit it there anyway.
-(setq inhibit-compacting-font-caches t)
-
 ;; Performance on Windows is considerably worse than elsewhere, especially if
 ;; WSL is involved. We'll need everything we can get.
 (when IS-WINDOWS
@@ -73,7 +39,6 @@
 (setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
 (setq adaptive-fill-first-line-regexp "^* *$")
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
-(setq make-backup-files nil)               ; Forbide to make backup files
 (setq set-mark-command-repeat-pop t)       ; Repeating C-SPC after popping mark pops it again
 ;; (setq-default kill-whole-line t)           ; Kill line including '\n'
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -83,12 +48,10 @@
 (setq use-dialog-box nil)                  ; no gui dialog box popups
 (setq confirm-kill-processes nil)          ; just kill the process on exit
 (setq column-number-mode t)                ; enable column number
-(setq x-wait-for-event-timeout 0)          ; no wait for X events
 ;; Line numbers do not appear for very large buffers and buffers
 ;; with very long lines; see variables line-number-display-limit
 ;; check `line-number-mode'
 (setq line-number-display-limit-width 1000)
-(setq inhibit-compacting-font-caches t)    ; don't compact font caches during GC
 
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
@@ -96,10 +59,11 @@
 (setq scroll-step 1)
 (setq compilation-always-kill t
       compilation-scroll-output t)
-(setq warning-minimum-level :error)
+
+;; (setq warning-minimum-level :warning)
+
 ;; emacs 28 new feature, CJK word breaking lines
-(when (boundp 'word-wrap-by-category)
-  (setq word-wrap-by-category t))
+(setq word-wrap-by-category t)
 
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
@@ -108,8 +72,8 @@
               tab-width        2
               indent-tabs-mode nil)
 
-(with-eval-after-load 'cc-vars
-  (add-to-list 'c-offsets-alist '(case-label . +)))
+;; (with-eval-after-load 'cc-vars
+;;   (add-to-list 'c-offsets-alist '(case-label . +)))
 
 ;; normal cache location
 (setq url-configuration-directory (locate-user-emacs-file "cache/url/")
@@ -125,8 +89,7 @@
       mouse-drag-and-drop-region t)
 
 ;; Increase subprocess read chunk size
-(when (bound-and-true-p read-process-output-max)
-  (setq read-process-output-max (* 1024 1024)))
+(setq read-process-output-max (* 1024 1024))
 
 ;; remap major mode
 (when (treesit-available-p)

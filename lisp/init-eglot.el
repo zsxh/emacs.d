@@ -10,9 +10,6 @@
 
 ;;; Code:
 
-(when (bound-and-true-p read-process-output-max)
-  (setq read-process-output-max (* 1024 1024)))
-
 ;; NOTE: https://joaotavora.github.io/eglot/
 (use-package eglot
   :ensure nil

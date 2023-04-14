@@ -13,32 +13,15 @@
 (eval-when-compile
   (require 'init-custom))
 
-;; TODO: It's usually best to put code that;s GUI/Terminal specific in `after-make-frame-functions'
-;; (add-hook 'after-make-frame-functions
-;;           (lambda ()
-;;             (if (display-graphic-p)
-;;                 ;; we do something only in GUI Emacs
-;;                 nil
-;;               ;; we do something only in terminal Emacs
-;;               nil)))
-
 (defvar current-theme (if (display-graphic-p)
                           personal-gui-theme
                         personal-tui-theme)
   "Current using theme.")
 
-;; Minimal UI in init.el when emacs-version < 27
-(when (version< emacs-version "27")
-  (scroll-bar-mode -1)
-  (tool-bar-mode   -1)
-  (tooltip-mode    -1)
-  (menu-bar-mode   -1))
-
 ;; Show buffer name in title
 (setq frame-title-format "emacs@%b")
 
 ;; Startup frame size
-
 (cond ((eq personal-frame-startup-size 'max)
        (toggle-frame-maximized))
       ((eq personal-frame-startup-size 'fullscreen)
@@ -67,11 +50,6 @@
     ;;  all-the-icons fonts must be installed!
     (setq doom-themes-neotree-file-icons t)
     (require 'doom-themes-ext-neotree))
-
-  ;; Enable treemacs theme
-  (with-eval-after-load 'treemacs
-    (setq doom-themes-treemacs-theme "doom-colors")
-    (require 'doom-themes-ext-treemacs))
 
   ;; Corrects (and improves) org-mode's native fontification.
   (with-eval-after-load 'org-mode
@@ -104,13 +82,6 @@
 ;;                     charset (font-spec :family "Source Han Serif"))
 ;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
 
-;; Text Scale
-(use-package default-text-scale
-  :commands (default-text-scale-increase default-text-scale-descrease default-text-scale-reset)
-  :config
-  (default-text-scale-mode 1))
-
-;; Set Fonts
 (ignore-errors
   ;; Download ans install SF Mono fonts:
   ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
@@ -123,6 +94,12 @@
   (if (member "Symbola" (font-family-list))
       (set-fontset-font t 'unicode "Symbola" nil 'prepend)
     (message "[WARN] font \"Symbola\" not found")))
+
+;; Text Scale
+(use-package default-text-scale
+  :commands (default-text-scale-increase default-text-scale-descrease default-text-scale-reset)
+  :config
+  (default-text-scale-mode 1))
 
 (defun +ui/frame-config (frame)
   "Custom behaviours for new frames."
@@ -148,6 +125,7 @@
 (with-eval-after-load 'doom-themes
   (+ui/frame-config (selected-frame)))
 
+;; NOTE: It's usually best to put code that's GUI/Terminal (display-graphic-p) specific in `after-make-frame-functions'
 ;; Run later, for emacs daemon, emacsclients -c [-nw]
 (add-hook 'after-make-frame-functions '+ui/frame-config)
 

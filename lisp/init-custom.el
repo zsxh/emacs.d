@@ -28,11 +28,6 @@
           (const :tag "Tencent" tencent)
           (const :tag "Tuna" tuna)))
 
-(defcustom personal-eaf-grip-token nil
-  "Github personal access token for eaf-markdown-previewer.
-https://github.com/manateelazycat/emacs-application-framework#markdown-previewer"
-  :type 'string)
-
 (defcustom personal-gui-theme-day 'doom-solarized-light
   "Customize GUI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
 Check https://github.com/hlissner/emacs-doom-themes"
@@ -95,6 +90,7 @@ Check https://github.com/hlissner/emacs-doom-themes"
 (defcustom personal-proxy-socks5-port 1080
   "Set socks5 proxy port."
   :type 'integer)
+
 
 (provide 'init-custom)
 
