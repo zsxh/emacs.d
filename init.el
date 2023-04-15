@@ -10,6 +10,9 @@
 
 ;;; Code:
 
+;; NOTE: Startup Summary: Sequence of Actions at Startup
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
+
 (setq debug-on-error t)
 
 ;; Emacs Version
@@ -41,6 +44,8 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
+;; benchmark require times
+;; https://github.com/purcell/emacs.d/blob/master/lisp/init-benchmarking.el
 (require 'init-benchmarking)
 
 ;; Config

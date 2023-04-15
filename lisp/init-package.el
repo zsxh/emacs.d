@@ -93,21 +93,6 @@ named arguments:
   (setq use-package-always-ensure t
         use-package-verbose t))
 
-;; Benchmark-init only measures time spent in `require' and `load'
-(use-package benchmark-init
-  :config
-  (benchmark-init/activate)
-  (add-hook 'after-init-hook 'benchmark-init/deactivate)
-  (with-eval-after-load 'evil
-    (evil-define-key 'normal benchmark-init/tree-mode-map
-      "h" 'evil-backward-char
-      "gg" 'evil-goto-first-line
-      "q" 'quit-window)
-    (evil-define-key 'normal benchmark-init/tabulated-mode-map
-      "h" 'evil-backward-char
-      "gg" 'evil-goto-first-line
-      "q" 'quit-window)))
-
 (defvar emacs-startup-time nil
   "The time it took, in seconds, for Emacs to initialize.")
 

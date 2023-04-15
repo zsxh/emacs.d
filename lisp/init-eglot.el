@@ -42,7 +42,7 @@
        server :workspace/didChangeConfiguration
        (list
         :settings
-        (or (eglot--workspace-configuration-plist server)
+        (or settings
             eglot--{})))))
 
   ;; Uri <-> File Path
