@@ -89,7 +89,7 @@
 ;;;;;;;;;;;;;; Setup a menu of recently opened files ;;;;;;;;;;;;;;
 (use-package recentf
   :ensure nil
-  :defer t
+  :defer 10
   :config
   (setq recentf-auto-cleanup "07:00pm"
         recentf-max-saved-items 200
@@ -167,7 +167,7 @@
 ;; https://mina86.com/2021/emacs-remote/
 (use-package tramp
   :ensure nil
-  :defer t
+  :defer 10
   :config
   (setq tramp-default-method "ssh"
         remote-file-name-inhibit-cache 120

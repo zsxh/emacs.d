@@ -25,7 +25,7 @@
 ;; https://github.com/alexluigit/dirvish/blob/main/Configuration.org
 ;; MacOS require: brew install coreutils fd poppler ffmpegthumbnailer mediainfo imagemagick gnu-tar unzip
 (use-package dirvish
-  :defer t
+  :defer 10
   :custom
   ;; Feel free to replace `all-the-icons' with `vscode-icon'.
   (dirvish-time-format-string "%F %R")
@@ -68,6 +68,10 @@
           (needs-update . vc-needs-update-state)
           (ignored . nil)
           (unregistered . dirvish-vc-unregistered-face)))
+
+  ;; Lazy load persp-mode.el
+  (plist-put dirvish-scopes :persp (lambda () (when (bound-and-true-p persp-mode) (get-current-persp))))
+  (plist-put dirvish-scopes :perspective nil)
 
   (dirvish-override-dired-mode-maybe)
   ;; (dirvish-override-dired-mode)

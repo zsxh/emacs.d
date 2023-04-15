@@ -61,16 +61,28 @@
 
 ;; Short and sweet LISP editing
 (use-package lispy
-  :commands lispy-mode
   :bind ((:map lispy-mode-map
                (":" . self-insert-command)
                ("C-j" . newline-and-indent)))
+  :init
+  (defun enable-lispy ()
+    "Lazy load lispy because bunch of require statements on top of lispy.el
+ slows down the startup of emacs."
+    (if (or (not (eq major-mode 'lisp-interaction-mode))
+            (featurep 'lispy))
+        (lispy-mode)
+      (let ((buf (current-buffer)))
+        (run-with-idle-timer
+         5 nil
+         (lambda ()
+           (with-current-buffer buf
+             (lispy-mode)))))))
   :hook ((lisp-mode
           emacs-lisp-mode
           lisp-interaction-mode
           clojure-mode
           clojurec-mode
-          clojurescript-mode) . lispy-mode)
+          clojurescript-mode) . enable-lispy)
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
   (setq lispy-eval-display-style 'overlay)

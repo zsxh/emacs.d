@@ -16,7 +16,7 @@
 (use-package project
   :ensure nil
   :defer t
-  :commands (project-root project-forget-zombie-projects)
+  :commands (project-root project-forget-zombie-projects project-prompt-project-dir)
   :config
   ;; auto clean up zombie projects
   (run-at-time "07:00pm" (* 24 60 60) 'project-forget-zombie-projects)
@@ -31,7 +31,8 @@
                (not (string-prefix-p "*cider" name))
                (not (string-prefix-p "*Python" name)))
           (string-match-p "magit.*:" name)
-          (when-let ((cur-persp (get-current-persp)))
+          (when-let ((cur-persp (and (bound-and-true-p persp-mode)
+                                     (get-current-persp))))
             (not (persp-contain-buffer-p buffer cur-persp))))))
 
   (if (boundp 'project-ignore-buffer-conditions)
