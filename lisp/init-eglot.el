@@ -155,8 +155,16 @@
       (add-hook 'post-command-hook #'+eglot/show-signature-help nil t)))
 
   (with-eval-after-load 'company
-    (define-advice company-complete-selection (:after (&rest _) eglot-signature)
-      (+eglot/signature-help-at-point))))
+    (define-advice company-finish (:around (orig-fn candidate) eglot-signature)
+      (let* ((kind (company-call-backend 'kind candidate))
+             (complete-function-p (member kind '(method function))))
+        (funcall orig-fn candidate)
+        (when complete-function-p
+          (when (member major-mode '(python-mode python-ts-mode))
+            ;; HACK: complete pyright parentheses
+            (insert "()")
+            (goto-char (1- (point))))
+          (+eglot/signature-help-at-point))))))
 
 (defun +eglot/set-leader-keys (&optional map)
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))
