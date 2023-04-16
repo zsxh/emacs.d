@@ -117,7 +117,7 @@ If RETURN-P, return the message as a string instead of displaying it."
         auto-package-update-hide-results nil
         auto-package-update-excluded-packages nil
         auto-package-update-excluded-packages
-        '(elispfl org-block-capf screenshot popon flymake-popon)
+        '(elispfl org-block-capf screenshot)
         auto-package-update-last-update-day-path (expand-file-name "cache/.last-package-update-day" user-emacs-directory))
   :defer t
   :config
@@ -141,10 +141,6 @@ If RETURN-P, return the message as a string instead of displaying it."
           (format "%s up to date." (symbol-name package)))
       (error
        (format "Error installing %s" (symbol-name package))))))
-
-(use-package async
-  :defer t
-  :commands (async-start))
 
 
 (provide 'init-package)

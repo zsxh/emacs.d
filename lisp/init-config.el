@@ -60,7 +60,7 @@
 (setq compilation-always-kill t
       compilation-scroll-output t)
 
-;; (setq warning-minimum-level :warning)
+(setq warning-minimum-level :error)
 
 ;; emacs 28 new feature, CJK word breaking lines
 (setq word-wrap-by-category t)

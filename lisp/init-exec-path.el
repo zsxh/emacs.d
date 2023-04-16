@@ -41,7 +41,8 @@
   ;; since I use fnm replacing zsh-defer + nvm,
   ;; no need to load shell variables asynchronously now
   (defun +env/load-shell-env ()
-    (when (memq window-system '(mac ns x pgtk))
+    (when (and (not exec-path-from-shell-initialize-p)
+               (memq window-system '(mac ns x pgtk)))
       ;; (exec-path-from-shell-initialize-async)
       (exec-path-from-shell-initialize-sync)
       (setq exec-path-from-shell-initialize-p t)))

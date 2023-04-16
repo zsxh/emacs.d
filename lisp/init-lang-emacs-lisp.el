@@ -77,12 +77,7 @@
          (lambda ()
            (with-current-buffer buf
              (lispy-mode)))))))
-  :hook ((lisp-mode
-          emacs-lisp-mode
-          lisp-interaction-mode
-          clojure-mode
-          clojurec-mode
-          clojurescript-mode) . enable-lispy)
+  :hook ((lisp-data-mode clojure-mode) . enable-lispy)
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
   (setq lispy-eval-display-style 'overlay)

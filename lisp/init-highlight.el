@@ -13,7 +13,7 @@
 ;; Highlight matching parenthesis
 (use-package paren
   :ensure nil
-  :hook (prog-mode . show-paren-local-mode)
+  :hook ((lisp-data-mode clojure-mode) . show-paren-local-mode)
   :config
   (setq show-paren-mode nil
         show-paren-when-point-inside-paren t
