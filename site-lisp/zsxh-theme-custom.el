@@ -20,31 +20,33 @@
      (progn
        (with-eval-after-load 'dired
          (set-face-foreground 'dired-directory "#3B6EA8"))
-       (with-eval-after-load 'all-the-icons-dired
-         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))))
+       (with-eval-after-load 'all-the-icons-completion
+         (set-face-foreground 'all-the-icons-completion-dir-face "#3B6EA8"))))
     ('doom-one-light
      (progn
        (with-eval-after-load 'dired
          (set-face-foreground 'dired-directory "#3B6EA8"))
-       (with-eval-after-load 'all-the-icons-dired
-         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))))
+       (with-eval-after-load 'all-the-icons-completion
+         (set-face-foreground 'all-the-icons-completion-dir-face "#3B6EA8"))))
     ('doom-one
      (progn
        (with-eval-after-load 'dired
          (set-face-foreground 'dired-directory "#51afef"))
-       (with-eval-after-load 'all-the-icons-dired
-         (set-face-foreground 'all-the-icons-dired-dir-face "#3B6EA8"))))
+       (with-eval-after-load 'all-the-icons-completion
+         (set-face-foreground 'all-the-icons-completion-dir-face "#51afef"))))
     ('doom-solarized-light
      (progn
        (with-eval-after-load 'dired
          (set-face-foreground 'dired-directory "#268bd2"))
+       (with-eval-after-load 'all-the-icons-completion
+         (set-face-foreground 'all-the-icons-completion-dir-face "#268bd2"))
        (with-eval-after-load 'paren
          (set-face-background 'show-paren-match "#E5E5E5"))))
     ('doom-dark+
      (progn
-       (with-eval-after-load 'all-the-icons-dired
-         (set-face-foreground 'all-the-icons-dired-dir-face "#C586C0"))
        (set-face-background 'fringe (face-attribute 'default :background))
+       (with-eval-after-load 'all-the-icons-completion
+         (set-face-foreground 'all-the-icons-completion-dir-face "#E5E5E5"))
        (with-eval-after-load 'company-posframe
          (set-face-background 'company-posframe-active-backend-name (doom-color 'modeline-bg))
          (set-face-background 'company-posframe-inactive-backend-name (doom-color 'modeline-bg-alt)))
