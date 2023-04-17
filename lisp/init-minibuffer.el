@@ -10,6 +10,18 @@
 
 ;;; Code:
 
+;; `completion-category-defaults', `completion-category-overrides', `completion-styles'
+(setq completion-category-overrides
+      '((buffer (styles . (substring basic)))))
+
+(with-eval-after-load 'orderless
+  ;; NOTE: https://github.com/minad/consult#bug-reports
+  ;; Ensure that the `completion-styles' variable is properly configured.
+  ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
+  (setq completion-styles '(basic orderless))
+  (setq completion-category-overrides
+        '((buffer (styles . (substring orderless basic))))))
+
 ;; minibuffer ui
 ;; FIXME: `vertico-directory-delete-char', tramp path
 (use-package vertico
@@ -65,11 +77,6 @@
   :init
   (add-hook-run-once 'minibuffer-setup-hook (lambda () (require 'orderless)))
   :config
-  ;; NOTE: https://github.com/minad/consult#bug-reports
-  ;; Ensure that the `completion-styles' variable is properly configured.
-  ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
-  (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(substring orderless basic))))
-  (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic orderless))))
   ;; pinyin
   (use-package pinyinlib
     :commands pinyinlib-build-regexp-string)
@@ -116,11 +123,6 @@
 
 (use-package all-the-icons-completion
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
-
-;; (use-package minibuffer
-;;   :ensure nil
-;;   :bind (:map minibuffer-local-completion-map
-;;               ("TAB" . minibuffer-force-complete)))
 
 
 (provide 'init-minibuffer)
