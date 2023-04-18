@@ -109,12 +109,14 @@
   :init
   (setq xref-show-xrefs-function 'consult-xref
         xref-show-definitions-function #'consult-xref)
-  :custom
-  (consult-line-start-from-top t)
+  ;; :custom
+  ;; (consult-line-start-from-top t)
   :commands (consult-buffer consult-imenu consult-line consult-grep consult-ripgrep consult--read consult-locate)
   :config
   (setq consult-preview-key 'any
-        consult-async-min-input 2))
+        consult-async-min-input 2
+        consult-line-start-from-top t
+        consult-buffer-sources '(consult--source-hidden-buffer consult--source-modified-buffer consult--source-buffer)))
 
 ;; minibuffer actions and occur/export features
 ;; NOTE: https://karthinks.com/software/fifteen-ways-to-use-embark/
