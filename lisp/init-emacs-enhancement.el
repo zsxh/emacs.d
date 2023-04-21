@@ -80,9 +80,7 @@
                         (ibuffer-do-sort-by-alphabetic))))))
 
 (use-package all-the-icons-ibuffer
-  :defer t
-  :init
-  (add-hook-run-once 'ibuffer-hook (lambda () (all-the-icons-ibuffer-mode))))
+  :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
 ;; TODO: try https://github.com/alphapapa/bufler.el
 

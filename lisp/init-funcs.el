@@ -324,7 +324,7 @@ Version 2017-01-27"
               (get-current-persp))
          (call-interactively 'persp-switch-to-buffer))
         (t
-         (consult-buffer))))
+         (call-interactively 'switch-to-buffer))))
 
 (defun +funcs/toggle-maximize-buffer ()
   "Toggle Maximize buffer"

@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+;; Completion Styles
 ;; `completion-category-defaults', `completion-category-overrides', `completion-styles'
 (setq completion-category-overrides
       '((buffer (styles . (substring basic)))))
@@ -20,7 +21,7 @@
   ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
   (setq completion-styles '(basic orderless))
   (setq completion-category-overrides
-        '((buffer (styles . (substring orderless basic))))))
+        '((buffer (styles . (orderless basic))))))
 
 ;; minibuffer ui
 ;; FIXME: `vertico-directory-delete-char', tramp path
@@ -109,8 +110,6 @@
   :init
   (setq xref-show-xrefs-function 'consult-xref
         xref-show-definitions-function #'consult-xref)
-  ;; :custom
-  ;; (consult-line-start-from-top t)
   :commands (consult-buffer consult-imenu consult-line consult-grep consult-ripgrep consult--read consult-locate)
   :config
   (setq consult-preview-key 'any
