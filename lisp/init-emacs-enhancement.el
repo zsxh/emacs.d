@@ -82,6 +82,9 @@
 (use-package all-the-icons-ibuffer
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 
+;; (use-package nerd-icons-ibuffer
+;;   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
+
 ;; TODO: try https://github.com/alphapapa/bufler.el
 
 ;;;;;;;;;;;;;; Setup a menu of recently opened files ;;;;;;;;;;;;;;

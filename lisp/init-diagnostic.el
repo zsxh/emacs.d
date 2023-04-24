@@ -21,8 +21,10 @@
         flymake-show-diagnostics-at-end-of-line t)
   (advice-add 'flymake-eldoc-function :override #'ignore))
 
-;; TODO: flymake-collection
 ;; https://github.com/mohkale/flymake-collection
+;; TODO: flymake checkers for non-lsp files: yaml, xml, json...
+(use-package flymake-collection
+  :defer t)
 
 
 (provide 'init-diagnostic)

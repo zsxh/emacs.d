@@ -13,15 +13,14 @@
 ;; Completion Styles
 ;; `completion-category-defaults', `completion-category-overrides', `completion-styles'
 (setq completion-category-overrides
-      '((buffer (styles . (substring basic)))))
+      '((buffer (styles . (orderless substring basic)))))
 
-(with-eval-after-load 'orderless
-  ;; NOTE: https://github.com/minad/consult#bug-reports
-  ;; Ensure that the `completion-styles' variable is properly configured.
-  ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
-  (setq completion-styles '(basic orderless))
-  (setq completion-category-overrides
-        '((buffer (styles . (orderless basic))))))
+;; NOTE: https://github.com/minad/consult#bug-reports
+;; For `consult-line', etc.
+;; Ensure that the `completion-styles' variable is properly configured.
+;; Try to set `completion-styles' to a list including `substring' or `orderless'.
+(add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless substring basic))))
+(add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic orderless))))
 
 ;; minibuffer ui
 ;; FIXME: `vertico-directory-delete-char', tramp path
