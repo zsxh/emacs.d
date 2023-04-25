@@ -16,7 +16,7 @@
   :defer t
   :ensure nil
   :config
-  ;; NOTE: eglot is not respect `flymake-no-changes-timeout' option right now
+  ;; NOTE: eglot does not respect `flymake-no-changes-timeout' option right now
   ;; New LSP versions support so-called "pull diagnostics", but not all servers support this necessarily.
   ;; only actually and eagerly report LSP diagnotics if the user has Flymake starting automatically on a timer (`flymake-no-changes-timeout' is a number).
   ;; https://github.com/joaotavora/eglot/discussions/1083
