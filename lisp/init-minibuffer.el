@@ -11,6 +11,7 @@
 ;;; Code:
 
 ;; Completion Styles
+;; NOTE: https://www.gnu.org/software/emacs/manual/html_node/emacs/Completion-Styles.html
 ;; `completion-category-defaults', `completion-category-overrides', `completion-styles'
 (setq completion-category-overrides
       '((buffer (styles . (orderless substring basic)))))

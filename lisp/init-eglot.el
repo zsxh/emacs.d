@@ -16,7 +16,7 @@
   :commands (eglot eglot-ensure)
   :config
   (setq eglot-autoshutdown t
-        eglot-send-changes-idle-time 0.3
+        eglot-send-changes-idle-time 0.5
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
         ;; NOTE: drop jsonrpc log to improve performance
