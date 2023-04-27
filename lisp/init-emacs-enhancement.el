@@ -331,6 +331,15 @@
 
 (add-hook 'after-init-hook #'auto-save-visited-mode)
 
+;; Extra colors for Emacs's `Info-mode'
+(use-package info-colors
+  :ensure nil
+  :init (slot/vc-install :fetcher "github" :repo "ubolonton/info-colors")
+  :hook (Info-selection . info-colors-fontify-node))
+
+(with-eval-after-load 'info
+  (set-face-foreground 'Info-quoted (face-foreground font-lock-constant-face)))
+
 
 (provide 'init-emacs-enhancement)
 

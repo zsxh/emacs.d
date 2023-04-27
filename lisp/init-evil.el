@@ -79,6 +79,7 @@
 (use-package evil-collection
   :after evil
   :config
+  (setq evil-collection-want-unimpaired-p nil)
   ;; (evil-collection-init)
   (with-eval-after-load 'ibuffer
     (evil-collection-init 'ibuffer)
@@ -98,8 +99,13 @@
     ;; (evil-set-initial-state 'Info-mode 'normal)
     (evil-collection-init 'info)
     (evil-define-key 'normal Info-mode-map
+      "b" 'evil-backward-word-begin
+      "e" 'evil-forward-word-end
+      "h" 'evil-backward-char
       "H" 'Info-history-back
-      "q" 'Info-history-back))
+      "l" 'evil-forward-char
+      "q" 'Info-history-back
+      "w" 'evil-forward-word-begin))
 
   (with-eval-after-load 'arc-mode
     (evil-collection-init 'arc-mode)

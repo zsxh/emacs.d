@@ -10,16 +10,9 @@
 
 ;;; Code:
 
-;; NOTE: https://github.com/calve/flycheck-infer Flycheck for java using Infer
-;; NOTE: https://fbinfer.com/ Infer
-;; NOTE: https://github.com/pmd/pmd-emacs PMD Emacs
-;; NOTE: https://pmd.github.io/latest/index.html PMD
-
 ;; NOTE: Install `jdtls', https://github.com/eclipse/eclipse.jdt.ls
 ;; NOTE: Install decomiplers, https://github.com/dgileadi/dg.jdt.ls.decompiler, https://marketplace.visualstudio.com/items?itemName=dgileadi.java-decompiler
-
 ;; NOTE: `jdtls' settings: https://github.com/eclipse/eclipse.jdt.ls/blob/master/org.eclipse.jdt.ls.core/src/org/eclipse/jdt/ls/core/internal/preferences/Preferences.java
-
 ;; NOTE: Formatter settings:
 ;; Eclipse formatter settings: https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
 ;; continuation_indentation: https://stackoverflow.com/questions/42622553/eclipse-code-formatter-indents-with-double-amount-of-spaces-intellij-ide
