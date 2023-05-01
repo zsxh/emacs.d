@@ -36,6 +36,9 @@
       },
       "completion": {
         "guessMethodArguments": true,
+        "lazyResolveTextEdit": {
+          "enabled": true
+        },
         "favoriteStaticMembers": [
           "org.junit.Assert.*",
           "org.junit.Assume.*",
