@@ -180,14 +180,6 @@ This filter de-installs itself after this call."
       ",k" 'wgrep-abort-changes
       "q" 'wgrep-exit)))
 
-;; Install fasd
-;; https://github.com/clvv/fasd
-(use-package fasd
-  :defer 15
-  :commands (fasd-find-file)
-  :config
-  (global-fasd-mode))
-
 ;; This package allows Emacs to copy to and paste from the GUI clipboard
 ;; when running in text terminal.
 (use-package xclip
@@ -324,11 +316,6 @@ This filter de-installs itself after this call."
       (setq write-file-functions
             (remove 'delete-trailing-whitespace-skip-current-line write-file-functions))))
   (setq editorconfig-trim-whitespaces-mode '+editor/auto-save-trim-whitespaces-mode))
-
-;; TODO: formatter for python
-;; https://github.com/lassik/emacs-format-all-the-code
-(use-package format-all
-  :defer t)
 
 
 (provide 'init-editor)

@@ -23,6 +23,12 @@
 (add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless substring basic))))
 (add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic orderless))))
 
+;; Lazy load `orderless', `marginalia', `nerd-icons-completion'
+(add-hook-run-once 'minibuffer-setup-hook (lambda ()
+                                            (require 'orderless)
+                                            (marginalia-mode)
+                                            (nerd-icons-completion-mode)))
+
 ;; minibuffer ui
 ;; FIXME: `vertico-directory-delete-char', tramp path
 (use-package vertico
@@ -75,8 +81,6 @@
 
 (use-package orderless
   :defer 10
-  :init
-  (add-hook-run-once 'minibuffer-setup-hook (lambda () (require 'orderless)))
   :config
   ;; pinyin
   (use-package pinyinlib
@@ -87,7 +91,7 @@
 
 ;; Helpful minibuffer annotations
 (use-package marginalia
-  :hook (after-init . marginalia-mode)
+  :defer t
   :custom
   (marginalia-align 'left)
   :config
@@ -122,8 +126,8 @@
 (use-package embark
   :defer t)
 
-(use-package all-the-icons-completion
-  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
+(use-package nerd-icons-completion
+  :defer t)
 
 
 (provide 'init-minibuffer)

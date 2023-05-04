@@ -72,21 +72,6 @@
                                  "t" '(yas-tryout-snippet :which-key "yas-tryout-snippet")))
 
 ;; Popup documentation for completion candidates
-(use-package company-quickhelp
-  :if (or (< emacs-major-version 26)
-          (not (display-graphic-p)))
-  :after company
-  :bind ((:map company-active-map
-               ("C-h" . company-quickhelp-manual-begin)))
-  :hook (global-company-mode . company-quickhelp-mode)
-  :config
-  (setq company-quickhelp-delay nil))
-
-(use-package company-quickhelp-terminal
-  :if (not (display-graphic-p))
-  :after company
-  :hook (global-company-mode . company-quickhelp-terminal-mode))
-
 (use-package company-posframe
   :if (and (>= emacs-major-version 26)
            (display-graphic-p))
@@ -119,8 +104,6 @@
       (company-posframe-quickhelp-show)
       (company-posframe-quickhelp-raise-frame)
       (add-hook 'pre-command-hook #'+company-posframe/quickhelp-auto-hide 0 t))))
-
-
 
 
 (provide 'init-completion)

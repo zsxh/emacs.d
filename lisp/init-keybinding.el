@@ -96,7 +96,7 @@
    "fd" '(+dired/find-program :which-key "find-files-in-dired")
    "fe" '(+funcs/sudo-edit-current-file :which-key "sudo-edit-current-file")
    "ff" '(find-file :which-key "find-file")
-   "fj" '(fasd-find-file :which-key "fasd-find-file")
+   "fj" '(recentf :which-key "recentf")
    "fp" '(xah-copy-file-path :which-key "copy-file-path")
    "fr" '(consult-recent-file :which-key "open-recentf-file")
    "f/" '(rg-dwim-current-file :which-key "rg-dwim-current-file")

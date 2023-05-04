@@ -77,12 +77,8 @@
         highlight-indent-guides-responsive 'top
         highlight-indent-guides-highlighter-function 'my-highlighter))
 
-;; TODO: try xterm-color?
-(use-package ansi-color
-  :ensure nil
-  :commands ansi-color-apply-on-region)
-
 (with-eval-after-load 'compile
+  (require 'ansi-color)
   (defun colorize-compilation-buffer ()
     (toggle-read-only)
     (ansi-color-apply-on-region (point-min) (point-max))

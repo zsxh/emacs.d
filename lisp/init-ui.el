@@ -53,6 +53,7 @@
   ;; (doom-themes-visual-bell-config)
 
   ;; Enable neotree theme
+  ;; TODO: use `nerd-icons' instead of `all-the-icons'
   (with-eval-after-load 'neotree
     ;;  all-the-icons fonts must be installed!
     (setq doom-themes-neotree-file-icons t)

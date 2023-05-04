@@ -25,7 +25,9 @@
 
   ;; Improve performance
   (setq neo-mode-line-custom-format (list " " "Neotree")
-        neo-mode-line-type 'custom)
+        neo-mode-line-type 'custom
+        neo-theme (if (display-graphic-p) 'icons 'arrow)
+        neo-show-slash-for-folder nil)
 
   (with-eval-after-load 'evil-collection
     ;; Evil-Keybindings
