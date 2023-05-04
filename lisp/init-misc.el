@@ -194,7 +194,7 @@
         telega-translate-to-language-by-default "zh")
 
   ;; avatar size
-  (setf (alist-get 2 telega-avatar-factors-alist ) '(0.4 . 0.1))
+  (setf (alist-get 2 telega-avatar-factors-alist) '(0.4 . 0.1))
 
   (with-eval-after-load 'telega-root
     (with-eval-after-load 'evil
@@ -221,17 +221,9 @@
       (company-mode 1))
     (add-hook 'telega-chat-mode-hook 'my-telega-chat-mode))
 
-  (with-eval-after-load 'all-the-icons
-    (add-to-list 'all-the-icons-mode-icon-alist
-                 '(telega-root-mode all-the-icons-fileicon "telegram"
-                                    :heigt 1.0
-                                    :v-adjust -0.2
-                                    :face all-the-icons-blue))
-    (add-to-list 'all-the-icons-mode-icon-alist
-                 '(telega-chat-mode all-the-icons-fileicon "telegram"
-                                    :heigt 1.0
-                                    :v-adjust -0.2
-                                    :face all-the-icons-blue))))
+  (with-eval-after-load 'nerd-icons
+    (push '(telega-root-mode nerd-icons-faicon "nf-fae-telegram" :face nerd-icons-blue) nerd-icons-mode-icon-alist)
+    (push '(telega-chat-mode nerd-icons-faicon "nf-fae-telegram" :face nerd-icons-blue) nerd-icons-mode-icon-alist)))
 
 ;; https://github.com/tecosaur/screenshot.git
 ;; convert a selected region of code to a screenshot
