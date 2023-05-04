@@ -108,40 +108,25 @@ If RETURN-P, return the message as a string instead of displaying it."
 
 (add-hook 'emacs-startup-hook #'+package/display-benchmark)
 
-;; Commands: `auto-package-update-now', `auto-package-update-now-async'
-(use-package auto-package-update
-  :init
-  (setq auto-package-update-delete-old-versions t
-        auto-package-update-prompt-before-update t
-        auto-package-update-show-preview t
-        auto-package-update-hide-results nil
-        auto-package-update-excluded-packages nil
-        auto-package-update-excluded-packages
-        '(elispfl org-block-capf screenshot info-colors)
-        auto-package-update-last-update-day-path
-        (expand-file-name "cache/.last-package-update-day" user-emacs-directory))
-  :defer t
-  :config
-  (add-hook 'auto-package-update-before-hook #'package-refresh-contents)
-
-  (defun apu--add-to-old-versions-dirs-list (package)
-    "Add package all old version dirs to apu--old-versions-dirs-list"
-    (dolist (desc (cddr (assq package package-alist)))
-      (add-to-list 'apu--old-versions-dirs-list (package-desc-dir desc))))
-
-  (defun apu--safe-package-install (package)
-    (condition-case nil
-        (when-let* ((info (assoc package package-archive-contents))
-                    (pkg-desc (cadr info))
-                    (transaction (package-compute-transaction (list pkg-desc)
-                                                              (package-desc-reqs pkg-desc))))
-          (package-download-transaction transaction)
-          ;; NOTE: Only delete old packages when upgrade successfully
-          (when auto-package-update-delete-old-versions
-            (apu--add-to-old-versions-dirs-list package))
-          (format "%s up to date." (symbol-name package)))
-      (error
-       (format "Error installing %s" (symbol-name package))))))
+(with-eval-after-load 'package
+  (defvar package-upgrade-exclude-vc-pkgs-p t)
+  (define-advice package--upgradeable-packages (:override () advice)
+    ;; Initialize the package system to get the list of package
+    ;; symbols for completion.
+    (package--archives-initialize)
+    (mapcar
+     #'car
+     (seq-filter
+      (lambda (elt)
+        (or (let ((available
+                   (assq (car elt) package-archive-contents)))
+              (and available
+                   (version-list-<
+                    (package-desc-version (cadr elt))
+                    (package-desc-version (cadr available)))))
+            (and (not package-upgrade-exclude-vc-pkgs-p)
+                 (package-vc-p (cadr (assq (car elt) package-alist))))))
+      package-alist))))
 
 
 (provide 'init-package)
