@@ -121,10 +121,7 @@ This filter de-installs itself after this call."
 ;; Easy way to jump/swap window
 (use-package ace-window
   :bind (("M-u" . ace-window))
-  :commands (ace-window ace-swap-window)
-  :config
-  (with-eval-after-load 'neotree
-    (add-to-list 'aw-ignored-buffers neo-buffer-name)))
+  :commands (ace-window ace-swap-window))
 
 (use-package transpose-frame
   :commands (transpose-frame            ; \

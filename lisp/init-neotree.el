@@ -29,6 +29,13 @@
         neo-theme (if (display-graphic-p) 'icons 'arrow)
         neo-show-slash-for-folder nil)
 
+  (with-eval-after-load 'winum
+    ;; window 0 is reserved for file trees
+    (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func))
+
+  (with-eval-after-load 'ace-window
+    (add-to-list 'aw-ignored-buffers neo-buffer-name))
+
   (with-eval-after-load 'evil-collection
     ;; Evil-Keybindings
     (evil-collection-init 'neotree)
@@ -44,10 +51,6 @@
       "R" 'neotree-change-root
       "\C-a" 'move-beginning-of-line
       "\C-e" 'move-end-of-line))
-
-  (with-eval-after-load 'winum
-    ;; window 0 is reserved for file trees
-    (add-to-list 'winum-assign-functions #'+neotree/winum-neotree-assign-func))
 
   (with-eval-after-load 'doom-themes-ext-neotree
     (defun doom-themes-neotree-insert-dir-a (node depth expanded &optional short-name)

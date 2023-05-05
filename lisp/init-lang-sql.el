@@ -24,6 +24,9 @@
 ;;   :ensure nil
 ;;   :defer t)
 
+;; TODO: `ejc-sql', Emacs SQL client uses Clojure JDBC
+;; https://github.com/kostafey/ejc-sql
+
 
 (provide 'init-lang-sql)
 
