@@ -65,10 +65,9 @@
 
 (use-package sayid
   :after cider
-  ;; :config
+  :config
   ;; FIXME: temporary fixed clojure-cli dependencies
-  ;; (add-to-list 'cider-jack-in-dependencies `("com.billpiel/sayid" ,sayid-injected-plugin-version))
-  )
+  (add-to-list 'cider-jack-in-dependencies `("com.billpiel/sayid" ,sayid-injected-plugin-version)))
 
 ;; TODO: neil, A CLI to add common aliases and features to deps.edn-based projects.
 ;; https://github.com/babashka/neil

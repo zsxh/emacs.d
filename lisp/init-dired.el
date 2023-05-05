@@ -91,6 +91,7 @@
     (if-let* ((_ (bound-and-true-p winum-mode))
               (_ (bound-and-true-p doom-modeline-mode))
               (num (winum-get-number-string))
+              (_ (not (string-equal "0" num)))
               (_ (and (< 0 (length num))
                       (< 1 (length (cl-mapcan
                                     (lambda (frame)
@@ -139,7 +140,6 @@
       (or (funcall orig-fn window)
           (and (functionp 'dirvish-side--session-visible-p)
                (eq window (dirvish-side--session-visible-p)))))))
-
 
 (use-package dired
   :ensure nil

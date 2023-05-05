@@ -71,7 +71,6 @@
 ;; Feature
 (require 'init-emacs-enhancement)
 (require 'init-dired)
-;; (require 'init-neotree)
 (require 'init-org)
 (require 'init-shell-term)
 (require 'init-editor)

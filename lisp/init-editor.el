@@ -21,7 +21,6 @@
   :hook ((prog-mode
           org-mode
           dired-mode
-          neotree-mode
           magit-mode
           conf-space-mode) . +autorevert/turn-on)
   :init

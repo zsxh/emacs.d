@@ -52,13 +52,6 @@
   ;; Enable flashing mode-line on errors
   ;; (doom-themes-visual-bell-config)
 
-  ;; Enable neotree theme
-  ;; TODO: use `nerd-icons' instead of `all-the-icons'
-  ;; (with-eval-after-load 'neotree
-  ;;   ;;  all-the-icons fonts must be installed!
-  ;;   (setq doom-themes-neotree-file-icons t)
-  ;;   (require 'doom-themes-ext-neotree))
-
   ;; Corrects (and improves) org-mode's native fontification.
   (with-eval-after-load 'org-mode
     (require 'doom-themes-ext-org)))
