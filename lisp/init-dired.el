@@ -22,7 +22,7 @@
 
 (advice-run-once 'find-file :before #'dirvish-override-dired-mode-maybe)
 
-;; https://github.com/alexluigit/dirvish/blob/main/Configuration.org
+;; https://github.com/alexluigit/dirvish
 ;; MacOS require: brew install coreutils fd poppler ffmpegthumbnailer mediainfo imagemagick gnu-tar unzip
 (use-package dirvish
   :defer 10
@@ -153,7 +153,8 @@
         ;; dired-kill-when-opening-new-dired-buffer t
         ;; dired "human-readable" format
         dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group"
-        dired-mouse-drag-files t)
+        dired-mouse-drag-files t
+        dired-auto-revert-buffer #'dired-directory-changed-p)
 
   (defun +dried/dired-do-delete-a (fn &rest args)
     (let ((delete-by-moving-to-trash (and (not (file-remote-p default-directory))
