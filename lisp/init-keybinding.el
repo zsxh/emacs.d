@@ -50,7 +50,8 @@
    "!" '(shell-command :which-key "shell-command")
    ":" '(eval-expression :which-key "eval-expression")
    ";" '(comment-dwim-2 :which-key "comment-line")
-   "0" '(neotree-show :which-key "neotree")
+   ;; "0" '(neotree-show :which-key "neotree")
+   "0" '(dirvish-side :which-key "dirvish-side")
    "/" '(rg :which-key "ripgrep")
    ;; winum-select-window
    "1" 'winum-select-window-1
@@ -168,7 +169,8 @@
    "pF" '(project-find-dir :which-key "project-find-directory")
    "pk" '(project-kill-buffers :which-key "project-kill-buffers")
    "pp" '(my/project-switch-project :which-key "switch-project")
-   "pt" '(+neotree/find-project-root :which-key "neotree-find-project-root")
+   ;; "pt" '(+neotree/find-project-root :which-key "neotree-find-project-root")
+   "pt" '(+dirvish/project-root-side :which-key "+dirvish/project-root-side")
    ;; Text
    "t" '(nil :which-key "text")
    "tB" '(comment-box :which-key "comment-box")

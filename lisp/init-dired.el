@@ -103,7 +103,7 @@
                     'face (if (doom-modeline--active)
                               'doom-modeline-buffer-major-mode
                             'mode-line-inactive))
-      (doom-modeline-spc)))
+      " "))
 
   (when (executable-find "exa")
     (dirvish-define-preview exa (file)
@@ -111,6 +111,35 @@
       (when (file-directory-p file) ; we only interest in directories here
         `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the output of `exa' command as preview
     (add-to-list 'dirvish-preview-dispatchers 'exa)))
+
+(use-package dirvish-side
+  :ensure dirvish
+  :commands (+dirvish/project-root-side)
+  :config
+  (setq dirvish-side-width 25)
+
+  (defun +dirvish/project-root-side ()
+    (interactive)
+    (cond ((eq (dirvish-side--session-visible-p) (selected-window))
+           (dirvish-quit))
+          (t
+           (dirvish-side--new (or (project-root (project-current))
+                                  default-directory)))))
+
+  (with-eval-after-load 'winum
+    (defun +dirvish/winum-assign-func ()
+      (when (and (functionp 'dirvish-side--session-visible-p)
+                 (eq (selected-window) (dirvish-side--session-visible-p))
+                 (eq (selected-window) (frame-first-window)))
+        0))
+    (add-to-list 'winum-assign-functions #'+dirvish/winum-assign-func))
+
+  (with-eval-after-load 'ace-window
+    (define-advice aw-ignored-p (:around (orig-fn window) dirvish-advice)
+      (or (funcall orig-fn window)
+          (and (functionp 'dirvish-side--session-visible-p)
+               (eq window (dirvish-side--session-visible-p)))))))
+
 
 (use-package dired
   :ensure nil
