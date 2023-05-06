@@ -18,24 +18,15 @@
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
-  :hook ((prog-mode
-          org-mode
-          dired-mode
-          neotree-mode
-          magit-mode
-          conf-space-mode) . +autorevert/turn-on)
   :init
-  ;; disable auto revert in remote buffers
-  (defun +autorevert/turn-on ()
-    (unless (file-remote-p default-directory)
-      (turn-on-auto-revert-mode)))
+  (add-hook-run-once 'find-file-hook #'global-auto-revert-mode)
   :config
-  (setq global-auto-revert-non-file-buffers t
+  (setq global-auto-revert-non-file-buffers nil
         auto-revert-verbose nil
-        auto-revert-interval 10
+        auto-revert-interval 5
         ;; turn off `auto-revert-use-notify' or customize `auto-revert-notify-exclude-dir-regexp'
         ;; to exclude I/O intensive directories from auto-reverting.
-        auto-revert-use-notify nil
+        auto-revert-use-notify t
         ;; Since checking a remote file is slow, these modes check or revert
         ;; remote files only if the user option `auto-revert-remote-files' is
         ;; non-nil.  It is recommended to disable version control for remote
@@ -43,41 +34,7 @@
         auto-revert-remote-files nil
         ;; https://github.com/magit/magit/issues/2371#issuecomment-152746346
         ;; value nil, vc mode-line update when buffer changed. t, update every auto-revert-interval seconds
-        auto-revert-check-vc-info t)
-
-  ;; NOTE: Reverts all buffers that have windows in the current frame to improve checking vc info performance
-  ;; https://emacs.stackexchange.com/questions/28878/only-enable-auto-revert-mode-for-the-current-buffer
-  (defvar auto-revert-some-buffers-filter #'get-buffer-window
-    "Filter for the output of `buffer-list' in `auto-revert-buffers'.
-The function is called with a buffer as argument.
-It should return a non-nil value if this buffer should really be auto-reverted.")
-
-  (defun auto-revert-some-buffers-advice--buffer-list (ret)
-    "Filter output of the first call of `buffer-list' in `auto-revert-buffers'.
-This filter de-installs itself after this call."
-    (advice-remove #'buffer-list #'auto-revert-some-buffers-advice--buffer-list)
-    (cl-remove-if-not auto-revert-some-buffers-filter ret))
-
-  (defun auto-revert-some-buffers-advice (oldfun &rest args)
-    "Filter the buffers to be auto-reverted through `auto-revert-some-buffers-filter' (which see)."
-    (let (ret)
-      (if global-auto-revert-mode
-          (unwind-protect
-              (progn
-                (advice-add #'buffer-list :filter-return #'auto-revert-some-buffers-advice--buffer-list)
-                (setq ret (apply oldfun args)))
-            (advice-remove #'buffer-list #'auto-revert-some-buffers-advice--buffer-list) ;; being over-protective
-            )
-        (let ((old-auto-revert-buffer-list (cl-remove-if-not auto-revert-some-buffers-filter auto-revert-buffer-list))
-              ;; Note: We interpret `auto-revert-remaining-buffers' as transient effect and don't filter this list.
-              deleted-buffers)
-          (let ((auto-revert-buffer-list old-auto-revert-buffer-list))
-            (setq ret (apply oldfun args))
-            (setq deleted-buffers (cl-set-difference old-auto-revert-buffer-list auto-revert-buffer-list)))
-          (setq auto-revert-buffer-list (cl-set-difference auto-revert-buffer-list deleted-buffers))))
-      ret))
-
-  (advice-add #'auto-revert-buffers :around #'auto-revert-some-buffers-advice))
+        auto-revert-check-vc-info nil))
 
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2

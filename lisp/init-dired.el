@@ -22,7 +22,7 @@
 
 (advice-run-once 'find-file :before #'dirvish-override-dired-mode-maybe)
 
-;; https://github.com/alexluigit/dirvish/blob/main/Configuration.org
+;; https://github.com/alexluigit/dirvish
 ;; MacOS require: brew install coreutils fd poppler ffmpegthumbnailer mediainfo imagemagick gnu-tar unzip
 (use-package dirvish
   :defer 10
@@ -91,6 +91,7 @@
     (if-let* ((_ (bound-and-true-p winum-mode))
               (_ (bound-and-true-p doom-modeline-mode))
               (num (winum-get-number-string))
+              (_ (not (string-equal "0" num)))
               (_ (and (< 0 (length num))
                       (< 1 (length (cl-mapcan
                                     (lambda (frame)
@@ -112,6 +113,34 @@
         `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the output of `exa' command as preview
     (add-to-list 'dirvish-preview-dispatchers 'exa)))
 
+(use-package dirvish-side
+  :ensure dirvish
+  :commands (+dirvish/project-root-side)
+  :config
+  (setq dirvish-side-width 25)
+
+  (defun +dirvish/project-root-side ()
+    (interactive)
+    (cond ((eq (dirvish-side--session-visible-p) (selected-window))
+           (dirvish-quit))
+          (t
+           (dirvish-side--new (or (project-root (project-current))
+                                  default-directory)))))
+
+  (with-eval-after-load 'winum
+    (defun +dirvish/winum-assign-func ()
+      (when (and (functionp 'dirvish-side--session-visible-p)
+                 (eq (selected-window) (dirvish-side--session-visible-p))
+                 (eq (selected-window) (frame-first-window)))
+        0))
+    (add-to-list 'winum-assign-functions #'+dirvish/winum-assign-func))
+
+  (with-eval-after-load 'ace-window
+    (define-advice aw-ignored-p (:around (orig-fn window) dirvish-advice)
+      (or (funcall orig-fn window)
+          (and (functionp 'dirvish-side--session-visible-p)
+               (eq window (dirvish-side--session-visible-p)))))))
+
 (use-package dired
   :ensure nil
   :defer t
@@ -124,7 +153,8 @@
         ;; dired-kill-when-opening-new-dired-buffer t
         ;; dired "human-readable" format
         dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group"
-        dired-mouse-drag-files t)
+        dired-mouse-drag-files t
+        dired-auto-revert-buffer #'dired-directory-changed-p)
 
   (defun +dried/dired-do-delete-a (fn &rest args)
     (let ((delete-by-moving-to-trash (and (not (file-remote-p default-directory))

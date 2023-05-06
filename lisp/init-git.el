@@ -14,7 +14,10 @@
   :commands (magit magit-blame magit-file-popup)
   :defer 10
   :config
-  (setq magit-bury-buffer-function 'magit-mode-quit-window))
+  (setq magit-bury-buffer-function 'magit-mode-quit-window
+        magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
+        magit-define-global-key-bindings nil
+        magit-diff-refine-hunk t))
 
 ;; FIXME: Performance Issue caused by overlays, https://github.com/dandavison/magit-delta/issues/9
 (use-package magit-delta
