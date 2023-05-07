@@ -83,7 +83,10 @@
       recentf-save-file (locate-user-emacs-file "cache/recentf")
       tramp-persistency-file-name (locate-user-emacs-file "cache/tramp")
       project-list-file (locate-user-emacs-file "cache/projects")
-      elfeed-db-directory (locate-user-emacs-file "cache/elfeed"))
+      elfeed-db-directory (locate-user-emacs-file "cache/elfeed")
+      transient-levels-file (locate-user-emacs-file "cache/transient/levels.el")
+      transient-values-file (locate-user-emacs-file "cache/transient/values.el")
+      transient-history-file (locate-user-emacs-file "cache/transient/history.el"))
 
 (setq mouse-drag-and-drop-region-cross-program t
       mouse-drag-and-drop-region t)

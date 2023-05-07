@@ -223,7 +223,8 @@
              transient-emacs-cheatsheet
              transient-string-inflection)
   :config
-  (setq transient-show-popup t)
+  (setq transient-show-popup t
+        transient-save-history nil)
   (defvar +transient/non-dedicated-display '(display-buffer-in-side-window
                                              (side . bottom)
                                              (dedicated . nil)
