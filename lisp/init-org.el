@@ -171,14 +171,6 @@ at the first function to return non-nil.")
 
   (+org/init-label-lazy-loader-h))
 
-;; https://github.com/xenodium/org-block-capf
-(use-package org-block-capf
-  :ensure nil
-  :init (slot/vc-install :fetcher "github" :repo "xenodium/org-block-capf")
-  :custom
-  (org-block-capf-edit-style 'inline)
-  :hook (org-mode . org-block-capf-add-to-completion-at-point-functions))
-
 (use-package org-habit
   :ensure nil
   :after org-agenda
@@ -255,10 +247,6 @@ at the first function to return non-nil.")
   :custom
   (org-superstar-headline-bullets-list '(?◉ ?🞛 ?○ ?▷)))
 
-;; Presentation
-(use-package org-tree-slide
-  :commands org-tree-slide-mode)
-
 (use-package ob-go :defer t)
 (use-package ob-rust :defer t)
 (use-package ob-restclient :defer t)
@@ -301,24 +289,24 @@ at the first function to return non-nil.")
           "jupyter-R"
           "jupyter-javascript")))
 
-;; DROP: Ory Static Blog
-(use-package org-static-blog
-  :commands (org-static-blog-mode
-             org-static-blog-publish
-             org-static-blog-publish-file
-             org-static-blog-create-new-post)
-  :config
-  ;; https://github.com/bastibe/.emacs.d/blob/master/init.el#L729
-  (setq org-static-blog-publish-url "https://zsxh.github.io/"
-        org-static-blog-publish-title "zsxh blog"
-        org-static-blog-publish-directory "~/org/blog/"
-        org-static-blog-posts-directory "~/org/blog/posts/"
-        org-static-blog-drafts-directory "~/org/blog/drafts/"
-        org-static-blog-use-preview t
-        org-static-blog-preview-ellipsis "Read more..."
-        org-static-blog-preview-link-p t
-        org-static-blog-enable-tags t)
-  (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))
+;; TODO: remove `org-static-blog'
+;; (use-package org-static-blog
+;;   :commands (org-static-blog-mode
+;;              org-static-blog-publish
+;;              org-static-blog-publish-file
+;;              org-static-blog-create-new-post)
+;;   :config
+;;   ;; https://github.com/bastibe/.emacs.d/blob/master/init.el#L729
+;;   (setq org-static-blog-publish-url "https://zsxh.github.io/"
+;;         org-static-blog-publish-title "zsxh blog"
+;;         org-static-blog-publish-directory "~/org/blog/"
+;;         org-static-blog-posts-directory "~/org/blog/posts/"
+;;         org-static-blog-drafts-directory "~/org/blog/drafts/"
+;;         org-static-blog-use-preview t
+;;         org-static-blog-preview-ellipsis "Read more..."
+;;         org-static-blog-preview-link-p t
+;;         org-static-blog-enable-tags t)
+;;   (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))
 
 ;; TODO: hugo static blog
 ;; - hugo: https://gohugo.io/getting-started/quick-start/

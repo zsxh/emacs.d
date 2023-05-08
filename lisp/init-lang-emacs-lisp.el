@@ -80,8 +80,7 @@
   :hook ((lisp-data-mode clojure-mode) . enable-lispy)
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
-  (setq lispy-eval-display-style 'overlay)
-  (setq lispy-use-sly t))
+  (setq lispy-eval-display-style 'overlay))
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros
