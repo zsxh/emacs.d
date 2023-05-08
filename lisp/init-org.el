@@ -289,25 +289,6 @@ at the first function to return non-nil.")
           "jupyter-R"
           "jupyter-javascript")))
 
-;; TODO: remove `org-static-blog'
-;; (use-package org-static-blog
-;;   :commands (org-static-blog-mode
-;;              org-static-blog-publish
-;;              org-static-blog-publish-file
-;;              org-static-blog-create-new-post)
-;;   :config
-;;   ;; https://github.com/bastibe/.emacs.d/blob/master/init.el#L729
-;;   (setq org-static-blog-publish-url "https://zsxh.github.io/"
-;;         org-static-blog-publish-title "zsxh blog"
-;;         org-static-blog-publish-directory "~/org/blog/"
-;;         org-static-blog-posts-directory "~/org/blog/posts/"
-;;         org-static-blog-drafts-directory "~/org/blog/drafts/"
-;;         org-static-blog-use-preview t
-;;         org-static-blog-preview-ellipsis "Read more..."
-;;         org-static-blog-preview-link-p t
-;;         org-static-blog-enable-tags t)
-;;   (load (expand-file-name "site-lisp/org-static-blog-custom.el" user-emacs-directory)))
-
 ;; TODO: hugo static blog
 ;; - hugo: https://gohugo.io/getting-started/quick-start/
 ;; - hugo papermode theme: https://github.com/adityatelange/hugo-PaperMod/
