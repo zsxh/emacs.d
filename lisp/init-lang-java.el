@@ -27,6 +27,7 @@
 (with-eval-after-load 'eglot
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
 
+  ;; ----------------------- Intialization -----------------------
   (defun jdtls-command-contact (&optional interactive)
     (let* ((jdtls-cache-dir (file-name-concat user-emacs-directory "cache" "jdtls-cache"))
            (project-dir (file-name-nondirectory (directory-file-name (+project/root))))
@@ -50,35 +51,7 @@
   (cl-defmethod eglot-initialization-options (server &context (major-mode java-ts-mode))
     (jdtls-initialization-options))
 
-  ;; https://github.com/joaotavora/eglot/discussions/888#discussioncomment-2386710
-  (cl-defmethod eglot-execute-command
-    (_server (_cmd (eql java.apply.workspaceEdit)) arguments)
-    "Command `java.apply.workspaceEdit' handler."
-    (mapc #'eglot--apply-workspace-edit arguments))
-
-  (cl-defmethod eglot-execute-command
-    (_server (_cmd (eql java.action.overrideMethodsPrompt)) arguments)
-    "Command `java.action.overrideMethodsPrompt' handler."
-    (let* ((argument (aref arguments 0))
-           (list-methods-result (jsonrpc-request (eglot--current-server-or-lose)
-                                                 :java/listOverridableMethods
-                                                 argument))
-           (methods (plist-get list-methods-result :methods))
-           (menu-items (mapcar (lambda (method)
-                                 (let* ((name (plist-get method :name))
-                                        (parameters (plist-get method :parameters))
-                                        (class (plist-get method :declaringClass)))
-                                   (cons (format "%s(%s) class: %s" name (string-join parameters ", ") class) method)))
-                               methods))
-           (selected-methods (cl-map 'vector
-                                     (lambda (choice) (alist-get choice menu-items nil nil 'equal))
-                                     (delete-dups
-                                      (completing-read-multiple "overridable methods: " menu-items))))
-           (add-methods-result (jsonrpc-request (eglot--current-server-or-lose)
-                                                :java/addOverridableMethods
-                                                (list :overridableMethods selected-methods :context argument))))
-      (eglot--apply-workspace-edit add-methods-result)))
-
+  ;; ----------------------- Support URI jdt:// protocol -----------------------
   (defun +eglot/jdtls-uri-to-path (uri)
     "Support Eclipse jdtls `jdt://' uri scheme."
     (when-let* ((jdt-scheme-p (string-prefix-p "jdt://" uri))
@@ -100,8 +73,56 @@
     (+eglot/jdtls-uri-to-path uri))
 
   (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode java-ts-mode))
-    (+eglot/jdtls-uri-to-path uri)))
+    (+eglot/jdtls-uri-to-path uri))
 
+  ;; ----------------------- Support jdt.ls extra commands -----------------------
+  (defun java-apply-workspaceEdit (arguments)
+    "Command `java.apply.workspaceEdit' handler."
+    (mapc #'eglot--apply-workspace-edit arguments))
+
+  (defun java-action-overrideMethodsPrompt (arguments)
+    "Command `java.action.overrideMethodsPrompt' handler."
+    (let* ((argument (aref arguments 0))
+           (list-methods-result (jsonrpc-request (eglot--current-server-or-lose)
+                                                 :java/listOverridableMethods
+                                                 argument))
+           (methods (plist-get list-methods-result :methods))
+           (menu-items (mapcar (lambda (method)
+                                 (let* ((name (plist-get method :name))
+                                        (parameters (plist-get method :parameters))
+                                        (class (plist-get method :declaringClass)))
+                                   (cons (format "%s(%s) class: %s" name (string-join parameters ", ") class) method)))
+                               methods))
+           (selected-methods (cl-map 'vector
+                                     (lambda (choice) (alist-get choice menu-items nil nil 'equal))
+                                     (delete-dups
+                                      (completing-read-multiple "overridable methods: " menu-items))))
+           (add-methods-result (jsonrpc-request (eglot--current-server-or-lose)
+                                                :java/addOverridableMethods
+                                                (list :overridableMethods selected-methods :context argument))))
+      (eglot--apply-workspace-edit add-methods-result)))
+
+  (defun +java/eglot-execute (server action)
+    "Ask SERVER to execute ACTION.
+ACTION is an LSP object of either `CodeAction' or `Command' type."
+    (eglot--dcase action
+      (((Command) command arguments)
+       (pcase command
+         ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
+         (_ (eglot--request server :workspace/executeCommand action))))
+      (((CodeAction) edit command)
+       (when edit (eglot--apply-workspace-edit edit))
+       (when command
+         (eglot--dbind ((Command) command arguments) command
+           (pcase command
+             ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt arguments))
+             (_ (eglot--request server :workspace/executeCommand action))))))))
+
+  (cl-defmethod eglot-execute (server action &context (major-mode java-mode))
+    (+java/eglot-execute server action))
+
+  (cl-defmethod eglot-execute (server action &context (major-mode java-ts-mode))
+    (+java/eglot-execute server action)))
 
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode
@@ -182,19 +203,21 @@
   (defun +java/eglot-get-project-classpath (&optional filename scope)
     (let* ((filename (or filename (buffer-file-name)))
            (scope (or scope "test"))
-           (classpaths (plist-get (eglot-execute-command (eglot--current-server-or-lose)
-                                                         "java.project.getClasspaths"
-                                                         (vector (eglot--path-to-uri filename)
-                                                                 (json-encode `(("scope" . ,scope)))))
-                                  :classpaths)))
+           (command (list
+                     :title ""
+                     :command "java.project.getClasspaths"
+                     :arguments (vector (eglot--path-to-uri filename)
+                                        (json-serialize (list :scope scope)))))
+           (classpaths (plist-get (eglot-execute (eglot--current-server-or-lose) command) :classpaths)))
       (mapconcat #'identity classpaths path-separator)))
 
   (defun +java/testfile-p (file-path)
     "Tell if a file locate at FILE-PATH is a test class."
-    (eglot-execute-command
-     (eglot--current-server-or-lose)
-     "java.project.isTestFile"
-     (vector (eglot--path-to-uri file-path)))))
+    (let ((command (list
+                    :title ""
+                    :command "java.project.isTestFile"
+                    :arguments (vector (eglot--path-to-uri file-path)))))
+      (eq t (eglot-execute (eglot--current-server-or-lose) command)))))
 
 ;; http://www.tianxiangxiong.com/2017/02/12/decompiling-java-classfiles-in-emacs.html
 ;; https://github.com/xiongtx/jdecomp

@@ -36,14 +36,13 @@
   ;; HACK: Temporary fix for jdtls `workspace/didChangeConfiguration'
   ;; https://github.com/joaotavora/eglot/discussions/1197#discussioncomment-5515587
   (define-advice eglot-signal-didChangeConfiguration (:override (server) override)
+    "Send a `:workspace/didChangeConfiguration' signal to SERVER.
+When called interactively, use the currently active server"
     (interactive (list (eglot--current-server-or-lose)))
     (when-let ((settings (eglot--workspace-configuration-plist server)))
       (jsonrpc-notify
        server :workspace/didChangeConfiguration
-       (list
-        :settings
-        (or settings
-            eglot--{})))))
+       (list :settings settings))))
 
   ;; Uri <-> File Path
   (defvar eglot-path-uri-cache (make-hash-table :test #'equal)
