@@ -271,24 +271,6 @@
   (set-face-foreground 'eldoc-highlight-function-argument
                        (face-attribute 'font-lock-variable-name-face :foreground)))
 
-;;;;;;;;;;;;;; others ;;;;;;;;;;;;;;
-
-;; Toggle pixel scrolling, according to the turning of the mouse wheel
-(when (boundp 'pixel-scroll-precision-mode)
-  (pixel-scroll-precision-mode 1))
-
-(defun up-directory (path)
-  "Move up a directory (delete backwards to /)."
-  (interactive "p")
-  (if (string-match-p "/." (minibuffer-contents))
-      (let ((end (point)))
-	      (re-search-backward "/.")
-	      (forward-char)
-	      (delete-region (point) end))))
-
-(define-key minibuffer-local-filename-completion-map
-            [C-backspace] #'up-directory)
-
 ;;;;;;;;;;;;;; GnuPG and Auth Sources ;;;;;;;;;;;;;;
 ;; TODO: gpg and auth-sources
 ;; NOTE: https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sources
@@ -300,7 +282,6 @@
 ;; (add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
 
 ;;;;;;;;;;;;;; Auto Save ;;;;;;;;;;;;;;
-
 ;; NOTE: For MacOS, https://emacs-china.org/t/macos-save-silently-t/24086
 (setq save-silently t
       auto-save-default nil
@@ -326,6 +307,7 @@
 
 (add-hook 'after-init-hook #'auto-save-visited-mode)
 
+;;;;;;;;;;;;;; Info-mode ;;;;;;;;;;;;;;
 ;; Extra colors for Emacs's `Info-mode'
 (use-package info-colors
   :ensure nil
@@ -334,6 +316,33 @@
 
 (with-eval-after-load 'info
   (set-face-foreground 'Info-quoted (face-foreground font-lock-constant-face)))
+
+;;;;;;;;;;;;;; M-x breadcrumb-mode ;;;;;;;;;;;;;;
+;; https://github.com/joaotavora/breadcrumb
+(use-package breadcrumb
+  :ensure nil
+  :init
+  (slot/vc-install :fetcher "github" :repo "joaotavora/breadcrumb")
+  (with-eval-after-load 'eglot
+    (add-hook 'eglot-managed-mode-hook #'breadcrumb-local-mode))
+  :defer t)
+
+;;;;;;;;;;;;;; others ;;;;;;;;;;;;;;
+;; Toggle pixel scrolling, according to the turning of the mouse wheel
+(when (boundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1))
+
+(defun up-directory (path)
+  "Move up a directory (delete backwards to /)."
+  (interactive "p")
+  (if (string-match-p "/." (minibuffer-contents))
+      (let ((end (point)))
+	      (re-search-backward "/.")
+	      (forward-char)
+	      (delete-region (point) end))))
+
+(define-key minibuffer-local-filename-completion-map
+            [C-backspace] #'up-directory)
 
 
 (provide 'init-emacs-enhancement)
