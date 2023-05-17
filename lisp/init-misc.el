@@ -228,8 +228,7 @@
 ;; https://github.com/tecosaur/screenshot.git
 ;; convert a selected region of code to a screenshot
 (use-package screenshot
-  :ensure nil
-  :init (slot/vc-install :fetcher "github" :repo "tecosaur/screenshot")
+  :vc (:url "https://github.com/tecosaur/screenshot" :rev :newest)
   :commands screenshot)
 
 ;; NOTE: timers
@@ -243,10 +242,6 @@
 
 (use-package protobuf-mode
   :defer t)
-
-(use-package esup
-  :defer t)
-
 ;; TODO: https://github.com/ginqi7/plantuml-emacs
 
 ;; https://github.com/vedang/pdf-tools

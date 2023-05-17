@@ -171,8 +171,7 @@ Lisp function does not specify a special indentation."
 
 ;; Extra font lock for emacs lisp
 (use-package elispfl
-  :ensure nil
-  :init (slot/vc-install :fetcher "github" :repo "cireu/elispfl")
+  :vc (:url "https://github.com/cireu/elispfl" :rev :newest)
   :after elisp-mode
   :config
   (elispfl-mode))

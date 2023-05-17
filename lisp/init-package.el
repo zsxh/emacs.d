@@ -59,36 +59,6 @@
 
 (set-package-archives personal-package-archives)
 
-;; https://tony-zorman.com/posts/2022-11-30-package-vc-install.html
-;; NOTE: https://github.com/slotThe/vc-use-package
-(defconst slot/package-vc-fetchers
-  '(:github "https://github.com/"
-    :gitlab "https://gitlab.com/"
-    :codeberg "https://codeberg.org/"
-    :sourcehut "https://git.sr.ht/~")
-  "Places from where to fetch packages.")
-
-(cl-defun slot/vc-install (&key (fetcher "github") repo name rev backend)
-  "Install a package from a remote if it's not already installed.
-This is a thin wrapper around `package-vc-install' in order to
-make non-interactive usage more ergonomic.  Takes the following
-named arguments:
-
-- FETCHER the remote where to get the package (e.g., \"gitlab\").
-  If omitted, this defaults to \"github\".
-
-- REPO should be the name of the repository (e.g.,
-  \"slotThe/arXiv-citation\".
-
-- NAME, REV, and BACKEND are as in `package-vc-install' (which
-  see)."
-  (let* ((fetcher-url (plist-get slot/package-vc-fetchers (intern (concat ":" fetcher))))
-         (url (format "%s%s" fetcher-url repo))
-         (iname (when name (intern name)))
-         (pac-name (or iname (intern (file-name-base repo)))))
-    (unless (package-installed-p pac-name)
-      (package-vc-install url rev backend iname))))
-
 (eval-when-compile
   (setq use-package-always-ensure t
         use-package-verbose t))
@@ -110,7 +80,7 @@ If RETURN-P, return the message as a string instead of displaying it."
 
 (with-eval-after-load 'package
   (defvar package-upgrade-exclude-vc-pkgs-p t)
-  (define-advice package--upgradeable-packages (:override () advice)
+  (define-advice package--upgradeable-packages (:override (&optional include-builtins) advice)
     ;; Initialize the package system to get the list of package
     ;; symbols for completion.
     (package--archives-initialize)
@@ -121,12 +91,24 @@ If RETURN-P, return the message as a string instead of displaying it."
         (or (let ((available
                    (assq (car elt) package-archive-contents)))
               (and available
-                   (version-list-<
-                    (package-desc-version (cadr elt))
-                    (package-desc-version (cadr available)))))
+                   (and (not package-upgrade-exclude-vc-pkgs-p)
+                        (package-vc-p (cadr elt)))
+                   (or (and
+                        include-builtins
+                        (not (package-desc-version (cadr elt))))
+                       (version-list-<
+                        (package-desc-version (cadr elt))
+                        (package-desc-version (cadr available))))))
             (and (not package-upgrade-exclude-vc-pkgs-p)
-                 (package-vc-p (cadr (assq (car elt) package-alist))))))
-      package-alist))))
+                 (package-vc-p (cadr elt)))))
+      (if include-builtins
+          (append package-alist
+                  (mapcan
+                   (lambda (elt)
+                     (when (not (assq (car elt) package-alist))
+                       (list (list (car elt) (package--from-builtin elt)))))
+                   package--builtins))
+        package-alist)))))
 
 
 (provide 'init-package)

@@ -310,8 +310,7 @@
 ;;;;;;;;;;;;;; Info-mode ;;;;;;;;;;;;;;
 ;; Extra colors for Emacs's `Info-mode'
 (use-package info-colors
-  :ensure nil
-  :init (slot/vc-install :fetcher "github" :repo "ubolonton/info-colors")
+  :vc (:url "https://github.com/ubolonton/info-colors" :rev :newest)
   :hook (Info-selection . info-colors-fontify-node))
 
 (with-eval-after-load 'info
@@ -320,11 +319,7 @@
 ;;;;;;;;;;;;;; M-x breadcrumb-mode ;;;;;;;;;;;;;;
 ;; https://github.com/joaotavora/breadcrumb
 (use-package breadcrumb
-  :ensure nil
-  :init
-  (slot/vc-install :fetcher "github" :repo "joaotavora/breadcrumb")
-  (with-eval-after-load 'eglot
-    (add-hook 'eglot-managed-mode-hook #'breadcrumb-local-mode))
+  :vc (:url "https://github.com/joaotavora/breadcrumb" :rev :newest)
   :defer t)
 
 ;;;;;;;;;;;;;; others ;;;;;;;;;;;;;;
