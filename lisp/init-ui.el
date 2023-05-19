@@ -30,12 +30,6 @@
 ;; Fringe
 (fringe-mode '(10 . 10))
 
-;; Installing Fonts
-;; https://github.com/domtronn/all-the-icons.el#installing-fonts
-;; M-x `all-the-icons-install-fonts'
-(use-package all-the-icons
-  :defer t)
-
 ;; nerd-icons.el works on both GUI and terminal
 ;; https://github.com/rainstormstudio/nerd-icons.el
 ;; M-x `nerd-icons-install-fonts'

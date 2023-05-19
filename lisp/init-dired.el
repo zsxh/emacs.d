@@ -27,33 +27,32 @@
 (use-package dirvish
   :defer 10
   :custom
-  ;; Feel free to replace `all-the-icons' with `vscode-icon'.
   (dirvish-time-format-string "%F %R")
-  (dirvish-attributes '(subtree-state all-the-icons file-size))
-  ;; (dirvish-attributes '(subtree-state all-the-icons file-size collapse))
+  (dirvish-attributes '(subtree-state nerd-icons file-size))
+  ;; (dirvish-attributes '(subtree-state nerd-icons file-size collapse))
   (dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index)))
   (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
-              ("C-<return>" . 'dired-open-xdg)
-              ("TAB" . 'dirvish-subtree-toggle)
-              ("f" . dirvish-file-info-menu)
-              ("h" . dired-omit-mode)
-              ("K" . dired-up-directory)
-              ("l" . nil)
-              ("N" . consult-focus-lines)
-              ;; "o" `dired-find-file-other-window'
-              ("M-a" . dirvish-mark-actions-menu)
-              ("M-m" . dirvish-setup-menu)
-              ("M-f" . dirvish-layout-toggle)
-              ("M-h" . dirvish-show-history)
-              ([remap dired-summary] . dirvish-dispatch) ; "?"
-              ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
-              ([remap dired-do-copy] . dirvish-yank) ; "C", "P" copy
-              ;; ("R". dired-do-rename) ; "R" rename
-              ("M" . dirvish-move)      ; "M" move
-              ([remap mode-line-other-buffer] . dirvish-other-buffer)
-              ("." . dired-omit-mode) ;; toggle dotfiles
-              )
+         ("C-<return>" . 'dired-open-xdg)
+         ("TAB" . 'dirvish-subtree-toggle)
+         ("f" . dirvish-file-info-menu)
+         ("h" . dired-omit-mode)
+         ("K" . dired-up-directory)
+         ("l" . nil)
+         ("N" . consult-focus-lines)
+         ;; "o" `dired-find-file-other-window'
+         ("M-a" . dirvish-mark-actions-menu)
+         ("M-m" . dirvish-setup-menu)
+         ("M-f" . dirvish-layout-toggle)
+         ("M-h" . dirvish-show-history)
+         ([remap dired-summary] . dirvish-dispatch)             ; "?"
+         ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
+         ([remap dired-do-copy] . dirvish-yank) ; "C", "P" copy
+         ;; ("R". dired-do-rename) ; "R" rename
+         ("M" . dirvish-move)           ; "M" move
+         ([remap mode-line-other-buffer] . dirvish-other-buffer)
+         ("." . dired-omit-mode) ;; toggle dotfiles
+         )
   :config
   (require 'dirvish-vc)
   (require 'dirvish-emerge)
@@ -69,6 +68,7 @@
           (needs-update . vc-needs-update-state)
           (ignored . nil)
           (unregistered . dirvish-vc-unregistered-face)))
+  (setq dirvish-subtree-state-style 'nerd)
 
   ;; Lazy load persp-mode.el
   (plist-put dirvish-scopes :persp (lambda () (when (bound-and-true-p persp-mode) (get-current-persp))))
