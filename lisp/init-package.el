@@ -91,8 +91,8 @@ If RETURN-P, return the message as a string instead of displaying it."
         (or (let ((available
                    (assq (car elt) package-archive-contents)))
               (and available
-                   (and (not package-upgrade-exclude-vc-pkgs-p)
-                        (package-vc-p (cadr elt)))
+                   (when package-upgrade-exclude-vc-pkgs-p
+                     (not (package-vc-p (cadr elt))))
                    (or (and
                         include-builtins
                         (not (package-desc-version (cadr elt))))
