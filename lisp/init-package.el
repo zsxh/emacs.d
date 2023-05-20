@@ -10,10 +10,10 @@
 
 ;;; Code:
 
-;; NOTE: `package-vc-install', `package-vc-update', `package-vc-update-all' for packages not in mepla/elpa
+(setq package-quickstart t)
 
 ;; Initialize packages
-(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
+(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27+
   (setq package-enable-at-startup nil) ; To prevent initializing twice
   (package-initialize))
 

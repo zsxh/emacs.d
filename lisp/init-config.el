@@ -86,7 +86,8 @@
       elfeed-db-directory (locate-user-emacs-file "cache/elfeed")
       transient-levels-file (locate-user-emacs-file "cache/transient/levels.el")
       transient-values-file (locate-user-emacs-file "cache/transient/values.el")
-      transient-history-file (locate-user-emacs-file "cache/transient/history.el"))
+      transient-history-file (locate-user-emacs-file "cache/transient/history.el")
+      package-quickstart-file (locate-user-emacs-file "cache/package-quickstart.el"))
 
 (setq mouse-drag-and-drop-region-cross-program t
       mouse-drag-and-drop-region t)
