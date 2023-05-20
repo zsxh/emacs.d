@@ -30,7 +30,8 @@
   (dirvish-time-format-string "%F %R")
   (dirvish-attributes '(subtree-state nerd-icons file-size))
   ;; (dirvish-attributes '(subtree-state nerd-icons file-size collapse))
-  (dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index)))
+  (dirvish-mode-line-format '(:left (winum sort file-time symlink) :right (omit yank vc-info index)))
+  (dirvish-mode-line-height doom-modeline-height)
   (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
          ("C-<return>" . 'dired-open-xdg)
@@ -45,7 +46,7 @@
          ("M-m" . dirvish-setup-menu)
          ("M-f" . dirvish-layout-toggle)
          ("M-h" . dirvish-show-history)
-         ([remap dired-summary] . dirvish-dispatch)             ; "?"
+         ([remap dired-summary] . dirvish-dispatch) ; "?"
          ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
          ([remap dired-do-copy] . dirvish-yank) ; "C", "P" copy
          ;; ("R". dired-do-rename) ; "R" rename
@@ -82,9 +83,8 @@
     (evil-define-key 'normal dirvish-mode-map
       "q" 'dirvish-quit))
 
-  (dirvish-define-mode-line bar "doom-modeline bar"
-    (when (bound-and-true-p doom-modeline-mode)
-      (doom-modeline--bar)))
+  (define-advice dirvish--bar-image (:override (&rest _) doom-modeline--bar)
+    (doom-modeline--bar))
 
   (dirvish-define-mode-line winum "`winum' indicator"
     (setq winum-auto-setup-mode-line nil)
