@@ -18,7 +18,7 @@
   (setq
    ;; NOTE: https://github.com/purcell/exec-path-from-shell#making-exec-path-from-shell-faster
    ;; load from .zshenv, no need to load .zshrc(interactive login shell)
-   exec-path-from-shell-arguments nil
+   ;; exec-path-from-shell-arguments nil
    exec-path-from-shell-variables '("PATH" "MANPATH" "LANG" "LANGUAGE" "LD_LIBRARY_PATH"))
 
   (defun exec-path-from-shell-initialize-async ()
