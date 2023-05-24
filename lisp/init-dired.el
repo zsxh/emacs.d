@@ -219,7 +219,20 @@
 
 ;; open files with external applications(just for linux now)
 (use-package dired-open
-  :commands dired-open-xdg)
+  :commands dired-open-xdg
+  :config
+  (define-advice dired-open-xdg (:override () advice)
+    "Try to run `xdg-open' to open the file under point."
+    (interactive)
+    (if (executable-find "xdg-open")
+        (let ((file (ignore-errors (dired-get-file-for-visit))))
+          ;; FIXME: https://askubuntu.com/a/675366
+          ;; xdg-open return before their children are done working,
+          ;; Emacs might kill their controlling terminal when this happens,
+          ;; killing the children, and stopping the external applications.
+          (start-process "dired-open" nil
+                         "setsid" "-w" "xdg-open" (file-truename file)))
+      nil)))
 
 ;; Editable Dired pre-mode configs
 (use-package wdired
