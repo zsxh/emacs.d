@@ -102,23 +102,21 @@
                                                 (list :overridableMethods selected-methods :context argument))))
       (eglot--apply-workspace-edit add-methods-result)))
 
-  (defun +java/execute-command (server command arguments action)
-    (pcase command
-      ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
-      ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt arguments))
-      (_ (eglot--request server :workspace/executeCommand action))))
+  (defun +java/execute-command (server _command)
+    (eglot--dbind ((Command) command arguments) _command
+      (pcase command
+        ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
+        ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt arguments))
+        (_ (eglot--request server :workspace/executeCommand _command)))))
 
   (defun +java/eglot-execute (server action)
     "Ask SERVER to execute ACTION.
 ACTION is an LSP object of either `CodeAction' or `Command' type."
     (eglot--dcase action
-      (((Command) command arguments)
-       (+java/execute-command server command arguments action))
+      (((Command)) (+java/execute-command server action))
       (((CodeAction) edit command)
        (when edit (eglot--apply-workspace-edit edit))
-       (when command
-         (eglot--dbind ((Command) command arguments) command
-           (+java/execute-command server command arguments action))))))
+       (when command (+java/execute-command server command)))))
 
   (cl-defmethod eglot-execute (server action &context (major-mode java-mode))
     (+java/eglot-execute server action))
