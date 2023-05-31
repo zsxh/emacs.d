@@ -51,6 +51,12 @@
   (cl-defmethod eglot-initialization-options (server &context (major-mode java-ts-mode))
     (jdtls-initialization-options))
 
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode java-mode))
+    (list :settings (plist-get (jdtls-initialization-options) :settings)))
+
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode java-ts-mode))
+    (list :settings (plist-get (jdtls-initialization-options) :settings)))
+
   ;; ----------------------- Support URI jdt:// protocol -----------------------
   (defun +eglot/jdtls-uri-to-path (uri)
     "Support Eclipse jdtls `jdt://' uri scheme."
