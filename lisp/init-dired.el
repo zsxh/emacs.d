@@ -57,6 +57,7 @@
   :config
   (require 'dirvish-vc)
   (require 'dirvish-emerge)
+  (require 'pdf-tools nil t)
   (setq dirvish-vc-state-face-alist
         '((up-to-date . nil)
           (edited . diff-changed)

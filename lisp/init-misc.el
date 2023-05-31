@@ -285,6 +285,11 @@
         (push (format "-d%s" data) args)
         (nreverse (cons url args))))))
 
+(use-package pdf-tools
+  :defer t
+  :config
+  (pdf-tools-install))
+
 
 (provide 'init-misc)
 
