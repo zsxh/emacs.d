@@ -31,10 +31,22 @@
   :if (featurep 'treesit)
   :ensure nil
   :defer t
-  :config
-  (setq treesit-font-lock-level 4)
-  ;; (treesit-font-lock-recompute-features '(command string variable function operator bracket keyword))
+  ;; :preface
+  ;; NOTE: `treesit-font-lock-level' has a special `setter' attached to it,
+  ;; so as to automatically recompute the font lock features in all your buffers when you change the level
+  ;; (custom-set-variables '(treesit-font-lock-level 4))
   )
+
+;; NOTE: “Fixing” the S-Expression Commands, https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
+(defun mp-remove-treesit-sexp-changes ()
+  (when (eq forward-sexp-function #'treesit-forward-sexp)
+    (setq forward-sexp-function nil))
+  (when (eq transpose-sexps-function #'treesit-transpose-sexps)
+    (setq transpose-sexps-function #'transpose-sexps-default-function))
+  (when (eq forward-sentence-function #'treesit-forward-sentence)
+    (setq forward-sentence-function #'forward-sentence-default-function)))
+
+(add-hook 'prog-mode-hook #'mp-remove-treesit-sexp-changes)
 
 (use-package treesit-auto
   :if (featurep 'treesit)

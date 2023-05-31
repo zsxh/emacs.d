@@ -10,7 +10,8 @@
 
 ;;; Code:
 
-;; NOTE: clang language server
+;; NOTE: clang language server,
+;; https://clangd.llvm.org/installation#project-setup
 (use-package cc-mode
   :ensure nil
   ;; By default files ending in .h are treated as c files rather than c++ files.
