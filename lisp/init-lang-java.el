@@ -27,7 +27,7 @@
 (with-eval-after-load 'eglot
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
 
-  ;; ----------------------- Intialization -----------------------
+  ;; ----------------------- Intialization/Configurations -----------------------
   (defun jdtls-command-contact (&optional interactive)
     (let* ((jdtls-cache-dir (file-name-concat user-emacs-directory "cache" "jdtls-cache"))
            (project-dir (file-name-nondirectory (directory-file-name (+project/root))))
