@@ -54,9 +54,10 @@
     (or (gethash path eglot-path-uri-cache)
         (funcall orig-fn path)))
 
-  ;; handle workspace configuration
   (cl-defgeneric +eglot/workspace-configuration (server)
-    "Config response to workspace/configuration."
+    "Set workspace configuration,
+- Handle server request `workspace/configuration'
+- Send a `workspace/didChangeConfiguration' signal to SERVER"
     nil)
   (setq-default eglot-workspace-configuration #'+eglot/workspace-configuration)
 

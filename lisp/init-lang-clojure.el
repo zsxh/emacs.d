@@ -33,7 +33,7 @@
     (+eglot/set-leader-keys (intern (format "%s-map" mode))))
 
   (with-eval-after-load 'eglot
-    (cl-defmethod eglot-initialization-options (eglot-lsp-server &context (major-mode clojure-mode))
+    (cl-defmethod eglot-initialization-options (server &context (major-mode clojure-mode))
       ;; NOTE: :zip scheme no response from the server?
       '(:dependency-scheme "jar"))
 
