@@ -2,7 +2,7 @@
   "settings": {
     "java": {
       "autobuild": {
-        "enabled": false
+        "enabled": true
       },
       "configuration": {
         "runtimes": [
