@@ -11,6 +11,7 @@
 ;;; Code:
 
 ;; NOTE: https://joaotavora.github.io/eglot/
+;; NOTE: macos file descriptors limitation, https://www.reddit.com/r/emacs/comments/x4p7mg/fix_annoying_max_open_files_for_emacs/
 (use-package eglot
   :ensure nil
   :commands (eglot eglot-ensure)

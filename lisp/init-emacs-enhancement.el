@@ -144,7 +144,7 @@
 
 ;;;;;;;;;;;;;; Garbage-Collection ;;;;;;;;;;;;;;
 
-(setq garbage-collection-messages t)
+(setq garbage-collection-messages nil)
 
 ;; Adopt a sneaky garbage collection strategy of waiting until idle time to
 ;; collect; staving off the collector while the user is working.
@@ -165,7 +165,7 @@
   :defer t
   :hook (after-init . gcmh-mode)
   :config
-  (setq gcmh-verbose t
+  (setq gcmh-verbose nil
         gcmh-low-cons-threshold 1800000))
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
@@ -175,7 +175,7 @@
 ;; https://mina86.com/2021/emacs-remote/
 (use-package tramp
   :ensure nil
-  :defer 10
+  :defer t
   :config
   (setq tramp-default-method "ssh"
         remote-file-name-inhibit-cache 120
