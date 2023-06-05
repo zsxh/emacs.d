@@ -1,13 +1,13 @@
 #+STARTUP: showall
-Updated: <2023-05-23>
+Updated: <2023-06-03>
 
 * Enviroment
-  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.37, cairo version 1.17.8) of 2023-05-18
-  - emacs-repository-version: =d1404d3a11999a41b1147698479e858b1a3b6353=
+  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.37, cairo version 1.17.8) of 2023-06-03
+  - emacs-repository-version: =b5f17fe07c6624380ba8d0c7a400a6b89f225209=
   - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
   - OS: Manjaro 23.0.0
   - Shell: zsh 5.9
-  - Kernel: 6.3.3-1-MANJARO
+  - Kernel: 6.3.5-1-MANJARO
   - DE: Plasma 5.27.5
   - WM: KWin
   - GCC version: 13.1.1 with libgccjit
