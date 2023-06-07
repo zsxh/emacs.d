@@ -15,27 +15,6 @@
   :ensure nil
   :hook (org-mode . (lambda () (electric-indent-local-mode -1))))
 
-;; Automatically reload files was modified by external program
-(use-package autorevert
-  :ensure nil
-  :init
-  (add-hook-run-once 'find-file-hook #'global-auto-revert-mode)
-  :config
-  (setq global-auto-revert-non-file-buffers nil
-        auto-revert-verbose nil
-        auto-revert-interval 5
-        ;; turn off `auto-revert-use-notify' or customize `auto-revert-notify-exclude-dir-regexp'
-        ;; to exclude I/O intensive directories from auto-reverting.
-        auto-revert-use-notify t
-        ;; Since checking a remote file is slow, these modes check or revert
-        ;; remote files only if the user option `auto-revert-remote-files' is
-        ;; non-nil.  It is recommended to disable version control for remote
-        ;; files.
-        auto-revert-remote-files nil
-        ;; https://github.com/magit/magit/issues/2371#issuecomment-152746346
-        ;; value nil, vc mode-line update when buffer changed. t, update every auto-revert-interval seconds
-        auto-revert-check-vc-info nil))
-
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :bind ("M-;" . comment-dwim-2)
