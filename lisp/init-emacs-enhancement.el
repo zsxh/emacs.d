@@ -318,6 +318,7 @@
 ;; NOTE: For MacOS, https://emacs-china.org/t/macos-save-silently-t/24086
 (setq save-silently t
       auto-save-default nil
+      auto-save-list-file-prefix nil
       create-lockfiles nil
       make-backup-files nil
       auto-save-visited-interval 1
