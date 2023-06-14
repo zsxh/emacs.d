@@ -17,7 +17,19 @@
   (setq magit-bury-buffer-function 'magit-mode-quit-window
         magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
         magit-define-global-key-bindings nil
-        magit-diff-refine-hunk 'all))
+        magit-diff-refine-hunk 'all)
+  (with-eval-after-load 'evil-collection
+    (evil-collection-init 'magit)
+    (evil-define-key '(normal visual) magit-mode-map
+      "$" 'magit-process-buffer)
+    (with-eval-after-load 'with-editor
+      (evil-define-minor-mode-key 'normal 'with-editor-mode
+        ",c" 'with-editor-finish
+        ",k" 'with-editor-cancel))
+    (with-eval-after-load 'magit-blame
+      (evil-define-minor-mode-key 'normal 'magit-blame-mode
+        "q" 'magit-blame-quit
+        "c" 'magit-blame-cycle-style))))
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos

@@ -22,7 +22,7 @@
   (setq elfeed-curl-extra-arguments `(,(format "-xhttp://%s:%s" personal-proxy-http-host personal-proxy-http-port))
         elfeed-log-level 'debug)
 
-  (when (featurep 'evil-collection)
+  (with-eval-after-load 'evil-collection
     (evil-collection-init 'elfeed))
 
   (when (and (eq system-type 'gnu/linux)
