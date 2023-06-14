@@ -152,7 +152,7 @@ Lisp function does not specify a special indentation."
             (featurep 'lispy))
         (lispy-mode)
       (let ((buf (current-buffer)))
-        (run-with-idle-timer
+        (run-with-timer
          5 nil
          (lambda ()
            (with-current-buffer buf
