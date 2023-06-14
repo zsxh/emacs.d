@@ -111,7 +111,8 @@
    "gm" '(vc-msg-show :which-key "vc-msg-show")
    "gM" '(transient-smerge :which-key "smerge-menu")
    "gs" '(magit :which-key "magit-status")
-   "gt" '(magit-todos-list :which-key "magit-todos-list")
+   ;; "gt" '(magit-todos-list :which-key "magit-todos-list")
+   "gt" '(consult-magit-todos :which-key "consult-magit-todos")
    "gT" '(git-timemachine :which-key "git-timemachine")
    ;; Help
    "h" '(nil :which-key "help")

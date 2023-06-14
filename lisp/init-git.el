@@ -17,12 +17,7 @@
   (setq magit-bury-buffer-function 'magit-mode-quit-window
         magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
         magit-define-global-key-bindings nil
-        magit-diff-refine-hunk t))
-
-;; FIXME: Performance Issue caused by overlays, https://github.com/dandavison/magit-delta/issues/9
-(use-package magit-delta
-  ;; :hook (magit-mode . magit-delta-mode)
-  :defer t)
+        magit-diff-refine-hunk 'all))
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
@@ -30,18 +25,30 @@
   ;; :hook (magit-mode . magit-todos-mode)
   ;; :after magit
   :custom
-  (magit-todos-exclude-globs '("node_modules" "*.json" ".git/"))
+  (magit-todos-exclude-globs '("node_modules" "*.json" ".git/" ".venv/"))
   ;; (magit-todos-update t)
   ;; magit-todos insert is slow for large repos, so toggle todos manually
-  :commands (magit-todos-list)
+  :commands (magit-todos-list consult-magit-todos)
   :config
-  (magit-todos-mode)
+  ;; (magit-todos-mode)
   (setq magit-todos-auto-group-items 'always)
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit-todos))
   (with-eval-after-load 'evil
     (evil-collection-define-key nil 'magit-todos-item-section-map
-      "j" nil)))
+      "j" nil))
+  (defun consult-magit-todos ()
+    (interactive)
+    (consult--read (magit-todos-candidates)
+                   :prompt "TODOs: "
+                   :sort nil
+                   :history nil
+                   :group (lambda (selected transform)
+                            (if transform selected
+                              (nth 0 (split-string selected))))
+                   :lookup (lambda (selected candidates &rest _)
+                             (magit-todos-jump-to-item
+                              :item (consult--lookup-cdr selected candidates))))))
 
 (use-package forge
   :defer t
