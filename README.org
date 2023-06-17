@@ -1,13 +1,13 @@
 #+STARTUP: showall
-Updated: <2023-06-03>
+Updated: <2023-06-17>
 
 * Enviroment
-  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.37, cairo version 1.17.8) of 2023-06-03
-  - emacs-repository-version: =b5f17fe07c6624380ba8d0c7a400a6b89f225209=
-  - system-configuration-options: ~--with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
+  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.38, cairo version 1.17.8) of 2023-06-17
+  - emacs-repository-version: =b51be64a715f9f00d3f413aff4ee8a10d30d2a04=
+  - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
   - OS: Manjaro 23.0.0
   - Shell: zsh 5.9
-  - Kernel: 6.3.5-1-MANJARO
+  - Kernel: 6.3.8-1-MANJARO
   - DE: Plasma 5.27.5
   - WM: KWin
   - GCC version: 13.1.1 with libgccjit
@@ -22,9 +22,10 @@ Updated: <2023-06-03>
 #+begin_src shell
   git clone --depth 1 https://github.com/emacs-mirror/emacs.git emacs-master
   cd emacs-master
-  #./autogen.sh && ./configure --with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
-  ./autogen.sh && ./configure --with-xwidgets --with-xinput2 --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
-  make -j
+  # ./autogen.sh && ./configure --help # list optionsal features
+  # ./autogen.sh && ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
+  ./autogen.sh && ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
+  make -j8
   sudo make install
 #+end_src
 
@@ -68,3 +69,5 @@ generate autoloads for elpa packages
 ** Low Resolution Emacs Icon In KDE Task Switcher
 
 - https://forum.suse.org.cn/t/emacs/4656 ~emacs -nbi~
+
+
