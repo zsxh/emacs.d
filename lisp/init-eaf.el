@@ -21,9 +21,10 @@
 ;; git clone --depth 1 --single-branch https://github.com/emacs-eaf/eaf-image-viewer.git app/eaf-image-viewer
 ;;
 ;; python dependencies, check dependencies.json
-;; core: pip install --user --upgrade epc sexpdata tld lxml PyQt6 PyQt6-Qt6 PyQt6-sip PyQt6-WebEngine PyQt6-WebEngine-Qt6
-;; browser: pip install --user --upgrade pysocks braveblock
-;; pdf: pip install --user --upgrade packaging pymupdf
+;; virtual enviroment: $ mkdir -p ~/.emacs.d/cache && cd ~/.emacs.d/cache && python -m venv eaf-venv && source source eaf-venv/bin/activate
+;; core: $ pip install --upgrade epc sexpdata tld lxml PyQt6 PyQt6-Qt6 PyQt6-sip PyQt6-WebEngine PyQt6-WebEngine-Qt6
+;; browser: $ pip install --upgrade pysocks braveblock
+;; pdf: $ pip install --upgrade packaging pymupdf
 ;;
 ;; js Dependencies, check package.json
 (use-package eaf
@@ -80,7 +81,7 @@
   (advice-remove 'dired-find-file #'eaf--dired-find-file-advisor)
   (advice-remove 'dired-find-alternate-file #'eaf--dired-find-file-advisor)
 
-  (setq eaf-python-command (expand-file-name "~/.pyenv/versions/3.11.1/bin/python")
+  (setq eaf-python-command (expand-file-name "~/.emacs.d/cache/eaf-venv/bin/python")
         eaf-browser-default-search-engine "duckduckgo"
         eaf-config-location (expand-file-name (locate-user-emacs-file "cache/eaf/"))
         eaf-proxy-host personal-proxy-http-host

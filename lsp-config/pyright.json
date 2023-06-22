@@ -1,17 +1,7 @@
 {
   "python": {
     "analysis": {
-      "autoImportCompletions": true,
-      "typeshedPaths": [],
-      "stubPath": "",
-      "useLibraryCodeForTypes": true,
-      "diagnosticMode": "openFilesOnly",
-      "typeCheckingMode": "basic",
-      "logLevel": "info",
-      "autoSearchPaths": true,
-      "extraPaths": []
-    },
-    "pythonPath": "python",
-    "venvPath": ""
+      "typeshedPaths": ["~/.emacs.d/cache/lsp-servers/python/typeshed"]
+    }
   }
 }

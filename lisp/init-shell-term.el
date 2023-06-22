@@ -24,14 +24,14 @@
            (fboundp 'module-load))
   :commands (vterm vterm-other-window)
   :bind ((:map vterm-mode-map
-               ("M-u" . ace-window)
-               ("M-`" . +vterm/send-tmux-prefix-key)
-               ("C-s" . +vterm/search-line)
-               ("<f9>" . +vterm/toggle-here)
-               ("<f10>" . +vterm/toggle-other-window)
-               ("<f11>" . toggle-frame-fullscreen))
+          ("M-u" . ace-window)
+          ("M-`" . +vterm/send-tmux-prefix-key)
+          ("C-s" . +vterm/search-line)
+          ("<f9>" . +vterm/toggle-here)
+          ("<f10>" . +vterm/toggle-other-window)
+          ("<f11>" . toggle-frame-fullscreen))
          (:map vterm-copy-mode-map
-               ("q" . vterm-copy-mode-done)))
+          ("q" . vterm-copy-mode-done)))
   :custom
   (vterm-kill-buffer-on-exit t)
   ;; (vterm-term-environment-variable "xterm-24bit")
@@ -133,9 +133,15 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
               (vterm-send-return)))
            (t nil))))))
 
+
   (defun +vterm/activate-local-python-venv ()
-    (when (file-exists-p (expand-file-name "venv" default-directory))
-      (dolist (char (string-to-list "source venv/bin/activate"))
+    (when-let* ((project-dir (+project/root))
+                (venv-dir (or
+                           (when-let ((venv (locate-dominating-file project-dir "venv")))
+                             (file-name-concat venv "venv"))
+                           (when-let ((venv (locate-dominating-file project-dir ".venv")))
+                             (file-name-concat venv ".venv")))))
+      (dolist (char (string-to-list (format "source %s" (file-name-concat venv-dir "bin" "activate"))))
         (vterm--update vterm--term (char-to-string char) nil nil nil))
       (vterm-send-return)))
 
