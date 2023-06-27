@@ -51,8 +51,8 @@
   ;; https://microsoft.github.io/pyright/#/settings
   (defun +python/workspace-configuration (&optional server)
     (if-let ((venv-python-cmd (+python/locate-venv-python-cmd)))
-        (list :python
-          (list :pythonPath venv-python-cmd))))
+        `(:python
+          (:pythonPath ,venv-python-cmd))))
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-mode))
     (+python/workspace-configuration))
