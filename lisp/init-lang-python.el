@@ -48,15 +48,11 @@
 
   (require 'eglot)
 
+  ;; https://microsoft.github.io/pyright/#/settings
   (defun +python/workspace-configuration (&optional server)
-    (when-let* ((config-file (file-name-concat user-emacs-directory "lsp-config" "pyright.json"))
-                (settings (with-temp-buffer
-                            (insert-file-contents config-file)
-                            (json-parse-buffer :object-type 'plist :false-object :json-false))))
-      (if-let ((venv-python-cmd (+python/locate-venv-python-cmd))
-               (python-section (plist-get settings :python)))
-          (plist-put python-section :pythonPath venv-python-cmd))
-      settings))
+    (if-let ((venv-python-cmd (+python/locate-venv-python-cmd)))
+        (list :python
+          (list :pythonPath venv-python-cmd))))
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-mode))
     (+python/workspace-configuration))

@@ -1,7 +1,0 @@
-{
-  "python": {
-    "analysis": {
-      "typeshedPaths": ["~/.emacs.d/cache/lsp-servers/python/typeshed"]
-    }
-  }
-}
