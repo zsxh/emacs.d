@@ -135,6 +135,7 @@
 ;; This library is designed to be used by other library writers,
 ;; to write apps that use websockets, and is not useful by itself.
 ;; https://github.com/ahyatt/emacs-websocket
+;; https://blog.abrochard.com/websockets.html
 (use-package websocket
   :defer t)
 
