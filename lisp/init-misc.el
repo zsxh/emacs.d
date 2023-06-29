@@ -188,8 +188,8 @@
   ;; (require 'telega-bridge-bot)
   ;; (require 'telega-transient)
 
-  (setq telega-proxies (list '(:server "127.0.0.1" :port 1081 :enable nil :type (:@type "proxyTypeHttp"))
-                             '(:server "127.0.0.1" :port 1080 :enable t :type (:@type "proxyTypeSocks5")))
+  (setq telega-proxies (list `(:server ,personal-proxy-http-host :port ,personal-proxy-http-port :enable nil :type (:@type "proxyTypeHttp"))
+                             `(:server ,personal-proxy-http-host :port ,personal-proxy-socks5-port :enable t :type (:@type "proxyTypeSocks5")))
         telega-old-date-format "%Y/%M/%D"
         telega-translate-to-language-by-default "zh")
 
@@ -267,7 +267,7 @@
 
   PROMPTS is the data to send, TOKEN is a unique identifier."
       (let* ((args
-              (list "--location" "--silent" "--compressed" "--disable" "-xhttp://127.0.0.1:1081"))
+              (list "--location" "--silent" "--compressed" "--disable" (format "-xhttp://%s:%s" personal-proxy-http-host personal-proxy-http-port)))
              (url "https://api.openai.com/v1/chat/completions")
              (data (encode-coding-string
                     (json-encode (gptel--request-data prompts))
