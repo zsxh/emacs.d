@@ -37,8 +37,8 @@
           (unless elfeed-search-remain-on-entry (forward-line))
           ;; Open elfeed item in current window
           (eaf-open-browser (elfeed-entry-link entry)))))
-
-    (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") '+eaf/elfeed-current-window)))
+    (with-eval-after-load 'evil
+      (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") '+eaf/elfeed-current-window))))
 
 ;; Youdao
 (use-package youdao-dictionary

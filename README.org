@@ -32,6 +32,7 @@ Updated: <2023-06-27>
 * Installation
 #+begin_src shell
   git clone --recursive https://github.com/zsxh/emacs.d.git ~/.emacs.d
+  mkdir ~/.emacs.d/cache
   git submodule update --init --recursive --depth 1
   cd submodules/emacs-application-framework
   mkdir app
