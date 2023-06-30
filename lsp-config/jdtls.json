@@ -31,9 +31,6 @@
           "profile": "GoogleStyle"
         }
       },
-      "contentProvider": {
-        "preferred": "fernflower"
-      },
       "completion": {
         "guessMethodArguments": true,
         "lazyResolveTextEdit": {
@@ -61,10 +58,5 @@
     "classFileContentsSupport": true,
     "overrideMethodsPromptSupport": true
   },
-  "bundles": [
-    "/home/zsxh/.emacs.d/cache/lsp-servers/java/bundles/dg.jdt.ls.decompiler.cfr-0.0.3.jar",
-    "/home/zsxh/.emacs.d/cache/lsp-servers/java/bundles/dg.jdt.ls.decompiler.common-0.0.3.jar",
-    "/home/zsxh/.emacs.d/cache/lsp-servers/java/bundles/dg.jdt.ls.decompiler.fernflower-0.0.3.jar",
-    "/home/zsxh/.emacs.d/cache/lsp-servers/java/bundles/dg.jdt.ls.decompiler.procyon-0.0.3.jar"
-  ]
+  "bundles": []
 }
