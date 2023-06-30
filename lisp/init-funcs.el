@@ -310,9 +310,7 @@ Version 2017-01-27"
 
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
-  (cond ((eq major-mode 'eaf-mode)
-         (+funcs/switch-major-mode-buffer major-mode))
-        ((member major-mode '(telega-root-mode telega-chat-mode))
+  (cond ((member major-mode '(telega-root-mode telega-chat-mode))
          (+funcs/switch-major-mode-buffer 'telega-root-mode 'telega-chat-mode))
         ;; TODO: switch between remote buffers
         ((and

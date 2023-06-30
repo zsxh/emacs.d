@@ -23,22 +23,7 @@
         elfeed-log-level 'debug)
 
   (with-eval-after-load 'evil-collection
-    (evil-collection-init 'elfeed))
-
-  (when (and (eq system-type 'gnu/linux)
-             (require 'eaf nil t))
-    (defun +eaf/elfeed-current-window ()
-      (interactive)
-      (let ((entry (elfeed-search-selected :ignore-region)))
-        (when (elfeed-entry-p entry)
-          ;; Move to next feed item.
-          (elfeed-untag entry 'unread)
-          (elfeed-search-update-entry entry)
-          (unless elfeed-search-remain-on-entry (forward-line))
-          ;; Open elfeed item in current window
-          (eaf-open-browser (elfeed-entry-link entry)))))
-    (with-eval-after-load 'evil
-      (evil-define-key 'normal elfeed-search-mode-map (kbd "<return>") '+eaf/elfeed-current-window))))
+    (evil-collection-init 'elfeed)))
 
 ;; Youdao
 (use-package youdao-dictionary
