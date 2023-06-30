@@ -18,10 +18,6 @@
 ;; On ArchLinux or Manjaro install libvterm first
 ;; sudo pacman -S libvterm
 (use-package vterm
-  :if (and (executable-find "vterm-ctrl")
-           (executable-find "make")
-           (executable-find "cmake")
-           (fboundp 'module-load))
   :commands (vterm vterm-other-window)
   :bind ((:map vterm-mode-map
           ("M-u" . ace-window)
