@@ -246,29 +246,7 @@
   :config
   (when (bound-and-true-p personal-openai-key)
     (setq gptel-api-key personal-openai-key))
-  (with-eval-after-load 'gptel-curl
-    (defun gptel-curl--get-args (prompts token)
-      "Produce list of arguments for calling Curl.
-
-  PROMPTS is the data to send, TOKEN is a unique identifier."
-      (let* ((args
-              (list "--location" "--silent" "--compressed" "--disable" (format "-xhttp://%s:%s" personal-proxy-http-host personal-proxy-http-port)))
-             (url "https://api.openai.com/v1/chat/completions")
-             (data (encode-coding-string
-                    (json-encode (gptel--request-data prompts))
-                    'utf-8))
-             (headers
-              `(("Content-Type" . "application/json")
-                ("Authorization" . ,(concat "Bearer " (gptel--api-key))))))
-        (push (format "-X%s" "POST") args)
-        (push (format "-w(%s . %%{size_header})" token) args)
-        ;; (push (format "--keepalive-time %s" 240) args)
-        (push (format "-m%s" 60) args)
-        (push "-D-" args)
-        (pcase-dolist (`(,key . ,val) headers)
-          (push (format "-H%s: %s" key val) args))
-        (push (format "-d%s" data) args)
-        (nreverse (cons url args))))))
+  (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)))
 
 (use-package pdf-tools
   :defer t
