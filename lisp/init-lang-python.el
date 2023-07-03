@@ -20,11 +20,8 @@
 (use-package pyenv-mode
   :commands pyenv-mode)
 
-;; NOTE: Install: pyright, ruff-lsp
-;; $ pipx install pyright ruff-lsp
-;; NOTE: pyright custom type stub, settings python.analysis.stubPath, https://github.com/microsoft/pyright/blob/main/docs/settings.md
-;; $ mkdir -p ~/.emacs.d/cache/lsp-servers/python && cd ~/.emacs.d/cache/lsp-servers/python
-;; $ git clone --depth 1 https://github.com/python/typeshed.git
+;; NOTE: Install: pyright
+;; $ npm install -g pyright
 (use-package python
   :ensure nil
   :hook (python-base-mode . eglot-ensure)
