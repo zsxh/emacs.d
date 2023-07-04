@@ -65,6 +65,9 @@
 ;; emacs 28 new feature, CJK word breaking lines
 (setq word-wrap-by-category t)
 
+;; disable the bell
+(setq ring-bell-function 'ignore)
+
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
 ;; M-^ delete-indentation
