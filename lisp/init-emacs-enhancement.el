@@ -81,8 +81,7 @@
 (use-package elisp-demos
   :defer t
   :init
-  ;; Tips: bad performance with `company-box' doc request, so only enable elisp-demos for `helpful'
-  ;; (advice-add 'describe-function-1 :after #'elisp-demos-advice-describe-function-1)
+  (advice-add 'describe-function-1 :after #'elisp-demos-advice-describe-function-1)
   (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
 
 ;; A better *Help* buffer
