@@ -61,6 +61,29 @@
     nil)
   (setq-default eglot-workspace-configuration #'+eglot/workspace-configuration)
 
+  ;; FIXME: path(:scopeUri) can be project root directory(pyright for example),
+  ;; setq default-directory (file-name-directory path) can be wrong here
+  (define-advice eglot--workspace-configuration-plist (:override (server &optional path) advice)
+    "Returns SERVER's workspace configuration as a plist.
+If PATH consider that file's `file-name-directory' to get the
+local value of the `eglot-workspace-configuration' variable, else
+use the root of SERVER's `eglot--project'."
+    (let ((val (with-temp-buffer
+                 (setq default-directory (project-root (eglot--project server)))
+                 ;; Set the major mode to be the first of the managed
+                 ;; modes.  This is the one the user started eglot in.
+                 (setq major-mode (car (eglot--major-modes server)))
+                 (hack-dir-local-variables-non-file-buffer)
+                 (if (functionp eglot-workspace-configuration)
+                     (funcall eglot-workspace-configuration server)
+                   eglot-workspace-configuration))))
+      (or (and (consp (car val))
+               (cl-loop for (section . v) in val
+                        collect (if (keywordp section) section
+                                  (intern (format ":%s" section)))
+                        collect v))
+          val)))
+
   ;; Hover
   (defun +eglot/show-hover-at-point ()
     (interactive)
