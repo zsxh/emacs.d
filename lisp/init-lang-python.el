@@ -11,6 +11,10 @@
 ;;; Code:
 
 ;; NOTE: `PDM' https://chriswarrick.com/blog/2023/01/15/how-to-improve-python-packaging/
+;; > pipx install "pdm[all]"
+;; NOTE: python linter, formatter
+;; > pipx install ruff
+;; > pipx install black
 
 ;; Python virtual environment support for Emacs
 (use-package pyvenv
@@ -20,17 +24,50 @@
 (use-package pyenv-mode
   :commands pyenv-mode)
 
-;; NOTE: Install: pyright
+;; NOTE: install python language server
 ;; $ npm install -g pyright
 (use-package python
   :ensure nil
   :hook (python-base-mode . eglot-ensure)
-  :custom (python-indent-offset 2)
-  :config
-  (+eglot/set-leader-keys python-mode-map)
-  (+eglot/set-leader-keys python-ts-mode-map))
+  :custom (python-indent-offset 2))
+
+;; python ruff linter
+(use-package flymake-ruff
+  :defer t
+  :hook (eglot-managed-mode . (lambda ()
+                                (when (derived-mode-p 'python-base-mode)
+                                  (flymake-ruff-load)))))
 
 (with-eval-after-load 'python
+  ;; formatter
+  (require 'reformatter)
+  (reformatter-define black-format
+    :program "black"
+    :args '("-q" "-"))
+  (reformatter-define ruff-format
+    :program "ruff"
+    :args '("--fix-only" "-"))
+  (defun +python/format-buffer ()
+    (interactive)
+    (ruff-format-buffer)
+    (black-format-buffer))
+
+  ;; keybindings
+  (+eglot/set-leader-keys python-mode-map)
+  (+eglot/set-leader-keys python-ts-mode-map)
+  (+funcs/major-mode-leader-keys
+   python-mode-map
+   "f" '(+python/format-buffer :which-key "format")
+   "v" '(nil :which-key "venv")
+   "va" '(pyvenv-activate :which-key "activate")
+   "vd" '(pyvenv-deactivate :which-key "deactivate"))
+  (+funcs/major-mode-leader-keys
+   python-ts-mode-map
+   "f" '(+python/format-buffer :which-key "format")
+   "v" '(nil :which-key "venv")
+   "va" '(pyvenv-activate :which-key "activate")
+   "vd" '(pyvenv-deactivate :which-key "deactivate"))
+
   ;; TODO: Check https://github.com/wyuenho/emacs-pet
   (defun +python/locate-venv-python-cmd ()
     "Look for virtual environments local to the workspace."
