@@ -252,6 +252,11 @@
             (remove 'delete-trailing-whitespace-skip-current-line write-file-functions))))
   (setq editorconfig-trim-whitespaces-mode '+editor/auto-save-trim-whitespaces-mode))
 
+;;;;;;;;;;;;;; Formatter ;;;;;;;;;;;;;;
+;; https://github.com/purcell/emacs-reformatter
+(use-package reformatter
+  :defer t)
+
 
 (provide 'init-editor)
 

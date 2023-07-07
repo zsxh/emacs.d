@@ -170,6 +170,9 @@
    "pk" '(project-kill-buffers :which-key "project-kill-buffers")
    "pp" '(my/project-switch-project :which-key "switch-project")
    "pt" '(+dirvish/project-root-side :which-key "+dirvish/project-root-side")
+   "pv" '(nil :which-key "python-venv")
+   "pva" '(pyvenv-activate :which-key "activate")
+   "pvd" '(pyvenv-deactivate :which-key "deactivate")
    ;; Text
    "t" '(nil :which-key "text")
    "tB" '(comment-box :which-key "comment-box")
