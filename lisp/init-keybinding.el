@@ -66,7 +66,6 @@
    "a" '(nil :which-key "application")
    "ac" '(nil :which-key "client")
    "acr" '(+web/restclient-new-buffer :which-key "restclient")
-   "aC" '(cfw:open-org-calendar :which-key "calendar")
    "ad" '(docker :which-key "docker")
    "af" '(elfeed :which-key "elfeed")
    "am" '(man :which-key "man-page")
