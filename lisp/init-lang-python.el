@@ -69,6 +69,7 @@
    "vd" '(pyvenv-deactivate :which-key "deactivate"))
 
   ;; TODO: Check https://github.com/wyuenho/emacs-pet
+  ;; to support .pdm-python file
   (defun +python/locate-venv-python-cmd ()
     "Look for virtual environments local to the workspace."
     (when-let* ((project-dir (+project/root))
