@@ -82,7 +82,7 @@
   (setq evil-collection-want-unimpaired-p nil)
   ;; (evil-collection-init)
   (with-eval-after-load 'ibuffer
-    (evil-collection-init 'ibuffer)
+    (evil-collection-ibuffer-setup)
     (evil-define-key 'normal ibuffer-mode-map
       "h" 'evil-backward-char
       "j" 'evil-next-line
@@ -91,13 +91,12 @@
       "gg" 'evil-goto-first-line
       "G" 'evil-goto-line))
 
-  (with-eval-after-load 'ediff (evil-collection-init 'ediff))
-  (with-eval-after-load 'edebug (evil-collection-init 'edebug))
-  (with-eval-after-load 'popup (evil-collection-init 'popup))
-  (with-eval-after-load 'calendar (evil-collection-init 'calendar))
+  (with-eval-after-load 'ediff (evil-collection-ediff-setup))
+  (with-eval-after-load 'edebug (evil-collection-edebug-setup))
+  (with-eval-after-load 'popup (evil-collection-popup-setup))
+  (with-eval-after-load 'calendar (evil-collection-calendar-setup))
   (with-eval-after-load 'info
-    ;; (evil-set-initial-state 'Info-mode 'normal)
-    (evil-collection-init 'info)
+    (evil-collection-info-setup)
     (evil-define-key 'normal Info-mode-map
       "b" 'evil-backward-word-begin
       "e" 'evil-forward-word-end
@@ -106,9 +105,8 @@
       "l" 'evil-forward-char
       "q" 'Info-history-back
       "w" 'evil-forward-word-begin))
-
   (with-eval-after-load 'arc-mode
-    (evil-collection-init 'arc-mode)
+    (evil-collection-arc-mode-setup)
     (evil-define-key 'normal archive-mode-map
       (kbd "C-d") 'evil-scroll-down)))
 

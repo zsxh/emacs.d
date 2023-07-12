@@ -245,11 +245,18 @@
 ;; TODO: https://github.com/ginqi7/plantuml-emacs
 
 ;; https://github.com/vedang/pdf-tools
-;; (use-package pdf-tools
-;;   :defer t
-;;   :mode ("\\.pdf\\'" . pdf-view-mode)
-;;   :config
-;;   (pdf-tools-install))
+(use-package pdf-tools
+  :defer t
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :config
+  (pdf-tools-install)
+  (with-eval-after-load 'evil-collection
+    (evil-collection-pdf-setup)
+    (evil-define-key 'normal pdf-view-mode-map
+      (kbd "C-s") 'isearch-forward
+      (kbd "C-r") 'isearch-backward
+      "d" 'pdf-view-scroll-up-or-next-page
+      "u" 'pdf-view-scroll-down-or-previous-page)))
 
 ;; TODO: another chatgpt wrapper
 ;; https://github.com/xenodium/chatgpt-shell
@@ -262,11 +269,6 @@
   (when (bound-and-true-p personal-openai-key)
     (setq gptel-api-key personal-openai-key))
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)))
-
-(use-package pdf-tools
-  :defer t
-  :config
-  (pdf-tools-install))
 
 
 (provide 'init-misc)

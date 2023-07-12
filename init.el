@@ -101,7 +101,7 @@
 ;; (require 'init-latex)
 
 ;; Misc
-(require 'init-eaf)
+;; (require 'init-eaf)
 (require 'init-misc)
 (require 'init-window)
 
