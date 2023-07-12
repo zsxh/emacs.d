@@ -23,7 +23,7 @@
   ;; https://github.com/joaotavora/eglot/discussions/964
   ;; https://github.com/joaotavora/eglot/commit/2b87b06d9ef15e7c39d87fd5a4375b6deaa7e322
   ;; https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_pullDiagnostics
-  (setq flymake-no-changes-timeout 2
+  (setq flymake-no-changes-timeout 0.5
         flymake-start-on-save-buffer nil
         flymake-show-diagnostics-at-end-of-line nil)
   (advice-add 'flymake-eldoc-function :override #'ignore))
