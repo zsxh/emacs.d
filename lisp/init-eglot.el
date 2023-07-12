@@ -23,7 +23,8 @@
         ;; NOTE: drop jsonrpc log to improve performance
         eglot-events-buffer-size 0
         eglot-report-progress nil
-        eglot-stay-out-of '(eldoc))
+        eglot-stay-out-of '(eldoc)
+        eglot-extend-to-xref t)
   (add-hook 'eglot-managed-mode-hook #'breadcrumb-local-mode))
 
 (with-eval-after-load 'eglot

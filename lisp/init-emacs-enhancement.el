@@ -251,8 +251,8 @@
   :defer t
   :config
   ;; (global-eldoc-mode -1)
-  (setq eldoc-echo-area-use-multiline-p 1
-        eldoc-idle-delay 0.5)
+  ;; `eldoc-echo-area-use-multiline-p'
+  (setq eldoc-idle-delay 0.5)
   (eldoc-add-command-completions "delete-char" "lispy-delete-backward" "puni-backward-delete-char")
   (set-face-foreground 'eldoc-highlight-function-argument
                        (face-attribute 'font-lock-variable-name-face :foreground)))
