@@ -82,9 +82,9 @@
     (+eglot/jdtls-uri-to-path uri))
 
   ;; ----------------------- Support jdt.ls extra commands -----------------------
-  (defun java-apply-workspaceEdit (arguments)
-    "Command `java.apply.workspaceEdit' handler."
-    (mapc #'eglot--apply-workspace-edit arguments))
+  ;; (defun java-apply-workspaceEdit (arguments)
+  ;;   "Command `java.apply.workspaceEdit' handler."
+  ;;   (mapc #'eglot--apply-workspace-edit arguments))
 
   (defun java-action-overrideMethodsPrompt (arguments)
     "Command `java.action.overrideMethodsPrompt' handler."
@@ -111,7 +111,7 @@
   (defun +java/execute-command (server _command)
     (eglot--dbind ((Command) command arguments) _command
       (pcase command
-        ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
+        ;; ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
         ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt arguments))
         (_ (eglot--request server :workspace/executeCommand _command)))))
 
@@ -120,9 +120,12 @@
 ACTION is an LSP object of either `CodeAction' or `Command' type."
     (eglot--dcase action
       (((Command)) (+java/execute-command server action))
-      (((CodeAction) edit command)
-       (when edit (eglot--apply-workspace-edit edit))
-       (when command (+java/execute-command server command)))))
+      (((CodeAction) edit command data)
+       (if (and (null edit) (null command) data
+                (eglot--server-capable :codeActionProvider :resolveProvider))
+           (eglot-execute server (eglot--request server :codeAction/resolve action))
+         (when edit (eglot--apply-workspace-edit edit))
+         (when command (+java/execute-command server command))))))
 
   (cl-defmethod eglot-execute (server action &context (major-mode java-mode))
     (+java/eglot-execute server action))
