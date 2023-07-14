@@ -25,7 +25,7 @@
   :commands pyenv-mode)
 
 ;; NOTE: install python language server
-;; $ pnpm install -g pyright
+;; $ pnpm add -g pyright
 (use-package python
   :ensure nil
   :hook (python-base-mode . eglot-ensure)

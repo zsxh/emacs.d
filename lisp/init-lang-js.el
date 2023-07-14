@@ -18,7 +18,7 @@
 
 ;; NOTE: Install TypeScript & JavaScript Language Server
 ;; https://github.com/typescript-language-server/typescript-language-server
-;; pnpm install -g typescript-language-server typescript
+;; pnpm add -g typescript-language-server typescript
 
 (use-package js
   :ensure nil
