@@ -10,9 +10,8 @@
 
 ;;; Code:
 
-;; NOTE: JavaScript Tool Manager: Volta, fnm
-;; Volta: https://volta.sh/
-;; fnm: https://github.com/Schniz/fnm
+;; NOTE: JavaScript Package Manager: pnpm
+;; https://pnpm.io
 
 ;; NOTE: Build tool: Vite
 ;; https://github.com/vitejs/vite
