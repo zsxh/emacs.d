@@ -17,7 +17,8 @@
   (setq magit-bury-buffer-function 'magit-mode-quit-window
         magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1
         magit-define-global-key-bindings nil
-        magit-diff-refine-hunk 'all)
+        magit-diff-refine-hunk 'all
+        magit-save-repository-buffers 'dontask)
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit)
     (evil-define-key '(normal visual) magit-mode-map

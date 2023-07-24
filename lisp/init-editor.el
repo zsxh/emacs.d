@@ -37,15 +37,6 @@
       ",c" 'edit-indirect-commit
       ",k" 'edit-indirect-abort)))
 
-;; A comprehensive visual interface to diff & patch
-(use-package ediff
-  :ensure nil
-  :commands ediff
-  :config
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-merge-split-window-function 'split-window-horizontally))
-
 ;; Framework for mode-specific buffer indexes
 (use-package imenu-list
   :commands imenu-list-smart-toggle

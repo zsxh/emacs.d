@@ -326,6 +326,18 @@
 (define-key minibuffer-local-filename-completion-map
             [C-backspace] #'up-directory)
 
+(with-eval-after-load 'man
+  (setq Man-notify-method 'aggressive))
+
+;; A comprehensive visual interface to diff & patch
+(use-package ediff
+  :ensure nil
+  :commands ediff
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-merge-split-window-function 'split-window-horizontally))
+
 
 (provide 'init-emacs-enhancement)
 
