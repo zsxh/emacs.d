@@ -13,12 +13,9 @@
 (eval-when-compile
   (require 'init-custom))
 
-;; HIGHLY RECOMMENDED
 ;; https://github.com/akermu/emacs-libvterm
-;; Linux install libvterm
-;; > sudo pacman -S libvterm
-;; MacOS install libvterm
-;; > brew install libvterm
+;; Linux: sudo pacman -S libvterm
+;; MacOS: brew install libvterm
 (use-package vterm
   :commands (vterm vterm-other-window)
   :bind ((:map vterm-mode-map
