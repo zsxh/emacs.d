@@ -42,7 +42,7 @@
 ;; Quickstart: precompute activation actions for faster start up
 ;; However, if you do this, then you have to manually run the command ‘package-quickstart-refresh’ when the
 ;; activations need to be changed, such as when you change the value of  ‘package-load-list’
-;; (setq package-quickstart t)
+(setq package-quickstart t)
 
 ;; Emacs startup *scratch* buffer
 (setq inhibit-startup-screen t
