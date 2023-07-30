@@ -75,7 +75,7 @@ Check https://github.com/hlissner/emacs-doom-themes"
           (const :tag "Max" max)
           (const :tag "Fullscreen" fullscreen)))
 
-(defcustom personal-shell-executable "/usr/bin/zsh"
+(defcustom personal-shell-executable "/bin/zsh"
   "Shell used in `term' and `ansi-term'."
   :type 'string)
 

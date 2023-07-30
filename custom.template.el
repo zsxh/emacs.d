@@ -19,7 +19,7 @@
 (setq personal-frame-startup-size 'max)
 
 ;; "Shell used in `term' and `ansi-term'."
-(setq personal-shell-executable "/usr/bin/zsh")
+(setq personal-shell-executable "/bin/zsh")
 
 
 ;;; custom.el ends here
