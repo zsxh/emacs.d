@@ -63,7 +63,8 @@
   :hook (lisp-data-mode . rainbow-delimiters-mode))
 
 (use-package highlight-indent-guides
-  :hook ((python-mode yaml-mode docker-compose-mode) . highlight-indent-guides-mode)
+  ;; :hook ((python-mode python-ts-mode yaml-mode docker-compose-mode) . highlight-indent-guides-mode)
+  :defer t
   :config
   (defun my-highlighter (level responsive display)
     (if (> 1 level)
@@ -76,6 +77,12 @@
         highlight-indent-guides-auto-top-character-face-perc 60
         highlight-indent-guides-responsive 'top
         highlight-indent-guides-highlighter-function 'my-highlighter))
+
+;; Fast, configurable indentation guide-bars for Emacs
+;; https://github.com/jdtsmith/indent-bars
+(use-package indent-bars
+  :vc (:url "https://github.com/jdtsmith/indent-bars" :rev :newest)
+  :hook ((python-mode python-ts-mode yaml-mode docker-compose-mode) . indent-bars-mode))
 
 (with-eval-after-load 'compile
   (require 'ansi-color)
