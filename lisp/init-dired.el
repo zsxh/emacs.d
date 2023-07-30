@@ -149,17 +149,19 @@
   :defer t
   :config
   (dirvish-override-dired-mode-maybe)
-
-  (when (and IS-MAC (executable-find "gls"))
-    ;; Macos install `coreutils'
-    (setq insert-directory-program "gls"))
+  
+  (let ((mac-find-gls-p (and IS-MAC (executable-find "gls"))))
+    (when mac-find-gls-p
+      ;; Macos `coreutils' installed
+      (setq insert-directory-program "gls"))
+    (when (or IS-LINUX mac-find-gls-p)
+      (setq dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group")))
 
   (setq dired-dwim-target t
         dired-recursive-copies 'always
         dired-recursive-deletes 'always
         ;; dired-kill-when-opening-new-dired-buffer t
         ;; dired "human-readable" format
-        dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group"
         dired-mouse-drag-files t
         dired-auto-revert-buffer #'dired-directory-changed-p)
 
