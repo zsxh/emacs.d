@@ -150,6 +150,10 @@
   :config
   (dirvish-override-dired-mode-maybe)
 
+  (when (and IS-MAC (executable-find "gls"))
+    ;; Macos install `coreutils'
+    (setq insert-directory-program "gls"))
+
   (setq dired-dwim-target t
         dired-recursive-copies 'always
         dired-recursive-deletes 'always
