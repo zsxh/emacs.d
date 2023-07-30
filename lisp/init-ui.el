@@ -79,7 +79,7 @@
       ;; https://github.com/hick/emacs-chinese#emacs-中文基础
       (set-frame-font "SF Mono-13:weight=semi-bold" nil t))
     (when (and IS-MAC (member "Menlo" (font-family-list)))
-      (set-frame-font "Menlo-16" nil t))
+      (set-frame-font "Menlo-15" nil t))
     (when (member "Symbola" (font-family-list))
       ;; Download specify font for all unicode characters, emoji for example
       ;; http://xahlee.info/comp/unicode_font_download.html

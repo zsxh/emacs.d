@@ -15,8 +15,10 @@
 
 ;; HIGHLY RECOMMENDED
 ;; https://github.com/akermu/emacs-libvterm
-;; On ArchLinux or Manjaro install libvterm first
-;; sudo pacman -S libvterm
+;; Linux install libvterm
+;; > sudo pacman -S libvterm
+;; MacOS install libvterm
+;; > brew install libvterm
 (use-package vterm
   :commands (vterm vterm-other-window)
   :bind ((:map vterm-mode-map
