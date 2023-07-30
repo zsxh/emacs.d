@@ -50,13 +50,9 @@
                  sgml-skip-tag-forward
                  nil))
 
-  (defun +web/formatter ()
-    (interactive)
-    (format-all-buffer))
-
   (+funcs/major-mode-leader-keys
    web-mode-map
-   "f" '(+web/formatter :which-key "format-html")))
+   "f" '(web-mode-buffer-indent :which-key "indent-buffer")))
 
 (use-package css-mode
   :ensure nil
