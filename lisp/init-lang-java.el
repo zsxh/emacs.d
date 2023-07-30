@@ -40,7 +40,11 @@
       contact))
 
   (defun jdtls-initialization-options ()
-    (let ((setting-json-file (file-name-concat user-emacs-directory "lsp-config" "jdtls.json")))
+    (let* ((ostype (cond
+                    (IS-LINUX "Linux")
+                    (IS-MAC "Darwin")
+                    (t "")))
+           (setting-json-file (file-name-concat user-emacs-directory "lsp-config" (format "jdtls-%s.json" ostype))))
       (with-temp-buffer
         (insert-file-contents setting-json-file)
         (json-parse-buffer :object-type 'plist :false-object :json-false))))
@@ -136,7 +140,7 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode
 
-  ;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
+  ;; Download `junit-platform-console-standalone.jar'
   (defvar +java/junit-platform-console-standalone-jar
     (expand-file-name (locate-user-emacs-file "cache/lsp-servers/java/junit-console/junit-platform-console-standalone.jar")))
 
