@@ -71,25 +71,19 @@
   :config (setq display-line-numbers-type 'relative))
 
 ;; Fonts
-(when IS-LINUX
-  ;; Source Han Serief: https://github.com/adobe-fonts/source-han-serif
-  ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-  ;;   (set-fontset-font (frame-parameter nil 'font)
-  ;;                     charset (font-spec :family "Source Han Serif"))
-  ;;   (setq face-font-rescale-alist '(("Source Han Serif" . 1.24))))
-
-  (ignore-errors
-    ;; Download ans install SF Mono fonts:
-    ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
-    ;; https://github.com/hick/emacs-chinese#emacs-中文基础
-    (if (member "SF Mono" (font-family-list))
-        (set-frame-font "SF Mono-13:weight=semi-bold" nil t)
-      (message "[WARN] font \"SF Mono\" not found"))
-    ;; Download specify font for all unicode characters, emoji for example
-    ;; http://xahlee.info/comp/unicode_font_download.html
-    (if (member "Symbola" (font-family-list))
-        (set-fontset-font t 'unicode "Symbola" nil 'prepend)
-      (message "[WARN] font \"Symbola\" not found"))))
+(ignore-errors
+  (let ((font-list (font-family-list)))
+    (when (and IS-LINUX (member "SF Mono" (font-family-list)))
+      ;; Download ans install SF Mono fonts:
+      ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
+      ;; https://github.com/hick/emacs-chinese#emacs-中文基础
+      (set-frame-font "SF Mono-13:weight=semi-bold" nil t))
+    (when (and IS-MAC (member "Menlo" (font-family-list)))
+      (set-frame-font "Menlo-16" nil t))
+    (when (member "Symbola" (font-family-list))
+      ;; Download specify font for all unicode characters, emoji for example
+      ;; http://xahlee.info/comp/unicode_font_download.html
+      (set-fontset-font t 'unicode "Symbola" nil 'prepend))))
 
 ;; Text Scale
 (use-package default-text-scale
