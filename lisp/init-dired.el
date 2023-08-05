@@ -31,7 +31,7 @@
   (dirvish-attributes '(subtree-state nerd-icons file-size))
   ;; (dirvish-attributes '(subtree-state nerd-icons file-size collapse))
   (dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index)))
-  (dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) 23))
+  (dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4)))
   (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
          ("C-<return>" . 'dired-open-xdg)
