@@ -71,6 +71,12 @@
           (ignored . nil)
           (unregistered . dirvish-vc-unregistered-face)))
   (setq dirvish-subtree-state-style 'nerd)
+  (setq dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
+                                ("Documents" (extensions "pdf" "tex" "bib" "epub"))
+                                ("Video" (extensions "mp4" "mkv" "webm"))
+                                ("Pictures" (extensions "jpg" "png" "svg" "gif"))
+                                ("Audio" (extensions "mp3" "flac" "wav" "ape" "aac"))
+                                ("Archives" (extensions "gz" "rar" "zip"))))
 
   ;; Lazy load persp-mode.el
   (plist-put dirvish-scopes :persp (lambda () (when (bound-and-true-p persp-mode) (get-current-persp))))
@@ -149,7 +155,7 @@
   :defer t
   :config
   (dirvish-override-dired-mode-maybe)
-  
+
   (let ((mac-find-gls-p (and IS-MAC (executable-find "gls"))))
     (when mac-find-gls-p
       ;; Macos `coreutils' installed

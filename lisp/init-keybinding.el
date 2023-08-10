@@ -143,8 +143,8 @@
    ;; Jump
    "j" '(nil :which-key "jump/goto")
    "jc" '(avy-goto-char :which-key "avy-goto-char")
-   "jd" '(dired-jump :which-key "dired-jump")
-   "jD" '(dired-jump-other-window :which-key "dired-jump-other-window")
+   "jd" '(dirvish :which-key "dirvish")
+   "jD" '(dired-jump :which-key "dired-jump")
    "je" '(avy-goto-word-0 :which-key "avy-goto-word-0")
    "jf" '(find-file-at-point :which-key "find-file-at-point")
    "jj" '(avy-goto-char-in-line :which-key "avy-goto-char-in-line")
