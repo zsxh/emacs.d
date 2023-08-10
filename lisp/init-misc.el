@@ -255,6 +255,18 @@
     (setq gptel-api-key personal-openai-key))
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)))
 
+;; use "C-\" to `toggle-input-method'
+(use-package rime
+  :if IS-LINUX
+  :defer t
+  :init
+  (advice-run-once 'toggle-input-method :before (lambda (&rest _) (require 'rime)))
+  :custom
+  (default-input-method "rime")
+  :config
+  (when (package-installed-p 'posframe))
+  (setq rime-show-candidate 'posframe))
+
 
 (provide 'init-misc)
 
