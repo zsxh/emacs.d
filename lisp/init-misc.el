@@ -230,6 +230,9 @@
 ;; TODO: https://github.com/ginqi7/plantuml-emacs
 
 ;; https://github.com/vedang/pdf-tools
+;; install poppler
+;; macos: brew install poppler, set PKG_CONFIG_PATH
+;; arch: pacman -S poppler
 (use-package pdf-tools
   :defer t
   :mode ("\\.pdf\\'" . pdf-view-mode)
