@@ -1,9 +1,9 @@
 #+STARTUP: showall
-Updated: <2023-07-17>
+Updated: <2023-08-11>
 
 * Enviroment
-  - GNU Emacs 30.0.50 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.33, cairo version 1.16.0) of 2023-07-17
-  - emacs-repository-version: =a65ece8b2011bd69922262a6fbcf68c2e2c2a717=
+  - GNU Emacs 30.0.50
+  - emacs-repository-version: =4fa75771d17800651cab6f1e97bc7fbb1f3e874b=
   - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
 
 * TODOs
