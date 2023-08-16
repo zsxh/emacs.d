@@ -14,6 +14,7 @@
 (defconst IS-LINUX   (eq system-type 'gnu/linux))
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
+(defconst IS-WSL     (if (and IS-LINUX (getenv "WSL_DISTRO_NAME")) t nil))
 
 ;; Performance on Windows is considerably worse than elsewhere, especially if
 ;; WSL is involved. We'll need everything we can get.

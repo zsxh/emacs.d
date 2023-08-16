@@ -1,0 +1,62 @@
+{
+  "settings": {
+    "java": {
+      "autobuild": {
+        "enabled": true
+      },
+      "configuration": {
+        "runtimes": [
+          {
+            "name": "JavaSE-1.8",
+            "path": "/usr/local/java-8"
+          },
+          {
+            "name": "JavaSE-11",
+            "path": "/usr/local/java-11"
+          },
+          {
+            "name": "JavaSE-17",
+            "path": "/usr/local/java-17"
+          },
+          {
+            "name": "JavaSE-20",
+            "path": "/usr/local/java-20",
+            "default": true
+          }
+        ]
+      },
+      "format": {
+        "settings": {
+          "url": "/home/cbx/.emacs.d/cache/eclipse-java-google-style.xml",
+          "profile": "GoogleStyle"
+        }
+      },
+      "completion": {
+        "guessMethodArguments": true,
+        "lazyResolveTextEdit": {
+          "enabled": true
+        },
+        "matchCase": "auto",
+        "favoriteStaticMembers": [
+          "org.junit.Assert.*",
+          "org.junit.Assume.*",
+          "org.junit.jupiter.api.Assertions.*",
+          "org.junit.jupiter.api.Assumptions.*",
+          "org.junit.jupiter.api.DynamicContainer.*",
+          "org.junit.jupiter.api.DynamicTest.*",
+          "org.mockito.Mockito.*",
+          "org.mockito.ArgumentMatchers.*",
+          "org.mockito.Answers.*"
+        ]
+      },
+      "edit": {
+        "validateAllOpenBuffersOnChanges": false
+      }
+    }
+  },
+  "extendedClientCapabilities": {
+    "classFileContentsSupport": true,
+    "overrideMethodsPromptSupport": true
+  },
+  "bundles": []
+}
