@@ -41,9 +41,9 @@
 
   (defun jdtls-initialization-options ()
     (let* ((ostype (cond
+                    (IS-WSL "WSL")
                     (IS-LINUX "Linux")
                     (IS-MAC "Darwin")
-                    (IS-WSL "WSL")
                     (t "")))
            (setting-json-file (file-name-concat user-emacs-directory "lsp-config" (format "jdtls-%s.json" ostype))))
       (with-temp-buffer
