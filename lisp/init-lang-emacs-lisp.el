@@ -139,11 +139,12 @@ Lisp function does not specify a special indentation."
     (evil-define-minor-mode-key 'normal 'macrostep-mode
       "q" 'macrostep-collapse)))
 
+;; TODO: remove lispy (format, sturcture delete, eval)
 ;; Short and sweet LISP editing
 (use-package lispy
   :bind ((:map lispy-mode-map
-               (":" . self-insert-command)
-               ("C-j" . newline-and-indent)))
+          (":" . self-insert-command)
+          ("C-j" . newline-and-indent)))
   :init
   (defun enable-lispy ()
     "Lazy load lispy because bunch of require statements on top of lispy.el
