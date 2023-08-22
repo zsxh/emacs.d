@@ -132,6 +132,7 @@
      ("k" "smerge-prev" smerge-prev :transient t)
      ("1" "smerge-keep-upper" smerge-keep-upper :transient t)
      ("2" "smerge-keep-lower" smerge-keep-lower :transient t)
+     ("3" "smerge-keep-all" smerge-keep-all :transient t)
      ("q" "quit" transient-quit-all)]))
 
 
