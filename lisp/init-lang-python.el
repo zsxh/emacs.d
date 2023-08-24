@@ -20,10 +20,6 @@
 (use-package pyvenv
   :commands pyvenv-activate)
 
-;; Setup `PYENV_VERSION' environment variable and `python-shell-virtualenv-root' custom variable based on user input
-(use-package pyenv-mode
-  :commands pyenv-mode)
-
 ;; NOTE: install python language server
 ;; $ pnpm add -g pyright
 (use-package python
