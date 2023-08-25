@@ -19,6 +19,8 @@
         magit-define-global-key-bindings nil
         magit-diff-refine-hunk 'all
         magit-save-repository-buffers 'dontask)
+  ;; cache user password when using http, https://stackoverflow.com/a/75298815
+  (add-hook 'magit-process-find-password-functions 'magit-process-password-auth-source)
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit)
     (evil-define-key '(normal visual) magit-mode-map
