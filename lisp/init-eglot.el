@@ -200,11 +200,18 @@ use the root of SERVER's `eglot--project'."
      "gr" '(xref-find-references :which-key "find-references")
      "gt" '(eglot-find-typeDefinition :which-key "find-typeDefinition")
      "gs" '(consult-eglot-symbols :which-key "workspace-symbols")
+     "h" '(nil :which-key "hierarchy")
+     "hc" '(eglot-hierarchy-call-hierarchy :which-key "call-hierarchy")
+     "ht" '(eglot-hierarchy-type-hierarchy :which-key "type-hierarchy")
      "R" '(eglot-rename :which-key "rename")
      "S" '(+eglot/signature-help-at-point :which-key "signatureHelp"))))
 
 ;; https://github.com/mohkale/consult-eglot
 (use-package consult-eglot
+  :defer t)
+
+(use-package eglot-hierarchy
+  :vc (:url "https://github.com/dolmens/eglot-hierarchy" :rev :newest)
   :defer t)
 
 
