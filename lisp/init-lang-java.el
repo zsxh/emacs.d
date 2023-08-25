@@ -39,6 +39,7 @@
            (contact (append '("jdtls") jvm-args `("-data" ,data-dir))))
       contact))
 
+  ;; TODO: dynamic jdk path
   (defun jdtls-initialization-options ()
     (let* ((ostype (cond
                     (IS-WSL "WSL")

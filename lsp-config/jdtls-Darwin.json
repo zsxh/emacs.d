@@ -8,19 +8,19 @@
         "runtimes": [
           {
             "name": "JavaSE-1.8",
-            "path": "/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home"
+            "path": "/Users/zsxh/.local/share/rtx/installs/java/zulu-8.72.0.17"
           },
           {
             "name": "JavaSE-11",
-            "path": "/opt/homebrew/Cellar/openjdk@11/11.0.20/libexec/openjdk.jdk/Contents/Home"
+            "path": "/Users/zsxh/.local/share/rtx/installs/java/adoptopenjdk-11.0.20+8"
           },
           {
             "name": "JavaSE-17",
-            "path": "/opt/homebrew/Cellar/openjdk@17/17.0.8/libexec/openjdk.jdk/Contents/Home"
+            "path": "/Users/zsxh/.local/share/rtx/installs/java/adoptopenjdk-17.0.8+7"
           },
           {
             "name": "JavaSE-20",
-            "path": "/opt/homebrew/Cellar/openjdk/20.0.1/libexec/openjdk.jdk/Contents/Home",
+            "path": "/Users/zsxh/.local/share/rtx/installs/java/adoptopenjdk-20.0.2+9",
             "default": true
           }
         ]
