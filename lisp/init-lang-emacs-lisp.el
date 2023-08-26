@@ -139,7 +139,7 @@ Lisp function does not specify a special indentation."
     (evil-define-minor-mode-key 'normal 'macrostep-mode
       "q" 'macrostep-collapse)))
 
-;; TODO: remove lispy (format, sturcture delete, eval)
+;; TODO: remove lispy (format(i), sturcture delete(backspace), eval(e), structure select/mark(m), lisp comment(;), slurp(>), barf(<))
 ;; Short and sweet LISP editing
 (use-package lispy
   :bind ((:map lispy-mode-map

@@ -185,15 +185,16 @@
     (modify-syntax-entry ?> "." rust-mode-syntax-table))
 
   ;; HACK: String[]| `puni-backward-delete-char', check `forward-sexp', `forward-sexp-function', `treesit-forward-sexp' for details
-  (define-advice puni-backward-delete-char (:around (orig-fn n) advice)
-    (if (and
-         (member major-mode '(java-ts-mode))
-         (eq ?\] (char-before))
-         (eq ?\[ (char-after
-                  (scan-sexps (point) -1)))
-         (eq (prefix-numeric-value n) 1))
-        (backward-char)
-      (funcall orig-fn n))))
+  ;; (define-advice puni-backward-delete-char (:around (orig-fn n) advice)
+  ;;   (if (and
+  ;;        (member major-mode '(java-ts-mode))
+  ;;        (eq ?\] (char-before))
+  ;;        (eq ?\[ (char-after
+  ;;                 (scan-sexps (point) -1)))
+  ;;        (eq (prefix-numeric-value n) 1))
+  ;;       (backward-char)
+  ;;     (funcall orig-fn n)))
+  )
 
 ;; Change variable name style
 (use-package string-inflection
