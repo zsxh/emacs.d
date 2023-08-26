@@ -39,17 +39,36 @@
            (contact (append '("jdtls") jvm-args `("-data" ,data-dir))))
       contact))
 
-  ;; TODO: dynamic jdk path
+  ;; (jsonrpc--json-encode (jdtls-initialization-options))
   (defun jdtls-initialization-options ()
-    (let* ((ostype (cond
-                    (IS-WSL "WSL")
-                    (IS-LINUX "Linux")
-                    (IS-MAC "Darwin")
-                    (t "")))
-           (setting-json-file (file-name-concat user-emacs-directory "lsp-config" (format "jdtls-%s.json" ostype))))
-      (with-temp-buffer
-        (insert-file-contents setting-json-file)
-        (json-parse-buffer :object-type 'plist :false-object :json-false))))
+    `(:settings (:java (:autobuild (:enabled t)
+                        :configuration (:runtimes [(:name "JavaSE-1.8"
+                                                    :path ,(string-trim (shell-command-to-string "rtx where java@8")))
+                                                   (:name "JavaSE-11"
+                                                    :path ,(string-trim (shell-command-to-string "rtx where java@11")))
+                                                   (:name "JavaSE-17"
+                                                    :path ,(string-trim (shell-command-to-string "rtx where java@17")))
+                                                   (:name "JavaSE-20"
+                                                    :path ,(string-trim (shell-command-to-string "rtx where java@20"))
+                                                    :default t)])
+                        :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
+                                            :profile "GoogleStyle"))
+                        :completion (:guessMethodArguments t
+                                     :lazyResolveTextEdit (:enabled t)
+                                     :matchCase "auto"
+                                     :favoriteStaticMembers ["org.junit.Assert.*"
+                                                             "org.junit.Assume.*"
+                                                             "org.junit.jupiter.api.Assertions.*"
+                                                             "org.junit.jupiter.api.Assumptions.*"
+                                                             "org.junit.jupiter.api.DynamicContainer.*"
+                                                             "org.junit.jupiter.api.DynamicTest.*"
+                                                             "org.mockito.Mockito.*"
+                                                             "org.mockito.ArgumentMatchers.*"
+                                                             "org.mockito.Answers.*"])
+                        :edit (:validateAllOpenBuffersOnChanges :json-false)))
+      :extendedClientCapabilities (:classFileContentsSupport t
+                                   :overrideMethodsPromptSupport t)
+      :bundles []))
 
   (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
     (jdtls-initialization-options))
