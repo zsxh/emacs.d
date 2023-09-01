@@ -149,7 +149,7 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
        (if (and (null edit) (null command) data
                 (eglot--server-capable :codeActionProvider :resolveProvider))
            (eglot-execute server (eglot--request server :codeAction/resolve action))
-         (when edit (eglot--apply-workspace-edit edit))
+         (when edit (eglot--apply-workspace-edit edit this-command))
          (when command (+java/execute-command server command))))))
 
   (cl-defmethod eglot-execute (server action &context (major-mode java-mode))
