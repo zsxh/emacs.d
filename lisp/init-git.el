@@ -37,8 +37,8 @@
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
   :defer t
-  :init
-  (add-hook-run-once 'magit-mode-hook #'magit-todos-mode)
+  ;; :init
+  ;; (add-hook-run-once 'magit-mode-hook #'magit-todos-mode)
   :custom
   (magit-todos-exclude-globs '("node_modules" "*.json" ".git/" ".venv/"))
   ;; (magit-todos-update t)
