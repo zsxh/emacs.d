@@ -65,7 +65,9 @@
                                                              "org.mockito.Mockito.*"
                                                              "org.mockito.ArgumentMatchers.*"
                                                              "org.mockito.Answers.*"])
-                        :edit (:validateAllOpenBuffersOnChanges :json-false)))
+                        :edit (:validateAllOpenBuffersOnChanges :json-false)
+                        ;; Javadoc generation, https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
+                        :codeGeneration (:generateComments t)))
       :extendedClientCapabilities (:classFileContentsSupport t
                                    :overrideMethodsPromptSupport t)
       :bundles []))
@@ -109,7 +111,7 @@
   ;; ----------------------- Support jdt.ls extra commands -----------------------
   ;; (defun java-apply-workspaceEdit (arguments)
   ;;   "Command `java.apply.workspaceEdit' handler."
-  ;;   (mapc #'eglot--apply-workspace-edit arguments))
+  ;;   (mapc #'eglot--apply-workspace-edit arguments this-command))
 
   (defun java-action-overrideMethodsPrompt (arguments)
     "Command `java.action.overrideMethodsPrompt' handler."
@@ -131,7 +133,7 @@
            (add-methods-result (jsonrpc-request (eglot--current-server-or-lose)
                                                 :java/addOverridableMethods
                                                 (list :overridableMethods selected-methods :context argument))))
-      (eglot--apply-workspace-edit add-methods-result)))
+      (eglot--apply-workspace-edit add-methods-result this-command)))
 
   (defun +java/execute-command (server _command)
     (eglot--dbind ((Command) command arguments) _command
