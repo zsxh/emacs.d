@@ -168,7 +168,16 @@ Lisp function does not specify a special indentation."
   :commands (eros-eval-last-sexp eros-eval-defun eros--make-result-overlay)
   :init
   (global-set-key [remap eval-last-sexp] #'eros-eval-last-sexp)
-  (global-set-key [remap eval-defun] #'eros-eval-defun))
+  (global-set-key [remap eval-defun] #'eros-eval-defun)
+  :config
+  ;; Inline previous result and why you should edebug
+  ;; https://xenodium.com/inline-previous-result-and-why-you-should-edebug/
+  (with-eval-after-load 'edebug
+    (define-advice edebug-previous-result (:around (_ &rest r) eros-advice)
+      "Adviced `edebug-previous-result'."
+      (eros--make-result-overlay edebug-previous-result
+        :where (point)
+        :duration eros-eval-result-duration))))
 
 ;; Extra font lock for emacs lisp
 (use-package elispfl
