@@ -149,7 +149,7 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
       (((Command)) (+java/execute-command server action))
       (((CodeAction) edit command data)
        (if (and (null edit) (null command) data
-                (eglot--server-capable :codeActionProvider :resolveProvider))
+                (eglot-server-capable :codeActionProvider :resolveProvider))
            (eglot-execute server (eglot--request server :codeAction/resolve action))
          (when edit (eglot--apply-workspace-edit edit this-command))
          (when command (+java/execute-command server command))))))
@@ -242,7 +242,7 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
            (command (list
                      :title ""
                      :command "java.project.getClasspaths"
-                     :arguments (vector (eglot--path-to-uri filename)
+                     :arguments (vector (eglot-path-to-uri filename)
                                         (json-serialize (list :scope scope)))))
            (classpaths (plist-get (eglot-execute (eglot--current-server-or-lose) command) :classpaths)))
       (mapconcat #'identity classpaths path-separator)))
@@ -252,7 +252,7 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
     (let ((command (list
                     :title ""
                     :command "java.project.isTestFile"
-                    :arguments (vector (eglot--path-to-uri file-path)))))
+                    :arguments (vector (eglot-path-to-uri file-path)))))
       (eq t (eglot-execute (eglot--current-server-or-lose) command)))))
 
 ;; http://www.tianxiangxiong.com/2017/02/12/decompiling-java-classfiles-in-emacs.html

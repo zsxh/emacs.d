@@ -44,13 +44,13 @@
     "Support extension uri."
     nil)
 
-  (define-advice eglot--uri-to-path (:around (orig-fn uri) advice)
+  (define-advice eglot-uri-to-path (:around (orig-fn uri) advice)
     "Support non standard LSP uri scheme."
     (when (keywordp uri) (setq uri (substring (symbol-name uri) 1)))
     (or (+eglot/ext-uri-to-path uri)
         (funcall orig-fn uri)))
 
-  (define-advice eglot--path-to-uri (:around (orig-fn path) advice)
+  (define-advice eglot-path-to-uri (:around (orig-fn path) advice)
     "Support non standard LSP uri scheme."
     (or (gethash path eglot-path-uri-cache)
         (funcall orig-fn path)))
@@ -65,7 +65,7 @@
   ;; Hover
   (defun +eglot/show-hover-at-point ()
     (interactive)
-    (when (eglot--server-capable :hoverProvider)
+    (when (eglot-server-capable :hoverProvider)
       (let ((buf (current-buffer)))
         (jsonrpc-async-request
          (eglot--current-server-or-lose)
@@ -100,7 +100,7 @@
   ;; Signature
   (defun +eglot/show-signature-help ()
     (when (and (eglot-managed-p)
-               (eglot--server-capable :signatureHelpProvider))
+               (eglot-server-capable :signatureHelpProvider))
       (unless +eglot/signature-last-point
         (setq +eglot/signature-last-point (point)))
       (let ((buf (current-buffer)))
@@ -142,7 +142,7 @@
   (defun +eglot/signature-help-at-point ()
     (interactive)
     (when (and (eglot-managed-p)
-               (eglot--server-capable :signatureHelpProvider))
+               (eglot-server-capable :signatureHelpProvider))
       (+eglot/show-signature-help)
       (add-hook 'post-command-hook #'+eglot/show-signature-help nil t)))
 
