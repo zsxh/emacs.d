@@ -305,7 +305,6 @@
 ;;;;;;;;;;;;;; M-x breadcrumb-mode ;;;;;;;;;;;;;;
 ;; https://github.com/joaotavora/breadcrumb
 (use-package breadcrumb
-  :vc (:url "https://github.com/joaotavora/breadcrumb" :rev :newest)
   :defer t)
 
 ;;;;;;;;;;;;;; others ;;;;;;;;;;;;;;
