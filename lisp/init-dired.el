@@ -24,6 +24,9 @@
 
 ;; https://github.com/alexluigit/dirvish
 ;; MacOS require: brew install coreutils fd poppler ffmpegthumbnailer mediainfo imagemagick gnu-tar unzip
+;; FIXME: How can I silence "Loading..." messages in batch mode? (dirvish make-process "emacs -Q -batch --eval ...")
+;; - https://lists.gnu.org/r/help-gnu-emacs/2012-07/msg00364.html
+;; - https://stackoverflow.com/questions/11498108/elisp-silence-loading-messages-in-batch-mode
 (use-package dirvish
   :defer 10
   :custom
