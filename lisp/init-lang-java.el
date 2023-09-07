@@ -162,35 +162,6 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
 
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode
-  ;; FIXME: fix java `treesit-thing-settings'
-  (define-advice treesit-major-mode-setup (:around (orig-fn &rest r) fix-java-ts)
-    (when (eq major-mode 'java-ts-mode)
-      (setq-local treesit-thing-settings
-                  `((java
-                     (sexp ,(rx (or "annotation"
-                                    "parenthesized_expression"
-                                    "argument_list"
-                                    "identifier"
-                                    "modifiers"
-                                    "block"
-                                    "body"
-                                    "literal"
-                                    "access"
-                                    "reference"
-                                    "_type"
-                                    "true"
-                                    "false")))
-                     (sentence ,(rx (or "statement"
-                                        "local_variable_declaration"
-                                        "field_declaration"
-                                        "module_declaration"
-                                        "package_declaration"
-                                        "import_declaration")))
-                     (text ,(regexp-opt '("line_comment"
-                                          "block_comment"
-                                          "text_block")))))))
-    (funcall orig-fn))
-
   ;; Download `junit-platform-console-standalone.jar'
   (defvar +java/junit-platform-console-standalone-jar
     (expand-file-name (locate-user-emacs-file "cache/lsp-servers/java/junit-console/junit-platform-console-standalone.jar")))
