@@ -27,6 +27,7 @@
 ;; FIXME: How can I silence "Loading..." messages in batch mode? (dirvish make-process "emacs -Q -batch --eval ...")
 ;; - https://lists.gnu.org/r/help-gnu-emacs/2012-07/msg00364.html
 ;; - https://stackoverflow.com/questions/11498108/elisp-silence-loading-messages-in-batch-mode
+;; - https://www.gnu.org/software/emacs/manual/html_node/elisp/Batch-Mode.html (in batch mode, message->stderr, prin1->stdout)
 (use-package dirvish
   :defer 10
   :custom
