@@ -191,6 +191,15 @@
   :vc (:url "https://github.com/dolmens/eglot-hierarchy" :rev :newest)
   :defer t)
 
+;; TODO: may work well with clojure-lsp
+;; Open project dependencies inside jar archives, pairs well with eglot
+;; https://git.sr.ht/~dannyfreeman/jarchive
+(use-package jarchive
+  :defer t
+  ;; :after eglot
+  :config
+  (jarchive-setup))
+
 
 (provide 'init-eglot)
 

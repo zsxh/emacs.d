@@ -37,6 +37,7 @@
       ;; NOTE: :zip scheme no response from the server?
       '(:dependency-scheme "jar"))
 
+    ;; TODO: replace with `jarchive'
     ;; https://github.com/emacs-lsp/lsp-mode/blob/d3bc47bde5ffc1bace40122a6ec0c6d8b9e84500/clients/lsp-clojure.el#L272
     ;; https://github.com/clojure-lsp/clojure-lsp/blob/master/lib/test/clojure_lsp/shared_test.clj
     (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode clojure-mode))
