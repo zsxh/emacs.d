@@ -126,6 +126,8 @@
                                         (class (plist-get method :declaringClass)))
                                    (cons (format "%s(%s) class: %s" name (string-join parameters ", ") class) method)))
                                methods))
+           ;; use ";" instead of "," to separate strings in completing-read-multiple
+           (crm-separator "[ \t]*;[ \t]*")
            (selected-methods (cl-map 'vector
                                      (lambda (choice) (alist-get choice menu-items nil nil 'equal))
                                      (delete-dups
