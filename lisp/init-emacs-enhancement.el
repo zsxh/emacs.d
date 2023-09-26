@@ -121,6 +121,9 @@
   (setq recentf-auto-cleanup "07:00pm"
         recentf-max-saved-items 200
         recentf-exclude '((expand-file-name package-user-dir)
+                          "/ssh:"
+                          "/sudo:"
+                          "/tmp"
                           ".cache"
                           ".cask"
                           ".elfeed"
