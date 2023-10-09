@@ -235,17 +235,17 @@
   :commands dired-open-xdg
   :config
   (define-advice dired-open-xdg (:override () advice)
-    "Try to run `xdg-open' to open the file under point."
+    "Try to run `xdg-open'(linux) or `open'(macos) to open the file under point."
     (interactive)
-    (if (executable-find "xdg-open")
-        (let ((file (ignore-errors (dired-get-file-for-visit))))
-          ;; FIXME: https://askubuntu.com/a/675366
-          ;; xdg-open return before their children are done working,
-          ;; Emacs might kill their controlling terminal when this happens,
-          ;; killing the children, and stopping the external applications.
-          (start-process "dired-open" nil
-                         "setsid" "-w" "xdg-open" (file-truename file)))
-      nil)))
+    (when-let ((cmd (or (executable-find "xdg-open")
+                        (executable-find "open")))
+               (file (ignore-errors (dired-get-file-for-visit))))
+      ;; FIXME: https://askubuntu.com/a/675366
+      ;; xdg-open return before their children are done working,
+      ;; Emacs might kill their controlling terminal when this happens,
+      ;; killing the children, and stopping the external applications.
+      (start-process "dired-open" nil
+                     "setsid" "-w" cmd (file-truename file)))))
 
 ;; Editable Dired pre-mode configs
 (use-package wdired
