@@ -28,6 +28,8 @@
   (add-hook 'eglot-managed-mode-hook #'breadcrumb-local-mode))
 
 (with-eval-after-load 'eglot
+  (add-to-list 'completion-category-overrides '(eglot (styles basic substring)))
+
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
   (defvar +eglot/display-frame nil)
   (defvar +eglot/hover-last-point nil)
@@ -162,14 +164,40 @@
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))
     (+funcs/major-mode-leader-keys
      mode-map
+     ;; code action
      "A" '(eglot-code-actions :which-key "code-action")
+     ;; hover
      "D" '(+eglot/show-hover-at-point :which-key "hover")
+
+     ;; FIXME: repeat mode
+     ;; debug
+     ;; "d" '(nil :which-key "debug")
+     ;; "dd" '(dape :which-key "dape")
+     ;; "dp" '(dape-pause :which-key "dape-pause")
+     ;; "dc" '(dape-continue :which-key "dape-continue")
+     ;; "dn" '(dape-next :which-key "dape-next")
+     ;; "ds" '(dape-step-in :which-key "dape-step-in")
+     ;; "do" '(dape-step-out :which-key "dape-step-out")
+     ;; "dr" '(dape-restart :which-key "dape-restart")
+     ;; "di" '(dape-info :which-key "dape-info")
+     ;; "dR" '(dape-repl :which-key "dape-repl")
+     ;; "dm" '(dape-read-memory :which-key "dape-read-memory")
+     ;; "dl" '(dape-log-breakpoint :which-key "dape-log-breakpoint")
+     ;; "de" '(dape-expression-breakpoint :which-key "dape-expression-breakpoint")
+     ;; "db" '(dape-toggle-breakpoint :which-key "dape-toggle-breakpoint")
+     ;; "dB" '(dape-remove-all-breakpoints :which-key "dape-remove-all-breakpoints")
+     ;; "dw" '(dape-watch-dwim :which-key "dape-watch-dwim")
+     ;; "dq" '(dape-quit :which-key "dape-quit")
+
+     ;; error
      "e" '(nil :which-key "error")
      "el" '(consult-flymake :which-key "show-buffer-diagnostics")
      "eL" '((lambda () (interactive) (consult-flymake t)) :which-key "show-project-diagnostics")
      "en" '(flymake-goto-next-error :which-key "next-error")
      "ep" '(flymake-goto-prev-error :which-key "prev-error")
+     ;; format
      "f" '(eglot-format :which-key "format")
+     ;; goto/find
      "g" '(nil :which-key "find/goto")
      "gd" '(xref-find-definitions :which-key "find-definitions")
      "ge" '(eglot-find-declaration :which-key "find-declaration")
@@ -177,10 +205,13 @@
      "gr" '(xref-find-references :which-key "find-references")
      "gt" '(eglot-find-typeDefinition :which-key "find-typeDefinition")
      "gs" '(consult-eglot-symbols :which-key "workspace-symbols")
+     ;; hierarchy
      "h" '(nil :which-key "hierarchy")
      "hc" '(eglot-hierarchy-call-hierarchy :which-key "call-hierarchy")
      "ht" '(eglot-hierarchy-type-hierarchy :which-key "type-hierarchy")
+     ;; rename
      "R" '(eglot-rename :which-key "rename")
+     ;; signature
      "S" '(+eglot/signature-help-at-point :which-key "signatureHelp"))))
 
 ;; https://github.com/mohkale/consult-eglot

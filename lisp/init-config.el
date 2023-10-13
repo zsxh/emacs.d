@@ -120,6 +120,9 @@
           (rust-mode       . rust-ts-mode)
           (yaml-mode       . yaml-ts-mode))))
 
+;; repeat mode
+(setq repeat-mode t)
+
 
 (provide 'init-config)
 
