@@ -32,8 +32,9 @@
     (let* ((jdtls-cache-dir (file-name-concat user-emacs-directory "cache" "jdtls-cache"))
            (project-dir (file-name-nondirectory (directory-file-name (+project/root))))
            (data-dir (expand-file-name (file-name-concat jdtls-cache-dir (md5 project-dir))))
-           (jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar"))
+           (jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar"))
                        "-XX:+UseZGC"
+                       "-XX:+ZGenerational"
                        "-XX:+UseStringDeduplication"))
            (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
            (contact (append '("jdtls") jvm-args `("-data" ,data-dir))))
