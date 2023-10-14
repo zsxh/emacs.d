@@ -88,6 +88,7 @@
 
 ;; Language
 (require 'init-eglot)
+(require 'init-debugger)
 (require 'init-lang-emacs-lisp)
 (require 'init-lang-c)
 (require 'init-lang-python)
