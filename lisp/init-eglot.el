@@ -166,10 +166,11 @@
      "A" '(eglot-code-actions :which-key "code-action")
      ;; hover
      "D" '(+eglot/show-hover-at-point :which-key "hover")
-     ;; debug
+
      ;; FIXME: repeat mode
-     "d" '(nil :which-key "debug")
-     "dd" '(dape :which-key "dape")
+     ;; debug
+     ;; "d" '(nil :which-key "debug")
+     ;; "dd" '(dape :which-key "dape")
      ;; "dp" '(dape-pause :which-key "dape-pause")
      ;; "dc" '(dape-continue :which-key "dape-continue")
      ;; "dn" '(dape-next :which-key "dape-next")
@@ -185,6 +186,7 @@
      ;; "dB" '(dape-remove-all-breakpoints :which-key "dape-remove-all-breakpoints")
      ;; "dw" '(dape-watch-dwim :which-key "dape-watch-dwim")
      ;; "dq" '(dape-quit :which-key "dape-quit")
+
      ;; error
      "e" '(nil :which-key "error")
      "el" '(consult-flymake :which-key "show-buffer-diagnostics")

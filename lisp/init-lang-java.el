@@ -70,7 +70,11 @@
                         :codeGeneration (:generateComments t)))
       :extendedClientCapabilities (:classFileContentsSupport t
                                    :overrideMethodsPromptSupport t)
-      :bundles []))
+      :bundles ,(if-let* ((bundles-dir (file-name-concat user-emacs-directory "cache" "lsp-servers" "java" "bundles"))
+                          (_ (file-directory-p bundles-dir))
+                          (jars (directory-files bundles-dir t "\\.jar$")))
+                    (apply #'vector jars)
+                  [])))
 
   (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
     (jdtls-initialization-options))
