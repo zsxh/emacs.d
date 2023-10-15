@@ -12,22 +12,29 @@
 
 ;; Completion Styles
 ;; NOTE: https://www.gnu.org/software/emacs/manual/html_node/emacs/Completion-Styles.html
+;; NOTE: https://www.masteringemacs.org/article/understanding-minibuffer-completion
 ;; `completion-category-defaults', `completion-category-overrides', `completion-styles'
-(setq completion-category-overrides
-      '((buffer (styles . (orderless substring basic)))))
+
+;; Lazy load `orderless' `marginalia', `nerd-icons-completion'
+(add-hook-run-once 'minibuffer-setup-hook (lambda ()
+                                            (require 'orderless)
+                                            (marginalia-mode)
+                                            (nerd-icons-completion-mode)))
 
 ;; NOTE: https://github.com/minad/consult#bug-reports
 ;; For `consult-line', etc.
 ;; Ensure that the `completion-styles' variable is properly configured.
 ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
-(add-hook 'minibuffer-setup-hook (lambda () (setq completion-styles '(orderless substring basic))))
-(add-hook 'minibuffer-exit-hook (lambda () (setq completion-styles '(basic orderless))))
-
-;; Lazy load `orderless', `marginalia', `nerd-icons-completion'
-(add-hook-run-once 'minibuffer-setup-hook (lambda ()
-                                            (require 'orderless)
-                                            (marginalia-mode)
-                                            (nerd-icons-completion-mode)))
+(add-hook 'minibuffer-setup-hook (lambda ()
+                                   (setq completion-styles
+                                         (if (assoc 'orderless completion-styles-alist)
+                                             '(orderless substring basic)
+                                           '(substring basic)))))
+(add-hook 'minibuffer-exit-hook (lambda ()
+                                  (setq completion-styles
+                                        (if (assoc 'orderless completion-styles-alist)
+                                            '(basic orderless)
+                                          '(basic partial-completion emacs22)))))
 
 ;; minibuffer ui
 ;; FIXME: `vertico-directory-delete-char', tramp path
@@ -87,7 +94,9 @@
     :commands pinyinlib-build-regexp-string)
   (defun completion--regex-pinyin (str)
     (orderless-regexp (pinyinlib-build-regexp-string str)))
-  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
+  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin)
+  ;; override `completion-category-defaults' buffer category
+  (add-to-list 'completion-category-overrides '(buffer (styles . (orderless substring basic)))))
 
 ;; Helpful minibuffer annotations
 (use-package marginalia
