@@ -30,6 +30,7 @@
                  :program dape-find-file-buffer-default))
 
   ;; Java
+  ;; TODO: debug test class/method
   ;; install vscode-java-debug, https://github.com/Microsoft/vscode-java-debug
   ;; install vscode-java-test, https://github.com/microsoft/vscode-java-test
   ;;
