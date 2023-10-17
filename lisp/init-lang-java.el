@@ -56,7 +56,6 @@
                                             :profile "GoogleStyle"))
                         :completion (:guessMethodArguments t
                                      :lazyResolveTextEdit (:enabled t)
-                                     :matchCase "firstLetter"
                                      :favoriteStaticMembers ["org.junit.Assert.*"
                                                              "org.junit.Assume.*"
                                                              "org.junit.jupiter.api.Assertions.*"
