@@ -28,7 +28,6 @@
   (add-hook 'eglot-managed-mode-hook #'breadcrumb-local-mode))
 
 (with-eval-after-load 'eglot
-  (add-to-list 'completion-category-overrides '(eglot (styles basic substring)))
 
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
   (defvar +eglot/display-frame nil)
