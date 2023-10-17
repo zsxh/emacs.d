@@ -27,6 +27,16 @@
 ;; Ensure that the `completion-styles' variable is properly configured.
 ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
 (setq completion-styles '(basic substring))
+(add-hook 'minibuffer-setup-hook (lambda ()
+                                   (setq completion-styles
+                                         (if (assoc 'orderless completion-styles-alist)
+                                             '(orderless substring basic)
+                                           '(substring basic)))))
+(add-hook 'minibuffer-exit-hook (lambda ()
+                                  (setq completion-styles
+                                        (if (assoc 'orderless completion-styles-alist)
+                                            '(basic orderless)
+                                          '(basic substring)))))
 
 ;; minibuffer ui
 ;; FIXME: `vertico-directory-delete-char', tramp path
