@@ -52,10 +52,11 @@
   :if (featurep 'treesit)
   :ensure nil
   :defer t
-  :config
+  ;; :config
   ;; NOTE: `treesit-font-lock-level' has a special `setter' attached to it,
   ;; so as to automatically recompute the font lock features in all your buffers when you change the level
-  (custom-set-variables '(treesit-font-lock-level 4)))
+  ;; (custom-set-variables '(treesit-font-lock-level 4))
+  )
 
 ;; NOTE: “Fixing” the S-Expression Commands, https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
 (defun mp-remove-treesit-sexp-changes ()
@@ -124,6 +125,7 @@
                           "/ssh:"
                           "/sudo:"
                           "/tmp"
+                          "/mnt"
                           ".cache"
                           ".cask"
                           ".elfeed"
