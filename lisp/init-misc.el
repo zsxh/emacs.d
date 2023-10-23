@@ -270,6 +270,12 @@
   (when (package-installed-p 'posframe))
   (setq rime-show-candidate 'posframe))
 
+;; Monitoring Linux Journald logs
+;; https://github.com/WJCFerguson/journalctl
+(use-package journalctl-mode
+  :defer t
+  :commands (journalctl))
+
 
 (provide 'init-misc)
 
