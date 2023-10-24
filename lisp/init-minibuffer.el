@@ -14,7 +14,8 @@
 ;; NOTE: [Manual] https://www.gnu.org/software/emacs/manual/html_node/emacs/Completion-Styles.html
 ;; NOTE: [Article] https://www.masteringemacs.org/article/understanding-minibuffer-completion
 ;; NOTE: [Video] https://www.youtube.com/watch?v=w9hHMDyF9V4
-;; `completion-category-overrides'/`completion-category-defaults' + `completion-styles'
+;; `completion-category-overrides' > `completion-category-defaults' > `completion-styles'
+
 
 ;; Lazy load `orderless' `marginalia', `nerd-icons-completion'
 (add-hook-run-once 'minibuffer-setup-hook (lambda ()
@@ -28,15 +29,13 @@
 ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
 (setq completion-styles '(basic substring))
 (add-hook 'minibuffer-setup-hook (lambda ()
-                                   (setq completion-styles
+                                   (setf (alist-get 'buffer completion-category-overrides)
                                          (if (assoc 'orderless completion-styles-alist)
-                                             '(orderless substring basic)
-                                           '(substring basic)))))
+                                             '((styles orderless substring basic))
+                                           '((styles substring basic))))))
 (add-hook 'minibuffer-exit-hook (lambda ()
-                                  (setq completion-styles
-                                        (if (assoc 'orderless completion-styles-alist)
-                                            '(basic orderless)
-                                          '(basic substring)))))
+                                  (setf (alist-get 'buffer completion-category-overrides)
+                                        '((styles basic substring)))))
 
 ;; minibuffer ui
 ;; FIXME: `vertico-directory-delete-char', tramp path
@@ -96,8 +95,7 @@
     :commands pinyinlib-build-regexp-string)
   (defun completion--regex-pinyin (str)
     (orderless-regexp (pinyinlib-build-regexp-string str)))
-  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin)
-  (setq completion-styles '(basic substring orderless)))
+  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 ;; Helpful minibuffer annotations
 (use-package marginalia
