@@ -29,11 +29,13 @@
 ;; Try to set `completion-styles' to a list including `substring' or `orderless'.
 (setq completion-styles '(basic substring))
 (add-hook 'minibuffer-setup-hook (lambda ()
+                                   (setq completion-styles '(orderless substring basic))
                                    (setf (alist-get 'buffer completion-category-overrides)
                                          (if (assoc 'orderless completion-styles-alist)
                                              '((styles orderless substring basic))
                                            '((styles substring basic))))))
 (add-hook 'minibuffer-exit-hook (lambda ()
+                                  (setq completion-styles '(basic substring))
                                   (setf (alist-get 'buffer completion-category-overrides)
                                         '((styles basic substring)))))
 
