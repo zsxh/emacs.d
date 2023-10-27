@@ -97,7 +97,7 @@
 
 ;; highlight comment tags like TODO, BUG, FIXME, etc.
 (use-package hl-todo
-  :hook (prog-mode . hl-todo-mode)
+  :hook ((prog-mode yaml-mode yaml-ts-mode) . hl-todo-mode)
   :config
   (push '("WIP" . "#7cb8bb") hl-todo-keyword-faces))
 
