@@ -122,6 +122,13 @@
 
 ;; repeat mode
 (setq repeat-mode t)
+;; improve long line coding, i don't need bidirectional text
+;; https://emacs-china.org/t/topic/25811/9
+(setq-default bidi-display-reordering nil)
+(setq bidi-inhibit-bpa t
+      long-line-threshold 1000
+      large-hscroll-threshold 1000
+      syntax-wholeline-max 1000)
 
 
 (provide 'init-config)

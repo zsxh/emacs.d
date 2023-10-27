@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+;; FIXME: `project-list-file' project.el remembered remote project
 ;; NOTE: https://emacstalk.github.io/post/010/ EmacsTalk
 ;; NOTE: https://github.com/karthink/project-x
 ;; `project-remember-project', `project-forget-project',
