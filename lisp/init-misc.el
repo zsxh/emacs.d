@@ -194,17 +194,7 @@
     (define-key telega-chat-button-map (kbd "h") nil)
     (with-eval-after-load 'evil
       (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
-      (define-key telega-msg-button-map (kbd "SPC") nil))
-
-    (defun my-telega-chat-mode ()
-      (set (make-local-variable 'company-backends)
-           (append (list telega-emoji-company-backend
-                         'telega-company-username
-                         'telega-company-hashtag)
-                   (when (telega-chat-bot-p telega-chatbuf--chat)
-                     '(telega-company-botcmd))))
-      (company-mode 1))
-    (add-hook 'telega-chat-mode-hook 'my-telega-chat-mode))
+      (define-key telega-msg-button-map (kbd "SPC") nil)))
 
   (with-eval-after-load 'nerd-icons
     (push '(telega-root-mode nerd-icons-faicon "nf-fae-telegram" :face nerd-icons-blue) nerd-icons-mode-icon-alist)
