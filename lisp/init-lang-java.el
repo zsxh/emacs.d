@@ -49,8 +49,6 @@
                                                     :path ,(string-trim (shell-command-to-string "rtx where java@11")))
                                                    (:name "JavaSE-17"
                                                     :path ,(string-trim (shell-command-to-string "rtx where java@17")))
-                                                   (:name "JavaSE-20"
-                                                    :path ,(string-trim (shell-command-to-string "rtx where java@20")))
                                                    (:name "JavaSE-21"
                                                     :path ,(string-trim (shell-command-to-string "rtx where java@21"))
                                                     :default t)])
