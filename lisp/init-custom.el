@@ -83,7 +83,7 @@ Check https://github.com/hlissner/emacs-doom-themes"
   "Set http(s) proxy host."
   :type 'string)
 
-(defcustom personal-proxy-http-port 1081
+(defcustom personal-proxy-http-port 1080
   "Set http(s) proxy port."
   :type 'integer)
 
