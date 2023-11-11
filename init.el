@@ -97,6 +97,7 @@
 (require 'init-lang-rust)
 (require 'init-lang-go)
 (require 'init-lang-clojure)
+(require 'init-lang-lua)
 (require 'init-lang-sql)
 (require 'init-web)
 ;; (require 'init-latex)
