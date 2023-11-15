@@ -156,12 +156,10 @@
   :config
   (dirvish-override-dired-mode-maybe)
 
-  (let ((mac-find-gls-p (and IS-MAC (executable-find "gls"))))
-    (when mac-find-gls-p
-      ;; Macos `coreutils' installed
-      (setq insert-directory-program "gls"))
-    (when (or IS-LINUX mac-find-gls-p)
-      (setq dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group")))
+  (when (or IS-LINUX
+            ;; Macos installed `coreutils'
+            (and IS-MAC (string= insert-directory-program "gls")))
+    (setq dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group"))
 
   (setq dired-dwim-target t
         dired-recursive-copies 'always
