@@ -14,7 +14,9 @@
   :bind (("M-/" . completion-at-point)
          (:map corfu-map
           ("C-j" . corfu-next)
-          ("C-k" . corfu-previous)))
+          ("C-k" . corfu-previous))
+         (:map corfu-popupinfo-map
+          ("C-h" . corfu-popupinfo-toggle)))
   :hook ((after-init . global-corfu-mode)
          (global-corfu-mode . corfu-popupinfo-mode))
   :config
