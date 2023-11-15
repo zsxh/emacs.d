@@ -14,9 +14,7 @@
   :bind (("M-/" . completion-at-point)
          (:map corfu-map
           ("C-j" . corfu-next)
-          ("C-k" . corfu-previous))
-         (:map corfu-popupinfo-map
-          ("C-h" . corfu-popupinfo-toggle)))
+          ("C-k" . corfu-previous)))
   :hook ((after-init . global-corfu-mode)
          (global-corfu-mode . corfu-popupinfo-mode))
   :config
@@ -28,6 +26,12 @@
         corfu-preview-current nil
         corfu-auto-delay 0.1
         corfu-popupinfo-delay '(0.2 . 0.1)))
+
+(use-package corfu-popupinfo
+  :defer t
+  :ensure corfu
+  :bind (:map corfu-popupinfo-map
+         ("C-h" . corfu-popupinfo-toggle)))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal
