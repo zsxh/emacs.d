@@ -107,6 +107,8 @@
       (setq restclient-buffer (generate-new-buffer restclient-buffer-name))
       (with-current-buffer restclient-buffer
         (restclient-mode)
+        (when (functionp 'cape-company-to-capf)
+          (setq-local completion-at-point-functions (push (cape-company-to-capf 'company-restclient) completion-at-point-functions)))
         (insert "# -*- restclient -*-
 # https://github.com/pashky/restclient.el
 #
