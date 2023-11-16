@@ -31,7 +31,11 @@
   :defer t
   :ensure corfu
   :bind (:map corfu-popupinfo-map
-         ("C-h" . corfu-popupinfo-toggle)))
+         ("C-h" . corfu-popupinfo-toggle)
+         ("C-d" . corfu-popupinfo-scroll-up)
+         ("C-b" . corfu-popupinfo-scroll-down)
+         ("gg" . corfu-popupinfo-beginning)
+         ("G" . corfu-popupinfo-end)))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal
