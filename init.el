@@ -83,6 +83,7 @@
 (require 'init-project)
 ;; (require 'init-completion)
 (require 'init-corfu)
+(require 'init-yasnippet)
 (require 'init-diagnostic)
 (require 'init-git)
 (require 'init-highlight)

@@ -3,6 +3,6 @@
 # key: Tversion
 # --
 /**
- * Version:${1:`(time-stamp-string "%Y%02m%02d%02H%02M%02S")`}
+ * Version:${1:`(format-time-string "%Y%02m%02d%02H%02M%02S")`}
  */
  $0
