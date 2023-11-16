@@ -18,40 +18,16 @@
 ;; NOTE: [Video] https://www.youtube.com/watch?v=w9hHMDyF9V4
 ;; `completion-category-overrides' > `completion-category-defaults' > `completion-styles'
 
-
-;; Lazy load `orderless' `marginalia', `nerd-icons-completion'
-(add-hook-run-once 'minibuffer-setup-hook (lambda ()
-                                            (require 'orderless)
-                                            (marginalia-mode)
-                                            (nerd-icons-completion-mode)))
-
-;; NOTE: https://github.com/minad/consult#bug-reports
-;; For `consult-line', etc.
-;; Ensure that the `completion-styles' variable is properly configured.
-;; Try to set `completion-styles' to a list including `substring' or `orderless'.
-(setq completion-styles '(basic substring))
-(add-hook 'minibuffer-setup-hook (lambda ()
-                                   (setq completion-styles '(orderless substring basic))
-                                   (setf (alist-get 'buffer completion-category-overrides)
-                                         (if (assoc 'orderless completion-styles-alist)
-                                             '((styles orderless substring basic))
-                                           '((styles substring basic))))))
-(add-hook 'minibuffer-exit-hook (lambda ()
-                                  (setq completion-styles '(basic substring))
-                                  (setf (alist-get 'buffer completion-category-overrides)
-                                        '((styles basic substring)))))
-
 ;; minibuffer ui
 ;; FIXME: `vertico-directory-delete-char', tramp path
 (use-package vertico
-  :hook (after-init . vertico-mode)
+  :hook ((after-init . vertico-mode)
+         (rfn-eshadow-update-overlay . vertico-directory-tidy))
   :bind ((:map vertico-map
-               ("C-k" . vertico-previous)
-               ("C-j" . vertico-next)
-               ("~" . +vertico/insert-tilde)
-               ("/" . +vertico/insert-slash)
-               ([backspace] . vertico-directory-delete-char)
-               ([escape] . abort-recursive-edit)))
+          ("C-k" . vertico-previous)
+          ("C-j" . vertico-next)
+          ([backspace] . vertico-directory-delete-char)
+          ([escape] . abort-recursive-edit)))
   :custom
   (vertico-resize nil)
   :config
@@ -65,45 +41,27 @@
                     vertico-multiform-mode
                     vertico-reverse-mode
                     vertico-unobtrusive-mode))
-      (evil-set-initial-state mode 'emacs)))
+      (evil-set-initial-state mode 'emacs))))
 
-  (require 'vertico-directory)
-
-  (defun +vertico/directory-home ()
-    (when (and (> (point) (minibuffer-prompt-end))
-               (eq (char-before) ?/)
-               (eq 'file (vertico--metadata-get 'category)))
-      (delete-minibuffer-contents)
-      (insert "~/")
-      t))
-  (defun +vertico/insert-tilde ()
-    (interactive)
-    (unless (+vertico/directory-home)
-      (insert "~")))
-  (defun +vertico/insert-slash ()
-    (interactive)
-    (when (and (> (point) (minibuffer-prompt-end))
-               (eq (char-before) ?/)
-               (save-excursion
-                 (goto-char (1- (point)))
-                 (eq (char-before) ?/))
-               (eq 'file (vertico--metadata-get 'category)))
-      (delete-minibuffer-contents))
-    (insert "/")))
-
+;; `orderless' completion style.
 (use-package orderless
-  :defer 10
   :config
-  ;; pinyin
-  (use-package pinyinlib
-    :commands pinyinlib-build-regexp-string)
+  (setq completion-styles '(orderless basic)
+        completion-category-overrides '((file (styles basic partial-completion))
+                                        (buffer (styles orderless basic)))))
+
+;; pinyin
+(use-package pinyinlib
+  :after orderless
+  :autoload pinyinlib-build-regexp-string
+  :config
   (defun completion--regex-pinyin (str)
     (orderless-regexp (pinyinlib-build-regexp-string str)))
   (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 ;; Helpful minibuffer annotations
 (use-package marginalia
-  :defer t
+  :hook (after-init . marginalia-mode)
   :custom
   (marginalia-align 'left)
   :config
@@ -139,7 +97,7 @@
   :defer t)
 
 (use-package nerd-icons-completion
-  :defer t)
+  :hook (marginalia-mode . nerd-icons-completion-mode))
 
 
 (provide 'init-minibuffer)
