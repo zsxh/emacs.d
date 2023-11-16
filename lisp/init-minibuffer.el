@@ -47,16 +47,16 @@
   :config
   (setq completion-styles '(orderless basic)
         completion-category-overrides '((file (styles basic partial-completion))
-                                        (buffer (styles orderless basic)))))
+                                        (buffer (styles orderless basic))))
+  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 ;; pinyin
 (use-package pinyinlib
   :after orderless
-  :autoload pinyinlib-build-regexp-string
+  :autoload completion--regex-pinyin
   :config
   (defun completion--regex-pinyin (str)
-    (orderless-regexp (pinyinlib-build-regexp-string str)))
-  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
+    (orderless-regexp (pinyinlib-build-regexp-string str))))
 
 ;; Helpful minibuffer annotations
 (use-package marginalia
