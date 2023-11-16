@@ -19,7 +19,6 @@
 ;; `completion-category-overrides' > `completion-category-defaults' > `completion-styles'
 
 ;; minibuffer ui
-;; FIXME: `vertico-directory-delete-char', tramp path
 (use-package vertico
   :hook ((after-init . vertico-mode)
          (rfn-eshadow-update-overlay . vertico-directory-tidy))
