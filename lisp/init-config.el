@@ -92,7 +92,8 @@
       transient-values-file (locate-user-emacs-file "cache/transient/values.el")
       transient-history-file (locate-user-emacs-file "cache/transient/history.el")
       package-quickstart-file (locate-user-emacs-file "cache/package-quickstart.el")
-      rime-user-data-dir (locate-user-emacs-file "cache/rime/"))
+      rime-user-data-dir (locate-user-emacs-file "cache/rime/")
+      tabspaces-session-file (locate-user-emacs-file "cache/tabsession.el"))
 
 (setq mouse-drag-and-drop-region-cross-program t
       mouse-drag-and-drop-region t)

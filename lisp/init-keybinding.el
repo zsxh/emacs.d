@@ -187,11 +187,6 @@
    "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    ;; View/Workspace/Layout
    "v" '(nil :which-key "workspace")
-   "va" '(persp-add-buffer :which-key "persp-add-buffer")
-   "vb" '(persp-switch-to-buffer :which-key "persp-switch-to-buffer")
-   "vk" '(persp-kill :which-key "persp-kill")
-   "vv" '(persp-switch :which-key "persp-switch")
-   "vV" '(+persp/add-new-with-visible-buffers :which-key "my-persp-switch-init-view")
    ;; Window
    "w" '(nil :which-key "window")
    "w/" '(split-window-right :which-key "split-right")

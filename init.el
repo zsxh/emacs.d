@@ -107,6 +107,7 @@
 ;; Misc
 (require 'init-misc)
 (require 'init-window)
+(require 'init-workspace)
 
 (add-hook 'emacs-startup-hook (lambda () (setq debug-on-error nil)))
 
