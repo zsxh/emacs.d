@@ -145,20 +145,7 @@ Lisp function does not specify a special indentation."
   :bind ((:map lispy-mode-map
           (":" . self-insert-command)
           ("C-j" . newline-and-indent)))
-  :init
-  (defun enable-lispy ()
-    "Lazy load lispy because bunch of require statements on top of lispy.el
- slows down the startup of emacs."
-    (if (or (not (eq major-mode 'lisp-interaction-mode))
-            (featurep 'lispy))
-        (lispy-mode)
-      (let ((buf (current-buffer)))
-        (run-with-idle-timer
-         3 nil
-         (lambda ()
-           (with-current-buffer buf
-             (lispy-mode)))))))
-  :hook ((lisp-data-mode clojure-mode) . enable-lispy)
+  :hook ((lisp-data-mode clojure-mode) . lispy-mode)
   :config
   ;; this requires CIDER or cider--display-interactive-eval-result function
   (setq lispy-eval-display-style 'overlay)
