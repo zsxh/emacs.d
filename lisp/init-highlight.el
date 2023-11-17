@@ -106,6 +106,8 @@
   :ensure nil
   :defer t
   :config
+  (setq pulse-delay 0.03
+        pulse-iterations 10)
   (set-face-background 'pulse-highlight-start-face "#51afef")
   (when (fboundp 'set-face-extend)
     (set-face-extend 'pulse-highlight-start-face t)))
