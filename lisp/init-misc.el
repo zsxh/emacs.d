@@ -178,8 +178,8 @@
         telega-old-date-format "%Y/%M/%D"
         telega-translate-to-language-by-default "zh")
 
-  ;; avatar size
-  (setf (alist-get 2 telega-avatar-factors-alist) '(0.4 . 0.1))
+  ;; avatar
+  (setq telega-avatar-workaround-gaps-for '(return t))
 
   (with-eval-after-load 'telega-root
     (with-eval-after-load 'evil
