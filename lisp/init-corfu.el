@@ -33,9 +33,7 @@
   :bind (:map corfu-popupinfo-map
          ("C-h" . corfu-popupinfo-toggle)
          ("C-d" . corfu-popupinfo-scroll-up)
-         ("C-b" . corfu-popupinfo-scroll-down)
-         ("gg" . corfu-popupinfo-beginning)
-         ("G" . corfu-popupinfo-end)))
+         ("C-b" . corfu-popupinfo-scroll-down)))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal
