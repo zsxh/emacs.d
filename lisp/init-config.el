@@ -101,28 +101,9 @@
 ;; Increase subprocess read chunk size
 (setq read-process-output-max (* 1024 1024))
 
-;; remap major mode
-(when (treesit-available-p)
-  (setq major-mode-remap-alist
-        '((c-mode          . c-ts-mode)
-          (c++-mode        . c++-ts-mode)
-          (conf-toml-mode  . toml-ts-mode)
-          (csharp-mode     . csharp-ts-mode)
-          (css-mode        . css-ts-mode)
-          (java-mode       . java-ts-mode)
-          (js-mode         . js-ts-mode)
-          (javascript-mode . js-ts-mode)
-          (js-json-mode    . json-ts-mode)
-          (python-mode     . python-ts-mode)
-          ;; (ruby-mode       . ruby-ts-mode)
-          (go-mode         . go-ts-mode)
-          (typescript-mode . typescript-ts-mode)
-          (sh-mode         . bash-ts-mode)
-          (rust-mode       . rust-ts-mode)
-          (yaml-mode       . yaml-ts-mode))))
-
 ;; repeat mode
 (setq repeat-mode t)
+
 ;; improve long line coding, i don't need bidirectional text
 ;; https://emacs-china.org/t/topic/25811/9
 (setq-default bidi-display-reordering nil)

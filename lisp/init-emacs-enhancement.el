@@ -49,7 +49,6 @@
 
 ;; TreeSitter
 (use-package treesit
-  :if (featurep 'treesit)
   :ensure nil
   :defer t
   ;; :config
@@ -70,11 +69,11 @@
 (add-hook 'prog-mode-hook #'mp-remove-treesit-sexp-changes)
 
 (use-package treesit-auto
-  :if (featurep 'treesit)
-  :defer t
-  ;; :config
-  ;; (global-treesit-auto-mode)
-  )
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
 
