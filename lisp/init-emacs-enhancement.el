@@ -72,7 +72,12 @@
   :custom
   (treesit-auto-install 'prompt)
   :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
+  ;; auto add to `auto-mode-alist' if `*-ts-mode' exists
+  (treesit-auto-add-to-auto-mode-alist
+   (seq-map #'treesit-auto-recipe-lang
+            (seq-filter
+             (lambda (r) (functionp (treesit-auto-recipe-ts-mode r)))
+             treesit-auto-recipe-list)))
   (global-treesit-auto-mode))
 
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
