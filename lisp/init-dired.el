@@ -156,9 +156,11 @@
   :config
   (dirvish-override-dired-mode-maybe)
 
-  (when (or IS-LINUX
-            ;; Macos installed `coreutils'
-            (and IS-MAC (string= insert-directory-program "gls")))
+  ;; Macos installed `coreutils'
+    ;; FIXME: raycast launch emacs (getenv "PATH"), wierd PATH
+  (when (and IS-MAC (executable-find "gls"))
+    (setq insert-directory-program "gls"))
+  (when (or IS-LINUX (executable-find "gls"))
     (setq dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group"))
 
   (setq dired-dwim-target t

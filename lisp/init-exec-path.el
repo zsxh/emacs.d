@@ -13,7 +13,6 @@
 (defvar exec-path-from-shell-initialize-p nil)
 
 (use-package exec-path-from-shell
-  :defer 1
   :config
   (setq
    ;; NOTE: https://github.com/purcell/exec-path-from-shell#making-exec-path-from-shell-faster
