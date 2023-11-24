@@ -260,18 +260,6 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
                     :arguments (vector (eglot-path-to-uri file-path)))))
       (eq t (eglot-execute (eglot--current-server-or-lose) command)))))
 
-;; http://www.tianxiangxiong.com/2017/02/12/decompiling-java-classfiles-in-emacs.html
-;; https://github.com/xiongtx/jdecomp
-;; https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine
-;; java -cp /home/zsxh/.local/share/JetBrains/Toolbox/apps/IDEA-C/ch-0/203.7148.57/plugins/java-decompiler/lib/java-decompiler.jar org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler [-<option>=<value>]* [<source>]+ <destination>
-;; TODO: `jdecomp--fernflower-decompile-file' should extract all A.class and A${anonymous}.class
-(use-package jdecomp
-  :commands (jdecomp-mode)
-  :config
-  (setq jdecomp-decompiler-type 'fernflower
-        jdecomp-decompiler-paths `((fernflower . ,(file-name-concat user-emacs-directory "cache" "lsp-servers" "java" "bundles" "dg.jdt.ls.decompiler.fernflower-0.0.3.jar")))
-        jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))))
-
 
 (provide 'init-lang-java)
 
