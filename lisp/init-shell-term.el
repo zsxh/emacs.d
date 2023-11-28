@@ -18,12 +18,13 @@
 ;; MacOS: brew install libvterm
 (use-package vterm
   :commands (vterm vterm-other-window)
+  :init
+  (global-set-key [f9] '+vterm/toggle)
   :bind ((:map vterm-mode-map
           ("M-u" . ace-window)
           ("M-`" . +vterm/send-tmux-prefix-key)
           ("C-s" . +vterm/search-line)
-          ("<f9>" . +vterm/toggle-here)
-          ("<f10>" . +vterm/toggle-other-window)
+          ("<f9>" . +vterm/toggle)
           ("<f11>" . toggle-frame-fullscreen))
          (:map vterm-copy-mode-map
           ("q" . vterm-copy-mode-done)))
@@ -31,9 +32,6 @@
   (vterm-kill-buffer-on-exit t)
   ;; (vterm-term-environment-variable "xterm-24bit")
   (vterm-timer-delay 0.01)
-  :init
-  (global-set-key [f9] '+vterm/toggle-here)
-  (global-set-key [f10] '+vterm/toggle-other-window)
   :config
   ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
   (with-eval-after-load 'doom-themes
@@ -48,12 +46,11 @@
       (evil-normal-state))
     (evil-define-key 'insert vterm-mode-map (kbd "<escape>") #'+vterm/evil-esc))
 
-  (defvar +vterm/toggle--window-configration nil)
-
-  (defun +vterm/toggle (arg &optional this-window-p)
+  (defun +vterm/toggle (arg)
     "Toggles a window at project root.
 
 If prefix ARG is non-nil, cd into `default-directory' instead of project root."
+    (interactive "P")
     (unless (fboundp 'module-load)
       (user-error "Your build of Emacs lacks dynamic modules support and cannot load vterm"))
     (let* ((dir-remote-p (file-remote-p default-directory))
@@ -67,45 +64,25 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
                      (directory-file-name
                       (expand-file-name default-directory))))))
       (if-let (win (get-buffer-window buffer-name))
+          ;; vterm buffer exist
           (if (eq (selected-window) win)
-              (progn
-                (with-current-buffer (get-buffer buffer-name)
-                  (bury-buffer))
-                (when +vterm/toggle--window-configration
-                  (set-window-configuration +vterm/toggle--window-configration)))
-            (select-window win)
+              ;; hide selected vterm buffer
+              (with-current-buffer (get-buffer buffer-name)
+                (bury-buffer))
+            ;; selected vterm buffer
+            (select-window win))
+        (if-let ((buffer (get-buffer buffer-name)))
+            ;; popup vterm buffer
+            (display-buffer buffer)
+          ;; create new vterm buffer
+          (with-current-buffer (vterm buffer-name)
             (when (bound-and-true-p evil-local-mode)
-              (evil-change-to-initial-state)))
-        (let ((buffer (get-buffer-create buffer-name)))
-          (with-current-buffer buffer
-            (unless (eq major-mode 'vterm-mode)
-              (vterm-mode)
-              (unless dir-remote-p
-                (+vterm/activate-local-python-venv)))
+              (evil-change-to-initial-state))
+            (unless dir-remote-p
+              (+vterm/activate-local-python-venv))
             ;; (when dir-remote-p
             ;;   (+vterm/change-remote-directory))
-            )
-          (setq +vterm/toggle--window-configration (current-window-configuration))
-          (if this-window-p
-              (let ((new-window (split-window
-                                 (selected-window)
-                                 (round (* (window-height (frame-root-window)) 0.7))
-                                 'below)))
-                (select-window new-window)
-                (switch-to-buffer buffer))
-            (pop-to-buffer buffer))))))
-
-  (defun +vterm/toggle-other-window (arg)
-    "Toggles a terminal popup window at project root.
-If prefix ARG is non-nil, cd into `default-directory' instead of project root."
-    (interactive "P")
-    (+vterm/toggle arg nil))
-
-  (defun +vterm/toggle-here (arg)
-    "Open a terminal buffer in the current window at project root.
-If prefix ARG is non-nil, cd into `default-directory' instead of project root."
-    (interactive "P")
-    (+vterm/toggle arg t))
+            )))))
 
   (defun +vterm/change-remote-directory ()
     "Use the corresponding method to prepare vterm at the corresponding remote directory."
