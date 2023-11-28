@@ -12,7 +12,16 @@
 
 ;; YAML config
 (use-package yaml-mode
-  :defer t)
+  :defer t
+  :hook (yaml-mode . (lambda ()
+                       (setq-local completion-at-point-functions
+                                   '(cape-dabbrev cape-file cape-keyword cape-abbrev)))))
+
+(with-eval-after-load 'yaml-ts-mode
+  (add-hook 'yaml-ts-mode-hook
+            (lambda ()
+              (setq-local completion-at-point-functions
+                          '(cape-dabbrev cape-file cape-keyword cape-abbrev)))))
 
 ;; Web mode for html,xml...
 (use-package web-mode
