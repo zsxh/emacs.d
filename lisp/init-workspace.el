@@ -11,6 +11,11 @@
 ;;; Code:
 
 ;; TODO: emacs built-in `tab-bar'
+(use-package tab-bar
+  :ensure nil
+  :hook (after-init . tab-bar-mode)
+  :custom
+  (tab-bar-show 1))
 
 ;; TODO: https://github.com/mclear-tools/tabspaces
 (use-package tabspaces

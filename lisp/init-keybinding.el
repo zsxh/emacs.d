@@ -187,6 +187,12 @@
    "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    ;; View/Workspace/Layout
    "v" '(nil :which-key "workspace")
+   "vc" '(tab-new :which-key "tab-new")
+   "vn" '(tab-next :which-key "tab-next")
+   "vp" '(tab-previous :which-key "tab-previous")
+   "vr" '(tab-rename :which-key "tab-rename")
+   "vs" '(tab-switch :which-key "tab-switch")
+   "vx" '(tab-close :which-key "tab-close")
    ;; Window
    "w" '(nil :which-key "window")
    "w/" '(split-window-right :which-key "split-right")
