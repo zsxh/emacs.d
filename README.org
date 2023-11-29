@@ -1,9 +1,9 @@
 #+STARTUP: showall
-Updated: <2023-10-30>
+Updated: <2023-11-29>
 
 * Enviroment
   - GNU Emacs 30.0.50
-  - emacs-repository-version: =b27e2bbb347c981ad12e05161d2bee195d110dd4=
+  - emacs-repository-version: =5a0250f76676d8750f42bbca1af5c4553846949b=
   - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
 
 * TODOs
@@ -27,20 +27,6 @@ Updated: <2023-10-30>
 #+begin_src shell
   git clone --recursive https://github.com/zsxh/emacs.d.git ~/.emacs.d
   mkdir ~/.emacs.d/cache
-  # git submodule update --init --recursive --depth 1
-  # cd submodules/emacs-application-framework
-  # mkdir app
-  # cd app
-  # git clone --depth 1 https://github.com/emacs-eaf/eaf-browser.git
-  # git clone --depth 1 https://github.com/emacs-eaf/eaf-pdf-viewer.git
-  # git clone --depth 1 https://github.com/emacs-eaf/eaf-image-viewer.git
-#+end_src
-
-* Updating
-#+begin_src shell
-  cd ~/.emacs.d/
-  git pull
-  # git submodule update --init --recursive --depth 1
 #+end_src
 
 * Q&A

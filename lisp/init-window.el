@@ -19,6 +19,12 @@
   ;;        ("M-`" . popper-cycle)
   ;;        ("C-M-`" . popper-toggle-type))
   :config
+  (setq popper-window-height
+        (lambda (win)
+          (fit-window-to-buffer
+           win
+           (floor (frame-height) 4)
+           (floor (frame-height) 4))))
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$"
