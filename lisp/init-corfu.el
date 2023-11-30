@@ -28,6 +28,10 @@
         corfu-auto-delay 0.1
         corfu-popupinfo-delay '(0.2 . 0.1)))
 
+(use-package corfu-terminal
+  :if (not (display-graphic-p))
+  :hook (global-corfu-mode . corfu-terminal-mode))
+
 (use-package corfu-popupinfo
   :defer t
   :ensure corfu

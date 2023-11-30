@@ -39,6 +39,7 @@
           (pcase archives
             ('melpa
              `(,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))
+               ,(cons "nongnu" (concat proto "://elpa.nongnu.org/nongnu/"))
                ,(cons "melpa" (concat proto "://melpa.org/packages/"))))
             ('melpa-mirror
              `(,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))
@@ -50,7 +51,9 @@
              `(,(cons "gnu-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/gnu/"))
                ,(cons "melpa-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/melpa/"))))
             ('tuna
+             ;; https://mirrors.tuna.tsinghua.edu.cn/help/elpa/
              `(,(cons "gnu-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+               ,(cons "nongnu" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/"))
                ,(cons "melpa-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
             (archives
              (error "Unknown archives: `%s'" archives))))))
