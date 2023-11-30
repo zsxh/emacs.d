@@ -14,6 +14,7 @@
 ;; Yet another snippet extension
 (use-package yasnippet
   :diminish yas-minor-mode
+  :bind (("M-/" . yas-expand))
   :hook (after-init . yas-global-mode))
 
 ;; Collection of yasnippet snippets
