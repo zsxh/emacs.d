@@ -136,6 +136,7 @@
   :hook ((prog-mode
           conf-mode
           yaml-mode
+          yaml-ts-mode
           editorconfig-mode
           vue-mode
           cider-repl-mode
