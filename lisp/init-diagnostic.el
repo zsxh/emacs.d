@@ -25,7 +25,8 @@
   ;; https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_pullDiagnostics
   (setq flymake-no-changes-timeout 0.5
         flymake-start-on-save-buffer nil
-        flymake-show-diagnostics-at-end-of-line 'short)
+        ;; FIXME: mess up corfu popup child frame
+        flymake-show-diagnostics-at-end-of-line nil)
   (advice-add 'flymake-eldoc-function :override #'ignore))
 
 ;; https://github.com/mohkale/flymake-collection
