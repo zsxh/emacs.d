@@ -20,7 +20,8 @@
   :config
   (set-face-attribute 'corfu-border nil :inherit 'region :background 'unspecified)
   (with-eval-after-load 'doom-themes
-    (set-face-background 'corfu-current (doom-color 'dark-blue)))
+    (when (eq current-theme 'doom-one)
+      (set-face-background 'corfu-current (doom-color 'dark-blue))))
   (setq corfu-auto t
         corfu-auto-prefix 1
         corfu-preview-current nil

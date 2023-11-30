@@ -45,9 +45,9 @@
 ;; `orderless' completion style.
 (use-package orderless
   :config
-  (setq completion-styles '(orderless basic)
+  (setq completion-styles '(basic orderless)
         completion-category-overrides '((file (styles basic partial-completion))
-                                        (buffer (styles orderless basic))))
+                                        (buffer (styles basic orderless))))
   (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 ;; pinyin
