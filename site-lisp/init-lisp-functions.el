@@ -155,7 +155,7 @@
       (mark-sexp)
       (call-interactively 'kill-ring-save))
     (newline-and-indent)
-    (yank))
+    (yank-pop))
    (t (setq this-command 'self-insert-command)
       (call-interactively 'self-insert-command))))
 
