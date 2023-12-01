@@ -9,6 +9,7 @@
 ;;
 
 ;;; Code:
+
 ;; TODO: remove lispy
 ;; - [x] format(i)
 ;; - [x] structure delete(backspace)
@@ -17,7 +18,7 @@
 ;; - [x] lisp comment(;)
 ;; - [ ] slurp(>)
 ;; - [ ] barf(<)
-;; - [ ] copy(c)
+;; - [x] clone(c)
 
 (defun zsxh/empty-pair (&optional pos)
   (let* ((pos (or pos (point)))
@@ -144,6 +145,20 @@
               (insert " ;; ")))))))
    (t (call-interactively 'comment-dwim))))
 
+(defun zsxh/lisp-clone ()
+  "From \")|\", clone, Otherwise `self-insert-command'"
+  (interactive)
+  (cond
+   ((and (memq (char-before) '(?\) ?\])) (not (zsxh/in-string-or-comment)))
+    (save-excursion
+      (backward-sexp)
+      (mark-sexp)
+      (call-interactively 'kill-ring-save))
+    (newline-and-indent)
+    (yank))
+   (t (setq this-command 'self-insert-command)
+      (call-interactively 'self-insert-command))))
+
 (bind-key (kbd "DEL") #'zsxh/lisp-backward-delete-char lispy-mode-map)
 ;; (bind-key (kbd "DEL") #'lispy-delete-backward lispy-mode-map)
 
@@ -158,10 +173,10 @@
 
 (bind-key (kbd ";") #'zsxh/lisp-comment lispy-mode-map)
 ;; (bind-key (kbd ";") #'lispy-comment lispy-mode-map)
-;; (bind-key (kbd ";") #'lispy-comment lispy-mode-map
-;;           acbk)
-;; (bind-key (kbd ";") #'lispy-comment lispy-mode-map (+ 1
-;;                                                       1)   )
+
+(bind-key (kbd "c") #'zsxh/lisp-clone lispy-mode-map)
+;; (bind-key (kbd "c") #'special-lispy-clone lispy-mode-map)
+
 
 (provide 'init-lisp-functions)
 
