@@ -57,7 +57,6 @@
         (previous-line)
         (end-of-line)))))
 
-;; FIXME: do not save to kill ring
 (defun zsxh/lisp-backward-delete-char (arg)
   "From \")|\", `backward-kill-sexp', Otherwise `backward-delete-char-untabify'"
   (interactive "p")
@@ -69,12 +68,15 @@
      ;; (...)|, [...]|, "..."|
      ((or (and (memq (char-before) '(?\) ?\])) (not in-string-or-comment))
           (and (eq ?\" (char-before)) (not in-string)))
-      (backward-kill-sexp arg))
-     ;; (|...), [|...]|, "|..."
+      (backward-sexp)
+      (mark-sexp)
+      (call-interactively 'delete-region))
+     ;; (|...), [|...], "|..."
      ((or (and (memq (char-before) '(?\( ?\[)) (not in-string-or-comment))
           (and (eq ?\" (char-before)) in-string))
       (backward-char 1)
-      (kill-sexp arg))
+      (mark-sexp)
+      (call-interactively 'delete-region))
      ;; (|), [|], "|", '|', {|}
      ((zsxh/empty-pair)
       (delete-char 1)
@@ -155,7 +157,7 @@
 ;; (bind-key (kbd "m") #'special-lispy-mark-list lispy-mode-map)
 
 (bind-key (kbd ";") #'zsxh/lisp-comment lispy-mode-map)
-(bind-key (kbd ";") #'lispy-comment lispy-mode-map)
+;; (bind-key (kbd ";") #'lispy-comment lispy-mode-map)
 ;; (bind-key (kbd ";") #'lispy-comment lispy-mode-map
 ;;           acbk)
 ;; (bind-key (kbd ";") #'lispy-comment lispy-mode-map (+ 1
