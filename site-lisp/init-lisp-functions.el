@@ -58,7 +58,7 @@
         (end-of-line)))))
 
 (defun zsxh/lisp-backward-delete-char (arg)
-  "From \")|\", `backward-kill-sexp', Otherwise `backward-delete-char-untabify'"
+  "From \")|\", `delete-region', Otherwise `backward-delete-char-untabify'"
   (interactive "p")
   (let* ((syntax (syntax-ppss))
          (in-string (nth 3 syntax))
