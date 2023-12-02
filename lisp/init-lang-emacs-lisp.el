@@ -139,49 +139,9 @@ Lisp function does not specify a special indentation."
     (evil-define-minor-mode-key 'normal 'macrostep-mode
       "q" 'macrostep-collapse)))
 
-;; TODO: remove lispy (format(i), sturcture delete(backspace), eval(e), structure select/mark(m), lisp comment(;), slurp(>), barf(<))
-;; Short and sweet LISP editing
-(use-package lispy
-  :bind ((:map lispy-mode-map
-          (":" . self-insert-command)
-          ("C-j" . newline-and-indent)))
-  :hook ((lisp-data-mode clojure-mode) . lispy-mode)
-  :config
-  ;; this requires CIDER or cider--display-interactive-eval-result function
-  (setq lispy-eval-display-style 'overlay)
-  (with-eval-after-load 'cider
-    (defun lispy-eval (arg &optional e-str)
-      "Eval the current sexp and display the result.
-When ARG is 2, insert the result as a comment.
-When at an outline, eval the outline."
-      (interactive "p")
-      (setq lispy-eval-output nil)
-      (condition-case e
-          (cond ((eq arg 2)
-                 (lispy-eval-and-comment))
-                ((and (looking-at lispy-outline)
-                      (looking-at lispy-outline-header))
-                 (lispy-eval-outline))
-                (t
-                 (let ((res (lispy--eval e-str)))
-                   (when (memq major-mode lispy-clojure-modes)
-                     (setq res (lispy--clojure-pretty-string res)))
-                   (when lispy-eval-output
-                     (setq res (concat lispy-eval-output res)))
-                   (cond ((eq lispy-eval-display-style 'message)
-                          (lispy-message res))
-                         ((or (fboundp 'cider--display-interactive-eval-result)
-                              (require 'cider nil t))
-                          (cider--display-interactive-eval-result
-                           res 'value (cdr (lispy--bounds-dwim))))
-                         ((or (fboundp 'eros--eval-overlay)
-                              (require 'eros nil t))
-                          (eros--eval-overlay
-                           res (cdr (lispy--bounds-dwim))))
-                         (t
-                          (error "Please install CIDER >= 0.10 or eros to display overlay"))))))
-        (eval-error
-         (lispy-message (cdr e)))))))
+(use-package zsxh-lispy
+  :ensure nil
+  :hook ((lisp-data-mode clojure-mode) . zsxh-lispy-mode))
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros
