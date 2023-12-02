@@ -24,8 +24,9 @@
       (set-face-background 'corfu-current (doom-color 'dark-blue))))
   (setq corfu-auto t
         corfu-auto-prefix 1
-        corfu-preview-current nil
         corfu-auto-delay 0.1
+        corfu-on-exact-match nil
+        corfu-preview-current nil
         corfu-popupinfo-delay '(0.2 . 0.1)))
 
 (use-package corfu-terminal
