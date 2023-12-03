@@ -121,8 +121,10 @@
    (t (setq this-command 'self-insert-command)
       (call-interactively 'self-insert-command))))
 
-(defun zsxh-lispy/format-region (start end)
+;;;###autoload
+(defun zsxh-lispy/lisp-format-region (start end)
   "Format the selected region."
+  (interactive "r")
   (save-restriction
     (narrow-to-region start end)
     (goto-char (point-min))
@@ -145,15 +147,15 @@
 
 ;;;###autoload
 (defun zsxh-lispy/lisp-format (&optional beg end)
-  "From \")|\", `indent-region', Otherwise `self-insert-command'"
+  "From \")|\", format lisp, Otherwise `self-insert-command'"
   (interactive (and (region-active-p) (list (region-beginning) (region-end))))
   (cond
    ((and beg end)
-    (save-excursion
-      (zsxh-lispy/format-region beg end)))
+    (save-excursion (zsxh-lispy/format-region beg end)))
    ((and (eq ?\) (char-before)) (not (zsxh-lispy/in-string-or-comment)))
     (save-excursion
-      (zsxh-lispy/format-region (save-excursion (backward-sexp 1 t) (point)) (point))))
+      (zsxh-lispy/format-region (save-excursion (backward-sexp 1 t) (point))
+                                (point))))
    (t (setq this-command 'self-insert-command)
       (call-interactively 'self-insert-command))))
 
