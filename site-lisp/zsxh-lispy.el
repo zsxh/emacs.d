@@ -121,10 +121,8 @@
    (t (setq this-command 'self-insert-command)
       (call-interactively 'self-insert-command))))
 
-;;;###autoload
 (defun zsxh-lispy/format-region (start end)
   "Format the selected region."
-  (interactive "r")
   (save-restriction
     (narrow-to-region start end)
     (goto-char (point-min))
@@ -151,7 +149,8 @@
   (interactive (and (region-active-p) (list (region-beginning) (region-end))))
   (cond
    ((and beg end)
-    (indent-region beg end))
+    (save-excursion
+      (zsxh-lispy/format-region beg end)))
    ((and (eq ?\) (char-before)) (not (zsxh-lispy/in-string-or-comment)))
     (save-excursion
       (zsxh-lispy/format-region (save-excursion (backward-sexp 1 t) (point)) (point))))
