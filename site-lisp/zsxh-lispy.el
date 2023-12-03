@@ -122,6 +122,30 @@
       (call-interactively 'self-insert-command))))
 
 ;;;###autoload
+(defun zsxh-lispy/format-region (start end)
+  "Format the selected region."
+  (interactive "r")
+  (save-restriction
+    (narrow-to-region start end)
+    (goto-char (point-min))
+    ;; Remove extra spaces
+    (while (re-search-forward "\s+" nil t)
+      (let ((before (char-before))
+            (in-string-p nil))
+        (when (and (not (zsxh-lispy/in-string-or-comment))
+                   (eq (char-before) ?\s))
+          (replace-match " "))))
+    ;; Remove trailing space
+    (goto-char (point-min))
+    (while (re-search-forward "\s\n" nil t)
+      (replace-match "\n"))
+    ;; Collapse consecutive empty lines to one
+    (goto-char (point-min))
+    (while (re-search-forward "\\([\s]*\n\\)\\{2,\\}" nil t)
+      (replace-match "\n\n"))
+    (indent-region (point-min) (point-max))))
+
+;;;###autoload
 (defun zsxh-lispy/lisp-format (&optional beg end)
   "From \")|\", `indent-region', Otherwise `self-insert-command'"
   (interactive (and (region-active-p) (list (region-beginning) (region-end))))
@@ -129,7 +153,8 @@
    ((and beg end)
     (indent-region beg end))
    ((and (eq ?\) (char-before)) (not (zsxh-lispy/in-string-or-comment)))
-    (indent-region (save-excursion (backward-sexp 1 t) (point)) (point)))
+    (save-excursion
+      (zsxh-lispy/format-region (save-excursion (backward-sexp 1 t) (point)) (point))))
    (t (setq this-command 'self-insert-command)
       (call-interactively 'self-insert-command))))
 
