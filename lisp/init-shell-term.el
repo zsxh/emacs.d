@@ -166,6 +166,9 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 ;; (use-package term-keys
 ;;   :hook (after-init . term-keys-mode))
 
+;; TODO: eat configs
+(use-package eat
+  :defer t)
 
 
 (provide 'init-shell-term)
