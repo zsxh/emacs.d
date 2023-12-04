@@ -41,7 +41,7 @@
 
 (add-hook 'emacs-startup-hook (lambda ()
                                 "Restore defalut values after startup."
-                                (message "[info] gcs-done %d times, gc-elapsed %d seconds" gcs-done gc-elapsed)
+                                (message "[info] gcs-done %d times, gc-elapsed %.03f seconds" gcs-done gc-elapsed)
                                 (setq gc-cons-threshold 1800000
                                       gc-cons-percentage 0.2)))
 ;; Load Path
