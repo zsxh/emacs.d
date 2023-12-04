@@ -36,14 +36,13 @@
 ;; https://emacsconf.org/2023/talks/gc/
 ;; NOTE: Check `gcs-done' and `gc-elapsed' right after Emacs startup
 (setq gc-cons-threshold 80000000)
-;; (setq gc-cons-threshold most-positive-fixnum
-;;       gc-cons-percentage 0.6)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            "Restore defalut values after startup."
+            (message "[info] gcs-done %d times, gc-elapsed %.03f seconds" gcs-done gc-elapsed)
+            (setq gc-cons-threshold 1800000
+                  gc-cons-percentage 0.2)))
 
-(add-hook 'emacs-startup-hook (lambda ()
-                                "Restore defalut values after startup."
-                                (message "[info] gcs-done %d times, gc-elapsed %.03f seconds" gcs-done gc-elapsed)
-                                (setq gc-cons-threshold 1800000
-                                      gc-cons-percentage 0.2)))
 ;; Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))

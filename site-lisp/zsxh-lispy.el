@@ -155,7 +155,7 @@
     (save-excursion (zsxh-lispy/format-region beg end)))
    ((and (eq ?\) (char-before)) (not (zsxh-lispy/in-string-or-comment)))
     (save-excursion
-      (zsxh-lispy/format-region (save-excursion (backward-sexp 1 t) (point))
+      (zsxh-lispy/lisp-format-region (save-excursion (backward-sexp 1 t) (point))
                                 (point))))
    (t (setq this-command 'self-insert-command)
       (call-interactively 'self-insert-command))))
