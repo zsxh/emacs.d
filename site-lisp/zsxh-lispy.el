@@ -7,8 +7,6 @@
 ;;
 ;; Custom Lispy Like Commands
 ;;
-;; TODO: clojure cider eval last sexp
-;;
 ;; Cheat Sheet:
 ;;
 ;; |---------------+-----+---------------+----------------------------------------|
@@ -117,7 +115,10 @@
   (interactive)
   (cond
    ((and (eq ?\) (char-before)) (not (zsxh-lispy/in-string-or-comment)))
-    (call-interactively 'eros-eval-last-sexp))
+    (if (and (derived-mode-p '(clojure-mode clojure-ts-mode))
+             (functionp 'cider-eval-last-sexp))
+        (call-interactively 'cider-eval-last-sexp)
+      (call-interactively 'eros-eval-last-sexp)))
    (t (setq this-command 'self-insert-command)
       (call-interactively 'self-insert-command))))
 

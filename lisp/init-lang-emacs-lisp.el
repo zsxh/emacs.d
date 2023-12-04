@@ -141,7 +141,7 @@ Lisp function does not specify a special indentation."
 
 (use-package zsxh-lispy
   :ensure nil
-  :hook ((lisp-data-mode clojure-mode) . zsxh-lispy-mode))
+  :hook ((lisp-data-mode clojure-mode clojure-ts-mode) . zsxh-lispy-mode))
 
 ;; Evaluation Result OverlayS for Emacs Lisp.
 (use-package eros
