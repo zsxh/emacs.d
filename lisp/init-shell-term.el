@@ -168,7 +168,9 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 
 ;; TODO: eat configs
 (use-package eat
-  :defer t)
+  :defer t
+  :config
+  (setq eat-kill-buffer-on-exit t))
 
 
 (provide 'init-shell-term)
