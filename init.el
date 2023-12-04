@@ -33,13 +33,17 @@
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
 ;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#avoid-garbage-collection-at-startup
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6)
+;; https://emacsconf.org/2023/talks/gc/
+;; NOTE: Check `gcs-done' and `gc-elapsed' right after Emacs startup
+(setq gc-cons-threshold 80000000)
+;; (setq gc-cons-threshold most-positive-fixnum
+;;       gc-cons-percentage 0.6)
 
 (add-hook 'emacs-startup-hook (lambda ()
                                 "Restore defalut values after startup."
-                                (setq gc-cons-threshold 16777216 ; 16mb
-                                      gc-cons-percentage 0.1)))
+                                (message "[info] gcs-done %d times, gc-elapsed %d seconds" gcs-done gc-elapsed)
+                                (setq gc-cons-threshold 1800000
+                                      gc-cons-percentage 0.2)))
 ;; Load Path
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))

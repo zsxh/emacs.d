@@ -191,7 +191,7 @@
 (use-package gcmh
   :init
   :defer t
-  :hook (after-init . gcmh-mode)
+  ;; :hook (after-init . gcmh-mode)
   :config
   (setq gcmh-verbose nil
         gcmh-low-cons-threshold 1800000))
