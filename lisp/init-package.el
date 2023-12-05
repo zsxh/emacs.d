@@ -80,7 +80,7 @@ If RETURN-P, return the message as a string instead of displaying it."
 (add-hook 'emacs-startup-hook #'+package/display-benchmark)
 
 (with-eval-after-load 'package
-  ;; (setq package-install-upgrade-built-in t)
+  (setq package-install-upgrade-built-in t)
   (defvar package-upgrade-exclude-vc-pkgs-p t)
   (define-advice package--upgradeable-packages (:override (&optional include-builtins) advice)
     ;; Initialize the package system to get the list of package
