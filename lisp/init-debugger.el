@@ -15,10 +15,7 @@
 ;; NOTE: https://github.com/svaante/dape#supported-debug-adapters
 ;; NOTE: https://microsoft.github.io/debug-adapter-protocol/overview
 (use-package dape
-  :vc (:url "https://github.com/svaante/dape" :rev :newest)
-  :after eglot
-  :config
-  (setq dape-inline-variables t))
+  :after eglot)
 
 (with-eval-after-load 'dape
   ;; Python
