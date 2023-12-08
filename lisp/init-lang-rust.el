@@ -29,6 +29,23 @@
 (add-hook-run-once 'rust-mode-hook #'+rust/set-custom-leader-keys)
 (add-hook-run-once 'rust-ts-mode-hook #'+rust/set-custom-leader-keys)
 
+;; TODO: rust-analyzer :experimental/externalDocs
+;; https://github.com/joaotavora/eglot/discussions/1327
+(defun +rust/eglot-open-external-documentation ()
+  "Open a URL to the documentation for the symbol under point."
+  (interactive)
+  (eglot-server-capable-or-lose :experimental :externalDocs)
+  (let ((res (jsonrpc-request (eglot--current-server-or-lose)
+                              :experimental/externalDocs
+                              (eglot--TextDocumentPositionParams))))
+    (when res
+      (let ((local (plist-get res :local))
+            (web (or (plist-get res :web)
+                     res)))
+        (if (and local (file-exists-p (eglot--uri-to-path local)))
+            (browse-url local)
+          (browse-url web))))))
+
 (use-package cargo
   :defer t)
 
