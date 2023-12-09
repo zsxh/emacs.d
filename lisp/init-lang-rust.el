@@ -42,7 +42,7 @@
       (let ((local (plist-get res :local))
             (web (or (plist-get res :web)
                      res)))
-        (if (and local (file-exists-p (eglot--uri-to-path local)))
+        (if (and local (file-exists-p (eglot-uri-to-path local)))
             (browse-url local)
           (browse-url web))))))
 

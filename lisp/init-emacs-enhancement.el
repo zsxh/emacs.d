@@ -174,28 +174,6 @@
 
 (setq garbage-collection-messages nil)
 
-;; Adopt a sneaky garbage collection strategy of waiting until idle time to
-;; collect; staving off the collector while the user is working.
-;;
-;; https://gitlab.com/koral/gcmh
-;; https://github.com/hlissner/doom-emacs/commit/717d53c6665229a731c55b23f9786c86111b3474
-;; https://www.reddit.com/r/emacs/comments/bg85qm/garbage_collector_magic_hack/elniyfv?utm_source=share&utm_medium=web2x
-;; https://github.com/hlissner/doom-emacs/issues/3108
-;;
-;; Follow the method recommended by Gnu Emacs Maintainer Eli Zaretskii: “My suggestion is
-;; to repeatedly multiply gc-cons-threshold by 2 until you stop seeing significant improvements
-;; in responsiveness, and in any case not to increase by a factor larger than 100 or somesuch.
-;; If even a 100-fold increase doesn’t help, there’s some deeper problem with the Lisp code
-;; which produces so much garbage, or maybe GC is not the reason for slowdown.”
-;; https://www.reddit.com/r/emacs/comments/brc05y/is_lspmode_too_slow_to_use_for_anyone_else/eofulix/
-(use-package gcmh
-  :init
-  :defer t
-  ;; :hook (after-init . gcmh-mode)
-  :config
-  (setq gcmh-verbose nil
-        gcmh-low-cons-threshold 1800000))
-
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
 ;; TODO: Enhance Tramp
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
