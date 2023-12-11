@@ -57,8 +57,11 @@
   :config
   (require 'dirvish-vc)
   (require 'dirvish-emerge)
-  (ignore-errors 
-    (require 'pdf-tools nil t))
+  (advice-run-once
+   'dirvish-pdf-dp
+   :before (lambda (&rest _)
+             (ignore-errors
+               (require 'pdf-tools nil t))))
   (setq dirvish-vc-state-face-alist
         '((up-to-date . nil)
           (edited . diff-changed)
