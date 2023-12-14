@@ -31,10 +31,7 @@
                (not (string-prefix-p "*vterm:" name))
                (not (string-prefix-p "*cider" name))
                (not (string-prefix-p "*Python" name)))
-          (string-match-p "magit.*:" name)
-          (when-let ((cur-persp (and (bound-and-true-p persp-mode)
-                                     (get-current-persp))))
-            (not (persp-contain-buffer-p buffer cur-persp))))))
+          (string-match-p "magit.*:" name))))
 
   (if (boundp 'project-ignore-buffer-conditions)
       (setq project-ignore-buffer-conditions '(+project/project-buffer-filter))

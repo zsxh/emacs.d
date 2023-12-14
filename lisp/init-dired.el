@@ -82,10 +82,6 @@
                                 ("Audio" (extensions "mp3" "flac" "wav" "ape" "aac"))
                                 ("Archives" (extensions "gz" "rar" "zip"))))
 
-  ;; Lazy load persp-mode.el
-  (plist-put dirvish-scopes :persp (lambda () (when (bound-and-true-p persp-mode) (get-current-persp))))
-  (plist-put dirvish-scopes :perspective nil)
-
   (dirvish-override-dired-mode-maybe)
   ;; (dirvish-override-dired-mode)
   ;; (dirvish-peek-mode)
