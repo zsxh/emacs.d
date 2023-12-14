@@ -25,6 +25,7 @@
   :bind ((:map vertico-map
           ("C-k" . vertico-previous)
           ("C-j" . vertico-next)
+          ("C-." . embark-act)
           ([backspace] . vertico-directory-delete-char)
           ([escape] . abort-recursive-edit)))
   :custom
