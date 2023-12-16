@@ -105,9 +105,9 @@
 (require 'init-lang-lua)
 (require 'init-lang-sql)
 (require 'init-web)
-;; (require 'init-latex)
 
 ;; Misc
+(require 'init-file-modes)
 (require 'init-misc)
 (require 'init-window)
 (require 'init-workspace)

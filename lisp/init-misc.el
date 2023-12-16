@@ -37,15 +37,6 @@
   (with-eval-after-load 'evil
     (evil-define-key 'normal youdao-dictionary-mode-map "q" 'quit-window)))
 
-;; Markdowm
-(use-package markdown-mode
-  :defer t
-  :config
-  (+funcs/major-mode-leader-keys
-   markdown-mode-map
-   "T" '(nil :which-key "toggle")
-   "Ti" '(markdown-toggle-inline-images :which-key "inline-images")))
-
 ;; https://github.com/lorniu/go-translate
 (use-package go-translate
   :commands (go-translate go-translate-popup)
