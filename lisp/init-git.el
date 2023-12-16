@@ -64,6 +64,14 @@
                              (magit-todos-jump-to-item
                               :item (consult--lookup-cdr selected candidates))))))
 
+(use-package diff-hl
+  :hook (after-init . global-diff-hl-mode)
+  :config
+  (setq diff-hl-disable-on-remote t)
+  (with-eval-after-load 'magit
+    (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
+
 (use-package forge
   :defer t
   :custom
