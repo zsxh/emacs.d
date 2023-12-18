@@ -237,7 +237,16 @@
   :config
   (when (bound-and-true-p personal-openai-key)
     (setq gptel-api-key personal-openai-key))
-  (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)))
+  ;; (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port))
+
+  ;; https://openrouter.ai/models/rwkv/rwkv-5-world-3b
+  (gptel-make-openai
+   "RWKV"
+   :header (lambda () `(("Authorization" . ,(concat "Bearer " (gptel--get-api-key)))))
+   :key 'gptel-api-key
+   :host "openrouter.ai/api"
+   :stream t
+   :models '("rwkv/rwkv-5-world-3b")))
 
 ;; use "C-\" to `toggle-input-method'
 (use-package rime
