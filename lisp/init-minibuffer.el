@@ -12,6 +12,12 @@
 
 (setq completion-ignore-case t)
 
+(add-hook 'text-mode-hook
+          (lambda ()
+            (remove-hook
+             'completion-at-point-functions
+             'ispell-completion-at-point t)))
+
 ;; Completion Styles
 ;; NOTE: [Manual] https://www.gnu.org/software/emacs/manual/html_node/emacs/Completion-Styles.html
 ;; NOTE: [Article] https://www.masteringemacs.org/article/understanding-minibuffer-completion
