@@ -234,6 +234,8 @@
 ;; https://github.com/karthink/gptel
 (use-package gptel
   :defer t
+  :bind (:map gptel-mode-map
+         ("C-c h" . gptel-menu))
   :config
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
         gptel--debug nil)
