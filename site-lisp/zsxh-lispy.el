@@ -136,7 +136,11 @@
         (when (and (not (zsxh-lispy/in-string-or-comment))
                    (eq (char-before) ?\s))
           (replace-match " "))))
-    ;; Remove trailing space
+    ;; Remove sexp trailing space
+    (goto-char (point-min))
+    (while (re-search-forward "[\s\n]*\\()\\\|]\\)$" nil t)
+      (replace-match "\\1"))
+    ;; Remove line trailing space
     (goto-char (point-min))
     (while (re-search-forward "\s\n" nil t)
       (replace-match "\n"))
@@ -153,7 +157,7 @@
   (cond
    ((and beg end)
     (save-excursion (zsxh-lispy/format-region beg end)))
-   ((and (eq ?\) (char-before)) (not (zsxh-lispy/in-string-or-comment)))
+   ((and (memq (char-before) '(?\) ?\])) (not (zsxh-lispy/in-string-or-comment)))
     (save-excursion
       (zsxh-lispy/lisp-format-region
        (save-excursion (backward-sexp 1 t) (point))
