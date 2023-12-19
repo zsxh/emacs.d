@@ -131,23 +131,31 @@
     (goto-char (point-min))
     ;; Remove extra spaces
     (while (re-search-forward "\s+" nil t)
-      (let ((before (char-before))
-            (in-string-p nil))
-        (when (and (not (zsxh-lispy/in-string-or-comment))
-                   (eq (char-before) ?\s))
-          (replace-match " "))))
-    ;; Remove sexp trailing space
+      (when (and (not (zsxh-lispy/in-string-or-comment))
+                 (eq (char-before) ?\s))
+        (replace-match " ")))
+    ;; Compact opened parens
     (goto-char (point-min))
-    (while (re-search-forward "[\s\n]*\\()\\\|]\\)$" nil t)
-      (replace-match "\\1"))
-    ;; Remove line trailing space
+    (while (re-search-forward "\\((\\\|\\[\\)[\s\n]*\\((\\\|\\[\\)" nil t)
+      (unless (zsxh-lispy/in-string-or-comment)
+        (replace-match "\\1\\2")
+        (backward-char)))
+    ;; Compact closed parens
+    (goto-char (point-min))
+    (while (re-search-forward "\\()\\\|]\\)[\s\n]*\\()\\\|]\\)" nil t)
+      (unless (zsxh-lispy/in-string-or-comment)
+        (replace-match "\\1\\2")
+        (backward-char)))
+    ;; Remove line trailing spaces
     (goto-char (point-min))
     (while (re-search-forward "\s\n" nil t)
-      (replace-match "\n"))
+      (unless (zsxh-lispy/in-string-or-comment)
+        (replace-match "\n")))
     ;; Collapse consecutive empty lines to one
     (goto-char (point-min))
     (while (re-search-forward "\\([\s]*\n\\)\\{2,\\}" nil t)
-      (replace-match "\n\n"))
+      (unless (zsxh-lispy/in-string-or-comment)
+        (replace-match "\n\n")))
     (indent-region (point-min) (point-max))))
 
 ;;;###autoload
