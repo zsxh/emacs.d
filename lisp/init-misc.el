@@ -208,24 +208,6 @@
 
 (use-package protobuf-mode
   :defer t)
-;; TODO: https://github.com/ginqi7/plantuml-emacs
-
-;; https://github.com/vedang/pdf-tools
-;; install poppler
-;; macos: brew install poppler, set PKG_CONFIG_PATH
-;; arch: pacman -S poppler
-(use-package pdf-tools
-  :defer t
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :config
-  (pdf-tools-install)
-  (with-eval-after-load 'evil-collection
-    (evil-collection-pdf-setup)
-    (evil-define-key 'normal pdf-view-mode-map
-      (kbd "C-s") 'isearch-forward
-      (kbd "C-r") 'isearch-backward
-      "d" 'pdf-view-scroll-up-or-next-page
-      "u" 'pdf-view-scroll-down-or-previous-page)))
 
 ;; TODO: another chatgpt wrapper
 ;; https://github.com/xenodium/chatgpt-shell
