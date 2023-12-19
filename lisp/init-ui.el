@@ -101,31 +101,23 @@
   (let ((custom--inhibit-theme-enable nil))
     (apply 'custom-theme-set-faces theme
            ;; Global faces
-           '(magit-diff-revision-summary ((t :inherit 'magit-diff-hunk-heading-highlight)))
+           '(magit-diff-revision-summary ((t (:inherit magit-diff-hunk-heading-highlight))))
+           `(orderless-match-face-0 ((t (:weight bold :foreground ,(doom-color 'blue)))))
+           `(orderless-match-face-1 ((t (:weight bold :foreground ,(doom-color 'magenta)))))
+           `(orderless-match-face-2 ((t (:weight bold :foreground ,(doom-color 'green)))))
+           `(orderless-match-face-3 ((t (:weight bold :foreground ,(doom-color 'yellow)))))
            ;; Per Theme faces
            (pcase theme
              ('doom-one-light
               '((dired-directory ((t (:foreground "#3B6EA8"))))
                 (nerd-icons-completion-dir-face ((t (:foreground "#3B6EA8"))))))
-             ('doom-nord-light
-              '((dired-directory ((t (:foreground "#3B6EA8"))))
-                (nerd-icons-completion-dir-face ((t (:foreground "#3B6EA8"))))))
-             ('doom-one
-              '((dired-directory ((t (:foreground "#51afef"))))
-                (nerd-icons-completion-dir-face ((t (:foreground "#51afef"))))))
              ('doom-one
               '((dired-directory ((t (:foreground "#51afef"))))
                 (nerd-icons-completion-dir-face ((t (:foreground "#51afef"))))))
              ('doom-solarized-light
               '((dired-directory ((t (:foreground "#268bd2"))))
                 (nerd-icons-completion-dir-face ((t (:foreground "#268bd2"))))
-                (show-paren-match ((t (:background "#E5E5E5"))))))
-             ('doom-dark+
-              `((fringe ((t (:background ,(face-attribute 'default :background)))))
-                (nerd-icons-completion-dir-face ((t (:foreground "#E5E5E5"))))
-                (company-posframe-active-backend-name ((t (:background ,(doom-color 'modeline-bg)))))
-                (company-posframe-inactive-backend-name ((t (:background ,(doom-color 'modeline-bg-alt)))))
-                (show-paren-match ((t (:background "#4e4e4e"))))))))))
+                (show-paren-match ((t (:foreground "#dc322f" :background "#E5E5E5" :weight ultra-bold))))))))))
 
 (advice-add 'load-theme :before #'+ui/disable-previous-theme)
 (advice-add 'load-theme :after #'+ui/custom-theme-faces)
@@ -133,7 +125,8 @@
 (defun +ui/frame-config (frame)
   "Custom behaviours for new frames."
   (with-selected-frame frame
-    (load-theme current-theme t)))
+    (ignore-errors
+      (load-theme current-theme t))))
 
 ;; Set config now
 (with-eval-after-load 'doom-themes
