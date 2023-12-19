@@ -91,25 +91,49 @@
   :config
   (default-text-scale-mode 1))
 
+;; Custom Faces
+(defun +ui/disable-previous-theme (theme &optional _ _)
+  (mapc #'disable-theme custom-enabled-themes)
+  (setq current-theme theme))
+
+(defun +ui/custom-theme-faces (theme &optional _ _)
+  "Customize THEME faces."
+  (let ((custom--inhibit-theme-enable nil))
+    (apply 'custom-theme-set-faces theme
+           ;; Global faces
+           '(magit-diff-revision-summary ((t :inherit 'magit-diff-hunk-heading-highlight)))
+           ;; Per Theme faces
+           (pcase theme
+             ('doom-one-light
+              '((dired-directory ((t (:foreground "#3B6EA8"))))
+                (nerd-icons-completion-dir-face ((t (:foreground "#3B6EA8"))))))
+             ('doom-nord-light
+              '((dired-directory ((t (:foreground "#3B6EA8"))))
+                (nerd-icons-completion-dir-face ((t (:foreground "#3B6EA8"))))))
+             ('doom-one
+              '((dired-directory ((t (:foreground "#51afef"))))
+                (nerd-icons-completion-dir-face ((t (:foreground "#51afef"))))))
+             ('doom-one
+              '((dired-directory ((t (:foreground "#51afef"))))
+                (nerd-icons-completion-dir-face ((t (:foreground "#51afef"))))))
+             ('doom-solarized-light
+              '((dired-directory ((t (:foreground "#268bd2"))))
+                (nerd-icons-completion-dir-face ((t (:foreground "#268bd2"))))
+                (show-paren-match ((t (:background "#E5E5E5"))))))
+             ('doom-dark+
+              `((fringe ((t (:background ,(face-attribute 'default :background)))))
+                (nerd-icons-completion-dir-face ((t (:foreground "#E5E5E5"))))
+                (company-posframe-active-backend-name ((t (:background ,(doom-color 'modeline-bg)))))
+                (company-posframe-inactive-backend-name ((t (:background ,(doom-color 'modeline-bg-alt)))))
+                (show-paren-match ((t (:background "#4e4e4e"))))))))))
+
+(advice-add 'load-theme :before #'+ui/disable-previous-theme)
+(advice-add 'load-theme :after #'+ui/custom-theme-faces)
+
 (defun +ui/frame-config (frame)
   "Custom behaviours for new frames."
   (with-selected-frame frame
-    (load-theme current-theme t)
-    ;; Customize faces
-    (+ui/customize-faces)))
-
-(defcustom +ui/customize-faces-fn nil
-  "Customize theme faces function."
-  :type 'function)
-
-(use-package zsxh-theme-custom
-  :ensure nil
-  :config
-  (setq +ui/customize-faces-fn 'zsxh-fix-theme))
-
-(defun +ui/customize-faces ()
-  (when +ui/customize-faces-fn
-    (funcall +ui/customize-faces-fn)))
+    (load-theme current-theme t)))
 
 ;; Set config now
 (with-eval-after-load 'doom-themes
@@ -118,16 +142,6 @@
 ;; NOTE: It's usually best to put code that's GUI/Terminal (display-graphic-p) specific in `after-make-frame-functions'
 ;; Run later, for emacs daemon, emacsclients -c [-nw]
 (add-hook 'after-make-frame-functions '+ui/frame-config)
-
-(defun load-theme-a (orig-fn &rest args)
-  ;; TODO: reset faces in `+ui/customize-faces'
-  ;; get rid of all loaded themes
-  (mapcar #'disable-theme custom-enabled-themes)
-  (setq current-theme (cl-first args))
-  (apply orig-fn args)
-  (+ui/customize-faces))
-
-(advice-add 'load-theme :around 'load-theme-a)
 
 
 (provide 'init-ui)
