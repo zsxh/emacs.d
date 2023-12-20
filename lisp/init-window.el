@@ -36,6 +36,7 @@
           "^\\*shell.*\\*$" shell-mode   ;shell as a popup
           "^\\*term.*\\*$" term-mode     ;term as a popup
           "^\\*vterm.*\\*$" vterm-mode   ;vterm as a popup
+          "^\\*HTTP Response\\*$"
           helpful-mode))
   (setq popper-group-function #'popper-group-by-project)
   (popper-mode 1)
