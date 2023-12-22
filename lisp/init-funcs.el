@@ -399,6 +399,10 @@ behavior added."
     (move-to-column column)
     (point)))
 
+(defun +funcs/try-get-major-mode-remap (mode)
+  "Respect `major-mode-remap-alist', *-ts-mode for example."
+  (alist-get mode major-mode-remap-alist mode))
+
 
 (provide 'init-funcs)
 

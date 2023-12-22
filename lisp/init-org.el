@@ -239,7 +239,7 @@ at the first function to return non-nil.")
    "T" '(nil :which-key "toggle")
    "Ti" '(org-toggle-inline-images :which-key "toggle-inline-images")
    "Tl" '(org-toggle-link-display :which-key "toggle-link-display")
-   "'" '(org-edit-special :which-key "editor")))
+   "'" '(org-edit-special :which-key "edit-code-block")))
 
 ;; https://github.com/integral-dw/org-superstar-mode
 (use-package org-superstar

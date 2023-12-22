@@ -14,6 +14,7 @@
   :config
   (+funcs/major-mode-leader-keys
    markdown-mode-map
+   "'" '(markdown-edit-code-block :which-key "edit-code-block")
    "T" '(nil :which-key "toggle")
    "Ti" '(markdown-toggle-inline-images :which-key "inline-images")))
 

@@ -78,7 +78,11 @@
             (seq-filter
              (lambda (r) (functionp (treesit-auto-recipe-ts-mode r)))
              treesit-auto-recipe-list)))
-  (global-treesit-auto-mode))
+  (global-treesit-auto-mode)
+  ;; Make org src block respect `major-mode-remap-alist'
+  (add-hook 'org-mode-hook #'treesit-auto--set-major-remap)
+  (with-eval-after-load 'org
+    (advice-add 'org-src-get-lang-mode :filter-return #'+funcs/try-get-major-mode-remap)))
 
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
 

@@ -25,17 +25,22 @@
   ;; and cause wrong comment lines.
   (setq cd2/region-command 'cd2/comment-or-uncomment-region))
 
+;; Edit regions in separate buffers, like `org-edit-src-code' but for arbitrary regions.
+(use-package edit-indirect
+  :defer t
+  :config
+  (with-eval-after-load 'evil
+    (evil-define-key* 'normal edit-indirect-mode-map
+      ",c" #'edit-indirect-commit
+      ",k" #'edit-indirect-abort)))
+
 ;; Edit comment or docstring in edit buffer
 ;; https://github.com/twlz0ne/separedit.el
 (use-package separedit
   :commands (separedit)
   :config
   (with-eval-after-load 'tree-sitter-hl
-    (add-to-list 'separedit-comment-faces 'tree-sitter-hl-face:comment))
-  (with-eval-after-load 'evil
-    (evil-define-minor-mode-key 'normal 'edit-indirect--overlay
-      ",c" 'edit-indirect-commit
-      ",k" 'edit-indirect-abort)))
+    (add-to-list 'separedit-comment-faces 'tree-sitter-hl-face:comment)))
 
 ;; Framework for mode-specific buffer indexes
 (use-package imenu-list
