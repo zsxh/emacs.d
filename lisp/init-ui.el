@@ -71,19 +71,36 @@
   :config (setq display-line-numbers-type 'relative))
 
 ;; Fonts
-(ignore-errors
-  (let ((font-list (font-family-list)))
-    (when (and IS-LINUX (member "SF Mono" (font-family-list)))
-      ;; Download ans install SF Mono fonts:
-      ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
-      ;; https://github.com/hick/emacs-chinese#emacs-中文基础
-      (set-frame-font "SF Mono-13:weight=semi-bold" nil t))
-    (when (and IS-MAC (member "Menlo" (font-family-list)))
-      (set-frame-font "Menlo-15" nil t))
-    (when (member "Symbola" (font-family-list))
-      ;; Download specify font for all unicode characters, emoji for example
-      ;; http://xahlee.info/comp/unicode_font_download.html
-      (set-fontset-font t 'unicode "Symbola" nil 'prepend))))
+(when (member "Symbola" (font-family-list))
+  ;; Download specify font for all unicode characters, emoji for example
+  ;; http://xahlee.info/comp/unicode_font_download.html
+  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+
+;; Download ans install SF Mono fonts for Linux
+;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
+;; https://github.com/hick/emacs-chinese#emacs-中文基础
+(defun +ui/adjust-font-size (frame)
+  "Adjust FRAME font size."
+  (let* ((attrs (frame-monitor-attributes))
+         (width-mm (nth 2 (nth 2 attrs))) ; Millimeter
+         (width-px (nth 3 (car attrs))) ; Pixel
+         (font-name (or
+                     ;; custom font
+                     (and IS-LINUX (member "SF Mono" (font-family-list)))
+                     ;; default font
+                     (car
+                      (string-split
+                       (aref
+                        (font-info
+                         (face-attribute 'default :font))
+                        1)
+                       ":"))))
+         (size (cond ((>= width-px 2560) 19)
+                     ((>= width-px 1920) 16)
+                     (t 13)))
+         (font (cond ((string-equal "SF Mono" font-name) (format "SF Mono-%d:weight=semi-bold" size))
+                     (t (format "%s-%d" font-name size)))))
+    (set-frame-font font)))
 
 ;; Text Scale
 (use-package default-text-scale
@@ -126,6 +143,7 @@
   "Custom behaviours for new frames."
   (with-selected-frame frame
     (ignore-errors
+      (+ui/adjust-font-size frame)
       (load-theme current-theme t))))
 
 ;; Set config now
