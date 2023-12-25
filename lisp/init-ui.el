@@ -80,13 +80,14 @@
 ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
 ;; https://github.com/hick/emacs-chinese#emacs-中文基础
 (defun +ui/adjust-font-size (frame)
-  "Adjust FRAME font size."
-  (let* ((attrs (frame-monitor-attributes))
-         (width-mm (nth 2 (nth 2 attrs))) ; Millimeter
-         (width-px (nth 3 (car attrs))) ; Pixel
+  "Adjust FRAME font size base on `frame-monitor-attributes'"
+  (let* ((geometry (frame-monitor-attribute 'geometry))
+         (mm-size (frame-monitor-attribute 'mm-size))
+         (width-px (nth 3 geometry)) ; Pixel
+         (width-mm (nth 2 mm-size)) ; Millimeter
          (font-name (or
                      ;; custom font
-                     (and IS-LINUX (member "SF Mono" (font-family-list)))
+                     (and IS-LINUX (member "SF Mono" (font-family-list)) "SF Mono")
                      ;; default font
                      (car
                       (string-split
