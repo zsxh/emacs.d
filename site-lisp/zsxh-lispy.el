@@ -1,7 +1,6 @@
 ;; zsxh-lispy.el --- Custom Lispy Like Commands	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
-;; URL: https://github.com/zsxh-lispy/emacs.d
 
 ;; Commentary:
 ;;
