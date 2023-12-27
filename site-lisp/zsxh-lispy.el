@@ -135,15 +135,15 @@
         (replace-match " ")))
     ;; Compact opened parens
     (goto-char (point-min))
-    (while (re-search-forward "\\((\\\|\\[\\)[\s\n]*\\((\\\|\\[\\)" nil t)
+    (while (re-search-forward "\\((\\\|\\[\\)[\s\n]+" nil t)
       (unless (zsxh-lispy/in-string-or-comment)
-        (replace-match "\\1\\2")
+        (replace-match "\\1")
         (backward-char)))
     ;; Compact closed parens
     (goto-char (point-min))
-    (while (re-search-forward "\\()\\\|]\\)[\s\n]*\\()\\\|]\\)" nil t)
+    (while (re-search-forward "[\s\n]+\\()\\\|]\\)" nil t)
       (unless (zsxh-lispy/in-string-or-comment)
-        (replace-match "\\1\\2")
+        (replace-match "\\1")
         (backward-char)))
     ;; Remove line trailing spaces
     (goto-char (point-min))
