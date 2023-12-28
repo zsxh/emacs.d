@@ -83,7 +83,7 @@
   "Adjust FRAME font size base on `frame-monitor-attributes'"
   (let* ((geometry (frame-monitor-attribute 'geometry))
          (mm-size (frame-monitor-attribute 'mm-size))
-         (width-px (nth 3 geometry)) ; Pixel
+         (width-px (nth 2 geometry)) ; Pixel
          (width-mm (nth 2 mm-size)) ; Millimeter
          (font-name (or
                      ;; custom font
