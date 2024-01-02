@@ -285,6 +285,47 @@
   (setq fd-dired-pre-fd-args "-0 -c never -I"
         fd-dired-ls-option '("| xargs -0 ls -alhdN" . "-ld")))
 
+;; FIXME: `dirvish--mode-line-fmt-setter' void-variable dv
+(with-eval-after-load 'dirvish
+  (defun dirvish--mode-line-fmt-setter@advice (left right &optional header)
+    "Set the `dirvish--mode-line-fmt'.
+LEFT and RIGHT are segments aligned to left/right respectively.
+If HEADER, set the `dirvish--header-line-fmt' instead."
+    (cl-labels ((expand (segments)
+                         (cl-loop for s in segments collect
+                                   (if (stringp s) s
+                                     `(:eval (,(intern (format "dirvish-%s-ml" s)) (dirvish-curr))))))
+                (get-font-scale ()
+                                (let* ((face (if header 'header-line 'mode-line-inactive))
+                                       (defualt (face-attribute 'default :height))
+                                       (ml-height (face-attribute face :height)))
+                                  (cond ((floatp ml-height) ml-height)
+                                        ((integerp ml-height) (/ (float ml-height) defualt))
+                                        (t 1)))))
+      `((:eval
+         (let* ((dv (dirvish-curr))
+                (buf (and (car (dv-layout dv)) (cdr (dv-index dv))))
+                (scale ,(get-font-scale))
+                (win-width (floor (/ (window-width) scale)))
+                (str-l (format-mode-line
+                        ',(or (expand left) mode-line-format) nil nil buf))
+                (str-r (format-mode-line ',(expand right) nil nil buf))
+                (len-r (string-width str-r)))
+           (concat
+            (dirvish--bar-image (car (dv-layout dv)) ,header)
+            (if (< (+ (string-width str-l) len-r) win-width)
+                str-l
+              (let ((trim (1- (- win-width len-r))))
+                (if (>= trim 0)
+                    (substring str-l 0 (min trim (1- (length str-l))))
+                  "")))
+            (propertize
+             " " 'display
+             `((space :align-to (- (+ right right-fringe right-margin)
+                                   ,(ceiling (* scale (string-width str-r)))))))
+            str-r))))))
+
+  (advice-add 'dirvish--mode-line-fmt-setter :override #'dirvish--mode-line-fmt-setter@advice))
 
 (provide 'init-dired)
 
