@@ -44,13 +44,13 @@
   (defun jdtls-initialization-options ()
     `(:settings (:java (:autobuild (:enabled t)
                         :configuration (:runtimes [(:name "JavaSE-1.8"
-                                                    :path ,(string-trim (shell-command-to-string "rtx where java@8")))
+                                                    :path ,(string-trim (shell-command-to-string "mise where java@8")))
                                                    (:name "JavaSE-11"
-                                                    :path ,(string-trim (shell-command-to-string "rtx where java@11")))
+                                                    :path ,(string-trim (shell-command-to-string "mise where java@11")))
                                                    (:name "JavaSE-17"
-                                                    :path ,(string-trim (shell-command-to-string "rtx where java@17")))
+                                                    :path ,(string-trim (shell-command-to-string "mise where java@17")))
                                                    (:name "JavaSE-21"
-                                                    :path ,(string-trim (shell-command-to-string "rtx where java@21"))
+                                                    :path ,(string-trim (shell-command-to-string "mise where java@21"))
                                                     :default t)])
                         :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
                                             :profile "GoogleStyle"))
