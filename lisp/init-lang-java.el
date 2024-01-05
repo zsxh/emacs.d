@@ -29,7 +29,7 @@
 
   ;; ----------------------- Intialization/Configurations -----------------------
   ;; NOTE: jdtls.py script add: os.environ["JAVA_HOME"] = subprocess.check_output(["mise", "where", "java@21"]).decode("utf-8").rstrip()
-  (defun jdtls-command-contact (&optional interactive)
+  (defun jdtls-command-contact (&optional interactive project)
     (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar"))
                        "-XX:+UseZGC"
                        "-XX:+ZGenerational"
