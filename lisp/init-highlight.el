@@ -85,7 +85,7 @@
 ;; For indent-bars to work, your port and version of emacs must correctly display the `:stipple' face attribute.
 ;; https://github.com/jdtsmith/indent-bars
 (use-package indent-bars
-  :if IS-LINUX
+  :if (and IS-LINUX (display-graphic-p))
   :vc (:url "https://github.com/jdtsmith/indent-bars" :rev :newest)
   :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode docker-compose-mode) . indent-bars-mode))
 
