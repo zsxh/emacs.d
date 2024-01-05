@@ -56,6 +56,12 @@
       "d" 'pdf-view-scroll-up-or-next-page
       "u" 'pdf-view-scroll-down-or-previous-page)))
 
+(use-package pdf-view-restore
+  :after pdf-tools
+  :hook (pdf-view-mode . pdf-view-restore-mode)
+  :config
+  (setq pdf-view-restore-filename (locate-user-emacs-file "cache/.pdf-view-restore")))
+
 ;; LaTeX
 ;; TODO: https://github.com/dandavison/xenops
 ;; NOTE: https://karthinks.com/software/latex-input-for-impatient-scholars/
