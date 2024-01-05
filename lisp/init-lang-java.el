@@ -24,20 +24,18 @@
 (add-hook 'java-mode-hook #'eglot-ensure)
 (add-hook 'java-ts-mode-hook #'eglot-ensure)
 
+;; NOTE: jdtls.py script add: os.environ["JAVA_HOME"] = subprocess.check_output(["mise", "where", "java@21"]).decode("utf-8").rstrip()
+(defun jdtls-command-contact (&optional interactive project)
+  (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar"))
+                     "-XX:+UseZGC"
+                     "-XX:+ZGenerational"
+                     "-XX:+UseStringDeduplication"))
+         (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
+         (contact (append '("jdtls") jvm-args)))
+    contact))
+
 (with-eval-after-load 'eglot
-  (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
-
   ;; ----------------------- Intialization/Configurations -----------------------
-  ;; NOTE: jdtls.py script add: os.environ["JAVA_HOME"] = subprocess.check_output(["mise", "where", "java@21"]).decode("utf-8").rstrip()
-  (defun jdtls-command-contact (&optional interactive project)
-    (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar"))
-                       "-XX:+UseZGC"
-                       "-XX:+ZGenerational"
-                       "-XX:+UseStringDeduplication"))
-           (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
-           (contact (append '("jdtls") jvm-args)))
-      contact))
-
   ;; (jsonrpc--json-encode (jdtls-initialization-options))
   (defun jdtls-initialization-options ()
     `(:settings (:java (:autobuild (:enabled t)
