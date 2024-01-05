@@ -20,8 +20,8 @@
         eglot-send-changes-idle-time 0.5
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
-        ;; NOTE: drop jsonrpc log to improve performance
-        eglot-events-buffer-size 0
+        ;; NOTE: drop log to improve performance
+        eglot-events-buffer-config '(:size 0 :format full)
         eglot-report-progress nil
         eglot-stay-out-of '(eldoc)
         eglot-extend-to-xref t)
