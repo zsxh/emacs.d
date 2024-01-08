@@ -33,6 +33,12 @@
   ;; (vterm-term-environment-variable "xterm-24bit")
   (vterm-timer-delay 0.01)
   :config
+  ;; https://github.com/akermu/emacs-libvterm#fonts
+  (defun +vterm/set-font ()
+    (set (make-local-variable 'buffer-face-mode-face) 'fixed-pitch)
+    (buffer-face-mode t))
+  (add-hook 'vterm-mode-hook #'+vterm/set-font)
+
   ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
   (with-eval-after-load 'doom-themes
     (set-face-background 'vterm-color-black (doom-color 'base6)))
