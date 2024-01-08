@@ -27,8 +27,9 @@
         eglot-extend-to-xref t)
   (add-hook 'eglot-managed-mode-hook #'breadcrumb-local-mode)
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
-  (require 'eglot-booster)
-  (eglot-booster))
+  ;; (require 'eglot-booster)
+  ;; (eglot-booster)
+  )
 
 (with-eval-after-load 'eglot
 

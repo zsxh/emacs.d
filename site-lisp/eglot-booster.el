@@ -4,7 +4,7 @@
 ;;; Commentary:
 
 ;; Boost eglot with emacs-lsp-booster.
-;; 1. Download emacs-lsp-booster from
+;; 1. Download a recent emacs-lsp-booster from
 ;;    https://github.com/blahgeek/emacs-lsp-booster
 ;; 2. In the cloned directory, build with cargo (rust):
 ;;    cargo build --release
@@ -18,6 +18,7 @@
 
 ;;; Code:
 (eval-when-compile (require 'cl-lib))
+(require 'seq)
 (require 'eglot)
 (require 'jsonrpc)
 
@@ -38,7 +39,8 @@ be boosted."
   (if (get 'eglot-server-programs 'lsp-booster-p)
       (message "eglot-server-programs already boosted.")
     (let ((cnt 0)
-	  (orig-read (symbol-function 'jsonrpc--json-read)))
+	  (orig-read (symbol-function 'jsonrpc--json-read))
+	  (boost '("emacs-lsp-booster" "--json-false-value" ":json-false" "--")))
       (dolist (entry eglot-server-programs)
 	(cond
 	 ((functionp (cdr entry))
@@ -47,11 +49,11 @@ be boosted."
 	    (setcdr entry (lambda (&rest r) ; wrap function
 			    (let ((res (apply fun r)))
 			      (if (eglot-booster-plain-command res)
-				  (cons "emacs-lsp-booster" res)
+				  (append boost res)
 				res))))))
 	 ((eglot-booster-plain-command (cdr entry))
 	  (cl-incf cnt)
-	  (setcdr entry (cons "emacs-lsp-booster" (cdr entry))))))
+	  (setcdr entry (append boost (cdr entry))))))
       (defalias 'jsonrpc--json-read
 	(lambda ()
 	  (or (and (= (following-char) ?#)
@@ -61,6 +63,9 @@ be boosted."
 	      (funcall orig-read))))
       (message "Boosted %d eglot-server-programs" cnt))
     (put 'eglot-server-programs 'lsp-booster-p t)))
+
+(defun eglot-booster-reset ()
+  (put 'eglot-server-programs 'lsp-booster-p nil))
 
 (provide 'eglot-booster)
 ;;; eglot-booster.el ends here
