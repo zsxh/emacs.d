@@ -8,6 +8,8 @@ Updated: <2024-01-08>
 
 * TODOs
 
+- password-store
+
 * Build Emacs
 
 +- Install libgccjit: https://aur.archlinux.org/packages/libgccjit/+

@@ -252,6 +252,10 @@
   :defer t
   :commands (journalctl))
 
+;; TODO: password manager
+(use-package password-store
+  :defer t)
+
 
 (provide 'init-misc)
 
