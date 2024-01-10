@@ -253,7 +253,7 @@
   :commands (journalctl))
 
 ;; TODO: password manager
-(use-package password-store
+(use-package pass
   :defer t)
 
 
