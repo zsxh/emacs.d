@@ -254,7 +254,10 @@
 
 ;; TODO: password manager
 (use-package pass
-  :defer t)
+  :defer t
+  :config
+  (with-eval-after-load 'evil-collection
+    (evil-collection-pass-setup)))
 
 
 (provide 'init-misc)
