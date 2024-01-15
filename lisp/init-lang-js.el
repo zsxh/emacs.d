@@ -23,7 +23,7 @@
 (use-package js
   :ensure nil
   :bind ((:map js-base-mode-map
-               ("/" . sgml-slash)))
+          ("/" . sgml-slash)))
   :hook (js-base-mode . +js/lsp-setup)
   :config
   (require 'sgml-mode)
@@ -33,20 +33,7 @@
 
   (defun +js/lsp-setup ()
     ;; This fix beginning-of-defun raise exception problem
-    (setq-local beginning-of-defun-function #'js-beginning-of-defun)
-    (unless (member major-mode '(js-json-mode ein:ipynb-mode))
-      (eglot-ensure)))
-
-  (+funcs/major-mode-leader-keys js-json-mode-map
-                                 "A" nil
-                                 "d" nil
-                                 "D" nil
-                                 "e" nil
-                                 "f" nil
-                                 "g" nil
-                                 "l" nil
-                                 "p" '(json-pretty-print-buffer :which-key "pretty-print")
-                                 "R" nil))
+    (setq-local beginning-of-defun-function #'js-beginning-of-defun)))
 
 (use-package json-ts-mode
   :ensure nil
