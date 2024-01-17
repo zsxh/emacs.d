@@ -283,6 +283,11 @@
      ("s" "string-inflection-all-cycle" string-inflection-all-cycle :transient t)
      ("q" "quit" transient-quit-all)]))
 
+;; showcase file: ~/.emacs.d/elpa/transient-showcase/transient-showcase.org
+(use-package transient-showcase
+  :vc (:url "https://github.com/positron-solutions/transient-showcase.git" :rev :newest)
+  :commands tsc-showcase)
+
 
 (provide 'init-keybinding)
 
