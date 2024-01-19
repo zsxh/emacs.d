@@ -156,7 +156,20 @@
 ;; Puni contains commands for soft deletion, which means deleting while keeping parentheses (or other delimiters, like html tags) balanced.
 (use-package puni
   :defer t
-  :hook ((prog-mode sgml-mode nxml-mode tex-mode eval-expression-minibuffer-setup) . puni-mode)
+  :hook ((prog-mode
+          sgml-mode
+          nxml-mode
+          tex-mode
+          eval-expression-minibuffer-setup
+          editorconfig-mode
+          vue-mode
+          cider-repl-mode
+          conf-mode
+          yaml-mode
+          yaml-ts-mode
+          conf-toml-mode
+          toml-ts-mode
+          ) . puni-mode)
   :config
   (define-key puni-mode-map (kbd "<") #'+editor/insert-angle)
   (define-key puni-mode-map (kbd "|") #'+editor/insert-rust-closure)
