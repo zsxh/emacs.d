@@ -68,10 +68,15 @@
          (save-excursion (end-of-line) (point))))))
 
 (defun zsxh-lispy/end-of-line-without-breaking-sexp ()
+  "Move point to end-of-line position,
+but if end-of-line point is in () or [],
+then move point to closest closed ) or ]."
   (let ((cur-line (line-number-at-pos))
+        (end-of-line-point (save-excursion (end-of-line) (point)))
         (last-pos -1))
     (ignore-errors
       (while (and (not (= last-pos (point)))
+                  (not (= end-of-line-point (point)))
                   (= cur-line (line-number-at-pos)))
         (setq last-pos (point))
         (forward-sexp 1 t))
