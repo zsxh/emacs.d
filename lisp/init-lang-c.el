@@ -12,6 +12,7 @@
 
 ;; NOTE: clang language server,
 ;; https://clangd.llvm.org/installation#project-setup
+;; https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 (use-package cc-mode
   :ensure nil
   ;; By default files ending in .h are treated as c files rather than c++ files.
