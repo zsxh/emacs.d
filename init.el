@@ -33,7 +33,7 @@
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter
 ;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#avoid-garbage-collection-at-startup
-;; https://emacsconf.org/2023/talks/gc/
+;; https://emacsconf.org/2023/talks/gc/, https://zenodo.org/records/10518083
 ;; NOTE: Check `gcs-done' and `gc-elapsed' right after Emacs startup
 (setq gc-cons-threshold 80000000)
 (add-hook 'emacs-startup-hook

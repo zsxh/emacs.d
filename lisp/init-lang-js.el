@@ -33,7 +33,8 @@
 
   (defun +js/lsp-setup ()
     ;; This fix beginning-of-defun raise exception problem
-    (setq-local beginning-of-defun-function #'js-beginning-of-defun)))
+    (setq-local beginning-of-defun-function #'js-beginning-of-defun)
+    (eglot-ensure)))
 
 (use-package json-ts-mode
   :ensure nil
