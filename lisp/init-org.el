@@ -31,12 +31,10 @@
   (setq org-confirm-babel-evaluate nil) ; do not prompt me to confirm everytime I want to evaluate a block
   (setq org-time-stamp-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
   (setq org-export-use-babel nil ; do not evaluate again during export.
-        org-export-with-toc nil
-        org-export-with-section-numbers nil
         org-hide-emphasis-markers t
         ;; NOTE: do not load used org modules to speed up first time load
         ;; https://orgmode.org/manual/Structure-Templates.html
-        org-modules '(ol-bibtex org-tempo))
+        org-modules '(org-tempo))
   ;; org restore window configuration after org-edit-src-exit
   ;; https://www.reddit.com/r/orgmode/comments/f9qy5h/in_orgmode_when_editing_a_source_block_with/
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2019-12/msg00263.html
@@ -65,14 +63,6 @@
   (setq org-todo-keyword-faces
         '(("WIP" . (:foreground "#ECBE7B" :weight bold :underline t))
           ("DROP" . (:foreground "#96A7A9" :weight bold :strike-through t))))
-
-  ;; Org table font
-  (ignore-errors
-    ;; (set-face-attribute 'org-table nil :family "Ubuntu Mono derivative Powerline")
-    (when (and (not (display-graphic-p))
-               (member "M+ 1m" (font-family-list)))
-      ;; Download font https://mplus-fonts.osdn.jp/about-en.html
-      (set-face-attribute 'org-table nil :family "M+ 1m")))
 
   (defun +org/remove-all-result-blocks ()
     "Remove all results in the current buffer."
