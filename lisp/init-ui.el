@@ -97,7 +97,7 @@
                         1)
                        ":"))))
          (size (cond ((>= width-px 2560) 19)
-                     ((>= width-px 1920) 16)
+                     ((>= width-px 1512) 16)
                      (t 13)))
          (font (cond ((string-equal "SF Mono" font-name) (format "SF Mono-%d:weight=semi-bold" size))
                      (t (format "%s-%d" font-name size)))))
