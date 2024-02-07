@@ -10,6 +10,13 @@
 
 ;;; Code:
 
+;; NOTE: install html lsp server
+;; $ pnpm add -g vscode-langservers-extracted
+(use-package html-ts-mode
+  :hook (html-ts-mode . eglot-ensure)
+  :config
+  (add-hook-run-once 'html-ts-mode-hook '+eglot/set-leader-keys))
+
 ;; Web mode for html,xml...
 (use-package web-mode
   :commands web-mode
@@ -24,7 +31,7 @@
          ("\\.erb\\'" . web-mode)
          ("\\.mustache\\'" . web-mode)
          ("\\.djhtml\\'" . web-mode)
-         ("\\.html?\\'" . web-mode)
+         ;; ("\\.html?\\'" . web-mode)
          ("\\.xml?\\'" . xml-web-mode))
   :hook ((web-mode . +web/config))
   :config
@@ -73,12 +80,14 @@
 ;; edit html
 (use-package sgml-mode
   :ensure nil
+  :hook (html-mode . eglot-ensure)
   :commands (sgml-slash sgml-skip-tag-forward)
   :config
   ;; https://emacs.stackexchange.com/questions/33240/html-mode-that-closes-tags
   ;; automatic insertion of the closing tag if you type </ or
   ;; pressing C-c / or C-c C-e or C-c / inserts a closing tag (the whole </foo>).
-  (setq sgml-quick-keys 'close))
+  (setq sgml-quick-keys 'close)
+  (add-hook-run-once 'html-mode-hook '+eglot/set-leader-keys))
 
 ;; This is a tool to manually explore and test HTTP REST webservices.
 ;; Runs queries from a plain-text query sheet, displays results as a pretty-printed XML, JSON and even images.
