@@ -213,6 +213,7 @@
 ;; TODO: another chatgpt wrapper
 ;; https://github.com/xenodium/chatgpt-shell
 
+;; TODO: Qwen
 ;; A simple ChatGPT client for Emacs
 ;; https://github.com/karthink/gptel
 (use-package gptel

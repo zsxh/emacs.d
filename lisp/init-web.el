@@ -10,10 +10,12 @@
 
 ;;; Code:
 
+;; TODO: integrate `html-ts-mode' with `puni-mode'
 ;; NOTE: install html lsp server
 ;; $ pnpm add -g vscode-langservers-extracted
 (use-package html-ts-mode
-  :hook (html-ts-mode . eglot-ensure)
+  :defer t
+  ;; :hook (html-ts-mode . eglot-ensure)
   :config
   (add-hook-run-once 'html-ts-mode-hook '+eglot/set-leader-keys))
 
@@ -23,6 +25,9 @@
   :init
   (define-derived-mode xml-web-mode web-mode "XML"
     "A major mode derived from web-mode, for editing pom.xml files.")
+  ;; TODO: use `html-ts-mode' instead of `html-web-mode'
+  (define-derived-mode html-web-mode web-mode "HTML"
+    "A major mode derived from web-mode, for editing html files.")
   :mode (("\\.phtml\\'" . web-mode)
          ("\\.phtml\\'" . web-mode)
          ("\\.tpl\\.php\\'" . web-mode)
@@ -32,8 +37,10 @@
          ("\\.mustache\\'" . web-mode)
          ("\\.djhtml\\'" . web-mode)
          ;; ("\\.html?\\'" . web-mode)
+         ("\\.html?\\'" . html-web-mode)
          ("\\.xml?\\'" . xml-web-mode))
-  :hook ((web-mode . +web/config))
+  :hook ((web-mode . +web/config)
+         (html-web-mode . eglot-ensure))
   :config
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2
@@ -55,20 +62,25 @@
 
   (+funcs/major-mode-leader-keys
    web-mode-map
-   "f" '(web-mode-buffer-indent :which-key "indent-buffer")))
+   "f" '(web-mode-buffer-indent :which-key "indent-buffer"))
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs `(html-web-mode . ,(eglot-alternatives '(("vscode-html-language-server" "--stdio") ("html-languageserver" "--stdio"))))))
+  (add-hook-run-once 'html-web-mode-hook '+eglot/set-leader-keys))
 
 (use-package css-mode
   :ensure nil
   :defer t
   :hook ((css-mode css-ts-mode) . (lambda ()
                                     (setq-local company-backends
-                                                '(company-capf company-files company-css company-dabbrev))))
+                                                '(company-capf company-files company-css company-dabbrev))
+                                    (eglot-ensure)))
   :config
   (setq css-indent-offset 2)
   (dolist (mode-map '(css-mode-map css-ts-mode-map))
     (+funcs/major-mode-leader-keys
      mode-map
-     "c" '(css-cycle-color-format :which-key "css-cycle-color-format"))))
+     "c" '(css-cycle-color-format :which-key "css-cycle-color-format")))
+  (add-hook-run-once 'css-base-mode-hook '+eglot/set-leader-keys))
 
 ;; edit xml
 (use-package nxml-mode
@@ -87,7 +99,24 @@
   ;; automatic insertion of the closing tag if you type </ or
   ;; pressing C-c / or C-c C-e or C-c / inserts a closing tag (the whole </foo>).
   (setq sgml-quick-keys 'close)
-  (add-hook-run-once 'html-mode-hook '+eglot/set-leader-keys))
+  (add-hook-run-once 'html-mode-hook '+eglot/set-leader-keys)
+  (define-advice sgml-slash (:override (arg) advice)
+    "Insert ARG slash characters.
+Behaves electrically if `sgml-quick-keys' is non-nil."
+    (interactive "p")
+    (cond
+     ((not (and (eq (char-before) ?<) (= arg 1)))
+      (sgml-slash-matching arg))
+     ((eq sgml-quick-keys 'indent)
+      (insert-char ?/ 1)
+      (indent-according-to-mode))
+     ((eq sgml-quick-keys 'close)
+      (delete-char -1)
+      ;; save point
+      (save-excursion
+        (sgml-close-tag)))
+     (t
+      (insert-char ?/ arg)))))
 
 ;; This is a tool to manually explore and test HTTP REST webservices.
 ;; Runs queries from a plain-text query sheet, displays results as a pretty-printed XML, JSON and even images.

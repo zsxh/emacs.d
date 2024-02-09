@@ -67,6 +67,7 @@
     (setq forward-sentence-function #'forward-sentence-default-function)))
 
 (add-hook 'prog-mode-hook #'mp-remove-treesit-sexp-changes)
+(add-hook 'html-ts-mode-hook #'mp-remove-treesit-sexp-changes)
 
 (use-package treesit-auto
   :custom

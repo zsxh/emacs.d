@@ -149,6 +149,7 @@
           protobuf-mode
           conf-toml-mode
           toml-ts-mode
+          html-mode
           ) . electric-pair-local-mode)
   :bind ("C-j" . newline-and-indent))
 
