@@ -232,7 +232,7 @@
   :defer t
   ;; :after eglot
   :config
-  (jarchive-setup))
+  (jarchive-mode))
 
 
 (provide 'init-eglot)

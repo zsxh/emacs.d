@@ -256,6 +256,36 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
                     :arguments (vector (eglot-path-to-uri file-path)))))
       (eq t (eglot-execute (eglot--current-server-or-lose) command)))))
 
+;; ==================== Viewing Java Class Files in Emacs ====================
+;;
+;; https://nullprogram.com/blog/2012/08/01/
+;;
+(defun javap-handler (operation &rest args)
+  "Handle .class files by putting the output of javap in the buffer."
+  (cond
+   ((eq operation 'get-file-buffer)
+    (let ((file (car args)))
+      (with-current-buffer (create-file-buffer file)
+        (call-process "javap" nil (current-buffer) nil "-verbose"
+                      "-classpath" (file-name-directory file)
+                      (file-name-sans-extension
+                       (file-name-nondirectory file)))
+        (setq buffer-file-name file)
+        (setq buffer-read-only t)
+        (set-buffer-modified-p nil)
+        (goto-char (point-min))
+        ;; (java-mode)
+        (current-buffer))))
+   ;; Run the real handler without the javap handler installed
+   (t (let ((inhibit-file-name-handlers
+             (cons 'javap-handler
+                   (and (eq inhibit-file-name-operation operation)
+                        inhibit-file-name-handlers)))
+            (inhibit-file-name-operation operation))
+        (apply operation args)))))
+
+(add-to-list 'file-name-handler-alist '("\\.class$" . javap-handler))
+
 
 (provide 'init-lang-java)
 
