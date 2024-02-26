@@ -30,39 +30,20 @@
       (eglot-ensure)))
 
   (dolist (mode '(clojure-mode clojurescript-mode))
-    (+eglot/set-leader-keys (intern (format "%s-map" mode))))
-
-  (with-eval-after-load 'eglot
-    (cl-defmethod eglot-initialization-options (server &context (major-mode clojure-mode))
-      ;; NOTE: :zip scheme no response from the server?
-      '(:dependency-scheme "jar"))
-
-    ;; TODO: replace with `jarchive'
-    ;; https://github.com/emacs-lsp/lsp-mode/blob/d3bc47bde5ffc1bace40122a6ec0c6d8b9e84500/clients/lsp-clojure.el#L272
-    ;; https://github.com/clojure-lsp/clojure-lsp/blob/master/lib/test/clojure_lsp/shared_test.clj
-    (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode clojure-mode))
-      "Support Clojure-lsp `zifile://', `jar:file://' uri scheme."
-      (when-let* ((clj-scheme-p (or (string-prefix-p "jar:file://" uri)
-                                    (string-prefix-p "zipfile://" uri)))
-                  (_ (string-match "^\\(jar:file\\|zipfile\\)://.+\\(!/\\|::\\)\\(.+\\)" uri))
-                  (ns-path (match-string 3 uri))
-                  (filename (replace-regexp-in-string "/" "." ns-path))
-                  (source-dir (file-name-concat (project-root (eglot--current-project)) ".eglot"))
-                  (source-file (expand-file-name (file-name-concat source-dir filename))))
-        (unless (file-directory-p source-dir)
-          (make-directory source-dir t))
-        (unless (file-readable-p source-file)
-          (let ((content (jsonrpc-request (eglot--current-server-or-lose)
-                                          :clojure/dependencyContents
-                                          (list :uri uri))))
-            (with-temp-file source-file (insert content))))
-        (puthash source-file uri eglot-path-uri-cache)
-        source-file))))
+    (+eglot/set-leader-keys (intern (format "%s-map" mode)))))
 
 ;; https://cider.mx/
 ;; `cider-insert-last-sexp-in-repl'
 (use-package cider
   :defer t)
+
+;; Open project dependencies inside jar archives, pairs well with eglot
+;; https://git.sr.ht/~dannyfreeman/jarchive
+(use-package jarchive
+  :defer t
+  :init
+  (with-eval-after-load 'clojure-mode (jarchive-mode))
+  (with-eval-after-load 'clojure-ts-mode (jarchive-mode)))
 
 ;; TODO: neil, A CLI to add common aliases and features to deps.edn-based projects.
 ;; https://github.com/babashka/neil

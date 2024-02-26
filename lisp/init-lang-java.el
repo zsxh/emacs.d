@@ -85,28 +85,29 @@
     (plist-get (jdtls-initialization-options) :settings))
 
   ;; ----------------------- Support URI jdt:// protocol -----------------------
-  (defun +eglot/jdtls-uri-to-path (uri)
+  (defun +eglot/jdt-uri-handler (operation &rest args)
     "Support Eclipse jdtls `jdt://' uri scheme."
-    (when-let* ((jdt-scheme-p (string-prefix-p "jdt://" uri))
-                (filename (when (string-match "^jdt://contents/\\(.*?\\)/\\(.*\\)\.class\\?" uri)
-                            (format "%s.java" (replace-regexp-in-string "/" "." (match-string 2 uri) t t))))
-                (source-dir (file-name-concat (project-root (eglot--current-project)) ".eglot"))
-                (source-file (expand-file-name (file-name-concat source-dir filename))))
-      (unless (file-directory-p source-dir)
-        (make-directory source-dir t))
+    (let* ((uri (car args))
+          (cache-dir (expand-file-name "eglot-java" (temporary-file-directory)))
+          (source-file
+            (expand-file-name
+            (concat
+              (file-name-as-directory cache-dir)
+              (save-match-data
+                (when (string-match "jdt://contents/\\(.*?\\)/\\(.*\\)\.class\\?" uri)
+                  (format "%s.java" (replace-regexp-in-string "/" "." (match-string 2 uri) t t))))))))
       (unless (file-readable-p source-file)
-        (let ((content (jsonrpc-request (eglot--current-server-or-lose)
-                                        :java/classFileContents
-                                        (list :uri uri))))
-          (with-temp-file source-file (insert content))))
-      (puthash source-file uri eglot-path-uri-cache)
+        (let ((content (jsonrpc-request (eglot-current-server) :java/classFileContents (list :uri uri)))
+              (metadata-file (format "%s.%s.metadata"
+                                    (file-name-directory source-file)
+                                    (file-name-base source-file))))
+          (unless (file-directory-p cache-dir) (make-directory cache-dir t))
+          (with-temp-file source-file (insert content))
+          ;; (with-temp-file metadata-file (insert uri))
+          ))
       source-file))
 
-  (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode java-mode))
-    (+eglot/jdtls-uri-to-path uri))
-
-  (cl-defmethod +eglot/ext-uri-to-path (uri &context (major-mode java-ts-mode))
-    (+eglot/jdtls-uri-to-path uri))
+  (add-to-list 'file-name-handler-alist '("\\`jdt://" . +eglot/jdt-uri-handler))
 
   ;; ----------------------- Support jdt.ls extra commands -----------------------
   ;; (defun java-apply-workspaceEdit (arguments)

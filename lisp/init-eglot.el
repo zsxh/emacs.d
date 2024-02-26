@@ -41,25 +41,6 @@
                                    (((background light)) . (:background "black")))
     "The border color used in childframe.")
 
-  ;; Uri <-> File Path
-  (defvar eglot-path-uri-cache (make-hash-table :test #'equal)
-    "File path to uri cache.")
-
-  (cl-defgeneric +eglot/ext-uri-to-path (uri)
-    "Support extension uri."
-    nil)
-
-  (define-advice eglot-uri-to-path (:around (orig-fn uri) advice)
-    "Support non standard LSP uri scheme."
-    (when (keywordp uri) (setq uri (substring (symbol-name uri) 1)))
-    (or (+eglot/ext-uri-to-path uri)
-        (funcall orig-fn uri)))
-
-  (define-advice eglot-path-to-uri (:around (orig-fn path) advice)
-    "Support non standard LSP uri scheme."
-    (or (gethash path eglot-path-uri-cache)
-        (funcall orig-fn path)))
-
   (cl-defgeneric +eglot/workspace-configuration (server)
     "Set workspace configuration,
 - Handle server request `workspace/configuration'
