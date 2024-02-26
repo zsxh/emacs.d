@@ -67,6 +67,12 @@
       (= (save-excursion (skip-chars-forward " \t") (point))
          (save-excursion (end-of-line) (point))))))
 
+(defun zsxh-lispy/in-comment-line ()
+  (save-excursion
+    (beginning-of-line)
+    (skip-chars-forward " \t")
+    (eq ?\; (char-after (point)))))
+
 (defun zsxh-lispy/end-of-line-without-breaking-sexp ()
   "Move point to end-of-line position,
 but if end-of-line point is in () or [],
@@ -141,13 +147,18 @@ then move point to closest closed ) or ]."
     ;; Compact opened parens
     (goto-char (point-min))
     (while (re-search-forward "\\((\\\|\\[\\)[\s\n]+" nil t)
-      (unless (zsxh-lispy/in-string-or-comment)
+      (unless (or (zsxh-lispy/in-string-or-comment)
+                  (zsxh-lispy/in-comment-line))
         (replace-match "\\1")
         (backward-char)))
     ;; Compact closed parens
     (goto-char (point-min))
     (while (re-search-forward "[\s\n]+\\()\\\|]\\)" nil t)
-      (unless (zsxh-lispy/in-string-or-comment)
+      (unless (or (zsxh-lispy/in-string-or-comment)
+                  (save-excursion
+                    (previous-line)
+                    (end-of-line)
+                    (zsxh-lispy/in-string-or-comment)))
         (replace-match "\\1")
         (backward-char)))
     ;; Remove line trailing spaces
