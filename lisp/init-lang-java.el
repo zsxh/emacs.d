@@ -88,20 +88,20 @@
   (defun +eglot/jdt-uri-handler (operation &rest args)
     "Support Eclipse jdtls `jdt://' uri scheme."
     (let* ((uri (car args))
-          (cache-dir (expand-file-name "eglot-java" (temporary-file-directory)))
-          (source-file
-            (expand-file-name
-            (concat
-              (file-name-as-directory cache-dir)
-              (save-match-data
-                (when (string-match "jdt://contents/\\(.*?\\)/\\(.*\\)\.class\\?" uri)
-                  (format "%s.java" (replace-regexp-in-string "/" "." (match-string 2 uri) t t))))))))
+           (cache-dir (expand-file-name "eglot-java" (temporary-file-directory)))
+           (_ (string-match "jdt://contents/\\(.*?\\)/\\(.*\\)\.class\\?" uri))
+           (jar-file (substring uri (match-beginning 1) (match-end 1)))
+           (java-file (format "%s.java" (replace-regexp-in-string "/" "." (substring uri (match-beginning 2) (match-end 2)) t t)))
+           (jar-dir (concat (file-name-as-directory cache-dir)
+                            (file-name-as-directory jar-file)))
+           (source-file (expand-file-name (concat jar-dir java-file))))
       (unless (file-readable-p source-file)
         (let ((content (jsonrpc-request (eglot-current-server) :java/classFileContents (list :uri uri)))
-              (metadata-file (format "%s.%s.metadata"
-                                    (file-name-directory source-file)
-                                    (file-name-base source-file))))
-          (unless (file-directory-p cache-dir) (make-directory cache-dir t))
+              ;; (metadata-file (format "%s.%s.metadata"
+              ;;                        (file-name-directory source-file)
+              ;;                        (file-name-base source-file)))
+              )
+          (unless (file-directory-p jar-dir) (make-directory jar-dir t))
           (with-temp-file source-file (insert content))
           ;; (with-temp-file metadata-file (insert uri))
           ))
