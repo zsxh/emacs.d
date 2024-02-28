@@ -85,12 +85,16 @@
     (plist-get (jdtls-initialization-options) :settings))
 
   ;; ----------------------- Support URI jdt:// protocol -----------------------
-  ;; NOTE: dape, eglot-java, file-name-handler-alist ...
-  ;; dape https://github.com/svaante/dape/issues/78#issuecomment-1966786597
-  ;; file-name-handler-alist https://www.gnu.org/software/emacs/manual/html_node/elisp/Magic-File-Names.html
-  ;; example ~/.emacs.d/elpa/jarchive-0.11.0/jarchive.el
-  ;; https://github.com/yveszoundi/eglot-java/pull/38/files
-  (defun +eglot/jdt-uri-handler (operation &rest args)
+  (defun +java/eglot-find-jdt-server ()
+    (let ((filter-fn (lambda (server)
+                       (cl-loop for (mode . languageid) in
+                                (eglot--languages server)
+                                when (string= languageid "java")
+                                return languageid)))
+          (servers (gethash (eglot--current-project) eglot--servers-by-project)))
+      (cl-find-if filter-fn servers)))
+
+  (defun +java/eglot-jdt-uri-handler (operation &rest args)
     "Support Eclipse jdtls `jdt://' uri scheme."
     (let* ((uri (car args))
            (cache-dir (expand-file-name "eglot-java" (temporary-file-directory)))
@@ -101,7 +105,11 @@
                             (file-name-as-directory jar-file)))
            (source-file (expand-file-name (concat jar-dir java-file))))
       (unless (file-readable-p source-file)
-        (let ((content (jsonrpc-request (eglot-current-server) :java/classFileContents (list :uri uri))))
+        (let ((content (jsonrpc-request
+                        (or (eglot-current-server)
+                            ;; NOTE: dape https://github.com/svaante/dape/issues/78#issuecomment-1966786597
+                            (+java/eglot-find-jdt-server))
+                        :java/classFileContents (list :uri uri))))
           (unless (file-directory-p jar-dir) (make-directory jar-dir t))
           (with-temp-file source-file (insert content))))
       (cond
@@ -111,13 +119,13 @@
        ((eq operation 'file-remote-p) nil)
        ;; Handle any operation we don’t know about.
        (t (let ((inhibit-file-name-handlers
-                 (cons '+eglot/jdt-uri-handler
+                 (cons '+java/eglot-jdt-uri-handler
                        (and (eq inhibit-file-name-operation operation)
                             inhibit-file-name-handlers)))
                 (inhibit-file-name-operation operation))
             (apply operation args))))))
 
-  (add-to-list 'file-name-handler-alist '("\\`jdt://" . +eglot/jdt-uri-handler))
+  (add-to-list 'file-name-handler-alist '("\\`jdt://" . +java/eglot-jdt-uri-handler))
 
   ;; ----------------------- Support jdt.ls extra commands -----------------------
   ;; (defun java-apply-workspaceEdit (arguments)
