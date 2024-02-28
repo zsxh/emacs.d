@@ -26,8 +26,7 @@
         corfu-auto-prefix 1
         corfu-auto-delay 0.1
         corfu-on-exact-match nil
-        corfu-preview-current nil
-        corfu-popupinfo-delay '(0.2 . 0.1)))
+        corfu-preview-current nil))
 
 (use-package corfu-terminal
   :if (not (display-graphic-p))
@@ -39,7 +38,9 @@
   :bind (:map corfu-popupinfo-map
          ("C-h" . corfu-popupinfo-toggle)
          ("C-d" . corfu-popupinfo-scroll-up)
-         ("C-b" . corfu-popupinfo-scroll-down)))
+         ("C-b" . corfu-popupinfo-scroll-down))
+  :config
+  (setq corfu-popupinfo-delay '(0.2 . 0.1)))
 
 (unless (display-graphic-p)
   (use-package corfu-terminal
