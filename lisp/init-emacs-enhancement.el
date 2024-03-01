@@ -135,6 +135,7 @@
                           "/sudo:"
                           "/tmp"
                           "/mnt"
+                          "/var/folders"
                           ".cache"
                           ".cask"
                           ".elfeed"
