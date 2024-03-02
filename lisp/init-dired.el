@@ -130,11 +130,11 @@
 
   (defun +dirvish/project-root-side ()
     (interactive)
-    (cond ((eq (dirvish-side--session-visible-p) (selected-window))
-           (dirvish-quit))
-          (t
-           (dirvish-side--new (or (project-root (project-current))
-                                  default-directory)))))
+    (if-let ((dirvish-side-win (dirvish-side--session-visible-p)))
+        (with-selected-window dirvish-side-win
+          (dirvish-quit))
+      (dirvish-side--new (or (project-root (project-current))
+                             default-directory))))
 
   (with-eval-after-load 'winum
     (defun +dirvish/winum-assign-func ()
