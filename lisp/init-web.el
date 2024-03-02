@@ -63,6 +63,9 @@
   (+funcs/major-mode-leader-keys
    web-mode-map
    "f" '(web-mode-buffer-indent :which-key "indent-buffer"))
+  (+funcs/major-mode-leader-keys
+   html-web-mode-map
+   "f" '(web-mode-buffer-indent :which-key "indent-buffer"))
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs `(html-web-mode . ,(eglot-alternatives '(("vscode-html-language-server" "--stdio") ("html-languageserver" "--stdio"))))))
   (add-hook-run-once 'html-web-mode-hook '+eglot/set-leader-keys))
