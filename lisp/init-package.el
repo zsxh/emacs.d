@@ -60,9 +60,9 @@
 
 (set-package-archives personal-package-archives)
 
-(eval-when-compile
-  (setq use-package-always-ensure t
-        use-package-verbose t))
+(setq use-package-always-ensure t
+      use-package-verbose t
+      use-package-vc-prefer-newest t)
 
 (defvar emacs-startup-time nil
   "The time it took, in seconds, for Emacs to initialize.")

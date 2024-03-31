@@ -200,7 +200,7 @@
   :defer t)
 
 (use-package eglot-hierarchy
-  :vc (:url "https://github.com/dolmens/eglot-hierarchy" :rev :newest)
+  :vc (:url "https://github.com/dolmens/eglot-hierarchy")
   :defer t)
 
 

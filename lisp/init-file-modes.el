@@ -21,7 +21,7 @@
 ;; CSV
 (use-package csv-mode :defer t)
 (use-package rainbow-csv-mode
-  :vc (:url "https://github.com/emacs-vs/rainbow-csv" :rev :newest)
+  :vc (:url "https://github.com/emacs-vs/rainbow-csv")
   :hook ((csv-mode tsv-mode) . rainbow-csv-mode))
 
 ;; Yaml

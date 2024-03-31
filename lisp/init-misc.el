@@ -195,7 +195,7 @@
 ;; https://github.com/tecosaur/screenshot.git
 ;; convert a selected region of code to a screenshot
 (use-package screenshot
-  :vc (:url "https://github.com/tecosaur/screenshot" :rev :newest)
+  :vc (:url "https://github.com/tecosaur/screenshot")
   :commands screenshot)
 
 ;; NOTE: timers

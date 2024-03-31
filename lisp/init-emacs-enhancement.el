@@ -289,7 +289,7 @@
 ;;;;;;;;;;;;;; Info-mode ;;;;;;;;;;;;;;
 ;; Extra colors for Emacs's `Info-mode'
 (use-package info-colors
-  :vc (:url "https://github.com/ubolonton/info-colors" :rev :newest)
+  :vc (:url "https://github.com/ubolonton/info-colors")
   :hook (Info-selection . info-colors-fontify-node))
 
 (with-eval-after-load 'info

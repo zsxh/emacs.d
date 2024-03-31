@@ -285,7 +285,7 @@
 
 ;; showcase file: ~/.emacs.d/elpa/transient-showcase/transient-showcase.org
 (use-package transient-showcase
-  :vc (:url "https://github.com/positron-solutions/transient-showcase.git" :rev :newest)
+  :vc (:url "https://github.com/positron-solutions/transient-showcase.git")
   :commands tsc-showcase)
 
 
