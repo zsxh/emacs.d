@@ -222,18 +222,32 @@
          ("C-c h" . gptel-menu))
   :config
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
-        gptel--debug nil)
+        gptel-default-mode 'org-mode
+        gptel-expert-commands t
+        gptel-log-level 'debug)
   (when (bound-and-true-p personal-openai-key)
     (setq gptel-api-key personal-openai-key))
   ;; https://openrouter.ai/models/rwkv/rwkv-5-world-3b
   (when (bound-and-true-p personal-openrouter-key)
-    (gptel-make-openai
-     "RWKV"
-     :header (lambda () `(("Authorization" . ,(concat "Bearer " (gptel--get-api-key)))))
-     :key 'personal-openrouter-key
-     :host "openrouter.ai/api"
-     :stream t
-     :models '("rwkv/rwkv-5-world-3b"))))
+    (gptel-make-openai "RWKV"
+      :header (lambda () `(("Authorization" . ,(concat "Bearer " (gptel--get-api-key)))))
+      :key 'personal-openrouter-key
+      :host "openrouter.ai/api"
+      :models '("rwkv/rwkv-5-world-3b")))
+  ;; kimi
+  (when (bound-and-true-p personal-kimi-key)
+    (gptel-make-openai "Moonshot"
+      :key 'personal-kimi-key
+      :models '("moonshot-v1-8k"
+                "moonshot-v1-32k"
+                "moonshot-v1-128k")
+      :host "api.moonshot.cn"))
+  ;; local llm
+  ;; NOTE: https://ollama.com/blog/how-to-prompt-code-llama
+  (gptel-make-openai "Local"
+    :host "localhost:1234"
+    :protocol "http"
+    :models '("local")))
 
 ;; use "C-\" to `toggle-input-method'
 (use-package rime

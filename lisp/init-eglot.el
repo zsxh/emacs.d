@@ -26,10 +26,7 @@
         eglot-stay-out-of '(eldoc)
         eglot-extend-to-xref t)
   (add-hook 'eglot-managed-mode-hook #'breadcrumb-local-mode)
-  (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs)
-  ;; (require 'eglot-booster)
-  ;; (eglot-booster)
-  )
+  (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
 
 (with-eval-after-load 'eglot
 

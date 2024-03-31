@@ -21,7 +21,8 @@
   :commands pyvenv-activate)
 
 ;; NOTE: install python language server
-;; $ pnpm add -g pyright
+;; > pipx install basedpyrig
+;; ## > pnpm add -g pyright
 (use-package python
   :ensure nil
   :hook (python-base-mode . eglot-ensure)

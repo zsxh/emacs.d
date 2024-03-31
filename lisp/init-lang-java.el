@@ -24,14 +24,19 @@
 (add-hook 'java-mode-hook #'eglot-ensure)
 (add-hook 'java-ts-mode-hook #'eglot-ensure)
 
-;; NOTE: jdtls.py script add: os.environ["JAVA_HOME"] = subprocess.check_output(["mise", "where", "java@21"]).decode("utf-8").rstrip()
 (defun jdtls-command-contact (&optional interactive project)
   (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar"))
                      "-XX:+UseZGC"
                      "-XX:+ZGenerational"
                      "-XX:+UseStringDeduplication"))
          (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
-         (contact (append '("jdtls") jvm-args)))
+         ;; NOTE: mise alias
+         ;; [alias.java]
+         ;; lsp-server = "{java-tool-version}" # temurin-17 for example
+         (java-executable (concat "--java-executable="
+                                  (string-trim (shell-command-to-string "mise where java@lsp-server"))
+                                  "/bin/java"))
+         (contact (append `("jdtls" ,java-executable) jvm-args)))
     contact))
 
 (with-eval-after-load 'eglot
@@ -46,7 +51,9 @@
                                                    (:name "JavaSE-17"
                                                     :path ,(string-trim (shell-command-to-string "mise where java@17")))
                                                    (:name "JavaSE-21"
-                                                    :path ,(string-trim (shell-command-to-string "mise where java@21"))
+                                                    :path ,(string-trim (shell-command-to-string "mise where java@21")))
+                                                   (:name "JavaSE-22"
+                                                    :path ,(string-trim (shell-command-to-string "mise where java@22"))
                                                     :default t)])
                         :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
                                             :profile "GoogleStyle"))

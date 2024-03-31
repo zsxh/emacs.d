@@ -139,9 +139,11 @@
     ["Smerge"
      ("j" "smerge-next" smerge-next :transient t)
      ("k" "smerge-prev" smerge-prev :transient t)
+     ("0" "smerge-keep-current" smerge-keep-current :transient t)
      ("1" "smerge-keep-upper" smerge-keep-upper :transient t)
-     ("2" "smerge-keep-lower" smerge-keep-lower :transient t)
-     ("3" "smerge-keep-all" smerge-keep-all :transient t)
+     ("2" "smerge-keep-base" smerge-keep-base :transient t)
+     ("3" "smerge-keep-lower" smerge-keep-lower :transient t)
+     ("4" "smerge-keep-all" smerge-keep-all :transient t)
      ("q" "quit" transient-quit-all)]))
 
 
