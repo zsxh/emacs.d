@@ -79,7 +79,7 @@
 ;; Download ans install SF Mono fonts for Linux
 ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
 ;; https://github.com/hick/emacs-chinese#emacs-中文基础
-(defun +ui/adjust-font-size (frame)
+(defun +ui/adjust-font-size ()
   "Adjust FRAME font size base on `frame-monitor-attributes'"
   (let* ((geometry (frame-monitor-attribute 'geometry))
          (mm-size (frame-monitor-attribute 'mm-size))
@@ -145,9 +145,8 @@
 (defun +ui/frame-config (frame)
   "Custom behaviours for new frames."
   (with-selected-frame frame
-    (ignore-errors
-      (+ui/adjust-font-size frame)
-      (load-theme current-theme t))))
+    (ignore-errors (load-theme current-theme t))
+    (ignore-errors (+ui/adjust-font-size))))
 
 ;; Set config now
 (with-eval-after-load 'doom-themes
