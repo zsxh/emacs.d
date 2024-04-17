@@ -67,6 +67,10 @@
 ;; NOTE: https://karthinks.com/software/latex-input-for-impatient-scholars/
 ;; NOTE: karthinks Fast, Async LaTeX Previews https://www.youtube.com/watch?v=n-AfvuV-bYo
 
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :hook (nix-mode . nix-prettify-mode))
+
 
 (provide 'init-file-modes)
 

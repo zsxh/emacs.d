@@ -25,7 +25,8 @@
 (use-package python
   :ensure nil
   :hook (python-base-mode . eglot-ensure)
-  :custom (python-indent-offset 2))
+  ;; :custom (python-indent-offset 2)
+  )
 
 ;; python ruff linter
 (use-package flymake-ruff

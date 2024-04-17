@@ -190,7 +190,6 @@
   :defer t
   :config
   (setq tramp-default-method "ssh"
-        remote-file-name-inhibit-cache 120
         tramp-verbose 3
         tramp-chunksize 2000))
 
@@ -271,7 +270,8 @@
       (lambda () (and (not (string-match-p "\\.gpg\\'" buffer-file-name))
                       (not (string-equal "COMMIT_EDITMSG" (buffer-name)))))
       remote-file-name-inhibit-auto-save t
-      remote-file-name-inhibit-auto-save-visited t)
+      remote-file-name-inhibit-auto-save-visited t
+      remote-file-name-inhibit-cache 120)
 
 (defun delete-trailing-whitespace-skip-current-line ()
     (interactive)

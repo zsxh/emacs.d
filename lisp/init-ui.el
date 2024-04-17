@@ -28,7 +28,7 @@
        (toggle-frame-fullscreen)))
 
 ;; Fringe
-(fringe-mode '(10 . 10))
+;; (fringe-mode '(10 . 10))
 
 ;; nerd-icons.el works on both GUI and terminal
 ;; https://github.com/rainstormstudio/nerd-icons.el
@@ -135,7 +135,9 @@
              ('doom-solarized-light
               '((dired-directory ((t (:foreground "#268bd2"))))
                 (nerd-icons-completion-dir-face ((t (:foreground "#268bd2"))))
-                (show-paren-match ((t (:foreground "#dc322f" :background "#E5E5E5" :weight ultra-bold))))))))))
+                (show-paren-match ((t (:foreground "#dc322f" :background "#E5E5E5" :weight ultra-bold))))
+                (telega-shadow ((t (:foreground "#556b72"))))
+                (telega-msg-inline-reply ((t (:foreground "#556b72" :background "gray85"))))))))))
 
 (advice-add 'load-theme :before #'+ui/disable-previous-theme)
 (advice-add 'load-theme :after #'+ui/custom-theme-faces)

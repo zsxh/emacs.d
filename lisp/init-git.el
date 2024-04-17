@@ -23,6 +23,7 @@
   (add-hook 'magit-process-find-password-functions 'magit-process-password-auth-source)
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit)
+    (evil-collection-init 'magit-section)
     (evil-define-key '(normal visual) magit-mode-map
       "$" 'magit-process-buffer)
     (with-eval-after-load 'with-editor

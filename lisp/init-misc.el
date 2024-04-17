@@ -274,6 +274,9 @@
   (with-eval-after-load 'evil-collection
     (evil-collection-pass-setup)))
 
+(use-package keycast
+  :defer t)
+
 
 (provide 'init-misc)
 
