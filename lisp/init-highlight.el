@@ -51,18 +51,26 @@
 
 ;; Color String
 (use-package rainbow-mode
-  :diminish rainbow-mode
-  :hook ((web-mode
-          lisp-mode
-          emacs-lisp-mode
-          help-mode
-          js-mode
-          css-mode)
-         . rainbow-mode))
+  :defer t)
 
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
 (use-package rainbow-delimiters
   :hook (lisp-data-mode . rainbow-delimiters-mode))
+
+;; Color String
+;; `colorful-mode' is a minor mode that allow you preview any color format such as color hex
+;; and color names, in your current buffer in real time and in a user friendly way.
+(use-package colorful-mode
+  :vc (:url "https://github.com/DevelopmentCool2449/colorful-mode")
+  :hook ((web-mode
+          lisp-mode
+          emacs-lisp-mode
+          help-mode
+          js-base-mode
+          css-base-mode)
+         . colorful-mode)
+  :config
+  (setq css-fontify-colors nil))
 
 (use-package highlight-indent-guides
   ;; :if (not IS-LINUX)

@@ -73,10 +73,10 @@
 (use-package css-mode
   :ensure nil
   :defer t
-  :hook ((css-mode css-ts-mode) . (lambda ()
-                                    (setq-local company-backends
-                                                '(company-capf company-files company-css company-dabbrev))
-                                    (eglot-ensure)))
+  :hook (css-base-mode . (lambda ()
+                           (setq-local company-backends
+                                       '(company-capf company-files company-css company-dabbrev))
+                           (eglot-ensure)))
   :config
   (setq css-indent-offset 2)
   (dolist (mode-map '(css-mode-map css-ts-mode-map))
