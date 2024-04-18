@@ -66,6 +66,9 @@
                               :item (consult--lookup-cdr selected candidates))))))
 
 (use-package diff-hl
+  :init
+  (unless (display-graphic-p)
+    (add-hook 'after-init-hook #'diff-hl-margin-mode))
   :hook (after-init . global-diff-hl-mode)
   :config
   (setq diff-hl-disable-on-remote t)

@@ -29,12 +29,6 @@
         flymake-show-diagnostics-at-end-of-line nil)
   (advice-add 'flymake-eldoc-function :override #'ignore))
 
-(use-package flymake-margin
-  :after flymake
-  :config
-  ;; (custom-set-variables '(flymake-margin-side 'right))
-  (flymake-margin-mode))
-
 ;; https://github.com/mohkale/flymake-collection
 ;; TODO: flymake checkers for non-lsp files: yaml, xml, json...
 (use-package flymake-collection
