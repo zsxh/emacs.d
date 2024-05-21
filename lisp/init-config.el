@@ -99,7 +99,7 @@
       mouse-drag-and-drop-region t)
 
 ;; Increase subprocess read chunk size
-(setq read-process-output-max (* 1024 1024))
+(setq read-process-output-max (if IS-MAC (* 64 1024) (* 1024 1024)))
 
 ;; repeat mode
 (setq repeat-mode t)

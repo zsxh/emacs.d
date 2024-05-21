@@ -19,9 +19,6 @@
          (global-corfu-mode . corfu-popupinfo-mode))
   :config
   (set-face-attribute 'corfu-border nil :inherit 'region :background 'unspecified)
-  (with-eval-after-load 'doom-themes
-    (when (eq current-theme 'doom-one)
-      (set-face-background 'corfu-current (doom-color 'dark-blue))))
   (setq corfu-auto t
         corfu-auto-prefix 1
         corfu-auto-delay 0.1

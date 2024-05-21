@@ -65,6 +65,11 @@
                              (magit-todos-jump-to-item
                               :item (consult--lookup-cdr selected candidates))))))
 
+(use-package magit-file-icons
+  :after magit
+  :config
+  (magit-file-icons-mode 1))
+
 (use-package diff-hl
   :init
   (unless (display-graphic-p)

@@ -17,6 +17,13 @@
   :custom
   (tab-bar-show 1))
 
+(defun +workspace/tab-new (name)
+    (interactive (list (read-from-minibuffer
+                        (format "New Tab Name(%s): " (buffer-name))
+                        nil nil nil nil (buffer-name))))
+    (tab-new)
+    (tab-rename name))
+
 
 (provide 'init-workspace)
 

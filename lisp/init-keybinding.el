@@ -187,7 +187,8 @@
    "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    ;; View/Workspace/Layout
    "v" '(nil :which-key "workspace")
-   "vc" '(tab-new :which-key "tab-new")
+   ;; "vc" '(tab-new :which-key "tab-new")
+   "vc" '(+workspace/tab-new :which-key "tab-new")
    "vn" '(tab-next :which-key "tab-next")
    "vp" '(tab-previous :which-key "tab-previous")
    "vr" '(tab-rename :which-key "tab-rename")

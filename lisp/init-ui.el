@@ -131,7 +131,8 @@
                 (nerd-icons-completion-dir-face ((t (:foreground "#3B6EA8"))))))
              ('doom-one
               '((dired-directory ((t (:foreground "#51afef"))))
-                (nerd-icons-completion-dir-face ((t (:foreground "#51afef"))))))
+                (nerd-icons-completion-dir-face ((t (:foreground "#51afef"))))
+                (corfu-current ((t (:background "#2257A0"))))))
              ('doom-solarized-light
               '((dired-directory ((t (:foreground "#268bd2"))))
                 (nerd-icons-completion-dir-face ((t (:foreground "#268bd2"))))

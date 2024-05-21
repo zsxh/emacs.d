@@ -61,7 +61,6 @@
 ;; `colorful-mode' is a minor mode that allow you preview any color format such as color hex
 ;; and color names, in your current buffer in real time and in a user friendly way.
 (use-package colorful-mode
-  :vc (:url "https://github.com/DevelopmentCool2449/colorful-mode")
   :hook ((web-mode
           lisp-mode
           emacs-lisp-mode
@@ -93,7 +92,7 @@
 ;; For indent-bars to work, your port and version of emacs must correctly display the `:stipple' face attribute.
 ;; https://github.com/jdtsmith/indent-bars
 (use-package indent-bars
-  :if (and IS-LINUX (display-graphic-p))
+  :if (display-graphic-p)
   :vc (:url "https://github.com/jdtsmith/indent-bars")
   :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode docker-compose-mode) . indent-bars-mode))
 

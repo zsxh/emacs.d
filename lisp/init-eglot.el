@@ -23,7 +23,7 @@
         ;; NOTE: drop log to improve performance
         eglot-events-buffer-config '(:size 0 :format full)
         eglot-report-progress nil
-        eglot-stay-out-of '(eldoc)
+        eglot-stay-out-of '()
         eglot-extend-to-xref t)
   (add-hook 'eglot-managed-mode-hook #'breadcrumb-local-mode)
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
@@ -33,7 +33,6 @@
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
   (defvar +eglot/display-frame nil)
   (defvar +eglot/hover-last-point nil)
-  (defvar +eglot/signature-last-point nil)
   (defface +eglot/display-border '((((background dark)) . (:background "white"))
                                    (((background light)) . (:background "black")))
     "The border color used in childframe.")
@@ -78,68 +77,7 @@
     (if (or (eq (point) +eglot/hover-last-point)
             (eq (selected-frame) +eglot/display-frame))
         (run-with-timer 0.1 nil #'+eglot/hide-hover)
-      (posframe-hide +eglot/display-buf)))
-
-  ;; Signature
-  (defun +eglot/show-signature-help ()
-    (when (and (eglot-managed-p)
-               (eglot-server-capable :signatureHelpProvider))
-      (unless +eglot/signature-last-point
-        (setq +eglot/signature-last-point (point)))
-      (let ((buf (current-buffer)))
-        (if (eql (line-number-at-pos +eglot/signature-last-point)
-                 (line-number-at-pos (point)))
-            (jsonrpc-async-request
-             (eglot--current-server-or-lose)
-             :textDocument/signatureHelp (eglot--TextDocumentPositionParams)
-             :success-fn (eglot--lambda ((SignatureHelp)
-                                         signatures activeSignature (activeParameter 0))
-                           (eglot--when-buffer-window buf
-                             (let ((active-sig (and (cl-plusp (length signatures))
-                                                    (aref signatures (or activeSignature 0)))))
-                               (if (not active-sig)
-                                   (+eglot/hide-signature buf)
-                                 (with-current-buffer (get-buffer-create +eglot/display-buf)
-                                   (erase-buffer)
-                                   (insert (or (eglot--sig-info active-sig activeParameter t) "")))
-                                 (setq +eglot/display-frame
-                                       (posframe-show
-                                        (get-buffer-create +eglot/display-buf)
-                                        :position +eglot/signature-last-point
-                                        :border-width 1
-                                        :border-color (face-background '+eglot/display-border nil t)
-                                        :max-width (/ (frame-width) 3)
-                                        :poshandler 'posframe-poshandler-point-bottom-left-corner-upward))))))
-             :timeout-fn (lambda () (+eglot/hide-signature buf))
-             :error-fn (lambda () (+eglot/hide-signature buf))
-             :deferred :textDocument/signatureHelp)
-          (+eglot/hide-signature buf)))))
-
-  (defun +eglot/hide-signature (buf)
-    (with-current-buffer buf
-      (remove-hook 'post-command-hook #'+eglot/show-signature-help t))
-    (setq +eglot/signature-last-point nil
-          +eglot/signature-retries 0)
-    (posframe-hide +eglot/display-buf))
-
-  (defun +eglot/signature-help-at-point ()
-    (interactive)
-    (when (and (eglot-managed-p)
-               (eglot-server-capable :signatureHelpProvider))
-      (+eglot/show-signature-help)
-      (add-hook 'post-command-hook #'+eglot/show-signature-help nil t)))
-
-  (with-eval-after-load 'company
-    (define-advice company-finish (:around (orig-fn candidate) eglot-signature)
-      (let* ((kind (company-call-backend 'kind candidate))
-             (complete-function-p (member kind '(method function))))
-        (funcall orig-fn candidate)
-        (when complete-function-p
-          (when (member major-mode '(python-mode python-ts-mode))
-            ;; HACK: complete pyright parentheses
-            (insert "()")
-            (goto-char (1- (point))))
-          (+eglot/signature-help-at-point))))))
+      (posframe-hide +eglot/display-buf))))
 
 (defun +eglot/set-leader-keys (&optional map)
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))

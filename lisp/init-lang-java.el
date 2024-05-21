@@ -39,6 +39,7 @@
          (contact (append `("jdtls" ,java-executable) jvm-args)))
     contact))
 
+;; TODO: eglot does not support `workspace.workspaceEdit.resourceOperations' yet
 (with-eval-after-load 'eglot
   ;; ----------------------- Intialization/Configurations -----------------------
   ;; (jsonrpc--json-encode (jdtls-initialization-options))

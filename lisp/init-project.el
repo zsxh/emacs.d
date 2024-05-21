@@ -151,6 +151,15 @@ else ask the user for a directory in which to look for the project."
   (interactive (list (project-prompt-project-dir)))
   (dired dir))
 
+;;;; TODO: Project Isolation
+
+;; [envrc.el](https://github.com/purcell/envrc)
+;; [direnv](https://direnv.net/docs/hook.html)
+(use-package envrc
+  :hook (after-init . envrc-global-mode))
+
+;; nix
+
 
 (provide 'init-project)
 

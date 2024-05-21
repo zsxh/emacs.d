@@ -269,6 +269,10 @@
 (use-package reformatter
   :defer t)
 
+;;;;;;;;;;;;;; Quick Run ;;;;;;;;;;;;;;
+(use-package quickrun
+  :defer t)
+
 
 (provide 'init-editor)
 
