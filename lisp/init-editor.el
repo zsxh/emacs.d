@@ -248,7 +248,10 @@
 ;; It does this by showing you the assembly output of a given source code file.
 ;; https://gitlab.com/jgkamat/rmsbolt
 (use-package rmsbolt
-  :commands rmsbolt-mode)
+  :defer t
+  :config
+  (setq rmsbolt-compile-delay 1
+        rmsbolt-automatic-recompile 'on-save))
 
 ;;;;;;;;;;;;;; Coding styles for multiple developers working on the same project across various editors and IDEs ;;;;;;;;;;;;;;
 ;; https://github.com/editorconfig/editorconfig-emacs

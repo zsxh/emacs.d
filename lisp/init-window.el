@@ -38,7 +38,8 @@
           "^\\*vterm.*\\*$" vterm-mode   ;vterm as a popup
           "^\\*HTTP Response\\*$"
           helpful-mode
-          magit-process-mode))
+          magit-process-mode
+          "\\*gt-result\\*"))
   (setq popper-group-function #'popper-group-by-project)
   (popper-mode 1)
   ;; For echo area hints

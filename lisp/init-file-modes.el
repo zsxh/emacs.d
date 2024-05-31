@@ -8,6 +8,20 @@
 
 ;;; Code:
 
+;; nix profile install nixpkgs#nil
+;; nix profile install nixpkgs#nixpkgs-fmt
+(use-package nix-mode
+  :mode "\\.nix\\'"
+  :hook ((nix-mode . nix-prettify-mode)
+         (nix-mode . eglot-ensure))
+  :config
+  (require 'eglot)
+  (+eglot/set-leader-keys nix-mode-map)
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-mode))
+    '(:nil
+      (:formatting
+       (:command ["nixpkgs-fmt"])))))
+
 ;; Markdowm
 (use-package markdown-mode
   :defer t
@@ -67,9 +81,13 @@
 ;; NOTE: https://karthinks.com/software/latex-input-for-impatient-scholars/
 ;; NOTE: karthinks Fast, Async LaTeX Previews https://www.youtube.com/watch?v=n-AfvuV-bYo
 
-(use-package nix-mode
-  :mode "\\.nix\\'"
-  :hook (nix-mode . nix-prettify-mode))
+;; google protobuf languages
+(use-package protobuf-mode
+  :defer t)
+
+;; Disable ispell word completion
+(with-eval-after-load 'text-mode
+  (custom-set-variables '(text-mode-ispell-word-completion nil)))
 
 
 (provide 'init-file-modes)

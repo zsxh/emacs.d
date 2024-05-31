@@ -268,7 +268,8 @@
       auto-save-visited-interval 1
       auto-save-visited-predicate
       (lambda () (and (not (string-match-p "\\.gpg\\'" buffer-file-name))
-                      (not (string-equal "COMMIT_EDITMSG" (buffer-name)))))
+                      (not (string-equal "COMMIT_EDITMSG" (buffer-name)))
+                      (not (bound-and-true-p rmsbolt-mode))))
       remote-file-name-inhibit-auto-save t
       remote-file-name-inhibit-auto-save-visited t
       remote-file-name-inhibit-cache 120)

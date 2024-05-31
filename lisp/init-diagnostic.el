@@ -26,7 +26,7 @@
   (setq flymake-no-changes-timeout 0.5
         flymake-start-on-save-buffer nil
         ;; FIXME: mess up corfu popup child frame
-        flymake-show-diagnostics-at-end-of-line nil)
+        flymake-show-diagnostics-at-end-of-line 'short)
   (advice-add 'flymake-eldoc-function :override #'ignore))
 
 ;; https://github.com/mohkale/flymake-collection

@@ -40,9 +40,17 @@
 
 ;; https://github.com/lorniu/go-translate
 (use-package go-translate
-  :commands (go-translate go-translate-popup)
+  :commands (gt-do-translate gt-do-speak)
   :config
-  (setq gts-translate-list '(("en" "zh"))))
+  (setq gt-langs '("en" "zh")
+        gt-default-translator (gt-translator
+                               :engines (gt-google-engine)
+                               :render (gt-buffer-render)))
+  (with-eval-after-load 'evil
+    (add-hook 'gt-buffer-render-init-hook
+              (lambda ()
+                (evil-define-key '(normal visual insert emacs) gt-buffer-render-local-map
+                  "q" 'kill-buffer-and-window)))))
 
 ;; Leetcode
 ;; https://github.com/kaiwk/leetcode.el
@@ -134,15 +142,6 @@
                         (shell-quote-argument network)))))))
     (funcall 'f line)))
 
-;; User can use curl when s/he has it, as curl is more reliable
-;; than url.el.
-(use-package request
-  :defer t
-  :custom
-  (request-storage-directory (locate-user-emacs-file "cache/request")))
-
-;; TODO: try another http client using curl as a backend, https://github.com/alphapapa/plz.el
-
 ;; Usage:
 ;; emacs -batch -l ${package-elpa-dir}/elisp-benchmarks.el -f elisp-benchmarks-run
 (use-package elisp-benchmarks
@@ -150,47 +149,6 @@
 
 (use-package memory-usage
   :commands memory-usage)
-
-;; https://zevlg.github.io/telega.el/#building-tdlib
-;; $ git clone --depth 1 https://github.com/tdlib/td
-;; $ cd td
-;; $ mkdir -p build && cd build && cmake ../
-;; $ make -j8
-;; $ sudo make install
-;; `telega-server-libs-prefix'
-;; M-x `telega-server-build'
-(use-package telega
-  :defer t
-  :config
-  ;; (require 'telega-bridge-bot)
-  ;; (require 'telega-transient)
-
-  (setq telega-proxies (list `(:server ,personal-proxy-http-host :port ,personal-proxy-http-port :enable nil :type (:@type "proxyTypeHttp"))
-                             `(:server ,personal-proxy-http-host :port ,personal-proxy-socks5-port :enable t :type (:@type "proxyTypeSocks5")))
-        telega-old-date-format "%Y/%M/%D"
-        telega-translate-to-language-by-default "zh")
-
-  ;; avatar
-  (setq telega-avatar-workaround-gaps-for '(return t))
-
-  (with-eval-after-load 'telega-root
-    (with-eval-after-load 'evil
-      (evil-define-key 'normal telega-root-mode-map "Q" #'telega-kill)))
-
-  (with-eval-after-load 'telega-msg
-    (define-key telega-msg-button-map (kbd "k") nil)
-    (define-key telega-msg-button-map (kbd "l") nil))
-
-  (with-eval-after-load 'telega-chat
-
-    (define-key telega-chat-button-map (kbd "h") nil)
-    (with-eval-after-load 'evil
-      (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
-      (define-key telega-msg-button-map (kbd "SPC") nil)))
-
-  (with-eval-after-load 'nerd-icons
-    (push '(telega-root-mode nerd-icons-faicon "nf-fae-telegram" :face nerd-icons-blue) nerd-icons-mode-icon-alist)
-    (push '(telega-chat-mode nerd-icons-faicon "nf-fae-telegram" :face nerd-icons-blue) nerd-icons-mode-icon-alist)))
 
 ;; https://github.com/tecosaur/screenshot.git
 ;; convert a selected region of code to a screenshot
@@ -206,48 +164,6 @@
 ;;      (float-time (time-since time))))
 
 ;; (nasy/timer (format-mode-line mode-line-format))
-
-(use-package protobuf-mode
-  :defer t)
-
-;; TODO: another chatgpt wrapper
-;; https://github.com/xenodium/chatgpt-shell
-
-;; TODO: Qwen
-;; A simple ChatGPT client for Emacs
-;; https://github.com/karthink/gptel
-(use-package gptel
-  :defer t
-  :bind (:map gptel-mode-map
-         ("C-c h" . gptel-menu))
-  :config
-  (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
-        gptel-default-mode 'org-mode
-        gptel-expert-commands t
-        gptel-log-level 'debug)
-  (when (bound-and-true-p personal-openai-key)
-    (setq gptel-api-key personal-openai-key))
-  ;; https://openrouter.ai/models/rwkv/rwkv-5-world-3b
-  (when (bound-and-true-p personal-openrouter-key)
-    (gptel-make-openai "RWKV"
-      :header (lambda () `(("Authorization" . ,(concat "Bearer " (gptel--get-api-key)))))
-      :key 'personal-openrouter-key
-      :host "openrouter.ai/api"
-      :models '("rwkv/rwkv-5-world-3b")))
-  ;; kimi
-  (when (bound-and-true-p personal-kimi-key)
-    (gptel-make-openai "Moonshot"
-      :key 'personal-kimi-key
-      :models '("moonshot-v1-8k"
-                "moonshot-v1-32k"
-                "moonshot-v1-128k")
-      :host "api.moonshot.cn"))
-  ;; local llm
-  ;; NOTE: https://ollama.com/blog/how-to-prompt-code-llama
-  (gptel-make-openai "Local"
-    :host "localhost:1234"
-    :protocol "http"
-    :models '("local")))
 
 ;; use "C-\" to `toggle-input-method'
 (use-package rime

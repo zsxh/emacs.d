@@ -29,8 +29,11 @@
                  :cwd dape-cwd-fn
                  :program dape-find-file-buffer-default))
 
-  ;; Java
-  ;; TODO: debug test class/method
+
+  ;; TODO: Java
+  ;; https://github.com/svaante/dape/issues/108
+  ;; https://github.com/yveszoundi/eglot-java/blob/main/eglot-java.el
+  ;;
   ;; install vscode-java-debug, https://github.com/Microsoft/vscode-java-debug
   ;; install vscode-java-test, https://github.com/microsoft/vscode-java-test
   ;;

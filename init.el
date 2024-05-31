@@ -111,6 +111,8 @@
 (require 'init-misc)
 (require 'init-window)
 (require 'init-workspace)
+(require 'init-telega)
+(require 'init-ai)
 
 (add-hook 'emacs-startup-hook (lambda () (setq debug-on-error nil)))
 
