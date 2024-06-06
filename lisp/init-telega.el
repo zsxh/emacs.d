@@ -26,8 +26,15 @@
 
   (setq telega-proxies (list `(:server ,personal-proxy-http-host :port ,personal-proxy-http-port :enable nil :type (:@type "proxyTypeHttp"))
                              `(:server ,personal-proxy-http-host :port ,personal-proxy-socks5-port :enable t :type (:@type "proxyTypeSocks5")))
-        telega-old-date-format "%Y/%M/%D"
-        telega-translate-to-language-by-default "zh")
+        telega-translate-to-language-by-default "zh"
+        telega-date-format-alist '((today . "%H:%M")
+                                   (this-week . "%a")
+                                   (old . "%Y.%m.%d")
+                                   (date . "%Y.%m.%d")
+                                   (time . "%H:%M")
+                                   (date-time . "%Y.%m.%d %a %H:%M")
+                                   (date-long . "%Y %B %d")
+                                   (date-break-bar . "%Y %B %d %a")))
 
   ;; avatar
   (setq telega-avatar-workaround-gaps-for '(return t))
