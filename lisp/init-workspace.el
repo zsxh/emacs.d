@@ -24,6 +24,10 @@
     (tab-new)
     (tab-rename name))
 
+;; Easily persist and restore your Emacs editing sessions
+(use-package easysession
+  :commands (easysession-save-as easysession-switch-to))
+
 
 (provide 'init-workspace)
 
