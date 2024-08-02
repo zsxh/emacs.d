@@ -50,6 +50,10 @@
     ;; defualt model
     (setq gptel-model "deepseek-coder")))
 
+(use-package gptel-commit
+  :ensure nil
+  :after magit)
+
 
 (provide 'init-ai)
 
