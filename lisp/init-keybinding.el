@@ -194,6 +194,8 @@
    "vr" '(tab-rename :which-key "tab-rename")
    "vs" '(tab-switch :which-key "tab-switch")
    "vx" '(tab-close :which-key "tab-close")
+   "vS" '(easysession-save-as :which-key "easysession-save-as")
+   "vR" '(easysession-save-as :which-key "easysession-switch-to")
    ;; Window
    "w" '(nil :which-key "window")
    "w/" '(split-window-right :which-key "split-right")
