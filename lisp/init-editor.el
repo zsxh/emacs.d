@@ -276,6 +276,13 @@
 (use-package quickrun
   :defer t)
 
+;;;;;;;;;;;;;; Cognitive Complexity for Emacs ;;;;;;;;;;;;;;
+;; Show the cognitive complexity of the code, https://github.com/emacs-vs/cognitive-complexity
+;; It implements live calculation of the Cognitive Complexity metric, https://www.sonarsource.com/docs/CognitiveComplexity.pdf
+(use-package cognitive-complexity
+  :vc (:url "https://github.com/emacs-vs/cognitive-complexity")
+  :defer t)
+
 
 (provide 'init-editor)
 
