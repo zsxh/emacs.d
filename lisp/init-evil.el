@@ -109,7 +109,8 @@
     (evil-collection-arc-mode-setup)
     (evil-define-key 'normal archive-mode-map
       (kbd "C-d") 'evil-scroll-down))
-  (with-eval-after-load 'cus-edit (evil-collection-custom-setup)))
+  (with-eval-after-load 'cus-edit (evil-collection-custom-setup))
+  (with-eval-after-load 'xwidget (evil-collection-xwidget-setup)))
 
 ;; https://github.com/redguardtoo/evil-matchit
 ;; Usage: '%' go to matching pair
