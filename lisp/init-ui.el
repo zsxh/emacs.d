@@ -36,6 +36,13 @@
 (use-package nerd-icons
   :defer t)
 
+;;  Use nerd-icons for archive-mode and tar-mode
+(use-package nerd-icons-archive
+  :vc (:url "https://github.com/abougouffa/nerd-icons-archive")
+  :after arc-mode
+  :init
+  (nerd-icons-archive-mode 1))
+
 ;; Theme
 (use-package doom-themes
   :config
@@ -54,11 +61,12 @@
   :hook (after-init . doom-modeline-mode)
   :config
   (setq doom-modeline-modal-icon nil
+        doom-modeline-modal-modern-icon nil
         doom-modeline-hud nil
         doom-modeline-unicode-fallback nil
         doom-modeline-major-mode-icon t
         doom-modeline-window-width-limit 100
-        doom-modeline-buffer-file-name-style 'truncate-with-project
+        doom-modeline-buffer-file-name-style 'auto
         ;; Customize segments
         ;; Requires `eyebrowse-mode' to be enabled or `tab-bar-mode' tabs to be created
         doom-modeline-workspace-name nil))
