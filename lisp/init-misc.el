@@ -26,6 +26,12 @@
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'elfeed)))
 
+(use-package elfeed-webkit
+  :if (featurep 'xwidget-internal)
+  :after elfeed
+  :bind (:map elfeed-show-mode-map
+         ("%" . elfeed-webkit-toggle)))
+
 ;; Youdao
 (use-package youdao-dictionary
   :commands (youdao-dictionary-search-at-point+
