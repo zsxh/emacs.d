@@ -12,6 +12,7 @@
 
 ;; A simple ChatGPT client for Emacs
 ;; https://github.com/karthink/gptel
+;; NOTE: https://github.com/karthink/gptel/wiki#defining-custom-gptel-commands
 ;; NOTE: https://ollama.com/blog/how-to-prompt-code-llama
 (use-package gptel
   :defer t
@@ -22,6 +23,10 @@
         gptel-default-mode 'org-mode
         gptel-expert-commands t
         gptel-log-level 'debug)
+
+  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+
   (when (bound-and-true-p personal-openai-key)
     (setq gptel-api-key personal-openai-key))
   ;; kimi
