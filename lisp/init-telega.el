@@ -10,6 +10,10 @@
 
 ;;; Code:
 
+;; NOTE: How to send code block
+;; https://zevlg.github.io/telega.el/#sending-ordinary-messages
+
+;; Install tdlib
 ;; https://zevlg.github.io/telega.el/#building-tdlib
 ;; $ git clone --depth 1 https://github.com/tdlib/td
 ;; $ cd td
