@@ -59,13 +59,15 @@
     "?" 'kubel-evil-help-popup))
 
 (use-package kubernetes
-  :if (executable-find "kubectl")
   :commands (kubernetes-overview))
 
 ;; If you want to pull in the Evil compatibility package.
 (use-package kubernetes-evil
   :after kubernetes)
 
+;; https://github.com/eshelyaron/kubed
+(use-package kubed
+  :defer t)
 
 ;; https://github.com/emacsorphanage/terraform-mode
 (use-package terraform-mode
