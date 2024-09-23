@@ -39,10 +39,6 @@
   :config
   (setq corfu-popupinfo-delay '(0.2 . 0.1)))
 
-(unless (display-graphic-p)
-  (use-package corfu-terminal
-    :hook (global-corfu-mode . corfu-terminal-mode)))
-
 (use-package nerd-icons-corfu
   :after corfu
   :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))

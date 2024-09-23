@@ -93,7 +93,6 @@
 ;; https://github.com/jdtsmith/indent-bars
 (use-package indent-bars
   :if (display-graphic-p)
-  :vc (:url "https://github.com/jdtsmith/indent-bars")
   :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode docker-compose-mode) . indent-bars-mode))
 
 (with-eval-after-load 'compile
