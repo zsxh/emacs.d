@@ -37,21 +37,16 @@
 
 ;; https://github.com/alphapapa/magit-todos
 (use-package magit-todos
-  :defer t
-  ;; :init
-  ;; (add-hook-run-once 'magit-mode-hook #'magit-todos-mode)
+  :after magit
   :custom
   (magit-todos-exclude-globs '("node_modules" "*.json" ".git/" ".venv/"))
-  ;; (magit-todos-update t)
-  ;; magit-todos insert is slow for large repos, so toggle todos manually
-  :commands (magit-todos-list consult-magit-todos)
+  (magit-todos-ignored-keywords '("NOTE" "DONE" "HACK"))
+  (magit-todos-auto-group-items 'always)
   :config
-  (setq magit-todos-auto-group-items 'always)
-  (with-eval-after-load 'evil-collection
-    (evil-collection-init 'magit-todos))
-  (with-eval-after-load 'evil
-    (evil-collection-define-key nil 'magit-todos-item-section-map
-      "j" nil))
+  (magit-todos-mode 1)
+  ;; evil keybindings
+  (with-eval-after-load 'evil-collection (evil-collection-init 'magit-todos))
+  ;; consult
   (defun consult-magit-todos ()
     (interactive)
     (consult--read (magit-todos-candidates)
@@ -154,6 +149,10 @@
      ("3" "smerge-keep-lower" smerge-keep-lower :transient t)
      ("4" "smerge-keep-all" smerge-keep-all :transient t)
      ("q" "quit" transient-quit-all)]))
+
+;; https://github.com/sshaw/git-link
+(use-package git-link
+  :defer t)
 
 
 (provide 'init-git)
