@@ -44,15 +44,19 @@
     (setq gptel-backend (gptel-make-openai "DeepSeek"
                           :key 'personal-deepseek-key
                           :stream t
-                          :models '("deepseek-chat"
-                                    "deepseek-coder")
+                          :models '("deepseek-chat")
                           :host "api.deepseek.com"))
     ;; defualt model
-    (setq gptel-model "deepseek-coder")))
+    (setq gptel-model "deepseek-chat")))
 
 (use-package gptel-commit
   :ensure nil
   :after magit)
+
+;; TODO: https://github.com/lanceberge/elysium/tree/main
+(use-package elysium
+  :vc (:url "https://github.com/lanceberge/elysium")
+  :defer t)
 
 
 (provide 'init-ai)
