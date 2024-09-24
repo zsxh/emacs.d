@@ -54,8 +54,8 @@
   :after magit)
 
 ;; TODO: https://github.com/lanceberge/elysium/tree/main
+;; `elysium-query', `elysium-toggle-window'
 (use-package elysium
-  :vc (:url "https://github.com/lanceberge/elysium")
   :defer t)
 
 
