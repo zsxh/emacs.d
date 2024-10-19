@@ -39,7 +39,8 @@
           "^\\*HTTP Response\\*$"
           helpful-mode
           magit-process-mode
-          "\\*gt-result\\*"))
+          "\\*gt-result\\*"
+          comint-mode))
   (setq popper-group-function #'popper-group-by-project)
   (popper-mode 1)
   ;; For echo area hints
