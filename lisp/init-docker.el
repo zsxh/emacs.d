@@ -49,22 +49,6 @@
       "u" 'tablist-unmark-forward
       "t" 'tablist-toggle-marks)))
 
-(use-package kubel
-  :commands (kubel))
-
-(use-package kubel-evil
-  :after kubel
-  :config
-  (evil-define-key '(normal motion) kubel-evil-mode-map
-    "?" 'kubel-evil-help-popup))
-
-(use-package kubernetes
-  :commands (kubernetes-overview))
-
-;; If you want to pull in the Evil compatibility package.
-(use-package kubernetes-evil
-  :after kubernetes)
-
 ;; https://github.com/eshelyaron/kubed
 (use-package kubed
   :defer t)
