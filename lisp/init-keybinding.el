@@ -229,9 +229,15 @@
              transient-transpose-frame
              transient-emacs-cheatsheet
              transient-string-inflection)
+  :custom
+  (transient-levels-file (locate-user-emacs-file (convert-standard-filename "cache/transient/levels.el")))
+  (transient-values-file (locate-user-emacs-file (convert-standard-filename "cache/transient/values.el")))
+  (transient-history-file (locate-user-emacs-file (convert-standard-filename "cache/transient/history.el")))
   :config
+  (define-key transient-map (kbd "<escape>") 'transient-quit-one)
   (setq transient-show-popup t
-        transient-save-history nil)
+        transient-save-history nil
+        transient-display-buffer-action '((display-buffer-below-selected)))
   (defvar +transient/non-dedicated-display '(display-buffer-in-side-window
                                              (side . bottom)
                                              (dedicated . nil)
@@ -258,10 +264,6 @@
      ("b" "balance" balance-windows)
      ("q" "quit" transient-quit-all)])
 
-  (define-advice transient-window-scale (:around (orig-fn) advice)
-    (let ((transient-display-buffer-action +transient/non-dedicated-display))
-      (funcall orig-fn)))
-
   (transient-define-prefix transient-transpose-frame ()
     "transpose frame"
     ["transpose frame
@@ -285,6 +287,23 @@
     ["Cycle text objects through camelCase, kebab-case, snake case and UPPER CASE."
      ("s" "string-inflection-all-cycle" string-inflection-all-cycle :transient t)
      ("q" "quit" transient-quit-all)]))
+
+;; posframe
+(use-package posframe
+  :defer t)
+
+;; transient posframe
+(use-package transient-posframe
+  :after transient
+  :config
+  (transient-posframe-mode)
+  (setq transient-posframe-parameters '((left-fringe . 8)
+                                        (right-fringe . 8))))
+
+(unless (posframe-workable-p)
+  (define-advice transient-window-scale (:around (orig-fn) advice)
+    (let ((transient-display-buffer-action +transient/non-dedicated-display))
+      (funcall orig-fn))))
 
 ;; showcase file: ~/.emacs.d/elpa/transient-showcase/transient-showcase.org
 (use-package transient-showcase

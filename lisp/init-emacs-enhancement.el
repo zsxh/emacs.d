@@ -158,26 +158,7 @@
   :commands insert-char-preview
   :bind ("C-x 8 RET" . insert-char-preview))
 
-;;;;;;;;;;;;;; posframe ;;;;;;;;;;;;;;
-(use-package posframe
-  :defer t
-  :config
-  (setq posframe-mouse-banish '(10000 . 10000)))
-
-;;;;;;;;;;;;;; transient ;;;;;;;;;;;;;;
-;; https://github.com/magit/transient/blob/master/docs/transient.org
-(use-package transient
-  :defer t
-  :custom
-  (transient-levels-file (locate-user-emacs-file (convert-standard-filename "cache/transient/levels.el")))
-  (transient-values-file (locate-user-emacs-file (convert-standard-filename "cache/transient/values.el")))
-  (transient-history-file (locate-user-emacs-file (convert-standard-filename "cache/transient/history.el")))
-  :config
-  (setq transient-display-buffer-action '((display-buffer-below-selected)))
-  (define-key transient-map (kbd "<escape>") 'transient-quit-one))
-
 ;;;;;;;;;;;;;; Garbage-Collection ;;;;;;;;;;;;;;
-
 (setq garbage-collection-messages nil)
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;

@@ -43,6 +43,14 @@
                     vertico-unobtrusive-mode))
       (evil-set-initial-state mode 'emacs))))
 
+(use-package vertico-posframe
+  :if (display-graphic-p)
+  :hook (vertico-mode . vertico-posframe-mode)
+  :config
+  (setq vertico-posframe-parameters
+        '((left-fringe . 8)
+          (right-fringe . 8))))
+
 ;; `orderless' completion style.
 (use-package orderless
   :config

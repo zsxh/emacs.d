@@ -61,6 +61,7 @@
 ;; TODO: https://github.com/tninja/aider.el
 (use-package aider
   :vc (:url "https://github.com/tninja/aider.el")
+  :defer t
   :config
   (setq aider-args '("--deepseek" "--no-auto-commits"))
   (setenv "DEEPSEEK_API_KEY" personal-deepseek-key))
