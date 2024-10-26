@@ -293,30 +293,11 @@ Version 2017-01-27"
   (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
   (advice-add symbol where function props))
 
-(defun +funcs/switch-major-mode-buffer (&rest modes)
-  (interactive)
-  (let ((buffer (consult--read
-                 (delete (buffer-name (current-buffer))
-                         (mapcar #'buffer-name (cl-remove-if-not
-                                                (lambda (buffer)
-                                                  (with-current-buffer buffer
-                                                    (cl-member-if #'derived-mode-p modes)
-                                                    ;; (cl-member-if #'derived-mode-p '(emacs-lisp-mode))
-                                                    ))
-                                                (buffer-list))))
-                 :prompt "Switch to: ")))
-    ;; (message "log: %s" buffer)
-    (switch-to-buffer buffer)))
-
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
-  (cond ((member major-mode '(telega-root-mode telega-chat-mode))
-         (+funcs/switch-major-mode-buffer 'telega-root-mode 'telega-chat-mode))
-        ;; TODO: switch between remote buffers
-        ((and
-          (or (not (fboundp 'tramp-tramp-file-p))
-              (not (tramp-tramp-file-p default-directory)))
-          (+project/root))
+  (cond ((and (or (not (fboundp 'tramp-tramp-file-p))
+                  (not (tramp-tramp-file-p default-directory)))
+              (+project/root))
          (call-interactively 'project-switch-to-buffer))
         (t
          (call-interactively 'switch-to-buffer))))
