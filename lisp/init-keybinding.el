@@ -297,8 +297,11 @@
   :after transient
   :config
   (transient-posframe-mode)
-  (setq transient-posframe-parameters '((left-fringe . 8)
-                                        (right-fringe . 8))))
+  (setq transient-posframe-parameters
+        '((title . "transient-posframe")
+          (undecorated . nil)
+          (left-fringe . 8)
+          (right-fringe . 8))))
 
 (unless (posframe-workable-p)
   (define-advice transient-window-scale (:around (orig-fn) advice)

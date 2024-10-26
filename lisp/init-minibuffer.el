@@ -47,8 +47,15 @@
   :if (display-graphic-p)
   :hook (vertico-mode . vertico-posframe-mode)
   :config
+  ;; The 'undecorated' frame parameter lets Emacs draw a border around the
+  ;; child frame (default is no border). The 'tty-non-selected-cursor'
+  ;; parameter makes redisplay put the terminal cursor in a non-selected
+  ;; frame which is nice for things like 'consult-buffer'
   (setq vertico-posframe-parameters
-        '((left-fringe . 8)
+        '((tty-non-selected-cursor . t)
+          (title . "vertico-posframe")
+          (undecorated . nil)
+          (left-fringe . 8)
           (right-fringe . 8))))
 
 ;; `orderless' completion style.
