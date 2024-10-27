@@ -67,9 +67,11 @@
 
 (use-package diff-hl
   :init
-  (unless (display-graphic-p)
-    (add-hook 'after-init-hook #'diff-hl-margin-mode))
-  :hook (after-init . global-diff-hl-mode)
+  (add-hook-run-once 'find-file-hook (lambda ()
+                                       (global-diff-hl-mode)
+                                       (unless (display-graphic-p)
+                                         (diff-hl-margin-mode))))
+  :defer t
   :config
   (setq diff-hl-disable-on-remote t)
   (with-eval-after-load 'magit
