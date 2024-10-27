@@ -130,7 +130,7 @@
 
   (defun +dirvish/project-root-side ()
     (interactive)
-    (if-let ((dirvish-side-win (dirvish-side--session-visible-p)))
+    (if-let* ((dirvish-side-win (dirvish-side--session-visible-p)))
         (with-selected-window dirvish-side-win
           (dirvish-quit))
       (dirvish-side--new (or (project-root (project-current))
@@ -237,7 +237,7 @@
   (define-advice dired-open-xdg (:override () advice)
     "Try to run `xdg-open'(linux) or `open'(macos) to open the file under point."
     (interactive)
-    (when-let ((cmd (or (executable-find "xdg-open")
+    (when-let* ((cmd (or (executable-find "xdg-open")
                         (executable-find "open")))
                (file (ignore-errors (dired-get-file-for-visit))))
       ;; FIXME: https://askubuntu.com/a/675366

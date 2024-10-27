@@ -72,9 +72,9 @@
     "Look for virtual environments local to the workspace."
     (when-let* ((project-dir (+project/root))
                 (venv-dir (or
-                           (when-let ((venv (locate-dominating-file project-dir "venv")))
+                           (when-let* ((venv (locate-dominating-file project-dir "venv")))
                              (file-name-concat venv "venv"))
-                           (when-let ((venv (locate-dominating-file project-dir ".venv")))
+                           (when-let* ((venv (locate-dominating-file project-dir ".venv")))
                              (file-name-concat venv ".venv"))))
                 (python-cmd (executable-find (file-name-concat venv-dir "bin" "python"))))
       python-cmd))
@@ -83,7 +83,7 @@
 
   ;; https://microsoft.github.io/pyright/#/settings
   (defun +python/workspace-configuration (&optional server)
-    (if-let ((venv-python-cmd (+python/locate-venv-python-cmd)))
+    (if-let* ((venv-python-cmd (+python/locate-venv-python-cmd)))
         `(:python
           (:pythonPath ,venv-python-cmd))))
 

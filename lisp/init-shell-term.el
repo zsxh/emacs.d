@@ -69,7 +69,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
                     (file-name-nondirectory
                      (directory-file-name
                       (expand-file-name default-directory))))))
-      (if-let (win (get-buffer-window buffer-name))
+      (if-let* (win (get-buffer-window buffer-name))
           ;; vterm buffer exist
           (if (eq (selected-window) win)
               ;; hide selected vterm buffer
@@ -77,7 +77,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
                 (bury-buffer))
             ;; selected vterm buffer
             (select-window win))
-        (if-let ((buffer (get-buffer buffer-name)))
+        (if-let* ((buffer (get-buffer buffer-name)))
             ;; popup vterm buffer
             (display-buffer buffer)
           ;; create new vterm buffer
@@ -115,9 +115,9 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
   (defun +vterm/activate-local-python-venv ()
     (when-let* ((project-dir (+project/root))
                 (venv-dir (or
-                           (when-let ((venv (locate-dominating-file project-dir "venv")))
+                           (when-let* ((venv (locate-dominating-file project-dir "venv")))
                              (file-name-concat venv "venv"))
-                           (when-let ((venv (locate-dominating-file project-dir ".venv")))
+                           (when-let* ((venv (locate-dominating-file project-dir ".venv")))
                              (file-name-concat venv ".venv")))))
       (dolist (char (string-to-list (format "source %s" (file-name-concat venv-dir "bin" "activate"))))
         (vterm--update vterm--term (char-to-string char) nil nil nil))

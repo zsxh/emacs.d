@@ -54,7 +54,7 @@
          :textDocument/hover (eglot--TextDocumentPositionParams)
          :success-fn (eglot--lambda ((Hover) contents range)
                        (eglot--when-buffer-window buf
-                         (if-let ((info (unless (seq-empty-p contents)
+                         (if-let* ((info (unless (seq-empty-p contents)
                                           (eglot--hover-info contents range))))
                              (progn
                                (with-current-buffer (get-buffer-create +eglot/display-buf)

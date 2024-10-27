@@ -93,7 +93,7 @@ If point was already at that position, move point to beginning of line."
   "Sudo edit current file."
   (interactive)
   (cond ((eq major-mode 'dired-mode)
-         (when-let ((filename (dired-file-name-at-point)))
+         (when-let* ((filename (dired-file-name-at-point)))
            (find-file (concat "/sudo:root@localhost:" (expand-file-name filename)))))
         ((buffer-file-name)
          (let ((old-point (point)))

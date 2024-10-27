@@ -47,7 +47,7 @@
 
   (defun my/project-try-local (dir)
     "Determine if DIR is a non-VC project."
-    (if-let ((root (if (listp my/project-local-identifier)
+    (if-let* ((root (if (listp my/project-local-identifier)
                        (seq-some (lambda (n)
                                    (locate-dominating-file dir n))
                                  my/project-local-identifier)
