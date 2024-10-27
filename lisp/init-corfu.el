@@ -23,7 +23,8 @@
         corfu-auto-prefix 1
         corfu-auto-delay 0.1
         corfu-on-exact-match nil
-        corfu-preview-current nil))
+        corfu-preview-current nil
+        global-corfu-modes '((not comint-mode) t)))
 
 (use-package corfu-terminal
   :if (not (display-graphic-p))

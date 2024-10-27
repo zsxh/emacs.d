@@ -215,8 +215,8 @@
       "k" 'evil-previous-line
       "m" 'man))
 
-  (with-eval-after-load 'comint
-    (evil-set-initial-state 'comint-mode 'normal))
+  ;; (with-eval-after-load 'comint
+  ;;   (evil-set-initial-state 'comint-mode 'normal))
 
   ;; Customize
 

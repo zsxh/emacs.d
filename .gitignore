@@ -84,3 +84,5 @@ games/*
 /devdocs-browser/
 /cache/
 /tree-sitter
+.aider*
+.env
