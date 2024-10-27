@@ -59,7 +59,7 @@
 
 (use-package gptel-commit
   :ensure nil
-  :after magit)
+  :commands (gptel-commit))
 
 ;; TODO: https://github.com/lanceberge/elysium/tree/main
 ;; `elysium-query', `elysium-toggle-window'
@@ -73,6 +73,16 @@
   :config
   (setq aider-args '("--deepseek" "--no-auto-commits"))
   (setenv "DEEPSEEK_API_KEY" personal-deepseek-key))
+
+(transient-define-prefix transient-ai-assistant ()
+  ["AI Assistants\n"
+   ["Assistants"
+    ("ag" "gptel" gptel-menu)
+    ("ad" "aider" aider-transient-menu)]
+   ["Git"
+    ("gc" "gptel-commit" gptel-commit)]])
+
+(global-set-key (kbd "<f8>") #'transient-ai-assistant)
 
 
 (provide 'init-ai)

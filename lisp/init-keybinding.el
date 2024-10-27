@@ -224,11 +224,6 @@
 
 (use-package transient
   :ensure nil
-  :commands (transient-text-scale
-             transient-window-scale
-             transient-transpose-frame
-             transient-emacs-cheatsheet
-             transient-string-inflection)
   :custom
   (transient-levels-file (locate-user-emacs-file (convert-standard-filename "cache/transient/levels.el")))
   (transient-values-file (locate-user-emacs-file (convert-standard-filename "cache/transient/values.el")))
