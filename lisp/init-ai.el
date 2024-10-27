@@ -71,9 +71,13 @@
   :vc (:url "https://github.com/tninja/aider.el")
   :defer t
   :config
-  (setq aider-args '("--deepseek" "--no-auto-commits" "--no-check-update"))
   (setenv "DEEPSEEK_API_KEY" personal-deepseek-key)
-  (setenv "OPENROUTER_API_KEY" personal-openrouter-key))
+  (setenv "OPENROUTER_API_KEY" personal-openrouter-key)
+  (setq aider-args
+        '("--deepseek"
+          "--no-auto-commits"
+          "--no-dirty-commits"
+          "--no-check-update")))
 
 (transient-define-prefix transient-ai-assistant ()
   ["AI Assistants\n"
