@@ -23,12 +23,20 @@
         gptel-default-mode 'org-mode
         gptel-expert-commands t
         gptel-log-level 'debug)
-
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
-
+  ;; OpenAI
   (when (bound-and-true-p personal-openai-key)
     (setq gptel-api-key personal-openai-key))
+  ;; OpenRouter
+  (when (bound-and-true-p personal-openrouter-key)
+  (gptel-make-openai "OpenRouter"
+    :host "openrouter.ai"
+    :endpoint "/api/v1/chat/completions"
+    :stream t
+    :key 'personal-openrouter-key
+    :models '(anthropic/claude-3.5-sonnet
+              anthropic/claude-3.5-sonnet:beta)))
   ;; kimi
   (when (bound-and-true-p personal-kimi-key)
     (gptel-make-openai "Moonshot"
@@ -38,7 +46,7 @@
                 "moonshot-v1-32k"
                 "moonshot-v1-128k")
       :host "api.moonshot.cn"))
-  ;; deepseek
+  ;; DeepSeek
   (when (bound-and-true-p personal-deepseek-key)
     ;; default backend
     (setq gptel-backend (gptel-make-openai "DeepSeek"
