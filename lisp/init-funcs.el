@@ -16,11 +16,11 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
 
 It returns the buffer (for elisp programing)."
   (interactive)
-  (let (($buf (generate-new-buffer "untitled")))
-    (switch-to-buffer $buf)
-    (funcall 'text-mode)
+  (let ((buf (generate-new-buffer "untitled")))
+    (switch-to-buffer buf)
+    (text-mode)
     (setq buffer-offer-save t)
-    $buf))
+    buf))
 
 (defun +funcs/switch-empty-buffer-or-create (name)
   "Switch or create a new empty buffer.
