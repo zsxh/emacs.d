@@ -172,11 +172,16 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 ;; (use-package term-keys
 ;;   :hook (after-init . term-keys-mode))
 
-;; TODO: eat configs
 (use-package eat
   :defer t
   :config
-  (setq eat-kill-buffer-on-exit t))
+  (unless (file-exists-p eat-term-terminfo-directory)
+    (eat-compile-terminfo))
+  (setq eat-kill-buffer-on-exit t
+        eat-enable-shell-prompt-annotation nil
+        eat-enable-shell-command-history nil)
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'eat-mode 'insert)))
 
 
 (provide 'init-shell-term)
