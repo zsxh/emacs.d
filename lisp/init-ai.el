@@ -72,6 +72,9 @@
          "{{Explanation of the changes in chinese}}\n"
          elysium-base-prompt)))
 
+;; TODO: https://github.com/shouya/ancilla.el
+;; TODO: https://github.com/rksm/org-ai
+
 ;; https://github.com/tninja/aider.el
 (use-package aider
   :vc (:url "https://github.com/tninja/aider.el")
@@ -86,11 +89,12 @@
           "--no-check-update")))
 
 (transient-define-prefix transient-ai-assistant ()
+  "Transient menu for interacting with various AI assistants,
+including chat, code, and git operations."
   ["AI Assistants\n"
    ["Assistants"
     ("ad" "aider" aider-transient-menu)
-    ("ag" "gptel" gptel-menu)
-    ("ar" "gptel-rewrite" gptel-rewrite-menu)]
+    ("ag" "gptel" gptel-menu)]
    ["Chat"
     ("C" "gptel chat" gptel)]
    ["Code"
