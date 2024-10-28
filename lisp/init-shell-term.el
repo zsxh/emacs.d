@@ -69,7 +69,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
                     (file-name-nondirectory
                      (directory-file-name
                       (expand-file-name default-directory))))))
-      (if-let* (win (get-buffer-window buffer-name))
+      (if-let* ((win (get-buffer-window buffer-name)))
           ;; vterm buffer exist
           (if (eq (selected-window) win)
               ;; hide selected vterm buffer
