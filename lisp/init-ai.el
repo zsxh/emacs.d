@@ -61,12 +61,18 @@
   :ensure nil
   :commands (gptel-commit))
 
-;; TODO: https://github.com/lanceberge/elysium/tree/main
+;; https://github.com/lanceberge/elysium
 ;; `elysium-query', `elysium-toggle-window'
 (use-package elysium
-  :defer t)
+  :defer t
+  :config
+  (setq elysium-base-prompt
+        (replace-regexp-in-string
+         "{{Explanation of the changes}}"
+         "{{Explanation of the changes in chinese}}\n"
+         elysium-base-prompt)))
 
-;; TODO: https://github.com/tninja/aider.el
+;; https://github.com/tninja/aider.el
 (use-package aider
   :vc (:url "https://github.com/tninja/aider.el")
   :defer t
@@ -82,12 +88,17 @@
 (transient-define-prefix transient-ai-assistant ()
   ["AI Assistants\n"
    ["Assistants"
+    ("ad" "aider" aider-transient-menu)
     ("ag" "gptel" gptel-menu)
-    ("ad" "aider" aider-transient-menu)]
+    ("ar" "gptel-rewrite" gptel-rewrite-menu)]
+   ["Chat"
+    ("C" "gptel chat" gptel)]
+   ["Code"
+    ("ce" "elysium code change" elysium-query)]
    ["Git"
     ("gc" "gptel-commit" gptel-commit)]])
 
-(global-set-key (kbd "<f8>") #'transient-ai-assistant)
+(global-set-key [f8] #'transient-ai-assistant)
 
 
 (provide 'init-ai)
