@@ -145,6 +145,7 @@
     ["Smerge"
      ("j" "smerge-next" smerge-next :transient t)
      ("k" "smerge-prev" smerge-prev :transient t)
+     ("e" "smerge-ediff" smerge-ediff :transient t)
      ("0" "smerge-keep-current" smerge-keep-current :transient t)
      ("1" "smerge-keep-upper" smerge-keep-upper :transient t)
      ("2" "smerge-keep-base" smerge-keep-base :transient t)
