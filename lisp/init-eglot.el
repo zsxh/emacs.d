@@ -141,6 +141,16 @@
   :vc (:url "https://github.com/dolmens/eglot-hierarchy")
   :defer t)
 
+;; NOTE: Install emacs-lsp-booster from https://github.com/blahgeek/emacs-lsp-booster
+(use-package eglot-booster
+  :if (executable-find "emacs-lsp-booster")
+  :vc (:url "https://github.com/jdtsmith/eglot-booster")
+	:after eglot
+	:config
+  (setq eglot-booster-no-remote-boost t
+        eglot-booster-io-only t)
+  (eglot-booster-mode))
+
 
 (provide 'init-eglot)
 
