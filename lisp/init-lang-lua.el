@@ -11,7 +11,9 @@
 ;;; Code:
 
 (use-package lua-ts-mode
-  :defer t)
+  :hook (lua-ts-mode . eglot-ensure)
+  :config
+  (+eglot/set-leader-keys lua-ts-mode-map))
 
 
 (provide 'init-lang-lua)

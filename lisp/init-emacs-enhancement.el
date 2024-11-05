@@ -12,11 +12,8 @@
 
 
 ;; Automatically reload files was modified by external program
-(use-package autorevert
-  :ensure nil
-  :init
-  (add-hook-run-once 'find-file-hook #'global-auto-revert-mode)
-  :config
+(add-hook-run-once 'find-file-hook #'global-auto-revert-mode)
+(with-eval-after-load 'autorevert
   (setq global-auto-revert-non-file-buffers nil
         auto-revert-verbose nil
         auto-revert-interval 5
@@ -33,10 +30,7 @@
         auto-revert-check-vc-info t))
 
 ;; just-in-time fontification
-(use-package jit-lock
-  :ensure nil
-  :defer t
-  :config
+(with-eval-after-load 'jit-lock
   ;; NOTE: [Re: Some performance questions.] https://lists.gnu.org/archive/html/emacs-devel/2023-02/msg00216.html
   ;; Turning on jit-stealth also lowers the GC pressure because it
   ;; fontifies buffers during idle time, so by the time you get to actually
@@ -48,14 +42,10 @@
         jit-lock-contextually t))
 
 ;; TreeSitter
-(use-package treesit
-  :ensure nil
-  :defer t
-  ;; :config
-  ;; NOTE: `treesit-font-lock-level' has a special `setter' attached to it,
-  ;; so as to automatically recompute the font lock features in all your buffers when you change the level
-  ;; (custom-set-variables '(treesit-font-lock-level 4))
-  )
+;; (with-eval-after-load 'treesit
+;;   ;; NOTE: `treesit-font-lock-level' has a special `setter' attached to it,
+;;   ;; so as to automatically recompute the font lock features in all your buffers when you change the level
+;;   (custom-set-variables '(treesit-font-lock-level 4)))
 
 ;; NOTE: “Fixing” the S-Expression Commands, https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
 (defun mp-remove-treesit-sexp-changes ()
@@ -149,63 +139,40 @@
                           "COMMIT_EDITMSG\\'"))
   (recentf-mode t))
 
-;;;;;;;;;;;;;; Change priority of minor-mode keymaps ;;;;;;;;;;;;;;
-(use-package minor-mode-hack
-  :commands show-minor-mode-map-priority)
-
-;;;;;;;;;;;;;; insert-char ;;;;;;;;;;;;;;
-(use-package insert-char-preview
-  :commands insert-char-preview
-  :bind ("C-x 8 RET" . insert-char-preview))
-
 ;;;;;;;;;;;;;; Garbage-Collection ;;;;;;;;;;;;;;
 (setq garbage-collection-messages nil)
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
-;; TODO: Enhance Tramp
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
 ;; https://willschenk.com/articles/2020/tramp_tricks/
 ;; https://mina86.com/2021/emacs-remote/
-(use-package tramp
-  :ensure nil
-  :defer t
-  :config
+(with-eval-after-load 'tramp
   (setq tramp-default-method "ssh"
         tramp-verbose 3
         tramp-chunksize 2000))
 
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; Emacs is now capable of editing files with very long lines since 29.1, `long-line-threshold'
-(use-package so-long
-  :ensure nil
-  :if (version< emacs-version "29")
-  :hook (after-init . global-so-long-mode))
+(when (version< emacs-version "29")
+  (add-hook 'after-init-hook #'global-so-long-mode))
 
-(use-package profiler
-  :ensure  nil
-  :defer t
-  ;; :config
-  ;; https://www.murilopereira.com/how-to-open-a-file-in-emacs
-  ;; (setf (caar profiler-report-cpu-line-format) 80
-  ;;       (caar profiler-report-memory-line-format) 80)
-  )
-
+;;;;;;;;;;;;;; Profiler ;;;;;;;;;;;;;;
+;; https://www.murilopereira.com/how-to-open-a-file-in-emacs
+;; (with-eval-after-load 'profiler
+;;   (setf (caar profiler-report-cpu-line-format) 80
+;;         (caar profiler-report-memory-line-format) 80))
 
 ;;;;;;;;;;;;;; Calendar ;;;;;;;;;;;;;;
-(use-package calendar
-  :ensure nil
-  :defer t
-  :config
-  ;; week starts on Monday
+;; Week starts on Monday
+(with-eval-after-load 'calendar
   (setq calendar-week-start-day 1))
 
+;;;;;;;;;;;;;; Xref ;;;;;;;;;;;;;;
 ;; `xref-find-definitions': <motion-state> gd
 ;; `xref-go-back': M-,
-(use-package xref
-  :ensure nil
-  :defer nil
-  :config
-  (setq xref-history-storage 'xref-window-local-history))
+;; (use-package xref
+;;   :ensure nil
+;;   :defer t)
 
 ;; https://github.com/jacktasia/dumb-jump#obsolete-commands-and-options
 (use-package dumb-jump
@@ -215,15 +182,10 @@
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 ;;;;;;;;;;;;;; eldoc ;;;;;;;;;;;;;;
-
 ;; Show function arglist or variable docstring
 ;; `global-eldoc-mode' is enabled by default.
-(use-package eldoc
-  :ensure nil
-  :defer t
-  :config
-  ;; (global-eldoc-mode -1)
-  ;; `eldoc-echo-area-use-multiline-p'
+;; `eldoc-echo-area-use-multiline-p'
+(with-eval-after-load 'eldoc
   (setq eldoc-idle-delay 0.5)
   (eldoc-add-command-completions "delete-char" "lispy-delete-backward" "puni-backward-delete-char")
   (set-face-foreground 'eldoc-highlight-function-argument
@@ -282,7 +244,7 @@
 (use-package breadcrumb
   :defer t)
 
-;;;;;;;;;;;;;; others ;;;;;;;;;;;;;;
+;;;;;;;;;;;;;; Others ;;;;;;;;;;;;;;
 ;; Toggle pixel scrolling, according to the turning of the mouse wheel
 (when (boundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode 1))
@@ -296,20 +258,18 @@
 	      (forward-char)
 	      (delete-region (point) end))))
 
-(define-key minibuffer-local-filename-completion-map
-            [C-backspace] #'up-directory)
+(define-key minibuffer-local-filename-completion-map [C-backspace] #'up-directory)
 
+;;;;;;;;;;;;;; Manual ;;;;;;;;;;;;;;
 (with-eval-after-load 'man
   (setq Man-notify-method 'aggressive))
 
+;;;;;;;;;;;;;; Ediff ;;;;;;;;;;;;;;
 ;; A comprehensive visual interface to diff & patch
-(use-package ediff
-  :ensure nil
-  :commands ediff
-  :config
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-merge-split-window-function 'split-window-horizontally))
+(with-eval-after-load 'ediff
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain
+        ediff-split-window-function 'split-window-horizontally
+        ediff-merge-split-window-function 'split-window-horizontally))
 
 
 (provide 'init-emacs-enhancement)

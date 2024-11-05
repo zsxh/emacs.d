@@ -30,13 +30,13 @@
     (setq gptel-api-key personal-openai-key))
   ;; OpenRouter
   (when (bound-and-true-p personal-openrouter-key)
-  (gptel-make-openai "OpenRouter"
-    :host "openrouter.ai"
-    :endpoint "/api/v1/chat/completions"
-    :stream t
-    :key 'personal-openrouter-key
-    :models '(anthropic/claude-3.5-sonnet
-              anthropic/claude-3.5-sonnet:beta)))
+    (gptel-make-openai "OpenRouter"
+      :host "openrouter.ai"
+      :endpoint "/api/v1/chat/completions"
+      :stream t
+      :key 'personal-openrouter-key
+      :models '(anthropic/claude-3-5-haiku
+                anthropic/claude-3.5-sonnet)))
   ;; kimi
   (when (bound-and-true-p personal-kimi-key)
     (gptel-make-openai "Moonshot"
@@ -74,6 +74,7 @@
 
 ;; TODO: https://github.com/shouya/ancilla.el
 ;; TODO: https://github.com/rksm/org-ai
+;; TODO: https://github.com/s-kostyaev/ellama
 
 ;; https://github.com/tninja/aider.el
 (use-package aider
