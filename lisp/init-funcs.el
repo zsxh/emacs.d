@@ -271,14 +271,12 @@ Version 2018-06-18"
          (message "File path copied: %s" $fpath)
          $fpath )))))
 
-(defun xah-display-minor-mode-key-priority ()
-  "Print out minor mode's key priority.
-URL `http://ergoemacs.org/emacs/minor_mode_key_priority.html'
-Version 2017-01-27"
+(defun display-minor-mode-key-priority ()
+  "Print minor mode key priorities."
   (interactive)
-  (mapc
-   (lambda (x) (prin1 (car x)) (terpri))
-   minor-mode-map-alist))
+  (dolist (x minor-mode-map-alist)
+    (princ (car x))
+    (terpri)))
 
 (defmacro add-hook-run-once (hook function &optional append local)
   "Like add-hook, but remove the hook after it is called"
