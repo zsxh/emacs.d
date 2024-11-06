@@ -37,15 +37,6 @@
       :key 'personal-openrouter-key
       :models '(anthropic/claude-3-5-haiku
                 anthropic/claude-3.5-sonnet)))
-  ;; kimi
-  (when (bound-and-true-p personal-kimi-key)
-    (gptel-make-openai "Moonshot"
-      :key 'personal-kimi-key
-      :stream t
-      :models '("moonshot-v1-8k"
-                "moonshot-v1-32k"
-                "moonshot-v1-128k")
-      :host "api.moonshot.cn"))
   ;; DeepSeek
   (when (bound-and-true-p personal-deepseek-key)
     ;; default backend
@@ -74,7 +65,35 @@
 
 ;; TODO: https://github.com/shouya/ancilla.el
 ;; TODO: https://github.com/rksm/org-ai
-;; TODO: https://github.com/s-kostyaev/ellama
+
+;; https://github.com/s-kostyaev/ellama
+(use-package llm
+  :defer t)
+
+(use-package ellama
+  :commands (ellama-transient-main-menu)
+  :config
+  (setq ellama-session-auto-save t
+        ellama-sessions-directory (file-truename
+                                   (file-name-concat
+                                    user-emacs-directory
+                                    "cache"
+                                    "ellama-sessions")))
+  (require 'llm-openai)
+  (setopt ellama-providers
+          '(("deepseek" . (make-llm-openai-compatible
+                           :url "https://api.deepseek.com/v1/"
+                           :chat-model "deepseek-chat"
+                           :key personal-deepseek-key))
+            ("claude-3.5-haiku" . (make-llm-openai-compatible
+                                   :url "https://openrouter.ai/api/v1/"
+                                   :chat-model "anthropic/claude-3-5-haiku"
+                                   :key personal-openrouter-key))
+            ("claude-3.5-sonnet" . (make-llm-openai-compatible
+                                    :url "https://openrouter.ai/api/v1/"
+                                    :chat-model "anthropic/claude-3.5-sonnet"
+                                    :key personal-openrouter-key))))
+  (setopt ellama-provider (eval (cdar ellama-providers))))
 
 ;; https://github.com/tninja/aider.el
 (use-package aider
@@ -95,7 +114,8 @@ including chat, code, and git operations."
   ["AI Assistants\n"
    ["Assistants"
     ("ad" "aider" aider-transient-menu)
-    ("ag" "gptel" gptel-menu)]
+    ("ag" "gptel" gptel-menu)
+    ("ae" "ellama" ellama-transient-main-menu)]
    ["Chat"
     ("C" "gptel chat" gptel)]
    ["Code"
