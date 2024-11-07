@@ -94,6 +94,10 @@
 ;; no wait for X events
 (setq x-wait-for-event-timeout 0)
 
+;; A second, case-insensitive pass over `auto-mode-alist' is time wasted.
+;; No second pass of case-insensitive search over auto-mode-alist.
+(setq auto-mode-case-fold nil)
+
 
 (provide 'early-init)
 

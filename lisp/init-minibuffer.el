@@ -25,7 +25,6 @@
   :bind ((:map vertico-map
           ("C-k" . vertico-previous)
           ("C-j" . vertico-next)
-          ("C-." . embark-act)
           ([backspace] . vertico-directory-delete-char)
           ([escape] . abort-recursive-edit)))
   :custom
@@ -106,8 +105,17 @@
 
 ;; minibuffer actions and occur/export features
 ;; NOTE: https://karthinks.com/software/fifteen-ways-to-use-embark/
+;;
+;; Embark is an Emacs package that acts like a context menu, allowing
+;; users to perform context-sensitive actions on selected items
+;; directly from the completion interface.
 (use-package embark
-  :defer t)
+  :defer t
+  :bind
+  (("C-." . embark-act) ;; pick some comfortable binding
+   ("C-;" . embark-dwim) ;; good alternative: M-.
+   ("C-h b" . embark-bindings)) ;; alternative for `describe-bindings'
+  )
 
 (use-package nerd-icons-completion
   :hook (marginalia-mode . nerd-icons-completion-mode))

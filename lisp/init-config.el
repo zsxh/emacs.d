@@ -107,11 +107,24 @@
 
 ;; improve long line coding, i don't need bidirectional text
 ;; https://emacs-china.org/t/topic/25811/9
+;; Disable bidirectional text scanning for a modest performance boost.
 (setq-default bidi-display-reordering nil)
-(setq bidi-inhibit-bpa t
-      long-line-threshold 500
+
+;; Give up some bidirectional functionality for slightly faster re-display.
+(setq-default bidi-inhibit-bpa t)
+
+(setq long-line-threshold 500
       large-hscroll-threshold 500
       syntax-wholeline-max 500)
+
+;; switch-to-buffer runs pop-to-buffer-same-window instead
+;; (setq switch-to-buffer-obey-display-actions t)
+
+(setq truncate-string-ellipsis "…")
+
+;; Resizing the Emacs frame can be costly when changing the font. Disable this
+;; to improve startup times with fonts larger than the system default.
+(setq frame-resize-pixelwise nil)
 
 
 (provide 'init-config)
