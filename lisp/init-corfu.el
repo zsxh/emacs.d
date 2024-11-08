@@ -38,7 +38,7 @@
          ("C-d" . corfu-popupinfo-scroll-up)
          ("C-b" . corfu-popupinfo-scroll-down))
   :config
-  (setq corfu-popupinfo-delay '(0.2 . 0.1)))
+  (setq corfu-popupinfo-delay '(1.0 . 0.5)))
 
 (use-package nerd-icons-corfu
   :after corfu
