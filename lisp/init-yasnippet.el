@@ -16,14 +16,16 @@
   :diminish yas-minor-mode
   :bind (("M-/" . yas-expand)
          ("C-c C-y" . yas-insert-snippet))
-  :hook (after-init . yas-global-mode))
+  ;; :hook (after-init . yas-global-mode)
+  :defer t)
 
 ;; Collection of yasnippet snippets
-(use-package yasnippet-snippets)
+(use-package yasnippet-snippets
+  :after yasnippet)
 
 ;; Yasnippet Completion At Point Function
 (use-package yasnippet-capf
-  :init (add-to-list 'completion-at-point-functions #'yasnippet-capf)
+  ;; :init (add-to-list 'completion-at-point-functions #'yasnippet-capf)
   :defer t)
 
 
