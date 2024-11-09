@@ -14,9 +14,16 @@
   :bind (("M-/" . completion-at-point)
          (:map corfu-map
           ("C-j" . corfu-next)
-          ("C-k" . corfu-previous)))
-  :hook ((after-init . global-corfu-mode)
-         (global-corfu-mode . corfu-popupinfo-mode))
+          ("C-k" . corfu-previous))
+         (:map corfu-popupinfo-map
+          ("C-h" . corfu-popupinfo-toggle)
+          ("C-d" . corfu-popupinfo-scroll-up)
+          ("C-b" . corfu-popupinfo-scroll-down)))
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode)
+         (org-mode . corfu-mode)
+         (markdown-mode . corfu-mode))
   :config
   (set-face-attribute 'corfu-border nil :inherit 'region :background 'unspecified)
   (setq corfu-auto t
@@ -24,21 +31,12 @@
         corfu-auto-delay 0.1
         corfu-on-exact-match nil
         corfu-preview-current nil
-        global-corfu-modes '((not comint-mode) t)))
+        corfu-popupinfo-delay '(1.0 . 0.5))
+  (corfu-popupinfo-mode))
 
 (use-package corfu-terminal
   :if (not (display-graphic-p))
   :hook (global-corfu-mode . corfu-terminal-mode))
-
-(use-package corfu-popupinfo
-  :defer t
-  :ensure corfu
-  :bind (:map corfu-popupinfo-map
-         ("C-h" . corfu-popupinfo-toggle)
-         ("C-d" . corfu-popupinfo-scroll-up)
-         ("C-b" . corfu-popupinfo-scroll-down))
-  :config
-  (setq corfu-popupinfo-delay '(1.0 . 0.5)))
 
 (use-package nerd-icons-corfu
   :after corfu
