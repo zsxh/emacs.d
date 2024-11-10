@@ -40,7 +40,7 @@
           helpful-mode
           magit-process-mode
           "\\*gt-result\\*"
-          comint-mode
+          ;; comint-mode
           eat-mode))
   (setq popper-group-function #'popper-group-by-project)
   (popper-mode 1)

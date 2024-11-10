@@ -126,6 +126,9 @@
 ;; to improve startup times with fonts larger than the system default.
 (setq frame-resize-pixelwise nil)
 
+;; Enable local variables in files, but restrict to only :safe ones for security.
+(setq enable-local-variables :safe)
+
 
 (provide 'init-config)
 
