@@ -1,10 +1,4 @@
 #+STARTUP: showall
-Updated: <2024-08-02>
-
-* Enviroment
-  - GNU Emacs 31.0.50
-  +- emacs-repository-version:+
-  - system-configuration-options: ~--with-xwidgets --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter~
 
 * TODOs
 
@@ -19,7 +13,6 @@ Updated: <2024-08-02>
   git clone --depth 1 https://github.com/emacs-mirror/emacs.git emacs-master
   cd emacs-master
   # ./autogen.sh && ./configure --help # list optionsal features
-  # ./autogen.sh && ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-native-compilation --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
   ./autogen.sh && ./configure --with-xwidgets --with-x-toolkit=gtk3 --with-imagemagick --without-toolkit-scroll-bars --with-tree-sitter
   make -j8
   sudo make install
