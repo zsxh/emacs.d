@@ -298,22 +298,14 @@
 ;; transient posframe
 (use-package transient-posframe
   :after transient
+  :vc (:url "https://github.com/tarsiiformes/transient-posframe" :branch "fix-sizing")
   :config
-  (transient-posframe-mode)
-
   (setq transient-posframe-parameters
         '((title . "transient-posframe")
           (undecorated . nil)
           (left-fringe . 8)
           (right-fringe . 8)))
-
-  (defun transient-posframe--show-buffer--advice (buffer _alist)
-    "Fix 'transient--buffer' window width size.
-url: https://github.com/magit/transient/commit/5478d4e6a73daa6bf0dcaad6cf4767ee4a1589ec"
-    (with-current-buffer buffer
-      (setq window-size-fixed t)))
-
-  (advice-add #'transient-posframe--show-buffer :before #'transient-posframe--show-buffer--advice))
+  (transient-posframe-mode))
 
 (unless (posframe-workable-p)
   (define-advice transient-window-scale (:around (orig-fn) advice)
