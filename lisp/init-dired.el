@@ -292,9 +292,9 @@
 LEFT and RIGHT are segments aligned to left/right respectively.
 If HEADER, set the `dirvish--header-line-fmt' instead."
     (cl-labels ((expand (segments)
-                         (cl-loop for s in segments collect
-                                   (if (stringp s) s
-                                     `(:eval (,(intern (format "dirvish-%s-ml" s)) (dirvish-curr))))))
+                        (cl-loop for s in segments collect
+                                 (if (stringp s) s
+                                   `(:eval (,(intern (format "dirvish-%s-ml" s)) (dirvish-curr))))))
                 (get-font-scale ()
                                 (let* ((face (if header 'header-line 'mode-line-inactive))
                                        (defualt (face-attribute 'default :height))
@@ -325,7 +325,32 @@ If HEADER, set the `dirvish--header-line-fmt' instead."
                                    ,(ceiling (* scale (string-width str-r)))))))
             str-r))))))
 
-  (advice-add 'dirvish--mode-line-fmt-setter :override #'dirvish--mode-line-fmt-setter@advice))
+  (advice-add 'dirvish--mode-line-fmt-setter :override #'dirvish--mode-line-fmt-setter@advice)
+
+  (defun dirvish--find-file-temporarily@advice (name)
+    "Open file NAME temporarily for preview."
+    (cl-letf (((symbol-function 'recentf-track-opened-file) #'ignore)
+              ((symbol-function 'undo-tree-save-history-from-hook) #'ignore)
+              ((symbol-function 'flycheck-mode-on-safe) #'ignore))
+      (let* ((vc-follow-symlinks t)
+             (vars (mapcar (pcase-lambda (`(,k . ,v))
+                             (list k v (default-value k) (symbol-value k)))
+                           dirvish-preview-environment))
+             (buf (unwind-protect (progn (pcase-dolist (`(,k ,v . ,_) vars)
+                                           (set-default k v) (set k v))
+                                         (find-file-noselect name 'nowarn))
+                    (pcase-dolist (`(,k ,_ ,d ,v) vars)
+                      (set-default k d) (set k v)))))
+        (cond ((ignore-errors (buffer-local-value 'so-long-detected-p buf))
+               (kill-buffer buf)
+               `(info . ,(format "File `%s' with long lines not previewed" name)))
+              (t
+               (with-current-buffer buf
+                 (font-lock-mode 1)
+                 (setq buffer-read-only t))
+               `(buffer . ,buf))))))
+
+  (advice-add 'dirvish--find-file-temporarily :override #'dirvish--find-file-temporarily@advice))
 
 (provide 'init-dired)
 

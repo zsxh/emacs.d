@@ -74,7 +74,7 @@
   :defer t
   :config
   (setq diff-hl-disable-on-remote t
-        diff-hl-update-async t)
+        diff-hl-update-async nil)
   (with-eval-after-load 'magit
     (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
