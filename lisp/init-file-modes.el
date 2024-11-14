@@ -8,8 +8,9 @@
 
 ;;; Code:
 
-;; nix profile install nixpkgs#nixd
-;; nix profile install nixpkgs#nixpkgs-fmt
+;; Nix
+;; $nix profile install nixpkgs#nixd
+;; $nix profile install nixpkgs#nixpkgs-fmt
 (use-package nix-ts-mode
   :mode "\\.nix\\'"
   :hook ((nix-ts-mode . eglot-ensure))
@@ -23,6 +24,13 @@
     '(:nixd
       (:nixpkgs (:expr "import <nixpkgs> { }")
        :formatting (:command ["nixpkgs-fmt"])))))
+
+;; Lua
+;; $nix profile install nixpkgs#lua-language-server
+(use-package lua-ts-mode
+  :hook (lua-ts-mode . eglot-ensure)
+  :config
+  (+eglot/set-leader-keys lua-ts-mode-map))
 
 ;; Markdowm
 (use-package markdown-mode
@@ -52,6 +60,15 @@
             (lambda ()
               (setq-local completion-at-point-functions
                           '(cape-dabbrev cape-file cape-keyword cape-abbrev)))))
+
+;; Json
+(use-package json-ts-mode
+  :ensure nil
+  :defer t
+  :config
+  (+funcs/major-mode-leader-keys json-ts-mode-map
+                                 "j" '(counsel-jq :which-key "counsel-jq")
+                                 "p" '(json-pretty-print-buffer :which-key "pretty-print")))
 
 ;; PDF
 ;;
@@ -86,10 +103,6 @@
 ;; google protobuf languages
 (use-package protobuf-mode
   :defer t)
-
-;; Disable ispell word completion
-(with-eval-after-load 'text-mode
-  (custom-set-variables '(text-mode-ispell-word-completion nil)))
 
 
 (provide 'init-file-modes)

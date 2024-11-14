@@ -129,6 +129,9 @@
 ;; Enable local variables in files, but restrict to only :safe ones for security.
 (setq enable-local-variables :safe)
 
+;; Disable ispell word completion
+(setopt text-mode-ispell-word-completion nil)
+
 
 (provide 'init-config)
 

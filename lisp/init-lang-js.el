@@ -36,14 +36,6 @@
     (setq-local beginning-of-defun-function #'js-beginning-of-defun)
     (eglot-ensure)))
 
-(use-package json-ts-mode
-  :ensure nil
-  :defer t
-  :config
-  (+funcs/major-mode-leader-keys json-ts-mode-map
-                                 "j" '(counsel-jq :which-key "counsel-jq")
-                                 "p" '(json-pretty-print-buffer :which-key "pretty-print")))
-
 (use-package typescript-mode
   :defer t
   ;; :init
