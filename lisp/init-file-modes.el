@@ -8,19 +8,21 @@
 
 ;;; Code:
 
-;; nix profile install nixpkgs#nil
+;; nix profile install nixpkgs#nixd
 ;; nix profile install nixpkgs#nixpkgs-fmt
-(use-package nix-mode
+(use-package nix-ts-mode
   :mode "\\.nix\\'"
-  :hook ((nix-mode . nix-prettify-mode)
-         (nix-mode . eglot-ensure))
+  :hook ((nix-ts-mode . eglot-ensure))
   :config
   (require 'eglot)
-  (+eglot/set-leader-keys nix-mode-map)
-  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-mode))
-    '(:nil
-      (:formatting
-       (:command ["nixpkgs-fmt"])))))
+  (unless (eglot--lookup-mode 'nix-ts-mode)
+    (push `(nix-ts-mode . ,(eglot-alternatives '("nil" "rnix-lsp" "nixd"))) eglot-server-programs))
+  (+eglot/set-leader-keys nix-ts-mode-map)
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-ts-mode))
+    (message "[DEBUG]: nix-ts-mode")
+    '(:nixd
+      (:nixpkgs (:expr "import <nixpkgs> { }")
+       :formatting (:command ["nixpkgs-fmt"])))))
 
 ;; Markdowm
 (use-package markdown-mode

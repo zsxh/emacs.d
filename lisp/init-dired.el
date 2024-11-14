@@ -40,7 +40,7 @@
          ("h" . dired-omit-mode)
          ("K" . dired-up-directory)
          ("l" . nil)
-         ("N" . consult-focus-lines)
+         ("N" . dirvish-narrow)
          ;; "o" `dired-find-file-other-window'
          ("M-a" . dirvish-mark-actions-menu)
          ("M-m" . dirvish-setup-menu)
@@ -208,7 +208,7 @@
 
   (+funcs/major-mode-leader-keys
    dired-mode-map
-   "N" '(consult-focus-lines :which-key "consult-focus-lines")
+   "N" '(dirvish-narrow :which-key "dirvish-narrow")
    "M" '(dirvish-move :which-key "move-file")
    "P" '(dirvish-yank :which-key "paste-file")
    "s" '(+dired/get-size :which-key "get-size")
