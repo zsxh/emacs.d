@@ -185,7 +185,7 @@
    "tS" '(transient-string-inflection :which-key "string-inflection-cycle")
    ;; "tt"  '(tiny-expand :which-key "tiny-expand")
    "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
-   ;; View/Workspace/Layout
+   ;; View/Workspace/Layout/Session
    "v" '(nil :which-key "workspace")
    ;; "vc" '(tab-new :which-key "tab-new")
    "vc" '(+workspace/tab-new :which-key "tab-new")
@@ -194,8 +194,9 @@
    "vr" '(tab-rename :which-key "tab-rename")
    "vs" '(tab-switch :which-key "tab-switch")
    "vx" '(tab-close :which-key "tab-close")
+   "vD" '(easysession-delete :which-key "easysession-delete")
+   "vR" '(easysession-switch-to :which-key "easysession-switch-to")
    "vS" '(easysession-save-as :which-key "easysession-save-as")
-   "vR" '(easysession-save-as :which-key "easysession-switch-to")
    ;; Window
    "w" '(nil :which-key "window")
    "w/" '(split-window-right :which-key "split-right")
