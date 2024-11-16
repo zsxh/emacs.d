@@ -104,6 +104,10 @@
 (use-package protobuf-mode
   :defer t)
 
+;; [just](https://github.com/casey/just) is a handy way to save and run project-specific commands.
+(use-package just-mode
+  :defer t)
+
 
 (provide 'init-file-modes)
 
