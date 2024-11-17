@@ -132,6 +132,9 @@
 ;; Disable ispell word completion
 (setopt text-mode-ispell-word-completion nil)
 
+;; `split-window-preferred-function', `split-window-sensibly'
+(setq split-width-threshold 140)
+
 
 (provide 'init-config)
 
