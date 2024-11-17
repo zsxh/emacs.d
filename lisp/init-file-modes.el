@@ -20,10 +20,9 @@
     (push `(nix-ts-mode . ,(eglot-alternatives '("nil" "rnix-lsp" "nixd"))) eglot-server-programs))
   (+eglot/set-leader-keys nix-ts-mode-map)
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-ts-mode))
-    (message "[DEBUG]: nix-ts-mode")
     '(:nixd
       (:nixpkgs (:expr "import <nixpkgs> { }")
-       :formatting (:command ["nixpkgs-fmt"])))))
+       :formatting (:command ["nixfmt"])))))
 
 ;; Lua
 ;; $nix profile install nixpkgs#lua-language-server
