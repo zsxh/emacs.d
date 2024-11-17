@@ -10,7 +10,7 @@
 
 ;; Nix
 ;; $nix profile install nixpkgs#nixd
-;; $nix profile install nixpkgs#nixpkgs-fmt
+;; $nix profile install nixpkgs#alejandra
 (use-package nix-ts-mode
   :mode "\\.nix\\'"
   :hook ((nix-ts-mode . eglot-ensure))
@@ -22,7 +22,7 @@
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-ts-mode))
     '(:nixd
       (:nixpkgs (:expr "import <nixpkgs> { }")
-       :formatting (:command ["nixfmt"])))))
+       :formatting (:command ["alejandra"])))))
 
 ;; Lua
 ;; $nix profile install nixpkgs#lua-language-server
