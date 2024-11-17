@@ -141,6 +141,12 @@
   :vc (:url "https://github.com/dolmens/eglot-hierarchy")
   :defer t)
 
+;; https://github.com/liushihao456/symbols-outline.el
+(use-package symbols-outline
+  :defer t
+  :config
+  (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
+
 ;; NOTE: Install emacs-lsp-booster from https://github.com/blahgeek/emacs-lsp-booster
 (use-package eglot-booster
   :if (executable-find "emacs-lsp-booster")

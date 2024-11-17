@@ -154,7 +154,9 @@
    "m" '(nil :which-key "major")
    ;; Navigator
    "n" '(nil :which-key "navigator")
-   "nm" '(consult-imenu :which-key "imenu")
+   "nl" '(imenu-list :which-key "imenu-list")
+   "nm" '(consult-imenu :which-key "conult-imenu")
+   "no" '(symbols-outline-show :which-key "symbols-outline-show")
    "ns" '(nil :which-key "symbol-overlay")
    "nsc" '(symbol-overlay-remove-all :which-key "symbol-overlay-remove-all")
    "nsh" '(symbol-overlay-map-help :which-key "symbol-overlay-help")
