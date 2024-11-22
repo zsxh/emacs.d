@@ -16,10 +16,6 @@
 (with-eval-after-load 'autorevert
   (setq global-auto-revert-non-file-buffers nil
         auto-revert-verbose nil
-        auto-revert-interval 5
-        ;; turn off `auto-revert-use-notify' or customize `auto-revert-notify-exclude-dir-regexp'
-        ;; to exclude I/O intensive directories from auto-reverting.
-        auto-revert-use-notify t
         ;; Since checking a remote file is slow, these modes check or revert
         ;; remote files only if the user option `auto-revert-remote-files' is
         ;; non-nil.  It is recommended to disable version control for remote
@@ -27,7 +23,11 @@
         auto-revert-remote-files nil
         ;; https://github.com/magit/magit/issues/2371#issuecomment-152746346
         ;; value nil, vc mode-line update when buffer changed. t, update every auto-revert-interval seconds
-        auto-revert-check-vc-info t))
+        auto-revert-check-vc-info t)
+  (setopt auto-revert-interval 5
+          ;; turn off `auto-revert-use-notify' or customize `auto-revert-notify-exclude-dir-regexp'
+          ;; to exclude I/O intensive directories from auto-reverting.
+          auto-revert-use-notify t))
 
 ;; just-in-time fontification
 (with-eval-after-load 'jit-lock

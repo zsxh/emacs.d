@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+;; NOTE: https://magit.vc/manual/magit/Performance.html
 (use-package magit
   :commands (magit magit-blame magit-file-popup)
   :defer 10
