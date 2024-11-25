@@ -24,9 +24,11 @@
 ;; M-x `telega-server-build'
 (use-package telega
   :defer t
+  :init
+  (setq telega-directory (expand-file-name (locate-user-emacs-file "cache/telega")))
   :config
   ;; (require 'telega-bridge-bot)
-  ;; (require 'telega-transient)
+  (require 'telega-transient)
 
   (setq telega-proxies (list `(:server ,personal-proxy-http-host :port ,personal-proxy-http-port :enable nil :type (:@type "proxyTypeHttp"))
                              `(:server ,personal-proxy-http-host :port ,personal-proxy-socks5-port :enable t :type (:@type "proxyTypeSocks5")))
@@ -38,14 +40,18 @@
                                    (time . "%H:%M")
                                    (date-time . "%Y.%m.%d %a %H:%M")
                                    (date-long . "%Y %B %d")
-                                   (date-break-bar . "%Y %B %d %a")))
+                                   (date-break-bar . "%Y %B %d %a"))
+        ;; avatar
+        telega-avatar-workaround-gaps-for '(return t))
 
-  ;; avatar
-  (setq telega-avatar-workaround-gaps-for '(return t))
-
-  (with-eval-after-load 'telega-root
-    (with-eval-after-load 'evil
-      (evil-define-key 'normal telega-root-mode-map "Q" #'telega-kill)))
+  (with-eval-after-load 'evil
+    (evil-define-key* 'normal telega-root-mode-map
+      "j" #'telega-button-forward
+      "k" #'telega-button-backward
+      "v" #'telega-transient-root-view
+      "F" #'telega-transient-chat-folder
+      "Q" #'telega-kill
+      "?" telega-root-mode-map))
 
   (with-eval-after-load 'telega-msg
     (define-key telega-msg-button-map (kbd "k") nil)
@@ -56,11 +62,7 @@
     (define-key telega-chat-button-map (kbd "h") nil)
     (with-eval-after-load 'evil
       (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
-      (define-key telega-msg-button-map (kbd "SPC") nil)))
-
-  (with-eval-after-load 'nerd-icons
-    (push '(telega-root-mode nerd-icons-faicon "nf-fae-telegram" :face nerd-icons-blue) nerd-icons-mode-icon-alist)
-    (push '(telega-chat-mode nerd-icons-faicon "nf-fae-telegram" :face nerd-icons-blue) nerd-icons-mode-icon-alist)))
+      (define-key telega-msg-button-map (kbd "SPC") nil))))
 
 
 (provide 'init-telega)
