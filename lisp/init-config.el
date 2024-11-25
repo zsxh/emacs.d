@@ -135,6 +135,10 @@
 ;; `split-window-preferred-function', `split-window-sensibly'
 (setq split-width-threshold 140)
 
+;; prevent Emacs from searching within folded sectionsi
+(setq search-invisible nil
+      isearch-invisible nil)
+
 
 (provide 'init-config)
 
