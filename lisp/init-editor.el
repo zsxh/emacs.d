@@ -226,14 +226,11 @@
 
 ;;;;;;;;;;;;;; Code Folding ;;;;;;;;;;;;;;
 ;; evil open/close/toggle folds rely on hideshow
-;; "z a" evil-toggle-fold
-;; "z m" evil-close-folds
-;; "z r" evil-open-folds
+;; Open fold(s): zo, zO, zr
+;; Close fold(s): zc, zC, zm
+;; Toggle folds: za
 (use-package hideshow
   :commands (hs-minor-mode hs-hide-level)
-  :init
-  (with-eval-after-load 'evil
-    (define-key evil-normal-state-map (kbd "zf") 'hs-hide-level))
   :hook ((prog-mode nxml-mode) . hs-minor-mode)
   :config
   (add-to-list 'hs-special-modes-alist
