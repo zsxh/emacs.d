@@ -103,6 +103,11 @@
         consult-line-start-from-top t
         consult-buffer-sources '(consult--source-hidden-buffer consult--source-modified-buffer consult--source-buffer)))
 
+;; Navigate the Xref stack with Consult.
+(use-package consult-xref-stack
+  :vc (:url "https://github.com/brett-lempereur/consult-xref-stack")
+  :bind (("C-," . consult-xref-stack-backward)))
+
 ;; minibuffer actions and occur/export features
 ;; NOTE: https://karthinks.com/software/fifteen-ways-to-use-embark/
 ;;
