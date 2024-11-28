@@ -28,11 +28,9 @@
           ("<f11>" . toggle-frame-fullscreen))
          (:map vterm-copy-mode-map
           ("q" . vterm-copy-mode-done)))
-  :custom
-  (vterm-kill-buffer-on-exit t)
-  ;; (vterm-term-environment-variable "xterm-24bit")
-  (vterm-timer-delay 0.01)
   :config
+  (setq vterm-timer-delay nil)
+
   ;; https://github.com/akermu/emacs-libvterm#fonts
   (defun +vterm/set-font ()
     (set (make-local-variable 'buffer-face-mode-face) 'fixed-pitch)
@@ -93,7 +91,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
   (defun +vterm/change-remote-directory ()
     "Use the corresponding method to prepare vterm at the corresponding remote directory."
     (when (featurep 'tramp)
-      (message "default-directory is %s" default-directory)
+      ;; (message "default-directory is %s" default-directory)
       (with-parsed-tramp-file-name default-directory path
         (let ((method (cadr (assoc `tramp-login-program
                                    (assoc path-method tramp-methods)))))
@@ -134,7 +132,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
   (defun +vterm/search-line ()
     (interactive)
     (vterm-copy-mode)
-    (message "vterm-copy-mode activated")
+    ;; (message "vterm-copy-mode activated")
     (consult-line))
 
   ;; Kill vterm window and buffer when a vterm process is finished
