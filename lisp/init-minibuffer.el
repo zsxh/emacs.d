@@ -47,7 +47,7 @@
 
 (use-package vertico-posframe
   :if (display-graphic-p)
-  :hook (vertico-mode . vertico-posframe-mode)
+  :after vertico
   :config
   ;; The 'undecorated' frame parameter lets Emacs draw a border around the
   ;; child frame (default is no border). The 'tty-non-selected-cursor'
@@ -59,7 +59,13 @@
           (title . "vertico-posframe")
           (undecorated . nil)
           (left-fringe . 8)
-          (right-fringe . 8))))
+          (right-fringe . 8)))
+  ;; NOTE: vertico-posframe-mode will be activated/deactivated by `vertico-multiform-mode'
+  ;; dynamically when you add ‘posframe’ setting to vertico-multiform-commands,
+  ;; please do not enable vertico-posframe-mode globally at the moment.
+  (setq vertico-multiform-commands '((consult-line (:not posframe))
+                                     (t posframe)))
+  (vertico-multiform-mode))
 
 ;; `orderless' completion style.
 (use-package orderless
