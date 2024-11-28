@@ -25,9 +25,8 @@
         gptel-log-level 'debug)
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
-  ;; OpenAI
-  (when (bound-and-true-p personal-openai-key)
-    (setq gptel-api-key personal-openai-key))
+  ;; Clean Up default backends
+  (setq gptel--known-backends nil)
   ;; OpenRouter
   (when (bound-and-true-p personal-openrouter-key)
     (gptel-make-openai "OpenRouter"
@@ -94,6 +93,8 @@
                                     :chat-model "anthropic/claude-3.5-sonnet"
                                     :key personal-openrouter-key))))
   (setopt ellama-provider (eval (cdar ellama-providers))))
+
+;; TODO: RAG [elisa](https://github.com/s-kostyaev/elisa)
 
 ;; https://github.com/tninja/aider.el
 (use-package aider

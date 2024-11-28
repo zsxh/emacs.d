@@ -18,7 +18,10 @@
 ;; NOTE: [Video] https://www.youtube.com/watch?v=w9hHMDyF9V4
 ;; `completion-category-overrides' > `completion-category-defaults' > `completion-styles'
 
-;; minibuffer ui
+;; Vertico provides a performant and minimalistic vertical completion UI
+;; based on the default completion system.  By reusing the built-in
+;; facilities, Vertico achieves full compatibility with built-in Emacs
+;; completion commands and completion tables.
 (use-package vertico
   :hook ((after-init . vertico-mode)
          (rfn-eshadow-update-overlay . vertico-directory-tidy))
@@ -90,7 +93,13 @@
        time)))
   (advice-add 'marginalia--time-absolute :override #'marginalia--time-absolute@advice))
 
-;; similar to Swiper
+;; Consult implements a set of `consult-<thing>' commands, which aim to
+;; improve the way you use Emacs.  The commands are founded on
+;; `completing-read', which selects from a list of candidate strings.
+;;
+;; The Consult commands are compatible with multiple completion systems
+;; based on the Emacs `completing-read' API, including the default
+;; completion system, Vertico, Mct and Icomplete.
 (use-package consult
   :bind ("C-s" . consult-line)
   :init
@@ -101,7 +110,9 @@
   (setq consult-preview-key 'any
         consult-async-min-input 2
         consult-line-start-from-top t
-        consult-buffer-sources '(consult--source-hidden-buffer consult--source-modified-buffer consult--source-buffer)))
+        consult-buffer-sources '(consult--source-hidden-buffer consult--source-modified-buffer consult--source-buffer))
+  ;; customize `consult--customize-alist'
+  (consult-customize consult-theme :preview-key '(:debounce 0.5 any)))
 
 ;; Navigate the Xref stack with Consult.
 (use-package consult-xref-stack
