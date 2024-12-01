@@ -18,6 +18,10 @@
 ;; NOTE: [Video] https://www.youtube.com/watch?v=w9hHMDyF9V4
 ;; `completion-category-overrides' > `completion-category-defaults' > `completion-styles'
 
+;; In case you like auto completion settings, where the completion popup appears immediately,
+;; better use a cheap completion style like `basic', which performs prefix filtering.
+(setq completion-styles '(basic))
+
 ;; Vertico provides a performant and minimalistic vertical completion UI
 ;; based on the default completion system.  By reusing the built-in
 ;; facilities, Vertico achieves full compatibility with built-in Emacs
@@ -71,8 +75,7 @@
 ;; `orderless' completion style.
 (use-package orderless
   :config
-  (setq completion-styles '(orderless)
-        completion-category-overrides '((buffer (styles orderless))))
+  (add-hook 'minibuffer-setup-hook (lambda () (setq-local completion-styles '(orderless))))
   (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 ;; pinyin
