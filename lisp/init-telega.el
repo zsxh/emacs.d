@@ -28,7 +28,7 @@
   (setq telega-directory (expand-file-name (locate-user-emacs-file "cache/telega")))
   :config
   ;; (require 'telega-bridge-bot)
-  (require 'telega-transient)
+  (require 'telega-transient nil t)
 
   (setq telega-proxies (list `(:server ,personal-proxy-http-host :port ,personal-proxy-http-port :enable nil :type (:@type "proxyTypeHttp"))
                              `(:server ,personal-proxy-http-host :port ,personal-proxy-socks5-port :enable t :type (:@type "proxyTypeSocks5")))
