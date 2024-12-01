@@ -42,10 +42,10 @@
     (setq gptel-backend (gptel-make-openai "DeepSeek"
                           :key 'personal-deepseek-key
                           :stream t
-                          :models '("deepseek-chat")
+                          :models '(deepseek-chat)
                           :host "api.deepseek.com"))
     ;; defualt model
-    (setq gptel-model "deepseek-chat")))
+    (setq gptel-model 'deepseek-chat)))
 
 (use-package gptel-commit
   :ensure nil
@@ -97,24 +97,24 @@
 ;; TODO: RAG [elisa](https://github.com/s-kostyaev/elisa)
 
 ;; https://github.com/tninja/aider.el
-(use-package aider
-  :vc (:url "https://github.com/tninja/aider.el")
-  :defer t
-  :config
-  (setenv "DEEPSEEK_API_KEY" personal-deepseek-key)
-  (setenv "OPENROUTER_API_KEY" personal-openrouter-key)
-  (setq aider-args
-        '("--deepseek"
-          "--no-auto-commits"
-          "--no-dirty-commits"
-          "--no-check-update")))
+;; (use-package aider
+;;   :vc (:url "https://github.com/tninja/aider.el")
+;;   :defer t
+;;   :config
+;;   (setenv "DEEPSEEK_API_KEY" personal-deepseek-key)
+;;   (setenv "OPENROUTER_API_KEY" personal-openrouter-key)
+;;   (setq aider-args
+;;         '("--deepseek"
+;;           "--no-auto-commits"
+;;           "--no-dirty-commits"
+;;           "--no-check-update")))
 
 (transient-define-prefix transient-ai-assistant ()
   "Transient menu for interacting with various AI assistants,
 including chat, code, and git operations."
   ["AI Assistants\n"
    ["Assistants"
-    ("ad" "aider" aider-transient-menu)
+    ;; ("ad" "aider" aider-transient-menu)
     ("ag" "gptel" gptel-menu)
     ("ae" "ellama" ellama-transient-main-menu)]
    ["Chat"
@@ -125,6 +125,8 @@ including chat, code, and git operations."
     ("gc" "gptel-commit" gptel-commit)]])
 
 (global-set-key [f8] #'transient-ai-assistant)
+
+;; TODO: https://github.com/Kungsgeten/selected.el
 
 
 (provide 'init-ai)
