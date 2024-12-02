@@ -306,7 +306,7 @@
   :config
   (setq transient-posframe-parameters
         '((title . "transient-posframe")
-          (undecorated . nil)
+          ;; (undecorated . nil)
           (left-fringe . 8)
           (right-fringe . 8)))
   (transient-posframe-mode))

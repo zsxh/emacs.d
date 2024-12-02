@@ -61,7 +61,7 @@
         vertico-posframe-parameters
         '((tty-non-selected-cursor . t)
           (title . "vertico-posframe")
-          (undecorated . nil)
+          ;; (undecorated . nil)
           (left-fringe . 8)
           (right-fringe . 8)))
   ;; NOTE: vertico-posframe-mode will be activated/deactivated by `vertico-multiform-mode'

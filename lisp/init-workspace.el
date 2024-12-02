@@ -10,21 +10,34 @@
 
 ;;; Code:
 
-;; emacs built-in `tab-bar'
+;; Workspace
 (use-package tab-bar
   :ensure nil
   :hook (after-init . tab-bar-mode)
-  :custom
-  (tab-bar-show 1)
-  (tab-bar-new-tab-choice "*scratch*"))
+  :init
+  (setopt tab-bar-show 1
+          ;; press <super>-[num] select hint num tab
+          tab-bar-select-tab-modifiers '(super))
+  (setq tab-bar-new-tab-choice "*scratch*"
+        tab-bar-auto-width nil
+        tab-bar-tab-hints t
+        tab-bar-new-tab-to 'rightmost))
 
 (defun +workspace/tab-new (name)
   (interactive (list
                 (read-from-minibuffer
                  "New Tab Name(*scratch*): "
                  nil nil nil nil (buffer-name))))
-    (tab-new)
-    (tab-rename name))
+   (tab-new)
+   (tab-rename name))
+
+;; Buffer Tab
+(use-package tab-line
+  ;; :hook (after-init . global-tab-line-mode)
+  :defer t)
+
+(use-package tab-line-nerd-icons
+  :hook (global-tab-line-mode . tab-line-nerd-icons-global-mode))
 
 ;; Easily persist and restore your Emacs editing sessions
 (use-package easysession
