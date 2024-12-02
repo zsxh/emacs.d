@@ -235,7 +235,8 @@
   (define-key transient-map (kbd "<escape>") 'transient-quit-one)
   (setq transient-show-popup t
         transient-save-history nil
-        transient-display-buffer-action '((display-buffer-below-selected)))
+        transient-display-buffer-action '((display-buffer-below-selected))
+        transient-mode-line-format nil)
   (defvar +transient/non-dedicated-display '(display-buffer-in-side-window
                                              (side . bottom)
                                              (dedicated . nil)

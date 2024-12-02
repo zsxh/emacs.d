@@ -55,8 +55,8 @@
          ("." . dired-omit-mode) ;; toggle dotfiles
          )
   :config
-  (require 'dirvish-vc)
-  (require 'dirvish-emerge)
+  (require 'dirvish-vc nil t)
+  (require 'dirvish-emerge nil t)
   (advice-run-once
    'dirvish-pdf-dp
    :before (lambda (&rest _)

@@ -39,9 +39,7 @@
 ;;  Use nerd-icons for archive-mode and tar-mode
 (use-package nerd-icons-archive
   :vc (:url "https://github.com/abougouffa/nerd-icons-archive")
-  :after arc-mode
-  :init
-  (nerd-icons-archive-mode 1))
+  :hook (after-init . nerd-icons-archive-mode))
 
 ;; Theme
 (use-package doom-themes

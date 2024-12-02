@@ -102,7 +102,6 @@
 (require 'init-lang-rust)
 (require 'init-lang-go)
 (require 'init-lang-clojure)
-(require 'init-lang-sql)
 (require 'init-web)
 
 ;; Misc

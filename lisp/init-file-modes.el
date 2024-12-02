@@ -95,6 +95,7 @@
   (setq pdf-view-restore-filename (locate-user-emacs-file "cache/.pdf-view-restore")))
 
 ;; LaTeX
+;;
 ;; TODO: https://github.com/dandavison/xenops
 ;; NOTE: https://karthinks.com/software/latex-input-for-impatient-scholars/
 ;; NOTE: karthinks Fast, Async LaTeX Previews https://www.youtube.com/watch?v=n-AfvuV-bYo
@@ -106,6 +107,11 @@
 ;; [just](https://github.com/casey/just) is a handy way to save and run project-specific commands.
 (use-package just-mode
   :defer t)
+
+;; SQL
+;; use the SQL indent support features of sql-indent.
+(use-package sql-indent
+  :hook (sql-mode . sqlind-minor-mode))
 
 
 (provide 'init-file-modes)
