@@ -135,18 +135,16 @@
            `(orderless-match-face-1 ((t (:weight bold :foreground ,(doom-color 'magenta)))))
            `(orderless-match-face-2 ((t (:weight bold :foreground ,(doom-color 'green)))))
            `(orderless-match-face-3 ((t (:weight bold :foreground ,(doom-color 'yellow)))))
+           '(nerd-icons-completion-dir-face ((t (:inherit dired-directory))))
            ;; Per Theme faces
            (pcase theme
              ('doom-one-light
-              '((dired-directory ((t (:foreground "#3B6EA8"))))
-                (nerd-icons-completion-dir-face ((t (:foreground "#3B6EA8"))))))
+              '((dired-directory ((t (:foreground "#3B6EA8"))))))
              ('doom-one
               '((dired-directory ((t (:foreground "#51afef"))))
-                (nerd-icons-completion-dir-face ((t (:foreground "#51afef"))))
                 (corfu-current ((t (:background "#2257A0"))))))
              ('doom-solarized-light
               '((dired-directory ((t (:foreground "#268bd2"))))
-                (nerd-icons-completion-dir-face ((t (:foreground "#268bd2"))))
                 (show-paren-match ((t (:foreground "#dc322f" :background "#E5E5E5" :weight ultra-bold))))
                 (telega-shadow ((t (:foreground "#556b72"))))
                 (telega-msg-inline-reply ((t (:foreground "#556b72" :background "gray85"))))))))))
