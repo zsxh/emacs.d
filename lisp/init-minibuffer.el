@@ -75,7 +75,9 @@
 ;; `orderless' completion style.
 (use-package orderless
   :config
-  (add-hook 'minibuffer-setup-hook (lambda () (setq-local completion-styles '(orderless))))
+  (defun customize-minibuffer-completion-styles ()
+    (setq-local completion-styles '(basic orderless)))
+  (add-hook 'minibuffer-setup-hook #'customize-minibuffer-completion-styles)
   (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
 ;; pinyin
