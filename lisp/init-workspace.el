@@ -28,8 +28,12 @@
                 (read-from-minibuffer
                  "New Tab Name(*scratch*): "
                  nil nil nil nil (buffer-name))))
-   (tab-new)
-   (tab-rename name))
+  (let* ((tab-explicit-name (> (length name) 0))
+         (tab-name (if tab-explicit-name
+                       name
+                     "*scratch*")))
+    (tab-new)
+    (tab-rename tab-name)))
 
 ;; Buffer Tab
 (use-package tab-line
