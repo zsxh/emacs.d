@@ -189,9 +189,7 @@
 ;; `eldoc-echo-area-use-multiline-p'
 (with-eval-after-load 'eldoc
   (setq eldoc-idle-delay 0.5)
-  (eldoc-add-command-completions "delete-char" "lispy-delete-backward" "puni-backward-delete-char")
-  (set-face-foreground 'eldoc-highlight-function-argument
-                       (face-attribute 'font-lock-variable-name-face :foreground)))
+  (eldoc-add-command-completions "delete-char" "lispy-delete-backward" "puni-backward-delete-char"))
 
 ;;;;;;;;;;;;;; GnuPG and Auth Sources ;;;;;;;;;;;;;;
 ;; TODO: gpg and auth-sources
@@ -237,9 +235,6 @@
 (use-package info-colors
   :vc (:url "https://github.com/ubolonton/info-colors")
   :hook (Info-selection . info-colors-fontify-node))
-
-(with-eval-after-load 'info
-  (set-face-foreground 'Info-quoted (face-foreground font-lock-constant-face)))
 
 ;;;;;;;;;;;;;; M-x breadcrumb-mode ;;;;;;;;;;;;;;
 ;; https://github.com/joaotavora/breadcrumb

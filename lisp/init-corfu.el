@@ -25,7 +25,6 @@
          (org-mode . corfu-mode)
          (markdown-mode . corfu-mode))
   :config
-  (set-face-attribute 'corfu-border nil :inherit 'region :background 'unspecified)
   (setq corfu-auto t
         corfu-auto-prefix 1
         corfu-auto-delay 0.1

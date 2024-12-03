@@ -128,26 +128,22 @@
 (defun +ui/custom-theme-faces (theme &optional _ _)
   "Customize THEME faces."
   (let ((custom--inhibit-theme-enable nil))
-    (apply 'custom-theme-set-faces theme
-           ;; Global faces
-           '(magit-diff-revision-summary ((t (:inherit magit-diff-hunk-heading-highlight))))
-           `(orderless-match-face-0 ((t (:weight bold :foreground ,(doom-color 'blue)))))
-           `(orderless-match-face-1 ((t (:weight bold :foreground ,(doom-color 'magenta)))))
-           `(orderless-match-face-2 ((t (:weight bold :foreground ,(doom-color 'green)))))
-           `(orderless-match-face-3 ((t (:weight bold :foreground ,(doom-color 'yellow)))))
-           '(nerd-icons-completion-dir-face ((t (:inherit dired-directory))))
-           ;; Per Theme faces
-           (pcase theme
-             ('doom-one-light
-              '((dired-directory ((t (:foreground "#3B6EA8"))))))
-             ('doom-one
-              '((dired-directory ((t (:foreground "#51afef"))))
-                (corfu-current ((t (:background "#2257A0"))))))
-             ('doom-solarized-light
-              '((dired-directory ((t (:foreground "#268bd2"))))
-                (show-paren-match ((t (:foreground "#dc322f" :background "#E5E5E5" :weight ultra-bold))))
-                (telega-shadow ((t (:foreground "#556b72"))))
-                (telega-msg-inline-reply ((t (:foreground "#556b72" :background "gray85"))))))))))
+    (custom-theme-set-faces
+     theme
+     `(dired-directory ((t :foreground ,(doom-color 'blue))))
+     '(nerd-icons-completion-dir-face ((t :inherit dired-directory)))
+     '(magit-diff-revision-summary ((t :inherit magit-diff-hunk-heading-highlight)))
+     '(eldoc-highlight-function-argument ((t :inherit font-lock-variable-name-face
+                                             :weight bold)))
+     '(Info-quoted ((t :inherit (font-lock-constant-face fixed-pitch-serif))))
+     `(orderless-match-face-0 ((t :weight bold :foreground ,(doom-color 'blue))))
+     `(orderless-match-face-1 ((t :weight bold :foreground ,(doom-color 'magenta))))
+     `(orderless-match-face-2 ((t :weight bold :foreground ,(doom-color 'green))))
+     `(orderless-match-face-3 ((t :weight bold :foreground ,(doom-color 'yellow))))
+     ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
+     `(vterm-color-black ((t :background ,(doom-color 'base6))))
+     `(corfu-current ((t :background ,(doom-color 'region)
+                         :foreground ,(doom-color 'fg)))))))
 
 (advice-add 'load-theme :before #'+ui/disable-previous-theme)
 (advice-add 'load-theme :after #'+ui/custom-theme-faces)

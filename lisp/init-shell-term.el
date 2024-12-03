@@ -37,10 +37,6 @@
     (buffer-face-mode t))
   (add-hook 'vterm-mode-hook #'+vterm/set-font)
 
-  ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
-  (with-eval-after-load 'doom-themes
-    (set-face-background 'vterm-color-black (doom-color 'base6)))
-
   (with-eval-after-load 'evil
     (evil-set-initial-state 'vterm-mode 'insert)
     (evil-define-key '(normal insert emacs) vterm-copy-mode-map "q" #'vterm-copy-mode-done)
