@@ -241,6 +241,10 @@
                  sgml-skip-tag-forward
                  nil)))
 
+(use-package treesit-fold
+  :vc (:url "https://github.com/emacs-tree-sitter/treesit-fold")
+  :hook (after-init . global-treesit-fold-mode))
+
 ;; NOTE: RMSBolt tries to make it easy to see what your compiler is doing.
 ;; It does this by showing you the assembly output of a given source code file.
 ;; https://gitlab.com/jgkamat/rmsbolt

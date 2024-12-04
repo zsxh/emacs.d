@@ -145,7 +145,12 @@
 (use-package symbols-outline
   :defer t
   :config
-  (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch))
+  (setq symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)
+  (with-eval-after-load 'evil
+    (evil-define-key* 'normal symbols-outline-mode-map
+      "j" #'symbols-outline-next
+      "k" #'symbols-outline-prev
+      "gr" #'symbols-outline-refresh)))
 
 ;; NOTE: Install emacs-lsp-booster from https://github.com/blahgeek/emacs-lsp-booster
 (use-package eglot-booster
