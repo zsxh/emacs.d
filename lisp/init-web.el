@@ -127,9 +127,6 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 (use-package restclient
   :commands restclient-mode
   :config
-  (use-package company-restclient
-    :config
-    (add-to-list 'company-backends 'company-restclient))
   (with-eval-after-load 'evil
     (evil-define-key 'normal restclient-mode-map
       (kbd "RET") 'org-open-at-point)))
@@ -161,10 +158,6 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 # param1=value1&param2=value2\n")))
     (switch-to-buffer restclient-buffer)))
 
-;; `verb' is an attempt to improve upon the core idea of the `restclient' package
-(use-package verb
-  :defer t)
-
 ;; This is a elisp library for websocket clients to talk to websocket servers,
 ;; and for websocket servers to accept connections from websocket clients.
 ;; This library is designed to be used by other library writers,
@@ -172,9 +165,6 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 ;; https://github.com/ahyatt/emacs-websocket
 ;; https://blog.abrochard.com/websockets.html
 (use-package websocket
-  :defer t)
-
-(use-package know-your-http-well
   :defer t)
 
 

@@ -84,7 +84,6 @@
 
 ;; Programing
 (require 'init-project)
-;; (require 'init-completion)
 (require 'init-corfu)
 (require 'init-yasnippet)
 (require 'init-diagnostic)
