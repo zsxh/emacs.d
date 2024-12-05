@@ -129,21 +129,6 @@
   :config
   (global-evil-surround-mode 1))
 
-(use-package evil-mark-replace
-  :after evil
-  :commands (evilmr-replace-in-defun
-             evilmr-replace-in-buffer
-             evilmr-tag-selected-region
-             evilmr-replace-in-tagged-region))
-
-;; https://github.com/VanLaser/evil-nl-break-undo
-;; It means that, for example, after you write an entire paragraph in insert state,
-;; and then you hit u in normal state to undo, changes are undone line by line,
-;; instead of the whole paragraph disappearing with one swift stroke.
-(use-package evil-nl-break-undo
-  :after evil
-  :hook ((text-mode prog-mode) . evil-nl-break-undo-mode))
-
 (with-eval-after-load 'evil
   ;; evil key bindings for some emacs built-in packages
   (define-key special-mode-map "h" nil)

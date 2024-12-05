@@ -131,7 +131,6 @@
    "hk" '(helpful-key :which-key "helpful-key")
    "hm" '(describe-keymap :which-key "describe-keymap")
    "hs" '(describe-syntax :which-key "describe-syntax")
-   "hS" '(transient-emacs-cheatsheet :which-key "my-emacs-cheatsheet")
    "hv" '(helpful-variable :which-key "helpful-variable")
    "hp" '(helpful-at-point :which-key "helpful-at-point")
    "hP" '(nil :which-key "profiler")
@@ -171,21 +170,12 @@
    "pk" '(project-kill-buffers :which-key "project-kill-buffers")
    "pp" '(my/project-switch-project :which-key "switch-project")
    "pt" '(+dirvish/project-root-side :which-key "+dirvish/project-root-side")
-   "pv" '(nil :which-key "python-venv")
-   "pva" '(pyvenv-activate :which-key "activate")
-   "pvd" '(pyvenv-deactivate :which-key "deactivate")
    ;; Text
    "t" '(nil :which-key "text")
    "tB" '(comment-box :which-key "comment-box")
-   "ti" '(nil :which-key "insert")
    "tn" '(+funcs/narrow-or-widen-dwim :which-key "narrow-to-region")
-   "tr" '(nil :which-key "replace")
-   "trb" '(evilmr-replace-in-buffer :which-key "evilmr-replace-in-buffer")
-   "trf" '(evilmr-replace-in-defun :which-key "evilmr-replace-in-defun")
-   "trl" '(evilmr-replace-lines :which-key "evilmr-replace-lines")
    "ts" '(transient-text-scale :which-key "scale")
    "tS" '(transient-string-inflection :which-key "string-inflection-cycle")
-   ;; "tt"  '(tiny-expand :which-key "tiny-expand")
    "tw" '(+funcs/shrink-whitespaces :which-key "shrink-whitespace")
    ;; View/Workspace/Layout/Session
    "v" '(nil :which-key "workspace")
@@ -212,19 +202,16 @@
    ;; Toggle
    "T" '(nil :which-key "toggle")
    "Td" '(toggle-debug-on-error :which-key "debug-on-error")
-   "Tf" '(font-lock-mode :which-key "syntax-highlighting")
    "Tl" '(toggle-truncate-lines :which-key "truncate-lines")
    "Tn" '(display-line-numbers-mode :which-key "display-line-numbers")
    "Tp" '(nil :which-key "proxy")
    "Tph" '(proxy-http-toggle :which-key "http(s)-proxy")
    "Tps" '(proxy-socks-toggle :which-key "socks-proxy")
    "Tw" '(whitespace-mode :which-key "whitespace-mode")
-   "Tx" '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
-   "Tz" '(evil-toggle-fold :which-key "evil-toggle-fold")))
+   ;; "Tx" '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
+   ))
 
-(use-package lv
-  :hook (lv-window . visual-line-mode))
-
+;; Examples: https://github.com/positron-solutions/transient-showcase
 (use-package transient
   :ensure nil
   :custom
@@ -276,12 +263,6 @@
      ("O" "rotate-frame-anticlockwise A->C->D->B->A" rotate-frame-anticlockwise)
      ("q" "quit" transient-quit-all)])
 
-  (transient-define-prefix transient-emacs-cheatsheet ()
-    "emacs cheatsheet"
-    ["Emacs Cheatsheet"
-     ("s" "\"C-x TAB\" indent-rigidly" indent-rigidly) ; shift line[s] left/right
-     ("q" "quit" transient-quit-all)])
-
   (transient-define-prefix transient-string-inflection ()
     ["Cycle text objects through camelCase, kebab-case, snake case and UPPER CASE."
      ("s" "string-inflection-all-cycle" string-inflection-all-cycle :transient t)
@@ -289,15 +270,7 @@
 
 ;; posframe
 (use-package posframe
-  :defer t
-  :config
-  (defun posframe-poshandler-frame-center-near-bottom (info)
-    (cons (/ (- (plist-get info :parent-frame-width)
-                (plist-get info :posframe-width))
-             2)
-          (/ (+ (plist-get info :parent-frame-height)
-                (* 2 (plist-get info :font-height)))
-             2))))
+  :defer t)
 
 ;; transient posframe
 (use-package transient-posframe
@@ -315,11 +288,6 @@
   (define-advice transient-window-scale (:around (orig-fn) advice)
     (let ((transient-display-buffer-action +transient/non-dedicated-display))
       (funcall orig-fn))))
-
-;; showcase file: ~/.emacs.d/elpa/transient-showcase/transient-showcase.org
-(use-package transient-showcase
-  :vc (:url "https://github.com/positron-solutions/transient-showcase.git")
-  :commands tsc-showcase)
 
 
 (provide 'init-keybinding)

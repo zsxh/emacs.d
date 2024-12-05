@@ -57,8 +57,7 @@
   ;; child frame (default is no border). The 'tty-non-selected-cursor'
   ;; parameter makes redisplay put the terminal cursor in a non-selected
   ;; frame which is nice for things like 'consult-buffer'
-  (setq vertico-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
-        vertico-posframe-parameters
+  (setq vertico-posframe-parameters
         '((tty-non-selected-cursor . t)
           (title . "vertico-posframe")
           ;; (undecorated . nil)
