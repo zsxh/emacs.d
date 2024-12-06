@@ -68,6 +68,7 @@
   ;; please do not enable vertico-posframe-mode globally at the moment.
   (setq vertico-multiform-commands '((consult-line (:not posframe))
                                      (consult-imenu (:not posframe))
+                                     (consult-flymake (:not posframe))
                                      (t posframe)))
   (vertico-multiform-mode))
 
