@@ -21,6 +21,10 @@
 ;; Show buffer name in title
 (setq frame-title-format "emacs@%b")
 
+;; When Context Menu mode is enabled, clicking the mouse button down-mouse-3
+;; activates the menu whose contents depends on its surrounding context
+(context-menu-mode 1)
+
 ;; Startup frame size
 (cond ((eq personal-frame-startup-size 'max)
        (toggle-frame-maximized))
@@ -131,7 +135,7 @@
     (custom-theme-set-faces
      theme
      `(dired-directory ((t :foreground ,(doom-color 'blue))))
-     '(nerd-icons-completion-dir-face ((t :inherit dired-directory)))
+     `(nerd-icons-completion-dir-face ((t :foreground ,(doom-color 'blue))))
      '(magit-diff-revision-summary ((t :inherit magit-diff-hunk-heading-highlight)))
      '(eldoc-highlight-function-argument ((t :inherit font-lock-variable-name-face
                                              :weight bold)))

@@ -73,6 +73,7 @@
    "aoa" '(org-agenda :which-key "org-agenda")
    "aoc" '(org-capture :which-key "org-capture")
    "ap" '(list-processes :which-key "list-processes")
+   "aP" '(package-isolate :which-key "package-isolate") ;; fast emacs debug environment
    "aR" '(re-builder :which-key "re-builder")
    "at" '(telega :which-key "telega")
    "ay" '(nil :which-key "dictionary")

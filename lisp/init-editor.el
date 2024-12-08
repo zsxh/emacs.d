@@ -284,6 +284,9 @@
   :vc (:url "https://github.com/emacs-vs/cognitive-complexity")
   :defer t)
 
+;; TODO: try `p-search'
+;; https://github.com/zkry/p-search
+
 
 (provide 'init-editor)
 
