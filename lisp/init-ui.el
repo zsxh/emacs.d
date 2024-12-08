@@ -147,7 +147,8 @@
      ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
      `(vterm-color-black ((t :background ,(doom-color 'base6))))
      `(corfu-current ((t :background ,(doom-color 'region)
-                         :foreground ,(doom-color 'fg)))))))
+                         :foreground ,(doom-color 'fg))))
+     `(tab-bar-tab ((t :foreground ,(doom-color 'highlight) :weight bold))))))
 
 (advice-add 'load-theme :before #'+ui/disable-previous-theme)
 (advice-add 'load-theme :after #'+ui/custom-theme-faces)
