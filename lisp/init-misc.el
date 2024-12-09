@@ -199,6 +199,11 @@
 (use-package keycast
   :defer t)
 
+;; Emacs editing PostgreSQL databases
+(use-package pgmacs
+  :vc (:url "https://github.com/emarsden/pgmacs")
+  :defer t)
+
 
 (provide 'init-misc)
 

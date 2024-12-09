@@ -34,8 +34,6 @@
           ("C-j" . vertico-next)
           ([backspace] . vertico-directory-delete-char)
           ([escape] . abort-recursive-edit)))
-  :custom
-  (vertico-resize nil)
   :config
   (with-eval-after-load 'evil
     (dolist (mode '(vertico-mode

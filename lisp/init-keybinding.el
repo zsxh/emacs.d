@@ -26,7 +26,6 @@
   (push '(("\\(.*\\)1" . "winum-select-window-1") . ("\\11..9" . "window 1..9")) which-key-replacement-alist)
   ;; Hide other entries [2-9]
   (push '((nil . "select-window-[2-9]") . t) which-key-replacement-alist)
-  (setq resize-mini-windows t)
   (which-key-mode))
 
 ;; NOTE: `Master-Key-Bindings-Emacs' https://www.masteringemacs.org/article/mastering-key-bindings-emacs
