@@ -148,7 +148,9 @@
      `(vterm-color-black ((t :background ,(doom-color 'base6))))
      `(corfu-current ((t :background ,(doom-color 'region)
                          :foreground ,(doom-color 'fg))))
-     `(tab-bar-tab ((t :foreground ,(doom-color 'highlight) :weight bold))))))
+     `(tab-bar-tab ((t :foreground ,(doom-color 'highlight)
+                       :background ,(doom-color 'bg)
+                       :weight bold))))))
 
 (advice-add 'load-theme :before #'+ui/disable-previous-theme)
 (advice-add 'load-theme :after #'+ui/custom-theme-faces)
