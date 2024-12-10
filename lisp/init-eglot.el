@@ -162,6 +162,8 @@
         eglot-booster-io-only t)
   (eglot-booster-mode))
 
+;; TODO: https://codeberg.org/harald/eglot-supplements
+
 
 (provide 'init-eglot)
 

@@ -133,7 +133,7 @@
 (setopt text-mode-ispell-word-completion nil)
 
 ;; `split-window-preferred-function', `split-window-sensibly'
-(setq split-width-threshold 140)
+(setq split-width-threshold 130)
 
 ;; prevent Emacs from searching within folded sectionsi
 (setq search-invisible nil

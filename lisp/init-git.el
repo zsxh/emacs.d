@@ -22,6 +22,7 @@
         magit-save-repository-buffers 'dontask)
   ;; cache user password when using http, https://stackoverflow.com/a/75298815
   (add-hook 'magit-process-find-password-functions 'magit-process-password-auth-source)
+  ;; TIPS: keybindings "[" `magit-section-forward-sibling', "]" `magit-section-backward-sibling'
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit)
     (evil-collection-init 'magit-section)
