@@ -148,6 +148,7 @@
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
 ;; https://willschenk.com/articles/2020/tramp_tricks/
 ;; https://mina86.com/2021/emacs-remote/
+;; https://www.reddit.com/r/emacs/comments/1hccvoj/all_i_want_for_christmas_is_a_working_ssh_feature/
 (with-eval-after-load 'tramp
   (setq tramp-default-method "ssh"
         tramp-verbose 3

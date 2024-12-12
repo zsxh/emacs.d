@@ -20,7 +20,7 @@
   (setq show-paren-mode nil
         show-paren-when-point-inside-paren t
         show-paren-when-point-in-periphery t
-        show-paren-delay 0.125))
+        show-paren-delay 0.2))
 
 ;; Highlight Symbol
 (use-package symbol-overlay
@@ -48,10 +48,6 @@
   (define-key symbol-overlay-map (kbd ">") 'symbol-overlay-goto-last)
   (define-key symbol-overlay-map (kbd "h") 'nil)
   (define-key symbol-overlay-map (kbd "?") 'symbol-overlay-map-help))
-
-;; Color String
-(use-package rainbow-mode
-  :defer t)
 
 ;; Highlights delimiters such as parentheses, brackets or braces according to their depth
 (use-package rainbow-delimiters
@@ -115,10 +111,7 @@
   :defer t
   :config
   (setq pulse-delay 0.03
-        pulse-iterations 10)
-  (set-face-background 'pulse-highlight-start-face "#51afef")
-  (when (fboundp 'set-face-extend)
-    (set-face-extend 'pulse-highlight-start-face t)))
+        pulse-iterations 10))
 
 (defun pulse-line (&rest _)
   "Pulse the current line."

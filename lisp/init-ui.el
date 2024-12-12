@@ -150,7 +150,12 @@
                          :foreground ,(doom-color 'fg))))
      `(tab-bar-tab ((t :foreground ,(doom-color 'highlight)
                        :background ,(doom-color 'bg)
-                       :weight bold))))))
+                       :weight bold)))
+     `(show-paren-match ((t :foreground ,(doom-color 'red)
+                            :background ,(doom-color 'base0)
+                            :weight ultra-bold
+                            :underline t)))
+     '(pulse-highlight-start-face ((t :background "#51afef" :extend t))))))
 
 (advice-add 'load-theme :before #'+ui/disable-previous-theme)
 (advice-add 'load-theme :after #'+ui/custom-theme-faces)
