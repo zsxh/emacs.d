@@ -42,17 +42,16 @@
   :group 'zsxh-lispy)
 
 ;;; Utils
-(defun zsxh-lispy/empty-pair (&optional pos)
+(defun zsxh-lispy/in-empty-pair (&optional pos)
   (let* ((pos (or pos (point)))
          (char-begin (char-before pos))
          (char-end (char-after pos)))
-    (cond
-     ((and (eq ?\( char-begin) (eq ?\) char-end)) t)
-     ((and (eq ?\[ char-begin) (eq ?\] char-end)) t)
-     ((and (eq ?\" char-begin) (eq ?\" char-end)) t)
-     ((and (eq ?\' char-begin) (eq ?\' char-end)) t)
-     ((and (eq ?\{ char-begin) (eq ?\} char-end)) t)
-     (t nil))))
+    (member (cons char-begin char-end)
+            '((?\( . ?\))
+              (?\[ . ?\])
+              (?\" . ?\")
+              (?\' . ?\')
+              (?\{ . ?\})))))
 
 (defun zsxh-lispy/in-string-or-comment ()
   (let* ((syntax (syntax-ppss))
@@ -114,7 +113,7 @@ then move point to closest closed ) or ]."
       (mark-sexp)
       (call-interactively 'delete-region))
      ;; (|), [|], "|", '|', {|}
-     ((zsxh-lispy/empty-pair)
+     ((zsxh-lispy/in-empty-pair)
       (delete-char 1)
       (backward-delete-char-untabify arg))
      (t (backward-delete-char-untabify arg)))))
@@ -148,7 +147,12 @@ then move point to closest closed ) or ]."
     (goto-char (point-min))
     (while (re-search-forward "\\((\\\|\\[\\)[\s\n]+" nil t)
       (unless (or (zsxh-lispy/in-string-or-comment)
-                  (zsxh-lispy/in-comment-line))
+                  (zsxh-lispy/in-comment-line)
+                  ;; Fix ?\(, ?\[, eg: '(?\( . ?\))
+                  (save-excursion
+                    (skip-chars-backward " \t([")
+                    (and (eq (char-before (point)) ?\\)
+                         (eq (char-before (1- (point))) ?\?))))
         (replace-match "\\1")
         (backward-char)))
     ;; Compact closed parens
@@ -260,7 +264,7 @@ then move point to closest closed ) or ]."
           (delete-region del-beg end)
           (backward-char)
           (unless (memq (char-before) '(?\( ?\[))
-              (insert " "))
+            (insert " "))
           (insert str)
           (forward-char)
           (backward-sexp 1 t)
