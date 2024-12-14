@@ -43,6 +43,13 @@
 
 ;;; Utils
 (defun zsxh-lispy/in-empty-pair (&optional pos)
+  "Check if the current position or POS is inside an empty pair of parentheses, brackets, or quotes.
+
+An empty pair is defined as one of the following: (),[],\"\",'',{}
+
+If POS is provided, it checks the position at POS instead of the current point.
+
+Returns t if the position is inside an empty pair, otherwise nil."
   (let* ((pos (or pos (point)))
          (char-begin (char-before pos))
          (char-end (char-after pos)))
