@@ -112,6 +112,10 @@ If RETURN-P, return the message as a string instead of displaying it."
                    package--builtins))
         package-alist)))))
 
+(when (and (not (file-exists-p package-user-dir))
+           (directory-empty-p package-user-dir))
+  (package-refresh-contents))
+
 
 (provide 'init-package)
 
