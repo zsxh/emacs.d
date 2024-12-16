@@ -82,6 +82,8 @@ If RETURN-P, return the message as a string instead of displaying it."
 (with-eval-after-load 'package
   (setq package-install-upgrade-built-in t)
   (defvar package-upgrade-exclude-vc-pkgs-p t)
+
+  ;; may exclude vc pkgs
   (define-advice package--upgradeable-packages (:override (&optional include-builtins) advice)
     ;; Initialize the package system to get the list of package
     ;; symbols for completion.
@@ -110,7 +112,32 @@ If RETURN-P, return the message as a string instead of displaying it."
                      (when (not (assq (car elt) package-alist))
                        (list (list (car elt) (package--from-builtin elt)))))
                    package--builtins))
-        package-alist)))))
+        package-alist))))
+
+  ;; upgrade-all should respect `package-install-upgrade-built-in'
+  (define-advice package-upgrade-all (:override (&optional query) advice)
+    "Refresh package list and upgrade all packages.
+If QUERY, ask the user before upgrading packages.  When called
+interactively, QUERY is always true.
+
+Currently, packages which are part of the Emacs distribution are
+not upgraded by this command.  To enable upgrading such a package
+using this command, first upgrade the package to a newer version
+from ELPA by either using `\\[package-upgrade]' or
+`\\<package-menu-mode-map>\\[package-menu-mark-install]' after `\\[list-packages]'."
+    (interactive (list (not noninteractive)))
+    (package-refresh-contents)
+    (let ((upgradeable (package--upgradeable-packages package-install-upgrade-built-in)))
+      (if (not upgradeable)
+          (message "No packages to upgrade")
+        (when (and query
+                   (not (yes-or-no-p
+                         (if (length= upgradeable 1)
+                             "One package to upgrade.  Do it? "
+                           (format "%s packages to upgrade.  Do it?"
+                                   (length upgradeable))))))
+          (user-error "Upgrade aborted"))
+        (mapc #'package-upgrade upgradeable)))))
 
 (when (and (not (file-exists-p package-user-dir))
            (directory-empty-p package-user-dir))
