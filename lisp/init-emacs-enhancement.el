@@ -41,7 +41,7 @@
         jit-lock-stealth-load 100
         jit-lock-stealth-nice 0.5
         jit-lock-contextually 'syntax-driven
-        jit-lock-defer-time nil))
+        jit-lock-defer-time 0))
 
 ;; TreeSitter
 ;; (with-eval-after-load 'treesit

@@ -162,6 +162,11 @@
         eglot-booster-io-only t)
   (eglot-booster-mode))
 
+(use-package eglot-inactive-regions
+  :after eglot
+  :config
+  (eglot-inactive-regions-mode 1))
+
 ;; TODO: https://codeberg.org/harald/eglot-supplements
 
 
