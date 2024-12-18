@@ -60,6 +60,26 @@ Returns t if the position is inside an empty pair, otherwise nil."
               (?\' . ?\')
               (?\{ . ?\})))))
 
+(defun zsxh-lispy/in-string-p (&optional pos)
+  "Check if the current position or POS is inside a string
+
+If POS is provided, it checks the position at POS instead of the current point.
+
+Returns t if the position is inside a string, otherwise nil."
+  (let* ((syntax (save-excursion (syntax-ppss (or pos (point)))))
+         (in-string (nth 3 syntax)))
+    in-string))
+
+(defun zsxh-lispy/in-comment-p (&optional pos)
+  "Check if the current position or POS is inside a comment
+
+If POS is provided, it checks the position at POS instead of the current point.
+
+Returns t if the position is inside a comment, otherwise nil."
+  (let* ((syntax (save-excursion (syntax-ppss (or pos (point)))))
+         (in-comment (nth 4 syntax)))
+    in-comment))
+
 (defun zsxh-lispy/in-string-or-comment-p (&optional pos)
     "Check if the current position or POS is inside a string or comment.
 
@@ -219,7 +239,7 @@ START and END are the boundaries of the region to be formatted."
     ;; Remove line trailing spaces
     (goto-char (point-min))
     (while (re-search-forward "\s+$" nil t)
-      (unless (nth 3 (syntax-ppss)) ; not in string
+      (unless (zsxh-lispy/in-string-p) ; not in string
         (replace-match "")))
     (indent-region (point-min) (point-max))))
 
@@ -385,6 +405,8 @@ for quickly modifying s-expressions in Lisp-like languages."
         (when (length> str 0)
           (delete-region beg end)
           (delete-region (save-excursion (skip-chars-backward " \t\n") (point)) beg)
+          (when (zsxh-lispy/in-comment-p)
+            (newline-and-indent))
           (forward-char)
           (save-excursion (insert " " str))
           (backward-sexp 1 t)

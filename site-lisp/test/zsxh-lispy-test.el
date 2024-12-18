@@ -5,6 +5,7 @@
 
 ;;; Code:
 
+;; NOTE https://scripter.co/quick-intro-to-emacs-lisp-regression-testing/
 
 ;; NOTE: Run Tests
 ;; M-x eval-expression RET (ert t) RET
@@ -902,6 +903,15 @@
     (goto-char (point-max))
     (zsxh-lispy/lisp-barf)
     (should (equal (buffer-string) "(foo) (bar)"))))
+
+(ert-deftest zsxh-lispy/lisp-barf-test-9 ()
+  "Test barfing the last s-expression with trailing comment"
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "(lambda ()\n  ;; returning the used window.\n  (func1))")
+    (goto-char (point-max))
+    (zsxh-lispy/lisp-barf)
+    (should (equal (buffer-string) "(lambda ()\n  ;; returning the used window.\n  ) (func1)"))))
 
 ;;; ***************************************************
 ;;; Test `zsxh-lispy/lisp-up-list'
