@@ -16,13 +16,12 @@
 ;; tips: press "%" in normal mode to jump between code block, tags
 (use-package evil
   :init
-  (setq evil-want-keybinding nil)
-  (setq evil-want-integration t)
-  (setq evil-insert-state-cursor nil)
-  (setq evil-esc-delay 0.001)
-  (when (functionp 'undo-redo)
-    (setq evil-undo-system 'undo-redo))
-  :commands evil-mode
+  (setq evil-want-keybinding nil
+        evil-want-integration t
+        evil-insert-state-cursor nil
+        evil-esc-delay 0.001
+        evil-undo-system 'undo-redo
+        evil-respect-visual-line-mode t)
   :hook (after-init . evil-mode)
   :bind ((:map evil-normal-state-map
                ("C-a" . +funcs/smart-beginning-of-line)

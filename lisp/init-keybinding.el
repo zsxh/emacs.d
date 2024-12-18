@@ -207,6 +207,7 @@
    "Tp" '(nil :which-key "proxy")
    "Tph" '(proxy-http-toggle :which-key "http(s)-proxy")
    "Tps" '(proxy-socks-toggle :which-key "socks-proxy")
+   "Tv" '(visual-line-mode :which-key "visual-line-mode")
    "Tw" '(whitespace-mode :which-key "whitespace-mode")
    ;; "Tx" '((lambda () (interactive) (shell-command "xmodmap ~/.Xmodmap")) :which-key "xmodmap")
    ))

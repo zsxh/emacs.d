@@ -139,6 +139,9 @@
 (setq search-invisible nil
       isearch-invisible nil)
 
+;; show fringe-indicators for wrapped lines
+(setopt visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
+
 
 (provide 'init-config)
 

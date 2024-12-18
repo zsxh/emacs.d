@@ -25,6 +25,7 @@
         gptel-log-level 'debug)
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+  (add-hook 'gptel-mode-hook 'turn-on-visual-line-mode)
   ;; Clean Up default backends
   (setq gptel--known-backends nil)
   ;; OpenRouter
