@@ -276,13 +276,39 @@
 ;; transient posframe
 (use-package transient-posframe
   :after transient
-  :vc (:url "https://github.com/tarsiiformes/transient-posframe" :branch "fix-sizing")
   :config
+  ;; https://github.com/yanghaoxie/transient-posframe/pull/7#issuecomment-2538792470
+  (define-advice transient-posframe--show-buffer (:override (buffer _) advice)
+    (posframe-show
+     buffer
+     :poshandler #'posframe-poshandler-frame-center
+     ;; To reduce the likelyhood of horizontal resizing, use the
+     ;; same minimal width as transient uses by default.  It matches
+     ;; the width needed to display the commands common to all menus.
+     :min-width transient-minimal-frame-width
+     ;; If the parent frame is small, there might not be enough room.
+     ;; By default posframe wraps lines, but we truncate instead.
+     :lines-truncate t
+     ;; Enable the fringe, so that we can see when truncation has
+     ;; occured.  Hm, actually that's not good enough, so let's not.
+     ;; :right-fringe 8
+     ;;
+     ;; Indicate transient-ness of the menu.  You could also use a
+     ;; constant color, if you don't care about this.
+     :internal-border-color (transient--prefix-color)
+     :internal-border-width 1)
+    ;; `posframe-show' it not suitable for use as a display action
+    ;; and it appears posframe does not provide some other function
+    ;; that is.  We can make this more complient by at least
+    ;; returning the used window.
+    (get-buffer-window transient--buffer t))
+
   (setq transient-posframe-parameters
         '((title . "transient-posframe")
           ;; (undecorated . nil)
           (left-fringe . 8)
           (right-fringe . 8)))
+
   (transient-posframe-mode))
 
 (unless (posframe-workable-p)
