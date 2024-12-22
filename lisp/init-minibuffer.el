@@ -48,7 +48,8 @@
       (evil-set-initial-state mode 'emacs))))
 
 (use-package vertico-posframe
-  :if (display-graphic-p)
+  :if (or (display-graphic-p)
+          (featurep 'tty-child-frames))
   :after vertico
   :config
   ;; The 'undecorated' frame parameter lets Emacs draw a border around the

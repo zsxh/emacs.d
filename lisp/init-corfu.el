@@ -34,7 +34,8 @@
   (corfu-popupinfo-mode))
 
 (use-package corfu-terminal
-  :if (not (display-graphic-p))
+  :if (not (or (display-graphic-p)
+               (featurep 'tty-child-frames)))
   :hook (global-corfu-mode . corfu-terminal-mode))
 
 (use-package nerd-icons-corfu
