@@ -18,6 +18,7 @@
   :config
   (setq eglot-autoshutdown t
         eglot-send-changes-idle-time 0.5
+        eglot-sync-connect nil
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
         ;; NOTE: drop log to improve performance
