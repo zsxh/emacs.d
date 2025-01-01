@@ -54,20 +54,6 @@
   :ensure nil
   :commands (gptel-commit))
 
-;; https://github.com/lanceberge/elysium
-;; `elysium-query', `elysium-toggle-window'
-(use-package elysium
-  :defer t
-  :config
-  (setq elysium-base-prompt
-        (replace-regexp-in-string
-         "{{Explanation of the changes}}"
-         "{{Explanation of the changes in chinese}}\n"
-         elysium-base-prompt)))
-
-;; TODO: https://github.com/shouya/ancilla.el
-;; TODO: https://github.com/rksm/org-ai
-
 ;; https://github.com/s-kostyaev/ellama
 (use-package llm
   :defer t)
@@ -98,38 +84,7 @@
   (setopt ellama-provider (eval (cdar ellama-providers))))
 
 ;; TODO: RAG [elisa](https://github.com/s-kostyaev/elisa)
-
-;; https://github.com/tninja/aider.el
-;; (use-package aider
-;;   :vc (:url "https://github.com/tninja/aider.el")
-;;   :defer t
-;;   :config
-;;   (setenv "DEEPSEEK_API_KEY" personal-deepseek-key)
-;;   (setenv "OPENROUTER_API_KEY" personal-openrouter-key)
-;;   (setq aider-args
-;;         '("--deepseek"
-;;           "--no-auto-commits"
-;;           "--no-dirty-commits"
-;;           "--no-check-update")))
-
-(transient-define-prefix transient-ai-assistant ()
-  "Transient menu for interacting with various AI assistants,
-including chat, code, and git operations."
-  ["AI Assistants\n"
-   ["Assistants"
-    ;; ("ad" "aider" aider-transient-menu)
-    ("ag" "gptel" gptel-menu)
-    ("ae" "ellama" ellama-transient-main-menu)]
-   ["Chat"
-    ("C" "gptel chat" gptel)]
-   ["Code"
-    ("ce" "elysium code change" elysium-query)]
-   ["Git"
-    ("gc" "gptel-commit" gptel-commit)]])
-
-(global-set-key [f8] #'transient-ai-assistant)
-
-;; TODO: https://github.com/Kungsgeten/selected.el
+;; TODO: https://github.com/zbelial/eureka.el
 
 
 (provide 'init-ai)

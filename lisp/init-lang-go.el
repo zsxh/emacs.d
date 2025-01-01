@@ -10,11 +10,10 @@
 
 ;;; Code:
 
-;; Install gopls
-;; https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation
+;; NOTE: Install gopls
+
 (use-package go-mode
   :if (not (treesit-ready-p 'go))
-  ;; :mode ("\\.go\\'" . go-mode)
   :hook (go-mode . eglot-ensure)
   :config
   (+eglot/set-leader-keys go-mode-map)
@@ -25,7 +24,6 @@
 (use-package go-ts-mode
   :ensure nil
   :if (treesit-ready-p 'go)
-  ;; :mode ("\\.go\\'" . go-ts-mode)
   :hook (go-ts-mode . eglot-ensure)
   :config
   (+eglot/set-leader-keys go-ts-mode-map)

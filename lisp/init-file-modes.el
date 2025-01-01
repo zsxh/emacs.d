@@ -9,8 +9,6 @@
 ;;; Code:
 
 ;; Nix
-;; $nix profile install nixpkgs#nixd
-;; $nix profile install nixpkgs#alejandra
 (use-package nix-ts-mode
   :mode "\\.nix\\'"
   :hook ((nix-ts-mode . eglot-ensure))
@@ -25,7 +23,6 @@
        :formatting (:command ["alejandra"])))))
 
 ;; Lua
-;; $nix profile install nixpkgs#lua-language-server
 (use-package lua-ts-mode
   :hook (lua-ts-mode . eglot-ensure)
   :config
@@ -70,11 +67,8 @@
                                  "p" '(json-pretty-print-buffer :which-key "pretty-print")))
 
 ;; PDF
-;;
 ;; https://github.com/vedang/pdf-tools
-;; install poppler
-;; - macos: brew install poppler, set PKG_CONFIG_PATH
-;; - arch: pacman -S poppler
+;; install `poppler'
 (use-package pdf-tools
   :defer t
   :mode ("\\.pdf\\'" . pdf-view-mode)

@@ -10,19 +10,15 @@
 
 ;;; Code:
 
-;; NOTE: `PDM' https://chriswarrick.com/blog/2023/01/15/how-to-improve-python-packaging/
-;; > pipx install "pdm[all]"
-;; NOTE: python linter, formatter
-;; > pipx install ruff
-;; > pipx install black
+;; NOTE: install python dev tools
+;; - python language server `pyright'
+;; - python linter `ruff'
+;; - python formatter `black'
 
 ;; Python virtual environment support for Emacs
 (use-package pyvenv
   :commands pyvenv-activate)
 
-;; NOTE: install python language server
-;; > pnpm add -g pyright
-;; # > pipx install basedpyright
 (use-package python
   :ensure nil
   :hook (python-base-mode . eglot-ensure)

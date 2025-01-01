@@ -16,9 +16,7 @@
 ;; NOTE: Build tool: Vite
 ;; https://github.com/vitejs/vite
 
-;; NOTE: Install TypeScript & JavaScript Language Server
-;; https://github.com/typescript-language-server/typescript-language-server
-;; pnpm add -g typescript-language-server typescript
+;; NOTE: Install TypeScript & JavaScript Language Server `typescript-language-server'
 
 (use-package js
   :ensure nil

@@ -10,8 +10,9 @@
 
 ;;; Code:
 
-;; Install rust-analyzer
-;; NOTE: https://github.com/rust-analyzer/rust-analyzer/releases
+;; NOTE: Install `rust-analyzer'
+;; https://github.com/rust-analyzer/rust-analyzer/releases
+
 (use-package rust-mode
   :defer t
   :mode ("\\.rs\\'" . rust-mode)

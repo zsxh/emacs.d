@@ -10,9 +10,8 @@
 
 ;;; Code:
 
-;; TODO: integrate `html-ts-mode' with `puni-mode'
-;; NOTE: install html lsp server
-;; $ pnpm add -g vscode-langservers-extracted
+;; NOTE: install HTML/CSS/JSON/ESLint language servers `vscode-langservers-extracted'
+
 (use-package html-ts-mode
   :defer t
   ;; :hook (html-ts-mode . eglot-ensure)

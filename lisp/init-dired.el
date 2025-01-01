@@ -23,7 +23,6 @@
 (advice-run-once 'find-file :before #'dirvish-override-dired-mode-maybe)
 
 ;; https://github.com/alexluigit/dirvish
-;; MacOS require: brew install coreutils fd poppler ffmpegthumbnailer mediainfo imagemagick gnu-tar unzip
 (use-package dirvish
   :defer 10
   :custom
@@ -272,7 +271,6 @@
 
 ;; TODO: remove fd-dired
 ;; Drop-in replacement for find-dired
-;; install rust fd first: pacman -S fd
 ;; https://github.com/sharkdp/fd
 ;; dired find files using 'fd' instead of 'find'
 ;; https://github.com/yqrashawn/fd-dired
