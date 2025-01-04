@@ -155,12 +155,8 @@
   :config
   (dirvish-override-dired-mode-maybe)
 
-  ;; Macos installed `coreutils'
-    ;; FIXME: raycast launch emacs (getenv "PATH"), wierd PATH
-  (when (and IS-MAC (executable-find "gls"))
-    (setq insert-directory-program "gls"))
-  (when (or IS-LINUX (executable-find "gls"))
-    (setq dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group"))
+  ;; NOTE: install nixpkgs `coreutils'
+  (setq dired-listing-switches "-alhA --time-style=long-iso --group-directories-first --no-group")
 
   (setq dired-dwim-target t
         dired-recursive-copies 'always

@@ -20,11 +20,8 @@
          ("C-c h" . gptel-menu))
   :config
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
-        gptel-default-mode 'org-mode
         gptel-expert-commands t
         gptel-log-level 'debug)
-  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
-  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
   (add-hook 'gptel-mode-hook 'turn-on-visual-line-mode)
   ;; Clean Up default backends
   (setq gptel--known-backends nil)
