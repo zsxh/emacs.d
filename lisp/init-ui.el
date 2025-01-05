@@ -86,11 +86,6 @@
   :config (setq display-line-numbers-type 'relative))
 
 ;; Fonts
-(when (member "Symbola" (font-family-list))
-  ;; Download specify font for all unicode characters, emoji for example
-  ;; http://xahlee.info/comp/unicode_font_download.html
-  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
-
 ;; Download ans install SF Mono fonts for Linux
 ;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
 ;; https://github.com/hick/emacs-chinese#emacs-中文基础

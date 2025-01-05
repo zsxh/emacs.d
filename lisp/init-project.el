@@ -151,14 +151,14 @@ else ask the user for a directory in which to look for the project."
   (interactive (list (project-prompt-project-dir)))
   (dired dir))
 
-;;;; TODO: Project Isolation
+;;;; Project Isolation
 
 ;; [envrc.el](https://github.com/purcell/envrc)
 ;; [direnv](https://direnv.net/docs/hook.html)
+;; [nix-direnv](https://github.com/nix-community/nix-direnv)
+;; `envrc-reload', `envrc-allow', `envrc-deny'
 (use-package envrc
   :hook (after-init . envrc-global-mode))
-
-;; nix
 
 
 (provide 'init-project)
