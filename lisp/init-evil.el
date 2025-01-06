@@ -94,6 +94,12 @@
   (with-eval-after-load 'edebug (evil-collection-edebug-setup))
   (with-eval-after-load 'popup (evil-collection-popup-setup))
   (with-eval-after-load 'calendar (evil-collection-calendar-setup))
+  (with-eval-after-load 'compile
+    (evil-collection-compile-setup)
+    (evil-define-key 'normal compilation-mode-map
+      "h" 'evil-backward-char
+      "gg" 'evil-goto-first-line
+      "gr" 'recompile))
   (with-eval-after-load 'info
     (evil-collection-info-setup)
     (evil-define-key 'normal Info-mode-map
@@ -144,14 +150,6 @@
   (evil-define-key 'normal messages-buffer-mode-map
     "0" 'evil-digit-argument-or-evil-beginning-of-line
     "q" 'quit-window)
-
-  ;; compilation-mode evil key bindings
-  (with-eval-after-load 'compile
-    (evil-set-initial-state 'compilation-mode 'normal)
-    (evil-define-key 'normal compilation-mode-map
-      "h" 'evil-backward-char
-      "gg" 'evil-goto-first-line
-      "gr" 'recompile))
 
   ;; evil keybindings for simple package
   (with-eval-after-load 'simple

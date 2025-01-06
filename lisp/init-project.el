@@ -160,6 +160,17 @@ else ask the user for a directory in which to look for the project."
 (use-package envrc
   :hook (after-init . envrc-global-mode))
 
+;;;; Compilation
+;; `compilation-shell-minor-mode'
+(use-package compile
+  :defer t
+  :init
+  (require 'ansi-color)
+  :hook (compilation-filter . ansi-color-compilation-filter)
+  :config
+  (setq compilation-scroll-output t
+        compilation-ask-about-save nil))
+
 
 (provide 'init-project)
 
