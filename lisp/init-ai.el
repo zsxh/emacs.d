@@ -33,9 +33,7 @@
       :stream t
       :key 'personal-openrouter-key
       :models '(anthropic/claude-3-5-haiku
-                anthropic/claude-3.5-sonnet
-                google/gemini-2.0-flash-exp:free
-                google/gemini-exp-1206:free)))
+                anthropic/claude-3.5-sonnet)))
   ;; DeepSeek
   (when (bound-and-true-p personal-deepseek-key)
     ;; default backend

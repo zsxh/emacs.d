@@ -74,8 +74,7 @@
 (advice-add #'x-apply-session-resources :override #'ignore)
 
 ;; Inhibit automatic native compilation of loaded .elc files
-;; (setq native-comp-deferred-compilation nil
-;;       inhibit-automatic-native-compilation t)
+(setq native-comp-jit-compilation nil)
 
 ;; If non-nil and there was input pending at the beginning of the command,
 ;; the `fontification_functions` hook is not run.  This usually does not
