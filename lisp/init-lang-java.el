@@ -10,7 +10,7 @@
 
 ;;; Code:
 
-;; NOTE: Install `jdtls', https://github.com/eclipse/eclipse.jdt.ls
+;; NOTE: Install `jdtls' via Nix home-manager/darwin-nix, https://github.com/eclipse/eclipse.jdt.ls
 ;; NOTE: Install decomiplers, https://github.com/dgileadi/dg.jdt.ls.decompiler, https://marketplace.visualstudio.com/items?itemName=dgileadi.java-decompiler
 ;; NOTE: `jdtls' settings: https://github.com/eclipse/eclipse.jdt.ls/blob/master/org.eclipse.jdt.ls.core/src/org/eclipse/jdt/ls/core/internal/preferences/Preferences.java
 ;; NOTE: Formatter settings:
@@ -26,17 +26,11 @@
 
 (defun jdtls-command-contact (&optional interactive project)
   (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar"))
-                     "-XX:+UseZGC"
-                     "-XX:+ZGenerational"
+                     ;; "-XX:+UseZGC"
+                     ;; "-XX:+ZGenerational"
                      "-XX:+UseStringDeduplication"))
          (jvm-args (mapcar (lambda (arg) (concat "--jvm-arg=" arg)) jvm-args))
-         ;; NOTE: mise alias
-         ;; [alias.java]
-         ;; lsp-server = "{java-tool-version}" # temurin-17 for example
-         (java-executable (concat "--java-executable="
-                                  (string-trim (shell-command-to-string "mise where java@lsp-server"))
-                                  "/bin/java"))
-         (contact (append `("jdtls" ,java-executable) jvm-args)))
+         (contact (append '("jdtls") jvm-args)))
     contact))
 
 ;; TODO: eglot does not support `workspace.workspaceEdit.resourceOperations' yet
@@ -46,15 +40,15 @@
   (defun jdtls-initialization-options ()
     `(:settings (:java (:autobuild (:enabled t)
                         :configuration (:runtimes [(:name "JavaSE-1.8"
-                                                    :path ,(string-trim (shell-command-to-string "mise where java@8")))
+                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_8_HOME")))
                                                    (:name "JavaSE-11"
-                                                    :path ,(string-trim (shell-command-to-string "mise where java@11")))
+                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_11_HOME")))
                                                    (:name "JavaSE-17"
-                                                    :path ,(string-trim (shell-command-to-string "mise where java@17")))
+                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_17_HOME")))
                                                    (:name "JavaSE-21"
-                                                    :path ,(string-trim (shell-command-to-string "mise where java@21")))
-                                                   (:name "JavaSE-22"
-                                                    :path ,(string-trim (shell-command-to-string "mise where java@22"))
+                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_21_HOME")))
+                                                   (:name "JavaSE-23"
+                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_23_HOME"))
                                                     :default t)])
                         :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
                                             :profile "GoogleStyle"))
