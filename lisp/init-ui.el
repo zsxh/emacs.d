@@ -139,8 +139,6 @@
      `(orderless-match-face-1 ((t :weight bold :foreground ,(doom-color 'magenta))))
      `(orderless-match-face-2 ((t :weight bold :foreground ,(doom-color 'green))))
      `(orderless-match-face-3 ((t :weight bold :foreground ,(doom-color 'yellow))))
-     ;; https://github.com/akermu/emacs-libvterm/issues/58#issuecomment-516950648
-     `(vterm-color-black ((t :background ,(doom-color 'base6))))
      `(corfu-current ((t :background ,(doom-color 'region)
                          :foreground ,(doom-color 'fg))))
      `(tab-bar-tab ((t :foreground ,(doom-color 'highlight)
