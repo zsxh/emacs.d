@@ -193,7 +193,6 @@
   (eldoc-add-command-completions "delete-char" "lispy-delete-backward" "puni-backward-delete-char"))
 
 ;;;;;;;;;;;;;; GnuPG and Auth Sources ;;;;;;;;;;;;;;
-;; TODO: gpg and auth-sources
 ;; NOTE: https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sources
 (setq epg-pinentry-mode 'loopback)
 ;; (setq epa-file-select-keys 0)
@@ -201,6 +200,13 @@
 ;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 ;; (epa-file-enable)
 ;; (add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
+
+;; age encryption support for Emacs
+(use-package age
+  :config
+  (setq age-default-recipient "~/.ssh/id_ed25519.pub"
+        age-default-identity "~/.ssh/id_ed25519"
+        auth-sources (cons "~/.authinfo.age" auth-sources)))
 
 ;;;;;;;;;;;;;; Auto Save ;;;;;;;;;;;;;;
 ;; NOTE: For MacOS, https://emacs-china.org/t/macos-save-silently-t/24086
