@@ -11,7 +11,7 @@
 ;;; Code:
 
 ;; NOTE: install python dev tools
-;; - python language server `pyright'
+;; - python language server `basedpyright'
 ;; - python linter `ruff'
 ;; - python formatter `black'
 
@@ -77,7 +77,7 @@
 
   (require 'eglot)
 
-  ;; https://microsoft.github.io/pyright/#/settings
+  ;; https://docs.basedpyright.com/latest/configuration/language-server-settings/
   (defun +python/workspace-configuration (&optional server)
     (if-let* ((venv-python-cmd (+python/locate-venv-python-cmd)))
         `(:python
