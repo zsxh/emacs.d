@@ -40,7 +40,8 @@
     (setq gptel-backend (gptel-make-openai "DeepSeek"
                           :key 'personal-deepseek-key
                           :stream t
-                          :models '(deepseek-chat)
+                          :models '(deepseek-chat
+                                    deepseek-reasoner)
                           :host "api.deepseek.com"))
     ;; defualt model
     (setq gptel-model 'deepseek-chat)))
@@ -49,37 +50,10 @@
   :ensure nil
   :commands (gptel-commit))
 
-;; https://github.com/s-kostyaev/ellama
-(use-package llm
-  :defer t)
-
-(use-package ellama
-  :commands (ellama-transient-main-menu)
-  :config
-  (setq ellama-session-auto-save t
-        ellama-sessions-directory (file-truename
-                                   (file-name-concat
-                                    user-emacs-directory
-                                    "cache"
-                                    "ellama-sessions")))
-  (require 'llm-openai)
-  (setopt ellama-providers
-          '(("deepseek" . (make-llm-openai-compatible
-                           :url "https://api.deepseek.com/v1/"
-                           :chat-model "deepseek-chat"
-                           :key personal-deepseek-key))
-            ("claude-3.5-haiku" . (make-llm-openai-compatible
-                                   :url "https://openrouter.ai/api/v1/"
-                                   :chat-model "anthropic/claude-3-5-haiku"
-                                   :key personal-openrouter-key))
-            ("claude-3.5-sonnet" . (make-llm-openai-compatible
-                                    :url "https://openrouter.ai/api/v1/"
-                                    :chat-model "anthropic/claude-3.5-sonnet"
-                                    :key personal-openrouter-key))))
-  (setopt ellama-provider (eval (cdar ellama-providers))))
-
-;; TODO: RAG [elisa](https://github.com/s-kostyaev/elisa)
-;; TODO: https://github.com/zbelial/eureka.el
+;; TODO: ai tools
+;; - RAG: https://github.com/s-kostyaev/elisa
+;; - ai assistant :https://github.com/zbelial/eureka.el
+;; - code fim: https://github.com/milanglacier/minuet-ai.el
 
 
 (provide 'init-ai)
