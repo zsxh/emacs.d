@@ -13,15 +13,7 @@
 ;; NOTE: How to send code block
 ;; https://zevlg.github.io/telega.el/#sending-ordinary-messages
 
-;; Install tdlib
-;; https://zevlg.github.io/telega.el/#building-tdlib
-;; $ git clone --depth 1 https://github.com/tdlib/td
-;; $ cd td
-;; $ mkdir -p build && cd build && cmake ../
-;; $ make -j8
-;; $ sudo make install
-;; `telega-server-libs-prefix'
-;; M-x `telega-server-build'
+;; Install `emacsPackages.telega' via nix to obtain `telega-server'
 (use-package telega
   :defer t
   :init
