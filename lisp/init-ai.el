@@ -29,23 +29,47 @@
   (setq gptel--known-backends nil)
 
   ;; OpenRouter
-  (gptel-make-openai "OpenRouter"
-    :host "openrouter.ai"
-    :endpoint "/api/v1/chat/completions"
-    :stream t
-    :key 'gptel-api-key
-    :models '(anthropic/claude-3-5-haiku
-              anthropic/claude-3.5-sonnet))
+  (defvar gptel--openrouter
+    (gptel-make-openai "OpenRouter"
+      :host "openrouter.ai"
+      :endpoint "/api/v1/chat/completions"
+      :stream t
+      :key 'gptel-api-key
+      :models '(anthropic/claude-3-5-haiku
+                anthropic/claude-3.5-sonnet)))
 
   ;; DeepSeek
-  (setq gptel-backend (gptel-make-openai "DeepSeek"
-                        :host "api.deepseek.com"
-                        :stream t
-                        :key 'gptel-api-key
-                        :models '(deepseek-chat
-                                  deepseek-reasoner)))
+  (defvar gptel--deepseek
+    (gptel-make-openai "DeepSeek"
+      :host "api.deepseek.com"
+      :stream t
+      :key 'gptel-api-key
+      :models '(deepseek-chat
+                deepseek-reasoner)))
+
+  ;; Siliconflow
+  (defvar gptel--siliconflow
+    (gptel-make-openai "Siliconflow"
+      :host "api.siliconflow.cn"
+      :stream t
+      :key 'gptel-api-key
+      :models '(deepseek-ai/DeepSeek-R1
+                deepseek-ai/DeepSeek-V3)))
+
+  ;; VolcEngine
+  (defvar gptel--volcengine
+    (gptel-make-openai "VolcEngine"
+      :host "ark.cn-beijing.volces.com"
+      :endpoint "/api/v3/chat/completions"
+      :stream t
+      :key 'gptel-api-key
+      :models '(ep-20250204215608-lx8sx ;; DeepSeek-R1
+                ep-20250204215631-zxmvf ;; DeepSeek-V3
+                )))
+
   ;; default model
-  (setq gptel-model 'deepseek-chat))
+  (setq gptel-backend gptel--deepseek
+        gptel-model 'deepseek-chat))
 
 (use-package gptel-commit
   :ensure nil
