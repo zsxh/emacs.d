@@ -198,6 +198,13 @@
       "k" 'evil-previous-line
       "m" 'man))
 
+  (with-eval-after-load 'tree-widget
+    (define-key tree-widget-button-keymap (kbd "TAB") nil)
+    (evil-define-key 'normal tree-widget-button-keymap
+      (kbd "TAB") 'widget-button-press
+      "j" 'widget-forward
+      "k" 'widget-backward))
+
   ;; (with-eval-after-load 'comint
   ;;   (evil-set-initial-state 'comint-mode 'normal))
 

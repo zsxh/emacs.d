@@ -128,8 +128,8 @@
      "gs" '(consult-eglot-symbols :which-key "workspace-symbols")
      ;; hierarchy
      "h" '(nil :which-key "hierarchy")
-     "hc" '(eglot-hierarchy-call-hierarchy :which-key "call-hierarchy")
-     "ht" '(eglot-hierarchy-type-hierarchy :which-key "type-hierarchy")
+     "hc" '(eglot-show-call-hierarchy :which-key "call-hierarchy")
+     "ht" '(eglot-show-type-hierarchy :which-key "type-hierarchy")
      ;; rename
      "R" '(eglot-rename :which-key "rename")
      ;; signature
@@ -137,10 +137,6 @@
 
 ;; https://github.com/mohkale/consult-eglot
 (use-package consult-eglot
-  :defer t)
-
-(use-package eglot-hierarchy
-  :vc (:url "https://github.com/dolmens/eglot-hierarchy")
   :defer t)
 
 ;; https://github.com/liushihao456/symbols-outline.el

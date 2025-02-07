@@ -21,7 +21,10 @@
   :config
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
         gptel-expert-commands t
-        gptel-log-level 'debug)
+        gptel-log-level 'debug
+        ;; I don't want a default system prompt
+        gptel--system-message nil
+        gptel--rewrite-directive nil)
 
   (add-hook 'gptel-mode-hook 'turn-on-visual-line-mode)
 
@@ -36,7 +39,8 @@
       :stream t
       :key 'gptel-api-key
       :models '(anthropic/claude-3-5-haiku
-                anthropic/claude-3.5-sonnet)))
+                anthropic/claude-3.5-sonnet
+                deepseek/deepseek-r1:free)))
 
   ;; DeepSeek
   (defvar gptel--deepseek
@@ -77,7 +81,7 @@
 
 ;; TODO: ai tools
 ;; - RAG: https://github.com/s-kostyaev/elisa
-;; - ai assistant :https://github.com/zbelial/eureka.el
+;; - ai assistant: https://github.com/zbelial/eureka.el
 ;; - code fim: https://github.com/milanglacier/minuet-ai.el
 
 
