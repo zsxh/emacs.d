@@ -111,7 +111,7 @@
                      (t 13)))
          (font (cond ((string-equal "SF Mono" font-name) (format "SF Mono-%d:weight=semi-bold" size))
                      (t (format "%s-%d" font-name size)))))
-    (set-frame-font font)))
+    (set-frame-font font nil t)))
 
 ;; Text Scale
 (use-package default-text-scale
