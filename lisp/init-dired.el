@@ -16,22 +16,15 @@
 (defun dirvish-override-dired-mode-maybe (&rest _)
   "Call `dirvish-override-dired-mode' only once."
   (unless dirvish-override-dired-p
-    ;; (message "debug: load dirvish")
     (setq dirvish-override-dired-p t)
-    (dirvish-override-dired-mode)))
+    (dirvish-override-dired-mode)
+    (dirvish-peek-mode)))
 
 (advice-run-once 'find-file :before #'dirvish-override-dired-mode-maybe)
 
 ;; https://github.com/alexluigit/dirvish
 (use-package dirvish
   :defer 10
-  :custom
-  (dirvish-time-format-string "%F %R")
-  (dirvish-attributes '(subtree-state nerd-icons file-size))
-  ;; (dirvish-attributes '(subtree-state nerd-icons file-size collapse))
-  (dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index)))
-  (dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4)))
-  (dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/"))
   :bind (:map dired-mode-map
          ("C-<return>" . 'dired-open-xdg)
          ("TAB" . 'dirvish-subtree-toggle)
@@ -53,6 +46,8 @@
          ([remap mode-line-other-buffer] . dirvish-other-buffer)
          ("." . dired-omit-mode) ;; toggle dotfiles
          )
+  :init
+  (defvar server-buffer-clients '())
   :config
   (require 'dirvish-vc nil t)
   (require 'dirvish-emerge nil t)
@@ -61,29 +56,35 @@
    :before (lambda (&rest _)
              (ignore-errors
                (require 'pdf-tools nil t))))
-  (setq dirvish-vc-state-face-alist
-        '((up-to-date . nil)
-          (edited . diff-changed)
-          (added . diff-added)
-          (removed . diff-removed)
-          (missing . vc-missing-state)
-          (needs-merge . dirvish-vc-needs-merge-face)
-          (conflict . vc-conflict-state)
-          (unlocked-changes . vc-locked-state)
-          (needs-update . vc-needs-update-state)
-          (ignored . nil)
-          (unregistered . dirvish-vc-unregistered-face)))
-  (setq dirvish-subtree-state-style 'nerd)
-  (setq dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
+
+  (setq dirvish-time-format-string "%F %R"
+        dirvish-attributes '(subtree-state nerd-icons file-size)
+        dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index))
+        dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4))
+        dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/")
+        dirvish-reuse-session t
+        ;; enable font lock in buffer preview
+        dirvish-preview-environment (delete '(delay-mode-hooks . t) dirvish-preview-environment)
+        dirvish-vc-state-face-alist '((up-to-date . nil)
+                                      (edited . diff-changed)
+                                      (added . diff-added)
+                                      (removed . diff-removed)
+                                      (missing . vc-missing-state)
+                                      (needs-merge . dirvish-vc-needs-merge-face)
+                                      (conflict . vc-conflict-state)
+                                      (unlocked-changes . vc-locked-state)
+                                      (needs-update . vc-needs-update-state)
+                                      (ignored . nil)
+                                      (unregistered . dirvish-vc-unregistered-face))
+        dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
                                 ("Documents" (extensions "pdf" "tex" "bib" "epub"))
                                 ("Video" (extensions "mp4" "mkv" "webm"))
                                 ("Pictures" (extensions "jpg" "png" "svg" "gif"))
                                 ("Audio" (extensions "mp3" "flac" "wav" "ape" "aac"))
                                 ("Archives" (extensions "gz" "rar" "zip"))))
+  (setopt dirvish-subtree-state-style 'nerd)
 
   (dirvish-override-dired-mode-maybe)
-  ;; (dirvish-override-dired-mode)
-  ;; (dirvish-peek-mode)
 
   (with-eval-after-load 'evil
     (evil-define-key 'normal dirvish-mode-map
@@ -92,7 +93,7 @@
   (dirvish-define-mode-line bar "doom-modeline bar"
     (when (bound-and-true-p doom-modeline-mode)
       (doom-modeline--bar)))
-  (advice-add 'dirvish--bar-image :override #'ignore)
+  (advice-add 'dirvish--mode-line-bar-img :override #'ignore)
 
   (dirvish-define-mode-line winum "`winum' indicator"
     (setq winum-auto-setup-mode-line nil)
@@ -278,32 +279,6 @@
   :config
   (setq fd-dired-pre-fd-args "-0 -c never -I"
         fd-dired-ls-option '("| xargs -0 ls -alhdN" . "-ld")))
-
-(with-eval-after-load 'dirvish
-  (defun dirvish--find-file-temporarily@advice (name)
-    "Open file NAME temporarily for preview."
-    (cl-letf (((symbol-function 'recentf-track-opened-file) #'ignore)
-              ((symbol-function 'undo-tree-save-history-from-hook) #'ignore)
-              ((symbol-function 'flycheck-mode-on-safe) #'ignore))
-      (let* ((vc-follow-symlinks t)
-             (vars (mapcar (pcase-lambda (`(,k . ,v))
-                             (list k v (default-value k) (symbol-value k)))
-                           dirvish-preview-environment))
-             (buf (unwind-protect (progn (pcase-dolist (`(,k ,v . ,_) vars)
-                                           (set-default k v) (set k v))
-                                         (find-file-noselect name 'nowarn))
-                    (pcase-dolist (`(,k ,_ ,d ,v) vars)
-                      (set-default k d) (set k v)))))
-        (cond ((ignore-errors (buffer-local-value 'so-long-detected-p buf))
-               (kill-buffer buf)
-               `(info . ,(format "File `%s' with long lines not previewed" name)))
-              (t
-               (with-current-buffer buf
-                 (font-lock-mode 1)
-                 (setq buffer-read-only t))
-               `(buffer . ,buf))))))
-
-  (advice-add 'dirvish--find-file-temporarily :override #'dirvish--find-file-temporarily@advice))
 
 
 (provide 'init-dired)
