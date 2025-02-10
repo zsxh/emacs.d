@@ -58,24 +58,13 @@
                (require 'pdf-tools nil t))))
 
   (setq dirvish-time-format-string "%F %R"
-        dirvish-attributes '(subtree-state nerd-icons file-size)
+        dirvish-attributes '(vc-state subtree-state nerd-icons git-msg file-time file-size)
         dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index))
         dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4))
         dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/")
         dirvish-reuse-session t
         ;; enable font lock in buffer preview
         dirvish-preview-environment (delete '(delay-mode-hooks . t) dirvish-preview-environment)
-        dirvish-vc-state-face-alist '((up-to-date . nil)
-                                      (edited . diff-changed)
-                                      (added . diff-added)
-                                      (removed . diff-removed)
-                                      (missing . vc-missing-state)
-                                      (needs-merge . dirvish-vc-needs-merge-face)
-                                      (conflict . vc-conflict-state)
-                                      (unlocked-changes . vc-locked-state)
-                                      (needs-update . vc-needs-update-state)
-                                      (ignored . nil)
-                                      (unregistered . dirvish-vc-unregistered-face))
         dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
                                 ("Documents" (extensions "pdf" "tex" "bib" "epub"))
                                 ("Video" (extensions "mp4" "mkv" "webm"))

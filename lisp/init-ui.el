@@ -148,7 +148,10 @@
                             :background ,(doom-color 'base0)
                             :weight ultra-bold
                             :underline t)))
-     '(pulse-highlight-start-face ((t :background "#51afef" :extend t))))))
+     '(pulse-highlight-start-face ((t :background "#51afef" :extend t)))
+     `(dirvish-vc-edited-state ((t :foreground ,(doom-color 'vc-modified))))
+     `(dirvish-vc-added-state ((t :foreground ,(doom-color 'vc-added))))
+     `(dirvish-vc-removed-state ((t :foreground ,(doom-color 'vc-deleted)))))))
 
 (advice-add 'load-theme :before #'+ui/disable-previous-theme)
 (advice-add 'load-theme :after #'+ui/custom-theme-faces)
