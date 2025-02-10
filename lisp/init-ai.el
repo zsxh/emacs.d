@@ -58,7 +58,9 @@
       :stream t
       :key 'gptel-api-key
       :models '(deepseek-ai/DeepSeek-R1
-                deepseek-ai/DeepSeek-V3)))
+                deepseek-ai/DeepSeek-V3
+                Pro/deepseek-ai/DeepSeek-R1
+                Pro/deepseek-ai/DeepSeek-V3)))
 
   ;; VolcEngine
   (defvar gptel--volcengine
