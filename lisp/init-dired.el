@@ -42,7 +42,7 @@
          ([remap dired-sort-toggle-or-edit] . dirvish-ls-switches-menu) ; "s"
          ([remap dired-do-copy] . dirvish-yank) ; "C", "P" copy
          ;; ("R". dired-do-rename) ; "R" rename
-         ("M" . dirvish-move)           ; "M" move
+         ("M" . dirvish-move) ; "M" move
          ([remap mode-line-other-buffer] . dirvish-other-buffer)
          ("." . dired-omit-mode) ;; toggle dotfiles
          )
@@ -115,12 +115,14 @@
                             'mode-line-inactive))
       " "))
 
-  (when (executable-find "exa")
-    (dirvish-define-preview exa (file)
-      "Use `exa' to generate directory preview."
+  (when (executable-find "eza")
+    (dirvish-define-preview eza (file)
+      "Use `eza' to generate directory preview."
+      :require ("eza") ; tell Dirvish to check if we have the executable
       (when (file-directory-p file) ; we only interest in directories here
-        `(shell . ("exa" "--color=always" "-al" ,file)))) ; use the output of `exa' command as preview
-    (add-to-list 'dirvish-preview-dispatchers 'exa)))
+        `(shell . ("eza" "-al" "--color=always" "--icons"
+                   "--group-directories-first" ,file))))
+    (add-to-list 'dirvish-preview-dispatchers 'eza)))
 
 (use-package dirvish-side
   :ensure dirvish
