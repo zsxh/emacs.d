@@ -17,11 +17,14 @@
   :config
   (setq magit-bury-buffer-function #'magit-restore-window-configuration
         magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1
+        magit-format-file-function #'magit-format-file-nerd-icons
         magit-define-global-key-bindings nil
         magit-diff-refine-hunk 'all
         magit-save-repository-buffers 'dontask)
+
   ;; cache user password when using http, https://stackoverflow.com/a/75298815
   (add-hook 'magit-process-find-password-functions 'magit-process-password-auth-source)
+
   ;; TIPS: keybindings "[" `magit-section-forward-sibling', "]" `magit-section-backward-sibling'
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit)
@@ -61,11 +64,6 @@
                    :lookup (lambda (selected candidates &rest _)
                              (magit-todos-jump-to-item
                               :item (consult--lookup-cdr selected candidates))))))
-
-(use-package magit-file-icons
-  :after magit
-  :config
-  (magit-file-icons-mode 1))
 
 (use-package diff-hl
   :init
