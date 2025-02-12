@@ -82,6 +82,22 @@
   :ensure nil
   :commands (gptel-commit))
 
+(use-package aidermacs
+  :vc (:url "https://github.com/MatthewZMD/aidermacs")
+  :bind ("C-c a" . aidermacs-transient-menu)
+  :config
+  (defun +aider/api-key-from-auth-source (host)
+    (when-let* ((auth-info (car (auth-source-search :host host)))
+                (secret (plist-get auth-info :secret)))
+      (if (functionp secret)
+          (encode-coding-string (funcall secret) 'utf-8)
+        secret)))
+  (setq aidermacs-args '("--model" "openrouter/google/gemini-2.0-flash-001"))
+  (setenv "OPENROUTER_API_KEY" (+aider/api-key-from-auth-source "openrouter.ai"))
+  (setenv "AIDER_AUTO_COMMITS" "False")
+  (setenv "AIDER_CHAT_LANGUAGE" "Chinese")
+  (setq aidermacs-backend 'vterm))
+
 ;; TODO: ai tools
 ;; - RAG: https://github.com/s-kostyaev/elisa
 ;; - ai assistant: https://github.com/zbelial/eureka.el

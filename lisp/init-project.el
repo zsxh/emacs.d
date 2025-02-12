@@ -23,14 +23,12 @@
   (run-at-time "07:00pm" (* 24 60 60) 'project-forget-zombie-projects)
 
   (defun +project/project-buffer-filter (buffer)
-    (let ((name (buffer-name buffer)))
+    (let ((name (buffer-name buffer))
+          (major-mode (with-current-buffer buffer major-mode)))
       (or (and (string-prefix-p "*" name)
-               (not (string-prefix-p "*eww*" name))
-               (not (string-prefix-p "*ein: http" name))
-               (not (string-prefix-p "*ein:notebooklist" name))
-               (not (string-prefix-p "*vterm:" name))
                (not (string-prefix-p "*cider" name))
-               (not (string-prefix-p "*Python" name)))
+               (not (eq major-mode 'vterm-mode))
+               (not (eq major-mode 'inferior-python-mode)))
           (string-match-p "magit.*:" name))))
 
   (if (boundp 'project-ignore-buffer-conditions)
