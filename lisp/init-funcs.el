@@ -382,6 +382,16 @@ behavior added."
   "Respect `major-mode-remap-alist', *-ts-mode for example."
   (alist-get mode major-mode-remap-alist mode))
 
+(defun +funcs/merge-plists (plist1 plist2)
+  "Merge two plists (PLIST1 and PLIST2). If a key exists in both plists,
+the value from PLIST2 will be used."
+  (let ((result plist1))
+    (while plist2
+      (let ((key (pop plist2))
+            (value (pop plist2)))
+        (setq result (plist-put result key value))))
+    result))
+
 
 (provide 'init-funcs)
 

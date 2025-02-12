@@ -166,6 +166,11 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 (use-package websocket
   :defer t)
 
+;; plz is an HTTP library for Emacs. It uses curl as a backend, which avoids
+;; some of the issues with using Emacs’s built-in url library .
+(use-package plz
+  :commands (plz))
+
 
 (provide 'init-web)
 

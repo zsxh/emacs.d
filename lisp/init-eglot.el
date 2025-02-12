@@ -167,6 +167,23 @@
 
 ;; TODO: https://codeberg.org/harald/eglot-supplements
 
+;; json/yaml/toml files metadata for lsp servers.
+(defvar schemastore-url "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json")
+(defvar schemastore-file "~/.emacs.d/cache/lsp-servers/schemastore/catalog.json")
+(defun +eglot/fetch-json-schema ()
+  "Fetch json schema from \"https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json\"."
+  (interactive)
+  (let* ((url schemastore-url)
+         (buffer (plz 'get url :as 'buffer))
+         (file-path schemastore-file))
+    (let ((dir (file-name-directory file-path)))
+      (unless (file-exists-p dir)
+        (make-directory dir t)))
+    (with-temp-file file-path
+      (erase-buffer)
+      (insert-buffer-substring buffer))
+    (message "Successfully fetched schemastore json schema to %s" file-path)))
+
 
 (provide 'init-eglot)
 

@@ -1,3 +1,4 @@
+;; init-file-modes.el --- file modes	-*- lexical-binding: t -*-
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
 
@@ -46,22 +47,36 @@
 
 ;; Yaml
 (use-package yaml-mode
-  :defer t
-  :hook (yaml-mode . (lambda ()
-                       (setq-local completion-at-point-functions
-                                   '(cape-dabbrev cape-file cape-keyword cape-abbrev)))))
+  :defer t)
 
-(with-eval-after-load 'yaml-ts-mode
-  (add-hook 'yaml-ts-mode-hook
-            (lambda ()
-              (setq-local completion-at-point-functions
-                          '(cape-dabbrev cape-file cape-keyword cape-abbrev)))))
+(use-package yaml-ts-mode
+  :ensure nil
+  :defer t
+  :config
+  (with-eval-after-load 'eglot
+    (when-let* ((_ (file-exists-p schemastore-file))
+                (schemas (with-temp-buffer
+                           (insert-file-contents schemastore-file)
+                           (jsonrpc--json-read))))
+      (cl-defmethod +eglot/workspace-configuration (server &context (major-mode yaml-ts-mode))
+        `(:yaml
+          (:schemas ,schemas))))))
 
 ;; Json
 (use-package json-ts-mode
   :ensure nil
   :defer t
   :config
+  (with-eval-after-load 'eglot
+    (when-let* ((_ (file-exists-p schemastore-file))
+                (schemas (with-temp-buffer
+                           (insert-file-contents schemastore-file)
+                           (jsonrpc--json-read))))
+      ;; FIXME: `eglot--workspace-configuration-plist' set wrong major mode
+      (cl-defmethod +eglot/workspace-configuration (server &context (major-mode js-json-mode))
+        `(:json
+          (:validate (:enable t)
+           :schemas ,schemas)))))
   (+funcs/major-mode-leader-keys json-ts-mode-map
                                  "j" '(counsel-jq :which-key "counsel-jq")
                                  "p" '(json-pretty-print-buffer :which-key "pretty-print")))
