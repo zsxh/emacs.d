@@ -41,9 +41,9 @@
   :defer t)
 
 ;;  Use nerd-icons for archive-mode and tar-mode
-(use-package nerd-icons-archive
-  :vc (:url "https://github.com/abougouffa/nerd-icons-archive")
-  :hook (after-init . nerd-icons-archive-mode))
+(use-package nerd-icons-multimodal
+  :vc (:url "https://github.com/abougouffa/nerd-icons-multimodal")
+  :hook ((archive-mode tar-mode) . nerd-icons-multimodal-mode))
 
 ;; Theme
 (use-package doom-themes

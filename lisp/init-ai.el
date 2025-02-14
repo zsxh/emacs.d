@@ -98,6 +98,10 @@
   (setenv "AIDER_CHAT_LANGUAGE" "Chinese")
   (setq aidermacs-backend 'vterm))
 
+(use-package gptel-aibo
+  :vc (:url "https://github.com/dolmens/gptel-aibo")
+  :defer t)
+
 ;; TODO: ai tools
 ;; - RAG: https://github.com/s-kostyaev/elisa
 ;; - ai assistant: https://github.com/zbelial/eureka.el
