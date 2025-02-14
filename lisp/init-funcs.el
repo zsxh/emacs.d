@@ -293,8 +293,7 @@ Version 2018-06-18"
 
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
-  (cond ((and (or (not (fboundp 'tramp-tramp-file-p))
-                  (not (tramp-tramp-file-p default-directory)))
+  (cond ((and (not (file-remote-p default-directory))
               (+project/root))
          (call-interactively 'project-switch-to-buffer))
         (t

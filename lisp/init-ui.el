@@ -97,7 +97,8 @@
          (width-mm (nth 2 mm-size)) ; Millimeter
          (font-name (or
                      ;; custom font
-                     (and IS-LINUX (member "SF Mono" (font-family-list)) "SF Mono")
+                     (when (member "JetBrainsMono Nerd Font" (font-family-list))
+                       "JetBrainsMono Nerd Font")
                      ;; default font
                      (car
                       (string-split
@@ -109,8 +110,7 @@
          (size (cond ((>= width-px 2560) 17)
                      ((>= width-px 1512) 15)
                      (t 13)))
-         (font (cond ((string-equal "SF Mono" font-name) (format "SF Mono-%d:weight=semi-bold" size))
-                     (t (format "%s-%d" font-name size)))))
+         (font (format "%s-%d" font-name size)))
     (set-frame-font font nil t)))
 
 ;; Text Scale
@@ -160,7 +160,8 @@
   "Custom behaviours for new frames."
   (with-selected-frame frame
     (ignore-errors (load-theme current-theme t))
-    (ignore-errors (+ui/adjust-font-size))))
+    (when (display-graphic-p)
+      (ignore-errors (+ui/adjust-font-size)))))
 
 ;; Set config now
 (with-eval-after-load 'doom-themes

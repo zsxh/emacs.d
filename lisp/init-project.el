@@ -30,18 +30,11 @@
                (not (eq major-mode 'vterm-mode))
                (not (eq major-mode 'inferior-python-mode)))
           (string-match-p "magit.*:" name))))
-
-  (if (boundp 'project-ignore-buffer-conditions)
-      (setq project-ignore-buffer-conditions '(+project/project-buffer-filter))
-    (define-advice project-buffers (:around (orig-fn project) advice)
-      (cl-remove-if
-       (lambda (buffer) (+project/project-buffer-filter buffer))
-       (funcall orig-fn project))))
-
-  ;; (setq my/project-local-identifier '(".projectile" ".project" "go.mod" "Cargo.toml"
+  (setq project-ignore-buffer-conditions '(+project/project-buffer-filter))
+  ;; (defvar my/project-local-identifier '(".projectile" ".project" "go.mod" "Cargo.toml"
   ;;                                     "project.clj" "pom.xml" "package.json"
   ;;                                     "Makefile" "README.org" "README.md"))
-  (setq my/project-local-identifier '(".projectile" "pyproject.toml"))
+  (defvar my/project-local-identifier '(".projectile" "pyproject.toml"))
 
   (defun my/project-try-local (dir)
     "Determine if DIR is a non-VC project."
