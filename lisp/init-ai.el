@@ -83,17 +83,15 @@
   :commands (gptel-commit))
 
 (use-package aidermacs
-  :vc (:url "https://github.com/MatthewZMD/aidermacs")
+  :vc (:url "https://github.com/MatthewZMD/aidermacs"
+       :ignored-files
+       "aidermacs-doom.el"
+       "aidermacs-helm.el")
   :bind ("C-c a" . aidermacs-transient-menu)
   :config
-  (defun +aider/api-key-from-auth-source (host)
-    (when-let* ((auth-info (car (auth-source-search :host host)))
-                (secret (plist-get auth-info :secret)))
-      (if (functionp secret)
-          (encode-coding-string (funcall secret) 'utf-8)
-        secret)))
-  (setq aidermacs-args '("--model" "openrouter/google/gemini-2.0-flash-001"))
-  (setenv "OPENROUTER_API_KEY" (+aider/api-key-from-auth-source "openrouter.ai"))
+  (setq aidermacs-extra-args '("--model" "openrouter/google/gemini-2.0-flash-001"))
+  (setenv "DEEPSEEK_API_KEY" (auth-source-pick-first-password :host "api.deepseek.com"))
+  (setenv "OPENROUTER_API_KEY" (auth-source-pick-first-password :host "openrouter.ai"))
   (setenv "AIDER_AUTO_COMMITS" "False")
   (setenv "AIDER_CHAT_LANGUAGE" "Chinese")
   (setq aidermacs-backend 'vterm))
