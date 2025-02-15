@@ -103,8 +103,7 @@
   (setenv "AIDER_AUTO_COMMITS" "False") ;; Disable auto commit of LLM changes
   (setenv "AIDER_CHAT_LANGUAGE" "Chinese") ;; Specify the language to use in the chat
 
-  (setq aidermacs-backend 'vterm
-        aidermacs-auto-commits t))
+  (setq aidermacs-backend 'vterm))
 
 (use-package gptel-aibo
   :vc (:url "https://github.com/dolmens/gptel-aibo")
