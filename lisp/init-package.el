@@ -38,23 +38,23 @@
                (proto (if no-ssl "http" "https")))
           (pcase archives
             ('melpa
-             `(,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))
-               ,(cons "nongnu" (concat proto "://elpa.nongnu.org/nongnu/"))
-               ,(cons "melpa" (concat proto "://melpa.org/packages/"))))
+             `(,(cons "melpa" (concat proto "://melpa.org/packages/"))
+               ,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))
+               ,(cons "nongnu" (concat proto "://elpa.nongnu.org/nongnu/"))))
             ('melpa-mirror
-             `(,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))
-               ,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/"))))
+             `(,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/"))
+               ,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))))
             ('emacs-china
-             `(,(cons "gnu-cn" (concat proto "://elpa.emacs-china.org/gnu/"))
-               ,(cons "melpa-cn" (concat proto "://elpa.emacs-china.org/melpa/"))))
+             `(,(cons "melpa-cn" (concat proto "://elpa.emacs-china.org/melpa/"))
+               ,(cons "gnu-cn" (concat proto "://elpa.emacs-china.org/gnu/"))))
             ('tencent
-             `(,(cons "gnu-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/gnu/"))
-               ,(cons "melpa-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/melpa/"))))
+             `(,(cons "melpa-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/melpa/"))
+               ,(cons "gnu-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/gnu/"))))
             ('tuna
              ;; https://mirrors.tuna.tsinghua.edu.cn/help/elpa/
-             `(,(cons "gnu-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
-               ,(cons "nongnu" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/"))
-               ,(cons "melpa-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+             `(,(cons "melpa-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))
+               ,(cons "gnu-cn" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+               ,(cons "nongnu" (concat proto "://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/"))))
             (archives
              (error "Unknown archives: `%s'" archives))))))
 

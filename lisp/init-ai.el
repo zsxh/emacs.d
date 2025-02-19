@@ -22,6 +22,7 @@
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
         gptel-expert-commands t
         gptel-log-level 'debug
+        gptel-temperature 0.6
         ;; I don't want a default system prompt
         gptel--system-message nil
         gptel--rewrite-directive nil)
