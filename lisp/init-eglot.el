@@ -164,8 +164,6 @@
   :config
   (eglot-inactive-regions-mode 1))
 
-;; TODO: https://codeberg.org/harald/eglot-supplements
-
 ;; json/yaml/toml files metadata for lsp servers.
 (defvar schemastore-url "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json")
 (defvar schemastore-file "~/.emacs.d/cache/lsp-servers/schemastore/catalog.json")

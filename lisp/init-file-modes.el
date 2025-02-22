@@ -104,12 +104,6 @@
   :config
   (setq pdf-view-restore-filename (locate-user-emacs-file "cache/.pdf-view-restore")))
 
-;; LaTeX
-;;
-;; TODO: https://github.com/dandavison/xenops
-;; NOTE: https://karthinks.com/software/latex-input-for-impatient-scholars/
-;; NOTE: karthinks Fast, Async LaTeX Previews https://www.youtube.com/watch?v=n-AfvuV-bYo
-
 ;; google protobuf languages
 (use-package protobuf-mode
   :defer t)
