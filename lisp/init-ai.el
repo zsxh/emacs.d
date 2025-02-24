@@ -107,7 +107,6 @@
   (setq aidermacs-backend 'vterm))
 
 (use-package gptel-aibo
-  :vc (:url "https://github.com/dolmens/gptel-aibo")
   :defer t
   :bind ((:map gptel-aibo-complete-mode-map
           ("C-c i" . gptel-aibo-complete-at-point))))

@@ -16,7 +16,7 @@
   :hook (after-init . tab-bar-mode)
   :init
   (setopt tab-bar-show 1
-          ;; press <super>-[num] select hint num tab
+          ;; NOTE: press <super>-[num] select hint num tab
           tab-bar-select-tab-modifiers '(super))
   (setq tab-bar-new-tab-choice "*scratch*"
         tab-bar-auto-width nil
@@ -28,12 +28,9 @@
                 (read-from-minibuffer
                  "New Tab Name(*scratch*): "
                  nil nil nil nil (buffer-name))))
-  (let* ((tab-explicit-name (> (length name) 0))
-         (tab-name (if tab-explicit-name
-                       name
-                     "*scratch*")))
-    (tab-new)
-    (tab-rename tab-name)))
+  (tab-new)
+  (if (> (length name) 0)
+      (tab-rename name)))
 
 ;; Buffer Tab
 (use-package tab-line

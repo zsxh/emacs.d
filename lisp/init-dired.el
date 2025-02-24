@@ -62,7 +62,7 @@
         dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index))
         dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4))
         dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/")
-        dirvish-reuse-session t
+        dirvish-reuse-session 'open
         ;; enable font lock in buffer preview
         dirvish-preview-environment (delete '(delay-mode-hooks . t) dirvish-preview-environment)
         dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
