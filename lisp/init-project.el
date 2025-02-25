@@ -28,9 +28,13 @@
       (or (and (string-prefix-p "*" name)
                (not (string-prefix-p "*cider" name))
                (not (eq major-mode 'vterm-mode))
-               (not (eq major-mode 'inferior-python-mode)))
+               (not (eq major-mode 'inferior-python-mode))
+               (not (with-current-buffer buffer (bound-and-true-p gptel-mode))))
+          (string-prefix-p " " name)
           (string-match-p "magit.*:" name))))
+
   (setq project-ignore-buffer-conditions '(+project/project-buffer-filter))
+
   ;; (defvar my/project-local-identifier '(".projectile" ".project" "go.mod" "Cargo.toml"
   ;;                                     "project.clj" "pom.xml" "package.json"
   ;;                                     "Makefile" "README.org" "README.md"))

@@ -122,9 +122,31 @@
   (setq consult-preview-key 'any
         consult-async-min-input 2
         consult-line-start-from-top t
-        consult-buffer-sources '(consult--source-hidden-buffer consult--source-modified-buffer consult--source-buffer))
+        consult-buffer-sources '(consult--source-hidden-buffer consult--source-modified-buffer consult--source-buffer)
+        consult-project-buffer-sources '(+minibuffer/consult--source-project-buffer))
+
   ;; customize `consult--customize-alist'
-  (consult-customize consult-theme :preview-key '(:debounce 0.5 any)))
+  (consult-customize consult-theme :preview-key '(:debounce 0.5 any))
+
+  ;; custom project buffer source
+  (defvar +minibuffer/consult--source-project-buffer
+    `(:name "Project Buffer"
+      :narrow ?b
+      :category buffer
+      :face consult-buffer
+      :history buffer-name-history
+      :state ,#'consult--buffer-state
+      :enabled ,(lambda () consult-project-function)
+      :items
+      ,(lambda ()
+         (let* ((bufs (project-buffers (project-current t)))
+                (filtered-bufs (cl-remove-if
+                                (lambda (buffer)
+                                  (project--buffer-check buffer project-ignore-buffer-conditions))
+                                bufs))
+                (buffer-pairs (mapcar (lambda (buffer) (cons (buffer-name buffer) buffer)) filtered-bufs)))
+           buffer-pairs)))
+    "Project buffer source for `consult-buffer'."))
 
 ;; Navigate the Xref stack with Consult.
 (use-package consult-xref-stack

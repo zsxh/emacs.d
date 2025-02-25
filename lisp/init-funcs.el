@@ -291,13 +291,23 @@ Version 2018-06-18"
   (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
   (advice-add symbol where function props))
 
+(defun +funcs/switch-to-buffer ()
+  (interactive)
+  (if (functionp 'consult-buffer)
+      (call-interactively 'consult-buffer)
+    (call-interactively 'switch-to-buffer)))
+
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
   (cond ((and (not (file-remote-p default-directory))
               (+project/root))
-         (call-interactively 'project-switch-to-buffer))
+         (if (functionp 'consult-project-buffer)
+             (call-interactively 'consult-project-buffer)
+           (call-interactively 'project-switch-to-buffer)))
         (t
-         (call-interactively 'switch-to-buffer))))
+         (if (functionp 'consult-buffer)
+             (call-interactively 'consult-buffer)
+           (call-interactively 'switch-to-buffer)))))
 
 (defun +funcs/toggle-maximize-buffer ()
   "Toggle Maximize buffer"
