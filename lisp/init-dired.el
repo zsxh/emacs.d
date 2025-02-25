@@ -66,12 +66,15 @@
         ;; enable font lock in buffer preview
         dirvish-preview-environment (delete '(delay-mode-hooks . t) dirvish-preview-environment)
         dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
+                                ("Directories" (predicate . directories))
                                 ("Documents" (extensions "pdf" "tex" "bib" "epub"))
                                 ("Video" (extensions "mp4" "mkv" "webm"))
                                 ("Pictures" (extensions "jpg" "png" "svg" "gif"))
                                 ("Audio" (extensions "mp3" "flac" "wav" "ape" "aac"))
-                                ("Archives" (extensions "gz" "rar" "zip"))))
+                                ("Archives" (extensions "gz" "rar" "zip"))
+                                ("Files" (predicate . files))))
   (setopt dirvish-subtree-state-style 'nerd)
+  ;; (add-hook 'dirvish-setup-hook #'dirvish-emerge-mode)
 
   (dirvish-override-dired-mode-maybe)
 

@@ -40,7 +40,7 @@
       :stream t
       :key 'gptel-api-key
       :models '(anthropic/claude-3-5-haiku
-                anthropic/claude-3.5-sonnet
+                anthropic/claude-3.7-sonnet
                 deepseek/deepseek-r1:free
                 google/gemini-2.0-flash-001)))
 
