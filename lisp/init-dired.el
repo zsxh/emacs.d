@@ -63,8 +63,6 @@
         dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4))
         dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/")
         dirvish-reuse-session 'open
-        ;; enable font lock in buffer preview
-        dirvish-preview-environment (delete '(delay-mode-hooks . t) dirvish-preview-environment)
         dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
                                 ("Directories" (predicate . directories))
                                 ("Documents" (extensions "pdf" "tex" "bib" "epub"))
