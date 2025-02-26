@@ -20,7 +20,9 @@
   (setq show-paren-mode nil
         show-paren-when-point-inside-paren t
         show-paren-when-point-in-periphery t
-        show-paren-delay 0.2))
+        show-paren-delay 0.2
+        blink-matching-paren-highlight-offscreen t
+        show-paren-context-when-offscreen 'child-frame))
 
 ;; Highlight Symbol
 (use-package symbol-overlay
