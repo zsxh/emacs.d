@@ -61,7 +61,7 @@
         dirvish-attributes '(vc-state subtree-state nerd-icons git-msg file-time file-size)
         dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index))
         dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4))
-        dirvish-cache-dir (locate-user-emacs-file "cache/dirvish/")
+        dirvish-cache-dir (expand-file-name (locate-user-emacs-file "cache/dirvish/"))
         dirvish-reuse-session 'open
         dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
                                 ("Directories" (predicate . directories))
@@ -105,6 +105,13 @@
                             'mode-line-inactive))
       " "))
 
+  (when (executable-find "pdftoppm")
+    ;; Dirvish provided an alternative PDF preview dispatcher pdf-preface which
+    ;; generates preface image for pdf files and use those preface images as the preview.
+    ;; This allows the user to preview big pdf files in a non-blocking fashion.
+    (setq dirvish-preview-dispatchers
+          (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers)))
+
   (when (executable-find "eza")
     (dirvish-define-preview eza (file)
       "Use `eza' to generate directory preview."
@@ -112,7 +119,6 @@
       (when (file-directory-p file) ; we only interest in directories here
         `(shell . ("eza" "-al" "--color=always" "--icons"
                    "--group-directories-first" ,file))))
-
     (setq dirvish-preview-dispatchers
           (cl-substitute 'eza 'dired dirvish-preview-dispatchers))))
 
