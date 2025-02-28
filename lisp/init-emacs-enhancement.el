@@ -65,12 +65,10 @@
   :custom
   (treesit-auto-install 'prompt)
   :config
+  ;; TODO: enable `markdown-ts-mode'
+  (delete 'markdown treesit-auto-langs)
   ;; auto add to `auto-mode-alist' if `*-ts-mode' exists
-  (treesit-auto-add-to-auto-mode-alist
-   (seq-map #'treesit-auto-recipe-lang
-            (seq-filter
-             (lambda (r) (functionp (treesit-auto-recipe-ts-mode r)))
-             treesit-auto-recipe-list)))
+  (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode)
   ;; Make org src block respect `major-mode-remap-alist'
   (add-hook 'org-mode-hook #'treesit-auto--set-major-remap)
