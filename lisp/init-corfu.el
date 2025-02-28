@@ -27,7 +27,7 @@
   :config
   (setq corfu-auto t
         corfu-auto-prefix 1
-        corfu-auto-delay 0.1
+        corfu-auto-delay 0.02
         corfu-on-exact-match nil
         corfu-preview-current nil
         corfu-popupinfo-delay '(1.0 . 0.5))
