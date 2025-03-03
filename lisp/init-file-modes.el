@@ -21,7 +21,7 @@
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-ts-mode))
     '(:nixd
       (:nixpkgs (:expr "import <nixpkgs> { }")
-       :formatting (:command ["alejandra"])))))
+       :formatting (:command ["nixfmt"])))))
 
 ;; Lua
 (use-package lua-ts-mode

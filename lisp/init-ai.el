@@ -85,10 +85,7 @@
   :commands (gptel-commit))
 
 (use-package aidermacs
-  :vc (:url "https://github.com/MatthewZMD/aidermacs"
-       :ignored-files
-       "aidermacs-doom.el"
-       "aidermacs-helm.el")
+  :vc (:url "https://github.com/MatthewZMD/aidermacs")
   :bind ("C-c a" . aidermacs-transient-menu)
   :config
   ;; Code mode by default
