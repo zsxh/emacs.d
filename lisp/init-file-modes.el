@@ -33,7 +33,7 @@
 (use-package markdown-mode
   :defer t
   :config
-  (setq markdown-fontify-code-blocks-natively t)
+  (setq-default markdown-fontify-code-blocks-natively t)
   (+funcs/major-mode-leader-keys
    markdown-mode-map
    "'" '(markdown-edit-code-block :which-key "edit-code-block")
