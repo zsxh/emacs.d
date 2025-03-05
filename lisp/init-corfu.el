@@ -43,6 +43,7 @@
   :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 ;; Add extensions
+(use-package company :defer t)          ;; provide Company backends for Cape
 (use-package cape
   :init
   ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)

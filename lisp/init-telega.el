@@ -22,6 +22,10 @@
   ;; (require 'telega-bridge-bot)
   (require 'telega-transient nil t)
 
+  ;; Highlight code blocks inside messages
+  (require 'telega-mnz)
+  (add-hook 'telega-load-hook 'global-telega-mnz-mode)
+
   (setq telega-proxies (list `(:server ,personal-proxy-http-host :port ,personal-proxy-http-port :enable nil :type (:@type "proxyTypeHttp"))
                              `(:server ,personal-proxy-http-host :port ,personal-proxy-socks5-port :enable t :type (:@type "proxyTypeSocks5")))
         telega-translate-to-language-by-default "zh"
@@ -54,7 +58,35 @@
     (define-key telega-chat-button-map (kbd "h") nil)
     (with-eval-after-load 'evil
       (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
-      (define-key telega-msg-button-map (kbd "SPC") nil))))
+      (define-key telega-msg-button-map (kbd "SPC") nil)))
+
+  (with-eval-after-load 'telega-company
+    (advice-add #'telega-company-botcmd :override
+                (lambda (command &optional arg &rest _ignored)
+                  (interactive (list 'interactive))
+                  (cl-case command
+                    (interactive (company-begin-backend 'telega-company-botcmd))
+                    (require-match 'never)
+                    (sorted t)
+                    (prefix
+                     (telega-company-grab-botcmd))
+                    (candidates
+                     (all-completions arg (telega-company--bot-commands)))
+                    (annotation
+                     (get-text-property 0 'telega-annotation arg))))))
+
+  ;; Completing input in chatbuf
+  ;; https://zevlg.github.io/telega.el/#completing-input-in-chatbuf
+  (when (require 'company nil t)
+    (defun +telega/completion-setup ()
+      (setq-local completion-at-point-functions (mapcar #'cape-company-to-capf telega-company-backends))
+      (corfu-mode 1))
+    (add-hook 'telega-chat-mode-hook #'+telega/completion-setup))
+
+  ;; `telega-mnz-attach-region-as-code'
+  (+funcs/major-mode-leader-keys
+   telega-chat-mode-map
+   "c" '(telega-mnz-chatbuf-attach-code :which-key "telega-mnz-chatbuf-attach-code")))
 
 
 (provide 'init-telega)
