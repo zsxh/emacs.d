@@ -15,7 +15,6 @@
 
 ;; Rss reader
 ;; https://github.com/skeeto/elfeed
-;; TODO: try emacs built-in `newsticker'
 (use-package elfeed
   :commands elfeed
   :config

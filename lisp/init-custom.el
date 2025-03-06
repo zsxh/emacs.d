@@ -28,12 +28,12 @@
           (const :tag "Tencent" tencent)
           (const :tag "Tuna" tuna)))
 
-(defcustom personal-gui-theme-day 'doom-solarized-light
+(defcustom personal-gui-theme-day 'doom-tomorrow-day
   "Customize GUI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
 Check https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)
 
-(defcustom personal-gui-theme-night 'doom-solarized-dark
+(defcustom personal-gui-theme-night 'doom-one
   "Customize GUI with doom-themes, \"doom-one\", \"doom-nord-light\" for example.
 Check https://github.com/hlissner/emacs-doom-themes"
   :type 'symbol)
@@ -45,7 +45,7 @@ Check https://github.com/hlissner/emacs-doom-themes"
   "Random pick GUI theme."
   :type 'boolean)
 
-(defcustom personal-light-gui-themes '(doom-one-light doom-solarized-light)
+(defcustom personal-light-gui-themes '(doom-one-light doom-solarized-light doom-tomorrow-day)
   "Random light themes"
   :type '(repeat symbol))
 
@@ -75,7 +75,7 @@ Check https://github.com/hlissner/emacs-doom-themes"
           (const :tag "Max" max)
           (const :tag "Fullscreen" fullscreen)))
 
-(defcustom personal-shell-executable "/bin/zsh"
+(defcustom personal-shell-executable (executable-find "zsh")
   "Shell used in `term' and `ansi-term'."
   :type 'string)
 

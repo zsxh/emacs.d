@@ -204,12 +204,23 @@
 ;; generate user key manually via `ssh-keygen -t ed25519 -a 256`
 (use-package age
   :config
-  ;; FIXME: age.el has no permission to read host key
   (setq age-default-recipient '("~/.ssh/id_ed25519.pub")
-        ;; age-default-recipient '("~/.ssh/id_ed25519.pub" "/etc/ssh/ssh_host_ed25519_key.pub")
         age-default-identity '("~/.ssh/id_ed25519")
-        ;; age-default-identity '("~/.ssh/id_ed25519" "/etc/ssh/ssh_host_ed25519_key")
-        auth-sources (cons "~/.authinfo.age" auth-sources)))
+        auth-sources (cons "~/.authinfo.age" auth-sources))
+
+  (advice-add
+   'age-file-find-file-hook
+   :override
+   (lambda ()
+     "Check if 'secrets.nix' exists in the current buffer's directory.
+If it exists, set the current buffer to read-only."
+     (when-let* (buffer-file-name
+                 (age-file-p (string-match age-file-name-regexp buffer-file-name))
+                 (secrets-path-p (file-exists-p (expand-file-name "secrets.nix" default-directory))))
+       (setq buffer-read-only t)
+       (message
+        "\"secrets.nix\" found, %s set to read-only. Use \"agenix\" to edit this file."
+        (buffer-name))))))
 
 ;;;;;;;;;;;;;; Auto Save ;;;;;;;;;;;;;;
 ;; NOTE: For MacOS, https://emacs-china.org/t/macos-save-silently-t/24086

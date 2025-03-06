@@ -43,7 +43,9 @@
                 anthropic/claude-3.7-sonnet
                 deepseek/deepseek-r1:free
                 google/gemini-2.0-flash-lite-001
-                google/gemini-2.0-flash-001)))
+                google/gemini-2.0-flash-001
+                qwen/qwq-32b
+                qwen/qwq-32b:free)))
 
   ;; DeepSeek
   (defvar gptel--deepseek
@@ -63,7 +65,8 @@
       :models '(deepseek-ai/DeepSeek-R1
                 deepseek-ai/DeepSeek-V3
                 Pro/deepseek-ai/DeepSeek-R1
-                Pro/deepseek-ai/DeepSeek-V3)))
+                Pro/deepseek-ai/DeepSeek-V3
+                Qwen/QwQ-32B)))
 
   ;; VolcEngine
   (defvar gptel--volcengine
