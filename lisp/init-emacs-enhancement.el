@@ -199,11 +199,16 @@
 ;; (epa-file-enable)
 ;; (add-hook 'kill-emacs-hook (lambda () (shell-command "pkill gpg-agent")))
 
-;; age encryption support for Emacs
+;; age encryption support for Emacs,
+;; generate host key manually via `sudo ssh-keygen -A`
+;; generate user key manually via `ssh-keygen -t ed25519 -a 256`
 (use-package age
   :config
-  (setq age-default-recipient "~/.ssh/id_ed25519.pub"
-        age-default-identity "~/.ssh/id_ed25519"
+  ;; FIXME: age.el has no permission to read host key
+  (setq age-default-recipient '("~/.ssh/id_ed25519.pub")
+        ;; age-default-recipient '("~/.ssh/id_ed25519.pub" "/etc/ssh/ssh_host_ed25519_key.pub")
+        age-default-identity '("~/.ssh/id_ed25519")
+        ;; age-default-identity '("~/.ssh/id_ed25519" "/etc/ssh/ssh_host_ed25519_key")
         auth-sources (cons "~/.authinfo.age" auth-sources)))
 
 ;;;;;;;;;;;;;; Auto Save ;;;;;;;;;;;;;;
