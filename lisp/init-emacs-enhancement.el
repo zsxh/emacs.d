@@ -208,19 +208,41 @@
         age-default-identity '("~/.ssh/id_ed25519")
         auth-sources (cons "~/.authinfo.age" auth-sources))
 
+  (defun +age/get-agenix-public-keys ()
+    "Retrieve the `publicKeys` value corresponding to the current file name from `secrets.nix`
+and return the parsed list object.
+   If the JSON data is invalid, return nil."
+    (interactive)
+    (let* ((current-file (file-name-nondirectory buffer-file-name))
+           (secrets-file (expand-file-name "secrets.nix" (file-name-directory buffer-file-name)))
+           (json (shell-command-to-string
+                  (format "nix-instantiate --eval --json --expr '(import \"%s\").\"%s\".publicKeys'"
+                          secrets-file current-file)))
+           (public-keys (condition-case nil
+                            (json-parse-string json :array-type 'list)
+                          (error nil))))
+      (when age-debug
+        (message "PublicKeys for %s: %s" current-file public-keys))
+      public-keys))
+
   (advice-add
    'age-file-find-file-hook
    :override
    (lambda ()
      "Check if 'secrets.nix' exists in the current buffer's directory.
-If it exists, set the current buffer to read-only."
+If it exists and file public keys found, set corresponding local `age-default-recipient',
+otherwise  set the current buffer to read-only."
      (when-let* (buffer-file-name
                  (age-file-p (string-match age-file-name-regexp buffer-file-name))
                  (secrets-path-p (file-exists-p (expand-file-name "secrets.nix" default-directory))))
-       (setq buffer-read-only t)
-       (message
-        "\"secrets.nix\" found, %s set to read-only. Use \"agenix\" to edit this file."
-        (buffer-name))))))
+       (if-let* ((_ (executable-find "nix-instantiate"))
+                 (public-keys (+age/get-agenix-public-keys)))
+           (progn
+             (setq-local age-default-recipient public-keys))
+         (setq buffer-read-only t)
+         (message
+          "%s publicKeys not found, buffer set to read-only. Use \"agenix\" to edit this file."
+          (buffer-name)))))))
 
 ;;;;;;;;;;;;;; Auto Save ;;;;;;;;;;;;;;
 ;; NOTE: For MacOS, https://emacs-china.org/t/macos-save-silently-t/24086
