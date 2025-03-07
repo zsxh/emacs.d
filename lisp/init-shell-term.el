@@ -161,10 +161,12 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (evil-define-key 'normal term-raw-map "p" 'term-paste)
     (evil-define-key 'insert term-raw-map "\C-y" 'term-paste)))
 
-;; TODO: lossless keyboard input in terminal
-;; https://github.com/CyberShadow/term-keys
-;; (use-package term-keys
-;;   :hook (after-init . term-keys-mode))
+;; Support for the Kitty Keyboard protocol in Emacs
+;; If you want to know if your terminal supports kkp, if its activated,
+;; and if yes, which enhancements are active, use `kkp-status'.
+(use-package kkp
+  :if (not (display-graphic-p))
+  :hook (after-init . global-kkp-mode))
 
 (use-package eat
   :defer t
