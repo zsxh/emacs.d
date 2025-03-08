@@ -67,7 +67,7 @@
                                       :border-width 1
                                       :border-color (face-background '+eglot/display-border nil t)
                                       :max-height (/ (frame-height) 3)
-                                      :max-width (/ (frame-width) 3)
+                                      :max-width (/ (frame-width) 2)
                                       :poshandler 'posframe-poshandler-point-bottom-left-corner-upward))
                                (run-with-timer 0.1 nil #'+eglot/hide-hover))
                            (message "LSP No Hover Document"))))
