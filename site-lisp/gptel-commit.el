@@ -74,7 +74,7 @@ A scope may be provided to a commit's type, to provide additional contextual inf
   (interactive)
   (let* ((lines (magit-git-lines "diff" "--cached"))
          (changes (string-join lines "\n")))
-    (gptel-request changes :system gptel-commit-prompt)))
+    (gptel-request changes :system gptel-commit-prompt :stream t)))
 
 (provide 'gptel-commit)
 ;;; gptel-commit.el ends here
