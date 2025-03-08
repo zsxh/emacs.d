@@ -117,6 +117,31 @@
 (use-package sql-indent
   :hook (sql-mode . sqlind-minor-mode))
 
+;; Hurl is a command line tool that runs HTTP requests defined in a simple plain text format.
+(use-package hurl-mode
+  :vc (:url "https://github.com/JasZhe/hurl-mode")
+  :mode "\\.hurl\\'"
+  :bind ((:map hurl-response-mode-map
+          ("C-j" . outline-next-heading)
+          ("C-k" . outline-previous-heading)
+          ("TAB" . outline-toggle-children)
+          ("S-TAB" . outline-cycle-children)))
+  :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'hurl-response-mode 'normal)
+    (evil-define-key '(normal visual) hurl-response-mode-map
+      "q" #'quit-window))
+  (+funcs/major-mode-leader-keys
+   hurl-mode-map
+   "t" '(hurl-mode-test-request-single :which-key "test")
+   "T" '(hurl-mode-test-request-file :which-key "test-all")
+   "x" '(hurl-mode-send-request-single :which-key "request")
+   "X" '(hurl-mode-send-request-file :which-key "request-all"))
+  (+funcs/major-mode-leader-keys
+   hurl-response-mode-map
+   "n" '(outline-next-heading :which-key "outline-next-heading")
+   "p" '(outline-previous-heading :which-key "outline-previous-heading")))
+
 
 (provide 'init-file-modes)
 
