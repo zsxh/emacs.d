@@ -120,43 +120,6 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
      (t
       (insert-char ?/ arg)))))
 
-;; This is a tool to manually explore and test HTTP REST webservices.
-;; Runs queries from a plain-text query sheet, displays results as a pretty-printed XML, JSON and even images.
-;; https://github.com/pashky/restclient.el
-(use-package restclient
-  :commands restclient-mode
-  :config
-  (with-eval-after-load 'evil
-    (evil-define-key 'normal restclient-mode-map
-      (kbd "RET") 'org-open-at-point)))
-
-;;;###autoload
-(defun +web/restclient-new-buffer ()
-  "Create a restclient buffer."
-  (interactive)
-  (let* ((restclient-buffer-name "*restclient*")
-         (restclient-buffer (get-buffer restclient-buffer-name)))
-    (unless restclient-buffer
-      (setq restclient-buffer (generate-new-buffer restclient-buffer-name))
-      (with-current-buffer restclient-buffer
-        (restclient-mode)
-        (when (functionp 'cape-company-to-capf)
-          (setq-local completion-at-point-functions (push (cape-company-to-capf 'company-restclient) completion-at-point-functions)))
-        (insert "# -*- restclient -*-
-# https://github.com/pashky/restclient.el
-#
-# GET https://api.github.com
-# User-Agent: Emacs Restclient
-# #
-# POST https://jira.atlassian.com/rest/api/2/search
-# Content-Type: application/json
-# {}
-# #
-# POST https://somehost/api
-# Content-Type: application/x-www-form-urlencoded
-# param1=value1&param2=value2\n")))
-    (switch-to-buffer restclient-buffer)))
-
 ;; This is a elisp library for websocket clients to talk to websocket servers,
 ;; and for websocket servers to accept connections from websocket clients.
 ;; This library is designed to be used by other library writers,

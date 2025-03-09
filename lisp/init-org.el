@@ -239,7 +239,6 @@ at the first function to return non-nil.")
 
 (use-package ob-go :defer t)
 (use-package ob-rust :defer t)
-(use-package ob-restclient :defer t)
 
 ;; https://github.com/mermaid-js/mermaid-cli
 ;; https://github.com/arnm/ob-mermaid
