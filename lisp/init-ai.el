@@ -23,6 +23,7 @@
         gptel-expert-commands t
         gptel-log-level 'debug
         gptel-temperature 0.6
+        gptel-include-reasoning 'ignore
         ;; I don't want a default system prompt
         gptel--system-message nil
         gptel--rewrite-directive nil)
@@ -42,6 +43,7 @@
       :models '(anthropic/claude-3-5-haiku
                 anthropic/claude-3.7-sonnet
                 deepseek/deepseek-r1:free
+                deepseek/deepseek-chat:free
                 google/gemini-2.0-flash-lite-001
                 google/gemini-2.0-flash-001
                 qwen/qwq-32b
@@ -49,8 +51,7 @@
 
   ;; DeepSeek
   (defvar gptel--deepseek
-    (gptel-make-openai "DeepSeek"
-      :host "api.deepseek.com"
+    (gptel-make-deepseek "DeepSeek"
       :stream t
       :key 'gptel-api-key
       :models '(deepseek-chat
@@ -58,7 +59,7 @@
 
   ;; Siliconflow
   (defvar gptel--siliconflow
-    (gptel-make-openai "Siliconflow"
+    (gptel-make-deepseek "Siliconflow/DeepSeek"
       :host "api.siliconflow.cn"
       :stream t
       :key 'gptel-api-key
@@ -70,7 +71,7 @@
 
   ;; VolcEngine
   (defvar gptel--volcengine
-    (gptel-make-openai "VolcEngine"
+    (gptel-make-deepseek "VolcEngine"
       :host "ark.cn-beijing.volces.com"
       :endpoint "/api/v3/chat/completions"
       :stream t
@@ -87,24 +88,17 @@
   :ensure nil
   :commands (gptel-commit))
 
+;; Aider config options, check `https://aider.chat/docs/config/options.html'
 (use-package aidermacs
-  :vc (:url "https://github.com/MatthewZMD/aidermacs")
   :bind ("C-c a" . aidermacs-transient-menu)
   :config
-  ;; Code mode by default
-  (setq aidermacs-extra-args '("--model" "openrouter/google/gemini-2.0-flash-001"))
-
-  ;; Architect mode by default
-  ;; (setq aidermacs-extra-args '("--architect"
-  ;;                              "--model" "deepseek/deepseek-reasoner"
-  ;;                              "--editor-model" "deepseek/deepseek-chat"))
-
-  ;; Aider config options, please check `https://aider.chat/docs/config/options.html'
+  (setq aidermacs-default-model "openrouter/google/gemini-2.0-flash-001"
+        aidermacs-editor-model "deepseek/deepseek-chat"
+        aidermacs-architect-model "deepseek/deepseek-reasoner")
   (setenv "DEEPSEEK_API_KEY" (auth-source-pick-first-password :host "api.deepseek.com"))
   (setenv "OPENROUTER_API_KEY" (auth-source-pick-first-password :host "openrouter.ai"))
-  (setenv "AIDER_AUTO_COMMITS" "False") ;; Disable auto commit of LLM changes
+  ;; (setenv "AIDER_AUTO_COMMITS" "False") ;; Disable auto commit of LLM changes
   (setenv "AIDER_CHAT_LANGUAGE" "Chinese") ;; Specify the language to use in the chat
-
   (setq aidermacs-backend 'vterm))
 
 (use-package gptel-aibo
@@ -114,7 +108,6 @@
 
 ;; TODO: ai tools
 ;; - RAG: https://github.com/s-kostyaev/elisa
-;; - ai assistant: https://github.com/zbelial/eureka.el
 ;; - code fim: https://github.com/milanglacier/minuet-ai.el
 
 

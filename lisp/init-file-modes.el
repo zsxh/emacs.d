@@ -117,7 +117,7 @@
 (use-package sql-indent
   :hook (sql-mode . sqlind-minor-mode))
 
-;; Hurl is a command line tool that runs HTTP requests defined in a simple plain text format.
+;; `Hurl' is a command line tool that runs HTTP requests defined in a simple plain text format.
 (use-package hurl-mode
   :vc (:url "https://github.com/JasZhe/hurl-mode")
   :mode "\\.hurl\\'"

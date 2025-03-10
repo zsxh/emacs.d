@@ -202,10 +202,11 @@
 ;; age encryption support for Emacs,
 ;; generate host key manually via `sudo ssh-keygen -A`
 ;; generate user key manually via `ssh-keygen -t ed25519 -a 256`
+;; dev: `auth-source-forget-all-cached'
 (use-package age
   :config
-  (setq age-default-recipient '("~/.ssh/id_ed25519.pub")
-        age-default-identity '("~/.ssh/id_ed25519")
+  (setq age-default-recipient `(,(expand-file-name "~/.ssh/id_ed25519.pub"))
+        age-default-identity `(,(expand-file-name "~/.ssh/id_ed25519"))
         auth-sources (cons "~/.authinfo.age" auth-sources))
 
   (defun +age/get-agenix-public-keys ()
