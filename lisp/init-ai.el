@@ -106,9 +106,46 @@
   :bind ((:map gptel-aibo-complete-mode-map
           ("C-c i" . gptel-aibo-complete-at-point))))
 
-;; TODO: ai tools
-;; - RAG: https://github.com/s-kostyaev/elisa
-;; - code fim: https://github.com/milanglacier/minuet-ai.el
+;; `whisper-cpp-download-ggml-model' from nixpkgs.whisper-cpp
+;; > whisper-cpp-download-ggml-model small ~/.emacs.d/cache/whisper.cpp/models
+;;
+;; NOTE: MacOS Configuration Requirements
+;; - Grant Emacs permission to use Mic
+;; - Set whisper--ffmpeg-input-device
+(use-package whisper
+  :if (executable-find "whisper-cpp")
+  :vc (:url "https://github.com/natrys/whisper.el.git")
+  :commands (whisper-run whisper-file)
+  :config
+  (setq whisper-install-whispercpp nil
+        whisper-install-directory (locate-user-emacs-file "cache")
+        whisper-model "small"
+        whisper-language "auto"
+        whisper-translate nil
+        whisper-use-threads (/ (num-processors) 2))
+
+  ;; NOTE: for nix user, https://github.com/natrys/whisper.el/issues/16#issuecomment-1810920590
+  ;; FIXME: `i' lispy indent
+  (defun whisper--nix-command (input-file)
+    `("whisper-cpp"
+      "--model" ,(expand-file-name
+                  (locate-user-emacs-file
+                   (concat "cache/whisper.cpp/models/"
+                           "ggml-" whisper-model ".bin")))
+      ,@(when whisper-use-threads
+          (list "--threads"
+                (number-to-string whisper-use-threads)))
+      ,@(when whisper-translate '("--translate"))
+      ,@(when whisper-show-progress-in-mode-line '("--print-progress"))
+      "--language" ,whisper-language
+      "--no-timestamps"
+      "--file" ,input-file))
+  (advice-add 'whisper-command :override #'whisper--nix-command)
+
+  (require 'darwin-ffmpeg-input-device)
+  (advice-run-once 'whisper-run :before
+                   (lambda (&optional arg)
+                     (call-interactively #'darwin/select-default-audio-device))))
 
 
 (provide 'init-ai)
