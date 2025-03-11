@@ -102,6 +102,17 @@ Returns t if the line is blank, otherwise nil."
     (= (save-excursion (skip-chars-forward " \t") (point))
        (line-end-position))))
 
+(defun zsxh-lispy/line-beginning-blank-p (&optional pos)
+  "Check if the current line is blank (contains only spaces or tabs) from the beginning to the current position or POS.
+
+If POS is provided, it checks the position at POS instead of the current point.
+
+Returns t if the line is blank from its beginning up to the point, otherwise nil."
+  (save-excursion
+    (goto-char (or pos (point)))
+    (= (save-excursion (skip-chars-backward " \t") (point))
+       (line-beginning-position))))
+
 (defun zsxh-lispy/line-trailing-comment-p (&optional pos)
   "Check if the current line has a trailing comment starting from the current position or POS.
 
@@ -212,7 +223,8 @@ START and END are the boundaries of the region to be formatted."
     (goto-char (point-min))
     ;; Remove extra spaces
     (while (re-search-forward "\s+" nil t)
-      (unless (zsxh-lispy/in-string-or-comment-p)
+      (unless (or (zsxh-lispy/in-string-or-comment-p)
+                  (zsxh-lispy/line-beginning-blank-p))
         (replace-match " ")))
     ;; Compact opened parens
     (goto-char (point-min))

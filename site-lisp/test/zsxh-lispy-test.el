@@ -312,6 +312,85 @@
     (should-not (zsxh-lispy/line-trailing-blank-p))))
 
 ;;; ************************************
+;;; Test `zsxh-lispy/line-trailing-blank-p'
+;;; ************************************
+(ert-deftest test-zsxh-lispy/line-beginning-blank-p-empty-line ()
+  "Test that an empty line is considered blank at the beginning."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "\n")
+    (goto-char (point-min))
+    (should (zsxh-lispy/line-beginning-blank-p))))
+
+(ert-deftest test-zsxh-lispy/line-beginning-blank-p-only-spaces ()
+  "Test if line beginning is blank when it contains only spaces."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "   foo")
+    (goto-char (point-min))
+    (should (zsxh-lispy/line-beginning-blank-p))
+    (goto-char 4)
+    (should (zsxh-lispy/line-beginning-blank-p))
+    (goto-char 5)
+    (should-not (zsxh-lispy/line-beginning-blank-p))))
+
+(ert-deftest test-zsxh-lispy/line-beginning-blank-p-only-tabs ()
+  "Test if line beginning is blank when it contains only tabs."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "\t\tfoo")
+    (goto-char (point-min))
+    (should (zsxh-lispy/line-beginning-blank-p))
+    (goto-char 3)
+    (should (zsxh-lispy/line-beginning-blank-p))
+    (goto-char 4)
+    (should-not (zsxh-lispy/line-beginning-blank-p))))
+
+(ert-deftest test-zsxh-lispy/line-beginning-blank-p-mixed-spaces-and-tabs ()
+  "Test if line beginning is blank when it contains mixed spaces and tabs."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert " \t foo")
+    (goto-char (point-min))
+    (should (zsxh-lispy/line-beginning-blank-p))
+    (goto-char 4)
+    (should (zsxh-lispy/line-beginning-blank-p))
+    (goto-char 5)
+    (should-not (zsxh-lispy/line-beginning-blank-p))))
+
+(ert-deftest test-zsxh-lispy/line-beginning-blank-p-non-blank-beginning ()
+  "Test if line beginning is blank when it starts with non-blank characters."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "foo bar")
+    (goto-char (point-min))
+    (should (zsxh-lispy/line-beginning-blank-p))))
+
+(ert-deftest test-zsxh-lispy/line-beginning-blank-p-non-blank-beginning-with-spaces ()
+  "Test if line beginning is blank when it contains non-blank characters with spaces."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "foo bar")
+    (goto-char 5)
+    (should-not (zsxh-lispy/line-beginning-blank-p))))
+
+(ert-deftest test-zsxh-lispy/line-beginning-blank-p-non-blank-beginning-with-tabs ()
+  "Test if line beginning is blank when it contains non-blank characters with tabs."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "foo\tbar")
+    (goto-char 5)
+    (should-not (zsxh-lispy/line-beginning-blank-p))))
+
+(ert-deftest test-zsxh-lispy/line-beginning-blank-p-non-blank-beginning-with-mixed ()
+  "Test if line beginning is blank when it contains non-blank characters with mixed spaces and tabs."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "foo \tbar")
+    (goto-char 6)
+    (should-not (zsxh-lispy/line-beginning-blank-p))))
+
+;;; ************************************
 ;;; Test `zsxh-lispy/line-trailing-comment-p'
 ;;; ************************************
 
@@ -623,6 +702,16 @@
     (forward-char 5)
     (zsxh-lispy/lisp-mark-sexp)
     (should (equal (mark) (+ (point) 9)))))
+
+;; FIXME: failed test case
+(ert-deftest test-zsxh-lispy/lisp-format-preserve-unquote-splicing-symbol ()
+  "Test that formatting doesn't remove the `,@' unquote-splicing symbol."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "`(\"abc\" ,@(list 1 2 3))")
+    (goto-char (point-max))
+    (zsxh-lispy/lisp-format)
+    (should (equal (buffer-string) "`(\"abc\" ,@(list 1 2 3))"))))
 
 ;;; ***************************************************
 ;;; Test `zsxh-lispy/lisp-comment'
