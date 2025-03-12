@@ -148,9 +148,19 @@
 ;; https://mina86.com/2021/emacs-remote/
 ;; https://www.reddit.com/r/emacs/comments/1hccvoj/all_i_want_for_christmas_is_a_working_ssh_feature/
 (with-eval-after-load 'tramp
+  ;; Enable full-featured Dirvish over TRAMP on ssh connections
+  ;; https://www.gnu.org/software/tramp/#Improving-performance-of-asynchronous-remote-processes
+  (connection-local-set-profile-variables
+   'remote-direct-async-process
+   '((tramp-direct-async-process . t)))
+  (connection-local-set-profiles
+   '(:application tramp :protocol "ssh")
+   'remote-direct-async-process)
   (setq tramp-default-method "ssh"
-        tramp-verbose 3
-        tramp-chunksize 2000))
+        ;; Tips to speed up connections
+        tramp-verbose 0
+        tramp-chunksize 2000
+        tramp-ssh-controlmaster-options nil))
 
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; Emacs is now capable of editing files with very long lines since 29.1, `long-line-threshold'
