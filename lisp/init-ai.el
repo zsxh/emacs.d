@@ -101,10 +101,13 @@
   (setenv "AIDER_CHAT_LANGUAGE" "Chinese") ;; Specify the language to use in the chat
   (setq aidermacs-backend 'vterm))
 
+;; An AI Writing Assistant for Emacs
+;; https://github.com/dolmens/gptel-aibo
 (use-package gptel-aibo
   :defer t
-  :bind ((:map gptel-aibo-complete-mode-map
-          ("C-c i" . gptel-aibo-complete-at-point))))
+  :bind (("C-c i" . gptel-aibo-summon)
+         (:map gptel-aibo-mode-map
+          ("C-c !" . gptel-aibo-apply-last-suggestions))))
 
 ;; `whisper-cpp-download-ggml-model' from nixpkgs.whisper-cpp
 ;; > whisper-cpp-download-ggml-model small ~/.emacs.d/cache/whisper.cpp/models
@@ -116,6 +119,7 @@
   :if (executable-find "whisper-cpp")
   :vc (:url "https://github.com/natrys/whisper.el.git")
   :commands (whisper-run whisper-file)
+  :bind (("C-c r" . whisper-run))
   :config
   (setq whisper-install-whispercpp nil
         whisper-install-directory (locate-user-emacs-file "cache")
