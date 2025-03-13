@@ -58,10 +58,7 @@
                 anthropic/claude-3.7-sonnet
                 deepseek/deepseek-r1:free
                 deepseek/deepseek-chat:free
-                google/gemini-2.0-flash-lite-001
-                google/gemini-2.0-flash-001
-                qwen/qwq-32b
-                qwen/qwq-32b:free)))
+                google/gemini-2.0-flash-001)))
 
   ;; DeepSeek
   (defvar gptel--deepseek

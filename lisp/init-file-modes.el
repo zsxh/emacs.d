@@ -142,6 +142,12 @@
    "n" '(outline-next-heading :which-key "outline-next-heading")
    "p" '(outline-previous-heading :which-key "outline-previous-heading")))
 
+;; EPUB reader
+;; https://depp.brause.cc/nov.el/
+(use-package nov
+  :mode "\\.epub\\'"
+  :defer t)
+
 
 (provide 'init-file-modes)
 
