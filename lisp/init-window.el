@@ -10,14 +10,11 @@
 
 ;;; Code:
 
-;; TODO: `display-buffer-alist' https://youtu.be/E-xUNlZi3rI?t=948
-;; TODO: Make an Emacs Buffer Open the Way You Want, https://lambdaland.org/posts/2022-12-27_repl_buffer_on_the_right/
+;; NOTE: `display-buffer-alist' https://youtu.be/E-xUNlZi3rI?t=948
+;; NOTE: Make an Emacs Buffer Open the Way You Want, https://lambdaland.org/posts/2022-12-27_repl_buffer_on_the_right/
 
 (use-package popper
-  ;; TODO: popper keybinds
-  ;; :bind (("C-`" . popper-toggle)
-  ;;        ("M-`" . popper-cycle)
-  ;;        ("C-M-`" . popper-toggle-type))
+  :bind (("C-`" . popper-toggle-type))
   :config
   (setq popper-window-height
         (lambda (win)
