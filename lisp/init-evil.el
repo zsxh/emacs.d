@@ -116,7 +116,11 @@
       (kbd "C-d") 'evil-scroll-down))
   (with-eval-after-load 'cus-edit (evil-collection-custom-setup))
   (with-eval-after-load 'xwidget (evil-collection-xwidget-setup))
-  (with-eval-after-load 'ert (evil-collection-ert-setup)))
+  (with-eval-after-load 'ert (evil-collection-ert-setup))
+  (with-eval-after-load 'nov
+    (setq nov-mode-map (make-sparse-keymap))
+    (evil-collection-nov-setup)
+    (setq nov-button-map (copy-keymap nov-mode-map))))
 
 ;; https://github.com/redguardtoo/evil-matchit
 ;; Usage: '%' go to matching pair

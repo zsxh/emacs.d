@@ -145,7 +145,7 @@
 ;; EPUB reader
 ;; https://depp.brause.cc/nov.el/
 (use-package nov
-  :mode "\\.epub\\'"
+  :mode ("\\.epub\\'" . nov-mode)
   :defer t)
 
 
