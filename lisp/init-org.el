@@ -240,20 +240,6 @@ at the first function to return non-nil.")
 (use-package ob-go :defer t)
 (use-package ob-rust :defer t)
 
-;; https://github.com/mermaid-js/mermaid-cli
-;; https://github.com/arnm/ob-mermaid
-;;
-;; $ mkdir -p ~/.emacs.d/cache/ob-mermaid & cd ~/.emacs.d/cache/ob-mermaid & npm install -g @mermaid-js/mermaid-cli
-;;
-;; #+begin_src mermaid :file ob-mermaid/test.svg
-;; sequenceDiagram
-;;   A-->B: Works!
-;; #+end_src
-(use-package ob-mermaid
-  :defer t
-  :config
-  (setq ob-mermaid-cli-path (expand-file-name "cache/ob-mermaid/node_modules/.bin/mmdc" user-emacs-directory)))
-
 ;; http://plantuml.sourceforge.net/
 ;; $ mkdir -p ~/.emacs.d/cache/ob-plantuml & wget -c http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O ~/.emacs.d/cache/ob-plantuml/plantuml.jar
 ;; $ sudo pacman -S graphviz
@@ -261,31 +247,6 @@ at the first function to return non-nil.")
   :ensure nil
   :defer t
   :custom (org-plantuml-jar-path (expand-file-name "cache/ob-plantuml/plantuml.jar" user-emacs-directory)))
-
-;; TODO: use org-mode built-in async,check `https://blog.tecosaur.com/tmio/2021-05-31-async.html'
-;; ob-async enables asynchronous execution of org-babel src blocks
-(use-package ob-async
-  :defer t
-  :config
-  (add-hook 'ob-async-pre-execute-src-block-hook
-            (lambda ()
-              (setq inferior-julia-program-name "julia")))
-  ;; emacs jupyter define their own :async keyword that may conflicts with ob-async
-  (setq ob-async-no-async-languages-alist
-        '("ipython"
-          "jupyter-python"
-          "jupyter-julia"
-          "jupyter-R"
-          "jupyter-javascript")))
-
-;; TODO: hugo static blog
-;; - hugo: https://gohugo.io/getting-started/quick-start/
-;; - hugo papermode theme: https://github.com/adityatelange/hugo-PaperMod/
-;; - org hugo example: https://lucidmanager.org/productivity/create-websites-with-org-mode-and-hugo/
-;; - parser:
-;;   - org parser go-org: https://github.com/niklasfasching/go-org
-;;   - hugo use go-org:  https://github.com/gohugoio/hugo/blob/master/markup/org/convert.go
-;; - Youtube Hugo - Static Site Generator | Tutorial: https://www.youtube.com/playlist?list=PLLAZ4kZ9dFpOnyRlyS-liKL5ReHDcj4G3
 
 
 (provide 'init-org)
