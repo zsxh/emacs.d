@@ -150,6 +150,8 @@
           conf-toml-mode
           toml-ts-mode
           html-mode
+          markdown-mode
+          markdown-ts-mode
           ) . electric-pair-local-mode)
   :bind ("C-j" . newline-and-indent))
 
