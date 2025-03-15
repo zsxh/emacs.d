@@ -15,6 +15,8 @@
 
 (use-package popper
   :bind (("C-`" . popper-toggle-type))
+  :hook ((after-init . popper-mode)
+         (after-init . popper-echo-mode))
   :config
   (setq popper-window-height
         (lambda (win)
@@ -39,10 +41,7 @@
           "\\*gt-result\\*"
           ;; comint-mode
           eat-mode))
-  (setq popper-group-function #'popper-group-by-project)
-  (popper-mode 1)
-  ;; For echo area hints
-  (popper-echo-mode 1))
+  (setq popper-group-function #'popper-group-by-project))
 
 
 (provide 'init-window)
