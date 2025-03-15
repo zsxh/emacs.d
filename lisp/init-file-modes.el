@@ -148,6 +148,14 @@
   :mode ("\\.epub\\'" . nov-mode)
   :defer t)
 
+;; GRPClient
+;; TODO: `grpclient-mode-map' key bindings
+(use-package grpclient
+  :if (executable-find "grpcurl")
+  :vc (:url "https://github.com/Prikaz98/grpclient.el.git")
+  :mode ("\\.grpc\\'" . grpclient-mode)
+  :defer t)
+
 
 (provide 'init-file-modes)
 
