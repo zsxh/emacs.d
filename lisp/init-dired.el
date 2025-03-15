@@ -58,7 +58,13 @@
                (require 'pdf-tools nil t))))
 
   (setq dirvish-time-format-string "%F %R"
-        dirvish-attributes '(vc-state subtree-state nerd-icons git-msg file-time file-size)
+        dirvish-attributes
+        (append
+         ;; The order of these attributes is insignificant, they are always
+         ;; displayed in the same position.
+         '(vc-state subtree-state nerd-icons)
+         ;; Other attributes are displayed in the order they appear in this list.
+         '(git-msg file-modes file-time file-size))
         dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index))
         dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4))
         dirvish-cache-dir (expand-file-name (locate-user-emacs-file "cache/dirvish/"))
