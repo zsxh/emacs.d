@@ -105,11 +105,10 @@
   :config
   (setq aidermacs-default-model "openrouter/google/gemini-2.0-flash-001"
         aidermacs-editor-model "deepseek/deepseek-chat"
-        aidermacs-architect-model "deepseek/deepseek-reasoner")
+        aidermacs-architect-model "deepseek/deepseek-reasoner"
+        aidermacs-extra-args '("--no-check-update"))
   (setenv "DEEPSEEK_API_KEY" (auth-source-pick-first-password :host "api.deepseek.com"))
   (setenv "OPENROUTER_API_KEY" (auth-source-pick-first-password :host "openrouter.ai"))
-  ;; (setenv "AIDER_AUTO_COMMITS" "False") ;; Disable auto commit of LLM changes
-  (setenv "AIDER_CHAT_LANGUAGE" "Chinese") ;; Specify the language to use in the chat
   (setq aidermacs-backend 'vterm))
 
 ;; An AI Writing Assistant for Emacs
