@@ -127,6 +127,7 @@
 ;;
 ;; NOTE: MacOS Configuration Requirements, https://github.com/natrys/whisper.el/wiki/MacOS-Configuration
 ;; - Grant Emacs permission to use Mic
+;;   - Reset it: tccutil reset Microphone org.gnu.Emacs
 ;; - Set whisper--ffmpeg-input-device
 (use-package whisper
   :if (executable-find "whisper-cpp")

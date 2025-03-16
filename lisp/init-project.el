@@ -38,7 +38,7 @@
   ;; (defvar my/project-local-identifier '(".projectile" ".project" "go.mod" "Cargo.toml"
   ;;                                     "project.clj" "pom.xml" "package.json"
   ;;                                     "Makefile" "README.org" "README.md"))
-  (defvar my/project-local-identifier '(".projectile" "pyproject.toml"))
+  (defvar my/project-local-identifier '(".projectile" "pyproject.toml" "go.mod" "Cargo.toml"))
 
   (defun my/project-try-local (dir)
     "Determine if DIR is a non-VC project."
