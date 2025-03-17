@@ -158,6 +158,11 @@
 (use-package git-link
   :defer t)
 
+;; TODO: Emacs integration for Atlassian's Jira.
+;; Supports listing and filtering issues, viewing issue details, modifying certain properties, and adding worklogs.
+(use-package jira
+  :defer t)
+
 
 (provide 'init-git)
 
