@@ -28,6 +28,8 @@
   :config
   (setq go-ts-mode-indent-offset 4)
   (+eglot/set-leader-keys go-ts-mode-map)
+  (modify-syntax-entry ?\" "\"" go-ts-mode--syntax-table)
+  (modify-syntax-entry ?` "\"" go-ts-mode--syntax-table)
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY"))))
