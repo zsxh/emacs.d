@@ -93,7 +93,7 @@
    "bs" '(scratch-buffer :which-key "switch-to-<*scratch*>")
    ;; Files
    "f" '(nil :which-key "file")
-   "fd" '(+dired/find-program :which-key "find-files-in-dired")
+   "fd" '(dirvish-fd :which-key "dirvish-fd")
    "fe" '(+funcs/sudo-edit-current-file :which-key "sudo-edit-current-file")
    "ff" '(find-file :which-key "find-file")
    "fj" '(recentf :which-key "recentf")

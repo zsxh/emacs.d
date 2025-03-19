@@ -26,7 +26,7 @@
 (use-package dirvish
   :defer 10
   :bind (:map dired-mode-map
-         ("C-<return>" . 'dired-open-xdg)
+         ("C-<return>" . 'dired-do-open)
          ("TAB" . 'dirvish-subtree-toggle)
          ("f" . dirvish-file-info-menu)
          ("h" . dired-omit-mode)
@@ -228,28 +228,6 @@
   (setq dired-omit-files
         (concat dired-omit-files "\\|^\\..*$")))
 
-;; Addtional syntax highlighting for dired
-;; (use-package diredfl
-;;   :hook
-;;   (dired-mode . diredfl-mode))
-
-;; open files with external applications(just for linux now)
-(use-package dired-open
-  :commands dired-open-xdg
-  :config
-  (define-advice dired-open-xdg (:override () advice)
-    "Try to run `xdg-open'(linux) or `open'(macos) to open the file under point."
-    (interactive)
-    (when-let* ((cmd (or (executable-find "xdg-open")
-                        (executable-find "open")))
-               (file (ignore-errors (dired-get-file-for-visit))))
-      ;; FIXME: https://askubuntu.com/a/675366
-      ;; xdg-open return before their children are done working,
-      ;; Emacs might kill their controlling terminal when this happens,
-      ;; killing the children, and stopping the external applications.
-      (start-process "dired-open" nil
-                     "setsid" "-w" cmd (file-truename file)))))
-
 ;; Editable Dired pre-mode configs
 (use-package wdired
   :ensure nil
@@ -264,28 +242,6 @@
    "c" '(wdired-finish-edit :which-key "finish edit")
    "k" '(wdired-abort-changes :which-key "abort changes")
    "q" '(wdired-exit :which-key "exit")))
-
-;; TODO: dirvish-fd
-;; https://github.com/alexluigit/dirvish/blob/main/EXTENSIONS.org#dirvish-as-the-interface-of-fd-dirvish-fdel
-
-(defalias '+dired/find-program 'find-name-dired)
-(with-eval-after-load 'find-dired
-  (setq find-ls-option
-        (cons "-print0 | xargs -0 ls -alhdN" "")))
-
-;; TODO: remove fd-dired
-;; Drop-in replacement for find-dired
-;; https://github.com/sharkdp/fd
-;; dired find files using 'fd' instead of 'find'
-;; https://github.com/yqrashawn/fd-dired
-(use-package fd-dired
-  :if (executable-find "fd")
-  :init
-  (defalias '+dired/find-program 'fd-dired)
-  :commands fd-dired
-  :config
-  (setq fd-dired-pre-fd-args "-0 -c never -I"
-        fd-dired-ls-option '("| xargs -0 ls -alhdN" . "-ld")))
 
 
 (provide 'init-dired)
