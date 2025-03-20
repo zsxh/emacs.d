@@ -126,8 +126,7 @@
       (when (file-directory-p file) ; we only interest in directories here
         `(shell . ("eza" "-al" "--color=always" "--icons"
                    "--group-directories-first" ,file))))
-    (setq dirvish-preview-dispatchers
-          (cl-substitute 'eza 'dired dirvish-preview-dispatchers))))
+    (push 'eza dirvish-preview-dispatchers)))
 
 (use-package dirvish-side
   :ensure dirvish
