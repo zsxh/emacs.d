@@ -35,6 +35,9 @@
 
   (setq project-ignore-buffer-conditions '(+project/project-buffer-filter))
 
+  (setq project-kill-buffer-conditions
+        (append project-kill-buffer-conditions '((major-mode . vterm-mode))))
+
   ;; (defvar my/project-local-identifier '(".projectile" ".project" "go.mod" "Cargo.toml"
   ;;                                     "project.clj" "pom.xml" "package.json"
   ;;                                     "Makefile" "README.org" "README.md"))
