@@ -108,7 +108,10 @@
   :hook ((ibuffer . (lambda ()
                       (ibuffer-vc-set-filter-groups-by-vc-root)
                       (unless (eq ibuffer-sorting-mode 'alphabetic)
-                        (ibuffer-do-sort-by-alphabetic))))))
+                        (ibuffer-do-sort-by-alphabetic)))))
+  :config
+  (advice-add 'ibuffer-vc-root :override
+              (lambda (buf) (with-current-buffer buf (project-current)))))
 
 (use-package nerd-icons-ibuffer
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))

@@ -72,8 +72,8 @@
 ;; Tab and Space
 ;; Permanently indent with spaces, never with TABs
 ;; M-^ delete-indentation
-(setq-default c-basic-offset   2
-              tab-width        2
+(setq-default c-basic-offset   4
+              tab-width        4
               indent-tabs-mode nil)
 
 ;; (with-eval-after-load 'cc-vars
