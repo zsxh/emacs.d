@@ -112,13 +112,6 @@
                             'mode-line-inactive))
       " "))
 
-  (when (executable-find "pdftoppm")
-    ;; Dirvish provided an alternative PDF preview dispatcher pdf-preface which
-    ;; generates preface image for pdf files and use those preface images as the preview.
-    ;; This allows the user to preview big pdf files in a non-blocking fashion.
-    (setq dirvish-preview-dispatchers
-          (cl-substitute 'pdf-preface 'pdf dirvish-preview-dispatchers)))
-
   (when (executable-find "eza")
     (dirvish-define-preview eza (file)
       "Use `eza' to generate directory preview."
