@@ -297,7 +297,8 @@
      ;; Indicate transient-ness of the menu.  You could also use a
      ;; constant color, if you don't care about this.
      :internal-border-color (transient--prefix-color)
-     :internal-border-width 1)
+     :internal-border-width 3
+     :override-parameters transient-posframe-parameters)
     ;; `posframe-show' it not suitable for use as a display action
     ;; and it appears posframe does not provide some other function
     ;; that is.  We can make this more complient by at least

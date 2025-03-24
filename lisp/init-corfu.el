@@ -46,11 +46,8 @@
 (use-package company :defer t)          ;; provide Company backends for Cape
 (use-package cape
   :init
-  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  ;; (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
-  ;; (add-to-list 'completion-at-point-functions #'cape-abbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions (cape-capf-super #'cape-dabbrev #'cape-dict))
   (eval-after-load 'eglot
     (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)))
 

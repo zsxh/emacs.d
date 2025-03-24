@@ -21,6 +21,7 @@
         eglot-sync-connect nil
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
+        eglot-stay-out-of '()
         ;; NOTE: drop log to improve performance
         eglot-events-buffer-config '(:size 0 :format full)
         eglot-report-progress nil
