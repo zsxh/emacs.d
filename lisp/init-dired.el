@@ -64,12 +64,14 @@
          ;; displayed in the same position.
          '(vc-state subtree-state nerd-icons)
          ;; Other attributes are displayed in the order they appear in this list.
-         '(git-msg file-modes file-time file-size))
+         ;; '(git-msg file-modes file-time file-size)
+         '(git-msg file-time file-size))
         dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index))
         dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4))
         dirvish-cache-dir (expand-file-name (locate-user-emacs-file "cache/dirvish/"))
         dirvish-reuse-session 'open
-        dirvish-redisplay-debounce 0.05 ;; perf: increase redisplay intervals
+        dirvish-input-throttle 0.1
+        dirvish-input-debounce 0.05 ;; perf: increase redisplay intervals
         dirvish-emerge-groups '(("Recent files" (predicate . recent-files-2h))
                                 ("Directories" (predicate . directories))
                                 ("Documents" (extensions "pdf" "tex" "bib" "epub"))
