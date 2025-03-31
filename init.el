@@ -28,9 +28,9 @@
   (setq file-name-handler-alist nil)
   (add-hook 'emacs-startup-hook
             (lambda ()
-              (setq file-name-handler-alist tmp--file-name-handler-alist)
-              (with-eval-after-load 'age
-                (age-file-enable)))))
+              (setq file-name-handler-alist
+                    (append tmp--file-name-handler-alist
+                            file-name-handler-alist)))))
 
 ;; Speedup Boostrap
 ;; Adjust garbage collection thresholds during startup, and thereafter

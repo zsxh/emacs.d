@@ -21,8 +21,12 @@
 (add-hook-run-once 'java-mode-hook #'+eglot/set-leader-keys)
 (add-hook-run-once 'java-ts-mode-hook #'+eglot/set-leader-keys)
 
-(add-hook 'java-mode-hook #'eglot-ensure)
-(add-hook 'java-ts-mode-hook #'eglot-ensure)
+(defun +java/eglot-ensure ()
+  (setq-local eglot-stay-out-of '(eldoc))
+  (eglot-ensure))
+
+(add-hook 'java-mode-hook #'+java/eglot-ensure)
+(add-hook 'java-ts-mode-hook #'+java/eglot-ensure)
 
 (defun jdtls-command-contact (&optional interactive project)
   (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar"))
@@ -305,7 +309,9 @@ ACTION is an LSP object of either `CodeAction' or `Command' type."
             (inhibit-file-name-operation operation))
         (apply operation args)))))
 
-(add-to-list 'file-name-handler-alist '("\\.class$" . javap-handler))
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (add-to-list 'file-name-handler-alist '("\\.class$" . javap-handler))))
 
 
 (provide 'init-lang-java)

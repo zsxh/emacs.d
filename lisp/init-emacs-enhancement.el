@@ -217,6 +217,7 @@
 ;; generate user key manually via `ssh-keygen -t ed25519 -a 256`
 ;; dev: `auth-source-forget-all-cached'
 (use-package age
+  :hook (emacs-startup . age-file-enable)
   :config
   (setq age-default-recipient `(,(expand-file-name "~/.ssh/id_ed25519.pub"))
         age-default-identity `(,(expand-file-name "~/.ssh/id_ed25519"))
