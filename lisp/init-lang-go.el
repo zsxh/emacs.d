@@ -19,7 +19,7 @@
   (+eglot/set-leader-keys go-mode-map)
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY"))))
+    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY" "GOROOT"))))
 
 (use-package go-ts-mode
   :ensure nil
@@ -34,7 +34,7 @@
   (modify-syntax-entry ?` "\"" go-ts-mode--syntax-table)
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
+    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY" "GOROOT")))
 
   (transient-define-prefix go-tools-menu ()
     ""
@@ -78,8 +78,8 @@
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode go-ts-mode))
     (+go/workspace-configuration)))
 
-(use-package go-impl :defer t)          ;; FIXME: broken
-(use-package go-fill-struct :defer t)
+(use-package go-impl :defer t)          ;; NOTE: `completion-styles' should be `basic'
+(use-package go-fill-struct :defer t)   ;; TODO: fillstruct already provided by gopls
 (use-package go-tag
   :defer t
   :init (setq go-tag-args (list "-transform" "camelcase")))

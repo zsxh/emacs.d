@@ -76,7 +76,7 @@
   :config
   (defun customize-minibuffer-completion-styles ()
     (setq-local completion-category-defaults nil
-                completion-styles '(orderless)))
+                completion-styles '(orderless basic)))
   (add-hook 'minibuffer-setup-hook #'customize-minibuffer-completion-styles)
   (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
 
