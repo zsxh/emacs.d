@@ -25,6 +25,8 @@
   :ensure nil
   :if (treesit-ready-p 'go)
   :hook (go-ts-mode . eglot-ensure)
+  :bind (:map go-ts-mode-map
+         ("<f1>" . go-tools-menu))
   :config
   (setq go-ts-mode-indent-offset 4)
   (+eglot/set-leader-keys go-ts-mode-map)
@@ -32,7 +34,28 @@
   (modify-syntax-entry ?` "\"" go-ts-mode--syntax-table)
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY"))))
+    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
+
+  (transient-define-prefix go-tools-menu ()
+    ""
+    [["misc"
+      ("d" "godoc" godoc)
+      ("i" "go-impl" go-impl)
+      ("s" "fillstruct" go-fill-struct)
+      ("t" "add-tag" go-tag-add)
+      ("T" "remove-tag" go-tag-remove)]
+     ["test"
+      ("g" "gen-test" go-gen-test-dwim)
+      ("f" "test-current-file" go-test-current-file)
+      ("x" "test-current-test" go-test-current-test)
+      ("p" "test-current-project" go-test-current-project)
+      ("b" "test-current-benchmark" go-test-current-benchmark)
+      ("c" "test-current-coverage" go-test-current-coverage)
+      ("r" "go-run" go-run)]])
+
+  (+funcs/major-mode-leader-keys
+   go-ts-mode-map
+   "m" '(go-tools-menu :which-key "go-tools-menu")))
 
 (with-eval-after-load 'eglot
   ;; https://github.com/golang/tools/blob/master/gopls/doc/settings.md
@@ -54,6 +77,14 @@
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode go-ts-mode))
     (+go/workspace-configuration)))
+
+(use-package go-impl :defer t)          ;; FIXME: broken
+(use-package go-fill-struct :defer t)
+(use-package go-tag
+  :defer t
+  :init (setq go-tag-args (list "-transform" "camelcase")))
+(use-package go-gen-test :defer t)
+(use-package gotest :defer t)
 
 
 (provide 'init-lang-go)

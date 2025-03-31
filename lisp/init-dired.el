@@ -51,11 +51,6 @@
   :config
   (require 'dirvish-vc nil t)
   (require 'dirvish-emerge nil t)
-  (advice-run-once
-   'dirvish-pdf-dp
-   :before (lambda (&rest _)
-             (ignore-errors
-               (require 'pdf-tools nil t))))
 
   (setq dirvish-time-format-string "%F %R"
         dirvish-attributes
@@ -79,7 +74,8 @@
                                 ("Pictures" (extensions "jpg" "png" "svg" "gif"))
                                 ("Audio" (extensions "mp3" "flac" "wav" "ape" "aac"))
                                 ("Archives" (extensions "gz" "rar" "zip"))
-                                ("Files" (predicate . files))))
+                                ("Files" (predicate . files)))
+        dirvish-peek-key '(:debounce 0.1 any))
   (setopt dirvish-subtree-state-style 'nerd)
   ;; (add-hook 'dirvish-setup-hook #'dirvish-emerge-mode)
 
