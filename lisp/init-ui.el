@@ -135,6 +135,7 @@
      '(eldoc-highlight-function-argument ((t :inherit font-lock-variable-name-face
                                              :weight bold)))
      '(Info-quoted ((t :inherit (font-lock-constant-face fixed-pitch-serif))))
+     `(completions-common-part ((t :weight bold :foreground ,(doom-color 'blue))))
      `(orderless-match-face-0 ((t :weight bold :foreground ,(doom-color 'blue))))
      `(orderless-match-face-1 ((t :weight bold :foreground ,(doom-color 'magenta))))
      `(orderless-match-face-2 ((t :weight bold :foreground ,(doom-color 'green))))
