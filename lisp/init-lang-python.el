@@ -62,8 +62,6 @@
    "va" '(pyvenv-activate :which-key "activate")
    "vd" '(pyvenv-deactivate :which-key "deactivate"))
 
-  ;; TODO: Check https://github.com/wyuenho/emacs-pet
-  ;; to support .pdm-python file
   (defun +python/locate-venv-python-cmd ()
     "Look for virtual environments local to the workspace."
     (when-let* ((project-dir (+project/root))
@@ -78,10 +76,19 @@
   (require 'eglot)
 
   ;; https://docs.basedpyright.com/latest/configuration/language-server-settings/
+  ;; https://docs.basedpyright.com/latest/benefits-over-pyright/better-defaults/#default-value-for-pythonpath
+  ;; If neither `pythonPath 'or `venvPath'/`venv' are set, basedpyright will check for a venv at `./.venv' and if it finds one, i
+  ;; t will use its python interpreter as the value for pythonPath.
   (defun +python/workspace-configuration (&optional server)
-    (if-let* ((venv-python-cmd (+python/locate-venv-python-cmd)))
-        `(:python
-          (:pythonPath ,venv-python-cmd))))
+    (append
+     ;; basedpyright settings
+     '(:basedpyright
+       (:analysis
+        (:typeCheckingMode "recommended"
+         :diagnosticMode "openFilesOnly")))
+     ;; pyright settings
+     (if-let* ((venv-python-cmd (+python/locate-venv-python-cmd)))
+         `(:python (:pythonPath ,venv-python-cmd)))))
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-mode))
     (+python/workspace-configuration))

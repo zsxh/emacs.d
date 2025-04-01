@@ -78,12 +78,13 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
           (with-current-buffer (vterm buffer-name)
             (when (bound-and-true-p evil-local-mode)
               (evil-change-to-initial-state))
-            (unless dir-remote-p
-              (+vterm/activate-local-python-venv))
+            ;; (unless dir-remote-p
+            ;;   (+vterm/activate-local-python-venv))
             ;; (when dir-remote-p
             ;;   (+vterm/change-remote-directory))
             )))))
 
+  ;; TODO: deprecated
   (defun +vterm/change-remote-directory ()
     "Use the corresponding method to prepare vterm at the corresponding remote directory."
     (when (featurep 'tramp)
@@ -105,7 +106,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
               (vterm-send-return)))
            (t nil))))))
 
-
+  ;; TODO: deprecated
   (defun +vterm/activate-local-python-venv ()
     (when-let* ((project-dir (+project/root))
                 (venv-dir (or
