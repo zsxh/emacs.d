@@ -156,6 +156,10 @@
   :mode ("\\.grpc\\'" . grpclient-mode)
   :defer t)
 
+;; Mermaid
+(use-package mermaid-mode
+  :defer t)
+
 
 (provide 'init-file-modes)
 

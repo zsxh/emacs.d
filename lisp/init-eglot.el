@@ -29,7 +29,8 @@
         eglot-report-progress nil
         eglot-stay-out-of '()
         eglot-extend-to-xref t
-        eglot-code-action-indications '(margin))
+        eglot-code-action-indications '(margin)
+        eglot-advertise-cancellation nil)
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
 
 (with-eval-after-load 'eglot
@@ -133,9 +134,7 @@
      "hc" '(eglot-show-call-hierarchy :which-key "call-hierarchy")
      "ht" '(eglot-show-type-hierarchy :which-key "type-hierarchy")
      ;; rename
-     "R" '(eglot-rename :which-key "rename")
-     ;; signature
-     "S" '(+eglot/signature-help-at-point :which-key "signatureHelp"))))
+     "R" '(eglot-rename :which-key "rename"))))
 
 ;; https://github.com/mohkale/consult-eglot
 (use-package consult-eglot

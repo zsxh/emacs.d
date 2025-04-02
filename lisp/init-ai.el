@@ -22,7 +22,7 @@
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
         gptel-expert-commands t
         gptel-log-level 'debug
-        gptel-temperature 1.0
+        gptel-temperature 0.7
         gptel-include-reasoning 'ignore)
 
   (add-hook 'gptel-mode-hook 'turn-on-visual-line-mode)
@@ -104,7 +104,7 @@
 (use-package aidermacs
   :bind ("C-c a" . aidermacs-transient-menu)
   :config
-  (setq aidermacs-default-model "openrouter/google/gemini-2.0-flash-001"
+  (setq aidermacs-default-model "openrouter/google/gemini-2.5-pro-exp-03-25:free"
         aidermacs-editor-model "deepseek/deepseek-chat"
         aidermacs-architect-model "deepseek/deepseek-reasoner"
         aidermacs-extra-args '("--no-check-update"))
