@@ -11,7 +11,6 @@
 ;;; Code:
 
 ;; NOTE: Install `jdtls' via Nix home-manager/darwin-nix, https://github.com/eclipse/eclipse.jdt.ls
-;; NOTE: Install decomiplers, https://github.com/dgileadi/dg.jdt.ls.decompiler, https://marketplace.visualstudio.com/items?itemName=dgileadi.java-decompiler
 ;; NOTE: `jdtls' settings: https://github.com/eclipse/eclipse.jdt.ls/blob/master/org.eclipse.jdt.ls.core/src/org/eclipse/jdt/ls/core/internal/preferences/Preferences.java
 ;; NOTE: Formatter settings:
 ;; Eclipse formatter settings: https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
@@ -21,15 +20,11 @@
 (add-hook-run-once 'java-mode-hook #'+eglot/set-leader-keys)
 (add-hook-run-once 'java-ts-mode-hook #'+eglot/set-leader-keys)
 
-(defun +java/eglot-ensure ()
-  (setq-local eglot-stay-out-of '(eldoc))
-  (eglot-ensure))
-
-(add-hook 'java-mode-hook #'+java/eglot-ensure)
-(add-hook 'java-ts-mode-hook #'+java/eglot-ensure)
+(add-hook 'java-mode-hook #'eglot-ensure)
+(add-hook 'java-ts-mode-hook #'eglot-ensure)
 
 (defun jdtls-command-contact (&optional interactive project)
-  (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar"))
+  (let* ((jvm-args `(,(concat "-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar"))
                      ;; "-XX:+UseZGC"
                      ;; "-XX:+ZGenerational"
                      "-XX:+UseStringDeduplication"))
@@ -39,20 +34,23 @@
 
 ;; TODO: eglot does not support `workspace.workspaceEdit.resourceOperations' yet
 (with-eval-after-load 'eglot
+
+  (exec-path-from-shell-copy-envs '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME" "JAVA_21_HOME" "JAVA_23_HOME"))
+
   ;; ----------------------- Intialization/Configurations -----------------------
   ;; (jsonrpc--json-encode (jdtls-initialization-options))
   (defun jdtls-initialization-options ()
     `(:settings (:java (:autobuild (:enabled t)
                         :configuration (:runtimes [(:name "JavaSE-1.8"
-                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_8_HOME")))
+                                                    :path ,(getenv "JAVA_8_HOME"))
                                                    (:name "JavaSE-11"
-                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_11_HOME")))
+                                                    :path ,(getenv "JAVA_11_HOME"))
                                                    (:name "JavaSE-17"
-                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_17_HOME")))
+                                                    :path ,(getenv "JAVA_17_HOME"))
                                                    (:name "JavaSE-21"
-                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_21_HOME")))
+                                                    :path ,(getenv "JAVA_21_HOME"))
                                                    (:name "JavaSE-23"
-                                                    :path ,(string-trim (shell-command-to-string "echo $JAVA_23_HOME"))
+                                                    :path ,(getenv "JAVA_23_HOME")
                                                     :default t)])
                         :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
                                             :profile "GoogleStyle"))
