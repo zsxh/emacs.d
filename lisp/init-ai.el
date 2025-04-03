@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;; TODO: gptel code review (change files + git diff --cached)
+
 ;; A simple ChatGPT client for Emacs
 ;; https://github.com/karthink/gptel
 ;; NOTE: https://github.com/karthink/gptel/wiki#defining-custom-gptel-commands

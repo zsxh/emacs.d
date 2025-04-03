@@ -196,9 +196,9 @@
    "w-" '(split-window-below :which-key "split-bottom")
    "wb" '(balance-windows :which-key "balance-windows")
    "wd" '(delete-window :which-key "delete-window")
+   "wl" '(transient-windows-layout :which-key "windows-layout")
    "wm" '(+funcs/toggle-maximize-buffer :which-key "maximized")
    "ws" '(transient-window-scale :which-key "scale")
-   "wt" '(transient-transpose-frame :which-key "transpose-frame")
    "ww" '(ace-swap-window :which-key "swap-window")
    ;; Toggle
    "T" '(nil :which-key "toggle")
@@ -252,18 +252,22 @@
      ("b" "balance" balance-windows)
      ("q" "quit" transient-quit-all)])
 
-  (transient-define-prefix transient-transpose-frame ()
-    "transpose frame"
-    ["transpose frame
-    |A|B|
-    |C|D|"
-     ("t" "transpose-frame            B<->C" transpose-frame)
-     ("-" "flip-frame                 AB<->CD" flip-frame)
-     ("/" "flop-frame                 AC<->BD" flop-frame)
-     ("x" "rotate-frame               A<->D B<->C" rotate-frame)
-     ("o" "rotate-frame-clockwise     A->B->D->C->A" rotate-frame-clockwise)
-     ("O" "rotate-frame-anticlockwise A->C->D->B->A" rotate-frame-anticlockwise)
-     ("q" "quit" transient-quit-all)])
+  (transient-define-prefix transient-windows-layout ()
+    "window commands.
+Check: https://p.bauherren.ovh/blog/tech/new_window_cmds"
+    ["Transpose"
+     ("t" "transpose-window-layout" transpose-window-layout :transient t)]
+    ["Rotate layout"
+     ("o" "rotate-window-layout-clockwise" rotate-window-layout-clockwise :transient t)
+     ;; TODO: enable it
+     ;; ("O" "rotate-window-layout-anticlockwise" rotate-window-layout-anticlockwise :transient t)
+     ]
+    ["Flip"
+     ("-" "flip-window-layout-vertically" flip-window-layout-vertically :transient t)
+     ("/" "flip-window-layout-horizontally" flip-window-layout-horizontally :transient t)]
+    ["Cycle (rotate windows)"
+     ("c" "rotate-windows" rotate-windows :transient t)
+     ("C" "rotate-windows-back" rotate-windows-back :transient t)])
 
   (transient-define-prefix transient-string-inflection ()
     ["Cycle text objects through camelCase, kebab-case, snake case and UPPER CASE."

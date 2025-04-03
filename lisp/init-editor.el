@@ -55,14 +55,6 @@
   :bind (("M-u" . ace-window))
   :commands (ace-window ace-swap-window))
 
-(use-package transpose-frame
-  :commands (transpose-frame            ; \
-             flip-frame                 ; -
-             flop-frame                 ; |
-             rotate-frame               ; x
-             rotate-frame-clockwise
-             rotate-frame-anticlockwise))
-
 ;; Numbered window shortcuts
 (use-package winum
   :defer 0.5
