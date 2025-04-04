@@ -81,18 +81,9 @@ If RETURN-P, return the message as a string instead of displaying it."
 
 (with-eval-after-load 'package
   (setq package-install-upgrade-built-in t)
+  (defvar package-upgrade-exclude-vc-pkgs-p t)
 
-  (defun custom-package-upgradable-p (pkg-desc)
-    "Check if PKG-DESC is upgradable.
-Return non-nil if the package:
-1. Is not a VC package (not managed via version control)
-2. Does not have \"external\" status
-3. Otherwise meets standard upgrade criteria"
-    (cond
-     ((package-vc-p pkg-desc) nil)
-     ((string-equal (package-desc-status pkg-desc) "external") nil)
-     (t t)))
-
+  ;; may exclude vc pkgs
   (define-advice package--upgradeable-packages (:override (&optional include-builtins) advice)
     ;; Initialize the package system to get the list of package
     ;; symbols for completion.
@@ -104,7 +95,8 @@ Return non-nil if the package:
         (or (let ((available
                    (assq (car elt) package-archive-contents)))
               (and available
-                   (custom-package-upgradable-p (cadr elt))
+                   (when package-upgrade-exclude-vc-pkgs-p
+                     (not (package-vc-p (cadr elt))))
                    (or (and
                         include-builtins
                         (not (package-desc-version (cadr elt))))
