@@ -82,6 +82,7 @@ If RETURN-P, return the message as a string instead of displaying it."
 (with-eval-after-load 'package
   (setq package-install-upgrade-built-in t)
   (defvar package-upgrade-exclude-vc-pkgs-p t)
+  (defvar package-upgrade-exclude-external-status-pkgs-p t)
 
   ;; may exclude vc pkgs
   (define-advice package--upgradeable-packages (:override (&optional include-builtins) advice)
@@ -95,8 +96,10 @@ If RETURN-P, return the message as a string instead of displaying it."
         (or (let ((available
                    (assq (car elt) package-archive-contents)))
               (and available
-                   (when package-upgrade-exclude-vc-pkgs-p
-                     (not (package-vc-p (cadr elt))))
+                   (or (not package-upgrade-exclude-vc-pkgs-p)
+                       (not (package-vc-p (cadr elt))))
+                   (or (not package-upgrade-exclude-external-status-pkgs-p)
+                       (not (string-equal "external" (package-desc-status (cadr elt)))))
                    (or (and
                         include-builtins
                         (not (package-desc-version (cadr elt))))
