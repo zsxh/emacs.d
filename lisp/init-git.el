@@ -140,20 +140,6 @@
 (use-package git-modes
   :defer t)
 
-(with-eval-after-load 'smerge-mode
-  (require 'transient)
-  (transient-define-prefix transient-smerge ()
-    ["Smerge"
-     ("j" "smerge-next" smerge-next :transient t)
-     ("k" "smerge-prev" smerge-prev :transient t)
-     ("e" "smerge-ediff" smerge-ediff :transient t)
-     ("0" "smerge-keep-current" smerge-keep-current :transient t)
-     ("1" "smerge-keep-upper" smerge-keep-upper :transient t)
-     ("2" "smerge-keep-base" smerge-keep-base :transient t)
-     ("3" "smerge-keep-lower" smerge-keep-lower :transient t)
-     ("4" "smerge-keep-all" smerge-keep-all :transient t)
-     ("q" "quit" transient-quit-all)]))
-
 ;; https://github.com/sshaw/git-link
 (use-package git-link
   :defer t)
@@ -162,6 +148,9 @@
 ;; Supports listing and filtering issues, viewing issue details, modifying certain properties, and adding worklogs.
 (use-package jira
   :defer t)
+
+(use-package embark-vc
+  :after embark)
 
 
 (provide 'init-git)

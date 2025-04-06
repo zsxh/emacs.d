@@ -62,7 +62,8 @@
       :models '(anthropic/claude-3.7-sonnet
                 deepseek/deepseek-r1:free
                 deepseek/deepseek-chat-v3-0324:free
-                google/gemini-2.5-pro-exp-03-25:free)))
+                google/gemini-2.5-pro-exp-03-25:free
+                openrouter/quasar-alpha)))
 
   ;; DeepSeek
   (defvar gptel--deepseek
