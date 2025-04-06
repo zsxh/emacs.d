@@ -207,7 +207,9 @@ targets."
         (apply fn args)))
 
     (advice-add #'embark-completing-read-prompter
-                :around #'embark-hide-which-key-indicator)))
+                :around #'embark-hide-which-key-indicator))
+
+  (define-key embark-file-map (kbd "S") '+funcs/sudo-find-file))
 
 (use-package embark-consult
   :hook (embark-collect-mode . consult-preview-at-point-mode))

@@ -89,15 +89,27 @@ If point was already at that position, move point to beginning of line."
     (and (= oldpos (point))
          (beginning-of-line))))
 
+(defun +funcs/sudo-find-file (file)
+  "Open FILE as root."
+  (interactive "FOpen file as root: ")
+  (when (file-writable-p file)
+    (user-error "File is user writeable, aborting sudo"))
+  (find-file (if (file-remote-p file)
+                 (concat "/" (file-remote-p file 'method) ":"
+                         (file-remote-p file 'user) "@" (file-remote-p file 'host)
+                         "|sudo:root@"
+                         (file-remote-p file 'host) ":" (file-remote-p file 'localname))
+               (concat "/sudo:root@localhost:" file))))
+
 (defun +funcs/sudo-edit-current-file ()
   "Sudo edit current file."
   (interactive)
   (cond ((eq major-mode 'dired-mode)
          (when-let* ((filename (dired-file-name-at-point)))
-           (find-file (concat "/sudo:root@localhost:" (expand-file-name filename)))))
+           (+funcs/sudo-find-file (expand-file-name filename))))
         ((buffer-file-name)
          (let ((old-point (point)))
-           (find-file (concat "/sudo:root@localhost:" (buffer-file-name)))
+           (+funcs/sudo-find-file (buffer-file-name))
            (goto-char old-point)))))
 
 (defun +funcs/sudo-shell-command (command)
