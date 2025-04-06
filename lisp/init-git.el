@@ -150,7 +150,7 @@
   :defer t)
 
 (use-package embark-vc
-  :after embark)
+  :defer forge)
 
 
 (provide 'init-git)

@@ -96,12 +96,31 @@
                 )))
 
   ;; default model
-  (setq gptel-backend gptel--deepseek
-        gptel-model 'deepseek-chat))
+  (setq gptel-backend gptel--openrouter
+        gptel-model 'openrouter/quasar-alpha))
+
+;; transient keymap
+;; - `+': `more-response'
+;; - `M-w': `copy-response'
+;; - `M-RET': `create-chat'
+(use-package gptel-quick
+  :vc (:url "https://github.com/karthink/gptel-quick")
+  :defer t
+  :init
+  (with-eval-after-load 'embark
+    (keymap-set embark-general-map "?" #'gptel-quick))
+  :config
+  (setq gptel-quick-system-message
+        (lambda (count)
+          (format "Explain in %d words or fewer in chinese." count))
+        gptel-quick-timeout nil))
 
 (use-package gptel-commit
   :ensure nil
-  :commands (gptel-commit))
+  :commands (gptel-commit)
+  :init
+  (with-eval-after-load 'embark
+    (keymap-set embark-general-map "." #'gptel-commit)))
 
 ;; Aider config options, check `https://aider.chat/docs/config/options.html'
 (use-package aidermacs

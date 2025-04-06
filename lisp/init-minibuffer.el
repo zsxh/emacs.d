@@ -153,7 +153,7 @@
   :vc (:url "https://github.com/brett-lempereur/consult-xref-stack")
   :bind (("C-," . consult-xref-stack-backward)))
 
-;; minibuffer actions and occur/export features
+;; Emacs Mini-Buffer Actions Rooted in Keymaps
 ;; NOTE: https://karthinks.com/software/fifteen-ways-to-use-embark/
 ;;
 ;; Embark is an Emacs package that acts like a context menu, allowing
