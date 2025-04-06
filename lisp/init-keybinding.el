@@ -132,7 +132,7 @@
    "hm" '(describe-keymap :which-key "describe-keymap")
    "hs" '(describe-syntax :which-key "describe-syntax")
    "hv" '(helpful-variable :which-key "helpful-variable")
-   "hp" '(helpful-at-point :which-key "helpful-at-point")
+   "hp" '(describe-package :which-key "describe-package")
    "hP" '(nil :which-key "profiler")
    "hPs" '(profiler-start :which-key "profiler-start")
    "hPr" '(profiler-report :which-key "profiler-report")
@@ -202,6 +202,7 @@
    ;; Toggle
    "T" '(nil :which-key "toggle")
    "Td" '(toggle-debug-on-error :which-key "debug-on-error")
+   "Te" '(next-error-follow-minor-mode :which-key "next-error-follow-minor-mode") ;; `compilation-next-error', `compilation-previous-error'
    "Tl" '(toggle-truncate-lines :which-key "truncate-lines")
    "Tn" '(display-line-numbers-mode :which-key "display-line-numbers")
    "Tp" '(nil :which-key "proxy")

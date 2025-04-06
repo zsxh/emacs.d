@@ -79,6 +79,7 @@
                ("g" . nil)
                ("gr" . rg-recompile)))
   :commands (rg rg-dwim rg-project rg-literal rg-dwim-current-file)
+  :hook (rg-mode . next-error-follow-minor-mode)
   :config
   (with-eval-after-load 'evil
     (evil-define-key 'normal rg-mode-map
@@ -100,6 +101,10 @@
       ",u" 'wgrep-remove-all-change
       ",k" 'wgrep-abort-changes
       "q" 'wgrep-exit)))
+
+(with-eval-after-load 'grep
+  (define-key grep-mode-map (kbd "e") #'wgrep-change-to-wgrep-mode)
+  (add-hook 'grep-mode-hook #'next-error-follow-minor-mode))
 
 ;; This package allows Emacs to copy to and paste from the GUI clipboard
 ;; when running in text terminal.
