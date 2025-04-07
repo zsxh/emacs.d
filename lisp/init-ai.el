@@ -27,6 +27,8 @@
         gptel-temperature 0.7
         gptel-include-reasoning 'ignore)
 
+  (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "gptel> ")
+
   (add-hook 'gptel-mode-hook 'turn-on-visual-line-mode)
 
   ;; Clean Up default backends

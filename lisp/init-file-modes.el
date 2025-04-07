@@ -34,6 +34,7 @@
   :defer t
   :config
   (setq-default markdown-fontify-code-blocks-natively t)
+  (setopt markdown-header-scaling t)
   (+funcs/major-mode-leader-keys
    markdown-mode-map
    "'" '(markdown-edit-code-block :which-key "edit-code-block")
