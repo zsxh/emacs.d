@@ -12,13 +12,19 @@
 
 ;; TODO: gptel code review (change files + git diff --cached)
 
+;; Embark Actions
+(with-eval-after-load 'embark
+  (keymap-set embark-general-map "?" #'gptel-quick)
+  (keymap-set embark-general-map "." #'gptel-commit))
+
 ;; A simple ChatGPT client for Emacs
 ;; https://github.com/karthink/gptel
 ;; NOTE: https://github.com/karthink/gptel/wiki#defining-custom-gptel-commands
 ;; NOTE: https://ollama.com/blog/how-to-prompt-code-llama
 (use-package gptel
   :defer t
-  :bind (:map gptel-mode-map
+  :bind (("<f8>" . gptel-menu)
+         :map gptel-mode-map
          ("C-c h" . gptel-menu))
   :config
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
@@ -108,9 +114,6 @@
 (use-package gptel-quick
   :vc (:url "https://github.com/karthink/gptel-quick")
   :defer t
-  :init
-  (with-eval-after-load 'embark
-    (keymap-set embark-general-map "?" #'gptel-quick))
   :config
   (setq gptel-quick-system-message
         (lambda (count)
@@ -119,10 +122,7 @@
 
 (use-package gptel-commit
   :ensure nil
-  :commands (gptel-commit)
-  :init
-  (with-eval-after-load 'embark
-    (keymap-set embark-general-map "." #'gptel-commit)))
+  :commands (gptel-commit))
 
 ;; Aider config options, check `https://aider.chat/docs/config/options.html'
 (use-package aidermacs
