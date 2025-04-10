@@ -69,6 +69,7 @@ Additional types are not mandated by the Conventional Commits specification, and
 <br /><br />
 A scope may be provided to a commit's type, to provide additional contextual information and is contained within parenthesis, e.g., `feat(parser): add ability to parse arrays`.")
 
+;; TODO: english/chinese commit message
 (defun gptel-commit ()
   "Generate commit message with gptel and insert it into the buffer."
   (interactive)

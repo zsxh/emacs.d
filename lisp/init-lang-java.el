@@ -15,7 +15,7 @@
 ;; NOTE: Formatter settings:
 ;; Eclipse formatter settings: https://github.com/redhat-developer/vscode-java/wiki/Formatter-settings
 ;; continuation_indentation: https://stackoverflow.com/questions/42622553/eclipse-code-formatter-indents-with-double-amount-of-spaces-intellij-ide
-(setq java-ts-mode-indent-offset 2)
+;; (setq java-ts-mode-indent-offset 2)
 
 (add-hook-run-once 'java-mode-hook #'+eglot/set-leader-keys)
 (add-hook-run-once 'java-ts-mode-hook #'+eglot/set-leader-keys)
