@@ -110,7 +110,7 @@
   :defer t)
 
 ;; [just](https://github.com/casey/just) is a handy way to save and run project-specific commands.
-(use-package just-mode
+(use-package just-ts-mode
   :defer t)
 
 ;; SQL

@@ -10,6 +10,11 @@
 
 ;;; Code:
 
+;; TODO: open kitty or tmux session in emacs
+;; kitty @ --to=unix:/tmp/mykitty-77842 launch --type=window --cwd=/tmp
+;; tmux ls
+;; tmux new-window -t 0 'cd /tmp'
+
 (eval-when-compile
   (require 'init-custom))
 

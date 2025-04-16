@@ -38,7 +38,7 @@
   ;; produced by fontifications was already produced and collected; the
   ;; editing itself will produce much less garbage.
   (setq jit-lock-stealth-time 1.5
-        jit-lock-stealth-load 100
+        jit-lock-stealth-load 200
         jit-lock-stealth-nice 0.5
         jit-lock-contextually 'syntax-driven
         jit-lock-defer-time 0))

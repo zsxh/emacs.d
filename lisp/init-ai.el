@@ -98,8 +98,7 @@ Supported languages: zh, en."
       :models '(anthropic/claude-3.7-sonnet
                 deepseek/deepseek-r1:free
                 deepseek/deepseek-chat-v3-0324:free
-                google/gemini-2.5-pro-exp-03-25:free
-                openrouter/optimus-alpha)))
+                google/gemini-2.5-pro-exp-03-25:free)))
 
   ;; DeepSeek
   (defvar gptel--deepseek
@@ -133,7 +132,7 @@ Supported languages: zh, en."
 
   ;; default model
   (setq gptel-backend gptel--openrouter
-        gptel-model 'openrouter/optimus-alpha))
+        gptel-model 'deepseek/deepseek-chat-v3-0324:free))
 
 ;; transient keymap
 ;; - `+': `more-response'
@@ -156,7 +155,7 @@ Supported languages: zh, en."
 (use-package aidermacs
   :bind ("C-c a" . aidermacs-transient-menu)
   :config
-  (setq aidermacs-default-model "openrouter/openrouter/optimus-alpha"
+  (setq aidermacs-default-model "openrouter/deepseek/deepseek-chat-v3-0324:free"
         aidermacs-editor-model "deepseek/deepseek-chat"
         aidermacs-architect-model "deepseek/deepseek-reasoner"
         aidermacs-extra-args '("--no-check-update"))
