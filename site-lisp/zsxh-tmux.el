@@ -72,36 +72,44 @@ setting working-dircotry to DIR."
 
 (defun tmux--select-or-create-session ()
   "Let user select existing tmux session or create new one."
-  (let ((sessions (tmux--list-sessions)))
-    (let ((choice (completing-read
-                   "Select tmux session (or Create new): "
-                   (append sessions '("Create New Session")) nil t)))
-      (if (string= choice "Create New Session")
-          (tmux--create-session
-           (read-string "New tmux session name: " nil))
-        choice))))
+  (let* ((sessions (tmux--list-sessions))
+         (choice (completing-read
+                  "Select or Create tmux session"
+                  sessions)))
+    (if (member choice sessions)
+        choice
+      (when (y-or-n-p (format "Create new session '%s'? " choice))
+        (tmux--create-session choice)))))
 
 (defun tmux--select-or-create-window ()
   "Let user select existing tmux window or create new one in SESSION."
   (let* ((session (tmux--select-or-create-session))
-         (windows (tmux--list-windows session)))
-    (let ((choice (completing-read
-                   "Select tmux window (or Create new): "
-                   (append windows '("Create New Window")) nil t)))
-      (if (string= choice "Create New Window")
-          (tmux--create-window
-           session
-           (read-directory-name
-            "Workwing Directory: "
-            (or (project-root (project-current))
-                default-directory))
-           (read-string "New tmux window name: " nil))
-        (format "%s:%s" session (substring choice 0 (string-search ":" choice)))))))
+         (windows (tmux--list-windows session))
+         (choice (completing-read "Select or Create tmux window: " windows)))
+    (if (member choice windows)
+        (format "%s:%s" session (substring choice 0 (string-search ":" choice)))
+      (when (y-or-n-p (format "Create new window '%s'? " choice))
+        (let ((working-dir (read-directory-name
+                            "New window working-directory: "
+                            (or (project-root (project-current))
+                                default-directory))))
+          (tmux--create-window session working-dir choice))))))
 
 ;;;###autoload
 (defun tmux-run (session-window cmd)
+  "Run CMD in specified tmux SESSION-WINDOW.
+Interactively prompts for:
+1. A tmux session and window (existing or new)
+2. A command to execute in that window
+
+SESSION-WINDOW should be in format \"session_name:window_id\".
+CMD is the shell command to execute in the target window.
+
+Example:
+  (tmux-run \"mysession:@1\" \"ls -la\")"
   (interactive
    (list (tmux--select-or-create-window)
+         ;; TODO: https://github.com/LemonBreezes/emacs-fish-completion
          (read-string "tmux run: ")))
 
   (unless (executable-find "tmux")
