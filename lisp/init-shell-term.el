@@ -10,11 +10,6 @@
 
 ;;; Code:
 
-;; TODO: open kitty or tmux session in emacs
-;; kitty @ --to=unix:/tmp/mykitty-77842 launch --type=window --cwd=/tmp
-;; tmux ls
-;; tmux new-window -t 0 'cd /tmp'
-
 (eval-when-compile
   (require 'init-custom))
 
@@ -184,6 +179,10 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
         eat-enable-shell-command-history nil)
   (with-eval-after-load 'evil
     (evil-set-initial-state 'eat-mode 'insert)))
+
+;; `tmux-run'
+(use-package zsxh-tmux
+  :ensure nil)
 
 
 (provide 'init-shell-term)
