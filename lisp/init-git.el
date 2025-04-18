@@ -26,13 +26,14 @@
   (add-hook 'magit-process-find-password-functions 'magit-process-password-auth-source)
 
   (defun magit-mode-bury-buffer-always-kill (&optional _)
-    "kill Magit buffers based on context.
+    "Kill Magit buffers based on context.
 When called from a `magit-status-mode' buffer, kills all related Magit buffers.
 Otherwise, kill the current buffer using `magit-bury-buffer-function'."
     (interactive "P")
-    (if (eq major-mode 'magit-status-mode)
-        (mapc #'kill-buffer (magit-mode-get-buffers))
-      (funcall magit-bury-buffer-function t)))
+    (let ((current-mode major-mode))
+      (funcall magit-bury-buffer-function t)
+      (when (eq current-mode 'magit-status-mode)
+        (mapc #'kill-buffer (magit-mode-get-buffers)))))
 
   (define-key magit-mode-map (kbd "q") #'magit-mode-bury-buffer-always-kill)
 
@@ -42,7 +43,9 @@ Otherwise, kill the current buffer using `magit-bury-buffer-function'."
     (evil-collection-init 'magit-section)
     (evil-define-key '(normal visual) magit-mode-map
       "$" 'magit-process-buffer
-      "q" 'magit-mode-bury-buffer-always-kill)
+      "q" 'magit-mode-bury-buffer-always-kill
+      ;; "q" 'magit-mode-bury-buffer
+      )
     (with-eval-after-load 'with-editor
       (evil-define-minor-mode-key 'normal 'with-editor-mode
         ",c" 'with-editor-finish
