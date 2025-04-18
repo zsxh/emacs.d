@@ -25,12 +25,24 @@
   ;; cache user password when using http, https://stackoverflow.com/a/75298815
   (add-hook 'magit-process-find-password-functions 'magit-process-password-auth-source)
 
+  (defun magit-mode-bury-buffer-always-kill (&optional _)
+    "kill Magit buffers based on context.
+When called from a `magit-status-mode' buffer, kills all related Magit buffers.
+Otherwise, kill the current buffer using `magit-bury-buffer-function'."
+    (interactive "P")
+    (if (eq major-mode 'magit-status-mode)
+        (mapc #'kill-buffer (magit-mode-get-buffers))
+      (funcall magit-bury-buffer-function t)))
+
+  (define-key magit-mode-map (kbd "q") #'magit-mode-bury-buffer-always-kill)
+
   ;; TIPS: keybindings "[" `magit-section-forward-sibling', "]" `magit-section-backward-sibling'
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'magit)
     (evil-collection-init 'magit-section)
     (evil-define-key '(normal visual) magit-mode-map
-      "$" 'magit-process-buffer)
+      "$" 'magit-process-buffer
+      "q" 'magit-mode-bury-buffer-always-kill)
     (with-eval-after-load 'with-editor
       (evil-define-minor-mode-key 'normal 'with-editor-mode
         ",c" 'with-editor-finish
