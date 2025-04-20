@@ -14,6 +14,7 @@
 (use-package docker
   :commands docker
   :config
+  (setq docker-show-messages nil)
   ;; https://www.gnu.org/software/emacs/manual/html_node/tramp/Remote-processes.html
   ;; On remote hosts, the local `shell-file-name' might be useless, use `explicit-shell-file-name' instead instead
   ;; fixed /usr/bin/zsh not found error
@@ -52,6 +53,12 @@
 ;; https://github.com/eshelyaron/kubed
 (use-package kubed
   :defer t)
+
+(use-package kubernetes
+  :commands (kubernetes-overview)
+  :config
+  (setq kubernetes-poll-frequency 3600
+        kubernetes-redraw-frequency 3600))
 
 ;; https://github.com/emacsorphanage/terraform-mode
 (use-package terraform-mode

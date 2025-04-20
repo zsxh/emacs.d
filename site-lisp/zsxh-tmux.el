@@ -82,7 +82,12 @@ setting working-dircotry to DIR."
         (tmux--create-session choice)))))
 
 (defun tmux--select-or-create-window ()
-  "Let user select existing tmux window or create new one in SESSION."
+  "Let user select existing tmux window or create new one in SESSION.
+Checks if current buffer is remote (e.g. tramp) and errors if true."
+  (when (and (or (buffer-file-name) default-directory)
+             (file-remote-p (or (buffer-file-name) default-directory)))
+    (user-error "Remote files/directories not supported for tmux windows"))
+
   (let* ((session (tmux--select-or-create-session))
          (windows (tmux--list-windows session))
          (choice (completing-read "Select or Create tmux window: " windows)))
@@ -93,6 +98,8 @@ setting working-dircotry to DIR."
                             "New window working-directory: "
                             (or (project-root (project-current))
                                 default-directory))))
+          (when (file-remote-p working-dir)
+            (user-error "Cannot create tmux window with remote directory"))
           (tmux--create-window session working-dir choice))))))
 
 ;;;###autoload
