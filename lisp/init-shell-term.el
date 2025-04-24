@@ -176,7 +176,8 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (eat-compile-terminfo))
   (setq eat-kill-buffer-on-exit t
         eat-enable-shell-prompt-annotation nil
-        eat-enable-shell-command-history nil)
+        eat-enable-shell-command-history nil
+        eat-maximum-latency eat-minimum-latency)
   (with-eval-after-load 'evil
     (evil-set-initial-state 'eat-mode 'insert)))
 

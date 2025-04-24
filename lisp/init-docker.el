@@ -60,6 +60,12 @@
   (setq kubernetes-poll-frequency 3600
         kubernetes-redraw-frequency 3600))
 
+;; M-x: `kubel', `kubel-set-namespace', `kubel-set-context', `kubel-set-resource'
+(use-package kubel
+  :defer t
+  :config
+  (kubel-vterm-setup))
+
 ;; https://github.com/emacsorphanage/terraform-mode
 (use-package terraform-mode
   :defer t)

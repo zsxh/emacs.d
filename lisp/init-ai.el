@@ -120,17 +120,6 @@ Supported languages: zh, en."
                 Pro/deepseek-ai/DeepSeek-R1
                 Pro/deepseek-ai/DeepSeek-V3)))
 
-  ;; VolcEngine
-  (defvar gptel--volcengine
-    (gptel-make-deepseek "VolcEngine"
-      :host "ark.cn-beijing.volces.com"
-      :endpoint "/api/v3/chat/completions"
-      :stream t
-      :key 'gptel-api-key
-      :models '(ep-20250204215608-lx8sx ;; DeepSeek-R1
-                ep-20250204215631-zxmvf ;; DeepSeek-V3
-                )))
-
   ;; default model
   (setq gptel-backend gptel--openrouter
         gptel-model 'deepseek/deepseek-chat-v3-0324:free))
