@@ -203,6 +203,10 @@
   :vc (:url "https://github.com/emarsden/pgmacs")
   :defer t)
 
+;; `show-font-list', `show-font-select-preview',`show-font-tabulated'
+(use-package show-font
+  :defer t)
+
 
 (provide 'init-misc)
 
