@@ -171,6 +171,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 
 (use-package eat
   :defer t
+  :commands (eat-toggle)
   :config
   (unless (file-exists-p eat-term-terminfo-directory)
     (eat-compile-terminfo))
@@ -180,7 +181,29 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
         eat-minimum-latency 0.003
         eat-maximum-latency 0.033)
   (with-eval-after-load 'evil
-    (evil-set-initial-state 'eat-mode 'insert)))
+    (evil-set-initial-state 'eat-mode 'insert))
+
+  (defun eat-toggle (arg)
+    (interactive "P")
+    (let* ((dir-remote-p (file-remote-p default-directory))
+           (project-root (and (not arg)
+                              (not dir-remote-p)
+                              (+project/root)))
+           (default-directory (expand-file-name (or project-root default-directory)))
+           (predicate-fn (lambda (buf)
+                           (and (eq 'eat-mode (with-current-buffer buf major-mode))
+                                (string-equal default-directory
+                                              (with-current-buffer buf default-directory)))))
+           (buf (cl-find-if predicate-fn (buffer-list))))
+      (cond
+       ((buffer-live-p buf)
+        (if (eq (selected-window) (get-buffer-window buf))
+            (with-current-buffer buf (bury-buffer))
+          (display-buffer buf)))
+       (t
+        (if project-root
+            (call-interactively 'eat-project)
+          (call-interactively 'eat)))))))
 
 ;; `tmux-run'
 (use-package zsxh-tmux

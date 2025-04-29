@@ -70,34 +70,41 @@ setting working-dircotry to DIR."
     ;; (message "%s" cmd)
     (string-trim (shell-command-to-string cmd))))
 
-(defun tmux--select-or-create-session ()
+(defun tmux--select-or-create-session (&optional session-name)
   "Let user select existing tmux session or create new one."
   (let* ((sessions (tmux--list-sessions))
-         (choice (completing-read
-                  "Select or Create tmux session"
-                  sessions)))
+         (choice (or session-name (completing-read
+                                   "Select or Create tmux session"
+                                   sessions))))
     (if (member choice sessions)
         choice
       (when (y-or-n-p (format "Create new session '%s'? " choice))
         (tmux--create-session choice)))))
 
-(defun tmux--select-or-create-window ()
+(defun tmux--select-or-create-window (&optional session-name working-dir)
   "Let user select existing tmux window or create new one in SESSION.
 Checks if current buffer is remote (e.g. tramp) and errors if true."
   (when (and (or (buffer-file-name) default-directory)
              (file-remote-p (or (buffer-file-name) default-directory)))
     (user-error "Remote files/directories not supported for tmux windows"))
 
-  (let* ((session (tmux--select-or-create-session))
+  (let* ((session (tmux--select-or-create-session session-name))
          (windows (tmux--list-windows session))
-         (choice (completing-read "Select or Create tmux window: " windows)))
+         (choice
+          (or
+           (and working-dir (cl-find-if
+                             (lambda (cand) (string-suffix-p working-dir cand))
+                             windows))
+           (completing-read "Select or Create tmux window: " windows))))
     (if (member choice windows)
         (format "%s:%s" session (substring choice 0 (string-search ":" choice)))
       (when (y-or-n-p (format "Create new window '%s'? " choice))
-        (let ((working-dir (read-directory-name
-                            "New window working-directory: "
-                            (or (project-root (project-current))
-                                default-directory))))
+        (let ((working-dir (or working-dir
+                               (read-directory-name
+                                "New window working-directory: "
+                                (expand-file-name
+                                 (or (project-root (project-current))
+                                     default-directory))))))
           (when (file-remote-p working-dir)
             (user-error "Cannot create tmux window with remote directory"))
           (tmux--create-window session working-dir choice))))))
@@ -128,6 +135,36 @@ Example:
                 cmd
                 "C-m")
   (message "Run \"%s\" in tmux %s" cmd session-window))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; eat integration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun eat-tmux-open (&optional arg)
+  (let* ((dir-remote-p (file-remote-p default-directory))
+         (project (unless dir-remote-p (project-current)))
+         (session-name (string-replace
+                        "." "_"
+                        (if project (project-name project) "Default")))
+         (working-dir (when (or arg (not project)) (expand-file-name default-directory)))
+         (tmux-session (if working-dir
+                           (tmux--select-or-create-window session-name working-dir)
+                         (tmux--select-or-create-session session-name))))
+    (unless eat-terminal
+      (user-error "eat-termninal process not running"))
+    (eat-term-send-string eat-terminal (format "tmux switchc -t %s || tmux attach -t %s" tmux-session tmux-session))
+    (eat-self-input 1 'return)))
+
+;;;###autoload
+(defun eat-tmux-toggle (arg)
+  (interactive "P")
+  (require 'eat)
+  (let ((buffer (window-buffer (selected-window))))
+    (if (eq #'eat-mode (with-current-buffer buffer major-mode))
+        (bury-buffer)
+      (progn
+        (with-current-buffer (eat)
+          (eat-tmux-open arg))))))
 
 
 (provide 'zsxh-tmux)
