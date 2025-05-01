@@ -98,9 +98,11 @@ Supported languages: zh, en."
       :key 'gptel-api-key
       :models '(anthropic/claude-3.7-sonnet
                 google/gemini-2.5-pro-preview-03-25
+                google/gemini-2.5-pro-exp-03-25
                 deepseek/deepseek-r1:free
                 deepseek/deepseek-chat-v3-0324:free
-                google/gemini-2.5-pro-exp-03-25)))
+                qwen/qwen3-30b-a3b:free
+                qwen/qwen3-235b-a22b:free)))
 
   ;; DeepSeek
   (defvar gptel--deepseek
