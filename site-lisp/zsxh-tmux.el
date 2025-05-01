@@ -29,6 +29,9 @@
 
 ;;; Code:
 
+(defcustom tmux-debug nil
+  "Print tmux command if tmux-debug is not nil")
+
 (defun tmux--string-empty-p (str)
   (if (or (null str)
           (string= str ""))
@@ -48,12 +51,16 @@
     (when (not (string-empty-p windows))
       (split-string windows "\n" t))))
 
-(defun tmux--create-session (&optional name)
-  "Create new tmux session with NAME."
+(defun tmux--create-session (&optional name dir)
+  "Create new tmux session with NAME,
+setting working-dircotry to DIR."
   (let ((cmd "tmux new -d -P -F '#{session_name}'"))
     (unless (tmux--string-empty-p name)
       (setq cmd (concat cmd (format " -s '%s'" name))))
-    ;; (message "%s" cmd)
+    (unless (tmux--string-empty-p dir)
+      (setq cmd (concat cmd (format " -c %s" dir))))
+    (when tmux-debug
+      (message "%s" cmd))
     (string-trim (shell-command-to-string cmd))))
 
 (defun tmux--create-window (&optional session dir name)
@@ -64,13 +71,14 @@ setting working-dircotry to DIR."
       ;; -t <session_name>: 在最后加冒号保证 -t 后面加的是会话名而不是索引号
       (setq cmd (concat cmd (format " -t '%s:'" session))))
     (unless (tmux--string-empty-p dir)
-      (setq cmd (concat cmd (format " -c '%s'" dir))))
+      (setq cmd (concat cmd (format " -c %s" dir))))
     (unless (tmux--string-empty-p name)
       (setq cmd (concat cmd (format " -n '%s'" name))))
-    ;; (message "%s" cmd)
+    (when tmux-debug
+      (message "%s" cmd))
     (string-trim (shell-command-to-string cmd))))
 
-(defun tmux--select-or-create-session (&optional session-name)
+(defun tmux--select-or-create-session (&optional session-name working-dir)
   "Let user select existing tmux session or create new one."
   (let* ((sessions (tmux--list-sessions))
          (choice (or session-name (completing-read
@@ -79,7 +87,13 @@ setting working-dircotry to DIR."
     (if (member choice sessions)
         choice
       (when (y-or-n-p (format "Create new session '%s'? " choice))
-        (tmux--create-session choice)))))
+        (let ((working-dir (or working-dir
+                               (read-directory-name
+                                "New window working-directory: "
+                                (expand-file-name
+                                 (or (project-root (project-current))
+                                     default-directory))))))
+          (tmux--create-session choice working-dir))))))
 
 (defun tmux--select-or-create-window (&optional session-name working-dir)
   "Let user select existing tmux window or create new one in SESSION.
@@ -143,16 +157,25 @@ Example:
 (defun eat-tmux-open (&optional arg)
   (let* ((dir-remote-p (file-remote-p default-directory))
          (project (unless dir-remote-p (project-current)))
+         (project-working-dir-p (and (not arg) project))
          (session-name (string-replace
                         "." "_"
-                        (if project (project-name project) "Default")))
-         (working-dir (when (or arg (not project)) (expand-file-name default-directory)))
-         (tmux-session (if working-dir
-                           (tmux--select-or-create-window session-name working-dir)
-                         (tmux--select-or-create-session session-name))))
+                        (if project-working-dir-p
+                            (project-name project)
+                          "Default")))
+         (working-dir (expand-file-name
+                       (if project-working-dir-p
+                           (project-root project)
+                         default-directory)))
+         (tmux-session (if project-working-dir-p
+                           (tmux--select-or-create-session session-name working-dir)
+                         (tmux--select-or-create-window session-name working-dir))))
     (unless eat-terminal
       (user-error "eat-termninal process not running"))
-    (eat-term-send-string eat-terminal (format "tmux switchc -t %s || tmux attach -t %s" tmux-session tmux-session))
+    (eat-term-send-string
+     eat-terminal
+     ;; FIXME: multiple tmux clients
+     (format "tmux switchc -t %s || tmux attach -t %s" tmux-session tmux-session))
     (eat-self-input 1 'return)))
 
 ;;;###autoload

@@ -13,13 +13,13 @@
 (eval-when-compile
   (require 'init-custom))
 
+(global-set-key [f9] '+vterm/toggle)
+
 ;; https://github.com/akermu/emacs-libvterm
 ;; Linux: sudo pacman -S libvterm
 ;; MacOS: brew install libvterm
 (use-package vterm
   :commands (vterm vterm-other-window)
-  :init
-  (global-set-key [f9] '+vterm/toggle)
   :bind ((:map vterm-mode-map
           ("M-u" . ace-window)
           ("M-`" . +vterm/send-tmux-prefix-key)
@@ -170,7 +170,6 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
   :hook (after-init . global-kkp-mode))
 
 (use-package eat
-  :defer t
   :commands (eat-toggle)
   :config
   (unless (file-exists-p eat-term-terminfo-directory)
@@ -190,20 +189,17 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
                               (not dir-remote-p)
                               (+project/root)))
            (default-directory (expand-file-name (or project-root default-directory)))
-           (predicate-fn (lambda (buf)
-                           (and (eq 'eat-mode (with-current-buffer buf major-mode))
-                                (string-equal default-directory
-                                              (with-current-buffer buf default-directory)))))
-           (buf (cl-find-if predicate-fn (buffer-list))))
+           (eat-buffer-name (format "*eat:<%s>*"
+                                    (file-name-nondirectory
+                                     (directory-file-name
+                                      (expand-file-name default-directory)))))
+           (buf (get-buffer eat-buffer-name)))
       (cond
        ((buffer-live-p buf)
         (if (eq (selected-window) (get-buffer-window buf))
             (with-current-buffer buf (bury-buffer))
           (display-buffer buf)))
-       (t
-        (if project-root
-            (call-interactively 'eat-project)
-          (call-interactively 'eat)))))))
+       (t (eat))))))
 
 ;; `tmux-run'
 (use-package zsxh-tmux

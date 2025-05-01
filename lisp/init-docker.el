@@ -70,6 +70,8 @@
 (use-package terraform-mode
   :defer t)
 
+;; TODO: https://github.com/lina-bh/devcontainer.el
+
 
 (provide 'init-docker)
 
