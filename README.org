@@ -2,8 +2,6 @@
 
 * TODOs
 
-- password-store
-
 * Build Emacs
 
 +- Install libgccjit: https://aur.archlinux.org/packages/libgccjit/+

@@ -84,7 +84,7 @@
      ;; basedpyright settings
      '(:basedpyright
        (:analysis
-        (:typeCheckingMode "recommended"
+        (:typeCheckingMode "basic"
          :diagnosticMode "openFilesOnly")))
      ;; pyright settings
      (if-let* ((venv-python-cmd (+python/locate-venv-python-cmd)))
