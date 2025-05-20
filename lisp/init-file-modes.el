@@ -9,8 +9,14 @@
 
 ;;; Code:
 
+(when (treesit-ready-p 'toml)
+  (add-to-list 'major-mode-remap-alist '(conf-toml-mode . toml-ts-mode)))
+(when (treesit-ready-p 'toml)
+  (add-to-list 'major-mode-remap-alist '(conf-toml-mode . toml-ts-mode)))
+
 ;; Nix
 (use-package nix-ts-mode
+  :if (treesit-ready-p 'nix)
   :mode "\\.nix\\'"
   :hook ((nix-ts-mode . eglot-ensure))
   :config
@@ -25,6 +31,8 @@
 
 ;; Lua
 (use-package lua-ts-mode
+  :if (treesit-ready-p 'lua)
+  :mode "\\.lua\\'"
   :hook (lua-ts-mode . eglot-ensure)
   :config
   (+eglot/set-leader-keys lua-ts-mode-map))
@@ -48,21 +56,21 @@
   :hook ((csv-mode tsv-mode) . rainbow-csv-mode))
 
 ;; Yaml
-(use-package yaml-mode
-  :defer t)
-
-(use-package yaml-ts-mode
-  :ensure nil
-  :defer t
-  :config
-  (with-eval-after-load 'eglot
-    (when-let* ((_ (file-exists-p schemastore-file))
-                (schemas (with-temp-buffer
-                           (insert-file-contents schemastore-file)
-                           (jsonrpc--json-read))))
-      (cl-defmethod +eglot/workspace-configuration (server &context (major-mode yaml-ts-mode))
-        `(:yaml
-          (:schemas ,schemas))))))
+(if (treesit-ready-p 'yaml)
+    (use-package yaml-ts-mode
+      :ensure nil
+      :defer t
+      :config
+      (with-eval-after-load 'eglot
+        (when-let* ((_ (file-exists-p schemastore-file))
+                    (schemas (with-temp-buffer
+                               (insert-file-contents schemastore-file)
+                               (jsonrpc--json-read))))
+          (cl-defmethod +eglot/workspace-configuration (server &context (major-mode yaml-ts-mode))
+            `(:yaml
+              (:schemas ,schemas))))))
+  (use-package yaml-mode
+    :defer t))
 
 ;; Json
 (use-package json-ts-mode
@@ -111,6 +119,7 @@
 
 ;; [just](https://github.com/casey/just) is a handy way to save and run project-specific commands.
 (use-package just-ts-mode
+  :if (treesit-ready-p 'just)
   :defer t)
 
 ;; SQL

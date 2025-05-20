@@ -12,8 +12,12 @@
 
 ;; NOTE: Install gopls
 
+(when (treesit-ready-p 'go)
+  (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(go-dot-mod-mode . go-mod-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(go-dot-work-mode . go-work-ts-mode)))
+
 (use-package go-mode
-  :if (not (treesit-ready-p 'go))
   :hook (go-mode . eglot-ensure)
   :config
   (+eglot/set-leader-keys go-mode-map)
@@ -23,7 +27,6 @@
 
 (use-package go-ts-mode
   :ensure nil
-  :if (treesit-ready-p 'go)
   :hook (go-ts-mode . eglot-ensure)
   :bind (:map go-ts-mode-map
          ("<f1>" . go-tools-menu))

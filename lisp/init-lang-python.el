@@ -15,6 +15,9 @@
 ;; - python linter `ruff'
 ;; - python formatter `black'
 
+(when (treesit-ready-p 'python)
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
+
 ;; Python virtual environment support for Emacs
 (use-package pyvenv
   :commands pyvenv-activate)

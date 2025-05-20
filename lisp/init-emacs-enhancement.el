@@ -61,19 +61,7 @@
 (add-hook 'prog-mode-hook #'mp-remove-treesit-sexp-changes)
 (add-hook 'html-ts-mode-hook #'mp-remove-treesit-sexp-changes)
 
-(use-package treesit-auto
-  :custom
-  (treesit-auto-install 'prompt)
-  :config
-  ;; TODO: enable `markdown-ts-mode'
-  (delete 'markdown treesit-auto-langs)
-  ;; auto add to `auto-mode-alist' if `*-ts-mode' exists
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode)
-  ;; Make org src block respect `major-mode-remap-alist'
-  (add-hook 'org-mode-hook #'treesit-auto--set-major-remap)
-  (with-eval-after-load 'org
-    (advice-add 'org-src-get-lang-mode :filter-return #'+funcs/try-get-major-mode-remap)))
+(use-package treesit :ensure nil)
 
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
 

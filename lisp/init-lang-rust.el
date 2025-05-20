@@ -13,6 +13,9 @@
 ;; NOTE: Install `rust-analyzer'
 ;; https://github.com/rust-analyzer/rust-analyzer/releases
 
+(when (treesit-ready-p 'rust)
+  (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode)))
+
 (use-package rust-mode
   :defer t
   :mode ("\\.rs\\'" . rust-mode)
