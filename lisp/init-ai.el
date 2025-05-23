@@ -32,7 +32,7 @@
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
         gptel-expert-commands t
         gptel-log-level 'debug
-        gptel-temperature 0.7
+        gptel-temperature 1.0
         gptel-include-reasoning 'ignore)
 
   (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "gptel> ")
@@ -96,20 +96,25 @@ Supported languages: zh, en."
       :endpoint "/api/v1/chat/completions"
       :stream t
       :key 'gptel-api-key
-      :models '(anthropic/claude-3.7-sonnet
+      :models '(anthropic/claude-sonnet-4
                 google/gemini-2.5-pro-preview
-                google/gemini-2.5-pro-exp-03-25
-                deepseek/deepseek-r1:free
-                deepseek/deepseek-chat-v3-0324:free
-                qwen/qwen3-30b-a3b:free
-                qwen/qwen3-235b-a22b:free)))
+                openai/gpt-4.1
+                (deepseek/deepseek-chat-v3-0324:free
+                 :request-params (:temperature 0.3))
+                (qwen/qwen3-235b-a22b:free
+                 :request-params (;; :reasoning (:exclude t)
+                                  :temperature 0.6
+                                  :top_p 0.95
+                                  :top_k 20
+                                  :min_p 0)))))
 
   ;; DeepSeek
   (defvar gptel--deepseek
     (gptel-make-deepseek "DeepSeek"
       :stream t
       :key 'gptel-api-key
-      :models '(deepseek-chat
+      :models '((deepseek-chat
+                 :request-params (:temperature 0.3))
                 deepseek-reasoner)))
 
   ;; Siliconflow
@@ -119,13 +124,18 @@ Supported languages: zh, en."
       :stream t
       :key 'gptel-api-key
       :models '(deepseek-ai/DeepSeek-R1
-                deepseek-ai/DeepSeek-V3
-                Pro/deepseek-ai/DeepSeek-R1
-                Pro/deepseek-ai/DeepSeek-V3)))
+                (deepseek-ai/DeepSeek-V3
+                 :request-params (:temperature 0.3))
+                (Qwen/Qwen3-235B-A22B
+                 :request-params (:enable_thinking :json-false
+                                  :temperature 0.7
+                                  :top_p 0.8
+                                  :top_k 20
+                                  :min_p 0)))))
 
   ;; default model
-  (setq gptel-backend gptel--openrouter
-        gptel-model 'deepseek/deepseek-chat-v3-0324:free))
+  (setq gptel-backend gptel--siliconflow
+        gptel-model 'deepseek-ai/DeepSeek-V3))
 
 ;; transient keymap
 ;; - `+': `more-response'

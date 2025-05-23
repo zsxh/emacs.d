@@ -34,8 +34,8 @@
 
 ;; https://cider.mx/
 ;; `cider-insert-last-sexp-in-repl'
-(use-package cider
-  :defer t)
+;; (use-package cider
+;;   :defer t)
 
 ;; Open project dependencies inside jar archives, pairs well with eglot
 ;; https://git.sr.ht/~dannyfreeman/jarchive
