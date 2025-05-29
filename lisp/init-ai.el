@@ -99,6 +99,8 @@ Supported languages: zh, en."
       :models '(anthropic/claude-sonnet-4
                 google/gemini-2.5-pro-preview
                 openai/gpt-4.1
+                (deepseek/deepseek-r1-0528:free
+                 :request-params (:temperature 0.6))
                 (deepseek/deepseek-chat-v3-0324:free
                  :request-params (:temperature 0.3))
                 (qwen/qwen3-235b-a22b:free
@@ -115,7 +117,8 @@ Supported languages: zh, en."
       :key 'gptel-api-key
       :models '((deepseek-chat
                  :request-params (:temperature 0.3))
-                deepseek-reasoner)))
+                (deepseek-reasoner
+                 :request-params (:temperature 0.6)))))
 
   ;; Siliconflow
   (defvar gptel--siliconflow
@@ -123,7 +126,8 @@ Supported languages: zh, en."
       :host "api.siliconflow.cn"
       :stream t
       :key 'gptel-api-key
-      :models '(deepseek-ai/DeepSeek-R1
+      :models '((deepseek-ai/DeepSeek-R1
+                 :request-params (:temperature 0.6))
                 (deepseek-ai/DeepSeek-V3
                  :request-params (:temperature 0.3))
                 (Qwen/Qwen3-235B-A22B
