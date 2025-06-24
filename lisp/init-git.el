@@ -20,7 +20,8 @@
         magit-format-file-function #'magit-format-file-nerd-icons
         magit-define-global-key-bindings nil
         magit-diff-refine-hunk 'all
-        magit-save-repository-buffers 'dontask)
+        magit-save-repository-buffers 'dontask
+        magit-tramp-pipe-stty-settings 'pty)
 
   ;; cache user password when using http, https://stackoverflow.com/a/75298815
   (add-hook 'magit-process-find-password-functions 'magit-process-password-auth-source)

@@ -68,8 +68,13 @@
          ("C-c l" . avy-goto-line)
          ("C-c w" . avy-goto-word-1)
          ("C-c e" . avy-goto-word-0))
-  ;; :config (setq avy-style 'pre)
-  )
+  :config
+  (setq avy-style 'pre))
+
+(use-package ace-pinyin
+  :after avy
+  :config
+  (ace-pinyin-global-mode 1))
 
 ;; rigrep
 (use-package rg

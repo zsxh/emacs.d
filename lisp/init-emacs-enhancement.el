@@ -134,6 +134,7 @@
 (setq garbage-collection-messages nil)
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
+;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
 ;; https://willschenk.com/articles/2020/tramp_tricks/
 ;; https://mina86.com/2021/emacs-remote/
@@ -144,14 +145,36 @@
   (connection-local-set-profile-variables
    'remote-direct-async-process
    '((tramp-direct-async-process . t)))
+
   (connection-local-set-profiles
    '(:application tramp :protocol "ssh")
    'remote-direct-async-process)
+
+  (connection-local-set-profiles
+   '(:application tramp :protocol "scp")
+   'remote-direct-async-process)
+
+  ;; Tips to speed up connections
   (setq tramp-default-method "ssh"
-        ;; Tips to speed up connections
         tramp-verbose 0
         tramp-chunksize 2000
-        tramp-ssh-controlmaster-options nil))
+        tramp-ssh-controlmaster-options nil
+        tramp-use-scp-direct-remote-copying t
+        tramp-copy-size-limit (* 1024 1024) ;; 1MB
+        )
+
+  ;; NOTE: Fix remote compile
+  ;; Newer versions of TRAMP will use SSH connection sharing for much faster connections.
+  ;; These don’t require you to reenter your password each time you connect.
+  ;; The `compile' command disables this feature, so we want to turn it back on.
+  (with-eval-after-load 'compile
+    (remove-hook 'compilation-mode-hook #'tramp-compile-disable-ssh-controlmaster-options))
+
+  ;; perf issue
+  (remove-hook 'evil-insert-state-exit-hook #'doom-modeline-update-buffer-file-name)
+  (remove-hook 'find-file-hook #'doom-modeline-update-buffer-file-name)
+  (remove-hook 'find-file-hook 'forge-bug-reference-setup)
+  )
 
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; Emacs is now capable of editing files with very long lines since 29.1, `long-line-threshold'
@@ -261,6 +284,7 @@ otherwise  set the current buffer to read-only."
              (not (string-match-p "\\.age\\'" buffer-file-name))
              (not (string-equal "COMMIT_EDITMSG" (buffer-name)))
              (not (bound-and-true-p rmsbolt-mode))))
+      remote-file-name-inhibit-locks t
       remote-file-name-inhibit-auto-save t
       remote-file-name-inhibit-auto-save-visited t
       remote-file-name-inhibit-cache 120)

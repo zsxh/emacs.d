@@ -141,6 +141,10 @@ Supported languages: zh, en."
   (setq gptel-backend gptel--siliconflow
         gptel-model 'deepseek-ai/DeepSeek-V3))
 
+;; TODO: add mcp servers
+(use-package mcp
+  :defer t)
+
 ;; transient keymap
 ;; - `+': `more-response'
 ;; - `M-w': `copy-response'
