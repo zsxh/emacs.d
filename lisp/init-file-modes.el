@@ -113,6 +113,11 @@
   :config
   (setq pdf-view-restore-filename (locate-user-emacs-file "cache/.pdf-view-restore")))
 
+;; TODO: The Emacs Reader (via MuPDF) can open all the formats below:
+;; PDF,EPUB,MOBI,FB2,XPS/OpenXPS,CBZ
+;; (use-package reader
+;;   :vc (:url "https://codeberg.org/divyaranjan/emacs-reader" :make "all"))
+
 ;; google protobuf languages
 (use-package protobuf-mode
   :defer t)

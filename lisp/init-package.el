@@ -80,7 +80,8 @@ If RETURN-P, return the message as a string instead of displaying it."
 (add-hook 'emacs-startup-hook #'+package/display-benchmark)
 
 (with-eval-after-load 'package
-  (setq package-install-upgrade-built-in t)
+  (setq package-install-upgrade-built-in t
+        package-vc-allow-build-commands t)
   (defvar package-upgrade-exclude-vc-pkgs-p t)
   (defvar package-upgrade-exclude-external-status-pkgs-p t)
 
