@@ -91,32 +91,26 @@
                                  "j" '(counsel-jq :which-key "counsel-jq")
                                  "p" '(json-pretty-print-buffer :which-key "pretty-print")))
 
-;; PDF
-;; https://github.com/vedang/pdf-tools
-;; install `poppler'
-(use-package pdf-tools
-  :defer t
-  :mode ("\\.pdf\\'" . pdf-view-mode)
+;; PDF, EPUB, MOBI, FB2, XPS/OpenXPS, CBZ
+;; The Emacs Reader (via MuPDF)
+(use-package reader
+  :vc (:url "https://codeberg.org/divyaranjan/emacs-reader" :make "all")
+  :bind ((:map reader-mode-map
+          ("j" . reader-scroll-down-or-next-page)
+          ("k" . reader-scroll-up-or-prev-page)
+          ("h" . reader-scroll-left)
+          ("l" . reader-scroll-right)
+          ("d" . reader-next-page)
+          ("u" . reader-previous-page)
+          ("g" . reader-goto-page)
+          ("H" . reader-fit-to-height)
+          ("W" . reader-fit-to-width)
+          ("q" . nil)))
   :config
-  (pdf-tools-install)
-  (with-eval-after-load 'evil-collection
-    (evil-collection-pdf-setup)
-    (evil-define-key 'normal pdf-view-mode-map
-      (kbd "C-s") 'isearch-forward
-      (kbd "C-r") 'isearch-backward
-      "d" 'pdf-view-scroll-up-or-next-page
-      "u" 'pdf-view-scroll-down-or-previous-page)))
-
-(use-package pdf-view-restore
-  :after pdf-tools
-  :hook (pdf-view-mode . pdf-view-restore-mode)
-  :config
-  (setq pdf-view-restore-filename (locate-user-emacs-file "cache/.pdf-view-restore")))
-
-;; TODO: The Emacs Reader (via MuPDF) can open all the formats below:
-;; PDF,EPUB,MOBI,FB2,XPS/OpenXPS,CBZ
-;; (use-package reader
-;;   :vc (:url "https://codeberg.org/divyaranjan/emacs-reader" :make "all"))
+  (with-eval-after-load 'evil
+    (evil-define-key '(normal motion visual)
+      reader-outline-mode-map
+      "q" 'quit-window)))
 
 ;; google protobuf languages
 (use-package protobuf-mode
@@ -157,12 +151,6 @@
    "n" '(outline-next-heading :which-key "outline-next-heading")
    "p" '(outline-previous-heading :which-key "outline-previous-heading")))
 
-;; EPUB reader
-;; https://depp.brause.cc/nov.el/
-(use-package nov
-  :mode ("\\.epub\\'" . nov-mode)
-  :defer t)
-
 ;; GRPClient
 ;; TODO: `grpclient-mode-map' key bindings
 (use-package grpclient
@@ -174,6 +162,12 @@
 ;; Mermaid
 (use-package mermaid-mode
   :defer t)
+
+;; MoonBit
+;; (use-package moonbit-mode
+;;   :vc (:url "https://github.com/cxa/moonbit-mode.git")
+;;   :mode ("\\.mbt\\'" . moonbit-mode)
+;;   :defer t)
 
 
 (provide 'init-file-modes)
