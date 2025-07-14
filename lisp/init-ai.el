@@ -131,6 +131,8 @@ Supported languages: zh, en."
                  :request-params (:temperature 0.6))
                 (deepseek-ai/DeepSeek-V3
                  :request-params (:temperature 0.3))
+                (moonshotai/Kimi-K2-Instruct
+                 :request-params (:temperature 0.6))
                 (Qwen/Qwen3-235B-A22B
                  :request-params (:enable_thinking :json-false
                                   :temperature 0.7
