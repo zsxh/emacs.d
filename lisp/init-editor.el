@@ -220,6 +220,15 @@
 (use-package string-inflection
   :commands string-inflection-all-cycle)
 
+;; When you press gd (or any command that calls `xref-find-definitions'):
+;;   - At a definition → Show references
+;;   - At a reference → Go to definition
+(use-package smart-gd
+  :vc (:url "https://github.com/jiahut/smart-gd.el.git")
+  :after evil
+  :config
+  (smart-gd-setup))
+
 ;;;;;;;;;;;;;; Quick Scroll line ;;;;;;;;;;;;;;
 ;; keymap ("C-l" 'recenter-top-bottom) cycling 25%,top,bottom line position
 (add-hook 'prog-mode-hook (lambda () (setq-local recenter-positions '(0.25 top bottom))))
