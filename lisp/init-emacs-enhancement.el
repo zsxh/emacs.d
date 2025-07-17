@@ -199,12 +199,14 @@
 ;;   :ensure nil
 ;;   :defer t)
 
-;; https://github.com/jacktasia/dumb-jump#obsolete-commands-and-options
-(use-package dumb-jump
-  :after xref
+;; When you press gd (or any command that calls `xref-find-definitions'):
+;;   - At a definition → Show references
+;;   - At a reference → Go to definition
+(use-package smart-gd
+  :vc (:url "https://github.com/jiahut/smart-gd.el.git")
+  :after evil
   :config
-  (setq dump-jump-prefer-searcher 'rg)
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+  (smart-gd-setup))
 
 ;;;;;;;;;;;;;; eldoc ;;;;;;;;;;;;;;
 ;; Show function arglist or variable docstring
