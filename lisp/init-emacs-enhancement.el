@@ -199,14 +199,20 @@
 ;;   :ensure nil
 ;;   :defer t)
 
-;; When you press gd (or any command that calls `xref-find-definitions'):
-;;   - At a definition → Show references
-;;   - At a reference → Go to definition
-(use-package smart-gd
-  :vc (:url "https://github.com/jiahut/smart-gd.el.git")
-  :after evil
-  :config
-  (smart-gd-setup))
+(defun xref-find-usage(orig-fn &rest args)
+  "Advice around `xref-find-definitions' to fallback to `xref-find-references'
+when point is already on the definition."
+  (let* ((prev-line (line-number-at-pos))
+		 (prev-buffer (current-buffer))
+		 (prev-window (selected-window)))
+	(apply orig-fn args)
+	(when (and
+		   (= prev-line (line-number-at-pos))
+		   (eq (selected-window) prev-window)
+           (eq (current-buffer) prev-buffer))
+      (apply 'xref-find-references args))))
+
+(advice-add #'xref-find-definitions :around #'xref-find-usage)
 
 ;;;;;;;;;;;;;; eldoc ;;;;;;;;;;;;;;
 ;; Show function arglist or variable docstring
