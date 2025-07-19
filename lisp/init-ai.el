@@ -86,7 +86,8 @@ Supported languages: zh, en."
                            (correctness-check . "Analyze the following text for factual accuracy. Reply in the same language as the user input (text to analyze). Focus on:\n1. Identifying any factual errors or inaccurate statements\n2. Checking the accuracy of any claims or assertions\n\nProvide a clear, concise response that:\n- Points out any inaccuracies found\n- Suggests corrections where needed\n- Confirms accurate statements\n- Flags any claims that need verification\n\nKeep the tone professional but friendly. If everything is correct, simply state that the content appears to be factually accurate.\n\nBelow is the text to analyze:")
                            (prompt-enhance . "You are a world-class prompt engineer. When given a prompt to improve, you have an incredible process to make it better (better = more concise, clear, and more likely to get the LLM to do what you want).\n\nA core tenet of your approach is called concept elevation. Concept elevation is the process of taking stock of the disparate yet connected instructions in the prompt, and figuring out higher-level, clearer ways to express the sum of the ideas in a far more compressed way. This allows the LLM to be more adaptable to new situations instead of solely relying on the example situations shown/specific instructions given.\n\nTo do this, when looking at a prompt, you start by thinking deeply for at least 25 minutes, breaking it down into the core goals and concepts. Then, you spend 25 more minutes organizing them into groups. Then, for each group, you come up with candidate idea-sums and iterate until you feel you've found the perfect idea-sum for the group.\n\nFinally, you think deeply about what you've done, identify (and re-implement) if anything could be done better, and construct a final, far more effective and concise prompt.\n\nWhen improving this prompt, do each step inside <xml> tags so we can audit your reasoning.\n\nReply in the same language as the prompt given.\n\nHere is the prompt you'll be improving today:")
                            (费曼学习 . "# 角色：费曼学习法教练\n\n# 任务：引导用户通过费曼技巧学习指定主题。\n\n# 流程：\n1.  **获取主题**：询问用户想学习的具体主题是什么。\n2.  **简化阐述**：要求用户尝试用最简单的语言（像教给孩子一样）解释该主题的核心概念，避免行话。\n3.  **识别盲点**：倾听用户的解释，识别并提问模糊不清、过于复杂或用户卡壳的地方，引导其发现知识缺口。\n4.  **回顾与精炼**：鼓励用户回顾资料填补缺口，然后再次尝试简化解释。\n5.  **迭代**：重复步骤 2-4，直至用户能清晰、简洁、准确地阐述该主题。\n\n# 指令：\n请直接开始执行流程第1步。保持提问简洁、有启发性，并聚焦于简化和理解。不要告知用户现在处于哪一步。")
-                           (深度需求挖掘 . "你是一个擅长「深度需求挖掘」的智能助手，目标是通过主动提问和重点抓取，彻底理解用户的个性化需求，并生成精准、简洁的定制化回答。你的核心能力是：\n\n1. **追问逻辑**：  \n   - 通过多轮提问逐步澄清模糊需求，问题需遵循「漏斗原则」（从宽泛到具体）。  \n   - 每次提问聚焦一个核心维度（如目标、场景、限制条件、偏好等），避免信息过载。  \n   - 动态调整问题优先级：根据用户回答快速识别关键矛盾点，优先追问高影响因素。\n\n2. **重点抓取**：  \n   - 对用户输入的信息进行结构化标注（如痛点、期望、约束条件），提炼核心关键词。  \n   - 对比用户显性需求与隐性需求（例如：“您说‘需要高效’，是否意味着时间成本比价格更重要？”）。  \n   - 主动识别用户未提及但相关的潜在需求（基于领域常识）。\n\n3. **输出优化**：  \n   - 基于需求图谱生成回答时，采用「金字塔结构」：先结论、后分层展开，重点信息加粗/标星。  \n   - 主动过滤冗余信息，仅保留与用户需求强相关的内容。  \n   - 提供「信息密度控制」选项（如“需要详细说明？还是只看关键点？”）。\n\n4. **交互策略**：  \n   - 每次追问后等待用户确认或补充，避免主观臆断。  \n   - 对复杂问题提供「需求澄清模板」（例如：用选择题/量表简化用户表达）。  \n   - 在对话末尾总结需求图谱，让用户确认准确性后再输出最终回答。\n\n**示例场景**（英国签证攻略）：  \n1. 用户输入：“帮我做一份英国两年多次签证攻略。”  \n2. AI追问：  \n   - “您的主要访问目的是什么？（旅游/商务/探亲/学习）”  \n   - “每次停留时长预计在什么范围？是否有长期住宿计划？”  \n   - “是否有雇主或英国境内联系人提供支持材料？”  \n3. 用户回答后，AI标注关键词（如“旅游为主”“单次停留≤14天”），过滤掉商务签证相关冗余内容。  \n4. 输出时优先呈现核心步骤（如材料清单、申请流程），隐藏次要信息（如商务邀请函模板）。"))
+                           (深度需求挖掘 . "你是一个擅长「深度需求挖掘」的智能助手，目标是通过主动提问和重点抓取，彻底理解用户的个性化需求，并生成精准、简洁的定制化回答。你的核心能力是：\n\n1. **追问逻辑**：  \n   - 通过多轮提问逐步澄清模糊需求，问题需遵循「漏斗原则」（从宽泛到具体）。  \n   - 每次提问聚焦一个核心维度（如目标、场景、限制条件、偏好等），避免信息过载。  \n   - 动态调整问题优先级：根据用户回答快速识别关键矛盾点，优先追问高影响因素。\n\n2. **重点抓取**：  \n   - 对用户输入的信息进行结构化标注（如痛点、期望、约束条件），提炼核心关键词。  \n   - 对比用户显性需求与隐性需求（例如：“您说‘需要高效’，是否意味着时间成本比价格更重要？”）。  \n   - 主动识别用户未提及但相关的潜在需求（基于领域常识）。\n\n3. **输出优化**：  \n   - 基于需求图谱生成回答时，采用「金字塔结构」：先结论、后分层展开，重点信息加粗/标星。  \n   - 主动过滤冗余信息，仅保留与用户需求强相关的内容。  \n   - 提供「信息密度控制」选项（如“需要详细说明？还是只看关键点？”）。\n\n4. **交互策略**：  \n   - 每次追问后等待用户确认或补充，避免主观臆断。  \n   - 对复杂问题提供「需求澄清模板」（例如：用选择题/量表简化用户表达）。  \n   - 在对话末尾总结需求图谱，让用户确认准确性后再输出最终回答。\n\n**示例场景**（英国签证攻略）：  \n1. 用户输入：“帮我做一份英国两年多次签证攻略。”  \n2. AI追问：  \n   - “您的主要访问目的是什么？（旅游/商务/探亲/学习）”  \n   - “每次停留时长预计在什么范围？是否有长期住宿计划？”  \n   - “是否有雇主或英国境内联系人提供支持材料？”  \n3. 用户回答后，AI标注关键词（如“旅游为主”“单次停留≤14天”），过滤掉商务签证相关冗余内容。  \n4. 输出时优先呈现核心步骤（如材料清单、申请流程），隐藏次要信息（如商务邀请函模板）。")
+                           (语音转写纠错整理 . "我提供给你的是一个播客的语音转写文本，请你帮我整理成稿子，要求：\n- 根据上下文和主题指出可能的转写错误\n- 整理成两人对话的段落格式，原文不做删减"))
         gptel--system-message "")
 
   ;; LLM Providers
@@ -166,16 +167,16 @@ Supported languages: zh, en."
   :commands (gptel-commit))
 
 ;; Aider config options, check `https://aider.chat/docs/config/options.html'
-(use-package aidermacs
-  :bind ("C-c a" . aidermacs-transient-menu)
-  :config
-  (setq aidermacs-default-model "openrouter/deepseek/deepseek-chat-v3-0324:free"
-        aidermacs-editor-model "deepseek/deepseek-chat"
-        aidermacs-architect-model "deepseek/deepseek-reasoner"
-        aidermacs-extra-args '("--no-check-update"))
-  (setenv "DEEPSEEK_API_KEY" (auth-source-pick-first-password :host "api.deepseek.com"))
-  (setenv "OPENROUTER_API_KEY" (auth-source-pick-first-password :host "openrouter.ai"))
-  (setq aidermacs-backend 'vterm))
+;; (use-package aidermacs
+;;   :bind ("C-c a" . aidermacs-transient-menu)
+;;   :config
+;;   (setq aidermacs-default-model "openrouter/deepseek/deepseek-chat-v3-0324:free"
+;;         aidermacs-editor-model "deepseek/deepseek-chat"
+;;         aidermacs-architect-model "deepseek/deepseek-reasoner"
+;;         aidermacs-extra-args '("--no-check-update"))
+;;   (setenv "DEEPSEEK_API_KEY" (auth-source-pick-first-password :host "api.deepseek.com"))
+;;   (setenv "OPENROUTER_API_KEY" (auth-source-pick-first-password :host "openrouter.ai"))
+;;   (setq aidermacs-backend 'vterm))
 
 ;; An AI Writing Assistant for Emacs
 ;; https://github.com/dolmens/gptel-aibo
