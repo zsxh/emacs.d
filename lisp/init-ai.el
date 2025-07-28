@@ -99,16 +99,23 @@ Supported languages: zh, en."
       :stream t
       :key 'gptel-api-key
       :models '(anthropic/claude-sonnet-4
-                google/gemini-2.5-pro-preview
-                openai/gpt-4.1
+                google/gemini-2.5-flash
+                openai/gpt-4.1-mini
+                moonshotai/kimi-k2:free
+                thudm/glm-4-32b:free
                 (deepseek/deepseek-r1-0528:free
                  :request-params (:temperature 0.6))
                 (deepseek/deepseek-chat-v3-0324:free
                  :request-params (:temperature 0.3))
                 (qwen/qwen3-235b-a22b:free
                  :request-params (;; :reasoning (:exclude t)
-                                  :temperature 0.6
-                                  :top_p 0.95
+                                  :temperature 0.7
+                                  :top_p 0.8
+                                  :top_k 20
+                                  :min_p 0))
+                (qwen/qwen3-235b-a22b-2507:free
+                 :request-params (:temperature 0.7
+                                  :top_p 0.8
                                   :top_k 20
                                   :min_p 0)))))
 
@@ -139,7 +146,17 @@ Supported languages: zh, en."
                                   :temperature 0.7
                                   :top_p 0.8
                                   :top_k 20
-                                  :min_p 0)))))
+                                  :min_p 0))
+                (Qwen/Qwen3-235B-A22B-Instruct-2507
+                 :request-params (:temperature 0.7
+                                  :top_p 0.8
+                                  :top_k 20
+                                  :min_p 0))
+                (qwen/qwen3-coder:free
+                 :request-params (:temperature 0.7
+                                  :top_p 0.8
+                                  :top_k 20
+                                  :repetition_penalty 1.05)))))
 
   ;; default model
   (setq gptel-backend gptel--siliconflow
