@@ -166,18 +166,6 @@ Supported languages: zh, en."
   :ensure nil
   :commands (gptel-commit))
 
-;; Aider config options, check `https://aider.chat/docs/config/options.html'
-;; (use-package aidermacs
-;;   :bind ("C-c a" . aidermacs-transient-menu)
-;;   :config
-;;   (setq aidermacs-default-model "openrouter/deepseek/deepseek-chat-v3-0324:free"
-;;         aidermacs-editor-model "deepseek/deepseek-chat"
-;;         aidermacs-architect-model "deepseek/deepseek-reasoner"
-;;         aidermacs-extra-args '("--no-check-update"))
-;;   (setenv "DEEPSEEK_API_KEY" (auth-source-pick-first-password :host "api.deepseek.com"))
-;;   (setenv "OPENROUTER_API_KEY" (auth-source-pick-first-password :host "openrouter.ai"))
-;;   (setq aidermacs-backend 'vterm))
-
 ;; An AI Writing Assistant for Emacs
 ;; https://github.com/dolmens/gptel-aibo
 (use-package gptel-aibo
@@ -235,6 +223,17 @@ Supported languages: zh, en."
     (advice-run-once 'whisper-run :before
                      (lambda (&optional arg)
                        (call-interactively #'darwin/select-default-audio-device)))))
+
+;; interact cmd `claude-code'
+(use-package claude-code
+  :vc (:url "https://github.com/stevemolitor/claude-code.el")
+  :defer t
+  ;; :config
+  ;; ;; NOTE: ~/.claude/settings.json
+  ;; (setenv "ANTHROPIC_BASE_URL" "https://api.siliconflow.cn/")
+  ;; (setenv "ANTHROPIC_AUTH_TOKEN" (auth-source-pick-first-password :host "api.siliconflow.cn"))
+  ;; (setenv "ANTHROPIC_MODEL" "moonshotai/Kimi-K2-Instruct")
+  )
 
 
 (provide 'init-ai)
