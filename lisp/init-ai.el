@@ -10,10 +10,6 @@
 
 ;;; Code:
 
-;; TODO: gptel code review (change files + git diff --cached)
-;; TODO: prompts
-;; - make a plan
-
 ;; Embark Actions
 (with-eval-after-load 'embark
   (keymap-set embark-general-map "?" #'gptel-quick)
@@ -77,7 +73,7 @@ Supported languages: zh, en."
 
   ;; Add custom GPT directives for different use cases
   ;; https://github.com/grapeot/brainwave/blob/master/prompts.py
-  (setq gptel-directives `((default . "")
+  (setq gptel-directives `((no-system-prompt . nil)
                            (code-review . ,#'gptel--code-review-directive)
                            (code-explain . ,#'gptel--code-explain-directive)
                            (code-refactor . "Refactor the following code to improve its structure, readability, and maintainability. Focus on:\n1. Simplifying complex logic\n2. Improving variable and function naming\n3. Reducing code duplication\n4. Enhancing error handling\n5. Following best practices for the language\n\nProvide only the refactored code, without any explanations of the changes made or markdown code fences.\n\nBelow is the code to refactor:")
@@ -88,7 +84,8 @@ Supported languages: zh, en."
                            (费曼学习 . "# 角色：费曼学习法教练\n\n# 任务：引导用户通过费曼技巧学习指定主题。\n\n# 流程：\n1.  **获取主题**：询问用户想学习的具体主题是什么。\n2.  **简化阐述**：要求用户尝试用最简单的语言（像教给孩子一样）解释该主题的核心概念，避免行话。\n3.  **识别盲点**：倾听用户的解释，识别并提问模糊不清、过于复杂或用户卡壳的地方，引导其发现知识缺口。\n4.  **回顾与精炼**：鼓励用户回顾资料填补缺口，然后再次尝试简化解释。\n5.  **迭代**：重复步骤 2-4，直至用户能清晰、简洁、准确地阐述该主题。\n\n# 指令：\n请直接开始执行流程第1步。保持提问简洁、有启发性，并聚焦于简化和理解。不要告知用户现在处于哪一步。")
                            (深度需求挖掘 . "你是一个擅长「深度需求挖掘」的智能助手，目标是通过主动提问和重点抓取，彻底理解用户的个性化需求，并生成精准、简洁的定制化回答。你的核心能力是：\n\n1. **追问逻辑**：  \n   - 通过多轮提问逐步澄清模糊需求，问题需遵循「漏斗原则」（从宽泛到具体）。  \n   - 每次提问聚焦一个核心维度（如目标、场景、限制条件、偏好等），避免信息过载。  \n   - 动态调整问题优先级：根据用户回答快速识别关键矛盾点，优先追问高影响因素。\n\n2. **重点抓取**：  \n   - 对用户输入的信息进行结构化标注（如痛点、期望、约束条件），提炼核心关键词。  \n   - 对比用户显性需求与隐性需求（例如：“您说‘需要高效’，是否意味着时间成本比价格更重要？”）。  \n   - 主动识别用户未提及但相关的潜在需求（基于领域常识）。\n\n3. **输出优化**：  \n   - 基于需求图谱生成回答时，采用「金字塔结构」：先结论、后分层展开，重点信息加粗/标星。  \n   - 主动过滤冗余信息，仅保留与用户需求强相关的内容。  \n   - 提供「信息密度控制」选项（如“需要详细说明？还是只看关键点？”）。\n\n4. **交互策略**：  \n   - 每次追问后等待用户确认或补充，避免主观臆断。  \n   - 对复杂问题提供「需求澄清模板」（例如：用选择题/量表简化用户表达）。  \n   - 在对话末尾总结需求图谱，让用户确认准确性后再输出最终回答。\n\n**示例场景**（英国签证攻略）：  \n1. 用户输入：“帮我做一份英国两年多次签证攻略。”  \n2. AI追问：  \n   - “您的主要访问目的是什么？（旅游/商务/探亲/学习）”  \n   - “每次停留时长预计在什么范围？是否有长期住宿计划？”  \n   - “是否有雇主或英国境内联系人提供支持材料？”  \n3. 用户回答后，AI标注关键词（如“旅游为主”“单次停留≤14天”），过滤掉商务签证相关冗余内容。  \n4. 输出时优先呈现核心步骤（如材料清单、申请流程），隐藏次要信息（如商务邀请函模板）。")
                            (语音转写纠错整理 . "我提供给你的是一个播客的语音转写文本，请你帮我整理成稿子，要求：\n- 根据上下文和主题指出可能的转写错误\n- 整理成两人对话的段落格式，原文不做删减"))
-        gptel--system-message "")
+        gptel--system-message (alist-get '深度需求挖掘 gptel-directives))
+  ;; (add-to-list 'gptel-directives `(default . ,(alist-get '深度需求挖掘 gptel-directives)))
 
   ;; LLM Providers
   ;; OpenRouter
@@ -102,22 +99,18 @@ Supported languages: zh, en."
                 google/gemini-2.5-flash
                 openai/gpt-4.1-mini
                 moonshotai/kimi-k2:free
-                thudm/glm-4-32b:free
-                (deepseek/deepseek-r1-0528:free
-                 :request-params (:temperature 0.6))
                 (deepseek/deepseek-chat-v3-0324:free
                  :request-params (:temperature 0.3))
-                (qwen/qwen3-235b-a22b:free
-                 :request-params (;; :reasoning (:exclude t)
-                                  :temperature 0.7
-                                  :top_p 0.8
-                                  :top_k 20
-                                  :min_p 0))
                 (qwen/qwen3-235b-a22b-2507:free
                  :request-params (:temperature 0.7
                                   :top_p 0.8
                                   :top_k 20
-                                  :min_p 0)))))
+                                  :min_p 0))
+                (qwen/qwen3-coder:free
+                 :request-params (:temperature 0.7
+                                  :top_p 0.8
+                                  :top_k 20
+                                  :repetition_penalty 1.05)))))
 
   ;; DeepSeek
   (defvar gptel--deepseek
@@ -131,7 +124,7 @@ Supported languages: zh, en."
 
   ;; Siliconflow
   (defvar gptel--siliconflow
-    (gptel-make-deepseek "Siliconflow/DeepSeek"
+    (gptel-make-openai "Siliconflow/DeepSeek"
       :host "api.siliconflow.cn"
       :stream t
       :key 'gptel-api-key
@@ -141,22 +134,15 @@ Supported languages: zh, en."
                  :request-params (:temperature 0.3))
                 (moonshotai/Kimi-K2-Instruct
                  :request-params (:temperature 0.6))
-                (Qwen/Qwen3-235B-A22B
-                 :request-params (:enable_thinking :json-false
-                                  :temperature 0.7
-                                  :top_p 0.8
-                                  :top_k 20
-                                  :min_p 0))
                 (Qwen/Qwen3-235B-A22B-Instruct-2507
                  :request-params (:temperature 0.7
                                   :top_p 0.8
                                   :top_k 20
                                   :min_p 0))
-                (qwen/qwen3-coder:free
-                 :request-params (:temperature 0.7
-                                  :top_p 0.8
-                                  :top_k 20
-                                  :repetition_penalty 1.05)))))
+                (zai-org/GLM-4.5-Air
+                 :request-params (:enable_thinking :json-false))
+                (zai-org/GLM-4.5
+                 :request-params (:enable_thinking :json-false)))))
 
   ;; default model
   (setq gptel-backend gptel--siliconflow
@@ -250,7 +236,10 @@ Supported languages: zh, en."
   ;; (setenv "ANTHROPIC_BASE_URL" "https://api.siliconflow.cn/")
   ;; (setenv "ANTHROPIC_AUTH_TOKEN" (auth-source-pick-first-password :host "api.siliconflow.cn"))
   ;; (setenv "ANTHROPIC_MODEL" "moonshotai/Kimi-K2-Instruct")
+  ;; (setenv "ANTHROPIC_MODEL" "Qwen/Qwen3-235B-A22B-Instruct-2507")
   )
+
+;; TODO: https://github.com/manzaltu/claude-code-ide.el
 
 
 (provide 'init-ai)
