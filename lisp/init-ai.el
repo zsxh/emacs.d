@@ -240,6 +240,13 @@ Supported languages: zh, en."
   )
 
 ;; TODO: https://github.com/manzaltu/claude-code-ide.el
+(use-package claude-code-ide
+  :vc (:url "https://github.com/manzaltu/claude-code-ide.el.git")
+  :defer t
+  ;; :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  ;; :config
+  ;; (claude-code-ide-emacs-tools-setup) ; Optionally enable Emacs MCP tools
+  )
 
 
 (provide 'init-ai)
