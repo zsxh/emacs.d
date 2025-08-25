@@ -100,14 +100,15 @@ Supported languages: zh, en."
                 google/gemini-2.5-flash
                 openai/gpt-4.1-mini
                 moonshotai/kimi-k2:free
+                z-ai/glm-4.5-air:free
                 (deepseek/deepseek-chat-v3-0324:free
                  :request-params (:temperature 0.3))
-                (qwen/qwen3-235b-a22b-2507:free
+                (qwen/qwen3-235b-a22b-2507
                  :request-params (:temperature 0.7
                                   :top_p 0.8
                                   :top_k 20
                                   :min_p 0))
-                (qwen/qwen3-coder:free
+                (qwen/qwen3-coder
                  :request-params (:temperature 0.7
                                   :top_p 0.8
                                   :top_k 20
@@ -147,7 +148,7 @@ Supported languages: zh, en."
 
   ;; default model
   (setq gptel-backend gptel--siliconflow
-        gptel-model 'deepseek-ai/DeepSeek-V3))
+        gptel-model 'zai-org/GLM-4.5-Air))
 
 ;; TODO: add mcp servers
 (use-package mcp

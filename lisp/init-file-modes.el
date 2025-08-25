@@ -102,7 +102,7 @@
           ("l" . reader-scroll-right)
           ("d" . reader-next-page)
           ("u" . reader-previous-page)
-          ("g" . reader-goto-page)
+          ("P" . reader-goto-page)
           ("H" . reader-fit-to-height)
           ("W" . reader-fit-to-width)
           ("q" . nil)))
@@ -110,7 +110,26 @@
   (with-eval-after-load 'evil
     (evil-define-key '(normal motion visual)
       reader-outline-mode-map
-      "q" 'quit-window)))
+      "q" 'quit-window)
+    (evil-define-key '(normal motion visual)
+      reader-mode-map
+      "g" nil
+      "gg" 'reader-first-page
+      "G" 'reader-last-page
+      "P" 'reader-goto-page))
+
+  (with-eval-after-load 'doom-modeline
+    (doom-modeline-def-segment reader-pages
+      "Display Reader pages."
+      (format "  P%d/%d "
+              (or (eval `(reader-current-doc-pagenumber)) 0)
+              reader-current-doc-pagecount))
+
+    (doom-modeline-def-modeline 'reader
+      '(bar window-number modals matches buffer-info reader-pages)
+      '(compilation misc-info major-mode process vcs time))
+
+    (add-to-list 'doom-modeline-mode-alist '(reader-mode . reader))))
 
 ;; google protobuf languages
 (use-package protobuf-mode
@@ -129,7 +148,6 @@
 ;; `Hurl' is a command line tool that runs HTTP requests defined in a simple plain text format.
 (use-package hurl-mode
   :vc (:url "https://github.com/JasZhe/hurl-mode")
-  :mode "\\.hurl\\'"
   :bind ((:map hurl-response-mode-map
           ("C-j" . outline-next-heading)
           ("C-k" . outline-previous-heading)
