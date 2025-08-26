@@ -21,8 +21,7 @@
   :hook ((nix-ts-mode . eglot-ensure))
   :config
   (require 'eglot)
-  (unless (eglot--lookup-mode 'nix-ts-mode)
-    (push `(nix-ts-mode . ,(eglot-alternatives '("nil" "rnix-lsp" "nixd"))) eglot-server-programs))
+  (push `(nix-ts-mode . ,(eglot-alternatives '("nil" "rnix-lsp" "nixd"))) eglot-server-programs)
   (+eglot/set-leader-keys nix-ts-mode-map)
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-ts-mode))
     '(:nixd
@@ -182,10 +181,26 @@
   :defer t)
 
 ;; MoonBit
-;; (use-package moonbit-mode
-;;   :vc (:url "https://github.com/cxa/moonbit-mode.git")
-;;   :mode ("\\.mbt\\'" . moonbit-mode)
-;;   :defer t)
+(use-package moonbit-mode
+  :vc (:url "https://github.com/zsxh/moonbit-mode.git" :branch "feat/emacs-30")
+  ;; :vc (:url "https://github.com/cxa/moonbit-mode.git")
+  ;; :load-path "~/workspace/emacs/moonbit-mode"
+  ;; :mode ("\\.mbt\\'" . moonbit-mode)
+  :init
+  (defun moonbit-setup ()
+    (setq-local tab-width 2))
+  :hook ((moonbit-mode . eglot-ensure)
+         (moonbit-mode . moonbit-setup))
+  :config
+  (add-to-list
+   'treesit-language-source-alist
+   '(moonbit "https://github.com/moonbitlang/tree-sitter-moonbit.git"))
+  (unless (treesit-language-available-p 'moonbit)
+    (treesit-install-language-grammar 'moonbit))
+
+  (require 'eglot)
+  (push `(moonbit-mode . ("moonbit-lsp" "--stdio")) eglot-server-programs)
+  (+eglot/set-leader-keys moonbit-mode-map))
 
 
 (provide 'init-file-modes)

@@ -44,6 +44,7 @@
         jit-lock-defer-time 0))
 
 ;; TreeSitter
+;; NOTE: https://archive.casouri.cc/note/2025/emacs-tree-sitter-in-depth/
 ;; (with-eval-after-load 'treesit
 ;;   ;; NOTE: `treesit-font-lock-level' has a special `setter' attached to it,
 ;;   ;; so as to automatically recompute the font lock features in all your buffers when you change the level
