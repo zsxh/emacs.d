@@ -139,10 +139,10 @@
   ;;   "Command `java.apply.workspaceEdit' handler."
   ;;   (mapc #'eglot--apply-workspace-edit arguments this-command))
 
-  (defun java-action-overrideMethodsPrompt (arguments)
+  (defun java-action-overrideMethodsPrompt (server arguments)
     "Command `java.action.overrideMethodsPrompt' handler."
     (let* ((argument (aref arguments 0))
-           (list-methods-result (jsonrpc-request (eglot--current-server-or-lose)
+           (list-methods-result (jsonrpc-request server
                                                  :java/listOverridableMethods
                                                  argument))
            (methods (plist-get list-methods-result :methods))
@@ -158,35 +158,14 @@
                                      (lambda (choice) (alist-get choice menu-items nil nil 'equal))
                                      (delete-dups
                                       (completing-read-multiple "overridable methods: " menu-items))))
-           (add-methods-result (jsonrpc-request (eglot--current-server-or-lose)
+           (add-methods-result (jsonrpc-request server
                                                 :java/addOverridableMethods
                                                 (list :overridableMethods selected-methods :context argument))))
       (eglot--apply-workspace-edit add-methods-result this-command)))
 
-  (defun +java/execute-command (server _command)
-    (eglot--dbind ((Command) command arguments) _command
-      (pcase command
-        ;; ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
-        ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt arguments))
-        (_ (eglot--request server :workspace/executeCommand _command)))))
-
-  (defun +java/eglot-execute (server action)
-    "Ask SERVER to execute ACTION.
-ACTION is an LSP object of either `CodeAction' or `Command' type."
-    (eglot--dcase action
-      (((Command)) (+java/execute-command server action))
-      (((CodeAction) edit command data)
-       (if (and (null edit) (null command) data
-                (eglot-server-capable :codeActionProvider :resolveProvider))
-           (eglot-execute server (eglot--request server :codeAction/resolve action))
-         (when edit (eglot--apply-workspace-edit edit this-command))
-         (when command (+java/execute-command server command))))))
-
-  (cl-defmethod eglot-execute (server action &context (major-mode java-mode))
-    (+java/eglot-execute server action))
-
-  (cl-defmethod eglot-execute (server action &context (major-mode java-ts-mode))
-    (+java/eglot-execute server action)))
+  (defun +java/execute-command (server command arguments)
+    (pcase command
+      ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt server arguments)))))
 
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode

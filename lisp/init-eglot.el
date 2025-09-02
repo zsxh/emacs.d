@@ -34,6 +34,31 @@
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
 
 (with-eval-after-load 'eglot
+  (cl-defgeneric eglot-execute (server action)
+    "Ask SERVER to execute ACTION.
+ACTION is an LSP `CodeAction', `Command' or `ExecuteCommandParams'
+object."
+    (:method
+     (server action) "Default implementation."
+     (eglot--dcase action
+       (((Command) title command arguments)
+        (cond
+         ((string-prefix-p "java." command) (+java/execute-command server command arguments))
+         ((string-prefix-p "moonbit" command) (+moonbit/execute-command server command arguments))
+         (t (progn
+              ;; Convert to ExecuteCommandParams and recurse (bug#71642)
+              (cl-remf action :title)
+              (eglot-execute server action)))))
+       (((ExecuteCommandParams))
+        (eglot--request server :workspace/executeCommand action))
+       (((CodeAction) edit command data)
+        (if (and (null edit) (null command) data
+                 (eglot-server-capable :codeActionProvider :resolveProvider))
+            (eglot-execute server (eglot--request server :codeAction/resolve action))
+          (when edit (eglot--apply-workspace-edit edit this-command))
+          (when command
+            ;; Recursive call with what must be a Command object (bug#71642)
+            (eglot-execute server command)))))))
 
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
   (defvar +eglot/display-frame nil)
@@ -154,6 +179,10 @@
   :after eglot
   :config
   (eglot-inactive-regions-mode 1))
+
+(use-package eglot-codelens
+  :vc (:url "https://github.com/Gavinok/eglot-codelens.git")
+  :hook (eglot-managed-mode . eglot-codelens-mode))
 
 ;; json/yaml/toml files metadata for lsp servers.
 (defvar schemastore-url "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json")

@@ -102,6 +102,7 @@
 (require 'init-lang-js)
 (require 'init-lang-rust)
 (require 'init-lang-go)
+(require 'init-lang-moonbit)
 (require 'init-lang-clojure)
 (require 'init-web)
 

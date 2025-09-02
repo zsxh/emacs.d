@@ -93,14 +93,6 @@
   :if (display-graphic-p)
   :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode docker-compose-mode) . indent-bars-mode))
 
-(with-eval-after-load 'compile
-  (require 'ansi-color)
-  (defun colorize-compilation-buffer ()
-    (toggle-read-only)
-    (ansi-color-apply-on-region (point-min) (point-max))
-    (toggle-read-only))
-  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
-
 ;; highlight comment tags like TODO, BUG, FIXME, etc.
 (use-package hl-todo
   :hook ((prog-mode yaml-mode yaml-ts-mode) . hl-todo-mode)
