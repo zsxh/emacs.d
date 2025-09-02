@@ -70,8 +70,7 @@
                    (when fileName (format " -f %s" fileName))
                    (when index (format " -i %d" index))
                    (when (eq update t) " -u")
-                   (when backend (format " --target %s" backend))))))))
-  )
+                   (when backend (format " --target %s" backend)))))))))
 
 
 (provide 'init-lang-moonbit)
