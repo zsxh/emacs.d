@@ -101,8 +101,8 @@ Supported languages: zh, en."
                 openai/gpt-4.1-mini
                 moonshotai/kimi-k2:free
                 z-ai/glm-4.5-air:free
-                (deepseek/deepseek-chat-v3-0324:free
-                 :request-params (:temperature 0.3))
+                (deepseek/deepseek-chat-v3.1
+                 :request-params (:reasoning (:enabled :json-false)))
                 (qwen/qwen3-235b-a22b-2507
                  :request-params (:temperature 0.7
                                   :top_p 0.8
@@ -119,10 +119,8 @@ Supported languages: zh, en."
     (gptel-make-deepseek "DeepSeek"
       :stream t
       :key 'gptel-api-key
-      :models '((deepseek-chat
-                 :request-params (:temperature 0.3))
-                (deepseek-reasoner
-                 :request-params (:temperature 0.6)))))
+      :models '(deepseek-chat
+                deepseek-reasoner)))
 
   ;; Siliconflow
   (defvar gptel--siliconflow
@@ -130,11 +128,9 @@ Supported languages: zh, en."
       :host "api.siliconflow.cn"
       :stream t
       :key 'gptel-api-key
-      :models '((deepseek-ai/DeepSeek-R1
-                 :request-params (:temperature 0.6))
-                (deepseek-ai/DeepSeek-V3
-                 :request-params (:temperature 0.3))
-                (moonshotai/Kimi-K2-Instruct
+      :models '((Pro/deepseek-ai/DeepSeek-V3.1
+                 :request-params (:enable_thinking :json-false))
+                (Pro/moonshotai/Kimi-K2-Instruct
                  :request-params (:temperature 0.6))
                 (Qwen/Qwen3-235B-A22B-Instruct-2507
                  :request-params (:temperature 0.7
