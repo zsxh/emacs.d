@@ -182,7 +182,90 @@ object."
 
 (use-package eglot-codelens
   :vc (:url "https://github.com/Gavinok/eglot-codelens.git")
-  :hook (eglot-managed-mode . eglot-codelens-mode))
+  :hook (eglot-managed-mode . eglot-codelens-mode)
+  :config
+  (define-advice eglot-codelens-apply-code-lenses (:override nil advice)
+    "Request and display code lenses using Eglot."
+    (save-excursion
+      (let* ((code-lenses
+              ;; request code lenses from the server
+              (jsonrpc-request
+               (eglot--current-server-or-lose)
+               :textDocument/codeLens
+               (list :textDocument (eglot--TextDocumentIdentifier))))
+             (line-code-lenses (seq-group-by (lambda (item)
+                                               (let* ((range (plist-get item :range))
+                                                      (start (plist-get range :start))
+                                                      (line (plist-get start :line)))
+                                                 line))
+                                             code-lenses)))
+        (dolist (line-lenses line-code-lenses)
+          (let* ((lenses (cdr line-lenses))
+                 (size (length lenses)))
+            (seq-map-indexed (lambda (lens idx)
+                               (eglot-codelens-make-overlay-for-lens
+                                ;; Construct a lens with a resolved command
+                                ;; TODO consider just modifying the lens if that is faster
+                                (or (cl-getf lens :command)
+                                    (cl-getf (jsonrpc-request (eglot--current-server-or-lose)
+                                                              :codeLens/resolve
+                                                              lens)
+                                             :command))
+                                (cl-getf lens :range)
+                                idx
+                                (= idx (- size 1))))
+                             lenses))))))
+
+  (defun eglot-codelens-overlay-pos-and-indent-str (start-line)
+    (let ((indent-str nil)
+          (bol-pos nil))
+      (save-excursion
+        (goto-char (point-min))
+        (forward-line start-line)
+        (beginning-of-line)
+        (setq bol-pos (point))
+        (if (looking-at "\s*")
+            (setq indent-str (match-string 0))
+          (setq indent-str "")))
+      (cons bol-pos indent-str)))
+
+  (define-advice eglot-codelens-make-overlay-for-lens (:override (command range priority last-elt-p) advice)
+    "Insert overlays for each corresponding lens's COMMAND and RANGE."
+    (let* ((start-line (thread-first
+                         range
+                         (cl-getf :start)
+                         (cl-getf :line)))
+           (bol-pos-and-indent-str
+            (eglot-codelens-overlay-pos-and-indent-str start-line))
+           (bol-pos (car bol-pos-and-indent-str))
+           (indent-str (cdr bol-pos-and-indent-str))
+           (ol (make-overlay bol-pos bol-pos))
+           (text (concat
+                  indent-str
+                  (propertize (cl-getf command :title)
+                              'face 'eglot-parameter-hint-face
+                              'cursor t
+                              'pointer 'hand
+                              'mouse-face 'highlight
+                              'keymap (let ((map (make-sparse-keymap)))
+                                        (define-key map [mouse-1]
+                                          (lambda () (interactive)
+                                            (eglot-codelens-execute command)))
+                                        map))
+                  (if last-elt-p
+                      "\n"
+                    (propertize "| " 'face 'eglot-parameter-hint-face)))))
+      ;; Try to combine all the lenses into a single overlay so we can
+      ;; use this text property to prevent the cursor from ending up on
+      ;; the right side of the overlay
+      ;; taken from [[file:~/.emacs.d/elpa/flymake-1.3.7/flymake.el::put-text-property 0 1 'cursor t summary][eol overlays from flymake]]
+      (put-text-property 0 1 'cursor t text)
+      (overlay-put ol 'before-string text)
+      (overlay-put ol 'eglot-codelens-overlay (list :command command
+                                                    :range range))
+      (overlay-put ol 'cursor-face 'error)
+      (overlay-put ol 'priority priority)
+      (add-to-list 'eglot-codelens-overlays ol))))
 
 ;; json/yaml/toml files metadata for lsp servers.
 (defvar schemastore-url "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json")
