@@ -61,10 +61,17 @@
    "m" '(go-tools-menu :which-key "go-tools-menu")))
 
 (with-eval-after-load 'eglot
-  ;; https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+  ;; NOTE: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   (defun +go/workspace-configuration (&optional server)
     '(:gopls
       (:usePlaceholders t
+       ;; NOTE: https://github.com/golang/tools/blob/master/gopls/doc/codelenses.md
+       :codelenses (:generate t
+                    :regenerate_cgo t
+                    :tidy t
+                    :upgrade_dependency t
+                    :vendor t
+                    :test t)
        :hints (:assignVariableTypes t
                :compositeLiteralFields t
                :compositeLiteralTypes t
