@@ -81,19 +81,20 @@ Otherwise, kill the current buffer using `magit-bury-buffer-function'."
                              (magit-todos-jump-to-item
                               :item (consult--lookup-cdr selected candidates))))))
 
-(use-package diff-hl
-  :init
-  (add-hook-run-once 'find-file-hook (lambda ()
-                                       (global-diff-hl-mode)
-                                       (unless (display-graphic-p)
-                                         (diff-hl-margin-mode))))
-  :defer t
-  :config
-  (setq diff-hl-disable-on-remote t
-        diff-hl-update-async nil)
-  (with-eval-after-load 'magit
-    (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
+;; TODO: Remove `diff-hl' package
+;; (use-package diff-hl
+;;   :init
+;;   (add-hook-run-once 'find-file-hook (lambda ()
+;;                                        (global-diff-hl-mode)
+;;                                        (unless (display-graphic-p)
+;;                                          (diff-hl-margin-mode))))
+;;   :defer t
+;;   :config
+;;   (setq diff-hl-disable-on-remote t
+;;         diff-hl-update-async nil)
+;;   (with-eval-after-load 'magit
+;;     (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+;;     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
 
 (use-package forge
   :defer t
