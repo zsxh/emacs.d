@@ -44,9 +44,6 @@
             ('melpa-mirror
              `(,(cons "melpa" (concat proto "://www.mirrorservice.org/sites/melpa.org/packages/"))
                ,(cons "gnu" (concat proto "://elpa.gnu.org/packages/"))))
-            ('emacs-china
-             `(,(cons "melpa-cn" (concat proto "://elpa.emacs-china.org/melpa/"))
-               ,(cons "gnu-cn" (concat proto "://elpa.emacs-china.org/gnu/"))))
             ('tencent
              `(,(cons "melpa-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/melpa/"))
                ,(cons "gnu-cn" (concat proto "://mirrors.cloud.tencent.com/elpa/gnu/"))))

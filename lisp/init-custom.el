@@ -24,7 +24,6 @@
   :type '(choice
           (const :tag "Melpa" melpa)
           (const :tag "Melpa Mirror" melpa-mirror)
-          (const :tag "Emacs-China" emacs-china)
           (const :tag "Tencent" tencent)
           (const :tag "Tuna" tuna)))
 
