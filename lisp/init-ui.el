@@ -86,9 +86,10 @@
   :config (setq display-line-numbers-type 'relative))
 
 ;; Fonts
-;; Download ans install SF Mono fonts for Linux
-;; https://github.com/ZulwiyozaPutra/SF-Mono-Font
-;; https://github.com/hick/emacs-chinese#emacs-中文基础
+(when (and IS-MAC (version< "27.0" emacs-version))
+  (set-fontset-font
+   "fontset-default" 'unicode "Apple Color Emoji" nil 'prepend))
+
 (defun +ui/adjust-font-size ()
   "Adjust FRAME font size base on `frame-monitor-attributes'"
   (let* ((geometry (frame-monitor-attribute 'geometry))
