@@ -34,11 +34,15 @@
 (with-eval-after-load 'moonbit-mode
   (defun +moonbit/execute-command (server command arguments)
     (pcase command
-      ("moonbit-lsp/test" (moonbit--lsp/test server arguments))
+      ("moonbit-lsp/test" (moonbit--lsp/test arguments))
       ("moonbit-lsp/trace-test" (message "Unhandled method %s" command))
       ("moonbit-lsp/format-toplevel" (moonbit--lsp/format server arguments))
       ("moonbit-ai/generate" (message "Unhandled method %s" command))
-      ("moonbit-ai/generate-batched" (message "Unhandled method %s" command))))
+      ("moonbit-ai/generate-batched" (message "Unhandled method %s" command))
+      ("moonbit-lsp/run-main" (moonbit--lsp/run-main command arguments))
+      ("moonbit-lsp/debug-main" (message "Unhandled method %s" command)) ;; moon build --debug --target js
+      ("moonbit-lsp/trace-main" (message "Unhandled method %s" command))
+      (t (message "Unhandled method %s" command))))
 
   (defun moonbit--lsp/format (server arguments)
     (let* ((arg (aref arguments 0))
@@ -56,9 +60,8 @@
         (insert (substring result 0 (1- (length result))))
         (if eglot-codelens-mode (call-interactively 'eglot-codelens-force-refresh-lens)))))
 
-  (defun moonbit--lsp/test (server arguments)
-    (let ((default-directory (+project/root))
-          (cmd))
+  (defun moonbit--lsp/test (arguments)
+    (let ((default-directory (+project/root)))
       (cl-destructuring-bind
           (&key backend pkgPath fileName index update debug &allow-other-keys)
           (aref arguments 0)
@@ -70,7 +73,17 @@
                    (when fileName (format " -f %s" fileName))
                    (when index (format " -i %d" index))
                    (when (eq update t) " -u")
-                   (when backend (format " --target %s" backend)))))))))
+                   (when backend (format " --target %s" backend))))))))
+
+  ;; FIXME: How to get backend and pkg name
+  (defun moonbit--lsp/run-main (command arguments)
+    (let ((default-directory (+project/root)))
+      (cl-destructuring-bind
+          (&key modUri pkgUri &allow-other-keys)
+          (aref arguments 0)
+        (compile
+         (concat "moon run --target wasm-gc "
+                 (substring pkgUri (1+ (length modUri)))))))))
 
 
 (provide 'init-lang-moonbit)

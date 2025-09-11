@@ -132,7 +132,7 @@ Supported languages: zh, en."
       :key 'gptel-api-key
       :models '((Pro/deepseek-ai/DeepSeek-V3.1
                  :request-params (:enable_thinking :json-false))
-                (Pro/moonshotai/Kimi-K2-Instruct
+                (Pro/moonshotai/Kimi-K2-Instruct-0905
                  :request-params (:temperature 0.6))
                 (Qwen/Qwen3-235B-A22B-Instruct-2507
                  :request-params (:temperature 0.7
@@ -146,7 +146,7 @@ Supported languages: zh, en."
 
   ;; default model
   (setq gptel-backend gptel--siliconflow
-        gptel-model 'zai-org/GLM-4.5-Air))
+        gptel-model 'Pro/deepseek-ai/DeepSeek-V3.1))
 
 ;; TODO: add mcp servers
 (use-package mcp

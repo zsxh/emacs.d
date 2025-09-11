@@ -284,7 +284,15 @@ otherwise  set the current buffer to read-only."
 (setq save-silently t
       auto-save-default nil
       auto-save-list-file-prefix nil
-      create-lockfiles nil
+      ;; NOTE: `eglot' does use `file-notify-add-watch' like lsp-mode,
+      ;; which on macOS can't detect changes to existing files when the path
+      ;; given to file-notify-add-watch is a directory. (`didChangeWatchedFiles')
+      ;;
+      ;; https://emacs-china.org/t/file-notify-add-watch/19943
+      ;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=51146
+      ;; https://github.com/emacs-lsp/lsp-mode/issues/3296
+      ;; https://github.com/golang/go/issues/67529#issuecomment-2167932193
+      create-lockfiles (when IS-MAC t)
       make-backup-files nil
       auto-save-visited-interval 1
       auto-save-visited-predicate
