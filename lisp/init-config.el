@@ -95,7 +95,8 @@
       rime-user-data-dir (locate-user-emacs-file "cache/rime/")
       tabspaces-session-file (locate-user-emacs-file "cache/tabsession.el")
       easysession-directory (locate-user-emacs-file "cache/easysession")
-      nov-save-place-file (locate-user-emacs-file "cache/nov-places"))
+      nov-save-place-file (locate-user-emacs-file "cache/nov-places")
+      multisession-directory (locate-user-emacs-file "cache/multisession"))
 
 (setq mouse-drag-and-drop-region-cross-program t
       mouse-drag-and-drop-region t)
