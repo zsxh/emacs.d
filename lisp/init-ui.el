@@ -83,7 +83,7 @@
   :ensure nil
   :defer t
   ;; :hook (prog-mode . display-line-numbers-mode)
-  :config (setq display-line-numbers-type 'relative))
+  )
 
 ;; Fonts
 (when (and IS-MAC (version< "27.0" emacs-version))
