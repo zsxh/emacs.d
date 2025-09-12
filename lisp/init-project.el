@@ -23,8 +23,10 @@
   (run-at-time "07:00pm" (* 24 60 60) 'project-forget-zombie-projects)
 
   (defun +project/project-buffer-filter (buffer)
-    (let ((name (buffer-name buffer))
-          (major-mode (with-current-buffer buffer major-mode)))
+    (let* ((vbuffer-p (consp buffer)) ;; Check if BUFFER is an entry (BUF-NAME . BUF-OBJ) of Vbuffer_alist.
+           (buffer (if vbuffer-p (cdr buffer) buffer))
+           (name (buffer-name buffer))
+           (major-mode (with-current-buffer buffer major-mode)))
       (or (and (string-prefix-p "*" name)
                (not (string-prefix-p "*cider" name))
                (not (eq major-mode 'vterm-mode))

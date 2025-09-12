@@ -309,13 +309,17 @@ Version 2018-06-18"
       (call-interactively 'consult-buffer)
     (call-interactively 'switch-to-buffer)))
 
+(defun +funcs/projct-switch-to-buffer ()
+  (interactive)
+  (if (functionp 'consult-project-buffer)
+      (call-interactively 'consult-project-buffer)
+    (call-interactively 'project-switch-to-buffer)))
+
 (defun +funcs/switch-to-buffer-dwim ()
   (interactive)
   (cond ((and (not (file-remote-p default-directory))
               (+project/root))
-         (if (functionp 'consult-project-buffer)
-             (call-interactively 'consult-project-buffer)
-           (call-interactively 'project-switch-to-buffer)))
+         (call-interactively '+funcs/projct-switch-to-buffer))
         (t
          (if (functionp 'consult-buffer)
              (call-interactively 'consult-buffer)

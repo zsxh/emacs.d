@@ -163,7 +163,8 @@
    ;; Project
    "p" '(nil :which-key "project")
    "p/" '(rg-project :which-key "ripgrep-search-project")
-   "pb" '(project-switch-to-buffer :which-key "switch-to-project-buffer")
+   ;; "pb" '(project-switch-to-buffer :which-key "switch-to-project-buffer")
+   "pb" '(+funcs/projct-switch-to-buffer :which-key "switch-to-project-buffer")
    "pd" '(project-dired :which-key "project-root-dired")
    "pf" '(project-find-file :which-key "project-find-file")
    "pF" '(project-find-dir :which-key "project-find-directory")
