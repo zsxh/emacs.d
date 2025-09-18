@@ -83,7 +83,21 @@
           (aref arguments 0)
         (compile
          (concat "moon run --target wasm-gc "
-                 (substring pkgUri (1+ (length modUri)))))))))
+                 (substring pkgUri (1+ (length modUri))))))))
+
+  (with-eval-after-load 'compile
+    ;; MoonBit 方框诊断
+    (add-to-list 'compilation-error-regexp-alist-alist
+                 '(moonbit-box
+                   "^\\s-*╭─\\[\\s-*\\([^]\n]+?\\):\\([0-9]+\\):\\([0-9]+\\)\\s-*\\]"
+                   1 2 3))
+    ;; MoonBit test 失败
+    (add-to-list 'compilation-error-regexp-alist-alist
+                 '(moonbit-test
+                   "failed:\\s-+\\([^\n]+?\\):\\([0-9]+\\):\\([0-9]+\\)"
+                   1 2 3))
+    (dolist (r '(moonbit-box moonbit-test))
+      (add-to-list 'compilation-error-regexp-alist r))))
 
 
 (provide 'init-lang-moonbit)
