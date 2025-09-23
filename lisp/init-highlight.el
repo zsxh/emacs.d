@@ -64,7 +64,8 @@
           emacs-lisp-mode
           help-mode
           js-base-mode
-          css-base-mode)
+          css-base-mode
+          helpful-mode)
          . colorful-mode)
   :config
   (setq css-fontify-colors nil))
@@ -97,7 +98,8 @@
 (use-package hl-todo
   :hook ((prog-mode yaml-mode yaml-ts-mode) . hl-todo-mode)
   :config
-  (push '("WIP" . "#7cb8bb") hl-todo-keyword-faces))
+  (push `("WIP" . ,(cdr (assoc "PROG" hl-todo-keyword-faces))) hl-todo-keyword-faces)
+  (push `("BUG" . ,(cdr (assoc "FIXME" hl-todo-keyword-faces))) hl-todo-keyword-faces))
 
 ;; flash the line the cursor is on
 (use-package pulse
