@@ -30,7 +30,7 @@
         gptel-log-level 'debug
         gptel-temperature 1.0
         gptel-include-reasoning 'ignore
-        gptel-use-context 'user)
+        gptel-use-context 'system)
 
   (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "gptel> ")
 
