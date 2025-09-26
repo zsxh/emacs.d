@@ -99,7 +99,8 @@ If point was already at that position, move point to beginning of line."
                          (file-remote-p file 'user) "@" (file-remote-p file 'host)
                          "|sudo:root@"
                          (file-remote-p file 'host) ":" (file-remote-p file 'localname))
-               (concat "/sudo:root@localhost:" file))))
+               ;; (concat "/sudo:root@localhost:" file)
+               (concat "/sudo::" file))))
 
 (defun +funcs/sudo-edit-current-file ()
   "Sudo edit current file."
