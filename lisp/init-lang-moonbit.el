@@ -21,9 +21,9 @@
   :hook ((moonbit-mode . eglot-ensure)
          (moonbit-mode . moonbit-setup))
   :config
-  (add-to-list
-   'treesit-language-source-alist
-   '(moonbit "https://github.com/moonbitlang/tree-sitter-moonbit.git"))
+  ;; (add-to-list
+  ;;  'treesit-language-source-alist
+  ;;  '(moonbit "https://github.com/moonbitlang/tree-sitter-moonbit.git"))
   (unless (treesit-language-available-p 'moonbit)
     (treesit-install-language-grammar 'moonbit))
 
