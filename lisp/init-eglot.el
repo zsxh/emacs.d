@@ -12,8 +12,13 @@
 
 ;; TODO: https://github.com/sqls-server/sqls
 
+;; TODO: lsp semantic tokens
+;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=79374
+;; https://github.com/lua-vr/eglot-semtok
+
 ;; NOTE: https://joaotavora.github.io/eglot/
 ;; NOTE: macos file descriptors limitation, https://www.reddit.com/r/emacs/comments/x4p7mg/fix_annoying_max_open_files_for_emacs/
+;; NOTE: https://github.com/microsoft/vscode-extension-samples
 (use-package eglot
   :ensure nil
   :commands (eglot eglot-ensure)
@@ -29,7 +34,9 @@
         eglot-report-progress nil
         eglot-stay-out-of '()
         eglot-extend-to-xref t
-        eglot-code-action-indications '(margin)
+        ;; https://github.com/joaotavora/eglot/issues/1491
+        ;; https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/README.md
+        eglot-code-action-indications '()
         eglot-advertise-cancellation nil)
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
 

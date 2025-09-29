@@ -99,56 +99,96 @@ Supported languages: zh, en."
       :endpoint "/api/v1/chat/completions"
       :stream t
       :key 'gptel-api-key
-      :models '(anthropic/claude-sonnet-4
-                google/gemini-2.5-flash
-                openai/gpt-4.1-mini
-                moonshotai/kimi-k2:free
-                z-ai/glm-4.5-air:free
-                (deepseek/deepseek-chat-v3.1
-                 :request-params (:reasoning (:enabled :json-false)))
-                (qwen/qwen3-235b-a22b-2507
-                 :request-params (:temperature 0.7
-                                  :top_p 0.8
-                                  :top_k 20
-                                  :min_p 0))
-                (qwen/qwen3-coder
-                 :request-params (:temperature 0.7
-                                  :top_p 0.8
-                                  :top_k 20
-                                  :repetition_penalty 1.05)))))
+      :models '((anthropic/claude-sonnet-4
+                 :capabilities (tool-use)
+                 :context-window 200
+                 :input-cost 21.4
+                 :output-cost 42.80
+                 :reqest-params (:provider (:only ["anthropic"])))
+                (google/gemini-2.5-flash
+                 :capabilities (tool-use json media audio video)
+                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+                              "application/pdf" "text/plain" "text/csv" "text/html"
+                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
+                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
+                 :context-window 1048
+                 :input-cost 2.14
+                 :output-cost 17.83)
+                (google/gemini-2.5-pro
+                 :capabilities (tool-use json media audio video)
+                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+                              "application/pdf" "text/plain" "text/csv" "text/html"
+                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
+                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
+                 :context-window 200
+                 :input-cost 8.92
+                 :output-cost 71.34)
+                (openai/gpt-4.1-mini
+                 :capabilities (media tool-use json url)
+                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+                 :context-window 1024
+                 :input-cost 2.85
+                 :output-cost 11.41)
+                (openai/gpt-5
+                 :capabilities (media tool-use json url)
+                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+                 :context-window 400
+                 :input-cost 8.92
+                 :output-cost 71.34))))
 
   ;; DeepSeek
   (defvar gptel--deepseek
     (gptel-make-deepseek "DeepSeek"
       :stream t
       :key 'gptel-api-key
-      :models '(deepseek-chat
-                deepseek-reasoner)))
+      :models '((deepseek-chat
+                 :capabilities (tool-use)
+                 :context-window 128
+                 :input-cost 2
+                 :output-cost 3)
+                (deepseek-reasoner
+                 :capabilities (reasoning tool-use)
+                 :context-window 128
+                 :input-cost 2
+                 :output-cost 3))))
 
   ;; Siliconflow
   (defvar gptel--siliconflow
-    (gptel-make-openai "Siliconflow/DeepSeek"
+    (gptel-make-deepseek "Siliconflow"
       :host "api.siliconflow.cn"
       :stream t
       :key 'gptel-api-key
-      :models '((Pro/deepseek-ai/DeepSeek-V3.1
-                 :request-params (:enable_thinking :json-false))
+      :models '(;; (Pro/deepseek-ai/DeepSeek-V3.1-Terminus
+                ;;  :request-params (:enable_thinking :json-false)
+                ;;  :capabilities (tool-use reasoning)
+                ;;  :context-window 160
+                ;;  :input-cost 4
+                ;;  :output-cost 12)
                 (Pro/moonshotai/Kimi-K2-Instruct-0905
-                 :request-params (:temperature 0.6))
+                 :request-params (:temperature 0.6)
+                 :capabilities (tool-use)
+                 :context-window 256
+                 :input-cost 4
+                 :output-cost 16)
                 (Qwen/Qwen3-235B-A22B-Instruct-2507
                  :request-params (:temperature 0.7
                                   :top_p 0.8
                                   :top_k 20
-                                  :min_p 0))
-                (zai-org/GLM-4.5-Air
-                 :request-params (:enable_thinking :json-false))
+                                  :min_p 0)
+                 :capabilities (tool-use)
+                 :context-window 256
+                 :input-cost 2.5
+                 :output-cost 10)
                 (zai-org/GLM-4.5
-                 :request-params (:enable_thinking :json-false))
-                tencent/Hunyuan-MT-7B)))
+                 :request-params (:enable_thinking :json-false)
+                 :capabilities (tool-use reasoning)
+                 :context-window 128
+                 :input-cost 3.5
+                 :output-cost 14))))
 
   ;; default model
-  (setq gptel-backend gptel--siliconflow
-        gptel-model 'Pro/deepseek-ai/DeepSeek-V3.1))
+  (setq gptel-backend gptel--deepseek
+        gptel-model 'deepseek-chat))
 
 ;; TODO: add mcp servers
 (use-package mcp
