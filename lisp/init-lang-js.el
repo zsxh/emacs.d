@@ -28,7 +28,7 @@
   :hook (js-base-mode . +js/lsp-setup)
   :config
   (require 'sgml-mode)
-  ;; (setq js-indent-level 2)
+  (setq js-indent-level 2)
   (+eglot/set-leader-keys js-mode-map)
   (+eglot/set-leader-keys js-ts-mode-map)
 

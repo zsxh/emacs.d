@@ -152,9 +152,23 @@ Supported languages: zh, en."
                  :input-cost 2
                  :output-cost 3))))
 
+  ;; GLM
+  (defvar gptel--glm
+    (gptel-make-openai "GLM"
+      :host "open.bigmodel.cn"
+      :endpoint "/api/paas/v4/chat/completions"
+      :stream t
+      :key 'gptel-api-key
+      :models '((glm-4.6
+                 :request-params (:thinking (:type "disabled"))
+                 :capabilities (tool-use reasoning)
+                 :context-window 200
+                 :input-cost 4
+                 :output-cost 16))))
+
   ;; Siliconflow
   (defvar gptel--siliconflow
-    (gptel-make-deepseek "Siliconflow"
+    (gptel-make-openai "Siliconflow"
       :host "api.siliconflow.cn"
       :stream t
       :key 'gptel-api-key
