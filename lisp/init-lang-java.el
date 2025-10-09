@@ -17,7 +17,8 @@
 ;; continuation_indentation: https://stackoverflow.com/questions/42622553/eclipse-code-formatter-indents-with-double-amount-of-spaces-intellij-ide
 ;; (setq java-ts-mode-indent-offset 2)
 
-(when (treesit-ready-p 'java)
+(when (and (version< emacs-version "31")
+           (treesit-ready-p 'java))
   (add-to-list 'major-mode-remap-alist '(java-mode . java-ts-mode)))
 
 (add-hook-run-once 'java-mode-hook #'+eglot/set-leader-keys)

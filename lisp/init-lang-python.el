@@ -15,7 +15,8 @@
 ;; - python linter `ruff'
 ;; - python formatter `black'
 
-(when (treesit-ready-p 'python)
+(when (and (version< emacs-version "31")
+           (treesit-ready-p 'python))
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
 
 ;; Python virtual environment support for Emacs

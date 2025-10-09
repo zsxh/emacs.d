@@ -12,7 +12,8 @@
 
 ;; NOTE: Install gopls
 
-(when (treesit-ready-p 'go)
+(when (and (version< emacs-version "31")
+           (treesit-ready-p 'go))
   (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
   (add-to-list 'major-mode-remap-alist '(go-dot-mod-mode . go-mod-ts-mode))
   (add-to-list 'major-mode-remap-alist '(go-dot-work-mode . go-work-ts-mode)))

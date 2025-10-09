@@ -18,7 +18,8 @@
 
 ;; NOTE: Install TypeScript & JavaScript Language Server `typescript-language-server'
 
-(when (treesit-ready-p 'javascript)
+(when (and (version< emacs-version "31")
+           (treesit-ready-p 'javascript))
   (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode)))
 
 (use-package js

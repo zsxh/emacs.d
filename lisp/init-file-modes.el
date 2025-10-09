@@ -9,10 +9,11 @@
 
 ;;; Code:
 
-(when (treesit-ready-p 'toml)
-  (add-to-list 'major-mode-remap-alist '(conf-toml-mode . toml-ts-mode)))
-(when (treesit-ready-p 'toml)
-  (add-to-list 'major-mode-remap-alist '(conf-toml-mode . toml-ts-mode)))
+(when (version< emacs-version "31")
+  (when (treesit-ready-p 'toml)
+    (add-to-list 'major-mode-remap-alist '(conf-toml-mode . toml-ts-mode)))
+  (when (treesit-ready-p 'json)
+    (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode))))
 
 ;; Nix
 (use-package nix-ts-mode

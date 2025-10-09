@@ -14,7 +14,8 @@
 ;; https://clangd.llvm.org/installation#project-setup
 ;; https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 
-(when (treesit-ready-p 'c)
+(when (and (version< emacs-version "31")
+           (treesit-ready-p 'c))
   (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
   (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
   (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode)))

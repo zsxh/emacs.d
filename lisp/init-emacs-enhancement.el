@@ -62,7 +62,11 @@
 (add-hook 'prog-mode-hook #'mp-remove-treesit-sexp-changes)
 (add-hook 'html-ts-mode-hook #'mp-remove-treesit-sexp-changes)
 
-(use-package treesit :ensure nil)
+(use-package treesit
+  :ensure nil
+  :config
+  (setopt treesit-enabled-modes t)
+  (assq-delete-all 'markdown-mode major-mode-remap-alist))
 
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
 
