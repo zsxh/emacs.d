@@ -205,9 +205,21 @@ Supported languages: zh, en."
   (setq gptel-backend gptel--deepseek
         gptel-model 'deepseek-chat))
 
-;; TODO: add mcp servers
 (use-package mcp
-  :defer t)
+  :defer t
+  :config
+  (require 'mcp-hub)
+  (require 'gptel-integrations)
+  (exec-path-from-shell-copy-envs
+   '("CONTEXT7_API_KEY" "EXA_API_KEY" "METASO_API_KEY" "TAVILY_API_KEY"))
+
+  (setq mcp-hub-servers
+        `(("tavily" . (:url ,(format "https://mcp.tavily.com/mcp/?tavilyApiKey=%s" (getenv "TAVILY_API_KEY"))))
+          ("context7" . (:url "https://mcp.context7.com/mcp"
+                         :headers (("CONTEXT7_API_KEY" . ,(getenv "CONTEXT7_API_KEY")))))
+          ;; ("metaso" . (:url "https://metaso.cn/api/mcp"
+          ;;              :headers (("Authorization" . ,(format "Bearer %s" (getenv "METASO_API_KEY"))))))
+          ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY")))))))
 
 ;; transient keymap
 ;; - `+': `more-response'
