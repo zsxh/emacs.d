@@ -219,7 +219,19 @@ Supported languages: zh, en."
                          :headers (("CONTEXT7_API_KEY" . ,(getenv "CONTEXT7_API_KEY")))))
           ;; ("metaso" . (:url "https://metaso.cn/api/mcp"
           ;;              :headers (("Authorization" . ,(format "Bearer %s" (getenv "METASO_API_KEY"))))))
-          ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY")))))))
+          ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))))
+
+  (with-eval-after-load 'evil
+    (evil-define-key* '(normal visual) mcp-hub-mode-map
+      "d" #'mcp-hub-close-server
+      "j" #'next-line
+      "k" #'previous-line
+      "l" #'mcp-hub-view-log
+      "r" #'mcp-hub-restart-server
+      "s" #'mcp-hub-start-server
+      "D" #'mcp-hub-close-all-server
+      "R" #'mcp-hub-restart-all-server
+      "S" #'mcp-hub-start-all-server)))
 
 ;; transient keymap
 ;; - `+': `more-response'
