@@ -21,6 +21,13 @@
   (require 'elfeed-show)
   (setq elfeed-curl-extra-arguments `(,(format "-xhttp://%s:%s" personal-proxy-http-host personal-proxy-http-port))
         elfeed-log-level 'debug)
+  ;; https://github.com/skeeto/elfeed?tab=readme-ov-file#filter-syntax
+  (setq-default elfeed-search-filter "+unread")
+
+  ;; Entries older than 6 months are marked as read
+  (add-hook 'elfeed-new-entry-hook
+            (elfeed-make-tagger :before "6 months ago"
+                                :remove 'unread))
 
   (with-eval-after-load 'evil-collection
     (evil-collection-init 'elfeed)))
