@@ -179,12 +179,14 @@
   :config
   (require 'mcp-hub)
   (exec-path-from-shell-copy-envs
-   '("CONTEXT7_API_KEY" "EXA_API_KEY" "METASO_API_KEY" "TAVILY_API_KEY"))
+   '("CONTEXT7_API_KEY" "EXA_API_KEY" "METASO_API_KEY" "TAVILY_API_KEY" "GITHUB_API_TOKEN"))
 
   (setq mcp-hub-servers
         `(("tavily" . (:url ,(format "https://mcp.tavily.com/mcp/?tavilyApiKey=%s" (getenv "TAVILY_API_KEY"))))
           ("context7" . (:url "https://mcp.context7.com/mcp"
                          :headers (("CONTEXT7_API_KEY" . ,(getenv "CONTEXT7_API_KEY")))))
+          ("github" . (:url "https://api.githubcopilot.com/mcp/"
+                         :headers (("Authorization" . ,(getenv "GITHUB_API_TOKEN")))))
           ;; ("metaso" . (:url "https://metaso.cn/api/mcp"
           ;;              :headers (("Authorization" . ,(format "Bearer %s" (getenv "METASO_API_KEY"))))))
           ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))))
