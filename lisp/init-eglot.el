@@ -236,6 +236,30 @@ object."
           (setq indent-str "")))
       (cons bol-pos indent-str)))
 
+  (require 'nerd-icons nil t)
+
+  (defun eglot-codelens-codicons-to-nerd-icons (title)
+    "Convert VS Code icon placeholders in TITLE to nerd icons.
+VS Code icon placeholder syntax: $(icon-name)
+Converts to nerd icons using nerd-icons-codicon.
+If the icon is not recognized, returns the original placeholder."
+    (if (featurep 'nerd-icons)
+        (replace-regexp-in-string
+         "\\$(\\([^)]+\\))"
+         (lambda (match)
+           (let* ((icon-name (match-string 1 match))
+                  (nerd-icon-name (replace-regexp-in-string "-" "_" icon-name))
+                  (icon-code (format "nf-cod-%s" nerd-icon-name)))
+             (condition-case err
+                 (nerd-icons-codicon icon-code)
+               (error
+                ;; If nerd-icons-codicon fails, return the original placeholder
+                match))))
+         title
+         nil
+         t)
+      title))
+
   (define-advice eglot-codelens-make-overlay-for-lens (:override (command range priority last-elt-p) advice)
     "Insert overlays for each corresponding lens's COMMAND and RANGE."
     (let* ((start-line (thread-first
@@ -249,19 +273,21 @@ object."
            (ol (make-overlay bol-pos bol-pos))
            (text (concat
                   indent-str
-                  (propertize (cl-getf command :title)
-                              'face 'eglot-parameter-hint-face
-                              'cursor t
-                              'pointer 'hand
-                              'mouse-face 'highlight
-                              'keymap (let ((map (make-sparse-keymap)))
-                                        (define-key map [mouse-1]
-                                          (lambda () (interactive)
-                                            (eglot-codelens-execute command)))
-                                        map))
+                  (propertize
+                   (eglot-codelens-codicons-to-nerd-icons
+                    (cl-getf command :title))
+                   'face 'eglot-parameter-hint-face
+                   'cursor t
+                   'pointer 'hand
+                   'mouse-face 'highlight
+                   'keymap (let ((map (make-sparse-keymap)))
+                             (define-key map [mouse-1]
+                               (lambda () (interactive)
+                                 (eglot-codelens-execute command)))
+                             map))
                   (if last-elt-p
                       "\n"
-                    (propertize "| " 'face 'eglot-parameter-hint-face)))))
+                    (propertize "|" 'face 'eglot-parameter-hint-face)))))
       ;; Try to combine all the lenses into a single overlay so we can
       ;; use this text property to prevent the cursor from ending up on
       ;; the right side of the overlay
