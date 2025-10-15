@@ -99,6 +99,11 @@
     (dolist (r '(moonbit-box moonbit-test))
       (add-to-list 'compilation-error-regexp-alist r))))
 
+(with-eval-after-load 'nerd-icons
+  (add-to-list 'nerd-icons-mode-icon-alist
+               '(moonbit-mode nerd-icons-mdicon "nf-md-rabbit_variant" :face nerd-icons-maroon))
+  (add-to-list 'nerd-icons-extension-icon-alist
+               '("mbt" nerd-icons-mdicon "nf-md-rabbit_variant" :face nerd-icons-maroon)))
 
 (provide 'init-lang-moonbit)
 

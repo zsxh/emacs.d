@@ -21,7 +21,7 @@
 ;; NOTE: https://ollama.com/blog/how-to-prompt-code-llama
 (use-package gptel
   :defer t
-  :bind (("<f8>" . gptel-menu)
+  :bind (("<f8>" . gptel)
          :map gptel-mode-map
          ("C-c h" . gptel-menu))
   :config
