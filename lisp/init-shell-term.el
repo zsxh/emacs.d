@@ -77,46 +77,7 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
           ;; create new vterm buffer
           (with-current-buffer (vterm buffer-name)
             (when (bound-and-true-p evil-local-mode)
-              (evil-change-to-initial-state))
-            ;; (unless dir-remote-p
-            ;;   (+vterm/activate-local-python-venv))
-            ;; (when dir-remote-p
-            ;;   (+vterm/change-remote-directory))
-            )))))
-
-  ;; TODO: deprecated
-  (defun +vterm/change-remote-directory ()
-    "Use the corresponding method to prepare vterm at the corresponding remote directory."
-    (when (featurep 'tramp)
-      ;; (message "default-directory is %s" default-directory)
-      (with-parsed-tramp-file-name default-directory path
-        (let ((method (cadr (assoc `tramp-login-program
-                                   (assoc path-method tramp-methods)))))
-          (cond
-           ((string-equal method "ssh")
-            (progn
-              (vterm-send-string
-               (concat method " "
-                       (when path-user (concat path-user "@"))
-                       path-host
-                       (when path-port (concat " -p " path-port))))
-              (vterm-send-return)
-              (vterm-send-string
-               (concat "cd " path-localname))
-              (vterm-send-return)))
-           (t nil))))))
-
-  ;; TODO: deprecated
-  (defun +vterm/activate-local-python-venv ()
-    (when-let* ((project-dir (+project/root))
-                (venv-dir (or
-                           (when-let* ((venv (locate-dominating-file project-dir "venv")))
-                             (file-name-concat venv "venv"))
-                           (when-let* ((venv (locate-dominating-file project-dir ".venv")))
-                             (file-name-concat venv ".venv")))))
-      (dolist (char (string-to-list (format "source %s" (file-name-concat venv-dir "bin" "activate"))))
-        (vterm--update vterm--term (char-to-string char) nil nil nil))
-      (vterm-send-return)))
+              (evil-change-to-initial-state)))))))
 
   (defun +vterm/send-tmux-prefix-key ()
     "Send `M-`' to the libvterm."

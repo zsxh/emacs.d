@@ -42,7 +42,7 @@
       ("moonbit-lsp/run-main" (moonbit--lsp/run-main command arguments))
       ("moonbit-lsp/debug-main" (message "Unhandled method %s" command)) ;; moon build --debug --target js
       ("moonbit-lsp/trace-main" (message "Unhandled method %s" command))
-      (t (message "Unhandled method %s" command))))
+      (_ (message "Unhandled method %s" command))))
 
   (defun moonbit--lsp/format (server arguments)
     (let* ((arg (aref arguments 0))
