@@ -11,24 +11,26 @@
 ;;; Code:
 
 ;; [Dape] Debug Adapter Protocol for Emacs
-;; TODO: got to libaries source
-;; TODO: https://blog.dornea.nu/2024/11/28/mastering-golang-debugging-in-emacs/
 ;; NOTE: https://github.com/svaante/dape#supported-debug-adapters
 ;; NOTE: https://microsoft.github.io/debug-adapter-protocol/overview
+;; NOTE: https://blog.dornea.nu/2024/11/28/mastering-golang-debugging-in-emacs/
 (use-package dape
-  :after eglot)
+  :after eglot
+  :config
+  ;; Turn on global bindings for setting breakpoints with mouse
+  (dape-breakpoint-global-mode 1))
 
 (with-eval-after-load 'dape
   ;; Python
-  (add-to-list 'dape-configs
-               `(debugpy
-                 modes (python-ts-mode python-mode)
-                 command "python3"
-                 command-args ("-m" "debugpy.adapter")
-                 :type "executable"
-                 :request "launch"
-                 :cwd dape-cwd-fn
-                 :program dape-find-file-buffer-default))
+  ;; (add-to-list 'dape-configs
+  ;;              `(debugpy
+  ;;                modes (python-ts-mode python-mode)
+  ;;                command "python3"
+  ;;                command-args ("-m" "debugpy.adapter")
+  ;;                :type "executable"
+  ;;                :request "launch"
+  ;;                :cwd dape-cwd-fn
+  ;;                :program dape-find-file-buffer-default))
 
 
   ;; TODO: Java
