@@ -59,6 +59,7 @@
                            (动机分析与手段识别 . ,gptel-prompt-动机分析与手段识别)
                            (真实创业模拟器 . ,gptel-prompt-真实创业模拟器)
                            (导师贴心建议 . ,gptel-prompt-导师贴心建议)
+                           (学术写作改 . ,gptel-prompt-学术写作改写)
                            (业务prompt撰写专家 . ,gptel-prompt-业务prompt撰写专家)
                            (基于炸弹项圈理论评估产品风险 . ,gptel-prompt-基于炸弹项圈理论评估产品风险))
         gptel--system-message (alist-get '深度需求挖掘 gptel-directives))
