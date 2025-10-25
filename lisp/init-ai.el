@@ -31,6 +31,7 @@
         gptel-log-level 'debug
         gptel-temperature 1.0
         gptel-include-reasoning 'ignore
+        gptel-track-media t
         gptel-use-context 'system)
 
   (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "gptel> ")
@@ -73,12 +74,13 @@
       :endpoint "/api/v1/chat/completions"
       :stream t
       :key 'gptel-api-key
-      :models '((anthropic/claude-sonnet-4
-                 :capabilities (tool-use)
+      :models '((anthropic/claude-sonnet-4.5
+                 :capabilities (media tool-use cache)
+                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp" "application/pdf")
                  :context-window 200
                  :input-cost 21.4
-                 :output-cost 42.80
-                 :reqest-params (:provider (:only ["anthropic"])))
+                 :output-cost 106.82
+                 :reqest-params (:provider (:only ["anthropic" "google-vertex/global" "amazon-bedrock"])))
                 (google/gemini-2.5-flash
                  :capabilities (tool-use json media audio video)
                  :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
@@ -152,6 +154,12 @@
                  :context-window 160
                  :input-cost 2
                  :output-cost 3)
+                (deepseek-ai/DeepSeek-OCR
+                 :capabilities (media tool-use json url)
+                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+                 :context-window 8
+                 :input-cost 0
+                 :output-cost 0)
                 (Pro/moonshotai/Kimi-K2-Instruct-0905
                  :request-params (:temperature 0.6)
                  :capabilities (tool-use)
@@ -231,6 +239,10 @@
   :bind (("C-c i" . gptel-aibo-summon)
          (:map gptel-aibo-mode-map
           ("C-c !" . gptel-aibo-apply-last-suggestions))))
+
+;; TODO: https://github.com/milanglacier/minuet-ai.el
+(use-package minuet
+  :defer t)
 
 ;; use `whisper-cpp-download-ggml-model' from nixpkgs.whisper-cpp
 ;; > whisper-cpp-download-ggml-model {model} {whisper-install-directory}/whisper.cpp/models
