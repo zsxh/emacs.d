@@ -10,8 +10,11 @@
 
 ;;; Code:
 
-;; NOTE: `display-buffer-alist' https://youtu.be/E-xUNlZi3rI?t=948
-;; NOTE: Make an Emacs Buffer Open the Way You Want, https://lambdaland.org/posts/2022-12-27_repl_buffer_on_the_right/
+;; NOTE: learn `display-buffer-alist'
+;; - [popper.el - Popup buffers for Emacs](https://youtu.be/E-xUNlZi3rI?t=948)
+;; - [Make an Emacs Buffer Open the Way You Want](https://lambdaland.org/posts/2022-12-27_repl_buffer_on_the_right/)
+;; - [Demystifying Emacs’s Window Manager](https://www.masteringemacs.org/article/demystifying-emacs-window-manager)
+;; - [The Emacs Window Management Almanac](https://karthinks.com/software/emacs-window-management-almanac/)
 
 (use-package popper
   :bind (("C-`" . popper-toggle-type))
