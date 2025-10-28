@@ -26,6 +26,10 @@
                ("C-c C-:" . pp-eval-expression)
                ("C-c C-d" . edebug-defun)))
   :config
+  ;; Semantic highlighting support for Emacs Lisp since emacs 31
+  ;; (setq elisp-fontify-semantically t)
+  ;; (tooltip-mode 1)
+
   ;; Note: '(emacs-lisp-mode-map) or (list 'emacs-lisp-mode-map)
   (dolist (mode-map '(emacs-lisp-mode-map lisp-interaction-mode-map))
     (+funcs/major-mode-leader-keys

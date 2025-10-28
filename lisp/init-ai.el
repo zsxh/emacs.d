@@ -34,9 +34,13 @@
         gptel-track-media t
         gptel-use-context 'system)
 
-  (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "gptel> ")
+  (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "user  ")
+  (setf (alist-get 'markdown-mode gptel-response-prefix-alist) "assistant \n")
 
-  (add-hook 'gptel-mode-hook 'turn-on-visual-line-mode)
+  (add-hook 'gptel-mode-hook (lambda ()
+                               ;; (make-variable-buffer-local 'gptel-context)
+                               ;; (gptel-highlight-mode)
+                               (turn-on-visual-line-mode)))
 
   ;; Clean Up default backends
   (setq gptel--known-backends nil)
@@ -198,10 +202,13 @@
           ("context7" . (:url "https://mcp.context7.com/mcp"
                          :headers (("CONTEXT7_API_KEY" . ,(getenv "CONTEXT7_API_KEY")))))
           ("github" . (:url "https://api.githubcopilot.com/mcp/"
-                         :headers (("Authorization" . ,(getenv "GITHUB_API_TOKEN")))))
+                       :headers (("Authorization" . ,(getenv "GITHUB_API_TOKEN")))))
           ;; ("metaso" . (:url "https://metaso.cn/api/mcp"
           ;;              :headers (("Authorization" . ,(format "Bearer %s" (getenv "METASO_API_KEY"))))))
-          ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))))
+          ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))
+          ("searxng" . (:command "npx"
+                        :args ("-y" "mcp-searxng")
+                        :env (:SEARXNG_URL "http://localhost:8888")))))
 
   (with-eval-after-load 'evil
     (evil-define-key* '(normal visual) mcp-hub-mode-map
