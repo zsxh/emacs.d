@@ -31,8 +31,8 @@
       ((eq personal-frame-startup-size 'fullscreen)
        (toggle-frame-fullscreen)))
 
-;; Fringe
-;; (fringe-mode '(10 . 10))
+;; Fringe default '(8 . 8)
+;; (fringe-mode '(4 . 4))
 
 ;; nerd-icons.el works on both GUI and terminal
 ;; https://github.com/rainstormstudio/nerd-icons.el
