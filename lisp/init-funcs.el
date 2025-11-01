@@ -428,10 +428,10 @@ If no region is selected, do nothing."
       (set-text-properties start end nil)
       (message "Text properties removed from selected region"))))
 
-(evil-define-key '(normal visual) 'global
-  ;; go remove properties
-  "grp" '+funcs/remove-text-properties-in-region)
-
+(with-eval-after-load 'evil
+  (evil-define-key '(normal visual) 'global
+    ;; go remove properties
+    "grp" '+funcs/remove-text-properties-in-region))
 
 
 (provide 'init-funcs)
