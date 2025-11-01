@@ -37,6 +37,7 @@
         ;; https://github.com/joaotavora/eglot/issues/1491
         ;; https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/README.md
         eglot-code-action-indications '()
+        ;; eglot-code-action-indicator ""
         eglot-advertise-cancellation nil)
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
 

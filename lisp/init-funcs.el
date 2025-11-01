@@ -418,6 +418,21 @@ the value from PLIST2 will be used."
         (setq result (plist-put result key value))))
     result))
 
+;; NOTE: Just for gptel chat buffer properties
+(defun +funcs/remove-text-properties-in-region (start end)
+  "Remove all text properties in the selected region.
+If no region is selected, do nothing."
+  (interactive "r")
+  (when (use-region-p)
+    (let ((inhibit-read-only t))
+      (set-text-properties start end nil)
+      (message "Text properties removed from selected region"))))
+
+(evil-define-key '(normal visual) 'global
+  ;; go remove properties
+  "grp" '+funcs/remove-text-properties-in-region)
+
+
 
 (provide 'init-funcs)
 
