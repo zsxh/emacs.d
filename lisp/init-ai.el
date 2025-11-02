@@ -37,10 +37,78 @@
   (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "user  ")
   (setf (alist-get 'markdown-mode gptel-response-prefix-alist) "assistant \n")
 
+  (define-minor-mode gptel-highlight-mode
+    "Visually highlight LLM respones regions.
+
+Highlighting is via fringe or margin markers, and optionally a response
+face.  See `gptel-highlight-methods' for highlighting methods, and
+`gptel-response-highlight' and `gptel-response-fringe-highlight' for the
+faces.
+
+This minor mode can be used anywhere in Emacs, and not just gptel chat
+buffers."
+    :lighter nil
+    :global nil
+    (cond
+     (gptel-highlight-mode
+      (when (memq 'margin gptel-highlight-methods)
+        (setq left-margin-width (1+ left-margin-width))
+        ;; HACK: Only refresh window margin when gptel-mode is active in current window
+        (when (buffer-local-value 'gptel-mode (window-buffer))
+          (set-window-buffer (selected-window) (current-buffer))))
+      (jit-lock-register #'gptel-highlight--update)
+      (gptel-highlight--update (point-min) (point-max)))
+     (t (when (memq 'margin gptel-highlight-methods)
+          (setq left-margin-width (max (1- left-margin-width) 0))
+          (set-window-buffer (selected-window) (current-buffer)))
+        (jit-lock-unregister #'gptel-highlight--update)
+        (without-restriction
+          (remove-overlays nil nil 'gptel-highlight t)))))
+
   (add-hook 'gptel-mode-hook (lambda ()
                                ;; (make-variable-buffer-local 'gptel-context)
-                               ;; (gptel-highlight-mode)
+                               (gptel-highlight-mode)
                                (turn-on-visual-line-mode)))
+
+  ;; NOTE: https://github.com/karthink/gptel/issues/481#issuecomment-3203716169
+  (progn
+    ;; Add a new prompt transformation that looks for @buffer
+    (add-hook 'gptel-prompt-transform-functions 'my/gptel-inject-buffers)
+
+    ;; The transformation:
+    (defun my/gptel-inject-buffers (_)
+      "Search backward, injecting text files into context as needed.
+
+Include buffers by name as:
+
+@buffer *scratch*"
+      (while (and (re-search-backward "^\\s-*@buffer\\b" nil t) ;look for @buffer
+                  (not (get-char-property (point) 'gptel))) ;avoid LLM response regions
+        (goto-char (match-end 0))
+        (delete-region (point) (line-beginning-position))
+        (let ((buf-name (string-trim
+                         (buffer-substring-no-properties
+                          (point) (line-end-position)))))
+          (if (not (buffer-live-p (get-buffer buf-name)))
+              (message "Buffer \"%s\" not live, ignoring @buffer"
+                       buf-name)
+            (delete-region (point) (line-end-position))
+            (insert (format "\nIn buffer `%s`:\n\n```\n" buf-name))
+            (insert-buffer-substring-no-properties buf-name)
+            (insert "\n```\n")))))
+
+    (defun my/gptel-insert-buffer-name (&optional buffer-name)
+      "Insert buffer name with @buffer prefix in current buffer.
+When called interactively, prompts for buffer name with completion."
+      (interactive
+       (list (completing-read "Select buffer: @buffer "
+                              (mapcar #'buffer-name
+                                      (seq-filter
+                                       (lambda (buf)
+                                         (not (string-prefix-p " " (buffer-name buf))))
+                                       (buffer-list)))
+                              nil t nil nil (buffer-name))))
+      (insert "\n@buffer " buffer-name "\n")))
 
   ;; Clean Up default backends
   (setq gptel--known-backends nil)
