@@ -23,7 +23,8 @@
   :defer t
   :bind (("<f8>" . gptel)
          :map gptel-mode-map
-         ("C-c h" . gptel-menu))
+         ("C-c h" . gptel-menu)
+         ("C-c C-l" . my/gptel-insert))
   :config
   (require 'gptel-integrations)
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
@@ -97,18 +98,36 @@ Include buffers by name as:
             (insert-buffer-substring-no-properties buf-name)
             (insert "\n```\n")))))
 
-    (defun my/gptel-insert-buffer-name (&optional buffer-name)
+    (defun my/gptel-insert-buffer (&optional buffer-name)
       "Insert buffer name with @buffer prefix in current buffer.
 When called interactively, prompts for buffer name with completion."
       (interactive
-       (list (completing-read "Select buffer: @buffer "
+       (list (completing-read "Select buffer: "
                               (mapcar #'buffer-name
                                       (seq-filter
                                        (lambda (buf)
                                          (not (string-prefix-p " " (buffer-name buf))))
                                        (buffer-list)))
                               nil t nil nil (buffer-name))))
-      (insert "\n@buffer " buffer-name "\n")))
+      (insert "\n@buffer " buffer-name "\n"))
+
+    (defun my/gptel-insert-file (&optional file-path)
+      "Insert a markdown file link at point.
+FILE-PATH: Path to the file to link to."
+      (interactive
+       (list (read-file-name "Select file: ")))
+      (insert " [](" file-path ") "))
+
+    (defun my/gptel-insert (&optional type)
+      "Insert file or buffer reference with appropriate prefix.
+When called interactively, prompts for file or buffer type."
+      (interactive
+       (list (completing-read "File Or Buffer:  " '(file buffer) nil t)))
+      (cond
+       ((string= type "file")
+        (call-interactively #'my/gptel-insert-file))
+       ((string= type "buffer")
+        (call-interactively #'my/gptel-insert-buffer)))))
 
   ;; Clean Up default backends
   (setq gptel--known-backends nil)
