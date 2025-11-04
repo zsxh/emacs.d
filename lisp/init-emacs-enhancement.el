@@ -365,7 +365,7 @@ otherwise  set the current buffer to read-only."
                        'breadcrumb-with-icon t)
                     (if (functionp 'nerd-icons-corfu--get-by-kind)
                         (propertize
-                         (concat (nerd-icons-corfu--get-by-kind (intern (downcase string)))
+                         (concat (nerd-icons-corfu--get-by-kind (intern (downcase string)) nil)
                                  " " string)
                          'breadcrumb-with-icon t)
                       string)))))
