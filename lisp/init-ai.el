@@ -233,6 +233,22 @@ When called interactively, prompts for file or buffer type."
                  :input-cost 4
                  :output-cost 16))))
 
+  ;; MiniMax
+  (defvar gptel--minimax
+    (gptel-make-anthropic "MiniMax"
+      :host "api.minimaxi.com"
+      :endpoint "/anthropic/v1/messages"
+      :stream t
+      :key 'gptel-api-key
+      :models '((MiniMax-M2
+                 :request-params (:temperature 1.0
+                                  :top_p 0.95
+                                  :top_k 20)
+                 :capabilities (tool-use reasoning)
+                 :context-window 200
+                 :input-cost 2.1
+                 :output-cost 8.4))))
+
   ;; Siliconflow
   (defvar gptel--siliconflow
     (gptel-make-openai "Siliconflow"
@@ -271,7 +287,15 @@ When called interactively, prompts for file or buffer type."
                  :capabilities (tool-use reasoning)
                  :context-window 198
                  :input-cost 3.5
-                 :output-cost 14))))
+                 :output-cost 14)
+                (MiniMaxAI/MiniMax-M2
+                 :request-params (:temperature 1.0
+                                  :top_p 0.95
+                                  :top_k 20)
+                 :capabilities (tool-use reasoning)
+                 :context-window 192
+                 :input-cost 2.1
+                 :output-cost 8.4))))
 
   ;; default model
   (setq gptel-backend gptel--deepseek
