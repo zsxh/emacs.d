@@ -120,7 +120,11 @@
   (with-eval-after-load 'nov
     (setq nov-mode-map (make-sparse-keymap))
     (evil-collection-nov-setup)
-    (setq nov-button-map (copy-keymap nov-mode-map))))
+    (setq nov-button-map (copy-keymap nov-mode-map)))
+  (with-eval-after-load 'tar-mode
+    (evil-collection-tar-mode-setup)
+    (evil-define-key 'normal tar-mode-map
+      (kbd "C-d") 'evil-scroll-down)))
 
 ;; https://github.com/redguardtoo/evil-matchit
 ;; Usage: '%' go to matching pair

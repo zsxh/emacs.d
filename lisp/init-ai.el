@@ -201,7 +201,12 @@ When called interactively, prompts for file or buffer type."
                  :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
                  :context-window 400
                  :input-cost 8.92
-                 :output-cost 71.34))))
+                 :output-cost 71.34)
+                (x-ai/grok-4-fast
+                 :capabilities (tool-use json reasoning)
+                 :context-window 128
+                 :input-cost 1.4
+                 :output-cost 3.5))))
 
   ;; DeepSeek
   (defvar gptel--deepseek
@@ -358,9 +363,34 @@ When called interactively, prompts for file or buffer type."
          (:map gptel-aibo-mode-map
           ("C-c !" . gptel-aibo-apply-last-suggestions))))
 
-;; TODO: https://github.com/milanglacier/minuet-ai.el
+;; https://github.com/milanglacier/minuet-ai.el
 (use-package minuet
-  :defer t)
+  :defer t
+  :bind (("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
+         :map minuet-active-mode-map
+         ("<tab>" . #'minuet-accept-suggestion)
+         ("TAB" . #'minuet-accept-suggestion))
+  :config
+  (require 'gptel)
+  (setq minuet-provider 'openai-compatible
+        minuet-n-completions 1
+        minuet-request-timeout 2.5
+        minuet-auto-suggestion-throttle-delay 1.0
+        minuet-auto-suggestion-debounce-delay 0.4)
+
+  (plist-put minuet-openai-compatible-options :end-point "https://api.deepseek.com/chat/completions")
+  (plist-put minuet-openai-compatible-options :api-key (lambda () (gptel-api-key-from-auth-source "api.deepseek.com")))
+  (plist-put minuet-openai-compatible-options :model "deepseek-chat")
+
+  ;; (plist-put minuet-openai-compatible-options :end-point "https://openrouter.ai/api/v1/chat/completions")
+  ;; (plist-put minuet-openai-compatible-options :api-key (lambda () (gptel-api-key-from-auth-source "openrouter.ai")))
+  ;; (plist-put minuet-openai-compatible-options :model "x-ai/grok-4-fast")
+
+  ;; Prioritize throughput for faster completion
+  ;; (minuet-set-optional-options minuet-openai-compatible-options :provider '(:sort "throughput"))
+  ;; (minuet-set-optional-options minuet-openai-compatible-options :max_tokens 256)
+  ;; (minuet-set-optional-options minuet-openai-compatible-options :top_p 0.9)
+  )
 
 ;; use `whisper-cpp-download-ggml-model' from nixpkgs.whisper-cpp
 ;; > whisper-cpp-download-ggml-model {model} {whisper-install-directory}/whisper.cpp/models
