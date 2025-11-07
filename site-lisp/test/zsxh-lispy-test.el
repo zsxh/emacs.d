@@ -703,7 +703,6 @@
     (zsxh-lispy/lisp-mark-sexp)
     (should (equal (mark) (+ (point) 9)))))
 
-;; FIXME: failed test case
 (ert-deftest test-zsxh-lispy/lisp-format-preserve-unquote-splicing-symbol ()
   "Test that formatting doesn't remove the `,@' unquote-splicing symbol."
   (with-temp-buffer

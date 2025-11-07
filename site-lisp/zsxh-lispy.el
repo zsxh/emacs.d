@@ -221,19 +221,19 @@ START and END are the boundaries of the region to be formatted."
   (save-restriction
     (narrow-to-region start end)
     (goto-char (point-min))
-    ;; Remove extra spaces
-    (while (re-search-forward "\s+" nil t)
-      (unless (or (zsxh-lispy/in-string-or-comment-p)
-                  (zsxh-lispy/line-beginning-blank-p))
-        (replace-match " ")))
+    ;; Remove extra spaces in line
+    (while (re-search-forward "[ \t]\\{2,\\}" nil t)
+      (let ((match-beg (match-beginning 0)))
+        (unless (or (zsxh-lispy/in-string-or-comment-p match-beg)
+                    (zsxh-lispy/line-beginning-blank-p match-beg))
+          (replace-match " "))))
     ;; Compact opened parens
     (goto-char (point-min))
-    (while (re-search-forward "\\([([]\\)[\s\n]+" nil t)
-      (let* ((match-info (match-data))
-             (match-start (nth 0 match-info)))
-        (unless (zsxh-lispy/in-string-or-comment-p match-start)
+    (while (re-search-forward "\\([([]\\)[ \t\n\r\f\v]+" nil t)
+      (let* ((match-beg (match-beginning 0)))
+        (unless (zsxh-lispy/in-string-or-comment-p match-beg)
           (if (save-excursion
-                (skip-chars-backward "\s\n([")
+                (skip-chars-backward " \t\n\r\f\v([")
                 (and (eq (char-before (point)) ?\\)
                      (eq (char-before (1- (point))) ?\?)))
               ;; handle ?\(, ?\[, eg: '(?\( ?\))
@@ -242,15 +242,14 @@ START and END are the boundaries of the region to be formatted."
           (backward-char))))
     ;; Compact closed parens
     (goto-char (point-min))
-    (while (re-search-forward "[\s\n]+\\([])]\\)" nil t)
-      (let* ((match-info (match-data))
-             (match-start (nth 0 match-info)))
-        (unless (zsxh-lispy/in-string-or-comment-p match-start)
+    (while (re-search-forward "[ \t\n\r\f\v]+\\([])]\\)" nil t)
+      (let* ((match-beg (match-beginning 0)))
+        (unless (zsxh-lispy/in-string-or-comment-p match-beg)
           (replace-match "\\1")
           (backward-char))))
     ;; Remove line trailing spaces
     (goto-char (point-min))
-    (while (re-search-forward "\s+$" nil t)
+    (while (re-search-forward "\\s-+$" nil t)
       (unless (zsxh-lispy/in-string-p) ; not in string
         (replace-match "")))
     (indent-region (point-min) (point-max))))
@@ -267,7 +266,7 @@ BEG and END are the boundaries of the region to be formatted."
   (interactive (and (region-active-p) (list (region-beginning) (region-end))))
   (cond
    ((and beg end)
-    (save-excursion (zsxh-lispy/format-region beg end)))
+    (save-excursion (zsxh-lispy/lisp-format-region beg end)))
    ((and (memq (char-before) '(?\) ?\])) (not (zsxh-lispy/in-string-or-comment-p)))
     (save-excursion
       (zsxh-lispy/lisp-format-region
