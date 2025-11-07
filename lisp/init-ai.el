@@ -384,12 +384,14 @@ When called interactively, prompts for file or buffer type."
 
   ;; (plist-put minuet-openai-compatible-options :end-point "https://openrouter.ai/api/v1/chat/completions")
   ;; (plist-put minuet-openai-compatible-options :api-key (lambda () (gptel-api-key-from-auth-source "openrouter.ai")))
+  ;; (plist-put minuet-openai-compatible-options :model "google/gemini-2.5-flash-lite")
+  ;; (plist-put minuet-openai-compatible-options :model "x-ai/grok-code-fast-1")
   ;; (plist-put minuet-openai-compatible-options :model "x-ai/grok-4-fast")
 
   ;; Prioritize throughput for faster completion
   ;; (minuet-set-optional-options minuet-openai-compatible-options :provider '(:sort "throughput"))
-  ;; (minuet-set-optional-options minuet-openai-compatible-options :max_tokens 256)
-  ;; (minuet-set-optional-options minuet-openai-compatible-options :top_p 0.9)
+  (minuet-set-optional-options minuet-openai-compatible-options :max_tokens 256)
+  (minuet-set-optional-options minuet-openai-compatible-options :top_p 0.9)
   )
 
 ;; use `whisper-cpp-download-ggml-model' from nixpkgs.whisper-cpp
