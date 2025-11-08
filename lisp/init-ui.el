@@ -94,7 +94,7 @@
     (add-to-list 'face-font-rescale-alist '("Apple Color Emoji" . 0.95) t))
    (IS-WINDOWS
     (add-to-list 'face-font-rescale-alist '("Segoe UI Emoji" . 0.97) t))
-   (t nil))
+   (t nil)))
 
 (defun +ui/adjust-font-size ()
   "Adjust FRAME font size base on `frame-monitor-attributes'"
