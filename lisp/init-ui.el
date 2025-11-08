@@ -86,9 +86,15 @@
   )
 
 ;; Fonts
-(when (and IS-MAC (version< "27.0" emacs-version))
-  (set-fontset-font
-   "fontset-default" 'unicode "Apple Color Emoji" nil 'prepend))
+;; [Emoji line height scale](https://lists.gnu.org/archive/html/bug-gnu-emacs/2025-11/msg00124.html)
+(when (version< "27.0" emacs-version)
+  (cond
+   (IS-MAC
+    (set-fontset-font "fontset-default" 'unicode "Apple Color Emoji" nil 'prepend)
+    (add-to-list 'face-font-rescale-alist '("Apple Color Emoji" . 0.95) t))
+   (IS-WINDOWS
+    (add-to-list 'face-font-rescale-alist '("Segoe UI Emoji" . 0.97) t))
+   (t nil))
 
 (defun +ui/adjust-font-size ()
   "Adjust FRAME font size base on `frame-monitor-attributes'"

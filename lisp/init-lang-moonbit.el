@@ -34,14 +34,18 @@
 (with-eval-after-load 'moonbit-mode
   (defun +moonbit/execute-command (server command arguments)
     (pcase command
-      ("moonbit-lsp/test" (moonbit--lsp/test arguments))
-      ("moonbit-lsp/trace-test" (message "Unhandled method %s" command))
       ("moonbit-lsp/format-toplevel" (moonbit--lsp/format server arguments))
-      ("moonbit-ai/generate" (message "Unhandled method %s" command))
-      ("moonbit-ai/generate-batched" (message "Unhandled method %s" command))
-      ("moonbit-lsp/run-main" (moonbit--lsp/run-main command arguments))
+      ("moonbit-lsp/run-test" (moonbit--lsp/test arguments))
+      ("moonbit-lsp/debug-test" (message "Unhandled method %s" command))
+      ("moonbit-lsp/update-test" (moonbit--lsp/test arguments 'update))
+      ("moonbit-lsp/trace-test" (message "Unhandled method %s" command))
+      ("moonbit-lsp/run-all-tests" (moonbit--lsp/test arguments))
+      ("moonbit-lsp/update-all-tests" (moonbit--lsp/test arguments 'update))
+      ("moonbit-lsp/run-main" (moonbit--lsp/main arguments))
       ("moonbit-lsp/debug-main" (message "Unhandled method %s" command)) ;; moon build --debug --target js
       ("moonbit-lsp/trace-main" (message "Unhandled method %s" command))
+      ("moonbit-ai/generate" (message "Unhandled method %s" command))
+      ("moonbit-ai/generate-batched" (message "Unhandled method %s" command))
       (_ (message "Unhandled method %s" command))))
 
   (defun moonbit--lsp/format (server arguments)
@@ -60,29 +64,30 @@
         (insert (substring result 0 (1- (length result))))
         (if eglot-codelens-mode (call-interactively 'eglot-codelens-force-refresh-lens)))))
 
-  (defun moonbit--lsp/test (arguments)
+  (defun moonbit--lsp/test (arguments &optional action)
     (let ((default-directory (+project/root)))
       (cl-destructuring-bind
-          (&key backend pkgPath fileName index update debug &allow-other-keys)
-          (aref arguments 0)
-        (if (eq debug t)
-            (message "Debug not supported")
-          (compile
-           (concat "moon test"
-                   (when pkgPath (format " -p %s" pkgPath))
-                   (when fileName (format " -f %s" fileName))
-                   (when index (format " -i %d" index))
-                   (when (eq update t) " -u")
-                   (when backend (format " --target %s" backend))))))))
-
-  ;; FIXME: How to get backend and pkg name
-  (defun moonbit--lsp/run-main (command arguments)
-    (let ((default-directory (+project/root)))
-      (cl-destructuring-bind
-          (&key modUri pkgUri &allow-other-keys)
+          (&key cwdUri pkgPath fileUri fileName backend toplevelIndex index testName &allow-other-keys)
           (aref arguments 0)
         (compile
-         (concat "moon run --target wasm-gc "
+         (concat "moon test"
+                 (when pkgPath (format " -p %s" pkgPath))
+                 (when fileName (format " -f %s" fileName))
+                 (when index (format " -i %d" index))
+                 (cond
+                  ((eq action 'update) " -u")
+                  ((eq action 'debug) " -g")
+                  (t nil))
+                 (when backend (format " --target %s" backend)))))))
+
+  ;; TODO: get target backend and pkg name
+  (defun moonbit--lsp/main (arguments action)
+    (let ((default-directory (+project/root)))
+      (cl-destructuring-bind
+          (&key modUri pkgUri pkgPath fileUri &allow-other-keys)
+          (aref arguments 0)
+        (compile
+         (concat "moon run "
                  (substring pkgUri (1+ (length modUri))))))))
 
   (with-eval-after-load 'compile
