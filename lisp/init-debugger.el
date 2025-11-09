@@ -13,7 +13,8 @@
 ;; [Dape] Debug Adapter Protocol for Emacs
 ;; NOTE: https://github.com/svaante/dape#supported-debug-adapters
 ;; NOTE: https://microsoft.github.io/debug-adapter-protocol/overview
-;; NOTE: https://blog.dornea.nu/2024/11/28/mastering-golang-debugging-in-emacs/
+;; NOTE: [Mastering Golang Debugging in Emacs, vscode, dape args explain](https://blog.dornea.nu/2024/11/28/mastering-golang-debugging-in-emacs/)
+;; NOTE: [golang dape example](https://gitlab.com/skybert/my-little-friends/-/blob/master/emacs/.emacs#L865)
 (use-package dape
   :after eglot
   :config
