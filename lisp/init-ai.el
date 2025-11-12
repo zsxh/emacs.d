@@ -312,7 +312,8 @@ When called interactively, prompts for file or buffer type."
   (require 'mcp-hub)
   (exec-path-from-shell-copy-envs
    '("CONTEXT7_API_KEY" "EXA_API_KEY" "METASO_API_KEY" "TAVILY_API_KEY" "GITHUB_API_TOKEN"))
-
+  ;; TODO: more mcp servers
+  ;; - https://github.com/microsoft/playwright-mcp
   (setq mcp-hub-servers
         `(("tavily" . (:url ,(format "https://mcp.tavily.com/mcp/?tavilyApiKey=%s" (getenv "TAVILY_API_KEY"))))
           ("context7" . (:url "https://mcp.context7.com/mcp"
