@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;; TODO: [gptel-agent](https://github.com/karthink/gptel-agent)
+
 ;; Embark Actions
 (with-eval-after-load 'embark
   (keymap-set embark-general-map "?" #'gptel-quick)
@@ -394,6 +396,53 @@ When called interactively, prompts for file or buffer type."
   (minuet-set-optional-options minuet-openai-compatible-options :max_tokens 256)
   (minuet-set-optional-options minuet-openai-compatible-options :top_p 0.9)
   )
+
+;; |-----------------------------------------------|---------------------------------------|
+;; | unsloth/Qwen2.5-Coder-1.5B-Instruct-128K-GGUF | Qwen2.5-Coder-1.5B-Instruct-Q8_0.gguf |
+;; | unsloth/Qwen2.5-Coder-3B-Instruct-128K-GGUF   | Qwen2.5-Coder-3B-Instruct-Q4_K_M.gguf |
+;; | unsloth/Qwen2.5-Coder-7B-Instruct-128K-GGUF   | Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf |
+;;
+;; llama-server \
+;;     -hf-rep unsloth/Qwen2.5-Coder-7B-Instruct-128K-GGUF \
+;;     -hf-file Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf \
+;;     -fa on \
+;;     --cache-reuse 256
+;;
+;; https://github.com/ggml-org/llama.cpp/pull/9787
+;;
+;; FIXME: overlay cursor position
+(use-package wingman
+  :vc (:url "https://github.com/mjrusso/wingman")
+  :defer t
+  :bind
+  (:map wingman-mode-prefix-map
+   ("TAB" . wingman-fim) ; Request Native FIM
+   ("S-TAB" . wingman-fim-emulated) ; Request Emulated FIM
+   ("d" . wingman-fim-debug)
+   :map wingman-mode-completion-transient-map
+   ("TAB" . wingman-accept-full)
+   ("S-TAB" . wingman-accept-line)
+   ("M-S-TAB" . wingman-accept-word))
+  :init
+  (setq wingman-prefix-key "C-c w")
+  ;; :hook (prog-mode . wingman-mode)
+  :config
+  (setq wingman-log-level 4
+        wingman-ring-n-chunks 16
+        wingman-llama-endpoint "http://127.0.0.1:8080/infill")
+
+  ;; don't provide completions in files that typically contain secrets
+  (add-to-list 'wingman-disable-predicates
+               (lambda ()
+                 (or (derived-mode-p 'envrc-file-mode)
+                     (derived-mode-p 'direnv-envrc-mode)
+                     (derived-mode-p 'authinfo-mode)
+                     (when buffer-file-name
+                       (let ((fname (file-name-nondirectory buffer-file-name)))
+                         (or (string-equal ".env" fname)
+                             (string-equal ".envrc" fname)
+                             (string-prefix-p ".localrc" fname)
+                             (string-equal ".authinfo" fname))))))))
 
 ;; use `whisper-cpp-download-ggml-model' from nixpkgs.whisper-cpp
 ;; > whisper-cpp-download-ggml-model {model} {whisper-install-directory}/whisper.cpp/models
