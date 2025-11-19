@@ -47,14 +47,14 @@
     `(:settings (:java (:autobuild (:enabled t)
                         :configuration (:runtimes [(:name "JavaSE-1.8"
                                                     :path ,(getenv "JAVA_8_HOME"))
-                                                   (:name "JavaSE-11"
-                                                    :path ,(getenv "JAVA_11_HOME"))
-                                                   (:name "JavaSE-17"
-                                                    :path ,(getenv "JAVA_17_HOME"))
-                                                   (:name "JavaSE-21"
-                                                    :path ,(getenv "JAVA_21_HOME"))
-                                                   (:name "JavaSE-23"
-                                                    :path ,(getenv "JAVA_23_HOME")
+                                                   ;; (:name "JavaSE-11"
+                                                   ;;  :path ,(getenv "JAVA_11_HOME"))
+                                                   ;; (:name "JavaSE-17"
+                                                   ;;  :path ,(getenv "JAVA_17_HOME"))
+                                                   ;; (:name "JavaSE-21"
+                                                   ;;  :path ,(getenv "JAVA_21_HOME"))
+                                                   (:name "JavaSE-25"
+                                                    :path ,(getenv "JAVA_25_HOME")
                                                     :default t)])
                         :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
                                             :profile "GoogleStyle"))
