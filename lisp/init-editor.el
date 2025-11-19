@@ -244,6 +244,21 @@
 (use-package treesit-fold
   :hook (after-init . global-treesit-fold-mode))
 
+;; The kirigami package offers a unified interface for text folding
+(use-package kirigami
+  :vc (:url "https://github.com/jamescherti/kirigami.el")
+  :defer t
+  :init
+  ;; Configure Kirigami to replace the default Evil-mode folding key bindings
+  (with-eval-after-load 'evil
+    (define-key evil-normal-state-map "zo" 'kirigami-open-fold)
+    (define-key evil-normal-state-map "zO" 'kirigami-open-fold-rec)
+    (define-key evil-normal-state-map "zc" 'kirigami-close-fold)
+    (define-key evil-normal-state-map "za" 'kirigami-toggle-fold)
+    (define-key evil-normal-state-map "zr" 'kirigami-open-folds)
+    (define-key evil-normal-state-map "zm" 'kirigami-close-folds)))
+
+;;;;;;;;;;;;;; Compiler Exploration ;;;;;;;;;;;;;;
 ;; NOTE: RMSBolt tries to make it easy to see what your compiler is doing.
 ;; It does this by showing you the assembly output of a given source code file.
 ;; https://gitlab.com/jgkamat/rmsbolt
