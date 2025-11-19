@@ -192,6 +192,15 @@ When called interactively, prompts for file or buffer type."
                  :context-window 200
                  :input-cost 8.92
                  :output-cost 71.34)
+                (google/gemini-3-pro-preview
+                 :capabilities (tool-use json media audio video)
+                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+                              "application/pdf" "text/plain" "text/csv" "text/html"
+                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
+                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
+                 :context-window 200
+                 :input-cost 14.22
+                 :output-cost 85.30)
                 (openai/gpt-4.1-mini
                  :capabilities (media tool-use json url)
                  :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
