@@ -42,6 +42,14 @@
   (exec-path-from-shell-copy-envs '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME" "JAVA_21_HOME" "JAVA_23_HOME"))
 
   ;; ----------------------- Intialization/Configurations -----------------------
+  (defun java-get-jdtls-bundles ()
+    "Return a vector of JAR files from the jdtls bundles directory."
+    (if-let* ((bundles-dir (file-name-concat user-emacs-directory "cache" "lsp-servers" "java" "bundles"))
+              (_ (file-directory-p bundles-dir))
+              (jars (directory-files bundles-dir t "\\.jar$")))
+        (apply #'vector jars)
+      []))
+
   ;; (jsonrpc--json-encode (jdtls-initialization-options))
   (defun jdtls-initialization-options ()
     `(:settings (:java (:autobuild (:enabled t)
@@ -73,12 +81,18 @@
                         ;; Javadoc generation, https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
                         :codeGeneration (:generateComments t)))
       :extendedClientCapabilities (:classFileContentsSupport t
-                                   :overrideMethodsPromptSupport t)
-      :bundles ,(if-let* ((bundles-dir (file-name-concat user-emacs-directory "cache" "lsp-servers" "java" "bundles"))
-                          (_ (file-directory-p bundles-dir))
-                          (jars (directory-files bundles-dir t "\\.jar$")))
-                    (apply #'vector jars)
-                  [])))
+                                   :overrideMethodsPromptSupport t
+                                   :hashCodeEqualsPromptSupport t
+                                   :executeClientCommandSupport t
+                                   :advancedOrganizeImportsSupport t ; require `executeClientCommandSupport'
+                                   :generateConstructorsPromptSupport t
+                                   :generateToStringPromptSupport t
+                                   :advancedGenerateAccessorsSupport t
+                                   ;; :advancedExtractRefactoringSupport t
+                                   ;; :moveRefactoringSupport t
+                                   ;; :resolveAdditionalTextEditsSupport t
+                                   )
+      :bundles ,(java-get-jdtls-bundles)))
 
   (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
     (jdtls-initialization-options))
@@ -137,9 +151,9 @@
   (add-to-list 'file-name-handler-alist '("\\`jdt://" . +java/eglot-jdt-uri-handler))
 
   ;; ----------------------- Support jdt.ls extra commands -----------------------
-  ;; (defun java-apply-workspaceEdit (arguments)
-  ;;   "Command `java.apply.workspaceEdit' handler."
-  ;;   (mapc #'eglot--apply-workspace-edit arguments this-command))
+  (defun java-apply-workspaceEdit (arguments)
+    "Command `java.apply.workspaceEdit' handler."
+    (mapc #'eglot--apply-workspace-edit arguments this-command))
 
   (defun java-action-overrideMethodsPrompt (server arguments)
     "Command `java.action.overrideMethodsPrompt' handler."
@@ -165,9 +179,183 @@
                                                 (list :overridableMethods selected-methods :context argument))))
       (eglot--apply-workspace-edit add-methods-result this-command)))
 
+  (defun java-show-references (command arguments)
+    "Show Java references from LSP arguments."
+    (if-let* ((refs (seq-elt arguments 2))
+              (_ (length> refs 0)))
+        (xref-show-xrefs
+         (eglot--collecting-xrefs (collect)
+           (mapc
+            (lambda (ref)
+              (eglot--dbind ((Location) uri range) ref
+                (collect (eglot--xref-make-match "" uri range))))
+            refs))
+         nil)
+      (message "%s returned no references" command)))
+
+  (defun java-action-rename (arguments)
+    "Execute Java rename action using Eglot LSP."
+    (eglot--dbind (uri offset length) arguments
+      (with-current-buffer (find-file (eglot-uri-to-path uri))
+        (deactivate-mark)
+        (goto-char (1+ offset))
+        (set-mark (point))
+        (goto-char (+ (point) length))
+        (exchange-point-and-mark)
+        (sit-for 0.5)
+        (call-interactively 'eglot-rename)
+        (deactivate-mark))))
+
+  (defun java-action-generateToStringPrompt (server arguments)
+    "Prompt user to generate toString method for Java class using Eglot LSP."
+    (let* ((context (seq-elt arguments 0))
+           (check-resp (eglot--request server :java/checkToStringStatus context)))
+      (eglot--dbind (fields exists) check-resp
+        (when (or (eq exists :json-false) (y-or-n-p "The toString() method already exists. Replace?"))
+          (let* ((menu-items (mapcar (lambda (field)
+                                       (let ((name (plist-get field :name))
+                                             (type (plist-get field :type)))
+                                         (cons (format "%s: %s" name type) field)))
+                                     fields))
+                 ;; use ";" instead of "," to separate strings in completing-read-multiple
+                 (crm-separator "[ \t]*;[ \t]*")
+                 (selected-items (cl-map 'vector
+                                         (lambda (choice) (alist-get choice menu-items nil nil 'equal))
+                                         (delete-dups
+                                          (completing-read-multiple "Select fields to include: " menu-items))))
+                 (generate-result (eglot--request server :java/generateToString (list :fields selected-items :context context))))
+            (eglot--apply-workspace-edit generate-result this-command))))))
+
+  (defun java-action-hashCodeEqualsPrompt (server arguments)
+    "Prompt user to generate hashCode and equals methods for Java class using Eglot LSP."
+    (let* ((context (seq-elt arguments 0))
+           (check-resp (eglot--request server :java/checkHashCodeEqualsStatus context)))
+      (eglot--dbind (fields existingMethods) check-resp
+        (when (or (seq-empty-p existingMethods)
+                  (y-or-n-p (format "The %s method already exists. Replace?" existingMethods)))
+          (let* ((menu-items (mapcar (lambda (field)
+                                       (let ((name (plist-get field :name))
+                                             (type (plist-get field :type)))
+                                         (cons (format "%s: %s" name type) field)))
+                                     fields))
+                 ;; use ";" instead of "," to separate strings in completing-read-multiple
+                 (crm-separator "[ \t]*;[ \t]*")
+                 (selected-items (cl-map 'vector
+                                         (lambda (choice) (alist-get choice menu-items nil nil 'equal))
+                                         (delete-dups
+                                          (completing-read-multiple "Select fields to include: " menu-items))))
+                 (generate-result (eglot--request server :java/generateHashCodeEquals
+                                                  (list
+                                                   :fields selected-items
+                                                   :context context
+                                                   :regenerate (not (seq-empty-p existingMethods))))))
+            (eglot--apply-workspace-edit generate-result this-command))))))
+
+  (cl-defmethod eglot-handle-request
+    (_server (_method (eql workspace/executeClientCommand))
+             &key command arguments &allow-other-keys)
+    (message "[DEBUG] workspace/executeClientCommand")
+    (pcase command
+      ("java.action.organizeImports.chooseImports"
+       (setq t1 command)
+       (setq t2 arguments)
+       (let* ((documentUri (seq-elt arguments 0)) ; string - 文档 URI
+              (selections (seq-elt arguments 1)) ; ImportSelection[] - 导入冲突列表
+              (restoreExistingImports (seq-elt arguments 2)) ; boolean - 是否保留现有导入
+              (select-candidate-fn
+               (eglot--lambda (candidates range)
+                 (eglot--goto range)
+                 (let* ((menu-items (mapcar
+                                     (lambda (cand)
+                                       (let ((fullyQualifiedName (plist-get cand :fullyQualifiedName)))
+                                         (cons fullyQualifiedName cand)))
+                                     candidates))
+                        (selected-item-key (completing-read "Select class to import: " menu-items))
+                        (selected-item (alist-get selected-item-key menu-items nil nil 'equal)))
+                   selected-item))))
+         (with-current-buffer (find-file (eglot-uri-to-path documentUri))
+           (cl-map 'vector select-candidate-fn selections))))
+      ;; ("_java.reloadBundles.command" (java-get-jdtls-bundles))
+      ("_java.reloadBundles.command" [])
+      (_ (message "Unknown client command: %s" command))))
+
+  (defun java-action-organizeImports ()
+    "Organize imports in the current Java buffer using Eglot LSP."
+    (interactive)
+    (eglot--async-request
+     (eglot--current-server-or-lose)
+     :java/organizeImports
+     `(:textDocument (:uri ,(eglot-path-to-uri (buffer-file-name) :truenamep t))
+       :range (:start (:line 0 :character 0)
+               :end (:line 0 :character 0))
+       :context (:diagnostics []))
+     :success-fn (lambda (result)
+                   (eglot--apply-workspace-edit result this-command))
+     :hint :java/organizeImports))
+
+  (defun java-action-generateAccessorsPrompt (server arguments)
+    "Prompt user to generate accessor methods for Java fields using Eglot LSP."
+    (let* ((context (seq-elt arguments 0))
+           (accessorFields (eglot--request server :java/resolveUnimplementedAccessors context))
+           (menu-items (mapcar (lambda (accessorField)
+                                 (let ((field (plist-get accessorField :fieldName))
+                                       (type (plist-get accessorField :typeName)))
+                                   (cons (format "%s: %s" field type) accessorField)))
+                               accessorFields))
+           ;; use ";" instead of "," to separate strings in completing-read-multiple
+           (crm-separator "[ \t]*;[ \t]*")
+           (selected-items (cl-map 'vector
+                                   (lambda (choice) (alist-get choice menu-items nil nil 'equal))
+                                   (delete-dups
+                                    (completing-read-multiple "Select fields to generate: " menu-items))))
+           (generate-result (eglot--request server :java/generateAccessors (list :accessors selected-items :context context))))
+      (eglot--apply-workspace-edit generate-result this-command)))
+
+  (defun java-action-generateConstructorsPrompt (server arguments)
+    "Prompt user to generate constructors for Java classes using Eglot LSP."
+    (let* ((context (seq-elt arguments 0))
+           (check-resp (eglot--request server :java/checkConstructorsStatus context))
+           (constructors (plist-get check-resp :constructors))
+           (fields (plist-get check-resp :fields))
+           ;; use ";" instead of "," to separate strings in completing-read-multiple
+           (crm-separator "[ \t]*;[ \t]*")
+           (constructor-items (mapcar (lambda (item)
+                                        (let ((name (plist-get item :name))
+                                              (parameters (plist-get item :parameters)))
+                                          (cons (format "%s(%s)" name (mapconcat #'identity parameters ", ")) item)))
+                                      constructors))
+           (selected-constructors (cl-map 'vector
+                                          (lambda (choice) (alist-get choice constructor-items nil nil 'equal))
+                                          (delete-dups
+                                           (completing-read-multiple "Select constructors to generate: " constructor-items))))
+           (field-items (mapcar (lambda (item)
+                                  (let ((name (plist-get item :name))
+                                        (type (plist-get item :type)))
+                                    (cons (format "%s: %s" name type) item)))
+                                fields))
+           (selected-fields (cl-map 'vector
+                                    (lambda (choice) (alist-get choice field-items nil nil 'equal))
+                                    (delete-dups
+                                     (completing-read-multiple "Select fields to generate: " field-items))))
+           (generate-result (eglot--request server :java/generateConstructors
+                                            (list :context context
+                                                  :constructors selected-constructors
+                                                  :fields selected-fields))))
+      (eglot--apply-workspace-edit generate-result this-command)))
+
   (defun +java/execute-command (server command arguments)
     (pcase command
-      ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt server arguments)))))
+      ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
+      ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt server arguments))
+      ("java.action.generateToStringPrompt" (java-action-generateToStringPrompt server arguments))
+      ("java.action.hashCodeEqualsPrompt" (java-action-hashCodeEqualsPrompt server arguments))
+      ("java.action.generateAccessorsPrompt" (java-action-generateAccessorsPrompt server arguments))
+      ("java.action.generateConstructorsPrompt" (java-action-generateConstructorsPrompt server arguments))
+      ("java.action.applyRefactoringCommand" (message "Unhandled method %s" command))
+      ("java.action.rename" (java-action-rename arguments))
+      ("java.show.references" (java-show-references command arguments))
+      ("java.show.implementations" (java-show-references command arguments))
+      (_ (message "Unhandled method %s" command)))))
 
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode
