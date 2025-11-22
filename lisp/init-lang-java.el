@@ -157,26 +157,27 @@
 
   (defun java-action-overrideMethodsPrompt (server arguments)
     "Command `java.action.overrideMethodsPrompt' handler."
-    (let* ((argument (aref arguments 0))
-           (list-methods-result (jsonrpc-request server
-                                                 :java/listOverridableMethods
-                                                 argument))
+    (let* ((argument (seq-elt arguments 0))
+           (list-methods-result (eglot--request server :java/listOverridableMethods argument))
            (methods (plist-get list-methods-result :methods))
-           (menu-items (mapcar (lambda (method)
-                                 (let* ((name (plist-get method :name))
-                                        (parameters (plist-get method :parameters))
-                                        (class (plist-get method :declaringClass)))
-                                   (cons (format "%s(%s) class: %s" name (string-join parameters ", ") class) method)))
-                               methods))
+           (menu-items (mapcar
+                        (lambda (method)
+                          (let* ((name (plist-get method :name))
+                                 (parameters (plist-get method :parameters))
+                                 (class (plist-get method :declaringClass)))
+                            (cons (format "%s(%s): %s" name (string-join parameters ", ") class) method)))
+                        methods))
            ;; use ";" instead of "," to separate strings in completing-read-multiple
            (crm-separator "[ \t]*;[ \t]*")
-           (selected-methods (cl-map 'vector
-                                     (lambda (choice) (alist-get choice menu-items nil nil 'equal))
-                                     (delete-dups
-                                      (completing-read-multiple "overridable methods: " menu-items))))
-           (add-methods-result (jsonrpc-request server
-                                                :java/addOverridableMethods
-                                                (list :overridableMethods selected-methods :context argument))))
+           (selected-methods (cl-map
+                              'vector
+                              (lambda (choice) (alist-get choice menu-items nil nil 'equal))
+                              (delete-dups
+                               (completing-read-multiple "overridable methods: " menu-items))))
+           (add-methods-result (eglot--request
+                                server
+                                :java/addOverridableMethods
+                                (list :overridableMethods selected-methods :context argument))))
       (eglot--apply-workspace-edit add-methods-result this-command)))
 
   (defun java-show-references (command arguments)
@@ -274,7 +275,8 @@
                         (selected-item (alist-get selected-item-key menu-items nil nil 'equal)))
                    selected-item))))
          (with-current-buffer (find-file (eglot-uri-to-path documentUri))
-           (cl-map 'vector select-candidate-fn selections))))
+           (save-excursion
+             (cl-map 'vector select-candidate-fn selections)))))
       ;; ("_java.reloadBundles.command" (java-get-jdtls-bundles))
       ("_java.reloadBundles.command" [])
       (_ (message "Unknown client command: %s" command))))
