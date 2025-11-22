@@ -93,7 +93,7 @@ object."
          :success-fn (eglot--lambda ((Hover) contents range)
                        (eglot--when-buffer-window buf
                          (if-let* ((info (unless (seq-empty-p contents)
-                                          (eglot--hover-info contents range))))
+                                           (eglot--hover-info contents range))))
                              (progn
                                (with-current-buffer (get-buffer-create +eglot/display-buf)
                                  (erase-buffer)
@@ -115,7 +115,36 @@ object."
     (if (or (eq (point) +eglot/hover-last-point)
             (eq (selected-frame) +eglot/display-frame))
         (run-with-timer 0.1 nil #'+eglot/hide-hover)
-      (posframe-hide +eglot/display-buf))))
+      (posframe-hide +eglot/display-buf)))
+
+  ;; [Expose textDocument/selectionRange as an interactive command #1220](https://github.com/joaotavora/eglot/discussions/1220#discussioncomment-9321061)
+  ;; (global-set-key (kbd "C-=") 'eglot-expand-selection)
+  (defun eglot-expand-selection ()
+    "Expand the current selection to the enclosing unit of syntax,
+ as furnished by an LSP `textDocument/selectionRange' request."
+    ;; TODO(adonovan): add corresponding unexpand.
+    (interactive)
+    (let* ((resp (eglot--request (eglot--current-server-or-lose)
+			                     :textDocument/selectionRange
+			                     `(:textDocument ,(eglot--TextDocumentIdentifier) :positions [,(eglot--pos-to-lsp-position)])))
+	       (selection-range (elt resp 0)) ; LSP SelectionRange
+	       (current-range (cons (point) (if (use-region-p) (mark) (point))))
+	       (new-range (eglot-range-region (plist-get selection-range :range))))
+      ;; Walk down the linked list until we find an enclosing element.
+      ;; We define enclosing as a proper superinterval.
+      (while (let ((new-start (car new-range))
+		           (new-end (cdr new-range))
+		           (cur-start (car current-range))
+		           (cur-end (cdr current-range)))
+	           (not (and (<= new-start cur-start)
+		                 (>= new-end cur-end)
+		                 (> (- new-end new-start) (- cur-end cur-start)))))
+        (setq selection-range (plist-get selection-range :parent))
+        (setq new-range (eglot-range-region (plist-get selection-range :range))))
+      ;; Finally set the selection.
+      (goto-char (car new-range))
+      (set-mark (cdr new-range))
+      (activate-mark))))
 
 (defun +eglot/set-leader-keys (&optional map)
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))
@@ -171,6 +200,7 @@ object."
      "gr" '(xref-find-references :which-key "find-references")
      "gt" '(eglot-find-typeDefinition :which-key "find-typeDefinition")
      "gs" '(consult-eglot-symbols :which-key "workspace-symbols")
+     ;; "gs" '(xref-find-apropos :which-key "workspace-symbols")
      ;; hierarchy
      "h" '(nil :which-key "hierarchy")
      "hc" '(eglot-show-call-hierarchy :which-key "call-hierarchy")

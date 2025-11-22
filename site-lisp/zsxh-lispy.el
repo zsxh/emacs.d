@@ -223,7 +223,8 @@ START and END are the boundaries of the region to be formatted."
     (narrow-to-region start end)
     ;; Add spaces between certain characters
     (goto-char (point-min))
-    (while (re-search-forward "\\([^ \t\n\r\f\v'`,@\\]\\)\\([(['`,@]\\)" nil t)
+    ;; edge cases: ?\(, '(), `(), #'foo, ,(),  ,@(), (()), [[]], ([]), [()] ...
+    (while (re-search-forward "\\([^ \t\n\r\f\v'`,@([#\\]\\)\\([(['`,@#]\\)" nil t)
       (let* ((match-beg (match-beginning 0)))
         (unless (zsxh-lispy/in-string-or-comment-p (1+ match-beg)) ; edge cases: ",", "["
           (replace-match "\\1 \\2"))))

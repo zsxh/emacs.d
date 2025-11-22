@@ -651,17 +651,26 @@
   "Test adding spaces between sexps that are too close together."
   (with-temp-buffer
     (emacs-lisp-mode)
-    (insert "(progn\n  (+ 1(+ 1 1))\n  (append '()'(1 2 3)))")
-    (zsxh-lispy/lisp-format-region (point-min) (point-max))
-    (should (equal (buffer-string) "(progn\n  (+ 1 (+ 1 1))\n  (append '() '(1 2 3)))"))))
+    (let ((cases '(("(+ 1(+ 1 1))" . "(+ 1 (+ 1 1))")
+                   ("(append '()'(1 2 3))" . "(append '() '(1 2 3))")
+                   ("(()#'foo)" . "(() #'foo)"))))
+      (dolist (case cases)
+        (insert (car case))
+        (zsxh-lispy/lisp-format-region (point-min) (point-max))
+        (should (equal (buffer-string) (cdr case)))
+        (erase-buffer)))))
 
 (ert-deftest test-zsxh-lispy/lisp-format-region-not-add-space ()
-  ""
+  "Test that formatting doesn't add spaces in cases where it shouldn't."
   (with-temp-buffer
     (emacs-lisp-mode)
-    (insert "'(\"[ \\t]*;[ \\t]*\" \", \")")
-    (zsxh-lispy/lisp-format-region (point-min) (point-max))
-    (should (equal (buffer-string) "'(\"[ \\t]*;[ \\t]*\" \", \")"))))
+    (let ((cases '("'(\"[ \\t]*;[ \\t]*\" \", \")"
+                   "(list #'foo")))
+      (dolist (case cases)
+        (insert case)
+        (zsxh-lispy/lisp-format-region (point-min) (point-max))
+        (should (equal (buffer-string) case))
+        (erase-buffer)))))
 
 ;;; ***************************************************
 ;;; Test `zsxh-lispy/lisp-format'

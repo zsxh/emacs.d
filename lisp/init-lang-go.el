@@ -63,16 +63,29 @@
 
 (with-eval-after-load 'eglot
   ;; NOTE: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+  ;; eglot missing [gopls code actions](https://github.com/golang/tools/blob/master/gopls/doc/features/transformation.md):
+  ;; source.addTest, source.freesymbols, source.doc, source.assembly...
   (defun +go/workspace-configuration (&optional server)
     '(:gopls
-      (:usePlaceholders t
-       ;; NOTE: https://github.com/golang/tools/blob/master/gopls/doc/codelenses.md
-       :codelenses (:generate t
-                    :regenerate_cgo t
-                    :tidy t
-                    :upgrade_dependency t
-                    :vendor t
-                    :test t)
+      (;; --- Build ---
+       ;; --- Formatting ---
+       :gofumpt t
+       ;; --- UI ---
+       ;; :codelenses (:generate t
+       ;;              :regenerate_cgo t
+       ;;              :tidy t
+       ;;              :upgrade_dependency t
+       ;;              :vendor t
+       ;;              :test t
+       ;;              :run_govulncheck t
+       ;;              :vulncheck t)
+       :semanticTokens t
+       ;; --- Completion ---
+       :usePlaceholders t
+       ;; --- Diagnostic ---
+       ;; :staticcheck t
+       ;; --- Documentation ---
+       ;; --- Inlayhint ---
        :hints (:assignVariableTypes t
                :compositeLiteralFields t
                :compositeLiteralTypes t
@@ -80,8 +93,8 @@
                :functionTypeParameters t
                :parameterNames t
                :rangeVariableTypes t)
-       :staticcheck t
-       :gofumpt t)))
+       ;; --- Navigation ---
+       )))
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode go-mode))
     (+go/workspace-configuration))
