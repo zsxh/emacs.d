@@ -655,6 +655,14 @@
     (zsxh-lispy/lisp-format-region (point-min) (point-max))
     (should (equal (buffer-string) "(progn\n  (+ 1 (+ 1 1))\n  (append '() '(1 2 3)))"))))
 
+(ert-deftest test-zsxh-lispy/lisp-format-region-not-add-space ()
+  ""
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "'(\"[ \\t]*;[ \\t]*\" \", \")")
+    (zsxh-lispy/lisp-format-region (point-min) (point-max))
+    (should (equal (buffer-string) "'(\"[ \\t]*;[ \\t]*\" \", \")"))))
+
 ;;; ***************************************************
 ;;; Test `zsxh-lispy/lisp-format'
 ;;; ***************************************************

@@ -173,7 +173,7 @@
                               'vector
                               (lambda (choice) (alist-get choice menu-items nil nil 'equal))
                               (delete-dups
-                               (completing-read-multiple "overridable methods: " menu-items))))
+                               (completing-read-multiple "Select methods: " menu-items))))
            (add-methods-result (eglot--request
                                 server
                                 :java/addOverridableMethods
