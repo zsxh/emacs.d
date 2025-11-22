@@ -45,9 +45,6 @@
   (with-eval-after-load 'clojure-mode (jarchive-mode))
   (with-eval-after-load 'clojure-ts-mode (jarchive-mode)))
 
-;; TODO: neil, A CLI to add common aliases and features to deps.edn-based projects.
-;; https://github.com/babashka/neil
-
 
 (provide 'init-lang-clojure)
 
