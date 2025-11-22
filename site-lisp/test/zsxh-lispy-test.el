@@ -631,20 +631,45 @@
     (zsxh-lispy/lisp-format-region (point-min) (point-max))
     (should (equal (buffer-string) "'(?\\( ?\\[)"))))
 
-;;; ***************************************************
-;;; Test `zsxh-lispy/lisp-format'
-;;; ***************************************************
+(ert-deftest test-zsxh-lispy/lisp-format-region-preserve-unquote-splicing-symbol ()
+  "Test that formatting doesn't remove the `,@' unquote-splicing symbol."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "`(\"abc\" ,@(list 1 2 3))")
+    (zsxh-lispy/lisp-format-region (point-min) (point-max))
+    (should (equal (buffer-string) "`(\"abc\" ,@(list 1 2 3))"))))
 
 (ert-deftest test-zsxh-lispy/lisp-format-region ()
   "Test formatting a region."
   (with-temp-buffer
     (emacs-lisp-mode)
     (insert "(foo  bar  (baz   qux))")
-    (zsxh-lispy/lisp-format)
+    (zsxh-lispy/lisp-format-region (point-min) (point-max))
     (should (equal (buffer-string) "(foo bar (baz qux))"))))
 
+(ert-deftest test-zsxh-lispy/lisp-format-region-add-space ()
+  "Test adding spaces between sexps that are too close together."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "(progn\n  (+ 1(+ 1 1))\n  (append '()'(1 2 3)))")
+    (zsxh-lispy/lisp-format-region (point-min) (point-max))
+    (should (equal (buffer-string) "(progn\n  (+ 1 (+ 1 1))\n  (append '() '(1 2 3)))"))))
+
+;;; ***************************************************
+;;; Test `zsxh-lispy/lisp-format'
+;;; ***************************************************
+
+(ert-deftest test-zsxh-lispy/lisp-format-not-self-insert ()
+  "Test that `self-insert-command' is not called when formatting a sexp."
+  (with-temp-buffer
+    (emacs-lisp-mode)
+    (insert "(+ 1  1)")
+    (goto-char (point-max))
+    (funcall-interactively 'zsxh-lispy/lisp-format)
+    (should (equal (buffer-string) "(+ 1 1)"))))
+
 (ert-deftest test-zsxh-lispy/lisp-format-self-insert ()
-  "Test that =self-insert-command' is called when no region or s-expression is active."
+  "Test that `self-insert-command' is called when no region or s-expression is active."
   (with-temp-buffer
     (emacs-lisp-mode)
     (insert "foo")
@@ -652,7 +677,7 @@
     (should (eq this-command 'self-insert-command))))
 
 ;;; ***************************************************
-;;; Test `zsxh-lispy/lisp-format'
+;;; Test `zsxh-lispy/lisp-mark-sexp'
 ;;; ***************************************************
 
 (ert-deftest test-zsxh-lispy/lisp-mark-sexp-at-beginning-of-sexp ()
@@ -702,15 +727,6 @@
     (forward-char 5)
     (zsxh-lispy/lisp-mark-sexp)
     (should (equal (mark) (+ (point) 9)))))
-
-(ert-deftest test-zsxh-lispy/lisp-format-preserve-unquote-splicing-symbol ()
-  "Test that formatting doesn't remove the `,@' unquote-splicing symbol."
-  (with-temp-buffer
-    (emacs-lisp-mode)
-    (insert "`(\"abc\" ,@(list 1 2 3))")
-    (goto-char (point-max))
-    (zsxh-lispy/lisp-format)
-    (should (equal (buffer-string) "`(\"abc\" ,@(list 1 2 3))"))))
 
 ;;; ***************************************************
 ;;; Test `zsxh-lispy/lisp-comment'
