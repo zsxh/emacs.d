@@ -255,7 +255,6 @@
   (cl-defmethod eglot-handle-request
     (_server (_method (eql workspace/executeClientCommand))
              &key command arguments &allow-other-keys)
-    (message "[DEBUG] workspace/executeClientCommand")
     (pcase command
       ("java.action.organizeImports.chooseImports"
        (setq t1 command)
