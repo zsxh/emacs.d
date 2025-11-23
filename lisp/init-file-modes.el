@@ -181,6 +181,11 @@
 (use-package mermaid-mode
   :defer t)
 
+;; TODO: Typst
+;; https://codeberg.org/meow_king/typst-ts-mode
+;; https://github.com/havarddj/typst-preview.el
+;; lsp https://github.com/Myriad-Dreamin/tinymist
+
 
 (provide 'init-file-modes)
 
