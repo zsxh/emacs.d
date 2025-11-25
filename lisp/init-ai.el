@@ -167,31 +167,12 @@ When called interactively, prompts for file or buffer type."
       :endpoint "/api/v1/chat/completions"
       :stream t
       :key 'gptel-api-key
-      :models '((anthropic/claude-sonnet-4.5
+      :models '((anthropic/claude-opus-4.5
                  :capabilities (media tool-use cache)
                  :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp" "application/pdf")
                  :context-window 200
-                 :input-cost 21.4
-                 :output-cost 106.82
-                 :reqest-params (:provider (:only ["anthropic" "google-vertex/global" "amazon-bedrock"])))
-                (google/gemini-2.5-flash
-                 :capabilities (tool-use json media audio video)
-                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
-                              "application/pdf" "text/plain" "text/csv" "text/html"
-                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
-                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
-                 :context-window 1048
-                 :input-cost 2.14
-                 :output-cost 17.83)
-                (google/gemini-2.5-pro
-                 :capabilities (tool-use json media audio video)
-                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
-                              "application/pdf" "text/plain" "text/csv" "text/html"
-                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
-                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
-                 :context-window 200
-                 :input-cost 8.92
-                 :output-cost 71.34)
+                 :input-cost 35.52
+                 :output-cost 177.58)
                 (google/gemini-3-pro-preview
                  :capabilities (tool-use json media audio video)
                  :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
@@ -201,23 +182,15 @@ When called interactively, prompts for file or buffer type."
                  :context-window 200
                  :input-cost 14.22
                  :output-cost 85.30)
-                (openai/gpt-4.1-mini
-                 :capabilities (media tool-use json url)
-                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                 :context-window 1024
-                 :input-cost 2.85
-                 :output-cost 11.41)
-                (openai/gpt-5
+                (openai/gpt-5.1
                  :capabilities (media tool-use json url)
                  :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
                  :context-window 400
-                 :input-cost 8.92
-                 :output-cost 71.34)
-                (x-ai/grok-4-fast
+                 :input-cost 8.88
+                 :output-cost 71.03)
+                (x-ai/grok-4.1-fast
                  :capabilities (tool-use json reasoning)
-                 :context-window 128
-                 :input-cost 1.4
-                 :output-cost 3.5))))
+                 :context-window 128))))
 
   ;; DeepSeek
   (defvar gptel--deepseek

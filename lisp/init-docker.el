@@ -66,6 +66,8 @@
   :config
   (kubel-vterm-setup))
 
+;; TODO: try https://github.com/jinnovation/kele.el
+
 ;; https://github.com/emacsorphanage/terraform-mode
 (use-package terraform-mode
   :defer t)
