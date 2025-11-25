@@ -131,33 +131,17 @@ When called interactively, prompts for file or buffer type."
        ((string= type "buffer")
         (call-interactively #'my/gptel-insert-buffer)))))
 
-  ;; Clean Up default backends
-  (setq gptel--known-backends nil)
-
   ;; Customize Prompts
   (require 'gptel-prompts)
-  (setq gptel-directives `((no-system-prompt . nil)
-                           (code-review . ,gptel-prompt-code-review)
-                           (code-explain . ,gptel-prompt-code-explain)
-                           (code-refactor . ,gptel-prompt-code-refactor)
-                           (readability-enhance . ,gptel-prompt-readability-enhance)
-                           (ask-ai . ,gptel-prompt-ask-ai)
-                           (correctness-check . ,gptel-prompt-correctness-check)
-                           (prompt-enhance . ,gptel-prompt-prompt-enhance)
-                           (费曼学习 . ,gptel-prompt-费曼学习)
-                           (深度需求挖掘 . ,gptel-prompt-深度需求挖掘)
-                           (字幕->纠错转写 . ,gptel-prompt-字幕->纠错转写)
-                           (字幕->文章 . ,gptel-prompt-字幕->文章)
-                           (字幕->结构化文章 . ,gptel-prompt-字幕->结构化文章)
-                           (GEO-让大模型更容易推荐你的内容或产品 . ,gptel-prompt-GEO-让大模型更容易推荐你的内容或产品)
-                           (动机分析与手段识别 . ,gptel-prompt-动机分析与手段识别)
-                           (真实创业模拟器 . ,gptel-prompt-真实创业模拟器)
-                           (导师贴心建议 . ,gptel-prompt-导师贴心建议)
-                           (学术写作改 . ,gptel-prompt-学术写作改写)
-                           (业务prompt撰写专家 . ,gptel-prompt-业务prompt撰写专家)
-                           (基于炸弹项圈理论评估产品风险 . ,gptel-prompt-基于炸弹项圈理论评估产品风险))
-        gptel--system-message (alist-get '深度需求挖掘 gptel-directives))
-  ;; (add-to-list 'gptel-directives `(default . ,(alist-get '深度需求挖掘 gptel-directives)))
+  (gptel-prompts-refresh)
+  (setq gptel--system-message
+        (alist-get '深度需求挖掘 gptel-directives nil nil
+                   (lambda (sym1 sym2)
+                     (string= (symbol-name sym1)
+                              (symbol-name sym2)))))
+
+  ;; Clean Up default backends
+  (setq gptel--known-backends nil)
 
   ;; LLM Providers
   ;; OpenRouter
@@ -289,6 +273,15 @@ When called interactively, prompts for file or buffer type."
   ;; default model
   (setq gptel-backend gptel--deepseek
         gptel-model 'deepseek-chat))
+
+(use-package gptel-agent
+  ;; :after gptel
+  :defer t
+  :config
+  ;; FIXME: https://github.com/karthink/gptel-agent/pull/7
+  (setq gptel-agent-dirs nil)
+  ;; Read files from agents directories
+  (gptel-agent-update))
 
 (use-package mcp
   :defer t

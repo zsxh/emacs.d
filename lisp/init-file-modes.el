@@ -55,7 +55,7 @@
   :vc (:url "https://github.com/emacs-vs/rainbow-csv")
   :hook ((csv-mode tsv-mode) . rainbow-csv-mode))
 
-;; Yaml
+;; YAML
 (if (treesit-ready-p 'yaml)
     (use-package yaml-ts-mode
       :ensure nil
@@ -71,6 +71,8 @@
               (:schemas ,schemas))))))
   (use-package yaml-mode
     :defer t))
+
+(use-package yaml :defer t) ; YAML parser for Elisp
 
 ;; Json
 (use-package json-ts-mode
