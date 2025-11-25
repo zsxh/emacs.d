@@ -39,7 +39,8 @@
 ;; TODO: eglot does not support `workspace.workspaceEdit.resourceOperations' yet
 (with-eval-after-load 'eglot
 
-  (exec-path-from-shell-copy-envs '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME" "JAVA_21_HOME" "JAVA_23_HOME"))
+  (exec-path-from-shell-copy-envs
+   '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME" "JAVA_21_HOME" "JAVA_23_HOME" "JAVA_25_HOME"))
 
   ;; ----------------------- Intialization/Configurations -----------------------
   (defun java-get-jdtls-bundles ()
