@@ -129,7 +129,7 @@
                             (file-name-as-directory jar-file)))
            (source-file (expand-file-name (concat jar-dir java-file))))
       (unless (file-readable-p source-file)
-        (let ((content (jsonrpc-request
+        (let ((content (eglot--request
                         (or (eglot-current-server)
                             ;; NOTE: dape https://github.com/svaante/dape/issues/78#issuecomment-1966786597
                             (+java/eglot-find-jdt-server))

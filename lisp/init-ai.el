@@ -10,7 +10,6 @@
 
 ;;; Code:
 
-;; TODO: [gptel-agent](https://github.com/karthink/gptel-agent)
 
 ;; Embark Actions
 (with-eval-after-load 'embark

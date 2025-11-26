@@ -55,9 +55,10 @@
   (setq dirvish-time-format-string "%F %R"
         dirvish-attributes
         (append
-         ;; The order of these attributes is insignificant, they are always
-         ;; displayed in the same position.
-         '(vc-state subtree-state nerd-icons)
+         ;; FIXME: [Performance issue with vc-state attribute on macOS](https://github.com/alexluigit/dirvish/issues/314)
+         (if IS-MAC
+             '(subtree-state nerd-icons)
+           '(vc-state subtree-state nerd-icons))
          ;; Other attributes are displayed in the order they appear in this list.
          ;; '(git-msg file-modes file-time file-size)
          '(git-msg file-time file-size))
