@@ -17,7 +17,8 @@
   ;; :mode ("\\.mbt\\'" . moonbit-mode)
   :init
   (defun moonbit-setup ()
-    (setq-local tab-width 2))
+    (setq-local tab-width 2)
+    (face-remap-add-relative 'eglot-semantic-async-face :slant 'italic))
   :hook ((moonbit-mode . eglot-ensure)
          (moonbit-mode . moonbit-setup))
   :config
