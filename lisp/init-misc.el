@@ -38,26 +38,19 @@
   :bind (:map elfeed-show-mode-map
          ("%" . elfeed-webkit-toggle)))
 
-;; Youdao
-(use-package youdao-dictionary
-  :commands (youdao-dictionary-search-at-point+
-             youdao-dictionary-search-at-point-tooltip
-             youdao-dictionary-play-voice-at-point)
-  :custom
-  (youdao-dictionary-search-history-file (locate-user-emacs-file "cache/youdao-history"))
-  :config
-  (setq url-automatic-caching t)
-  (with-eval-after-load 'evil
-    (evil-define-key 'normal youdao-dictionary-mode-map "q" 'quit-window)))
-
 ;; https://github.com/lorniu/go-translate
 (use-package go-translate
-  :commands (gt-do-translate gt-do-speak)
+  :commands (gt-translate gt-speak)
   :config
   (setq gt-langs '("en" "zh")
         gt-default-translator (gt-translator
-                               :engines (gt-google-engine)
-                               :render (gt-buffer-render)))
+                               :engines (list (gt-chatgpt-engine) (gt-google-engine))
+                               ;; :engines (gt-google-engine)
+                               :render (gt-buffer-render))
+        gt-buffer-render-evil-leading-key nil
+        gt-buffer-render-follow-p t
+        gt-chatgpt-host "https://api.siliconflow.cn"
+        gt-chatgpt-model "tencent/Hunyuan-MT-7B")
   (with-eval-after-load 'evil
     (add-hook 'gt-buffer-render-init-hook
               (lambda ()

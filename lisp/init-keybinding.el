@@ -75,10 +75,9 @@
    "aP" '(package-isolate :which-key "package-isolate") ;; fast emacs debug environment
    "aR" '(re-builder :which-key "re-builder")
    "at" '(telega :which-key "telega")
-   "ay" '(nil :which-key "dictionary")
-   "ays" '(youdao-dictionary-search-from-input :which-key "search-from-input")
-   "ayy" '(youdao-dictionary-search-at-point-posframe :which-key "translate-at-point")
-   "ayv" '(youdao-dictionary-play-voice-at-point :which-key "voice-at-point")
+   "ay" '(nil :which-key "translate")
+   "ayy" '(gt-translate :which-key "translate-at-point")
+   "ayv" '(gt-speak :which-key "voice-at-point")
    ;; Buffers
    "b" '(nil :which-key "buffer")
    "bb" '(+funcs/switch-to-buffer-dwim :which-key "switch-to-buffer-dwim")
