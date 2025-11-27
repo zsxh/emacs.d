@@ -97,9 +97,6 @@
        )))
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode go-mode))
-    (+go/workspace-configuration))
-
-  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode go-ts-mode))
     (+go/workspace-configuration)))
 
 (use-package go-impl :defer t)          ;; NOTE: `completion-styles' should be `basic'

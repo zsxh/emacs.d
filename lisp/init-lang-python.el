@@ -94,10 +94,7 @@
      (if-let* ((venv-python-cmd (+python/locate-venv-python-cmd)))
          `(:python (:pythonPath ,venv-python-cmd)))))
 
-  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-mode))
-    (+python/workspace-configuration))
-
-  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-ts-mode))
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-base-mode))
     (+python/workspace-configuration)))
 
 

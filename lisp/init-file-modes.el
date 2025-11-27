@@ -56,26 +56,32 @@
   :hook ((csv-mode tsv-mode) . rainbow-csv-mode))
 
 ;; YAML
-(if (treesit-ready-p 'yaml)
-    (use-package yaml-ts-mode
-      :ensure nil
-      :defer t
-      :config
-      (with-eval-after-load 'eglot
-        (when-let* ((_ (file-exists-p schemastore-file))
-                    (schemas (with-temp-buffer
-                               (insert-file-contents schemastore-file)
-                               (jsonrpc--json-read))))
-          (cl-defmethod +eglot/workspace-configuration (server &context (major-mode yaml-ts-mode))
-            `(:yaml
-              (:schemas ,schemas))))))
-  (use-package yaml-mode
-    :defer t))
+(defun yaml-setup ()
+  (with-eval-after-load 'eglot
+    (when-let* ((_ (file-exists-p schemastore-file))
+                (schemas (with-temp-buffer
+                           (insert-file-contents schemastore-file)
+                           (jsonrpc--json-read))))
+      (cl-defmethod +eglot/workspace-configuration (server &context (major-mode yaml-mode))
+        `(:yaml
+          (:schemas ,schemas))))))
+
+(use-package yaml-ts-mode
+  :if (treesit-ready-p 'yaml)
+  :ensure nil
+  :defer t
+  :config (yaml-setup))
+
+(use-package yaml-mode
+  :if (not (treesit-ready-p 'yaml))
+  :defer t
+  :config (yaml-setup))
 
 (use-package yaml :defer t) ; YAML parser for Elisp
 
 ;; Json
 (use-package json-ts-mode
+  :if (treesit-ready-p 'json)
   :ensure nil
   :defer t
   :config
@@ -84,8 +90,10 @@
                 (schemas (with-temp-buffer
                            (insert-file-contents schemastore-file)
                            (jsonrpc--json-read))))
-      ;; FIXME: `eglot--workspace-configuration-plist' set wrong major mode
-      (cl-defmethod +eglot/workspace-configuration (server &context (major-mode js-json-mode))
+      ;; HACK: `eglot--workspace-configuration-plist' set the major mode
+      ;; to be the first of the managed modes(`eglot-server-programs').
+      (derived-mode-add-parents 'js-json-mode '(json-mode))
+      (cl-defmethod +eglot/workspace-configuration (server &context (major-mode json-mode))
         `(:json
           (:validate (:enable t)
            :schemas ,schemas)))))
