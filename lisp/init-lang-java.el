@@ -339,19 +339,24 @@
                                                   :fields selected-fields))))
       (eglot--apply-workspace-edit generate-result this-command)))
 
-  (defun +java/execute-command (server command arguments)
-    (pcase command
-      ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
-      ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt server arguments))
-      ("java.action.generateToStringPrompt" (java-action-generateToStringPrompt server arguments))
-      ("java.action.hashCodeEqualsPrompt" (java-action-hashCodeEqualsPrompt server arguments))
-      ("java.action.generateAccessorsPrompt" (java-action-generateAccessorsPrompt server arguments))
-      ("java.action.generateConstructorsPrompt" (java-action-generateConstructorsPrompt server arguments))
-      ("java.action.applyRefactoringCommand" (message "Unhandled method %s" command))
-      ("java.action.rename" (java-action-rename arguments))
-      ("java.show.references" (java-show-references command arguments))
-      ("java.show.implementations" (java-show-references command arguments))
-      (_ (message "Unhandled method %s" command)))))
+  (cl-defmethod eglot-execute :around
+    (server action &context (major-mode java-mode))
+    "Custom handler for performing client commands."
+    (let ((command (plist-get action :command))
+          (arguments (plist-get action :arguments)))
+      (pcase command
+        ("java.apply.workspaceEdit" (java-apply-workspaceEdit arguments))
+        ("java.action.overrideMethodsPrompt" (java-action-overrideMethodsPrompt server arguments))
+        ("java.action.generateToStringPrompt" (java-action-generateToStringPrompt server arguments))
+        ("java.action.hashCodeEqualsPrompt" (java-action-hashCodeEqualsPrompt server arguments))
+        ("java.action.generateAccessorsPrompt" (java-action-generateAccessorsPrompt server arguments))
+        ("java.action.generateConstructorsPrompt" (java-action-generateConstructorsPrompt server arguments))
+        ("java.action.applyRefactoringCommand" (message "Unhandled method %s" command))
+        ("java.action.rename" (java-action-rename arguments))
+        ("java.show.references" (java-show-references command arguments))
+        ("java.show.implementations" (java-show-references command arguments))
+        (_ (cl-call-next-method)))))
+  )
 
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode

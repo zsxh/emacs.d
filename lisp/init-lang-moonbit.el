@@ -37,31 +37,36 @@
   (+eglot/set-leader-keys moonbit-mode-map))
 
 (with-eval-after-load 'moonbit-mode
-  (defun +moonbit/execute-command (server command arguments)
-    (pcase command
-      ("moonbit-lsp/format-toplevel" (moonbit--lsp/format server arguments))
-      ("moonbit-lsp/run-test" (moonbit--lsp/test arguments))
-      ("moonbit-lsp/debug-test" (message "Unhandled method %s" command))
-      ("moonbit-lsp/update-test" (moonbit--lsp/test arguments 'update))
-      ("moonbit-lsp/trace-test" (message "Unhandled method %s" command))
-      ("moonbit-lsp/run-all-tests" (moonbit--lsp/test arguments))
-      ("moonbit-lsp/update-all-tests" (moonbit--lsp/test arguments 'update))
-      ("moonbit-lsp/run-main" (moonbit--lsp/main arguments))
-      ("moonbit-lsp/debug-main" (message "Unhandled method %s" command)) ;; moon build --debug --target js
-      ("moonbit-lsp/trace-main" (message "Unhandled method %s" command))
-      ("moonbit-ai/generate" (message "Unhandled method %s" command))
-      ("moonbit-ai/generate-batched" (message "Unhandled method %s" command))
-      (_ (message "Unhandled method %s" command))))
+  (cl-defmethod eglot-execute :around
+    (server action &context (major-mode moonbit-mode))
+    "Custom handler for performing client commands."
+    (let ((command (plist-get action :command))
+          (arguments (plist-get action :arguments)))
+      (pcase command
+        ("moonbit-lsp/format-toplevel" (moonbit--lsp/format server arguments))
+        ("moonbit-lsp/run-test" (moonbit--lsp/test arguments))
+        ("moonbit-lsp/debug-test" (message "Unhandled method %s" command))
+        ("moonbit-lsp/update-test" (moonbit--lsp/test arguments 'update))
+        ("moonbit-lsp/trace-test" (message "Unhandled method %s" command))
+        ("moonbit-lsp/run-all-tests" (moonbit--lsp/test arguments))
+        ("moonbit-lsp/update-all-tests" (moonbit--lsp/test arguments 'update))
+        ("moonbit-lsp/run-main" (moonbit--lsp/main arguments))
+        ("moonbit-lsp/debug-main" (message "Unhandled method %s" command)) ;; moon build --debug --target js
+        ("moonbit-lsp/trace-main" (message "Unhandled method %s" command))
+        ("moonbit-ai/generate" (message "Unhandled method %s" command))
+        ("moonbit-ai/generate-batched" (message "Unhandled method %s" command))
+        (_ (cl-call-next-method)))))
 
   (defun moonbit--lsp/format (server arguments)
     (let* ((arg (aref arguments 0))
            (region (eglot-range-region (plist-get arg :range)))
            (beg (car region))
            (end (cdr region))
-           (result (jsonrpc-request server
-                                    :moonbit-lsp/format
-                                    (list :content (buffer-substring-no-properties beg end)
-                                          :blockStyle :json-false))))
+           (result (eglot--request
+                    server
+                    :moonbit-lsp/format
+                    (list :content (buffer-substring-no-properties beg end)
+                          :blockStyle :json-false))))
       (save-excursion
         (goto-char beg)
         (delete-region beg end)

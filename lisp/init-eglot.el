@@ -42,17 +42,6 @@
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
 
 (with-eval-after-load 'eglot
-  (cl-defmethod eglot-execute :around (server action)
-    "Execute custom LSP commands for specific language servers."
-    (let ((command (plist-get action :command))
-          (arguments (plist-get action :arguments)))
-      (if (stringp command)
-          (cond
-           ((string-prefix-p "java." command) (+java/execute-command server command arguments))
-           ((string-prefix-p "moonbit" command) (+moonbit/execute-command server command arguments))
-           (t (cl-call-next-method)))
-        (cl-call-next-method))))
-
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
   (defvar +eglot/display-frame nil)
   (defvar +eglot/hover-last-point nil)
