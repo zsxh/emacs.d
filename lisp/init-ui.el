@@ -19,7 +19,8 @@
   "Current using theme.")
 
 ;; Show buffer name in title
-(setq frame-title-format "emacs@%b")
+;; (setq frame-title-format "emacs@%b")
+(setq frame-title-format nil)
 
 ;; When Context Menu mode is enabled, clicking the mouse button down-mouse-3
 ;; activates the menu whose contents depends on its surrounding context

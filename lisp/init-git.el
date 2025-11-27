@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;; TODO: try [Enhanced diff display with external tools](https://codeberg.org/ideasman42/emacs-diff-ansi)
+
 ;; NOTE: https://magit.vc/manual/magit/Performance.html
 (use-package magit
   :commands (magit magit-blame magit-file-popup)

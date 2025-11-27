@@ -204,6 +204,7 @@ for quickly evaluating s-expressions in Lisp-like languages."
    (t (setq this-command 'self-insert-command)
       (call-interactively 'self-insert-command))))
 
+;; TODO: try [elisp-autofmt](https://codeberg.org/ideasman42/emacs-elisp-autofmt)
 ;;;###autoload
 (defun zsxh-lispy/lisp-format-region (start end)
   "Format the selected region.
