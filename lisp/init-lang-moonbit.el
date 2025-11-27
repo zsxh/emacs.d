@@ -18,7 +18,11 @@
   :init
   (defun moonbit-setup ()
     (setq-local tab-width 2)
-    (face-remap-add-relative 'eglot-semantic-async-face :slant 'italic))
+    (setq-local face-remapping-alist
+                '((eglot-semantic-async-face
+                   :weight normal
+                   :slant italic
+                   :underline t))))
   :hook ((moonbit-mode . eglot-ensure)
          (moonbit-mode . moonbit-setup))
   :config
