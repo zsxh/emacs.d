@@ -201,45 +201,54 @@
   :config
   (eglot-inactive-regions-mode 1))
 
+;; TODO: improve performance
 (use-package eglot-codelens
   :vc (:url "https://github.com/Gavinok/eglot-codelens.git")
   :hook (eglot-managed-mode . eglot-codelens-mode)
   :config
+  (setq eglot-codelens-debounce 0.5)
+
+  (define-advice eglot-delayed-lens-update (:override (&rest _) advice)
+    "Update lenses after a small delay to ensure the server is up to date."
+    (when eglot-codelens--refresh-timer
+      (cancel-timer eglot-codelens--refresh-timer))
+    (setq-local eglot-codelens--refresh-timer
+                (run-with-idle-timer eglot-codelens-debounce
+                                     nil
+                                     #'eglot-codelens-force-refresh-lens)))
+
   (define-advice eglot-codelens-apply-code-lenses (:override nil advice)
     "Request and display code lenses using Eglot."
-    (let ((buf (current-buffer)))
-      (eglot--async-request
-       (eglot--current-server-or-lose)
-       :textDocument/codeLens (list :textDocument (eglot--TextDocumentIdentifier))
-       :success-fn
-       (lambda (code-lenses)
-         (eglot--when-live-buffer buf
-           (let ((line-code-lenses (seq-group-by
-                                    (lambda (item)
-                                      (let* ((range (plist-get item :range))
-                                             (start (plist-get range :start))
-                                             (line (plist-get start :line)))
-                                        line))
-                                    code-lenses)))
-             (dolist (line-lenses line-code-lenses)
-               (let* ((lenses (cdr line-lenses))
-                      (size (length lenses)))
-                 (seq-map-indexed
-                  (lambda (lens idx)
-                    (eglot-codelens-make-overlay-for-lens
-                     ;; Construct a lens with a resolved command
-                     ;; TODO consider just modifying the lens if that is faster
-                     (or (cl-getf lens :command)
-                         (cl-getf (eglot--request
-                                   (eglot--current-server-or-lose)
-                                   :codeLens/resolve
-                                   lens)
-                                  :command))
-                     (cl-getf lens :range)
-                     idx
-                     (= idx (- size 1))))
-                  lenses))))))
-       :hint :textDocument/codeLens)))
+    (save-excursion
+      (let* ((code-lenses
+              ;; request code lenses from the server
+              (eglot--request
+               (eglot--current-server-or-lose)
+               :textDocument/codeLens
+               (list :textDocument (eglot--TextDocumentIdentifier))))
+             (line-code-lenses (seq-group-by (lambda (item)
+                                               (let* ((range (plist-get item :range))
+                                                      (start (plist-get range :start))
+                                                      (line (plist-get start :line)))
+                                                 line))
+                                             code-lenses)))
+        (dolist (line-lenses line-code-lenses)
+          (let* ((lenses (cdr line-lenses))
+                 (size (length lenses)))
+            (seq-map-indexed (lambda (lens idx)
+                               (eglot-codelens-make-overlay-for-lens
+                                ;; Construct a lens with a resolved command
+                                ;; TODO consider just modifying the lens if that is faster
+                                (or (cl-getf lens :command)
+                                    (cl-getf (eglot--request
+                                              (eglot--current-server-or-lose)
+                                              :codeLens/resolve
+                                              lens)
+                                             :command))
+                                (cl-getf lens :range)
+                                idx
+                                (= idx (- size 1))))
+                             lenses))))))
 
   (defun eglot-codelens-overlay-pos-and-indent-str (start-line)
     (let ((indent-str nil)
