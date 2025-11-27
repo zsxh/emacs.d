@@ -42,31 +42,16 @@
   (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
 
 (with-eval-after-load 'eglot
-  (cl-defgeneric eglot-execute (server action)
-    "Ask SERVER to execute ACTION.
-ACTION is an LSP `CodeAction', `Command' or `ExecuteCommandParams'
-object."
-    (:method
-     (server action) "Default implementation."
-     (eglot--dcase action
-       (((Command) title command arguments)
-        (cond
-         ((string-prefix-p "java." command) (+java/execute-command server command arguments))
-         ((string-prefix-p "moonbit" command) (+moonbit/execute-command server command arguments))
-         (t (progn
-              ;; Convert to ExecuteCommandParams and recurse (bug#71642)
-              (cl-remf action :title)
-              (eglot-execute server action)))))
-       (((ExecuteCommandParams))
-        (eglot--request server :workspace/executeCommand action))
-       (((CodeAction) edit command data)
-        (if (and (null edit) (null command) data
-                 (eglot-server-capable :codeActionProvider :resolveProvider))
-            (eglot-execute server (eglot--request server :codeAction/resolve action))
-          (when edit (eglot--apply-workspace-edit edit this-command))
-          (when command
-            ;; Recursive call with what must be a Command object (bug#71642)
-            (eglot-execute server command)))))))
+  (cl-defmethod eglot-execute :around (server action)
+    "Execute custom LSP commands for specific language servers."
+    (let ((command (plist-get action :command))
+          (arguments (plist-get action :arguments)))
+      (if (stringp command)
+          (cond
+           ((string-prefix-p "java." command) (+java/execute-command server command arguments))
+           ((string-prefix-p "moonbit" command) (+moonbit/execute-command server command arguments))
+           (t (cl-call-next-method)))
+        (cl-call-next-method))))
 
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
   (defvar +eglot/display-frame nil)
