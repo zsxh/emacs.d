@@ -79,8 +79,10 @@
                                                              "org.mockito.ArgumentMatchers.*"
                                                              "org.mockito.Answers.*"])
                         :edit (:validateAllOpenBuffersOnChanges :json-false)
-                        ;; Javadoc generation, https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
-                        :codeGeneration (:generateComments t)))
+                        :codeGeneration (:generateComments t) ;; https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
+                        :referencesCodeLens (:enabled :json-false) ;; https://github.com/redhat-developer/vscode-java/issues/148
+                        :implementationCodeLens "none" ;; one of [none, types, methods, all]
+                        ))
       :extendedClientCapabilities (:classFileContentsSupport t
                                    :overrideMethodsPromptSupport t
                                    :hashCodeEqualsPromptSupport t
