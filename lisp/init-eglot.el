@@ -204,7 +204,8 @@
 ;; TODO: improve performance
 (use-package eglot-codelens
   :vc (:url "https://github.com/Gavinok/eglot-codelens.git")
-  :hook (eglot-managed-mode . eglot-codelens-mode)
+  :defer t
+  ;; :hook (eglot-managed-mode . eglot-codelens-mode)
   :config
   (setq eglot-codelens-debounce 0.5)
 
@@ -297,9 +298,11 @@ If the icon is not recognized, returns the original placeholder."
             (eglot-codelens-overlay-pos-and-indent-str start-line))
            (bol-pos (car bol-pos-and-indent-str))
            (indent-str (cdr bol-pos-and-indent-str))
-           (ol (make-overlay bol-pos bol-pos))
+           ;; TODO: improve `eglot-codelens-execute-current-lens'
+           (ol (make-overlay bol-pos (1+ bol-pos)))
            (text (concat
-                  indent-str
+                  (when (eq 0 priority)
+                    indent-str)
                   (propertize
                    (eglot-codelens-codicons-to-nerd-icons
                     (cl-getf command :title))
