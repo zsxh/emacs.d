@@ -51,6 +51,8 @@
   :config
   (require 'dirvish-vc nil t)
   (require 'dirvish-emerge nil t)
+  ;; FIXME: `all' is a new function from `subr.el'
+  (setq dirvish-yank-sources (lambda () (dirvish-yank--get-srcs 'all)))
 
   (setq dirvish-time-format-string "%F %R"
         dirvish-attributes
@@ -205,6 +207,7 @@
    "N" '(dirvish-narrow :which-key "dirvish-narrow")
    "M" '(dirvish-move :which-key "move-file")
    "P" '(dirvish-yank :which-key "paste-file")
+   "R" '(dirvish-rsync :which-key "rsync")
    "s" '(+dired/get-size :which-key "get-size")
    "." '(dired-omit-mode :which-key "toggle-dotfiles")))
 
