@@ -252,6 +252,12 @@
      ("b" "balance" balance-windows)
      ("q" "quit" transient-quit-all)])
 
+  (define-advice transient-window-scale (:around (orig-fn) advice)
+    (if (and (featurep 'posframe) (posframe-workable-p))
+        (funcall orig-fn)
+      (let ((transient-display-buffer-action +transient/non-dedicated-display))
+        (funcall orig-fn))))
+
   (transient-define-prefix transient-windows-layout ()
     "window commands.
 Check: https://p.bauherren.ovh/blog/tech/new_window_cmds"
@@ -276,51 +282,27 @@ Check: https://p.bauherren.ovh/blog/tech/new_window_cmds"
 
 ;; posframe
 (use-package posframe
-  :defer t)
-
-;; transient posframe
-(use-package transient-posframe
-  :after transient
+  :defer t
   :config
-  ;; https://github.com/yanghaoxie/transient-posframe/pull/7#issuecomment-2538792470
-  (define-advice transient-posframe--show-buffer (:override (buffer _) advice)
-    (posframe-show
-     buffer
-     :poshandler #'posframe-poshandler-frame-center
-     ;; To reduce the likelyhood of horizontal resizing, use the
-     ;; same minimal width as transient uses by default.  It matches
-     ;; the width needed to display the commands common to all menus.
-     :min-width transient-minimal-frame-width
-     ;; If the parent frame is small, there might not be enough room.
-     ;; By default posframe wraps lines, but we truncate instead.
-     :lines-truncate t
-     ;; Enable the fringe, so that we can see when truncation has
-     ;; occured.  Hm, actually that's not good enough, so let's not.
-     ;; :right-fringe 8
-     ;;
-     ;; Indicate transient-ness of the menu.  You could also use a
-     ;; constant color, if you don't care about this.
-     :internal-border-color (transient--prefix-color)
-     :internal-border-width 3
-     :override-parameters transient-posframe-parameters)
-    ;; `posframe-show' it not suitable for use as a display action
-    ;; and it appears posframe does not provide some other function
-    ;; that is.  We can make this more complient by at least
-    ;; returning the used window.
-    (get-buffer-window transient--buffer t))
-
-  (setq transient-posframe-parameters
-        '((title . "transient-posframe")
-          ;; (undecorated . nil)
-          (left-fringe . 8)
-          (right-fringe . 8)))
-
-  (transient-posframe-mode))
-
-(unless (posframe-workable-p)
-  (define-advice transient-window-scale (:around (orig-fn) advice)
-    (let ((transient-display-buffer-action +transient/non-dedicated-display))
-      (funcall orig-fn))))
+  ;; https://github.com/emacsorphanage/transient-posframe/wiki
+  (with-eval-after-load 'transient
+    (setq transient-mode-line-format nil)
+    (setq transient-display-buffer-action
+          (list
+           (lambda (buffer _)
+             (posframe-show
+              buffer
+              :poshandler #'posframe-poshandler-frame-center
+              :min-width transient-minimal-frame-width
+              :lines-truncate t
+              :left-fringe 8
+              :right-fringe 8
+              :internal-border-color (transient--prefix-color)
+              :internal-border-width 1
+              :override-parameters '((title . "transient-posframe")
+                                     ;; (undecorated . nil)
+                                     ))
+             (get-buffer-window transient--buffer t))))))
 
 
 (provide 'init-keybinding)

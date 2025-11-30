@@ -246,7 +246,6 @@
 
 ;; The kirigami package offers a unified interface for text folding
 (use-package kirigami
-  :vc (:url "https://github.com/jamescherti/kirigami.el")
   :defer t
   :init
   ;; Configure Kirigami to replace the default Evil-mode folding key bindings

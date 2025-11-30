@@ -277,7 +277,6 @@ When called interactively, prompts for file or buffer type."
   ;; :after gptel
   :defer t
   :config
-  ;; FIXME: https://github.com/karthink/gptel-agent/pull/7
   (setq gptel-agent-dirs nil)
   ;; Read files from agents directories
   (gptel-agent-update))
