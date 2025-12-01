@@ -104,7 +104,8 @@
 ;; searches load-path can become very slow.  By filtering load-path up
 ;; front to only contain directories which are likely to contain the
 ;; searched-for file, load becomes much faster.
-(setq load-path-filter-function #'load-path-filter-cache-directory-files)
+(when (boundp 'load-path-filter-function)
+  (setq load-path-filter-function #'load-path-filter-cache-directory-files))
 
 
 (provide 'early-init)
