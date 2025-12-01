@@ -298,7 +298,7 @@ Check: https://p.bauherren.ovh/blog/tech/new_window_cmds"
               :left-fringe 8
               :right-fringe 8
               :internal-border-color (transient--prefix-color)
-              :internal-border-width 1
+              :internal-border-width 2
               :override-parameters '((title . "transient-posframe")
                                      ;; (undecorated . nil)
                                      ))

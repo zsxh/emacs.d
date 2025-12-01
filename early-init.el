@@ -97,6 +97,15 @@
 ;; No second pass of case-insensitive search over auto-mode-alist.
 (setq auto-mode-case-fold nil)
 
+;; https://github.com/emacs-mirror/emacs/commit/e5218df144203ff1b5da3d46b7579b6455008ee7
+;; Speed up repeated lookup of Lisp files in `load-path'
+;;
+;; When there are many directories on load-path, the part of load which
+;; searches load-path can become very slow.  By filtering load-path up
+;; front to only contain directories which are likely to contain the
+;; searched-for file, load becomes much faster.
+(setq load-path-filter-function #'load-path-filter-cache-directory-files)
+
 
 (provide 'early-init)
 
