@@ -43,6 +43,7 @@
    '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME" "JAVA_21_HOME" "JAVA_23_HOME" "JAVA_25_HOME"))
 
   ;; ----------------------- Intialization/Configurations -----------------------
+  ;; TODO: install jdtls bundles/plugins from `mason'
   (defun java-get-jdtls-bundles ()
     "Return a vector of JAR files from the jdtls bundles directory."
     (if-let* ((bundles-dir (file-name-concat user-emacs-directory "cache" "lsp-servers" "java" "bundles"))

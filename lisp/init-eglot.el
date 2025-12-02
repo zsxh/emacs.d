@@ -202,6 +202,8 @@
   (eglot-inactive-regions-mode 1))
 
 ;; TODO: improve performance
+;; - [emacs-asio](https://github.com/skeeto/emacs-aio)
+;; - [emacs-async](https://github.com/jwiegley/emacs-async)
 (use-package eglot-codelens
   :vc (:url "https://github.com/Gavinok/eglot-codelens.git")
   :hook (eglot-managed-mode . eglot-codelens-mode)
@@ -343,6 +345,14 @@ If the icon is not recognized, returns the original placeholder."
       (erase-buffer)
       (insert-buffer-substring buffer))
     (message "Successfully fetched schemastore json schema to %s" file-path)))
+
+;; mason.el is installer for LSP servers, DAP servers, linters and formatters
+;; `mason-install', `mason-manager'
+(use-package mason
+  :defer t
+  :config
+  (setq mason-dir (expand-file-name "cache/mason" user-emacs-directory))
+  (mason-ensure))
 
 
 (provide 'init-eglot)
