@@ -64,10 +64,7 @@
                  nil))
 
   (+funcs/major-mode-leader-keys
-   web-mode-map
-   "f" '(web-mode-buffer-indent :which-key "indent-buffer"))
-  (+funcs/major-mode-leader-keys
-   html-web-mode-map
+   '(web-mode-map html-web-mode-map)
    "f" '(web-mode-buffer-indent :which-key "indent-buffer"))
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs `(html-web-mode . ,(eglot-alternatives '(("vscode-html-language-server" "--stdio") ("html-languageserver" "--stdio"))))))
@@ -82,10 +79,9 @@
                            (eglot-ensure)))
   :config
   (setq css-indent-offset 2)
-  (dolist (mode-map '(css-mode-map css-ts-mode-map))
-    (+funcs/major-mode-leader-keys
-     mode-map
-     "c" '(css-cycle-color-format :which-key "css-cycle-color-format")))
+  (+funcs/major-mode-leader-keys
+   '(css-mode-map css-ts-mode-map)
+   "c" '(css-cycle-color-format :which-key "css-cycle-color-format"))
   (add-hook-run-once 'css-base-mode-hook '+eglot/set-leader-keys))
 
 ;; edit xml

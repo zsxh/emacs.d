@@ -54,13 +54,7 @@
   (+eglot/set-leader-keys python-mode-map)
   (+eglot/set-leader-keys python-ts-mode-map)
   (+funcs/major-mode-leader-keys
-   python-mode-map
-   "f" '(+python/format-buffer :which-key "format")
-   "v" '(nil :which-key "venv")
-   "va" '(pyvenv-activate :which-key "activate")
-   "vd" '(pyvenv-deactivate :which-key "deactivate"))
-  (+funcs/major-mode-leader-keys
-   python-ts-mode-map
+   '(python-mode-map python-ts-mode-map)
    "f" '(+python/format-buffer :which-key "format")
    "v" '(nil :which-key "venv")
    "va" '(pyvenv-activate :which-key "activate")

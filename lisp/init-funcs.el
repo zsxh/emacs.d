@@ -61,19 +61,31 @@ It returns a code string to define local leader keys."
   `(progn
      (general-define-key
       :states 'normal
-      :keymaps (if (and (symbolp ,mode-map)
-                        (keymapp (symbol-value ,mode-map)))
-                   ,mode-map
+      :keymaps (cond
+                ((keymapp ,mode-map)
                  (keymap-symbol ,mode-map))
+                ((and (symbolp ,mode-map)
+                      (keymapp (symbol-value ,mode-map)))
+                 ,mode-map)
+                ((listp ,mode-map)
+                 ,mode-map)
+                (t
+                 (keymap-symbol ,mode-map)))
       :major-modes t
       :prefix "SPC m"
       ,@args)
      (general-define-key
       :states 'normal
-      :keymaps (if (and (symbolp ,mode-map)
-                        (keymapp (symbol-value ,mode-map)))
-                   ,mode-map
+      :keymaps (cond
+                ((keymapp ,mode-map)
                  (keymap-symbol ,mode-map))
+                ((and (symbolp ,mode-map)
+                      (keymapp (symbol-value ,mode-map)))
+                 ,mode-map)
+                ((listp ,mode-map)
+                 ,mode-map)
+                (t
+                 (keymap-symbol ,mode-map)))
       :major-modes t
       :prefix ","
       ,@args)))
