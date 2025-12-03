@@ -310,6 +310,7 @@ otherwise  set the current buffer to read-only."
       remote-file-name-inhibit-auto-save-visited t
       remote-file-name-inhibit-cache 120)
 
+;; TODO: trim whitespace, https://github.com/lewang/ws-butler
 (defun delete-trailing-whitespace-skip-current-line ()
     (interactive)
     (let ((begin (line-beginning-position))

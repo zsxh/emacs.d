@@ -29,12 +29,12 @@
   ;; :custom (python-indent-offset 2)
   )
 
-;; python ruff linter
-(use-package flymake-ruff
-  :defer t
-  :hook (eglot-managed-mode . (lambda ()
-                                (when (derived-mode-p 'python-base-mode)
-                                  (flymake-ruff-load)))))
+;; TODO: remove python ruff linter
+;; (use-package flymake-ruff
+;;   :defer t
+;;   :hook (eglot-managed-mode . (lambda ()
+;;                                 (when (derived-mode-p 'python-base-mode)
+;;                                   (flymake-ruff-load)))))
 
 (with-eval-after-load 'python
   ;; formatter
@@ -79,20 +79,11 @@
 
   (require 'eglot)
 
-  ;; https://docs.basedpyright.com/latest/configuration/language-server-settings/
-  ;; https://docs.basedpyright.com/latest/benefits-over-pyright/better-defaults/#default-value-for-pythonpath
-  ;; If neither `pythonPath 'or `venvPath'/`venv' are set, basedpyright will check for a venv at `./.venv' and if it finds one, i
-  ;; t will use its python interpreter as the value for pythonPath.
   (defun +python/workspace-configuration (&optional server)
-    (append
-     ;; basedpyright settings
-     '(:basedpyright
-       (:analysis
-        (:typeCheckingMode "basic"
-         :diagnosticMode "openFilesOnly")))
-     ;; pyright settings
-     (if-let* ((venv-python-cmd (+python/locate-venv-python-cmd)))
-         `(:python (:pythonPath ,venv-python-cmd)))))
+  '(:ty
+    (:experimental
+     (:rename t
+      :autoImport t))))
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-base-mode))
     (+python/workspace-configuration)))
