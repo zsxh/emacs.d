@@ -69,6 +69,7 @@
   (setq vertico-multiform-commands '((consult-line (:not posframe))
                                      (consult-imenu (:not posframe))
                                      (consult-flymake (:not posframe))
+                                     (consult-jq (:not posframe))
                                      (t posframe)))
   (vertico-multiform-mode))
 

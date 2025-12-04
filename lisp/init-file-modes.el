@@ -98,8 +98,14 @@
           (:validate (:enable t)
            :schemas ,schemas)))))
   (+funcs/major-mode-leader-keys json-ts-mode-map
-                                 "j" '(counsel-jq :which-key "counsel-jq")
+                                 "j" '(consult-jq :which-key "consult-jq")
                                  "p" '(json-pretty-print-buffer :which-key "pretty-print")))
+
+(use-package consult-jq
+  :vc (:url "https://github.com/bigbuger/consult-jq")
+  :defer t
+  :config
+  (setq consult-jq-completion-styles '(basic partial-completion)))
 
 ;; PDF, EPUB, MOBI, FB2, XPS/OpenXPS, CBZ
 ;; The Emacs Reader (via MuPDF)
