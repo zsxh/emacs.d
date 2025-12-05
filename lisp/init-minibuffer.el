@@ -10,17 +10,19 @@
 
 ;;; Code:
 
-(setq completion-ignore-case t)
-
 ;; Completion Styles
-;; NOTE: [Manual] https://www.gnu.org/software/emacs/manual/html_node/emacs/Completion-Styles.html
-;; NOTE: [Article] https://www.masteringemacs.org/article/understanding-minibuffer-completion
-;; NOTE: [Video] https://www.youtube.com/watch?v=w9hHMDyF9V4
+;; NOTE: [Manual](https://www.gnu.org/software/emacs/manual/html_node/emacs/Completion-Styles.html)
+;; NOTE: [Understanding Minibuffer Completion](https://www.masteringemacs.org/article/understanding-minibuffer-completion)
+;; NOTE: [Emacs Minibuffer Completions](https://www.youtube.com/watch?v=w9hHMDyF9V4)
+;; NOTE: [Emacs 30 Built-in Completion UI & Styles Overview](https://www.youtube.com/watch?v=-ZeoGVtMLaU)
+;; NOTE: [Exploring Emacs Completion Styles - System Crafters Live!](https://www.youtube.com/watch?v=QNdOBXVdd1Q)
 ;; `completion-category-overrides' > `completion-category-defaults' > `completion-styles'
 
 ;; In case you like auto completion settings, where the completion popup appears immediately,
 ;; better use a cheap completion style like `basic', which performs prefix filtering.
-(setq completion-styles '(basic))
+;; (setq completion-styles '(basic))
+(setq completion-pcm-leading-wildcard t
+      completion-ignore-case t)
 
 ;; Vertico provides a performant and minimalistic vertical completion UI
 ;; based on the default completion system.  By reusing the built-in
@@ -32,7 +34,8 @@
   :bind ((:map vertico-map
           ("C-k" . vertico-previous)
           ("C-j" . vertico-next)
-          ([backspace] . vertico-directory-delete-char)
+          ("DEL" . vertico-directory-delete-char)
+          ("M-DEL" . vertico-directory-delete-word)
           ([escape] . abort-recursive-edit)
           ("TAB" . minibuffer-complete)))
   :config
