@@ -75,6 +75,7 @@
    "aP" '(package-isolate :which-key "package-isolate") ;; fast emacs debug environment
    "aR" '(re-builder :which-key "re-builder")
    "at" '(telega :which-key "telega")
+   "ax" '(transient-tmux :which-key "tmux")
    "ay" '(nil :which-key "translate")
    "ayy" '(gt-translate :which-key "translate-at-point")
    "ayv" '(gt-speak :which-key "voice-at-point")
@@ -278,6 +279,14 @@ Check: https://p.bauherren.ovh/blog/tech/new_window_cmds"
   (transient-define-prefix transient-string-inflection ()
     ["Cycle text objects through camelCase, kebab-case, snake case and UPPER CASE."
      ("s" "string-inflection-all-cycle" string-inflection-all-cycle :transient t)
+     ("q" "quit" transient-quit-all)])
+
+  (transient-define-prefix transient-tmux ()
+    ["Interact with tmux"
+     ("s" "send-command" emamux:send-command)
+     ("r" "send-region" emamux:send-region)
+     ("y" "yank-from-list-buffers" emamux:yank-from-list-buffers)
+     ("k" "kill-session" emamux:kill-session)
      ("q" "quit" transient-quit-all)]))
 
 ;; posframe

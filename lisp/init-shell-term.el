@@ -162,9 +162,9 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
           (display-buffer buf)))
        (t (eat))))))
 
-;; `tmux-run'
-(use-package zsxh-tmux
-  :ensure nil)
+;; Interact with tmux from Emacs.
+(use-package emamux
+  :defer t)
 
 
 (provide 'init-shell-term)

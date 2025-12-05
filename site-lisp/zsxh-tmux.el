@@ -9,7 +9,10 @@
 
 ;; This file is not part of GNU Emacs.
 
-;;; Commentary:
+;; Commentary:
+;;
+;; 2025/12/05: Deprecated, use `emamux' instead
+;;
 ;; This package provides integration between Emacs, terminal and tmux.
 ;; It allows opening project directories in terminal with tmux sessions.
 ;;
