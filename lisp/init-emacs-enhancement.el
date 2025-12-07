@@ -181,6 +181,15 @@
   (remove-hook 'find-file-hook 'forge-bug-reference-setup)
   )
 
+;; tramp-hlo works by implementing high-level Emacs file operations as single
+;; round-trip server-side scripts, significantly improving performance when
+;; using TRAMP on remote hosts.
+(use-package tramp-hlo
+  :after tramp
+  :config
+  (tramp-hlo-setup) ; `tramp-hlo-remove'
+  )
+
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; Emacs is now capable of editing files with very long lines since 29.1, `long-line-threshold'
 (when (version< emacs-version "29")
