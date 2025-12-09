@@ -122,15 +122,14 @@ Otherwise, kill the current buffer using `magit-bury-buffer-function'."
 (use-package git-timemachine
   :defer t
   :config
-  (evil-define-minor-mode-key 'normal 'git-timemachine-mode
-    "p" 'git-timemachine-show-previous-revision
-    "n" 'git-timemachine-show-next-revision
-    "q" 'git-timemachine-quit
-    "b" 'git-timemachine-blame
-    "gtg" 'git-timemachine-show-nth-revision
-    "gtt" 'git-timemachine-show-revision-fuzzy
-    "gty" 'git-timemachine-kill-abbreviated-revision
-    "gtY" 'git-timemachine-kill-revision))
+  (with-eval-after-load 'evil-collection
+    (evil-collection-git-timemachine-setup)
+    (evil-define-minor-mode-key '(normal visual motion) 'git-timemachine-mode
+      "p" 'git-timemachine-show-previous-revision
+      "n" 'git-timemachine-show-next-revision
+      "b" 'git-timemachine-blame
+      "q" 'git-timemachine-quit
+      "?" 'git-timemachine-help)))
 
 ;; Show Version Control Software (VCS) commit message of current line.
 ;; https://github.com/redguardtoo/vc-msg
