@@ -73,14 +73,17 @@
 
   (require 'eglot)
 
-  (defun +python/workspace-configuration (&optional server)
-  '(:ty
-    (:experimental
-     (:rename t
-      :autoImport t))))
+  (defvar eglot-python-workspace-configuration
+    '(:ty
+      (:experimental
+       (:rename t
+        :autoImport t))))
+
+  (cl-defmethod eglot-initialization-options (server &context (major-mode python-base-mode))
+    eglot-python-workspace-configuration)
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-base-mode))
-    (+python/workspace-configuration)))
+    eglot-python-workspace-configuration))
 
 
 (provide 'init-lang-python)

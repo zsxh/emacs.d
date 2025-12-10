@@ -65,39 +65,41 @@
   ;; NOTE: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   ;; eglot missing [gopls code actions](https://github.com/golang/tools/blob/master/gopls/doc/features/transformation.md):
   ;; source.addTest, source.freesymbols, source.doc, source.assembly...
-  (defun +go/workspace-configuration (&optional server)
-    '(:gopls
-      (;; --- Build ---
-       ;; --- Formatting ---
-       :gofumpt t
-       ;; --- UI ---
-       ;; :codelenses (:generate t
-       ;;              :regenerate_cgo t
-       ;;              :tidy t
-       ;;              :upgrade_dependency t
-       ;;              :vendor t
-       ;;              :test t
-       ;;              :run_govulncheck t
-       ;;              :vulncheck t)
-       :semanticTokens t
-       ;; --- Completion ---
-       :usePlaceholders t
-       ;; --- Diagnostic ---
-       ;; :staticcheck t
-       ;; --- Documentation ---
-       ;; --- Inlayhint ---
-       :hints (:assignVariableTypes t
-               :compositeLiteralFields t
-               :compositeLiteralTypes t
-               :constantValues t
-               :functionTypeParameters t
-               :parameterNames t
-               :rangeVariableTypes t)
-       ;; --- Navigation ---
-       )))
+  (defvar eglot-go-workspace-configuration
+    '(:gopls (;; --- Build ---
+              ;; --- Formatting ---
+              :gofumpt t
+              ;; --- UI ---
+              ;; :codelenses (:generate t
+              ;;              :regenerate_cgo t
+              ;;              :tidy t
+              ;;              :upgrade_dependency t
+              ;;              :vendor t
+              ;;              :test t
+              ;;              :run_govulncheck t
+              ;;              :vulncheck t)
+              :semanticTokens t
+              ;; --- Completion ---
+              :usePlaceholders t
+              ;; --- Diagnostic ---
+              ;; :staticcheck t
+              ;; --- Documentation ---
+              ;; --- Inlayhint ---
+              :hints (:assignVariableTypes t
+                      :compositeLiteralFields t
+                      :compositeLiteralTypes t
+                      :constantValues t
+                      :functionTypeParameters t
+                      :parameterNames t
+                      :rangeVariableTypes t)
+              ;; --- Navigation ---
+              )))
+
+  (cl-defmethod eglot-initialization-options (server &context (major-mode go-mode))
+    eglot-go-workspace-configuration)
 
   (cl-defmethod +eglot/workspace-configuration (server &context (major-mode go-mode))
-    (+go/workspace-configuration)))
+    eglot-go-workspace-configuration))
 
 (use-package go-impl :defer t)          ;; NOTE: `completion-styles' should be `basic'
 (use-package go-fill-struct :defer t)   ;; TODO: fillstruct already provided by gopls

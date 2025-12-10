@@ -38,13 +38,13 @@
 
 ;; TODO: eglot does not support `workspace.workspaceEdit.resourceOperations' yet
 (with-eval-after-load 'eglot
-
   (exec-path-from-shell-copy-envs
-   '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME" "JAVA_21_HOME" "JAVA_23_HOME" "JAVA_25_HOME"))
+   '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME"
+     "JAVA_21_HOME" "JAVA_23_HOME" "JAVA_25_HOME"))
 
   ;; ----------------------- Intialization/Configurations -----------------------
   ;; TODO: install jdtls bundles/plugins from `mason'
-  (defun java-get-jdtls-bundles ()
+  (defun eglot-java-bundles ()
     "Return a vector of JAR files from the jdtls bundles directory."
     (if-let* ((bundles-dir (file-name-concat user-emacs-directory "cache" "lsp-servers" "java" "bundles"))
               (_ (file-directory-p bundles-dir))
@@ -52,38 +52,41 @@
         (apply #'vector jars)
       []))
 
-  ;; (jsonrpc--json-encode (jdtls-initialization-options))
-  (defun jdtls-initialization-options ()
-    `(:settings (:java (:autobuild (:enabled t)
-                        :configuration (:runtimes [(:name "JavaSE-1.8"
-                                                    :path ,(getenv "JAVA_8_HOME"))
-                                                   ;; (:name "JavaSE-11"
-                                                   ;;  :path ,(getenv "JAVA_11_HOME"))
-                                                   ;; (:name "JavaSE-17"
-                                                   ;;  :path ,(getenv "JAVA_17_HOME"))
-                                                   ;; (:name "JavaSE-21"
-                                                   ;;  :path ,(getenv "JAVA_21_HOME"))
-                                                   (:name "JavaSE-25"
-                                                    :path ,(getenv "JAVA_25_HOME")
-                                                    :default t)])
-                        :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
-                                            :profile "GoogleStyle"))
-                        :completion (:guessMethodArguments t
-                                     :lazyResolveTextEdit (:enabled t)
-                                     :favoriteStaticMembers ["org.junit.Assert.*"
-                                                             "org.junit.Assume.*"
-                                                             "org.junit.jupiter.api.Assertions.*"
-                                                             "org.junit.jupiter.api.Assumptions.*"
-                                                             "org.junit.jupiter.api.DynamicContainer.*"
-                                                             "org.junit.jupiter.api.DynamicTest.*"
-                                                             "org.mockito.Mockito.*"
-                                                             "org.mockito.ArgumentMatchers.*"
-                                                             "org.mockito.Answers.*"])
-                        :edit (:validateAllOpenBuffersOnChanges :json-false)
-                        :codeGeneration (:generateComments t) ;; https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
-                        :referencesCodeLens (:enabled :json-false) ;; https://github.com/redhat-developer/vscode-java/issues/148
-                        :implementationCodeLens "none" ;; one of [none, types, methods, all]
-                        ))
+  (defvar eglot-java-workspace-configuration
+    `(:java
+      (:autobuild (:enabled t)
+       :configuration (:runtimes [(:name "JavaSE-1.8"
+                                   :path ,(getenv "JAVA_8_HOME"))
+                                  ;; (:name "JavaSE-11"
+                                  ;;  :path ,(getenv "JAVA_11_HOME"))
+                                  ;; (:name "JavaSE-17"
+                                  ;;  :path ,(getenv "JAVA_17_HOME"))
+                                  ;; (:name "JavaSE-21"
+                                  ;;  :path ,(getenv "JAVA_21_HOME"))
+                                  (:name "JavaSE-25"
+                                   :path ,(getenv "JAVA_25_HOME")
+                                   :default t)])
+       :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
+                           :profile "GoogleStyle"))
+       :completion (:guessMethodArguments t
+                    :lazyResolveTextEdit (:enabled t)
+                    :favoriteStaticMembers ["org.junit.Assert.*"
+                                            "org.junit.Assume.*"
+                                            "org.junit.jupiter.api.Assertions.*"
+                                            "org.junit.jupiter.api.Assumptions.*"
+                                            "org.junit.jupiter.api.DynamicContainer.*"
+                                            "org.junit.jupiter.api.DynamicTest.*"
+                                            "org.mockito.Mockito.*"
+                                            "org.mockito.ArgumentMatchers.*"
+                                            "org.mockito.Answers.*"])
+       :edit (:validateAllOpenBuffersOnChanges :json-false)
+       :codeGeneration (:generateComments t) ;; https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
+       :referencesCodeLens (:enabled :json-false) ;; https://github.com/redhat-developer/vscode-java/issues/148
+       :implementationCodeLens "none" ;; one of [none, types, methods, all]
+       )))
+
+  (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
+    `(:settings ,eglot-java-workspace-configuration
       :extendedClientCapabilities (:classFileContentsSupport t
                                    :overrideMethodsPromptSupport t
                                    :hashCodeEqualsPromptSupport t
@@ -96,14 +99,10 @@
                                    ;; :moveRefactoringSupport t
                                    ;; :resolveAdditionalTextEditsSupport t
                                    )
-      :bundles ,(java-get-jdtls-bundles)))
+      :bundles ,(eglot-java-bundles)))
 
-  (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
-    (jdtls-initialization-options))
-
-  ;; NOTE: https://github.com/eclipse-jdtls/eclipse.jdt.ls/pull/3576
-  ;; (cl-defmethod +eglot/workspace-configuration (server &context (major-mode java-mode))
-  ;;   (plist-get (jdtls-initialization-options) :settings))
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode java-mode))
+    eglot-java-workspace-configuration)
 
   ;; ----------------------- Support URI jdt:// protocol -----------------------
   (defun +java/eglot-find-jdt-server ()
@@ -274,7 +273,7 @@
          (with-current-buffer (find-file (eglot-uri-to-path documentUri))
            (save-excursion
              (cl-map 'vector select-candidate-fn selections)))))
-      ;; ("_java.reloadBundles.command" (java-get-jdtls-bundles))
+      ;; ("_java.reloadBundles.command" (eglot-java-bundles))
       ("_java.reloadBundles.command" [])
       (_ (message "Unknown client command: %s" command))))
 

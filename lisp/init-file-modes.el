@@ -24,10 +24,14 @@
   (require 'eglot)
   (push `(nix-ts-mode . ,(eglot-alternatives '("nil" "rnix-lsp" "nixd"))) eglot-server-programs)
   (+eglot/set-leader-keys nix-ts-mode-map)
-  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-ts-mode))
+  (defvar eglot-nix-workspace-configuration
     '(:nixd
       (:nixpkgs (:expr "import <nixpkgs> { }")
-       :formatting (:command ["nixfmt"])))))
+       :formatting (:command ["nixfmt"]))))
+  (cl-defmethod eglot-initialization-options (server &context (major-mode nix-ts-mode))
+    eglot-nix-workspace-configuration)
+  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-ts-mode))
+    eglot-nix-workspace-configuration))
 
 ;; Lua
 (use-package lua-ts-mode
@@ -57,14 +61,18 @@
 
 ;; YAML
 (defun yaml-setup ()
-  (with-eval-after-load 'eglot
-    (when-let* ((_ (file-exists-p schemastore-file))
-                (schemas (with-temp-buffer
-                           (insert-file-contents schemastore-file)
-                           (jsonrpc--json-read))))
-      (cl-defmethod +eglot/workspace-configuration (server &context (major-mode yaml-mode))
-        `(:yaml
-          (:schemas ,schemas))))))
+  (require 'eglot)
+  (when-let* ((_ (file-exists-p schemastore-file))
+              (schemas (with-temp-buffer
+                         (insert-file-contents schemastore-file)
+                         (jsonrpc--json-read))))
+    (defvar eglot-yaml-workspace-configuration
+      `(:yaml
+        (:schemas ,schemas)))
+    (cl-defmethod eglot-initialization-options (server &context (major-mode yaml-mode))
+      eglot-yaml-workspace-configuration)
+    (cl-defmethod +eglot/workspace-configuration (server &context (major-mode yaml-mode))
+      eglot-yaml-workspace-configuration)))
 
 (use-package yaml-ts-mode
   :if (treesit-ready-p 'yaml)
@@ -85,21 +93,27 @@
   :ensure nil
   :defer t
   :config
-  (with-eval-after-load 'eglot
-    (when-let* ((_ (file-exists-p schemastore-file))
-                (schemas (with-temp-buffer
-                           (insert-file-contents schemastore-file)
-                           (jsonrpc--json-read))))
-      ;; HACK: `eglot--workspace-configuration-plist' set the major mode
-      ;; to be the first of the managed modes(`eglot-server-programs').
-      (derived-mode-add-parents 'js-json-mode '(json-mode))
-      (cl-defmethod +eglot/workspace-configuration (server &context (major-mode json-mode))
-        `(:json
-          (:validate (:enable t)
-           :schemas ,schemas)))))
-  (+funcs/major-mode-leader-keys json-ts-mode-map
-                                 "j" '(consult-jq :which-key "consult-jq")
-                                 "p" '(json-pretty-print-buffer :which-key "pretty-print")))
+  (require 'eglot)
+  (when-let* ((_ (file-exists-p schemastore-file))
+              (schemas (with-temp-buffer
+                         (insert-file-contents schemastore-file)
+                         (jsonrpc--json-read))))
+    ;; HACK: `eglot--workspace-configuration-plist' set the major mode
+    ;; to be the first of the managed modes(`eglot-server-programs').
+    (derived-mode-add-parents 'js-json-mode '(json-mode))
+    (defvar eglot-json-workspace-configuration
+      `(:json
+        (:validate (:enable t)
+         :schemas ,schemas)))
+    (cl-defmethod eglot-initialization-options (server &context (major-mode json-mode))
+      eglot-json-workspace-configuration)
+    (cl-defmethod +eglot/workspace-configuration (server &context (major-mode json-mode))
+      eglot-json-workspace-configuration))
+
+  (+funcs/major-mode-leader-keys
+   json-ts-mode-map
+   "j" '(consult-jq :which-key "consult-jq")
+   "p" '(json-pretty-print-buffer :which-key "pretty-print")))
 
 (use-package consult-jq
   :vc (:url "https://github.com/bigbuger/consult-jq")
