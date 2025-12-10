@@ -20,8 +20,8 @@
 
 ;; In case you like auto completion settings, where the completion popup appears immediately,
 ;; better use a cheap completion style like `basic', which performs prefix filtering.
-;; (setq completion-styles '(basic))
-(setq completion-pcm-leading-wildcard t
+(setq completion-styles '(basic)
+      completion-pcm-leading-wildcard t
       completion-ignore-case t)
 
 ;; Vertico provides a performant and minimalistic vertical completion UI

@@ -40,6 +40,7 @@
 (setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
 (setq adaptive-fill-first-line-regexp "^* *$")
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
+(setq remote-file-name-inhibit-delete-by-moving-to-trash t)
 (setq set-mark-command-repeat-pop t)       ; Repeating C-SPC after popping mark pops it again
 ;; (setq-default kill-whole-line t)           ; Kill line including '\n'
 (fset 'yes-or-no-p 'y-or-n-p)
