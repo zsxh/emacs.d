@@ -103,7 +103,7 @@
    ;; Git
    "g" '(nil :which-key "git")
    "gb" '(magit-blame :which-key "magit-blame")
-   "gf" '(magit-file-checkout :which-key "magit-file-checkout")
+   "gf" '(magit-find-file :which-key "magit-find-file")
    "gl" '(nil :which-key "log")
    "gld" '(magit-dired-log :which-key "magit-dired-log")
    "glf" '(magit-log-buffer-file :which-key "magit-log-buffer-file")

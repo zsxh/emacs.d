@@ -91,7 +91,7 @@
                  (when backend (format " --target %s" backend)))))))
 
   ;; TODO: get target backend and pkg name
-  (defun moonbit--lsp/main (arguments action)
+  (defun moonbit--lsp/main (arguments)
     (let ((default-directory (+project/root)))
       (cl-destructuring-bind
           (&key modUri pkgUri pkgPath fileUri &allow-other-keys)
