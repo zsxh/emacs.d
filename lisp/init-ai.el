@@ -123,11 +123,11 @@ FILE-PATH: Path to the file to link to."
       "Insert file or buffer reference with appropriate prefix.
 When called interactively, prompts for file or buffer type."
       (interactive
-       (list (completing-read "File Or Buffer:  " '(file buffer) nil t)))
+       (list (completing-read "File Or Buffer:  " '(" file" " buffer") nil t)))
       (cond
-       ((string= type "file")
+       ((string= type " file")
         (call-interactively #'my/gptel-insert-file))
-       ((string= type "buffer")
+       ((string= type " buffer")
         (call-interactively #'my/gptel-insert-buffer)))))
 
   ;; Customize Prompts
