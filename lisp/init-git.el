@@ -27,6 +27,8 @@
 
   ;; cache user password when using http, https://stackoverflow.com/a/75298815
   (add-hook 'magit-process-find-password-functions 'magit-process-password-auth-source)
+  ;; Show all worktrees at the end of the status buffer (if more than one)
+  (add-hook 'magit-status-sections-hook #'magit-insert-worktrees t)
 
   (defun magit-mode-bury-buffer-always-kill (&optional _)
     "Kill Magit buffers based on context.
