@@ -153,6 +153,30 @@
            buffer-pairs)))
     "Project buffer source for `consult-buffer'."))
 
+(use-package consult-dir
+  :defer t
+  :bind ((:map vertico-map
+          ("C-x C-d" . consult-dir)))
+  :config
+  (setq consult-dir-default-command #'consult-dir-dired)
+
+  (defun consult-dir--zoxide-dirs ()
+    "Return list of zoxide dirs."
+    (split-string (shell-command-to-string "zoxide query -l") "\n" t))
+
+  (defvar consult-dir--source-zoxide
+    `(:name "zoxide"
+      :narrow ?z
+      :category file
+      :face consult-file
+      :history file-name-history
+      :enabled ,(lambda () (executable-find "zoxide"))
+      :items ,#'consult-dir--zoxide-dirs)
+    "zoxide directory source for `consult-dir'.")
+
+  ;; [More directory sources](https://github.com/karthink/consult-dir?tab=readme-ov-file#directory-sources)
+  (add-to-list 'consult-dir-sources 'consult-dir--source-zoxide t))
+
 ;; Navigate the Xref stack with Consult.
 (use-package consult-xref-stack
   :vc (:url "https://github.com/brett-lempereur/consult-xref-stack")
