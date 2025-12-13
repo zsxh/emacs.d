@@ -35,6 +35,8 @@
         gptel-include-reasoning 'ignore
         gptel-track-media t
         gptel-use-context 'system)
+  (make-variable-buffer-local 'gptel-tools)
+  ;; (make-variable-buffer-local 'gptel-context)
 
   (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "user  ")
   (setf (alist-get 'markdown-mode gptel-response-prefix-alist) "assistant \n")
@@ -68,7 +70,6 @@ buffers."
           (remove-overlays nil nil 'gptel-highlight t)))))
 
   (add-hook 'gptel-mode-hook (lambda ()
-                               ;; (make-variable-buffer-local 'gptel-context)
                                (gptel-highlight-mode)
                                (turn-on-visual-line-mode)))
 
