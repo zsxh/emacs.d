@@ -71,8 +71,7 @@
         (goto-char beg)
         (delete-region beg end)
         ;; NOTE: Why does `moonbit-lsp/format` keep adding a newline to the end?
-        (insert (substring result 0 (1- (length result))))
-        (if eglot-codelens-mode (call-interactively 'eglot-codelens-force-refresh-lens)))))
+        (insert (substring result 0 (1- (length result)))))))
 
   (defun moonbit--lsp/test (arguments &optional action)
     (let ((default-directory (+project/root)))

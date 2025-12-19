@@ -672,6 +672,8 @@
         (should (equal (buffer-string) case))
         (erase-buffer)))))
 
+;; TODO: (make-string (current-indentation) ? )
+
 ;;; ***************************************************
 ;;; Test `zsxh-lispy/lisp-format'
 ;;; ***************************************************
