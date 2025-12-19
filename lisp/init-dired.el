@@ -63,7 +63,7 @@
            '(vc-state subtree-state nerd-icons))
          ;; Other attributes are displayed in the order they appear in this list.
          ;; '(git-msg file-modes file-time file-size)
-         '(git-msg file-time file-size))
+         '(file-size file-time))
         dirvish-mode-line-format '(:left (bar winum sort file-time symlink) :right (omit yank vc-info index))
         dirvish-mode-line-height (or (bound-and-true-p doom-modeline-height) (+ (frame-char-height) 4))
         dirvish-cache-dir (expand-file-name (locate-user-emacs-file "cache/dirvish/"))

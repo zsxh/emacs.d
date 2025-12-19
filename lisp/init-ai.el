@@ -36,7 +36,7 @@
         gptel-track-media t
         gptel-use-context 'system)
   (make-variable-buffer-local 'gptel-tools)
-  ;; (make-variable-buffer-local 'gptel-context)
+  (make-variable-buffer-local 'gptel-context)
 
   (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "user  ")
   (setf (alist-get 'markdown-mode gptel-response-prefix-alist) "assistant \n")
@@ -473,7 +473,7 @@ When called interactively, prompts for file or buffer type."
   :vc (:url "https://github.com/stevemolitor/claude-code.el")
   :defer t
   :config
-  (setq claude-code-terminal-backend 'eat))
+  (setq claude-code-terminal-backend 'vterm))
 
 ;; TODO: https://github.com/manzaltu/claude-code-ide.el
 (use-package claude-code-ide

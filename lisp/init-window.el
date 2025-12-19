@@ -37,7 +37,7 @@
           "^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
           "^\\*shell.*\\*$" shell-mode ;shell as a popup
           "^\\*term.*\\*$" term-mode ;term as a popup
-          "^\\*vterm.*\\*$" ;; vterm-mode   ;vterm as a popup
+          "^\\*vterm.*\\*$" vterm-mode   ;vterm as a popup
           "^\\*HTTP Response\\*$"
           helpful-mode
           magit-process-mode

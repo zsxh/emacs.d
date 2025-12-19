@@ -399,21 +399,13 @@ otherwise  set the current buffer to read-only."
                         collect toadd)))
                   (string-join (reverse rcrumbs) separator)))))
 
-;;;;;;;;;;;;;; Others ;;;;;;;;;;;;;;
+;;;;;;;;;;;;;; Pixel Scrolling ;;;;;;;;;;;;;;
 ;; Toggle pixel scrolling, according to the turning of the mouse wheel
-(when (boundp 'pixel-scroll-precision-mode)
-  (pixel-scroll-precision-mode 1))
-
-(defun up-directory (path)
-  "Move up a directory (delete backwards to /)."
-  (interactive "p")
-  (if (string-match-p "/." (minibuffer-contents))
-      (let ((end (point)))
-	      (re-search-backward "/.")
-	      (forward-char)
-	      (delete-region (point) end))))
-
-(define-key minibuffer-local-filename-completion-map [C-backspace] #'up-directory)
+;; (when (boundp 'pixel-scroll-precision-mode)
+;;   (pixel-scroll-precision-mode 1))
+(use-package ultra-scroll
+  :config
+  (ultra-scroll-mode 1))
 
 ;;;;;;;;;;;;;; Manual ;;;;;;;;;;;;;;
 (with-eval-after-load 'man
@@ -425,6 +417,18 @@ otherwise  set the current buffer to read-only."
   (setq ediff-window-setup-function 'ediff-setup-windows-plain
         ediff-split-window-function 'split-window-horizontally
         ediff-merge-split-window-function 'split-window-horizontally))
+
+;;;;;;;;;;;;;; Others ;;;;;;;;;;;;;;
+(defun up-directory (path)
+  "Move up a directory (delete backwards to /)."
+  (interactive "p")
+  (if (string-match-p "/." (minibuffer-contents))
+      (let ((end (point)))
+	      (re-search-backward "/.")
+	      (forward-char)
+	      (delete-region (point) end))))
+
+(define-key minibuffer-local-filename-completion-map [C-backspace] #'up-directory)
 
 
 (provide 'init-emacs-enhancement)
