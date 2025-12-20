@@ -120,6 +120,55 @@
       (set-mark (cdr new-range))
       (activate-mark))))
 
+;; https://github.com/mohkale/consult-eglot
+(use-package consult-eglot
+  :defer t)
+
+;; NOTE: Install emacs-lsp-booster from https://github.com/blahgeek/emacs-lsp-booster
+(use-package eglot-booster
+  :if (executable-find "emacs-lsp-booster")
+  :vc (:url "https://github.com/jdtsmith/eglot-booster")
+	:after eglot
+	:config
+  (setq eglot-booster-no-remote-boost t
+        eglot-booster-io-only t)
+  (eglot-booster-mode))
+
+(use-package eglot-inactive-regions
+  :after eglot
+  :config
+  (eglot-inactive-regions-mode 1))
+
+(use-package eglot-codelens
+  ;; :load-path "~/workspace/emacs/eglot-codelens"
+  :vc (:url "https://github.com/zsxh/eglot-codelens")
+  :hook (eglot-managed-mode . eglot-codelens-mode))
+
+;; json/yaml/toml files metadata for lsp servers.
+(defvar schemastore-url "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json")
+(defvar schemastore-file "~/.emacs.d/cache/lsp-servers/schemastore/catalog.json")
+(defun +eglot/fetch-json-schema ()
+  "Fetch json schema from \"https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json\"."
+  (interactive)
+  (let* ((url schemastore-url)
+         (buffer (plz 'get url :as 'buffer))
+         (file-path schemastore-file))
+    (let ((dir (file-name-directory file-path)))
+      (unless (file-exists-p dir)
+        (make-directory dir t)))
+    (with-temp-file file-path
+      (erase-buffer)
+      (insert-buffer-substring buffer))
+    (message "Successfully fetched schemastore json schema to %s" file-path)))
+
+;; mason.el is installer for LSP servers, DAP servers, linters and formatters
+;; `mason-install', `mason-manager'
+(use-package mason
+  :defer t
+  :config
+  (setq mason-dir (expand-file-name "cache/mason" user-emacs-directory))
+  (mason-ensure))
+
 (defun +eglot/set-leader-keys (&optional map)
   (let ((mode-map (or map (keymap-symbol (current-local-map)))))
     (+funcs/major-mode-leader-keys
@@ -181,55 +230,6 @@
      "ht" '(eglot-show-type-hierarchy :which-key "type-hierarchy")
      ;; rename
      "R" '(eglot-rename :which-key "rename"))))
-
-;; https://github.com/mohkale/consult-eglot
-(use-package consult-eglot
-  :defer t)
-
-;; NOTE: Install emacs-lsp-booster from https://github.com/blahgeek/emacs-lsp-booster
-(use-package eglot-booster
-  :if (executable-find "emacs-lsp-booster")
-  :vc (:url "https://github.com/jdtsmith/eglot-booster")
-	:after eglot
-	:config
-  (setq eglot-booster-no-remote-boost t
-        eglot-booster-io-only t)
-  (eglot-booster-mode))
-
-(use-package eglot-inactive-regions
-  :after eglot
-  :config
-  (eglot-inactive-regions-mode 1))
-
-(use-package eglot-codelens
-  ;; :load-path "~/workspace/emacs/eglot-codelens"
-  :vc (:url "https://github.com/zsxh/eglot-codelens")
-  :hook (eglot-managed-mode . eglot-codelens-mode))
-
-;; json/yaml/toml files metadata for lsp servers.
-(defvar schemastore-url "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json")
-(defvar schemastore-file "~/.emacs.d/cache/lsp-servers/schemastore/catalog.json")
-(defun +eglot/fetch-json-schema ()
-  "Fetch json schema from \"https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json\"."
-  (interactive)
-  (let* ((url schemastore-url)
-         (buffer (plz 'get url :as 'buffer))
-         (file-path schemastore-file))
-    (let ((dir (file-name-directory file-path)))
-      (unless (file-exists-p dir)
-        (make-directory dir t)))
-    (with-temp-file file-path
-      (erase-buffer)
-      (insert-buffer-substring buffer))
-    (message "Successfully fetched schemastore json schema to %s" file-path)))
-
-;; mason.el is installer for LSP servers, DAP servers, linters and formatters
-;; `mason-install', `mason-manager'
-(use-package mason
-  :defer t
-  :config
-  (setq mason-dir (expand-file-name "cache/mason" user-emacs-directory))
-  (mason-ensure))
 
 
 (provide 'init-eglot)

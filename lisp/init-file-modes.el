@@ -161,6 +161,19 @@
 
     (add-to-list 'doom-modeline-mode-alist '(reader-mode . reader))))
 
+;; Instant Github-flavored Markdown/Org preview
+(use-package grip-mode
+  :defer t
+  :config
+  (with-eval-after-load 'org
+    (+funcs/major-mode-leader-keys
+     org-mode-map
+     "P" '(grip-mode :which-key "Preview")))
+  (with-eval-after-load 'markdown-mode
+    (+funcs/major-mode-leader-keys
+     markdown-mode-map
+     "P" '(grip-mode :which-key "Preview"))))
+
 ;; google protobuf languages
 (use-package protobuf-mode
   :defer t)
