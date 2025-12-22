@@ -54,6 +54,7 @@
   (with-eval-after-load 'evil
     (add-hook 'gt-buffer-render-init-hook
               (lambda ()
+                (toggle-truncate-lines -1)
                 (evil-define-key '(normal visual insert emacs) gt-buffer-render-local-map
                   "q" 'kill-buffer-and-window)))))
 
