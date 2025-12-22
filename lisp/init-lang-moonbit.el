@@ -43,7 +43,7 @@
     (let ((command (plist-get action :command))
           (arguments (plist-get action :arguments)))
       (pcase command
-        ("moonbit-lsp/format-toplevel" (moonbit--lsp/format server arguments))
+        ("moonbit-lsp/format-nth-toplevel" (moonbit--lsp/format server arguments))
         ("moonbit-lsp/run-test" (moonbit--lsp/test arguments))
         ("moonbit-lsp/debug-test" (message "Unhandled method %s" command))
         ("moonbit-lsp/update-test" (moonbit--lsp/test arguments 'update))
@@ -59,19 +59,21 @@
 
   (defun moonbit--lsp/format (server arguments)
     (let* ((arg (aref arguments 0))
-           (region (eglot-range-region (plist-get arg :range)))
-           (beg (car region))
-           (end (cdr region))
+           (n (plist-get arg :n))
            (result (eglot--request
                     server
-                    :moonbit-lsp/format
-                    (list :content (buffer-substring-no-properties beg end)
-                          :blockStyle :json-false))))
+                    :moonbit-lsp/format-nth
+                    (list :content (buffer-substring-no-properties (point-min) (point-max))
+                          :n n)))
+           (region (eglot-range-region (plist-get result :range)))
+           (beg (car region))
+           (end (cdr region))
+           (newtext (plist-get result :newText)))
       (save-excursion
         (goto-char beg)
         (delete-region beg end)
         ;; NOTE: Why does `moonbit-lsp/format` keep adding a newline to the end?
-        (insert (substring result 0 (1- (length result)))))))
+        (insert (substring newtext 0 (1- (length newtext)))))))
 
   (defun moonbit--lsp/test (arguments &optional action)
     (let ((default-directory (+project/root)))
