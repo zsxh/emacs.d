@@ -430,7 +430,6 @@ When called interactively, prompts for file or buffer type."
 ;; - Set whisper--ffmpeg-input-device
 (use-package whisper
   :if (executable-find "whisper-cli")
-  :vc (:url "https://github.com/natrys/whisper.el.git")
   :commands (whisper-run whisper-file)
   :bind (("C-c r" . whisper-run))
   :config
@@ -483,6 +482,11 @@ When called interactively, prompts for file or buffer type."
   ;; :config
   ;; (claude-code-ide-emacs-tools-setup) ; Optionally enable Emacs MCP tools
   )
+
+(use-package agent-shell
+  :defer t
+  :hook ((agent-shell-mode . corfu-mode)
+         (agent-shell-mode . agent-shell-completion-mode)))
 
 
 (provide 'init-ai)
