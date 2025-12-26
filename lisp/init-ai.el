@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;; TODO: [models.dev](https://models.dev/) & ai-sdk
+;; TODO: [ai sdk](https://ai-sdk.dev/)
 
 ;; Embark Actions
 (with-eval-after-load 'embark
@@ -166,6 +168,15 @@ When called interactively, prompts for file or buffer type."
                  :context-window 200
                  :input-cost 14.22
                  :output-cost 85.30)
+                (google/gemini-3-flash-preview
+                 :capabilities (tool-use json media audio video)
+                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+                              "application/pdf" "text/plain" "text/csv" "text/html"
+                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
+                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
+                 :context-window 1000
+                 :input-cost 3.5
+                 :output-cost 21)
                 (openai/gpt-5.1
                  :capabilities (media tool-use json url)
                  :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
@@ -199,12 +210,23 @@ When called interactively, prompts for file or buffer type."
       :endpoint "/api/paas/v4/chat/completions"
       :stream t
       :key 'gptel-api-key
-      :models '((glm-4.6
+      :models '((glm-4.7
                  :request-params (:thinking (:type "disabled"))
                  :capabilities (tool-use reasoning)
                  :context-window 200
                  :input-cost 4
                  :output-cost 16))))
+
+  (defvar gptel--glm-coding-plan
+    (gptel-make-openai "GLM-Code-Plan"
+      :host "open.bigmodel.cn"
+      :endpoint "/api/coding/paas/v4/chat/completions"
+      :stream t
+      :key 'gptel-api-key
+      :models '((glm-4.7
+                 :request-params (:thinking (:type "disabled"))
+                 :capabilities (tool-use reasoning)
+                 :context-window 200))))
 
   ;; MiniMax
   (defvar gptel--minimax

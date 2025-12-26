@@ -164,7 +164,7 @@
 ;; Instant Github-flavored Markdown/Org preview
 (use-package grip-mode
   :defer t
-  :config
+  :init
   (with-eval-after-load 'org
     (+funcs/major-mode-leader-keys
      org-mode-map
