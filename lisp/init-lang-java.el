@@ -55,8 +55,8 @@
   (defvar eglot-java-workspace-configuration
     `(:java
       (:autobuild (:enabled t)
-       :configuration (:runtimes [(:name "JavaSE-1.8"
-                                   :path ,(getenv "JAVA_8_HOME"))
+       :configuration (:runtimes [;; (:name "JavaSE-1.8"
+                                  ;;  :path ,(getenv "JAVA_8_HOME"))
                                   ;; (:name "JavaSE-11"
                                   ;;  :path ,(getenv "JAVA_11_HOME"))
                                   ;; (:name "JavaSE-17"

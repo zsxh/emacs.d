@@ -44,8 +44,8 @@
     (evil-define-key* 'normal telega-root-mode-map
       "j" #'telega-button-forward
       "k" #'telega-button-backward
-      "v" #'telega-transient-root-view
-      "F" #'telega-transient-chat-folder
+      "v" telega-root-view-map
+      "F" telega-folder-map
       "Q" #'telega-kill
       "?" telega-root-mode-map))
 

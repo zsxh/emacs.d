@@ -70,14 +70,13 @@
               ;; --- Formatting ---
               :gofumpt t
               ;; --- UI ---
-              ;; :codelenses (:generate t
-              ;;              :regenerate_cgo t
-              ;;              :tidy t
-              ;;              :upgrade_dependency t
-              ;;              :vendor t
-              ;;              :test t
-              ;;              :run_govulncheck t
-              ;;              :vulncheck t)
+              :codelenses (:generate t
+                           :regenerate_cgo t
+                           :tidy t
+                           :upgrade_dependency t
+                           :vendor t
+                           :test t
+                           :vulncheck t)
               :semanticTokens t
               ;; --- Completion ---
               :usePlaceholders t

@@ -12,6 +12,7 @@
 
 ;; TODO: [models.dev](https://models.dev/) & ai-sdk
 ;; TODO: [ai sdk](https://ai-sdk.dev/)
+;; TODO: https://github.com/folke/sidekick.nvim?tab=readme-ov-file#prompts--context
 
 ;; Embark Actions
 (with-eval-after-load 'embark
@@ -321,8 +322,8 @@ When called interactively, prompts for file or buffer type."
           ;; ("metaso" . (:url "https://metaso.cn/api/mcp"
           ;;              :headers (("Authorization" . ,(format "Bearer %s" (getenv "METASO_API_KEY"))))))
           ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))
-          ("searxng" . (:command "npx"
-                        :args ("-y" "mcp-searxng")
+          ("searxng" . (:command "bunx"
+                        :args ("mcp-searxng")
                         :env (:SEARXNG_URL "http://localhost:8888")))))
 
   (with-eval-after-load 'evil

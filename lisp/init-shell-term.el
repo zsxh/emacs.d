@@ -25,26 +25,41 @@
           ("M-`" . +vterm/send-tmux-prefix-key)
           ("C-s" . +vterm/search-line)
           ("<f9>" . +vterm/toggle)
-          ("<f11>" . toggle-frame-fullscreen))
+          ("<f11>" . toggle-frame-fullscreen)
+          ("<wheel-up>" . vterm-send-prior)
+          ("<wheel-down>" . vterm-send-next))
          (:map vterm-copy-mode-map
           ("q" . vterm-copy-mode-done)))
   :config
   (setq vterm-timer-delay nil)
 
-  ;; https://github.com/akermu/emacs-libvterm#fonts
-  (defun +vterm/set-font ()
+  (defun +vterm/setup ()
+    (when (bound-and-true-p pixel-scroll-precision-mode)
+      (setq-local pixel-scroll-precision-mode nil))
+    (when (bound-and-true-p ultra-scroll-mode)
+      (setq-local ultra-scroll-mode nil))
+    ;; https://github.com/akermu/emacs-libvterm#fonts
     (set (make-local-variable 'buffer-face-mode-face) 'fixed-pitch)
     (buffer-face-mode t))
-  (add-hook 'vterm-mode-hook #'+vterm/set-font)
+  (add-hook 'vterm-mode-hook #'+vterm/setup)
 
   (with-eval-after-load 'evil
     (evil-set-initial-state 'vterm-mode 'insert)
-    (evil-define-key '(normal insert emacs) vterm-copy-mode-map "q" #'vterm-copy-mode-done)
+
+    (evil-define-key '(normal insert emacs) vterm-copy-mode-map
+      "q" #'vterm-copy-mode-done)
+
     (defun +vterm/evil-esc ()
       (interactive)
       (vterm-send-escape)
       (evil-normal-state))
-    (evil-define-key 'insert vterm-mode-map (kbd "<escape>") #'+vterm/evil-esc))
+    (evil-define-key 'insert vterm-mode-map
+      (kbd "<escape>") #'+vterm/evil-esc)
+
+    (evil-define-key '(normal motion) vterm-mode-map
+      (kbd "C-b") #'vterm-send-prior
+      (kbd "C-d") #'vterm-send-next
+      (kbd "C-u") #'vterm-send-prior))
 
   (defun +vterm/toggle (arg)
     "Toggles a window at project root.

@@ -10,15 +10,17 @@
 
 ;;; Code:
 
-;; TODO: https://github.com/sqls-server/sqls
+;; TODO: lsp signature help
+;; https://www.kimi.com/chat/19b5fb06-f952-8562-8000-09a662fde627
+;; https://deepwiki.com/search/vscode-signature_6e97ec33-5757-48d5-876f-bf34fb2769f7?mode=fast
+;; https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_signatureHelp
 
-;; TODO: lsp semantic tokens
-;; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=79374
-;; https://github.com/lua-vr/eglot-semtok
+;; TODO: https://github.com/sqls-server/sqls
 
 ;; NOTE: https://joaotavora.github.io/eglot/
 ;; NOTE: macos file descriptors limitation, https://www.reddit.com/r/emacs/comments/x4p7mg/fix_annoying_max_open_files_for_emacs/
 ;; NOTE: https://github.com/microsoft/vscode-extension-samples
+;; NOTE: [Extending Eglot](https://elpa.gnu.org/devel/doc/eglot.html#Extending-Eglot-1)
 (use-package eglot
   :ensure nil
   :commands (eglot eglot-ensure)
