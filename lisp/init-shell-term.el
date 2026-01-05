@@ -34,13 +34,15 @@
   (setq vterm-timer-delay nil)
 
   (defun +vterm/setup ()
-    (when (bound-and-true-p pixel-scroll-precision-mode)
-      (setq-local pixel-scroll-precision-mode nil))
-    (when (bound-and-true-p ultra-scroll-mode)
-      (setq-local ultra-scroll-mode nil))
+    (setq-local line-number-mode nil
+                column-number-mode nil
+                pixel-scroll-precision-mode nil
+                ultra-scroll-mode nil)
+
     ;; https://github.com/akermu/emacs-libvterm#fonts
     (set (make-local-variable 'buffer-face-mode-face) 'fixed-pitch)
     (buffer-face-mode t))
+
   (add-hook 'vterm-mode-hook #'+vterm/setup)
 
   (with-eval-after-load 'evil
