@@ -83,7 +83,7 @@
        :codeGeneration (:generateComments t) ;; https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
        :referencesCodeLens (:enabled :json-false) ;; https://github.com/redhat-developer/vscode-java/issues/148
        :implementationCodeLens "none" ;; one of [none, types, methods, all]
-       )))
+       :signatureHelp (:enabled t :description (:enabled t)))))
 
   (cl-defmethod eglot-initialization-options (server &context (major-mode java-mode))
     `(:settings ,eglot-java-workspace-configuration

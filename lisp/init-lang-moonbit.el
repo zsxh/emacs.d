@@ -19,7 +19,7 @@
   (defun moonbit-setup ()
     (setq-local tab-width 2)
     (setq-local face-remapping-alist
-                '((eglot-semantic-async-face
+                '((eglot-semantic-async
                    :weight normal
                    :slant italic
                    :underline t))))

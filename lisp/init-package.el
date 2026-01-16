@@ -113,7 +113,45 @@ If RETURN-P, return the message as a string instead of displaying it."
                      (when (not (assq (car elt) package-alist))
                        (list (list (car elt) (package--from-builtin elt)))))
                    package--builtins))
-        package-alist)))))
+        package-alist))))
+
+  (define-advice package-install (:override (pkg &optional dont-select) advice)
+    (interactive
+     (progn
+       ;; Initialize the package system to get the list of package
+       ;; symbols for completion.
+       (package--archives-initialize)
+       (list (intern (completing-read
+                      "Install package: "
+                      package-archive-contents
+                      nil t))
+             nil)))
+    (cl-check-type pkg (or symbol package-desc))
+    (package--archives-initialize)
+    (add-hook 'post-command-hook #'package-menu--post-refresh)
+    (let ((name (if (package-desc-p pkg)
+                    (package-desc-name pkg)
+                  pkg)))
+      ;; (when (or (and package-install-upgrade-built-in
+      ;;                (package--active-built-in-p pkg))
+      ;;           (package-installed-p pkg))
+      ;;   (user-error "`%s' is already installed" name))
+      (unless (or dont-select (package--user-selected-p name))
+        (package--save-selected-packages
+         (cons name package-selected-packages)))
+      (when (and (or current-prefix-arg package-install-upgrade-built-in)
+                 (package--active-built-in-p pkg))
+        (setq pkg (or (cadr (assq name package-archive-contents)) pkg)))
+      (if-let* ((transaction
+                 (if (package-desc-p pkg)
+                     (unless (package-installed-p pkg)
+                       (package-compute-transaction (list pkg)
+                                                    (package-desc-reqs pkg)))
+                   (package-compute-transaction () (list (list pkg))))))
+          (progn
+            (package-download-transaction transaction)
+            (package--quickstart-maybe-refresh)
+            (message "Package `%s' installed." name))))))
 
 (when (and (not (file-exists-p package-user-dir))
            (directory-empty-p package-user-dir))

@@ -11,6 +11,7 @@
 ;;; Code:
 
 ;; TODO: try [Enhanced diff display with external tools](https://codeberg.org/ideasman42/emacs-diff-ansi)
+;; TODO: https://github.com/DamianB-BitFlipper/magit-pre-commit.el
 
 ;; NOTE: https://magit.vc/manual/magit/Performance.html
 (use-package magit

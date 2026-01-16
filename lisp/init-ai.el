@@ -294,8 +294,8 @@ When called interactively, prompts for file or buffer type."
                  :output-cost 8.4))))
 
   ;; default model
-  (setq gptel-backend gptel--deepseek
-        gptel-model 'deepseek-chat))
+  (setq gptel-backend gptel--glm-coding-plan
+        gptel-model 'glm-4.7))
 
 (use-package gptel-agent
   ;; :after gptel

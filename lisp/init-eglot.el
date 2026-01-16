@@ -34,7 +34,6 @@
         ;; NOTE: drop log to improve performance
         eglot-events-buffer-config '(:size 0 :format full)
         eglot-report-progress nil
-        eglot-stay-out-of '()
         eglot-extend-to-xref t
         ;; https://github.com/joaotavora/eglot/issues/1491
         ;; https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/README.md
@@ -143,8 +142,22 @@
 
 (use-package eglot-codelens
   ;; :load-path "~/workspace/emacs/eglot-codelens"
-  :vc (:url "https://github.com/zsxh/eglot-codelens")
+  :vc (:url "https://github.com/zsxh/eglot-codelens"
+       :rev :newest)
   :hook (eglot-managed-mode . eglot-codelens-mode))
+
+(use-package eglot-signature
+  ;; :load-path "~/workspace/emacs/eglot-signature"
+  :vc (:url "https://github.com/zsxh/eglot-signature"
+       :rev :newest)
+  :hook (eglot-managed-mode . eglot-signature-mode)
+  :init
+  (with-eval-after-load 'eglot
+    (eglot-signature-setup))
+  :config
+  (with-eval-after-load 'cape
+    (advice-add 'eglot-signature--capf-wrapper :around #'cape-wrap-buster))
+  (define-key eglot-signature-mode-map (kbd "S-s-SPC") #'eglot-signature-show))
 
 ;; json/yaml/toml files metadata for lsp servers.
 (defvar schemastore-url "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json")
