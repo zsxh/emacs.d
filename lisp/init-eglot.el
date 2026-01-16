@@ -30,7 +30,7 @@
         eglot-sync-connect nil
         eglot-ignored-server-capabilities '(:documentHighlightProvider
                                             :foldingRangeProvider)
-        eglot-stay-out-of '()
+        eglot-stay-out-of '(eldoc)
         ;; NOTE: drop log to improve performance
         eglot-events-buffer-config '(:size 0 :format full)
         eglot-report-progress nil
@@ -157,7 +157,9 @@
   :config
   (with-eval-after-load 'cape
     (advice-add 'eglot-signature--capf-wrapper :around #'cape-wrap-buster))
-  (define-key eglot-signature-mode-map (kbd "S-s-SPC") #'eglot-signature-show))
+  (define-key eglot-signature-mode-map (kbd "S-s-SPC") #'eglot-signature-show)
+  (with-eval-after-load 'evil
+    (evil-make-intercept-map eglot-signature-popup-map)))
 
 ;; json/yaml/toml files metadata for lsp servers.
 (defvar schemastore-url "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json")
