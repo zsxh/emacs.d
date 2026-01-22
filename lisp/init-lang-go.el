@@ -12,6 +12,11 @@
 
 ;; NOTE: Install gopls
 
+;; TODO: gopls codelens
+;; https://deepwiki.com/search/-gopls-codelensvscodego-codele_bd0ae6ba-3738-4b40-bd4d-b7848d4f0edb?mode=fast
+;; https://deepwiki.com/search/-gopls-codelens-codelens-comma_e9f152d7-583a-41a2-a8fa-09b8d95aee0c?mode=fast
+;; https://github.com/golang/vscode-go/blob/master/docs/settings.md#uicodelenses
+
 (when (and (version< emacs-version "31")
            (treesit-ready-p 'go))
   (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))

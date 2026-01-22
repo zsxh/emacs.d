@@ -74,6 +74,7 @@
         doom-modeline-modal-modern-icon nil
         doom-modeline-hud nil
         doom-modeline-unicode-fallback nil
+        doom-modeline-unicode-number nil
         doom-modeline-major-mode-icon t
         doom-modeline-window-width-limit 100
         doom-modeline-buffer-file-name-style 'auto

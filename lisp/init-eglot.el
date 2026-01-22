@@ -10,11 +10,6 @@
 
 ;;; Code:
 
-;; TODO: lsp signature help
-;; https://www.kimi.com/chat/19b5fb06-f952-8562-8000-09a662fde627
-;; https://deepwiki.com/search/vscode-signature_6e97ec33-5757-48d5-876f-bf34fb2769f7?mode=fast
-;; https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_signatureHelp
-
 ;; TODO: https://github.com/sqls-server/sqls
 
 ;; NOTE: https://joaotavora.github.io/eglot/
@@ -99,9 +94,10 @@
  as furnished by an LSP `textDocument/selectionRange' request."
     ;; TODO(adonovan): add corresponding unexpand.
     (interactive)
-    (let* ((resp (eglot--request (eglot--current-server-or-lose)
-			                     :textDocument/selectionRange
-			                     `(:textDocument ,(eglot--TextDocumentIdentifier) :positions [,(eglot--pos-to-lsp-position)])))
+    (let* ((resp (eglot--request
+                  (eglot--current-server-or-lose)
+			      :textDocument/selectionRange
+                  (eglot--TextDocumentPositionParams)))
 	       (selection-range (elt resp 0)) ; LSP SelectionRange
 	       (current-range (cons (point) (if (use-region-p) (mark) (point))))
 	       (new-range (eglot-range-region (plist-get selection-range :range))))
@@ -146,6 +142,9 @@
        :rev :newest)
   :hook (eglot-managed-mode . eglot-codelens-mode))
 
+;; https://deepwiki.com/search/vscode-signature_6e97ec33-5757-48d5-876f-bf34fb2769f7?mode=fast
+;; https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_signatureHelp
+;; https://www.kimi.com/chat/19b5fb06-f952-8562-8000-09a662fde627
 (use-package eglot-signature
   ;; :load-path "~/workspace/emacs/eglot-signature"
   :vc (:url "https://github.com/zsxh/eglot-signature"

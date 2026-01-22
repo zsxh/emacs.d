@@ -139,6 +139,7 @@
 (setq garbage-collection-messages nil)
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
+;; TODO: https://github.com/ArthurHeymans/emacs-tramp-rpc/
 ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
 ;; https://willschenk.com/articles/2020/tramp_tricks/

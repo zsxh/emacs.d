@@ -95,9 +95,19 @@
                                    :generateConstructorsPromptSupport t
                                    :generateToStringPromptSupport t
                                    :advancedGenerateAccessorsSupport t
+                                   :generateDelegateMethodsPromptSupport t
+
+                                   ;; TODO: refactor
+                                   ;; - https://deepwiki.com/search/-javaactionapplyrefactoringcom_b53cf13b-2260-4d67-9536-ac3eafcf8c52?mode=fast
+                                   ;; - https://github.com/mfussenegger/nvim-jdtls/blob/291dad797b5427ca0c9b7e0dd261279c7c3823e1/lua/jdtls.lua#L620
+
                                    ;; :advancedExtractRefactoringSupport t
+                                   ;; :inferSelectionSupport ["extractMethod"
+                                   ;;                         "extractVariable"
+                                   ;;                         "extractField"]
+                                   ;; :extractInterfaceSupport t
+                                   ;; :advancedIntroduceParameterRefactoringSupport t
                                    ;; :moveRefactoringSupport t
-                                   ;; :resolveAdditionalTextEditsSupport t
                                    )
       :bundles ,(eglot-java-bundles)))
 
@@ -341,6 +351,44 @@
                                                   :fields selected-fields))))
       (eglot--apply-workspace-edit generate-result this-command)))
 
+  (defun java-action-generateDelegateMethodsPromptSupport (server arguments)
+    "Prompt user to generate delegate methods for Java fields using Eglot LSP."
+    (let* ((context (seq-elt arguments 0))
+           (check-resp (eglot--request server :java/checkDelegateMethodsStatus context))
+           (delegate-fields (plist-get check-resp :delegateFields))
+           ;; use ";" instead of "," to separate strings in completing-read-multiple
+           (crm-separator "[ \t]*;[ \t]*")
+           (field-items (mapcar (lambda (item)
+                                  (let* ((field (plist-get item :field))
+                                         (name (plist-get field :name))
+                                         (type (plist-get field :type)))
+                                    (cons (format "%s: %s" name type) item)))
+                                delegate-fields))
+           (selected-field-key (completing-read "Select target to generate delegates for:" field-items))
+           (selected-field-item (alist-get selected-field-key field-items nil nil 'equal))
+           (field (plist-get selected-field-item :field))
+           (field-name (plist-get field :name))
+           (delegate-methods (plist-get selected-field-item :delegateMethods))
+           (delegate-method-items (mapcar (lambda (item)
+                                            (let* ((name (plist-get item :name))
+                                                   (parameters (plist-get item :parameters)))
+                                              (cons (format "%s.%s(%s)" field-name name
+                                                            (mapconcat #'identity parameters ", "))
+                                                    item)))
+                                          delegate-methods))
+           (selected-delegate-methods
+            (cl-map 'vector
+                    (lambda (choice)
+                      (let* ((method (alist-get choice delegate-method-items nil nil 'equal)))
+                        (list :field field :delegateMethod method)))
+                    (delete-dups
+                     (completing-read-multiple
+                      "Select methods to generate delegates for:" delegate-method-items))))
+           (generate-result (eglot--request server :java/generateDelegateMethods
+                                            (list :context context
+                                                  :delegateEntries selected-delegate-methods))))
+      (eglot--apply-workspace-edit generate-result this-command)))
+
   (cl-defmethod eglot-execute :around
     (server action &context (major-mode java-mode))
     "Custom handler for performing client commands."
@@ -353,6 +401,7 @@
         ("java.action.hashCodeEqualsPrompt" (java-action-hashCodeEqualsPrompt server arguments))
         ("java.action.generateAccessorsPrompt" (java-action-generateAccessorsPrompt server arguments))
         ("java.action.generateConstructorsPrompt" (java-action-generateConstructorsPrompt server arguments))
+        ("java.action.generateDelegateMethodsPrompt" (java-action-generateDelegateMethodsPromptSupport server arguments))
         ("java.action.applyRefactoringCommand" (message "Unhandled method %s" command))
         ("java.action.rename" (java-action-rename arguments))
         ("java.show.references" (java-show-references command arguments))

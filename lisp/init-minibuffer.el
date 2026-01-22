@@ -127,7 +127,7 @@
   (setq consult-preview-key 'any
         consult-async-min-input 2
         consult-line-start-from-top t
-        consult-buffer-sources '(consult--source-hidden-buffer consult--source-modified-buffer consult--source-buffer)
+        consult-buffer-sources '(consult-source-hidden-buffer consult-source-modified-buffer consult-source-buffer)
         consult-project-buffer-sources '(+minibuffer/consult--source-project-buffer))
 
   ;; customize `consult--customize-alist'
