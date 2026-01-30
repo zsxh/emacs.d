@@ -28,6 +28,7 @@
         eglot-stay-out-of '(eldoc)
         ;; NOTE: drop log to improve performance
         eglot-events-buffer-config '(:size 0 :format full)
+        ;; eglot-events-buffer-config '(:size 1000000000000 :format full)
         eglot-report-progress nil
         eglot-extend-to-xref t
         ;; https://github.com/joaotavora/eglot/issues/1491
@@ -43,13 +44,6 @@
   (defface +eglot/display-border '((((background dark)) . (:background "white"))
                                    (((background light)) . (:background "black")))
     "The border color used in childframe.")
-
-  (cl-defgeneric +eglot/workspace-configuration (server)
-    "Set workspace configuration,
-- Handle server request `workspace/configuration'
-- Send a `workspace/didChangeConfiguration' signal to SERVER"
-    nil)
-  (setq-default eglot-workspace-configuration #'+eglot/workspace-configuration)
 
   ;; Hover
   (defun +eglot/show-hover-at-point ()

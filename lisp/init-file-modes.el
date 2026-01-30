@@ -28,10 +28,9 @@
     '(:nixd
       (:nixpkgs (:expr "import <nixpkgs> { }")
        :formatting (:command ["nixfmt"]))))
-  (cl-defmethod eglot-initialization-options (server &context (major-mode nix-ts-mode))
-    eglot-nix-workspace-configuration)
-  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode nix-ts-mode))
-    eglot-nix-workspace-configuration))
+  (setq-default eglot-workspace-configuration
+                (plist-put eglot-workspace-configuration :nixd
+                           (plist-get eglot-nix-workspace-configuration :nixd))))
 
 ;; Lua
 (use-package lua-ts-mode
@@ -69,10 +68,9 @@
     (defvar eglot-yaml-workspace-configuration
       `(:yaml
         (:schemas ,schemas)))
-    (cl-defmethod eglot-initialization-options (server &context (major-mode yaml-mode))
-      eglot-yaml-workspace-configuration)
-    (cl-defmethod +eglot/workspace-configuration (server &context (major-mode yaml-mode))
-      eglot-yaml-workspace-configuration)))
+    (setq-default eglot-workspace-configuration
+                  (plist-put eglot-workspace-configuration :yaml
+                             (plist-get eglot-yaml-workspace-configuration :yaml)))))
 
 (use-package yaml-ts-mode
   :if (treesit-ready-p 'yaml)
@@ -105,10 +103,9 @@
       `(:json
         (:validate (:enable t)
          :schemas ,schemas)))
-    (cl-defmethod eglot-initialization-options (server &context (major-mode json-mode))
-      eglot-json-workspace-configuration)
-    (cl-defmethod +eglot/workspace-configuration (server &context (major-mode json-mode))
-      eglot-json-workspace-configuration))
+    (setq-default eglot-workspace-configuration
+                  (plist-put eglot-workspace-configuration :json
+                             (plist-get eglot-json-workspace-configuration :json))))
 
   (+funcs/major-mode-leader-keys
    json-ts-mode-map

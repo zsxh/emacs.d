@@ -79,11 +79,9 @@
        (:rename t
         :autoImport t))))
 
-  (cl-defmethod eglot-initialization-options (server &context (major-mode python-base-mode))
-    eglot-python-workspace-configuration)
-
-  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode python-base-mode))
-    eglot-python-workspace-configuration))
+  (setq-default eglot-workspace-configuration
+                (plist-put eglot-workspace-configuration :ty
+                           (plist-get eglot-python-workspace-configuration :ty))))
 
 
 (provide 'init-lang-python)

@@ -99,11 +99,9 @@
               ;; --- Navigation ---
               )))
 
-  (cl-defmethod eglot-initialization-options (server &context (major-mode go-mode))
-    eglot-go-workspace-configuration)
-
-  (cl-defmethod +eglot/workspace-configuration (server &context (major-mode go-mode))
-    eglot-go-workspace-configuration))
+  (setq-default eglot-workspace-configuration
+                (plist-put eglot-workspace-configuration :gopls
+                           (plist-get eglot-go-workspace-configuration :gopls))))
 
 (use-package go-impl :defer t)          ;; NOTE: `completion-styles' should be `basic'
 (use-package go-fill-struct :defer t)   ;; TODO: fillstruct already provided by gopls

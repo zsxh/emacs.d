@@ -28,16 +28,13 @@
 
 ;; TODO: eglot does not support `workspace.workspaceEdit.resourceOperations' yet
 (use-package eglot-jdtls
+  :vc (:url "https://github.com/zsxh/eglot-jdtls")
   :after eglot
   :init
   (setq eglot-jdtls-cache-dir (expand-file-name "eglot-jdtls" (temporary-file-directory)))
   :config
   (push '((java-mode java-ts-mode) . (eglot-jdtls-server . eglot-jdtls-cmd))
         eglot-server-programs)
-
-  (exec-path-from-shell-copy-envs
-   '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME"
-     "JAVA_21_HOME" "JAVA_23_HOME" "JAVA_25_HOME"))
 
   ;; TODO: install jdtls bundles/plugins from `mason'
   (defun eglot-java-bundles ()
@@ -53,38 +50,48 @@
                 ,(concat "--jvm-arg=-javaagent:"
                          (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar"))
                 "--jvm-arg=-XX:+UseStringDeduplication")
-          :settings (:java
-                     (:autobuild (:enabled t)
-                      :configuration (:runtimes [;; (:name "JavaSE-1.8"
-                                                 ;;  :path ,(getenv "JAVA_8_HOME"))
-                                                 ;; (:name "JavaSE-11"
-                                                 ;;  :path ,(getenv "JAVA_11_HOME"))
-                                                 ;; (:name "JavaSE-17"
-                                                 ;;  :path ,(getenv "JAVA_17_HOME"))
-                                                 ;; (:name "JavaSE-21"
-                                                 ;;  :path ,(getenv "JAVA_21_HOME"))
-                                                 (:name "JavaSE-25"
-                                                  :path ,(getenv "JAVA_25_HOME")
-                                                  :default t)])
-                      :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
-                                          :profile "GoogleStyle"))
-                      :completion (:guessMethodArguments t
-                                   :lazyResolveTextEdit (:enabled t)
-                                   :favoriteStaticMembers ["org.junit.Assert.*"
-                                                           "org.junit.Assume.*"
-                                                           "org.junit.jupiter.api.Assertions.*"
-                                                           "org.junit.jupiter.api.Assumptions.*"
-                                                           "org.junit.jupiter.api.DynamicContainer.*"
-                                                           "org.junit.jupiter.api.DynamicTest.*"
-                                                           "org.mockito.Mockito.*"
-                                                           "org.mockito.ArgumentMatchers.*"
-                                                           "org.mockito.Answers.*"])
-                      :edit (:validateAllOpenBuffersOnChanges :json-false)
-                      :codeGeneration (:generateComments t) ;; https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
-                      :referencesCodeLens (:enabled :json-false) ;; https://github.com/redhat-developer/vscode-java/issues/148
-                      :implementationCodeLens "none" ;; one of [none, types, methods, all]
-                      :signatureHelp (:enabled t :description (:enabled t))))
-          :init-options (:bundles ,(eglot-java-bundles)))))
+          :init-options (:bundles ,(eglot-java-bundles))))
+
+  (exec-path-from-shell-copy-envs
+   '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME"
+     "JAVA_21_HOME" "JAVA_23_HOME" "JAVA_25_HOME"))
+
+  (defvar eglot-java-workspace-configuration
+    `(:java
+      (:autobuild (:enabled t)
+       :configuration (:runtimes [;; (:name "JavaSE-1.8"
+                                  ;;  :path ,(getenv "JAVA_8_HOME"))
+                                  ;; (:name "JavaSE-11"
+                                  ;;  :path ,(getenv "JAVA_11_HOME"))
+                                  ;; (:name "JavaSE-17"
+                                  ;;  :path ,(getenv "JAVA_17_HOME"))
+                                  ;; (:name "JavaSE-21"
+                                  ;;  :path ,(getenv "JAVA_21_HOME"))
+                                  (:name "JavaSE-25"
+                                   :path ,(getenv "JAVA_25_HOME")
+                                   :default t)])
+       :format (:settings (:url ,(expand-file-name (locate-user-emacs-file "cache/eclipse-java-google-style.xml"))
+                           :profile "GoogleStyle"))
+       :completion (:guessMethodArguments t
+                    :lazyResolveTextEdit (:enabled t)
+                    :favoriteStaticMembers ["org.junit.Assert.*"
+                                            "org.junit.Assume.*"
+                                            "org.junit.jupiter.api.Assertions.*"
+                                            "org.junit.jupiter.api.Assumptions.*"
+                                            "org.junit.jupiter.api.DynamicContainer.*"
+                                            "org.junit.jupiter.api.DynamicTest.*"
+                                            "org.mockito.Mockito.*"
+                                            "org.mockito.ArgumentMatchers.*"
+                                            "org.mockito.Answers.*"])
+       :edit (:validateAllOpenBuffersOnChanges :json-false)
+       :codeGeneration (:generateComments t) ;; https://github.com/mfussenegger/nvim-jdtls/issues/76#issuecomment-831448277
+       :referencesCodeLens (:enabled :json-false) ;; https://github.com/redhat-developer/vscode-java/issues/148
+       :implementationCodeLens "none" ;; one of [none, types, methods, all]
+       :signatureHelp (:enabled t :description (:enabled t)))))
+
+  (setq-default eglot-workspace-configuration
+                (plist-put eglot-workspace-configuration :java
+                           (plist-get eglot-java-workspace-configuration :java))))
 
 ;; Run junit console
 (with-eval-after-load 'java-ts-mode
