@@ -60,7 +60,7 @@ MODE-MAP is keymap symbol or literal keymap name, ARGS is the keybindings.
 It returns a code string to define local leader keys."
   `(progn
      (general-define-key
-      :states 'normal
+      :states '(normal visual motion)
       :keymaps (cond
                 ((keymapp ,mode-map)
                  (keymap-symbol ,mode-map))
@@ -75,7 +75,7 @@ It returns a code string to define local leader keys."
       :prefix "SPC m"
       ,@args)
      (general-define-key
-      :states 'normal
+      :states '(normal visual motion)
       :keymaps (cond
                 ((keymapp ,mode-map)
                  (keymap-symbol ,mode-map))

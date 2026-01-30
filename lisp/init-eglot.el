@@ -34,8 +34,7 @@
         ;; https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/README.md
         eglot-code-action-indications '()
         ;; eglot-code-action-indicator ""
-        eglot-advertise-cancellation nil)
-  (push '((java-mode java-ts-mode) . jdtls-command-contact) eglot-server-programs))
+        eglot-advertise-cancellation nil))
 
 (with-eval-after-load 'eglot
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
@@ -137,7 +136,6 @@
   (eglot-inactive-regions-mode 1))
 
 (use-package eglot-codelens
-  ;; :load-path "~/workspace/emacs/eglot-codelens"
   :vc (:url "https://github.com/zsxh/eglot-codelens"
        :rev :newest)
   :hook (eglot-managed-mode . eglot-codelens-mode))
@@ -146,7 +144,6 @@
 ;; https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_signatureHelp
 ;; https://www.kimi.com/chat/19b5fb06-f952-8562-8000-09a662fde627
 (use-package eglot-signature
-  ;; :load-path "~/workspace/emacs/eglot-signature"
   :vc (:url "https://github.com/zsxh/eglot-signature"
        :rev :newest)
   :hook (eglot-managed-mode . eglot-signature-mode)
