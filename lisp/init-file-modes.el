@@ -110,7 +110,8 @@
   (+funcs/major-mode-leader-keys
    json-ts-mode-map
    "j" '(consult-jq :which-key "consult-jq")
-   "p" '(json-pretty-print-buffer :which-key "pretty-print")))
+   "p" '(json-pretty-print-buffer :which-key "pretty-print")
+   "P" '(json-ts-jq-path-at-point :which-key "jq-path-at-point")))
 
 (use-package consult-jq
   :vc (:url "https://github.com/bigbuger/consult-jq")
@@ -121,7 +122,7 @@
 ;; PDF, EPUB, MOBI, FB2, XPS/OpenXPS, CBZ
 ;; The Emacs Reader (via MuPDF)
 (use-package reader
-  :vc (:url "https://codeberg.org/divyaranjan/emacs-reader" :make "all")
+  :vc (:url "https://codeberg.org/MonadicSheep/emacs-reader" :make "all")
   :bind ((:map reader-mode-map
           ("j" . reader-scroll-down-or-next-page)
           ("k" . reader-scroll-up-or-prev-page)

@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-;; TODO: [models.dev](https://models.dev/) & ai-sdk
-;; TODO: [ai sdk](https://ai-sdk.dev/)
 ;; TODO: https://github.com/folke/sidekick.nvim?tab=readme-ov-file#prompts--context
 
 ;; Embark Actions
@@ -251,59 +249,25 @@ When called interactively, prompts for file or buffer type."
       :host "api.siliconflow.cn"
       :stream t
       :key 'gptel-api-key
-      :models '((Pro/deepseek-ai/DeepSeek-V3.2-Exp
-                 :request-params (:enable_thinking :json-false)
-                 :capabilities (tool-use reasoning)
-                 :context-window 160
-                 :input-cost 2
-                 :output-cost 3)
-                (deepseek-ai/DeepSeek-OCR
-                 :capabilities (media tool-use json url)
-                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                 :context-window 8
-                 :input-cost 0
-                 :output-cost 0)
+      :models '((Pro/moonshotai/Kimi-K2.5
+                 :capabilities (reasoning tool-use media audio video)
+                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
+                              "application/pdf" "text/plain" "text/csv" "text/html"
+                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
+                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
+                 :context-window 256
+                 :input-cost 4
+                 :output-cost 21)
                 (Pro/moonshotai/Kimi-K2-Instruct-0905
                  :request-params (:temperature 0.6)
                  :capabilities (tool-use)
                  :context-window 256
                  :input-cost 4
-                 :output-cost 16)
-                (Qwen/Qwen3-235B-A22B-Instruct-2507
-                 :request-params (:temperature 0.7
-                                  :top_p 0.8
-                                  :top_k 20
-                                  :min_p 0)
-                 :capabilities (tool-use)
-                 :context-window 256
-                 :input-cost 2.5
-                 :output-cost 10)
-                (zai-org/GLM-4.6
-                 :request-params (:enable_thinking :json-false)
-                 :capabilities (tool-use reasoning)
-                 :context-window 198
-                 :input-cost 3.5
-                 :output-cost 14)
-                (MiniMaxAI/MiniMax-M2
-                 :request-params (:temperature 1.0
-                                  :top_p 0.95
-                                  :top_k 20)
-                 :capabilities (tool-use reasoning)
-                 :context-window 192
-                 :input-cost 2.1
-                 :output-cost 8.4))))
+                 :output-cost 16))))
 
   ;; default model
   (setq gptel-backend gptel--glm-coding-plan
         gptel-model 'glm-4.7))
-
-(use-package gptel-agent
-  ;; :after gptel
-  :defer t
-  :config
-  (setq gptel-agent-dirs nil)
-  ;; Read files from agents directories
-  (gptel-agent-update))
 
 (use-package mcp
   :defer t
@@ -489,27 +453,6 @@ When called interactively, prompts for file or buffer type."
     (advice-run-once 'whisper-run :before
                      (lambda (&optional arg)
                        (call-interactively #'darwin/select-default-audio-device)))))
-
-;; interact cmd `claude-code'
-(use-package claude-code
-  :vc (:url "https://github.com/stevemolitor/claude-code.el")
-  :defer t
-  :config
-  (setq claude-code-terminal-backend 'vterm))
-
-;; TODO: https://github.com/manzaltu/claude-code-ide.el
-(use-package claude-code-ide
-  :vc (:url "https://github.com/manzaltu/claude-code-ide.el.git")
-  :defer t
-  ;; :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
-  ;; :config
-  ;; (claude-code-ide-emacs-tools-setup) ; Optionally enable Emacs MCP tools
-  )
-
-(use-package agent-shell
-  :defer t
-  :hook ((agent-shell-mode . corfu-mode)
-         (agent-shell-mode . agent-shell-completion-mode)))
 
 
 (provide 'init-ai)
