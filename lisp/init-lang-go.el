@@ -66,10 +66,15 @@
    go-ts-mode-map
    "m" '(go-tools-menu :which-key "go-tools-menu")))
 
-(with-eval-after-load 'eglot
+(use-package eglot-gopls
+  :vc (:url "https://github.com/zsxh/eglot-gopls")
+  :after eglot
+  :config
+  (push '((go-mode go-dot-mod-mode go-dot-work-mode go-ts-mode go-mod-ts-mode go-work-ts-mode)
+          . (eglot-gopls-server . ("gopls")))
+        eglot-server-programs)
+
   ;; NOTE: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-  ;; eglot missing [gopls code actions](https://github.com/golang/tools/blob/master/gopls/doc/features/transformation.md):
-  ;; source.addTest, source.freesymbols, source.doc, source.assembly...
   (defvar eglot-go-workspace-configuration
     '(:gopls (;; --- Build ---
               ;; --- Formatting ---
@@ -81,7 +86,8 @@
                            :upgrade_dependency t
                            :vendor t
                            :test t
-                           :vulncheck t)
+                           ;; :vulncheck t
+                           :run_govulncheck t)
               :semanticTokens t
               ;; --- Completion ---
               :usePlaceholders t
@@ -98,7 +104,6 @@
                       :rangeVariableTypes t)
               ;; --- Navigation ---
               )))
-
   (setq-default eglot-workspace-configuration
                 (plist-put eglot-workspace-configuration :gopls
                            (plist-get eglot-go-workspace-configuration :gopls))))

@@ -19,6 +19,8 @@
 (use-package eglot
   :ensure nil
   :commands (eglot eglot-ensure)
+  :bind (:map eglot-mode-map
+         ("<f7>" . eglot-momentary-inlay-hints))
   :config
   (setq eglot-autoshutdown t
         eglot-send-changes-idle-time 0.5
@@ -29,13 +31,13 @@
         ;; NOTE: drop log to improve performance
         eglot-events-buffer-config '(:size 0 :format full)
         ;; eglot-events-buffer-config '(:size 1000000000000 :format full)
-        eglot-report-progress nil
+        eglot-report-progress t
         eglot-extend-to-xref t
         ;; https://github.com/joaotavora/eglot/issues/1491
         ;; https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/README.md
         eglot-code-action-indications '()
         ;; eglot-code-action-indicator ""
-        eglot-advertise-cancellation nil))
+        ))
 
 (with-eval-after-load 'eglot
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
@@ -182,6 +184,7 @@
      mode-map
      ;; code action
      "A" '(eglot-code-actions :which-key "code-action")
+     "C" '(eglot-codelens-execute-at-line :which-key "codelens-execute-at-line")
      ;; hover
      "D" '(+eglot/show-hover-at-point :which-key "hover")
 

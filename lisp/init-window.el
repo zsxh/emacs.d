@@ -33,6 +33,7 @@
           "\\*Async Shell Command\\*"
           help-mode
           compilation-mode
+          eglot-gopls-compilation-mode
           "\\*compilation\\*"
           "^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
           "^\\*shell.*\\*$" shell-mode ;shell as a popup
