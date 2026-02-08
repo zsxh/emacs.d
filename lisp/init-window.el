@@ -32,19 +32,19 @@
           "Output\\*$"
           "\\*Async Shell Command\\*"
           help-mode
-          compilation-mode
-          eglot-gopls-compilation-mode
-          "\\*compilation\\*"
-          "^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
-          "^\\*shell.*\\*$" shell-mode ;shell as a popup
-          "^\\*term.*\\*$" term-mode ;term as a popup
-          "^\\*vterm.*\\*$" vterm-mode   ;vterm as a popup
+          (lambda (buf)
+            (with-current-buffer buf
+              (derived-mode-p 'compilation-mode)))
+          "^\\*shell.*\\*$"
+          "^\\*eshell.*\\*$"
+          term-mode
+          "^\\*vterm.*\\*$"
+          eat-mode
           "^\\*HTTP Response\\*$"
           helpful-mode
           magit-process-mode
           "\\*gt-result\\*"
           ;; comint-mode
-          eat-mode
           "*envrc*"))
   (setq popper-group-function #'popper-group-by-project))
 

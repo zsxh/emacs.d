@@ -176,9 +176,9 @@
 (use-package protobuf-mode
   :defer t)
 
-;; [just](https://github.com/casey/just) is a handy way to save and run project-specific commands.
-(use-package just-ts-mode
-  :if (treesit-ready-p 'just)
+;; justl.el mode is a major mode for driving justfiles.
+(use-package justl
+  :if (executable-find "just")
   :defer t)
 
 ;; SQL
@@ -189,6 +189,7 @@
 ;; `Hurl' is a command line tool that runs HTTP requests defined in a simple plain text format.
 (use-package hurl-mode
   :vc (:url "https://github.com/JasZhe/hurl-mode")
+  :if (executable-find "hurl")
   :bind ((:map hurl-response-mode-map
           ("C-j" . outline-next-heading)
           ("C-k" . outline-previous-heading)
