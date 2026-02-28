@@ -161,12 +161,10 @@ Lisp function does not specify a special indentation."
         :where (point)
         :duration eros-eval-result-duration))))
 
-;; Extra font lock for emacs lisp
-(use-package elispfl
-  :vc (:url "https://github.com/cireu/elispfl")
-  :after elisp-mode
-  :config
-  (elispfl-mode))
+;; Semantic Syntax Highlighting for Common Lisp & Elisp in Emacs
+(use-package lisp-semantic-hl
+  :ensure t
+  :hook ((emacs-lisp-mode lisp-mode) . lisp-semantic-hl-mode))
 
 
 (provide 'init-lang-emacs-lisp)
