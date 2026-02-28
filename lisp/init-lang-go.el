@@ -10,13 +10,6 @@
 
 ;;; Code:
 
-;; NOTE: Install gopls
-
-;; TODO: gopls codelens
-;; https://deepwiki.com/search/-gopls-codelensvscodego-codele_bd0ae6ba-3738-4b40-bd4d-b7848d4f0edb?mode=fast
-;; https://deepwiki.com/search/-gopls-codelens-codelens-comma_e9f152d7-583a-41a2-a8fa-09b8d95aee0c?mode=fast
-;; https://github.com/golang/vscode-go/blob/master/docs/settings.md#uicodelenses
-
 (when (and (version< emacs-version "31")
            (treesit-ready-p 'go))
   (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
@@ -66,6 +59,7 @@
    go-ts-mode-map
    "m" '(go-tools-menu :which-key "go-tools-menu")))
 
+;; TODO: https://deepwiki.com/search/vscode-goplsruntests-codelens_9edc58e3-8b65-44ee-854c-632b6054d58d?mode=fast
 (use-package eglot-gopls
   :vc (:url "https://github.com/zsxh/eglot-gopls")
   :after eglot
@@ -77,6 +71,7 @@
   ;; NOTE: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   (defvar eglot-go-workspace-configuration
     '(:gopls (;; --- Build ---
+              :buildFlags []
               ;; --- Formatting ---
               :gofumpt t
               ;; --- UI ---
