@@ -31,7 +31,7 @@
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (scroll-bar-mode -1)
 (tool-bar-mode   -1)
-(tooltip-mode    -1)
+;; (tooltip-mode    -1)
 (menu-bar-mode   -1)
 
 ;; In Emacs 27+, package initialization occurs before `user-init-file' is
