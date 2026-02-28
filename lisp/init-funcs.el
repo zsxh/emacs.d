@@ -60,7 +60,7 @@ MODE-MAP is keymap symbol or literal keymap name, ARGS is the keybindings.
 It returns a code string to define local leader keys."
   `(progn
      (general-define-key
-      :states '(normal visual motion)
+      :states '(normal visual motion insert emacs)
       :keymaps (cond
                 ((keymapp ,mode-map)
                  (keymap-symbol ,mode-map))
@@ -73,6 +73,7 @@ It returns a code string to define local leader keys."
                  (keymap-symbol ,mode-map)))
       :major-modes t
       :prefix "SPC m"
+      :global-prefix "M-o m"
       ,@args)
      (general-define-key
       :states '(normal visual motion)
@@ -111,8 +112,9 @@ If point was already at that position, move point to beginning of line."
                          (file-remote-p file 'user) "@" (file-remote-p file 'host)
                          "|sudo:root@"
                          (file-remote-p file 'host) ":" (file-remote-p file 'localname))
-               ;; (concat "/sudo:root@localhost:" file)
-               (concat "/sudo::" file))))
+               (concat "/sudo:root@localhost:" file)
+               ;; (concat "/sudo::" file)
+               )))
 
 (defun +funcs/sudo-edit-current-file ()
   "Sudo edit current file."
