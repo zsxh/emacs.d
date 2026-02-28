@@ -172,6 +172,10 @@ Otherwise, kill the current buffer using `magit-bury-buffer-function'."
 (use-package embark-vc
   :defer forge)
 
+(use-package conflict-buttons
+  :vc (:url "https://git.andros.dev/andros/conflict-buttons.el")
+  :hook (smerge-mode . conflict-buttons-mode))
+
 
 (provide 'init-git)
 
