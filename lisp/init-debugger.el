@@ -18,8 +18,14 @@
 (use-package dape
   :after eglot
   :config
+  (setq dape-debug nil)
   ;; Turn on global bindings for setting breakpoints with mouse
   (dape-breakpoint-global-mode 1))
+(use-package dape-toolbar
+  :vc (:url "https://github.com/zsxh/dape-toolbar")
+  :after dape
+  :config
+  (dape-toolbar-mode))
 
 (with-eval-after-load 'dape
   ;; Python
