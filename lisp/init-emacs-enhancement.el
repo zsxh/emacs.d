@@ -45,28 +45,30 @@
 
 ;; TreeSitter
 ;; NOTE: https://archive.casouri.cc/note/2025/emacs-tree-sitter-in-depth/
-;; (with-eval-after-load 'treesit
-;;   ;; NOTE: `treesit-font-lock-level' has a special `setter' attached to it,
-;;   ;; so as to automatically recompute the font lock features in all your buffers when you change the level
-;;   (setopt treesit-font-lock-level 4))
-
-;; NOTE: “Fixing” the S-Expression Commands, https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
-(defun mp-remove-treesit-sexp-changes ()
-  (when (eq forward-sexp-function #'treesit-forward-sexp)
-    (setq forward-sexp-function nil))
-  (when (eq transpose-sexps-function #'treesit-transpose-sexps)
-    (setq transpose-sexps-function #'transpose-sexps-default-function))
-  (when (eq forward-sentence-function #'treesit-forward-sentence)
-    (setq forward-sentence-function #'forward-sentence-default-function)))
-
-(add-hook 'prog-mode-hook #'mp-remove-treesit-sexp-changes)
-(add-hook 'html-ts-mode-hook #'mp-remove-treesit-sexp-changes)
-
+;; NOTE: https://batsov.com/articles/2026/02/27/building-emacs-major-modes-with-treesitter-lessons-learned/
 (use-package treesit
   :ensure nil
   :config
   (setopt treesit-enabled-modes t)
-  (assq-delete-all 'markdown-mode major-mode-remap-alist))
+  (assq-delete-all 'markdown-mode major-mode-remap-alist)
+  ;; NOTE: `treesit-font-lock-level' has a special `setter' attached to it,
+  ;; so as to automatically recompute the font lock features in all your buffers when you change the level
+  ;; (setopt treesit-font-lock-level 4)
+  )
+
+;; TODO: Remove outdated codes/comments
+;; (progn
+;;   ;; NOTE: “Fixing” the S-Expression Commands, https://www.masteringemacs.org/article/how-to-get-started-tree-sitter
+;;   (defun mp-remove-treesit-sexp-changes ()
+;;     (when (eq forward-sexp-function #'treesit-forward-sexp)
+;;       (setq forward-sexp-function nil))
+;;     (when (eq transpose-sexps-function #'treesit-transpose-sexps)
+;;       (setq transpose-sexps-function #'transpose-sexps-default-function))
+;;     (when (eq forward-sentence-function #'treesit-forward-sentence)
+;;       (setq forward-sentence-function #'forward-sentence-default-function)))
+
+;;   (add-hook 'prog-mode-hook #'mp-remove-treesit-sexp-changes)
+;;   (add-hook 'html-ts-mode-hook #'mp-remove-treesit-sexp-changes))
 
 ;;;;;;;;;;;;;; *Help* ;;;;;;;;;;;;;;
 
@@ -139,7 +141,11 @@
 (setq garbage-collection-messages nil)
 
 ;;;;;;;;;;;;;; Tramp ;;;;;;;;;;;;;;
+
 ;; TODO: https://github.com/ArthurHeymans/emacs-tramp-rpc/
+;; (use-package tramp-rpc
+;;   :after tramp)
+
 ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
 ;; https://www.eigenbahn.com/2020/01/15/tramp-autologin-insanity
 ;; https://willschenk.com/articles/2020/tramp_tricks/
@@ -185,11 +191,11 @@
 ;; tramp-hlo works by implementing high-level Emacs file operations as single
 ;; round-trip server-side scripts, significantly improving performance when
 ;; using TRAMP on remote hosts.
-(use-package tramp-hlo
-  :after tramp
-  :config
-  (tramp-hlo-setup) ; `tramp-hlo-remove'
-  )
+;; (use-package tramp-hlo
+;;   :after tramp
+;;   :config
+;;   (tramp-hlo-setup) ; `tramp-hlo-remove'
+;;   )
 
 ;;;;;;;;;;;;;; Long Line Performance Improvement ;;;;;;;;;;;;;;
 ;; Emacs is now capable of editing files with very long lines since 29.1, `long-line-threshold'

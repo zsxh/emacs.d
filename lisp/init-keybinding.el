@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+;; TODO: [defvar-map, which-key](https://sachachua.com/blog/2026/03/emacs-lisp-defvar-keymap-hints-for-which-key/)
+
 (require 'init-funcs)
 
 (use-package which-key

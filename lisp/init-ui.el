@@ -63,15 +63,8 @@
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :config
-  (setq evil-normal-state-tag "<N>"
-        evil-insert-state-tag "<I>"
-        evil-visual-state-tag "<V>"
-        evil-operator-state-tag "<O>"
-        evil-replace-state-tag "<R>"
-        evil-motion-state-tag "<M>"
-        evil-emacs-state-tag "<E>")
-  (setq doom-modeline-modal-icon nil
-        doom-modeline-modal-modern-icon nil
+  (setq doom-modeline-modal-icon t
+        doom-modeline-modal-modern-icon t
         doom-modeline-hud nil
         doom-modeline-unicode-fallback nil
         doom-modeline-unicode-number nil
