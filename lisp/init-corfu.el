@@ -23,7 +23,8 @@
          (shell-mode . corfu-mode)
          (eshell-mode . corfu-mode)
          (org-mode . corfu-mode)
-         (markdown-mode . corfu-mode))
+         (markdown-mode . corfu-mode)
+         (telega-chat-mode . corfu-mode))
   :config
   (setq corfu-auto t
         corfu-auto-prefix 1

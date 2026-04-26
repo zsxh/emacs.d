@@ -54,26 +54,14 @@
     (define-key telega-msg-button-map (kbd "l") nil))
 
   (with-eval-after-load 'telega-chat
-
     (define-key telega-chat-button-map (kbd "h") nil)
     (with-eval-after-load 'evil
       (evil-define-key 'normal telega-chat-mode-map "q" #'kill-current-buffer)
       (define-key telega-msg-button-map (kbd "SPC") nil)))
 
-  (with-eval-after-load 'telega-company
-    (advice-add #'telega-company-botcmd :override
-                (lambda (command &optional arg &rest _ignored)
-                  (interactive (list 'interactive))
-                  (cl-case command
-                    (interactive (company-begin-backend 'telega-company-botcmd))
-                    (require-match 'never)
-                    (sorted t)
-                    (prefix
-                     (telega-company-grab-botcmd))
-                    (candidates
-                     (all-completions arg (telega-company--bot-commands)))
-                    (annotation
-                     (get-text-property 0 'telega-annotation arg))))))
+  (when (require 'telega-completions nil t)
+    (add-hook 'telega-chat-mode-hook #'telega-completions-setup-capf))
+
 
   ;; Completing input in chatbuf
   ;; https://zevlg.github.io/telega.el/#completing-input-in-chatbuf
