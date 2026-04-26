@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: Tversion
-# key: Tversion
-# --
-/**
- * Version:${1:`(format-time-string "%Y%02m%02d%02H%02M%02S")`}
- */
- $0

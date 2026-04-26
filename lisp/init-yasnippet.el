@@ -20,13 +20,8 @@
   :defer t)
 
 ;; Collection of yasnippet snippets
-(use-package yasnippet-snippets
-  :after yasnippet)
-
-;; Yasnippet Completion At Point Function
-(use-package yasnippet-capf
-  ;; :init (add-to-list 'completion-at-point-functions #'yasnippet-capf)
-  :defer t)
+;; (use-package yasnippet-snippets
+;;   :after yasnippet)
 
 
 (provide 'init-yasnippet)
