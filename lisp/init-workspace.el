@@ -16,12 +16,14 @@
   :hook (after-init . tab-bar-mode)
   :init
   (setopt tab-bar-show 1
+          tab-bar-new-tab-choice "*scratch*"
+          tab-bar-auto-width nil
+          tab-bar-tab-hints t
+          tab-bar-new-tab-to 'rightmost
           ;; NOTE: press <super>-[num] select hint num tab
-          tab-bar-select-tab-modifiers '(super))
-  (setq tab-bar-new-tab-choice "*scratch*"
-        tab-bar-auto-width nil
-        tab-bar-tab-hints t
-        tab-bar-new-tab-to 'rightmost))
+          tab-bar-select-tab-modifiers '(super)
+          tab-bar-tab-name-function #'tab-bar-tab-name-truncated
+          tab-bar-tab-name-truncated-max 20))
 
 (defun +workspace/tab-new (name)
   (interactive (list

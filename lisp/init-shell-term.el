@@ -183,6 +183,14 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 (use-package emamux
   :defer t)
 
+;; TODO: [Terminal emulator powered by libghostty](https://github.com/dakra/ghostel)
+(use-package ghostel
+  :defer t)
+
+;; (use-package evil-ghostel
+;;   :after (ghostel evil)
+;;   :hook (ghostel-mode . evil-ghostel-mode))
+
 
 (provide 'init-shell-term)
 

@@ -163,7 +163,6 @@ Lisp function does not specify a special indentation."
 
 ;; Semantic Syntax Highlighting for Common Lisp & Elisp in Emacs
 (use-package lisp-semantic-hl
-  :ensure t
   :hook ((emacs-lisp-mode lisp-mode) . lisp-semantic-hl-mode))
 
 

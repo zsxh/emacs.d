@@ -54,11 +54,11 @@
 (use-package kubed
   :defer t)
 
-(use-package kubernetes
-  :commands (kubernetes-overview)
-  :config
-  (setq kubernetes-poll-frequency 3600
-        kubernetes-redraw-frequency 3600))
+;; (use-package kubernetes
+;;   :commands (kubernetes-overview)
+;;   :config
+;;   (setq kubernetes-poll-frequency 3600
+;;         kubernetes-redraw-frequency 3600))
 
 ;; M-x: `kubel', `kubel-set-namespace', `kubel-set-context', `kubel-set-resource'
 (use-package kubel

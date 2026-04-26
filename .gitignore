@@ -86,3 +86,4 @@ games/*
 /tree-sitter
 .aider*
 .env
+/.agent-shell/

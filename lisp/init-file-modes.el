@@ -228,6 +228,9 @@
 ;; https://github.com/havarddj/typst-preview.el
 ;; lsp https://github.com/Myriad-Dreamin/tinymist
 
+;; TODO: https://github.com/chaoswork/appine
+;; an Emacs plugin using a Dynamic Module that allows you to embed native macOS views (WebKit, PDFKit etc.) directly inside Emacs windows.
+
 
 (provide 'init-file-modes)
 

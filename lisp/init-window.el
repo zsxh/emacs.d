@@ -40,6 +40,7 @@
           term-mode
           "^\\*vterm.*\\*$"
           eat-mode
+          "^\\*.*ghostel.*\\*$"
           "^\\*HTTP Response\\*$"
           helpful-mode
           magit-process-mode

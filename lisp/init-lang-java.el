@@ -36,21 +36,29 @@
   (push '((java-mode java-ts-mode) . (eglot-jdtls-server . eglot-jdtls-cmd))
         eglot-server-programs)
 
-  ;; TODO: install jdtls bundles/plugins from `mason'
-  (defun eglot-java-bundles ()
-    "Return a vector of JAR files from the jdtls bundles directory."
-    (if-let* ((bundles-dir (file-name-concat user-emacs-directory "cache" "lsp-servers" "java" "bundles"))
-              (_ (file-directory-p bundles-dir))
-              (jars (directory-files bundles-dir t "\\.jar$")))
-        (apply #'vector jars)
-      []))
+  ;; NOTE: install jdtls bundles/plugins from `mason'
+  (defun eglot-java-config ()
+    (when (require 'mason nil t)
+      (let* ((root (expand-file-name "packages" mason-dir))
+             (jdtls-dir (expand-file-name "jdtls" root))
+             (debug-dir (expand-file-name "java-debug-adapter/extension/server" root))
+             (test-dir (expand-file-name "java-test/extension/server" root)))
+        (when (and (file-exists-p jdtls-dir)
+                   (file-exists-p debug-dir)
+                   (file-exists-p test-dir))
+          (let* ((jdtls-cmd (if (executable-find "jdtls")
+                                "jdtls"
+                              (expand-file-name "bin/jdtls" jdtls-dir)))
+                 (lombok (expand-file-name "lombok.jar" jdtls-dir))
+                 (debug-jars (directory-files debug-dir t "\\.jar$"))
+                 (test-jars (directory-files test-dir t "\\.jar$"))
+                 (jars (apply #'vector (append debug-jars test-jars))))
+            `(:cmd (,jdtls-cmd
+                    ,(concat "--jvm-arg=-javaagent:" lombok)
+                    "--jvm-arg=-XX:+UseStringDeduplication")
+              :init-options (:bundles ,jars)))))))
 
-  (setq eglot-jdtls-config
-        `(:cmd ("jdtls"
-                ,(concat "--jvm-arg=-javaagent:"
-                         (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar"))
-                "--jvm-arg=-XX:+UseStringDeduplication")
-          :init-options (:bundles ,(eglot-java-bundles))))
+  (setq eglot-jdtls-config (eglot-java-config))
 
   (exec-path-from-shell-copy-envs
    '("JAVA_8_HOME" "JAVA_11_HOME" "JAVA_17_HOME"

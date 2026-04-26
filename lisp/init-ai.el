@@ -136,7 +136,7 @@ When called interactively, prompts for file or buffer type."
   (require 'gptel-prompts)
   (gptel-prompts-refresh)
   (setq gptel--system-message
-        (alist-get '深度需求挖掘 gptel-directives nil nil
+        (alist-get 'talk-normal gptel-directives nil nil
                    (lambda (sym1 sym2)
                      (string= (symbol-name sym1)
                               (symbol-name sym2)))))
@@ -222,7 +222,7 @@ When called interactively, prompts for file or buffer type."
       :endpoint "/api/coding/paas/v4/chat/completions"
       :stream t
       :key 'gptel-api-key
-      :models '((glm-4.7
+      :models '((glm-5-turbo
                  :request-params (:thinking (:type "disabled"))
                  :capabilities (tool-use reasoning)
                  :context-window 200))))
@@ -267,10 +267,10 @@ When called interactively, prompts for file or buffer type."
 
   ;; default model
   (setq gptel-backend gptel--glm-coding-plan
-        gptel-model 'glm-4.7))
+        gptel-model 'glm-5-turbo))
 
 (use-package mcp
-  :defer t
+  :after gptel
   :config
   (require 'mcp-hub)
   (exec-path-from-shell-copy-envs
@@ -288,7 +288,8 @@ When called interactively, prompts for file or buffer type."
           ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))
           ("searxng" . (:command "bunx"
                         :args ("mcp-searxng")
-                        :env (:SEARXNG_URL "http://localhost:8888")))))
+                        :env (:SEARXNG_URL "http://localhost:8888")))
+          ("deepwiki" . (:url "https://mcp.deepwiki.com/mcp"))))
 
   (with-eval-after-load 'evil
     (evil-define-key* '(normal visual) mcp-hub-mode-map
@@ -326,84 +327,6 @@ When called interactively, prompts for file or buffer type."
   :bind (("C-c i" . gptel-aibo-summon)
          (:map gptel-aibo-mode-map
           ("C-c !" . gptel-aibo-apply-last-suggestions))))
-
-;; https://github.com/milanglacier/minuet-ai.el
-(use-package minuet
-  :defer t
-  :bind (("M-i" . #'minuet-show-suggestion) ;; use overlay for completion
-         :map minuet-active-mode-map
-         ("<tab>" . #'minuet-accept-suggestion)
-         ("TAB" . #'minuet-accept-suggestion))
-  :config
-  (require 'gptel)
-  (setq minuet-provider 'openai-compatible
-        minuet-n-completions 1
-        minuet-request-timeout 2.5
-        minuet-auto-suggestion-throttle-delay 1.0
-        minuet-auto-suggestion-debounce-delay 0.4)
-
-  (plist-put minuet-openai-compatible-options :end-point "https://api.deepseek.com/chat/completions")
-  (plist-put minuet-openai-compatible-options :api-key (lambda () (gptel-api-key-from-auth-source "api.deepseek.com")))
-  (plist-put minuet-openai-compatible-options :model "deepseek-chat")
-
-  ;; (plist-put minuet-openai-compatible-options :end-point "https://openrouter.ai/api/v1/chat/completions")
-  ;; (plist-put minuet-openai-compatible-options :api-key (lambda () (gptel-api-key-from-auth-source "openrouter.ai")))
-  ;; (plist-put minuet-openai-compatible-options :model "google/gemini-2.5-flash-lite")
-  ;; (plist-put minuet-openai-compatible-options :model "x-ai/grok-code-fast-1")
-  ;; (plist-put minuet-openai-compatible-options :model "x-ai/grok-4-fast")
-
-  ;; Prioritize throughput for faster completion
-  ;; (minuet-set-optional-options minuet-openai-compatible-options :provider '(:sort "throughput"))
-  (minuet-set-optional-options minuet-openai-compatible-options :max_tokens 256)
-  (minuet-set-optional-options minuet-openai-compatible-options :top_p 0.9)
-  )
-
-;; |-----------------------------------------------|---------------------------------------|
-;; | unsloth/Qwen2.5-Coder-1.5B-Instruct-128K-GGUF | Qwen2.5-Coder-1.5B-Instruct-Q8_0.gguf |
-;; | unsloth/Qwen2.5-Coder-3B-Instruct-128K-GGUF   | Qwen2.5-Coder-3B-Instruct-Q4_K_M.gguf |
-;; | unsloth/Qwen2.5-Coder-7B-Instruct-128K-GGUF   | Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf |
-;;
-;; llama-server \
-;;     -hf-rep unsloth/Qwen2.5-Coder-7B-Instruct-128K-GGUF \
-;;     -hf-file Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf \
-;;     -fa on \
-;;     --cache-reuse 256
-;;
-;; https://github.com/ggml-org/llama.cpp/pull/9787
-;;
-;; FIXME: overlay cursor position
-(use-package wingman
-  :vc (:url "https://github.com/mjrusso/wingman")
-  :defer t
-  :bind
-  (:map wingman-mode-prefix-map
-   ("TAB" . wingman-fim) ; Request Native FIM
-   ("S-TAB" . wingman-fim-emulated) ; Request Emulated FIM
-   ("d" . wingman-fim-debug)
-   :map wingman-mode-completion-transient-map
-   ("TAB" . wingman-accept-full)
-   ("S-TAB" . wingman-accept-line)
-   ("M-S-TAB" . wingman-accept-word))
-  :init
-  (setq wingman-prefix-key "C-c w")
-  ;; :hook (prog-mode . wingman-mode)
-  :config
-  (setq wingman-log-level 4
-        wingman-ring-n-chunks 16
-        wingman-llama-endpoint "http://127.0.0.1:8080/infill")
-
-  ;; don't provide completions in files that typically contain secrets
-  (add-to-list 'wingman-disable-predicates
-               (lambda ()
-                 (or (derived-mode-p 'envrc-file-mode)
-                     (derived-mode-p 'direnv-envrc-mode)
-                     (derived-mode-p 'authinfo-mode)
-                     (when buffer-file-name
-                       (let ((fname (file-name-nondirectory buffer-file-name)))
-                         (or (string-equal ".env" fname)
-                             (string-equal ".envrc" fname)
-                             (string-prefix-p ".localrc" fname)
-                             (string-equal ".authinfo" fname))))))))
 
 ;; use `whisper-cpp-download-ggml-model' from nixpkgs.whisper-cpp
 ;; > whisper-cpp-download-ggml-model {model} {whisper-install-directory}/whisper.cpp/models
@@ -453,6 +376,16 @@ When called interactively, prompts for file or buffer type."
     (advice-run-once 'whisper-run :before
                      (lambda (&optional arg)
                        (call-interactively #'darwin/select-default-audio-device)))))
+
+(use-package agent-shell
+  :defer t
+  :hook (agent-shell-mode . (lambda ()
+                              (corfu-mode)
+                              (setq-local completion-styles '(orderless flex))))
+  :config
+  (setq agent-shell-anthropic-claude-acp-command
+        '("bunx" "@zed-industries/claude-agent-acp")
+        agent-shell-display-action '(display-buffer-in-side-window)))
 
 
 (provide 'init-ai)

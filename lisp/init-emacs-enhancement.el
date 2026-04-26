@@ -29,6 +29,8 @@
           ;; to exclude I/O intensive directories from auto-reverting.
           auto-revert-use-notify t))
 
+;;;;;;;;;;;;;; Font Lock ;;;;;;;;;;;;;;
+
 ;; just-in-time fontification
 (with-eval-after-load 'jit-lock
   ;; NOTE: [Re: Some performance questions.] https://lists.gnu.org/archive/html/emacs-devel/2023-02/msg00216.html
@@ -46,6 +48,7 @@
 ;; TreeSitter
 ;; NOTE: https://archive.casouri.cc/note/2025/emacs-tree-sitter-in-depth/
 ;; NOTE: https://batsov.com/articles/2026/02/27/building-emacs-major-modes-with-treesitter-lessons-learned/
+;; NOTE: https://emacsredux.com/blog/2026/03/08/customizing-font-lock-in-the-age-of-tree-sitter/
 (use-package treesit
   :ensure nil
   :config
