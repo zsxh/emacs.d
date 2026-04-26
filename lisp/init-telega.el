@@ -62,15 +62,6 @@
   (when (require 'telega-completions nil t)
     (add-hook 'telega-chat-mode-hook #'telega-completions-setup-capf))
 
-
-  ;; Completing input in chatbuf
-  ;; https://zevlg.github.io/telega.el/#completing-input-in-chatbuf
-  (when (require 'company nil t)
-    (defun +telega/completion-setup ()
-      (setq-local completion-at-point-functions (mapcar #'cape-company-to-capf telega-company-backends))
-      (corfu-mode 1))
-    (add-hook 'telega-chat-mode-hook #'+telega/completion-setup))
-
   ;; `telega-mnz-attach-region-as-code'
   (+funcs/major-mode-leader-keys
    telega-chat-mode-map
