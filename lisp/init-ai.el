@@ -191,16 +191,12 @@ When called interactively, prompts for file or buffer type."
     (gptel-make-deepseek "DeepSeek"
       :stream t
       :key 'gptel-api-key
-      :models '((deepseek-chat
-                 :capabilities (tool-use)
-                 :context-window 128
-                 :input-cost 2
-                 :output-cost 3)
-                (deepseek-reasoner
+      :models '((deepseek-v4-flash
                  :capabilities (reasoning tool-use)
-                 :context-window 128
-                 :input-cost 2
-                 :output-cost 3))))
+                 :context-window 1000)
+                (deepseek-v4-pro
+                 :capabilities (reasoning tool-use)
+                 :context-window 1000))))
 
   ;; GLM
   (defvar gptel--glm
