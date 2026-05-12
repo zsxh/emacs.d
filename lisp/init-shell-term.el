@@ -13,7 +13,10 @@
 (eval-when-compile
   (require 'init-custom))
 
-(global-set-key [f9] '+vterm/toggle)
+(global-set-key [f9] '+ghostel/toggle)
+
+;; TODO: remove vterm
+;; (global-set-key [f9] '+vterm/toggle)
 
 ;; https://github.com/akermu/emacs-libvterm
 ;; Linux: sudo pacman -S libvterm
@@ -183,13 +186,55 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
 (use-package emamux
   :defer t)
 
-;; TODO: [Terminal emulator powered by libghostty](https://github.com/dakra/ghostel)
+;; [Terminal emulator powered by libghostty](https://github.com/dakra/ghostel)
 (use-package ghostel
-  :defer t)
+  :defer t
+  :bind ((:map ghostel-mode-map
+          ("M-`" . +ghostel/send-tmux-prefix-key)
+          ("<f9>" . +ghostel/toggle)))
+  :init
+  (setq ghostel-keymap-exceptions
+        '("C-c" "C-x" "C-u" "C-h" "M-x" "M-o" "M-:" "C-\\"
+          "<f9>"))
+  :config
+  (defun +ghostel/send-tmux-prefix-key ()
+    "Send `M-`' to the ghostel."
+    (interactive)
+    (when (and (featurep 'evil)
+               (not (evil-insert-state-p)))
+      (evil-insert-state))
+    ;; (ghostel-send-key "`" "meta")
+    (ghostel--send-string "`")))
 
-;; (use-package evil-ghostel
-;;   :after (ghostel evil)
-;;   :hook (ghostel-mode . evil-ghostel-mode))
+(defun +ghostel/toggle (arg)
+  "Toggles a window at project root.
+
+If prefix ARG is non-nil, cd into `default-directory' instead of project root."
+  (interactive "P")
+  (let* ((wins (window-list))
+         (ghostel-win (cl-find-if
+                       (lambda (win)
+                         (with-current-buffer (window-buffer win)
+                           (eq major-mode 'ghostel-mode)))
+                       wins)))
+    (if ghostel-win
+        (if (eq ghostel-win (selected-window))
+            (with-current-buffer (window-buffer ghostel-win)
+              (bury-buffer))
+          (select-window ghostel-win))
+      (let* ((dir-remote-p (file-remote-p default-directory))
+             (proj-p (and (not (or arg dir-remote-p))
+                          (project-current nil))))
+        (if proj-p
+            (call-interactively 'ghostel-project)
+          (call-interactively 'ghostel))))))
+
+(use-package evil-ghostel
+  :after (ghostel evil)
+  :hook (ghostel-mode . evil-ghostel-mode)
+  :config
+  (evil-define-key* '(insert motion)
+    evil-ghostel-mode-map (kbd "C-z") 'evil-normal-state))
 
 
 (provide 'init-shell-term)
