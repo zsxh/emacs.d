@@ -15,113 +15,6 @@
 
 (global-set-key [f9] '+ghostel/toggle)
 
-;; TODO: remove vterm
-;; (global-set-key [f9] '+vterm/toggle)
-
-;; https://github.com/akermu/emacs-libvterm
-;; Linux: sudo pacman -S libvterm
-;; MacOS: brew install libvterm
-(use-package vterm
-  :commands (vterm vterm-other-window)
-  :bind ((:map vterm-mode-map
-          ("M-u" . ace-window)
-          ("M-`" . +vterm/send-tmux-prefix-key)
-          ("C-s" . +vterm/search-line)
-          ("<f9>" . +vterm/toggle)
-          ("<f11>" . toggle-frame-fullscreen)
-          ("<wheel-up>" . vterm-send-prior)
-          ("<wheel-down>" . vterm-send-next))
-         (:map vterm-copy-mode-map
-          ("q" . vterm-copy-mode-done)))
-  :config
-  (setq vterm-timer-delay nil)
-
-  (defun +vterm/setup ()
-    (setq-local line-number-mode nil
-                column-number-mode nil
-                pixel-scroll-precision-mode nil
-                ultra-scroll-mode nil)
-
-    ;; https://github.com/akermu/emacs-libvterm#fonts
-    (set (make-local-variable 'buffer-face-mode-face) 'fixed-pitch)
-    (buffer-face-mode t))
-
-  (add-hook 'vterm-mode-hook #'+vterm/setup)
-
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'vterm-mode 'insert)
-
-    (evil-define-key '(normal insert emacs) vterm-copy-mode-map
-      "q" #'vterm-copy-mode-done)
-
-    (defun +vterm/evil-esc ()
-      (interactive)
-      (vterm-send-escape)
-      (evil-normal-state))
-    (evil-define-key 'insert vterm-mode-map
-      (kbd "<escape>") #'+vterm/evil-esc)
-
-    (evil-define-key '(normal motion) vterm-mode-map
-      (kbd "C-b") #'vterm-send-prior
-      (kbd "C-d") #'vterm-send-next
-      (kbd "C-u") #'vterm-send-prior))
-
-  (defun +vterm/toggle (arg)
-    "Toggles a window at project root.
-
-If prefix ARG is non-nil, cd into `default-directory' instead of project root."
-    (interactive "P")
-    (unless (fboundp 'module-load)
-      (user-error "Your build of Emacs lacks dynamic modules support and cannot load vterm"))
-    (let* ((dir-remote-p (file-remote-p default-directory))
-           (default-directory (if (or arg dir-remote-p)
-                                  default-directory
-                                (or (+project/root)
-                                    default-directory)))
-           (buffer-name
-            (format "*vterm:<%s>*"
-                    (file-name-nondirectory
-                     (directory-file-name
-                      (expand-file-name default-directory))))))
-      (if-let* ((win (get-buffer-window buffer-name)))
-          ;; vterm buffer exist
-          (if (eq (selected-window) win)
-              ;; hide selected vterm buffer
-              (with-current-buffer (get-buffer buffer-name)
-                (bury-buffer))
-            ;; selected vterm buffer
-            (select-window win))
-        (if-let* ((buffer (get-buffer buffer-name)))
-            ;; popup vterm buffer
-            (display-buffer buffer)
-          ;; create new vterm buffer
-          (with-current-buffer (vterm buffer-name)
-            (when (bound-and-true-p evil-local-mode)
-              (evil-change-to-initial-state)))))))
-
-  (defun +vterm/send-tmux-prefix-key ()
-    "Send `M-`' to the libvterm."
-    (interactive)
-    (when (and (featurep 'evil)
-               (not (evil-insert-state-p)))
-      (evil-insert-state))
-    (vterm-send-key "`" nil t))
-
-  (defun +vterm/search-line ()
-    (interactive)
-    (vterm-copy-mode)
-    ;; (message "vterm-copy-mode activated")
-    (consult-line))
-
-  ;; Kill vterm window and buffer when a vterm process is finished
-  (add-hook 'vterm-exit-functions
-            (lambda (_ _)
-              (let* ((buffer (current-buffer))
-                     (window (get-buffer-window buffer)))
-                (when (not (one-window-p))
-                  (delete-window window))
-                (kill-buffer buffer)))))
-
 (use-package term
   :ensure nil
   :defer t
@@ -197,6 +90,9 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
         '("C-c" "C-x" "C-u" "C-h" "M-x" "M-o" "M-:" "C-\\"
           "<f9>"))
   :config
+  (ghostel-compile-global-mode 1)
+  (add-to-list 'ghostel-compile-global-mode-excluded-modes 'rg-mode)
+
   (defun +ghostel/send-tmux-prefix-key ()
     "Send `M-`' to the ghostel."
     (interactive)

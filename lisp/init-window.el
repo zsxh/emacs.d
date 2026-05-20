@@ -35,6 +35,7 @@
           (lambda (buf)
             (with-current-buffer buf
               (derived-mode-p 'compilation-mode)))
+          "^\\*.*compilation\\*$"
           "^\\*shell.*\\*$"
           "^\\*eshell.*\\*$"
           term-mode
