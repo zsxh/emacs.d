@@ -88,7 +88,7 @@
   :init
   (setq ghostel-keymap-exceptions
         '("C-c" "C-x" "C-u" "C-h" "M-x" "M-o" "M-:" "C-\\"
-          "<f9>"))
+          "<f9>" "M-u"))
   :config
   (ghostel-compile-global-mode 1)
   (add-to-list 'ghostel-compile-global-mode-excluded-modes 'rg-mode)

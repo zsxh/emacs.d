@@ -176,6 +176,12 @@ Otherwise, kill the current buffer using `magit-bury-buffer-function'."
   :vc (:url "https://git.andros.dev/andros/conflict-buttons.el")
   :hook (smerge-mode . conflict-buttons-mode))
 
+(use-package majutsu
+  :vc (:url "https://github.com/0WD0/majutsu")
+  :defer t
+  :config
+  (require 'majutsu-evil))
+
 
 (provide 'init-git)
 
