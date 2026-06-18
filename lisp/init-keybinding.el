@@ -264,15 +264,13 @@
     "window commands.
 Check: https://p.bauherren.ovh/blog/tech/new_window_cmds"
     ["Transpose"
-     ("t" "transpose-window-layout" transpose-window-layout :transient t)]
+     ("t" "transpose" window-layout-transpose :transient t)]
     ["Rotate layout"
-     ("o" "rotate-window-layout-clockwise" rotate-window-layout-clockwise :transient t)
-     ;; TODO: enable it
-     ;; ("O" "rotate-window-layout-anticlockwise" rotate-window-layout-anticlockwise :transient t)
-     ]
+     ("o" "rotate-clockwise" window-layout-rotate-clockwise :transient t)
+     ("O" "rotate-anticlockwise" window-layout-rotate-anticlockwise :transient t)]
     ["Flip"
-     ("-" "flip-window-layout-vertically" flip-window-layout-vertically :transient t)
-     ("/" "flip-window-layout-horizontally" flip-window-layout-horizontally :transient t)]
+     ("-" "flip-topdown" window-layout-flip-topdown :transient t)
+     ("/" "flip-leftright" window-layout-flip-leftright :transient t)]
     ["Cycle (rotate windows)"
      ("c" "rotate-windows" rotate-windows :transient t)
      ("C" "rotate-windows-back" rotate-windows-back :transient t)])
