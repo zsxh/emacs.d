@@ -86,9 +86,9 @@
           ("M-`" . +ghostel/send-tmux-prefix-key)
           ("<f9>" . +ghostel/toggle)))
   :init
-  (setq ghostel-keymap-exceptions
-        '("C-c" "C-x" "C-u" "C-h" "M-x" "M-o" "M-:" "C-\\"
-          "<f9>" "M-u"))
+  (setopt ghostel-keymap-exceptions
+          '("C-c" "C-x" "C-u" "C-h" "M-x" "M-o" "M-:" "C-\\"
+            "<f9>" "M-u" "C-y" "C-s"))
   :config
   (ghostel-compile-global-mode 1)
   (add-to-list 'ghostel-compile-global-mode-excluded-modes 'rg-mode)
@@ -129,8 +129,10 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode)
   :config
-  (evil-define-key* '(insert motion)
-    evil-ghostel-mode-map (kbd "C-z") 'evil-normal-state))
+  (evil-define-key* '(insert motion) evil-ghostel-mode-map
+    (kbd "C-s") 'consult-line
+    (kbd "C-y") 'yank
+    (kbd "C-z") 'evil-normal-state))
 
 
 (provide 'init-shell-term)

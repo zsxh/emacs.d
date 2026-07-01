@@ -175,8 +175,23 @@ When called interactively, prompts for file or buffer type."
   ;;     :models '()))
 
   ;; default model
-  (setq gptel-backend gptel--glm-coding-plan
-        gptel-model 'glm-5.2))
+  (setq gptel-backend gptel--deepseek
+        gptel-model 'deepseek-v4-flash)
+
+  ;; custom tools
+  (require 'gptel-tools)
+
+  (gptel-make-preset 'fact-check
+    :description "Fact Check"
+    :backend "DeepSeek"
+    :model 'deepseek-v4-flash
+    :system (alist-get 'fact-check gptel-directives nil nil
+                       (lambda (sym1 sym2)
+                         (string= (symbol-name sym1)
+                                  (symbol-name sym2))))
+    :pre (lambda () (gptel-mcp-connect '("searxng") 'sync))
+    :tools '("web_url_read"
+             "searxng_web_search")))
 
 (use-package mcp
   :after gptel
