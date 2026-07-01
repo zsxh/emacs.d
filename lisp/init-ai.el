@@ -213,7 +213,9 @@ When called interactively, prompts for file or buffer type."
           ("searxng" . (:command "bunx"
                         :args ("mcp-searxng")
                         :env (:SEARXNG_URL "http://localhost:8888")))
-          ("deepwiki" . (:url "https://mcp.deepwiki.com/mcp"))))
+          ("deepwiki" . (:url "https://mcp.deepwiki.com/mcp"))
+          ("codebase-memory-mcp" . (:command "codebase-memory-mcp"
+                                    :args ()))))
 
   (with-eval-after-load 'evil
     (evil-define-key* '(normal visual) mcp-hub-mode-map
