@@ -42,34 +42,6 @@
   (setf (alist-get 'markdown-mode gptel-prompt-prefix-alist) "user  ")
   (setf (alist-get 'markdown-mode gptel-response-prefix-alist) "assistant \n")
 
-  (define-minor-mode gptel-highlight-mode
-    "Visually highlight LLM respones regions.
-
-Highlighting is via fringe or margin markers, and optionally a response
-face.  See `gptel-highlight-methods' for highlighting methods, and
-`gptel-response-highlight' and `gptel-response-fringe-highlight' for the
-faces.
-
-This minor mode can be used anywhere in Emacs, and not just gptel chat
-buffers."
-    :lighter nil
-    :global nil
-    (cond
-     (gptel-highlight-mode
-      (when (memq 'margin gptel-highlight-methods)
-        (setq left-margin-width (1+ left-margin-width))
-        ;; HACK: Only refresh window margin when gptel-mode is active in current window
-        (when (buffer-local-value 'gptel-mode (window-buffer))
-          (set-window-buffer (selected-window) (current-buffer))))
-      (jit-lock-register #'gptel-highlight--update)
-      (gptel-highlight--update (point-min) (point-max)))
-     (t (when (memq 'margin gptel-highlight-methods)
-          (setq left-margin-width (max (1- left-margin-width) 0))
-          (set-window-buffer (selected-window) (current-buffer)))
-        (jit-lock-unregister #'gptel-highlight--update)
-        (without-restriction
-          (remove-overlays nil nil 'gptel-highlight t)))))
-
   (add-hook 'gptel-mode-hook (lambda ()
                                (gptel-highlight-mode)
                                (turn-on-visual-line-mode)))
@@ -146,45 +118,13 @@ When called interactively, prompts for file or buffer type."
 
   ;; LLM Providers
   ;; OpenRouter
-  (defvar gptel--openrouter
-    (gptel-make-openai "OpenRouter"
-      :host "openrouter.ai"
-      :endpoint "/api/v1/chat/completions"
-      :stream t
-      :key 'gptel-api-key
-      :models '((anthropic/claude-opus-4.5
-                 :capabilities (media tool-use cache)
-                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp" "application/pdf")
-                 :context-window 200
-                 :input-cost 35.52
-                 :output-cost 177.58)
-                (google/gemini-3-pro-preview
-                 :capabilities (tool-use json media audio video)
-                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
-                              "application/pdf" "text/plain" "text/csv" "text/html"
-                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
-                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
-                 :context-window 200
-                 :input-cost 14.22
-                 :output-cost 85.30)
-                (google/gemini-3-flash-preview
-                 :capabilities (tool-use json media audio video)
-                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
-                              "application/pdf" "text/plain" "text/csv" "text/html"
-                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
-                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
-                 :context-window 1000
-                 :input-cost 3.5
-                 :output-cost 21)
-                (openai/gpt-5.1
-                 :capabilities (media tool-use json url)
-                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-                 :context-window 400
-                 :input-cost 8.88
-                 :output-cost 71.03)
-                (x-ai/grok-4.1-fast
-                 :capabilities (tool-use json reasoning)
-                 :context-window 128))))
+  ;; (defvar gptel--openrouter
+  ;;   (gptel-make-openai "OpenRouter"
+  ;;     :host "openrouter.ai"
+  ;;     :endpoint "/api/v1/chat/completions"
+  ;;     :stream t
+  ;;     :key 'gptel-api-key
+  ;;     :models '()))
 
   ;; DeepSeek
   (defvar gptel--deepseek
@@ -199,18 +139,18 @@ When called interactively, prompts for file or buffer type."
                  :context-window 1000))))
 
   ;; GLM
-  (defvar gptel--glm
-    (gptel-make-openai "GLM"
-      :host "open.bigmodel.cn"
-      :endpoint "/api/paas/v4/chat/completions"
-      :stream t
-      :key 'gptel-api-key
-      :models '((glm-4.7
-                 :request-params (:thinking (:type "disabled"))
-                 :capabilities (tool-use reasoning)
-                 :context-window 200
-                 :input-cost 4
-                 :output-cost 16))))
+  ;; (defvar gptel--glm
+  ;;   (gptel-make-openai "GLM"
+  ;;     :host "open.bigmodel.cn"
+  ;;     :endpoint "/api/paas/v4/chat/completions"
+  ;;     :stream t
+  ;;     :key 'gptel-api-key
+  ;;     :models '((glm-4.7
+  ;;                :request-params (:thinking (:type "disabled"))
+  ;;                :capabilities (tool-use reasoning)
+  ;;                :context-window 200
+  ;;                :input-cost 4
+  ;;                :output-cost 16))))
 
   (defvar gptel--glm-coding-plan
     (gptel-make-openai "GLM-Code-Plan"
@@ -221,49 +161,22 @@ When called interactively, prompts for file or buffer type."
       :models '((glm-5-turbo
                  :request-params (:thinking (:type "disabled"))
                  :capabilities (tool-use reasoning)
-                 :context-window 200))))
-
-  ;; MiniMax
-  (defvar gptel--minimax
-    (gptel-make-anthropic "MiniMax"
-      :host "api.minimaxi.com"
-      :endpoint "/anthropic/v1/messages"
-      :stream t
-      :key 'gptel-api-key
-      :models '((MiniMax-M2
-                 :request-params (:temperature 1.0
-                                  :top_p 0.95
-                                  :top_k 20)
+                 :context-window 200)
+                (glm-5.2
                  :capabilities (tool-use reasoning)
-                 :context-window 200
-                 :input-cost 2.1
-                 :output-cost 8.4))))
+                 :context-window 1000))))
 
   ;; Siliconflow
-  (defvar gptel--siliconflow
-    (gptel-make-openai "Siliconflow"
-      :host "api.siliconflow.cn"
-      :stream t
-      :key 'gptel-api-key
-      :models '((Pro/moonshotai/Kimi-K2.5
-                 :capabilities (reasoning tool-use media audio video)
-                 :mime-types ("image/png" "image/jpeg" "image/webp" "image/heic" "image/heif"
-                              "application/pdf" "text/plain" "text/csv" "text/html"
-                              "audio/mpeg" "audio/wav" "audio/ogg" "audio/flac" "audio/aac" "audio/mp3"
-                              "video/mp4" "video/mpeg" "video/avi" "video/quicktime" "video/webm")
-                 :context-window 256
-                 :input-cost 4
-                 :output-cost 21)
-                (Pro/moonshotai/Kimi-K2-Instruct-0905
-                 :request-params (:temperature 0.6)
-                 :capabilities (tool-use)
-                 :context-window 256
-                 :input-cost 4
-                 :output-cost 16))))
+  ;; (defvar gptel--siliconflow
+  ;;   (gptel-make-openai "Siliconflow"
+  ;;     :host "api.siliconflow.cn"
+  ;;     :stream t
+  ;;     :key 'gptel-api-key
+  ;;     :models '()))
 
   ;; default model
   (setq gptel-backend gptel--glm-coding-plan
-        gptel-model 'glm-5-turbo))
+        gptel-model 'glm-5.2))
 
 (use-package mcp
   :after gptel

@@ -53,7 +53,7 @@
   :ensure nil
   :config
   (setopt treesit-enabled-modes t)
-  (assq-delete-all 'markdown-mode major-mode-remap-alist)
+  ;; (assq-delete-all 'markdown-mode major-mode-remap-alist)
   ;; NOTE: `treesit-font-lock-level' has a special `setter' attached to it,
   ;; so as to automatically recompute the font lock features in all your buffers when you change the level
   ;; (setopt treesit-font-lock-level 4)
@@ -100,6 +100,7 @@
     (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)))
 
 ;;;;;;;;;;;;;; *Buffer* ;;;;;;;;;;;;;;
+(setq ibuffer-human-readable-size t)
 
 (use-package ibuffer-vc
   :bind (("C-x C-b" . ibuffer))

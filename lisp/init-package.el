@@ -61,6 +61,9 @@
       use-package-verbose t
       use-package-vc-prefer-newest t)
 
+(setq package-install-upgrade-built-in nil
+      package-vc-allow-build-commands t)
+
 (defvar emacs-startup-time nil
   "The time it took, in seconds, for Emacs to initialize.")
 
@@ -75,83 +78,6 @@ If RETURN-P, return the message as a string instead of displaying it."
                (setq emacs-startup-time (float-time (time-subtract (current-time) before-init-time))))))
 
 (add-hook 'emacs-startup-hook #'+package/display-benchmark)
-
-(with-eval-after-load 'package
-  (setq package-install-upgrade-built-in t
-        package-vc-allow-build-commands t)
-  (defvar package-upgrade-exclude-vc-pkgs-p t)
-  (defvar package-upgrade-exclude-external-status-pkgs-p t)
-
-  ;; may exclude vc pkgs
-  (define-advice package--upgradeable-packages (:override (&optional include-builtins) advice)
-    ;; Initialize the package system to get the list of package
-    ;; symbols for completion.
-    (package--archives-initialize)
-    (mapcar
-     #'car
-     (seq-filter
-      (lambda (elt)
-        (or (let ((available
-                   (assq (car elt) package-archive-contents)))
-              (and available
-                   (or (not package-upgrade-exclude-vc-pkgs-p)
-                       (not (package-vc-p (cadr elt))))
-                   (or (not package-upgrade-exclude-external-status-pkgs-p)
-                       (not (string-equal "external" (package-desc-status (cadr elt)))))
-                   (or (and
-                        include-builtins
-                        (not (package-desc-version (cadr elt))))
-                       (version-list-<
-                        (package-desc-version (cadr elt))
-                        (package-desc-version (cadr available))))))
-            (and (not package-upgrade-exclude-vc-pkgs-p)
-                 (package-vc-p (cadr elt)))))
-      (if include-builtins
-          (append package-alist
-                  (mapcan
-                   (lambda (elt)
-                     (when (not (assq (car elt) package-alist))
-                       (list (list (car elt) (package--from-builtin elt)))))
-                   package--builtins))
-        package-alist))))
-
-  (define-advice package-install (:override (pkg &optional dont-select) advice)
-    (interactive
-     (progn
-       ;; Initialize the package system to get the list of package
-       ;; symbols for completion.
-       (package--archives-initialize)
-       (list (intern (completing-read
-                      "Install package: "
-                      package-archive-contents
-                      nil t))
-             nil)))
-    (cl-check-type pkg (or symbol package-desc))
-    (package--archives-initialize)
-    (add-hook 'post-command-hook #'package-menu--post-refresh)
-    (let ((name (if (package-desc-p pkg)
-                    (package-desc-name pkg)
-                  pkg)))
-      ;; (when (or (and package-install-upgrade-built-in
-      ;;                (package--active-built-in-p pkg))
-      ;;           (package-installed-p pkg))
-      ;;   (user-error "`%s' is already installed" name))
-      (unless (or dont-select (package--user-selected-p name))
-        (package--save-selected-packages
-         (cons name package-selected-packages)))
-      (when (and (or current-prefix-arg package-install-upgrade-built-in)
-                 (package--active-built-in-p pkg))
-        (setq pkg (or (cadr (assq name package-archive-contents)) pkg)))
-      (if-let* ((transaction
-                 (if (package-desc-p pkg)
-                     (unless (package-installed-p pkg)
-                       (package-compute-transaction (list pkg)
-                                                    (package-desc-reqs pkg)))
-                   (package-compute-transaction () (list (list pkg))))))
-          (progn
-            (package-download-transaction transaction)
-            (package--quickstart-maybe-refresh)
-            (message "Package `%s' installed." name))))))
 
 (when (and (not (file-exists-p package-user-dir))
            (directory-empty-p package-user-dir))
