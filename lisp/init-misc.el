@@ -204,6 +204,13 @@
   :vc (:url "https://github.com/emarsden/pgmacs")
   :defer t)
 
+;; TODO: db configs
+(use-package clutch
+  :defer t
+  :init
+  (setq clutch-console-directory (locate-user-emacs-file "cache/clutch")
+        clutch-jdbc-agent-dir (locate-user-emacs-file "cache/clutch-jdbc")))
+
 ;; `show-font-list', `show-font-select-preview',`show-font-tabulated'
 (use-package show-font
   :defer t)
