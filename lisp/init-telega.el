@@ -22,6 +22,9 @@
   ;; (require 'telega-bridge-bot)
   (require 'telega-transient nil t)
 
+  (require 'telega-adblock)
+  (telega-adblock-mode 1)
+
   ;; Highlight code blocks inside messages
   (require 'telega-mnz)
   (add-hook 'telega-load-hook 'global-telega-mnz-mode)
