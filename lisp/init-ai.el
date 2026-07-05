@@ -108,10 +108,7 @@ When called interactively, prompts for file or buffer type."
   (require 'gptel-prompts)
   (gptel-prompts-refresh)
   (setq gptel--system-message
-        (alist-get 'talk-normal gptel-directives nil nil
-                   (lambda (sym1 sym2)
-                     (string= (symbol-name sym1)
-                              (symbol-name sym2)))))
+        (alist-get 'talk-normal gptel-directives nil nil #'string=))
 
   ;; Clean Up default backends
   (setq gptel--known-backends nil)
@@ -185,13 +182,19 @@ When called interactively, prompts for file or buffer type."
     :description "Fact Check"
     :backend "DeepSeek"
     :model 'deepseek-v4-flash
-    :system (alist-get 'fact-check gptel-directives nil nil
-                       (lambda (sym1 sym2)
-                         (string= (symbol-name sym1)
-                                  (symbol-name sym2))))
+    :system (alist-get 'fact-check gptel-directives nil nil #'string=)
     :pre (lambda () (gptel-mcp-connect '("searxng") 'sync))
     :tools '("web_url_read"
-             "searxng_web_search")))
+             "searxng_web_search"))
+
+  (gptel-make-preset 'codebase-analyzer
+    :description "Codebase-Analyzer"
+    :backend "DeepSeek"
+    :model 'deepseek-v4-flash
+    :system (alist-get 'talk-normal gptel-directives nil nil #'string=)
+    :pre (lambda () (gptel-mcp-connect '("codebase-memory-mcp") 'sync))
+    :tools '(:append ("mcp-codebase-memory-mcp")))
+  )
 
 (use-package mcp
   :after gptel
