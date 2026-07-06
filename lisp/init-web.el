@@ -12,10 +12,6 @@
 
 ;; NOTE: install HTML/CSS/JSON/ESLint language servers `vscode-langservers-extracted'
 
-(when (and (version< emacs-version "31")
-           (treesit-ready-p 'css))
-  (add-to-list 'major-mode-remap-alist '(css-mode . css-ts-mode)))
-
 (use-package html-ts-mode
   :defer t
   ;; :hook (html-ts-mode . eglot-ensure)

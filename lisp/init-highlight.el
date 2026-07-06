@@ -70,23 +70,6 @@
   :config
   (setq css-fontify-colors nil))
 
-(use-package highlight-indent-guides
-  ;; :if (not IS-LINUX)
-  ;; :hook ((python-mode python-ts-mode yaml-mode yaml-ts-mode docker-compose-mode) . highlight-indent-guides-mode)
-  :defer t
-  :config
-  (defun my-highlighter (level responsive display)
-    (if (> 1 level)
-        nil
-      (highlight-indent-guides--highlighter-default level responsive display)))
-
-  (setq highlight-indent-guides-method 'bitmap
-        ;; highlight-indent-guides-character ?\|
-        highlight-indent-guides-auto-character-face-perc 30
-        highlight-indent-guides-auto-top-character-face-perc 60
-        highlight-indent-guides-responsive 'top
-        highlight-indent-guides-highlighter-function 'my-highlighter))
-
 ;; Fast, configurable indentation guide-bars for Emacs
 ;; For indent-bars to work, your port and version of emacs must correctly display the `:stipple' face attribute.
 ;; https://github.com/jdtsmith/indent-bars

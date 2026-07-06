@@ -153,15 +153,6 @@
 (use-package elisp-benchmarks
   :defer t)
 
-(use-package memory-usage
-  :commands memory-usage)
-
-;; https://github.com/tecosaur/screenshot.git
-;; convert a selected region of code to a screenshot
-(use-package screenshot
-  :vc (:url "https://github.com/tecosaur/screenshot")
-  :commands screenshot)
-
 ;; NOTE: timers
 ;; (defmacro nasy/timer (&rest body)
 ;;   "Measure and return the time it takes evaluating BODY."
@@ -180,8 +171,8 @@
   :custom
   (default-input-method "rime")
   :config
-  (when (package-installed-p 'posframe))
-  (setq rime-show-candidate 'posframe))
+  (when (package-installed-p 'posframe)
+    (setq rime-show-candidate 'posframe)))
 
 ;; Monitoring Linux Journald logs
 ;; https://github.com/WJCFerguson/journalctl
