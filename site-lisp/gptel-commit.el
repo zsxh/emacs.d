@@ -20,7 +20,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-
+;; TODO: [gptel-magit](https://github.com/ragnard/gptel-magit)
 ;;
 
 ;;; Code:

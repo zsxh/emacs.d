@@ -249,14 +249,6 @@ When called interactively, prompts for file or buffer type."
   :ensure nil
   :commands (gptel-commit))
 
-;; An AI Writing Assistant for Emacs
-;; https://github.com/dolmens/gptel-aibo
-(use-package gptel-aibo
-  :defer t
-  :bind (("C-c i" . gptel-aibo-summon)
-         (:map gptel-aibo-mode-map
-          ("C-c !" . gptel-aibo-apply-last-suggestions))))
-
 ;; use `whisper-cpp-download-ggml-model' from nixpkgs.whisper-cpp
 ;; > whisper-cpp-download-ggml-model {model} {whisper-install-directory}/whisper.cpp/models
 ;;
