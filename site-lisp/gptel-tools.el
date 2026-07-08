@@ -72,6 +72,23 @@
  :async t
  :include t)
 
+(gptel-make-tool
+ :function (lambda (url)
+             (with-current-buffer (url-retrieve-synchronously url)
+               (goto-char (point-min))
+               (forward-paragraph)
+               (let ((dom (libxml-parse-html-region (point) (point-max))))
+                 (run-at-time 0 nil #'kill-buffer (current-buffer))
+                 (with-temp-buffer
+                   (shr-insert-document dom)
+                   (buffer-substring-no-properties (point-min) (point-max))))))
+ :name "read_url"
+ :description "Fetch and read the contents of a URL"
+ :args (list '(:name "url"
+               :type string
+               :description "The URL to read"))
+ :category "web")
+
 
 (provide 'gptel-tools)
 

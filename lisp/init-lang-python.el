@@ -11,7 +11,6 @@
 ;;; Code:
 
 ;; NOTE: install python dev tools
-;; - python language server `basedpyright'
 ;; - python linter `ruff'
 ;; - python formatter `black'
 
