@@ -48,6 +48,7 @@
 
   ;; NOTE: https://github.com/karthink/gptel/issues/481#issuecomment-3203716169
   (progn
+    ;; TODO: place holders replacement, eg: ${DATE}, ${EVAL:xxx}, etc.
     ;; Add a new prompt transformation that looks for @buffer
     (add-hook 'gptel-prompt-transform-functions 'my/gptel-inject-buffers)
 
@@ -214,6 +215,7 @@ When called interactively, prompts for file or buffer type."
           ;; ("metaso" . (:url "https://metaso.cn/api/mcp"
           ;;              :headers (("Authorization" . ,(format "Bearer %s" (getenv "METASO_API_KEY"))))))
           ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))
+          ;; TODO: replace searxng mcp with elisp function
           ("searxng" . (:command "bunx"
                         :args ("mcp-searxng")
                         :env (:SEARXNG_URL "http://localhost:8888"

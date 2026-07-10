@@ -89,6 +89,9 @@
                :description "The URL to read"))
  :category "web")
 
+;; TODO: searxng elisp-function/searxng-cli return csv/toon format
+;; TODO: [toon format](https://github.com/toon-format/toon)
+
 
 (provide 'gptel-tools)
 
