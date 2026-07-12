@@ -26,7 +26,7 @@
   :bind (("<f8>" . gptel)
          :map gptel-mode-map
          ("C-c h" . gptel-menu)
-         ("C-c C-l" . my/gptel-insert))
+         ("C-c C-l" . gptel-prompts-insert))
   :config
   (require 'gptel-integrations)
   (setq gptel-proxy (format "http://%s:%s" personal-proxy-http-host personal-proxy-http-port)
@@ -46,70 +46,15 @@
                                (gptel-highlight-mode)
                                (turn-on-visual-line-mode)))
 
-  ;; NOTE: https://github.com/karthink/gptel/issues/481#issuecomment-3203716169
-  (progn
-    ;; TODO: place holders replacement, eg: ${DATE}, ${EVAL:xxx}, etc.
-    ;; Add a new prompt transformation that looks for @buffer
-    (add-hook 'gptel-prompt-transform-functions 'my/gptel-inject-buffers)
-
-    ;; The transformation:
-    (defun my/gptel-inject-buffers (_)
-      "Search backward, injecting text files into context as needed.
-
-Include buffers by name as:
-
-@buffer *scratch*"
-      (while (and (re-search-backward "^\\s-*@buffer\\b" nil t) ;look for @buffer
-                  (not (get-char-property (point) 'gptel))) ;avoid LLM response regions
-        (goto-char (match-end 0))
-        (delete-region (point) (line-beginning-position))
-        (let ((buf-name (string-trim
-                         (buffer-substring-no-properties
-                          (point) (line-end-position)))))
-          (if (not (buffer-live-p (get-buffer buf-name)))
-              (message "Buffer \"%s\" not live, ignoring @buffer"
-                       buf-name)
-            (delete-region (point) (line-end-position))
-            (insert (format "\nIn buffer `%s`:\n\n```\n" buf-name))
-            (insert-buffer-substring-no-properties buf-name)
-            (insert "\n```\n")))))
-
-    (defun my/gptel-insert-buffer (&optional buffer-name)
-      "Insert buffer name with @buffer prefix in current buffer.
-When called interactively, prompts for buffer name with completion."
-      (interactive
-       (list (completing-read "Select buffer: "
-                              (mapcar #'buffer-name
-                                      (seq-filter
-                                       (lambda (buf)
-                                         (not (string-prefix-p " " (buffer-name buf))))
-                                       (buffer-list)))
-                              nil t nil nil (buffer-name))))
-      (insert "\n@buffer " buffer-name "\n"))
-
-    (defun my/gptel-insert-file (&optional file-path)
-      "Insert a markdown file link at point.
-FILE-PATH: Path to the file to link to."
-      (interactive
-       (list (read-file-name "Select file: ")))
-      (insert " [](" file-path ") "))
-
-    (defun my/gptel-insert (&optional type)
-      "Insert file or buffer reference with appropriate prefix.
-When called interactively, prompts for file or buffer type."
-      (interactive
-       (list (completing-read "File Or Buffer:  " '(" file" " buffer") nil t)))
-      (cond
-       ((string= type " file")
-        (call-interactively #'my/gptel-insert-file))
-       ((string= type " buffer")
-        (call-interactively #'my/gptel-insert-buffer)))))
-
   ;; Customize Prompts
+  ;; NOTE: https://github.com/karthink/gptel/issues/481#issuecomment-3203716169
   (require 'gptel-prompts)
   (gptel-prompts-refresh)
   (setq gptel--system-message
         (alist-get 'talk-normal gptel-directives nil nil #'string=))
+  (add-hook 'gptel-prompt-transform-functions #'gptel-prompts-inject-buffers)
+  (add-hook 'gptel-prompt-transform-functions #'gptel-prompts-inject-system-placeholders)
+
 
   ;; Clean Up default backends
   (setq gptel--known-backends nil)
