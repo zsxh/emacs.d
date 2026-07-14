@@ -129,9 +129,10 @@ Behaves electrically if `sgml-quick-keys' is non-nil."
 ;; some of the issues with using Emacs’s built-in url library .
 (use-package plz
   :commands (plz)
-  :config
-  (setq plz-curl-default-args
-        (append plz-curl-default-args '("--proxy" "http://localhost:1080"))))
+  ;; :config
+  ;; (setq plz-curl-default-args
+  ;;       (append plz-curl-default-args '("--proxy" "http://localhost:1080")))
+  )
 
 
 (provide 'init-web)

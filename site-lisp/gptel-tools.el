@@ -11,9 +11,13 @@
 ;;; Code:
 
 (require 'gptel)
-(require 'cl-lib)
+(require 'plz)
 
-(defun my/gptel-youtube-metadata (callback url)
+(require 'cl-lib)
+(require 'seq)
+
+
+(defun gptel-tools-youtube-metadata (callback url)
   (let* ((video-id (and (string-match (concat
                                        "^\\(?:http\\(?:s?://\\)\\)?\\(?:www\\.\\)?\\(?:youtu\\(?:\\(?:\\.be\\|be\\.com\\)/\\)\\)"
                                        "\\(?:watch\\?v=\\)?"
@@ -60,7 +64,7 @@
 
 (gptel-make-tool
  :name "youtube_video_metadata"
- :function #'my/gptel-youtube-metadata
+ :function #'gptel-tools-youtube-metadata
  :description "Find the description and video transcript for a youtube video. Return a XML object containing two fields:
 
 \"description\": The video description added by the uploader
@@ -89,8 +93,45 @@
                :description "The URL to read"))
  :category "web")
 
-;; TODO: searxng elisp-function/searxng-cli return csv/toon format
 ;; TODO: [toon format](https://github.com/toon-format/toon)
+(gptel-make-tool
+ :function (lambda (q pageno time_range)
+             (let* ((req-url (url-encode-url
+                              (format "http://localhost:8888/search?q=%s&format=json%s%s"
+                                      q
+                                      (if pageno (format "&pageno=%d" pageno) "")
+                                      (if time_range (format "&time_range=%s" time_range) ""))))
+                    (resp (plz 'get req-url))
+                    (json (json-parse-string resp :object-type 'plist))
+                    (results (plist-get json :results)))
+               (with-temp-buffer
+                 (seq-doseq (item results)
+                   (insert
+                    (format "Title: %s\nContent: %s\nURL: %s\nScore: %s\n\n"
+                            (plist-get item :title)
+                            (plist-get item :content)
+                            (plist-get item :url)
+                            (plist-get item :score))))
+                 (buffer-string))))
+ :name "web_search_searxng"
+ :description "Searches the web using SearXNG and returns a list of results, each with a title, URL, and content snippet."
+ :args (list '(:name "q"
+               :type string
+               :description "The search query string.")
+             '(:name "pageno"
+               :type number
+               :description "Search page number (starts at 1)"
+               :default 1 :optional t)
+             '(:name "time_range"
+               :type string
+               :description "Time range of search (day, week, month, year)"
+               :enum ["day" "week" "month" "year"] :optional t)
+             ;; '(:name "format"
+             ;;   :type string
+             ;;   :description "Output format of results."
+             ;;   :enum ["json" "csv" "rss"] :optional t)
+             )
+ :category "web")
 
 
 (provide 'gptel-tools)

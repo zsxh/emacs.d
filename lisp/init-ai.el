@@ -130,8 +130,7 @@
     :model 'deepseek-v4-flash
     :system (alist-get 'fact-check gptel-directives nil nil #'string=)
     :pre (lambda () (gptel-mcp-connect '("searxng") 'sync))
-    :tools '(;; "web_url_read"
-             "searxng_web_search"
+    :tools '("web_search_searxng"
              "read_url"))
 
   (gptel-make-preset 'codebase-analyzer
@@ -161,11 +160,11 @@
           ;;              :headers (("Authorization" . ,(format "Bearer %s" (getenv "METASO_API_KEY"))))))
           ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))
           ;; TODO: replace searxng mcp with elisp function
-          ("searxng" . (:command "bunx"
-                        :args ("mcp-searxng")
-                        :env (:SEARXNG_URL "http://localhost:8888"
-                              ;; :MCP_HTTP_ALLOW_PRIVATE_URLS "true"
-                              )))
+          ;; ("searxng" . (:command "bunx"
+          ;;               :args ("mcp-searxng")
+          ;;               :env (:SEARXNG_URL "http://localhost:8888"
+          ;;                     ;; :MCP_HTTP_ALLOW_PRIVATE_URLS "true"
+          ;;                     )))
           ("deepwiki" . (:url "https://mcp.deepwiki.com/mcp"))
           ("codebase-memory-mcp" . (:command "codebase-memory-mcp"
                                     :args ()))))
