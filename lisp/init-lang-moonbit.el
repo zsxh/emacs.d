@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+;; TODO: https://github.com/moonbit-community/moonbit-ts-mode
 (use-package moonbit-mode
   :vc (:url "https://github.com/zsxh/moonbit-mode.git" :branch "feat/emacs-30")
   ;; :vc (:url "https://github.com/cxa/moonbit-mode.git")

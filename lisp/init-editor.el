@@ -297,6 +297,36 @@
   :vc (:url "https://github.com/emacs-vs/cognitive-complexity")
   :defer t)
 
+;; Code Block Preview
+(use-package region-pin
+  :vc (:url "https://github.com/vmargb/region-pin/")
+  :defer t
+  :init
+  (setq region-pin-save-file
+        (expand-file-name "cache/region-pin/pins.el" user-emacs-directory))
+  :config
+  (defun my/region-pin-clear-all ()
+    "Delete every saved pin without confirming."
+    (interactive)
+    (cl-letf (((symbol-function 'yes-or-no-p) (lambda (&rest _) t)))
+      (region-pin-clear-all)))
+  (defvar region-pin-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map "i" #'region-pin-instant)
+      (define-key map "p" #'region-pin-save)
+      (define-key map "s" #'region-pin-show)
+      (define-key map "h" #'region-pin-hide)
+      (define-key map "n" #'region-pin-next)
+      (define-key map "p" #'region-pin-previous)
+      (define-key map "d" #'region-pin-delete)
+      (define-key map "D" #'my/region-pin-clear-all)
+      (define-key map "f" #'region-pin-follow)
+      map)
+    "Keymap for all region-pin commands.")
+  (fset 'region-pin-map region-pin-map)
+  (with-eval-after-load 'embark
+    (keymap-set embark-general-map "P" 'region-pin-map)))
+
 
 (provide 'init-editor)
 
