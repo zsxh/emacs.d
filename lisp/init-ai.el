@@ -159,15 +159,18 @@
           ;; ("metaso" . (:url "https://metaso.cn/api/mcp"
           ;;              :headers (("Authorization" . ,(format "Bearer %s" (getenv "METASO_API_KEY"))))))
           ("exa" . (:url ,(format "https://mcp.exa.ai/mcp?exaApiKey=%s" (getenv "EXA_API_KEY"))))
-          ;; TODO: replace searxng mcp with elisp function
+          ;; NOTE: replace searxng mcp with elisp function
           ;; ("searxng" . (:command "bunx"
           ;;               :args ("mcp-searxng")
           ;;               :env (:SEARXNG_URL "http://localhost:8888"
           ;;                     ;; :MCP_HTTP_ALLOW_PRIVATE_URLS "true"
           ;;                     )))
           ("deepwiki" . (:url "https://mcp.deepwiki.com/mcp"))
-          ("codebase-memory-mcp" . (:command "codebase-memory-mcp"
-                                    :args ()))))
+          ("codebase-memory-mcp" . (:command "codebase-memory-mcp" :args ()))
+          ("lightpanda" . (:command "lightpanda" :args ("mcp"))) ; Lightpanda: the headless browser designed for AI and automation
+          ;; TODO: [fastCRW](https://github.com/us/crw), rely on searxng & lightpanda
+          ;; TODO: [Camoufox is an open source anti-detect browser built for webscraping & AI agents.](https://github.com/daijro/camoufox)
+          ))
 
   (with-eval-after-load 'evil
     (evil-define-key* '(normal visual) mcp-hub-mode-map

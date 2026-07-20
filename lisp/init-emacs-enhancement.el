@@ -139,7 +139,8 @@
                           "undo-tree-hist"
                           "url"
                           "COMMIT_EDITMSG\\'"))
-  (recentf-mode t))
+  ;; (recentf-mode t)
+  )
 
 ;;;;;;;;;;;;;; Garbage-Collection ;;;;;;;;;;;;;;
 (setq garbage-collection-messages nil)
