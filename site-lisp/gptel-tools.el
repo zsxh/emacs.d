@@ -128,6 +128,7 @@
                                              "fetch"
                                              "--dump" "markdown"
                                              "--strip-mode" "full"
+                                             "--log-level" "fatal"
                                              url)))
                (unwind-protect
                    (if (zerop exit-code)
@@ -142,11 +143,14 @@
                :description "The URL to read"))
  :category "web")
 
+(defvar gptel-tools--searxng-url "http://localhost:8888")
+
 ;; TODO: [toon format](https://github.com/toon-format/toon)
 (gptel-make-tool
  :function (lambda (q pageno time_range)
              (let* ((req-url (url-encode-url
-                              (format "http://localhost:8888/search?q=%s&format=json%s%s"
+                              (format "%s/search?q=%s&format=json%s%s"
+                                      gptel-tools--searxng-url
                                       q
                                       (if pageno (format "&pageno=%d" pageno) "")
                                       (if time_range (format "&time_range=%s" time_range) ""))))

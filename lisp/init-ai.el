@@ -129,9 +129,7 @@
     :backend "DeepSeek"
     :model 'deepseek-v4-flash
     :system (alist-get 'fact-check gptel-directives nil nil #'string=)
-    :pre (lambda () (gptel-mcp-connect '("searxng") 'sync))
-    :tools '("web_search_searxng"
-             "fetch-url-lightpanda"))
+    :tools '("web_search_searxng" "fetch-url-lightpanda"))
 
   (gptel-make-preset 'codebase-analyzer
     :description "Codebase-Analyzer"
