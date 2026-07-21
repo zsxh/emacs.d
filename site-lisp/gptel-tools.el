@@ -110,7 +110,32 @@
                          (buffer-string)) ; 成功，返回内容
                      (error "命令执行失败，退出码: %d，请检查 html-to-markdown 是否安装" exit-code))
                  (kill-buffer temp-buffer))))
- :name "read_url_md"
+ :name "html-to-markdown"
+ :description "Fetch and read the contents of a URL"
+ :args (list '(:name "url"
+               :type string
+               :description "The URL to read"))
+ :category "web")
+
+(gptel-make-tool
+ :function (lambda (url)
+             ;; NOTE: [lightpanda](https://github.com/lightpanda-io/browser)
+             (let* ((temp-buffer (generate-new-buffer " *lightpanda-dump-output*"))
+                    (exit-code (call-process "lightpanda" ; 程序名
+                                             nil ; 无标准输入
+                                             temp-buffer ; 输出写入该buffer
+                                             nil ; 不重定向stderr（默认合并）
+                                             "fetch"
+                                             "--dump" "markdown"
+                                             "--strip-mode" "full"
+                                             url)))
+               (unwind-protect
+                   (if (zerop exit-code)
+                       (with-current-buffer temp-buffer
+                         (buffer-string)) ; 成功，返回内容
+                     (error "命令执行失败，退出码: %d，请检查 lightpanda 是否安装" exit-code))
+                 (kill-buffer temp-buffer))))
+ :name "fetch-url-lightpanda"
  :description "Fetch and read the contents of a URL"
  :args (list '(:name "url"
                :type string

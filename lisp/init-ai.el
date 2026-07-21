@@ -131,7 +131,7 @@
     :system (alist-get 'fact-check gptel-directives nil nil #'string=)
     :pre (lambda () (gptel-mcp-connect '("searxng") 'sync))
     :tools '("web_search_searxng"
-             "read_url_md"))
+             "fetch-url-lightpanda"))
 
   (gptel-make-preset 'codebase-analyzer
     :description "Codebase-Analyzer"
