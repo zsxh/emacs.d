@@ -300,7 +300,7 @@
 ;; Code Block Preview
 (use-package region-pin
   :vc (:url "https://github.com/vmargb/region-pin/")
-  :defer t
+  :after embark
   :init
   (setq region-pin-save-file
         (expand-file-name "cache/region-pin/pins.el" user-emacs-directory))

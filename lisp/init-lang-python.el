@@ -82,6 +82,9 @@
                 (plist-put eglot-workspace-configuration :ty
                            (plist-get eglot-python-workspace-configuration :ty))))
 
+(use-package jupyter
+  :defer t)
+
 
 (provide 'init-lang-python)
 

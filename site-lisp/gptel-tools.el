@@ -127,7 +127,7 @@
                                              nil ; 不重定向stderr（默认合并）
                                              "fetch"
                                              "--dump" "markdown"
-                                             "--strip-mode" "full"
+                                             ;; "--strip-mode" "full"
                                              "--log-level" "fatal"
                                              url)))
                (unwind-protect
