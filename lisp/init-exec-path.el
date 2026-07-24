@@ -55,6 +55,18 @@
 
   (advice-add #'exec-path-from-shell-initialize :override #'exec-path-from-shell-advice))
 
+;;;; Project Isolation
+
+;; [envrc.el](https://github.com/purcell/envrc)
+;; [direnv](https://direnv.net/docs/hook.html)
+;; [nix-direnv](https://github.com/nix-community/nix-direnv)
+;; `envrc-reload', `envrc-allow', `envrc-deny'
+(use-package envrc
+  :hook (after-init . envrc-global-mode))
+
+(use-package inheritenv
+  :defer t)
+
 
 (provide 'init-exec-path)
 

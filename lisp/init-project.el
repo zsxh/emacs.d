@@ -155,15 +155,6 @@ else ask the user for a directory in which to look for the project."
   (interactive (list (project-prompt-project-dir)))
   (dired dir))
 
-;;;; Project Isolation
-
-;; [envrc.el](https://github.com/purcell/envrc)
-;; [direnv](https://direnv.net/docs/hook.html)
-;; [nix-direnv](https://github.com/nix-community/nix-direnv)
-;; `envrc-reload', `envrc-allow', `envrc-deny'
-(use-package envrc
-  :hook (after-init . envrc-global-mode))
-
 ;;;; Compilation
 ;; `compilation-shell-minor-mode'
 (use-package compile

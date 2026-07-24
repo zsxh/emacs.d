@@ -83,7 +83,10 @@
                            (plist-get eglot-python-workspace-configuration :ty))))
 
 (use-package jupyter
-  :defer t)
+  :defer t
+  :config
+  (when (require 'inheritenv nil t)
+    (inheritenv-add-advice 'jupyter-run-repl)))
 
 
 (provide 'init-lang-python)
