@@ -23,6 +23,8 @@
 ;; (use-package yasnippet-snippets
 ;;   :after yasnippet)
 
+;; TODO: https://github.com/MiniApollo/snippy
+
 
 (provide 'init-yasnippet)
 

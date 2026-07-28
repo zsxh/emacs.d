@@ -215,9 +215,11 @@
 ;; TODO: `grpclient-mode-map' key bindings
 (use-package grpclient
   :if (executable-find "grpcurl")
-  :vc (:url "https://github.com/Prikaz98/grpclient.el.git")
   :mode ("\\.grpc\\'" . grpclient-mode)
-  :defer t)
+  :defer t
+  :init
+  (setq grpclient-completion-cache-dir
+        (expand-file-name "cache/grpcurl-autocomplete/" user-emacs-directory)))
 
 ;; Mermaid
 (use-package mermaid-mode

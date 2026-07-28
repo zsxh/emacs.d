@@ -19,12 +19,13 @@
           ("C-h" . corfu-popupinfo-toggle)
           ("C-d" . corfu-popupinfo-scroll-up)
           ("C-b" . corfu-popupinfo-scroll-down)))
-  :hook ((prog-mode . corfu-mode)
-         (shell-mode . corfu-mode)
-         (eshell-mode . corfu-mode)
-         (org-mode . corfu-mode)
-         (markdown-mode . corfu-mode)
-         (telega-chat-mode . corfu-mode))
+  :hook ((prog-mode
+          shell-mode
+          eshell-mode
+          org-mode
+          markdown-mode
+          telega-chat-mode
+          jupyter-repl-mode) . corfu-mode)
   :config
   (setq corfu-auto t
         corfu-auto-prefix 1
