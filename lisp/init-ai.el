@@ -76,7 +76,9 @@
       :key 'gptel-api-key
       :models '((deepseek-v4-flash
                  :capabilities (reasoning tool-use)
-                 :context-window 1000)
+                 :context-window 1000
+                 :request-params (:thinking (:type "enabled")
+                                  :reasoning_effort "max"))
                 (deepseek-v4-pro
                  :capabilities (reasoning tool-use)
                  :context-window 1000))))
