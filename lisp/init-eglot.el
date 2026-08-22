@@ -26,7 +26,9 @@
         eglot-send-changes-idle-time 0.5
         eglot-sync-connect nil
         eglot-ignored-server-capabilities '(:documentHighlightProvider
-                                            :foldingRangeProvider)
+                                            :foldingRangeProvider
+                                            ;; :inlayHintProvider
+                                            )
         eglot-stay-out-of '(eldoc)
         ;; NOTE: drop log to improve performance
         eglot-events-buffer-config '(:size 0 :format full)

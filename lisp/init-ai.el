@@ -107,7 +107,7 @@
                  :request-params (:thinking (:type "disabled"))
                  :capabilities (tool-use reasoning)
                  :context-window 200)
-                (glm-5.2
+                (glm-5.3
                  :capabilities (tool-use reasoning)
                  :context-window 1000))))
 

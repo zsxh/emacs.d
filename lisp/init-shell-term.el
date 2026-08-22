@@ -43,6 +43,13 @@
   :if (not (display-graphic-p))
   :hook (after-init . global-kkp-mode))
 
+;; TODO: Display images, video, and scaled text directly in terminal Emacs (emacs -nw) using the Kitty graphics protocol, tmux or Sixel
+;; (use-package kitty-graphics
+;;   :vc (:url "https://github.com/cashmeredev/kitty-graphics.el")
+;;   :config
+;;   (setq kitty-graphics-enable-video t)   ; optional: inline mpv playback
+;;   (kitty-graphics-setup))
+
 (use-package eat
   :commands (eat-toggle)
   :config
@@ -133,6 +140,9 @@ If prefix ARG is non-nil, cd into `default-directory' instead of project root."
     (kbd "C-s") 'consult-line
     (kbd "C-y") 'yank
     (kbd "C-z") 'evil-normal-state))
+
+(use-package fish-mode
+  :defer t)
 
 
 (provide 'init-shell-term)
