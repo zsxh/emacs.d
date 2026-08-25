@@ -241,9 +241,6 @@
                  sgml-skip-tag-forward
                  nil)))
 
-(use-package treesit-fold
-  :hook (after-init . global-treesit-fold-mode))
-
 ;; The kirigami package offers a unified interface for text folding
 (use-package kirigami
   :defer t

@@ -352,10 +352,8 @@ otherwise  set the current buffer to read-only."
   :hook (Info-selection . info-colors-fontify-node))
 
 ;;;;;;;;;;;;;; M-x breadcrumb-mode ;;;;;;;;;;;;;;
-;; https://github.com/joaotavora/breadcrumb
 (use-package breadcrumb
-  :vc (:url "https://github.com/zsxh/breadcrumb.git"
-       :branch "perf/header-line-redisplay")
+  :vc (:url "https://github.com/joaotavora/breadcrumb")
   :hook (after-init . breadcrumb-mode)
   :config
   (setq breadcrumb-project-max-length 0.3
