@@ -147,6 +147,11 @@
 ;; show fringe-indicators for wrapped lines
 (setopt visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 
+(setq frame-resize-pixelwise t
+      window-resize-pixelwise t)
+
+(setq shell-command-prompt-show-cwd t)
+
 
 (provide 'init-config)
 

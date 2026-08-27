@@ -103,12 +103,11 @@
       :endpoint "/api/coding/paas/v4/chat/completions"
       :stream t
       :key 'gptel-api-key
-      :models '((glm-5-turbo
-                 :request-params (:thinking (:type "disabled"))
-                 :capabilities (tool-use reasoning)
-                 :context-window 200)
-                (glm-5.3
-                 :capabilities (tool-use reasoning)
+      :models '((glm-5.3-flash
+                 :capabilities (tool-use reasoning media)
+                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+                 :request-params (:thinking (:type "enabled")
+                                  :reasoning_effort "max")
                  :context-window 1000))))
 
   ;; Siliconflow

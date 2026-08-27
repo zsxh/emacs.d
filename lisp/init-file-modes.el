@@ -52,6 +52,11 @@
    "T" '(nil :which-key "toggle")
    "Ti" '(markdown-toggle-inline-images :which-key "inline-images")))
 
+(use-package markdown-ts-mode
+  :defer t
+  :config
+  (require 'markdown-ts-mode-x nil t))
+
 ;; CSV
 (use-package csv-mode :defer t)
 (use-package rainbow-csv-mode

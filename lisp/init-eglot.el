@@ -22,6 +22,7 @@
   :bind (:map eglot-mode-map
          ("<f7>" . eglot-momentary-inlay-hints))
   :config
+  ;; https://www.jamescherti.com/emacs-eglot-performance/
   (setq eglot-autoshutdown t
         eglot-send-changes-idle-time 0.5
         eglot-sync-connect nil
@@ -39,7 +40,11 @@
         ;; https://github.com/microsoft/vscode-extension-samples/blob/main/code-actions-sample/README.md
         eglot-code-action-indications '()
         ;; eglot-code-action-indicator ""
-        ))
+        eglot-documentation-renderer (when (functionp 'markdown-ts-view-mode)
+                                       #'markdown-ts-view-mode)
+        )
+  ;; disabling the JSON-RPC event hook also avoids serializing JSON payloads
+  (setq jsonrpc-event-hook nil))
 
 (with-eval-after-load 'eglot
   (defvar +eglot/display-buf "*+eglot/display-buffer*")
