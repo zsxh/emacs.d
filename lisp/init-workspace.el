@@ -41,12 +41,9 @@
                          (project (project-name project))
                          (t (buffer-name))))
           (input-name (read-from-minibuffer
-                       (format "New name for tab (%s): " default-name)
-                       nil nil nil nil default-name)))
-     (list
-      (if (> (length input-name) 0)
-          input-name
-        default-name))))
+                       "New name for tab: "
+                       default-name nil nil nil default-name)))
+     (list input-name)))
   (tab-rename name))
 
 ;; Buffer Tab
