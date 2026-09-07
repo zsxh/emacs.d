@@ -62,7 +62,9 @@
 ;; [nix-direnv](https://github.com/nix-community/nix-direnv)
 ;; `envrc-reload', `envrc-allow', `envrc-deny'
 (use-package envrc
-  :hook (after-init . envrc-global-mode))
+  :hook (after-init . envrc-global-mode)
+  :config
+  (setq envrc-async t))
 
 (use-package inheritenv
   :defer t)

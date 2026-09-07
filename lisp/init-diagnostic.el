@@ -26,7 +26,6 @@
   (setq flymake-no-changes-timeout 0.5
         flymake-start-on-save-buffer nil
         flymake-inline-diagnostics 'short
-        flymake-fringe-indicator-position 'right-fringe
         flymake-indicator-type 'auto)
 
   (advice-add 'flymake-eldoc-function :override #'ignore)

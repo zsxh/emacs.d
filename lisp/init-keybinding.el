@@ -185,7 +185,7 @@
    "vc" '(+workspace/tab-new :which-key "tab-new")
    "vn" '(tab-next :which-key "tab-next")
    "vp" '(tab-previous :which-key "tab-previous")
-   "vr" '(tab-rename :which-key "tab-rename")
+   "vr" '(+workspace/tab-rename-dwim :which-key "tab-rename")
    "vs" '(tab-switch :which-key "tab-switch")
    "vx" '(tab-close :which-key "tab-close")
    "vD" '(easysession-delete :which-key "easysession-delete")

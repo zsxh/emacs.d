@@ -26,7 +26,6 @@
 (add-hook 'java-mode-hook #'eglot-ensure)
 (add-hook 'java-ts-mode-hook #'eglot-ensure)
 
-;; TODO: eglot does not support `workspace.workspaceEdit.resourceOperations' yet
 (use-package eglot-jdtls
   :vc (:url "https://github.com/zsxh/eglot-jdtls")
   :after eglot

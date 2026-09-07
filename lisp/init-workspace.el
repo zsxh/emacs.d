@@ -28,11 +28,26 @@
 (defun +workspace/tab-new (name)
   (interactive (list
                 (read-from-minibuffer
-                 "New Tab Name(*scratch*): "
+                 "New Tab Name (*scratch*): "
                  nil nil nil nil (buffer-name))))
   (tab-new)
-  (if (> (length name) 0)
-      (tab-rename name)))
+  (when (> (length name) 0)
+    (tab-rename name)))
+
+(defun +workspace/tab-rename-dwim (name)
+  (interactive
+   (let* ((project (project-current))
+          (default-name (cond
+                         (project (project-name project))
+                         (t (buffer-name))))
+          (input-name (read-from-minibuffer
+                       (format "New name for tab (%s): " default-name)
+                       nil nil nil nil default-name)))
+     (list
+      (if (> (length input-name) 0)
+          input-name
+        default-name))))
+  (tab-rename name))
 
 ;; Buffer Tab
 (use-package tab-line
