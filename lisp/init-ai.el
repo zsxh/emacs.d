@@ -74,14 +74,12 @@
     (gptel-make-deepseek "DeepSeek"
       :stream t
       :key 'gptel-api-key
-      :models '((deepseek-v4-flash
-                 :capabilities (reasoning tool-use)
+      :models '((deepseek-flash
+                 :capabilities (reasoning tool-use media)
+                 :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
                  :context-window 1000
                  :request-params (:thinking (:type "enabled")
-                                  :reasoning_effort "max"))
-                (deepseek-v4-pro
-                 :capabilities (reasoning tool-use)
-                 :context-window 1000))))
+                                  :reasoning_effort "high")))))
 
   ;; GLM
   ;; (defvar gptel--glm
@@ -120,7 +118,7 @@
 
   ;; default model
   (setq gptel-backend gptel--deepseek
-        gptel-model 'deepseek-v4-flash)
+        gptel-model 'deepseek-flash)
 
   ;; custom tools
   (require 'gptel-tools)

@@ -10,41 +10,43 @@
 
 ;;; Code:
 
-;; TODO: https://github.com/moonbit-community/moonbit-ts-mode
-(use-package moonbit-mode
-  :vc (:url "https://github.com/zsxh/moonbit-mode.git" :branch "feat/emacs-30")
-  ;; :vc (:url "https://github.com/cxa/moonbit-mode.git")
-  ;; :load-path "~/workspace/emacs/moonbit-mode"
-  ;; :mode ("\\.mbt\\'" . moonbit-mode)
-  :init
-  (defun moonbit-setup ()
-    (setq-local tab-width 2)
-    (setq-local face-remapping-alist
-                '((eglot-semantic-async
-                   :weight normal
-                   :slant italic
-                   :underline t))))
+(use-package moonbit-ts-mode
+  ;; :init
+  ;; (defun moonbit-setup ()
+  ;;   (setq-local tab-width 2)
+  ;;   (setq-local face-remapping-alist
+  ;;               '((eglot-semantic-async
+  ;;                  :weight normal
+  ;;                  :slant italic
+  ;;                  :underline t))))
   :hook ((moonbit-mode . eglot-ensure)
-         (moonbit-mode . moonbit-setup))
+         ;; (moonbit-mode . moonbit-setup)
+         )
   :config
-  ;; (add-to-list
-  ;;  'treesit-language-source-alist
-  ;;  '(moonbit "https://github.com/moonbitlang/tree-sitter-moonbit.git"))
+  (add-to-list 'treesit-language-source-alist
+               '(moonbit "https://github.com/moonbitlang/tree-sitter-moonbit.git" "main" "src"))
+  (add-to-list 'treesit-language-source-alist
+               '(moonbit_mbtp "https://github.com/moonbitlang/tree-sitter-moonbit.git"
+                              "main" "grammars/mbtp/src"))
   (unless (treesit-language-available-p 'moonbit)
     (treesit-install-language-grammar 'moonbit))
-
-  (+eglot/set-leader-keys moonbit-mode-map))
+  (unless (treesit-language-available-p 'moonbit_mbtp)
+    (treesit-install-language-grammar 'moonbit_mbtp))
+  (+eglot/set-leader-keys moonbit-ts-mode-map))
 
 (use-package eglot-moonbit
   :vc (:url "https://github.com/zsxh/eglot-moonbit")
   :after eglot
   :config
-  (push '(moonbit-mode . (eglot-moonbit-server . ("moonbit-lsp" "--stdio")))
+  ;; (push '(moonbit-ts-mode . (eglot-moonbit-server . ("moonbit-lsp" "--stdio")))
+  ;;       eglot-server-programs)
+  (push '((moonbit-ts-mode :language-id "moonbit")
+          . (eglot-moonbit-server . ("moonbit" "lsp")))
         eglot-server-programs))
 
 (with-eval-after-load 'nerd-icons
   (add-to-list 'nerd-icons-mode-icon-alist
-               '(moonbit-mode nerd-icons-mdicon "nf-md-rabbit_variant" :face nerd-icons-maroon))
+               '(moonbit-ts-mode nerd-icons-mdicon "nf-md-rabbit_variant" :face nerd-icons-maroon))
   (add-to-list 'nerd-icons-extension-icon-alist
                '("mbt" nerd-icons-mdicon "nf-md-rabbit_variant" :face nerd-icons-maroon)))
 

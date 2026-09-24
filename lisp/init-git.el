@@ -182,6 +182,36 @@ Otherwise, kill the current buffer using `magit-bury-buffer-function'."
   :config
   (require 'majutsu-evil))
 
+;; TODO: https://github.com/rschmukler/magit-difftastic
+
+(use-package difftastic
+  :after magit
+  :config
+  (require 'transient nil t)
+  (with-eval-after-load 'magit-diff
+    (let ((suffix [("M-d" "Difftastic diff (dwim)" difftastic-magit-diff)
+                   ("M-c" "Difftastic show" difftastic-magit-show)]))
+      (unless (equal (transient-parse-suffix 'magit-diff suffix)
+                     (transient-get-suffix 'magit-diff '(-1 -1)))
+        (transient-append-suffix 'magit-diff '(-1 -1) suffix))))
+  (with-eval-after-load 'magit-blame
+    (let ((suffix '("M-RET" "Difftastic show" difftastic-magit-show)))
+      (unless (equal (transient-parse-suffix 'magit-blame suffix)
+                     (transient-get-suffix 'magit-blame "b"))
+        (transient-append-suffix 'magit-blame "b" suffix))))
+  (with-eval-after-load 'evil
+    (evil-define-key '(normal visual) difftastic-mode-map
+      "g" nil
+      "gr" 'difftastic-rerun
+      "n" 'difftastic-next-chunk
+      "N" 'difftastic-next-file
+      "p" 'difftastic-previous-chunk
+      "P" 'difftastic-previous-file
+      "q" 'quit-window))
+
+  (setq difftastic-requested-window-width-function (lambda () (frame-width))
+        difftastic-rerun-requested-window-width (lambda () (frame-width))))
+
 
 (provide 'init-git)
 

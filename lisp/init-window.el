@@ -23,10 +23,11 @@
   :config
   (setq popper-window-height
         (lambda (win)
-          (fit-window-to-buffer
-           win
-           (floor (frame-height) 4)
-           (floor (frame-height) 4))))
+          (let ((divsor (if (eq major-mode 'difftastic-mode) 2 4)))
+            (fit-window-to-buffer
+             win
+             (floor (frame-height) divsor)
+             (floor (frame-height) divsor)))))
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$"
@@ -47,7 +48,8 @@
           magit-process-mode
           "\\*gt-result\\*"
           ;; comint-mode
-          "*envrc*"))
+          "*envrc*"
+          difftastic-mode))
   (setq popper-group-function #'popper-group-by-project))
 
 
