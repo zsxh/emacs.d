@@ -152,6 +152,11 @@
 
 (setq shell-command-prompt-show-cwd t)
 
+;; Emacs 32 support scaling of strike-through, overline, and underline lines
+(setq underline-line-scaling-flag t
+      overline-line-scaling-flag t
+      strike-through-line-scaling-flag t)
+
 
 (provide 'init-config)
 

@@ -238,6 +238,11 @@
 ;; TODO: https://github.com/chaoswork/appine
 ;; an Emacs plugin using a Dynamic Module that allows you to embed native macOS views (WebKit, PDFKit etc.) directly inside Emacs windows.
 
+;; TODO: Excalidraw inside Emacs
+;; (use-package excali-mode
+;;   :vc (:url "https://github.com/yibie/excali-mode")
+;;   :defer t)
+
 
 (provide 'init-file-modes)
 

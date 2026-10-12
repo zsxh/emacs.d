@@ -42,7 +42,7 @@
         ;; eglot-code-action-indicator ""
         eglot-documentation-renderer (when (functionp 'markdown-ts-view-mode)
                                        #'markdown-ts-view-mode)
-        )
+        eglot-completion-replace-semantics nil)
   ;; disabling the JSON-RPC event hook also avoids serializing JSON payloads
   (setq jsonrpc-event-hook nil))
 
