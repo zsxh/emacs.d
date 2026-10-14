@@ -29,9 +29,7 @@
   (require 'telega-mnz)
   (add-hook 'telega-load-hook 'global-telega-mnz-mode)
 
-  (setq telega-proxies (list `(:server ,personal-proxy-http-host :port ,personal-proxy-http-port :enable nil :type (:@type "proxyTypeHttp"))
-                             `(:server ,personal-proxy-http-host :port ,personal-proxy-socks5-port :enable t :type (:@type "proxyTypeSocks5")))
-        telega-translate-to-language-by-default "zh"
+  (setq telega-translate-to-language-by-default "zh"
         telega-date-format-alist '((today . "%H:%M")
                                    (this-week . "%a")
                                    (old . "%Y.%m.%d")
